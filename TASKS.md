@@ -20,7 +20,7 @@
 ## Epic 0 · 基建
 
 - [x] **0.1 [P0]** 3O 骨架与配置：建 `oprim/ oskill/ omodul/ obase/ services/ data/ alembic/ tests/`；迁已实现内核入位；`obase/config.py`(pydantic-settings)、`obase/db.py`(async session)、`pyproject.toml`、`.env.example`。DoD：`pytest tests/test_engine.py` 新结构下通过。 ✅ 骨架已建，内核已迁，测试全绿并已 push。
-- [ ] **0.2 [P0]** docker-compose（api+postgres16+redis7+minio）。DoD：`docker compose up -d` 全健康。
+- [x] **0.2 [P0]** docker-compose（api+postgres16+redis7+minio）。DoD：`docker compose up -d` 全健康。 ✅ docker-compose.yml 已配置，服务已全部健康启动并 push。
 - [ ] **0.3 [P0]** Alembic async + baseline。DoD：`alembic upgrade head` 成功。
 - [ ] **0.4 [P1]** CI 质量门：pytest+ruff+mypy+覆盖率阈值。DoD：一条命令跑完全检查。
 
