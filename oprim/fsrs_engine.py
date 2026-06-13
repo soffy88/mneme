@@ -61,6 +61,11 @@ def fsrs_retrievability(
 ) -> float:
     """当前可提取性 R (0~1)：此刻能回忆起的概率。"""
     card = Card.from_dict(card_dict)
+    
+    # 核心修正：对于从未复习过的新卡片，可提取性视为 1.0 (BKT 初始掌握度不衰减)
+    if card.last_review is None:
+        return 1.0
+        
     now = now or datetime.now(timezone.utc)
 
     # 优先用官方方法
