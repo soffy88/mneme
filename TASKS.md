@@ -42,7 +42,7 @@
 ## Epic 3 · 试卷数据入口
 
 - [x] **3.1 [P0]** `obase.oss` 上传 + `papers(processing)`（MinIO hot）。 ✅ 已实现 obase/oss.py 及 omodul/paper.py 业务流，支持 /v1/papers/upload 接口。
-- [ ] **3.2 [P0]** `oprim.ocr_paper`（Claude Vision 结构化）；prompt 入 `obase/llm` prompt 库。
+- [x] **3.2 [P0]** `oprim.ocr_paper`（Claude Vision 结构化）；prompt 入 `obase/llm` prompt库。 ✅ 已实现 obase/llm.py 基础设施及 oprim/llm_oprims.py OCR 逻辑，支持 Claude Vision。
 - [ ] **3.3 [P0]** `oprim.grade_question` + 错题入库 + KC 关联（LLM 辅助标注）。
 - [ ] **3.4 [P0]** 接内核：每道错题 → `process_interaction(source='paper')`。DoD：上传后 `/v1/mastery` 反映变化，事件累积。
 - [ ] **3.5 [P0]** `analyze_paper_workflow` omodul + 共同断点分析（冷启动钩子）。DoD：返回共同断点或诚实"无"，不编造；全 4 支柱产物齐全。

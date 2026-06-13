@@ -12,6 +12,7 @@ import os
 from obase.db import get_db, SessionLocal
 from obase.cognitive_store import PgStore
 from obase.prior_provider import PriorProvider
+from obase.llm import register_default_providers
 from omodul.cognitive import (
     process_interaction_workflow, 
     InteractionConfig, 
@@ -36,6 +37,9 @@ async def lifespan(app: FastAPI):
     # 预热 BKT 先验参数缓存
     async with SessionLocal() as session:
         await PriorProvider.warm_up(session)
+    
+    # 注册 LLM 提供商
+    register_default_providers()
     yield
 
 app = FastAPI(title="Mneme API", version="0.1.0", lifespan=lifespan)
