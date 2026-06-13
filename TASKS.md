@@ -29,7 +29,7 @@
 - [x] **1.1 [P0]** 全部 SQLAlchemy models（Master §7 全表+枚举）+ autogenerate migration。DoD：建出所有表，字段与 Master 一致。 ✅ 模型已全，数据库已同步。
 - [x] **1.2 [P0]** StateStore 抽象 + PgStore（重构 `cognitive_state.py`，保留 InMemoryStore）。DoD：同序列 InMemory 与 Pg 结果一致。 ✅ 已实现 BaseCognitiveStore 协议，支持 InMemoryStore 和 PgStore，通过一致性测试并清理了旧代码。
 - [x] **1.3 [P0]** `omodul` 认知落库：`process_interaction` 落 `kc_mastery` + 追加 `interaction_events`（只增不改），严守更新顺序红线。DoD：两表正确写入。 ✅ 已实现 omodul/cognitive.py 业务事务，支持 4 支柱决策轨迹，确保两表持久化及更新顺序。
-- [ ] **1.4 [P0]** KC 字典 seed → `bkt_priors`（按题型展开）；`get_bkt_prior` 读库带缓存。DoD：priors 行数 = KC×题型。
+- [x] **1.4 [P0]** KC 字典 seed → `bkt_priors`（按题型展开）；`get_bkt_prior` 读库带缓存。DoD：priors 行数 = KC×题型。 ✅ 已通过 scripts/seed_priors.py 展开入库（57 条），实现 obase/prior_provider.py 带缓存获取。
 - [ ] **1.5 [P1]** `/v1/interaction`、`/v1/mastery`、`/v1/review-queue`、`/v1/kc` 走服务层+PG。DoD：契约同 Master §8；重启状态不丢。
 
 ## Epic 2 · 用户与合规

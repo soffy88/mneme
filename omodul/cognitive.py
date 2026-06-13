@@ -26,6 +26,7 @@ class InteractionInput(BaseModel):
     student_id: UUID
     kc_id: str
     is_correct: bool
+    question_type: str = "solve"
     question_id: Optional[UUID] = None
     source: str = "paper"
     used_answer: bool = False
@@ -53,12 +54,13 @@ async def process_interaction_workflow(
 ) -> dict:
     """处理一次认知交互并落库。
 
-    DoD 1.3: 落 kc_mastery + 追加 interaction_events（只增不改），严守更新顺序红线。
+    DoD 1.3/1.4: 落 kc_mastery + 追加 interaction_events（只增不改），严守更新顺序红线。
+    支持按照题型扩展。
     """
     now = input_data.now or datetime.now(timezone.utc)
     
-    # 1. 获取当前状态
-    state, card_dict = await store.get_or_create(input_data.student_id, input_data.kc_id)
+    # 1. 获取当前状态 (传题型以获取正确的先验)
+    state, card_dict = await store.get_or_create(input_data.student_id, input_data.kc_id, input_data.question_type)
     
     # 2. 调用认知更新算法 (oskill)
     update_input = CognitiveUpdateInput(
@@ -106,7 +108,7 @@ async def process_interaction_workflow(
     )
     
     trail = [
-        {"step": "get_state", "kc_id": input_data.kc_id},
+        {"step": "get_state", "kc_id": input_data.kc_id, "question_type": input_data.question_type},
         {"step": "cognitive_update", "result": findings.model_dump()},
         {"step": "save_state"},
         {"step": "append_event"}

@@ -14,14 +14,14 @@ from sqlalchemy import select, update, insert
 from oprim.types import KCState
 from oprim.bkt import new_state_from_prior
 from oprim.fsrs_engine import fsrs_new_card
-from data.guangdong_math_kc import get_bkt_prior
+from obase.prior_provider import PriorProvider
 from services.models import KCMastery, InteractionEvent
 
 @runtime_checkable
 class BaseCognitiveStore(Protocol):
     """认知状态存储协议。"""
     
-    async def get_or_create(self, student_id: UUID, kc_id: str) -> tuple[KCState, dict]:
+    async def get_or_create(self, student_id: UUID, kc_id: str, question_type: str = "solve") -> tuple[KCState, dict]:
         """获取或创建认知状态和 FSRS 卡片。"""
         ...
 
@@ -47,10 +47,17 @@ class InMemoryStore:
     def _key(self, student_id: UUID, kc_id: str) -> str:
         return f"{student_id}::{kc_id}"
 
-    async def get_or_create(self, student_id: UUID, kc_id: str) -> tuple[KCState, dict]:
+    async def get_or_create(self, student_id: UUID, kc_id: str, question_type: str = "solve") -> tuple[KCState, dict]:
         k = self._key(student_id, kc_id)
         if k not in self._states:
-            prior = get_bkt_prior(kc_id)
+            # 优先使用 PriorProvider，如果它已经预热 (例如在测试中或应用启动时)
+            if PriorProvider._is_warmed:
+                prior = await PriorProvider.get_prior(None, kc_id, question_type)
+            else:
+                # 兼容性 Fallback
+                from data.guangdong_math_kc import get_bkt_prior
+                prior = get_bkt_prior(kc_id)
+            
             self._states[k] = new_state_from_prior(kc_id=kc_id, prior=prior)
             self._cards[k] = fsrs_new_card()
         return self._states[k], self._cards[k]
@@ -80,7 +87,7 @@ class PgStore:
     def __init__(self, session: AsyncSession):
         self.session = session
 
-    async def get_or_create(self, student_id: UUID, kc_id: str) -> tuple[KCState, dict]:
+    async def get_or_create(self, student_id: UUID, kc_id: str, question_type: str = "solve") -> tuple[KCState, dict]:
         stmt = select(KCMastery).where(
             KCMastery.student_id == student_id,
             KCMastery.knowledge_point == kc_id
@@ -91,7 +98,7 @@ class PgStore:
         if row:
             return self._row_to_entry(row)
         else:
-            prior = get_bkt_prior(kc_id)
+            prior = await PriorProvider.get_prior(self.session, kc_id, question_type)
             state = new_state_from_prior(kc_id=kc_id, prior=prior)
             card = fsrs_new_card()
             return state, card

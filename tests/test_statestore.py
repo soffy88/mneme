@@ -37,6 +37,10 @@ async def test_store_consistency(db_context):
     session, student_id = db_context
     kc_id = "GDMATH-CONIC-01"
     
+    # 预热 PriorProvider 确保一致性
+    from obase.prior_provider import PriorProvider
+    await PriorProvider.warm_up(session)
+    
     in_memory_store = InMemoryStore()
     pg_store = PgStore(session)
     config = InteractionConfig()
@@ -69,6 +73,41 @@ async def test_store_consistency(db_context):
         assert res_mem.rating == res_pg.rating
         
     print(f"  InMemoryStore 与 PgStore 序列一致性验证通过 ✓")
+
+@pytest.mark.asyncio
+async def test_question_type_priors(db_context):
+    session, student_id = db_context
+    pg_store = PgStore(session)
+    config = InteractionConfig()
+    
+    # 集合知识点 GDMATH-SET-01，支持 choice 和 fill
+    # choice 蒙对率应为 0.25，fill 蒙对率应为 0.05
+    
+    # 1. Choice 交互
+    sid_choice = uuid.uuid4()
+    # 模拟创建用户
+    from services.models import User, UserRole
+    user = User(id=sid_choice, phone=f"139{str(uuid.uuid4())[:8]}", role=UserRole.student)
+    session.add(user)
+    await session.commit()
+    
+    input_choice = InteractionInput(student_id=sid_choice, kc_id="GDMATH-SET-01", is_correct=False, question_type="choice")
+    await process_interaction(config, input_choice, pg_store)
+    state_choice, _ = await pg_store.get_or_create(sid_choice, "GDMATH-SET-01", "choice")
+    assert state_choice.p_guess == 0.25
+    
+    # 2. Fill 交互
+    sid_fill = uuid.uuid4()
+    user2 = User(id=sid_fill, phone=f"137{str(uuid.uuid4())[:8]}", role=UserRole.student)
+    session.add(user2)
+    await session.commit()
+    
+    input_fill = InteractionInput(student_id=sid_fill, kc_id="GDMATH-SET-01", is_correct=False, question_type="fill")
+    await process_interaction(config, input_fill, pg_store)
+    state_fill, _ = await pg_store.get_or_create(sid_fill, "GDMATH-SET-01", "fill")
+    assert state_fill.p_guess == 0.05
+    
+    print("  题型展开先验参数验证通过 ✓")
 
 @pytest.mark.asyncio
 async def test_pg_store_persistence(db_context):
