@@ -9,9 +9,11 @@ BKT + 认知状态 验证测试
 5. AUC：BKT 预测下一题对错的判别能力优于随机(0.5)
 """
 
+import pytest
+import uuid
 from datetime import datetime, timezone, timedelta
 from oprim import bkt
-from oskill.cognitive_update import CognitiveStore, process_interaction, review_queue
+from oskill.cognitive_state import InMemoryStore as CognitiveStore, process_interaction, mastery_overview, review_queue
 from data.guangdong_math_kc import get_bkt_prior
 
 
@@ -95,18 +97,19 @@ def _auc(scores, labels):
     return (wins + 0.5 * ties) / (len(pos) * len(neg))
 
 
-def test_end_to_end_with_fsrs():
+@pytest.mark.asyncio
+async def test_end_to_end_with_fsrs():
     """端到端：通过协调器跑一遍 KT+FSRS 统一流程。"""
     store = CognitiveStore()
-    sid = "stu_demo"
+    sid = uuid.uuid4()
     now = datetime.now(timezone.utc)
     # 学生在椭圆上做错一道
-    r1 = process_interaction(store, sid, "GDMATH-CONIC-01", is_correct=False,
+    r1 = await process_interaction(store, sid, "GDMATH-CONIC-01", is_correct=False,
                              struggled=True, now=now)
     assert r1["error_type"] in ("careless", "dontknow")
     assert r1["next_review_due"] is not None
     # 第二天回顾答对
-    r2 = process_interaction(store, sid, "GDMATH-CONIC-01", is_correct=True,
+    r2 = await process_interaction(store, sid, "GDMATH-CONIC-01", is_correct=True,
                              now=now + timedelta(days=1))
     assert r2["p_mastery"] > r1["p_mastery"], "回顾答对掌握度应上升"
     print(f"  端到端: 首次错(P={r1['p_mastery']}, {r1['error_type']}) "

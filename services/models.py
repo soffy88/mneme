@@ -180,6 +180,7 @@ class KCMastery(Base):
     p_recognition: Mapped[Optional[float]] = mapped_column(Float)
     p_recognition_init: Mapped[Optional[float]] = mapped_column(Float)
     long_term_mastery: Mapped[Optional[float]] = mapped_column(Float)
+    fsrs_card_json: Mapped[Optional[dict]] = mapped_column(JSONB)
     last_interaction_at: Mapped[Optional[datetime]] = mapped_column(DateTime(timezone=True))
     n_attempts: Mapped[Optional[int]] = mapped_column(Integer, server_default="0")
     updated_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=text("now()"))
@@ -341,3 +342,5 @@ class DailyReport(Base):
     report_text: Mapped[Optional[str]] = mapped_column(Text)
     sent_at: Mapped[Optional[datetime]] = mapped_column(DateTime(timezone=True))
     delivery_status: Mapped[Optional[str]] = mapped_column(String(20))
+
+
