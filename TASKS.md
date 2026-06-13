@@ -41,7 +41,7 @@
 
 ## Epic 3 · 试卷数据入口
 
-- [ ] **3.1 [P0]** `obase.oss` 上传 + `papers(processing)`（MinIO hot）。
+- [x] **3.1 [P0]** `obase.oss` 上传 + `papers(processing)`（MinIO hot）。 ✅ 已实现 obase/oss.py 及 omodul/paper.py 业务流，支持 /v1/papers/upload 接口。
 - [ ] **3.2 [P0]** `oprim.ocr_paper`（Claude Vision 结构化）；prompt 入 `obase/llm` prompt 库。
 - [ ] **3.3 [P0]** `oprim.grade_question` + 错题入库 + KC 关联（LLM 辅助标注）。
 - [ ] **3.4 [P0]** 接内核：每道错题 → `process_interaction(source='paper')`。DoD：上传后 `/v1/mastery` 反映变化，事件累积。

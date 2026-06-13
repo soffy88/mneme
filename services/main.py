@@ -1,9 +1,13 @@
-from fastapi import FastAPI, Depends, HTTPException, Query
+from fastapi import FastAPI, Depends, HTTPException, Query, UploadFile, File
 from sqlalchemy.ext.asyncio import AsyncSession
 from uuid import UUID
+import uuid
 from typing import List, Optional
 from datetime import datetime
 from contextlib import asynccontextmanager
+from pathlib import Path
+import shutil
+import os
 
 from obase.db import get_db, SessionLocal
 from obase.cognitive_store import PgStore
@@ -20,6 +24,11 @@ from omodul.auth import (
     AuthConfig,
     SendCodeInput
 )
+from omodul.paper import (
+    upload_paper_workflow,
+    PaperConfig,
+    PaperUploadInput
+)
 from data.guangdong_math_kc import KC_LIST, get_kc
 
 @asynccontextmanager
@@ -28,7 +37,6 @@ async def lifespan(app: FastAPI):
     async with SessionLocal() as session:
         await PriorProvider.warm_up(session)
     yield
-    # 清理可以在这里做
 
 app = FastAPI(title="Mneme API", version="0.1.0", lifespan=lifespan)
 
@@ -124,3 +132,44 @@ async def get_kc_detail(kc_id: str):
     if not kc:
         raise HTTPException(status_code=404, detail="Knowledge Component not found")
     return kc
+
+# ===== §3 试卷接口 =====
+
+@app.post("/v1/papers/upload")
+async def post_paper_upload(
+    student_id: UUID = Query(...),
+    file: UploadFile = File(...),
+    db: AsyncSession = Depends(get_db)
+):
+    """
+    POST /v1/papers/upload
+    上传一张试卷并启动处理流程。
+    """
+    config = PaperConfig()
+    
+    # 临时保存本地
+    temp_dir = "/tmp/mneme_uploads"
+    os.makedirs(temp_dir, exist_ok=True)
+    local_path = Path(temp_dir) / f"{uuid.uuid4()}_{file.filename}"
+    
+    try:
+        with open(local_path, "wb") as buffer:
+            shutil.copyfileobj(file.file, buffer)
+            
+        payload = PaperUploadInput(
+            student_id=student_id,
+            local_file_path=local_path,
+            filename=file.filename or "unknown.jpg"
+        )
+        
+        result = await upload_paper_workflow(config, payload, db)
+        
+        if result["status"] == "failed":
+            raise HTTPException(status_code=500, detail=result["error"])
+            
+        return result["findings"]
+        
+    finally:
+        # 清理临时文件
+        if local_path.exists():
+            os.remove(local_path)
