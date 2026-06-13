@@ -34,7 +34,7 @@
 
 ## Epic 2 · 用户与合规
 
-- [ ] **2.1 [P0]** 用户模型 + 短信验证码（dev mock）。
+- [x] **2.1 [P0]** 用户模型 + 短信验证码（dev mock）。 ✅ 用户模型已在 1.1 完成，已实现 obase/sms.py mock 逻辑及 /v1/auth/send-code 接口。
 - [ ] **2.2 [P0]** 注册/登录 + JWT + `get_current_user`（Master §8 auth）。
 - [ ] **2.3 [P0]** 未成年人合规校验：<14 岁强制监护人同意，写 `guardian_consents`，否则 422。DoD：合规红线测试通过。
 - [ ] **2.4 [P1]** 多孩子绑定 + `/v1/parent/children`。DoD：一家长绑 2 孩切换。

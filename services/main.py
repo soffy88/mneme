@@ -15,6 +15,11 @@ from omodul.cognitive import (
     mastery_overview_workflow,
     review_queue_workflow
 )
+from omodul.auth import (
+    send_code_workflow,
+    AuthConfig,
+    SendCodeInput
+)
 from data.guangdong_math_kc import KC_LIST, get_kc
 
 @asynccontextmanager
@@ -30,6 +35,20 @@ app = FastAPI(title="Mneme API", version="0.1.0", lifespan=lifespan)
 @app.get("/")
 async def root():
     return {"status": "healthy", "service": "mneme-api"}
+
+# ===== §8 认证 API =====
+
+@app.post("/v1/auth/send-code")
+async def post_send_code(
+    payload: SendCodeInput
+):
+    """
+    POST /v1/auth/send-code
+    发送短信验证码（dev mock）。
+    """
+    config = AuthConfig()
+    result = await send_code_workflow(config, payload)
+    return result["findings"]
 
 # ===== §8 认知状态 API =====
 
