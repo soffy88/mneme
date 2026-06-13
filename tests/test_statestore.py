@@ -4,7 +4,8 @@ import asyncio
 from datetime import datetime, timezone, timedelta
 from sqlalchemy.ext.asyncio import create_async_engine, async_sessionmaker, AsyncSession
 from obase.config import settings
-from oskill.cognitive_state import InMemoryStore, PgStore, process_interaction
+from obase.cognitive_store import InMemoryStore, PgStore
+from omodul.cognitive import process_interaction_workflow as process_interaction, InteractionConfig, InteractionInput
 from services.models import KCMastery, InteractionEvent, User, UserRole
 from sqlalchemy import delete
 
@@ -38,6 +39,7 @@ async def test_store_consistency(db_context):
     
     in_memory_store = InMemoryStore()
     pg_store = PgStore(session)
+    config = InteractionConfig()
     
     now = datetime.now(timezone.utc)
     
@@ -50,27 +52,21 @@ async def test_store_consistency(db_context):
     
     for i, interaction in enumerate(interactions):
         # 运行 InMemory
-        res_mem = await process_interaction(
-            in_memory_store, student_id, kc_id, 
-            is_correct=interaction["is_correct"],
-            used_answer=interaction.get("used_answer", False),
-            now=interaction["now"]
-        )
+        input_mem = InteractionInput(student_id=student_id, kc_id=kc_id, is_correct=interaction["is_correct"], used_answer=interaction.get("used_answer", False), now=interaction["now"])
+        res_mem_dict = await process_interaction(config, input_mem, in_memory_store)
+        res_mem = res_mem_dict["findings"]
         
         # 运行 Pg
-        res_pg = await process_interaction(
-            pg_store, student_id, kc_id, 
-            is_correct=interaction["is_correct"],
-            used_answer=interaction.get("used_answer", False),
-            now=interaction["now"]
-        )
+        input_pg = InteractionInput(student_id=student_id, kc_id=kc_id, is_correct=interaction["is_correct"], used_answer=interaction.get("used_answer", False), now=interaction["now"])
+        res_pg_dict = await process_interaction(config, input_pg, pg_store)
+        res_pg = res_pg_dict["findings"]
         
         # 比较结果
-        assert res_mem["p_mastery"] == res_pg["p_mastery"]
-        assert res_mem["long_term_mastery"] == res_pg["long_term_mastery"]
-        assert res_mem["effective_mastery"] == res_pg["effective_mastery"]
-        assert res_mem["error_type"] == res_pg["error_type"]
-        assert res_mem["rating"] == res_pg["rating"]
+        assert res_mem.p_mastery == res_pg.p_mastery
+        assert res_mem.long_term_mastery == res_pg.long_term_mastery
+        assert res_mem.effective_mastery == res_pg.effective_mastery
+        assert res_mem.error_type == res_pg.error_type
+        assert res_mem.rating == res_pg.rating
         
     print(f"  InMemoryStore 与 PgStore 序列一致性验证通过 ✓")
 
@@ -79,9 +75,11 @@ async def test_pg_store_persistence(db_context):
     session, student_id = db_context
     kc_id = "GDMATH-SET-01"
     pg_store = PgStore(session)
+    config = InteractionConfig()
     
     # 第一次交互
-    await process_interaction(pg_store, student_id, kc_id, is_correct=True)
+    input1 = InteractionInput(student_id=student_id, kc_id=kc_id, is_correct=True)
+    await process_interaction(config, input1, pg_store)
     await session.commit()
     
     # 获取状态

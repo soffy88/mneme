@@ -13,7 +13,8 @@ import pytest
 import uuid
 from datetime import datetime, timezone, timedelta
 from oprim import bkt
-from oskill.cognitive_state import InMemoryStore as CognitiveStore, process_interaction, mastery_overview, review_queue
+from obase.cognitive_store import InMemoryStore as CognitiveStore
+from omodul.cognitive import process_interaction_workflow as process_interaction, review_queue_workflow as review_queue
 from data.guangdong_math_kc import get_bkt_prior
 
 
@@ -100,20 +101,28 @@ def _auc(scores, labels):
 @pytest.mark.asyncio
 async def test_end_to_end_with_fsrs():
     """端到端：通过协调器跑一遍 KT+FSRS 统一流程。"""
+    from omodul.cognitive import InteractionConfig, InteractionInput
     store = CognitiveStore()
     sid = uuid.uuid4()
     now = datetime.now(timezone.utc)
+    config = InteractionConfig()
+    
     # 学生在椭圆上做错一道
-    r1 = await process_interaction(store, sid, "GDMATH-CONIC-01", is_correct=False,
-                             struggled=True, now=now)
-    assert r1["error_type"] in ("careless", "dontknow")
-    assert r1["next_review_due"] is not None
+    input1 = InteractionInput(student_id=sid, kc_id="GDMATH-CONIC-01", is_correct=False, struggled=True, now=now)
+    res1 = await process_interaction(config, input1, store)
+    r1 = res1["findings"]
+    
+    assert r1.error_type in ("careless", "dontknow")
+    assert r1.next_review_due is not None
+    
     # 第二天回顾答对
-    r2 = await process_interaction(store, sid, "GDMATH-CONIC-01", is_correct=True,
-                             now=now + timedelta(days=1))
-    assert r2["p_mastery"] > r1["p_mastery"], "回顾答对掌握度应上升"
-    print(f"  端到端: 首次错(P={r1['p_mastery']}, {r1['error_type']}) "
-          f"→ 次日对(P={r2['p_mastery']}), 下次复习={r2['next_review_due'][:10]}  ✓")
+    input2 = InteractionInput(student_id=sid, kc_id="GDMATH-CONIC-01", is_correct=True, now=now + timedelta(days=1))
+    res2 = await process_interaction(config, input2, store)
+    r2 = res2["findings"]
+    
+    assert r2.p_mastery > r1.p_mastery, "回顾答对掌握度应上升"
+    print(f"  端到端: 首次错(P={r1.p_mastery}, {r1.error_type}) "
+          f"→ 次日对(P={r2.p_mastery}), 下次复习={r2.next_review_due[:10]}  ✓")
 
 
 if __name__ == "__main__":
