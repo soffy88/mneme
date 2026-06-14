@@ -489,9 +489,41 @@ async def get_lesson(question_id: UUID, db: AsyncSession = Depends(get_db)):
     )).scalar_one_or_none()
     if not wq:
         raise HTTPException(status_code=404, detail="Question not found")
-    # Placeholder — real impl would call generate_lesson_page omodul
-    return {"question_id": str(question_id), "plot_data": None,
-            "question_text": wq.question_text, "self_check_passed": None, "cached": False}
+    from omodul.generate_lesson_page import LessonPageConfig, LessonPageInput, generate_lesson_page
+    import hashlib as _hashlib
+    kc_id = next(iter(wq.knowledge_points.keys()), "") if isinstance(wq.knowledge_points, dict) else ""
+    question_text = wq.question_text or ""
+    question_hash = _hashlib.sha256(question_text.encode()).hexdigest()[:16]
+    result = await generate_lesson_page(
+        config=LessonPageConfig(kc_id=kc_id, question_hash=question_hash),
+        input_data=LessonPageInput(
+            question_text=question_text,
+            correct_answer=wq.correct_answer or "",
+            problem_spec={},
+        ),
+        output_dir=Path(f"/tmp/mneme/lesson/{question_id}"),
+    )
+    if result.get("status") == "ok":
+        from services.models import LessonPage
+        cached_row = LessonPage(
+            question_id=question_id,
+            fingerprint=result.get("fingerprint", ""),
+            plot_data={"svg": result.get("svg", ""), "steps": result.get("steps", [])},
+            self_check_passed=result.get("self_check_passed", False),
+        )
+        db.add(cached_row)
+        try:
+            await db.flush()
+        except Exception:
+            await db.rollback()
+    return {
+        "question_id": str(question_id),
+        "plot_data": {"svg": result.get("svg", ""), "steps": result.get("steps", [])},
+        "answer": result.get("answer", ""),
+        "self_check_passed": result.get("self_check_passed"),
+        "status": result.get("status"),
+        "cached": False,
+    }
 
 
 # ===== §I.1 变式题 =====
@@ -500,40 +532,33 @@ async def get_lesson(question_id: UUID, db: AsyncSession = Depends(get_db)):
 async def post_practice_generate(
     kc_id: str = Query(...),
     count: int = Query(3),
+    difficulty: float = Query(0.5),
+    question_type: str = Query("solve"),
+    student_id: Optional[UUID] = Query(None),
     db: AsyncSession = Depends(get_db),
 ):
-    """POST /v1/practice/generate — 生成变式题（调 oskill.generate_practice_set）。"""
-    from oskill.generate_practice_set import PracticeSetConfig, generate_practice_set
-    from oskill.interleave_select import QuestionItem
+    """POST /v1/practice/generate — 生成变式题（调 omodul.practice_workflow）。"""
+    from omodul.practice_workflow import PracticeConfig, practice_workflow
     kc = get_kc(kc_id)
     if not kc:
         raise HTTPException(status_code=404, detail="KC not found")
-    # Build a minimal question bank from KC data
-    wqs = (await db.execute(
-        select(WrongQuestion).where(
-            WrongQuestion.knowledge_points.has_key(kc_id)  # type: ignore[attr-defined]
-        ).limit(20)
-    )).scalars().all()
-    bank = [
-        QuestionItem(question_id=str(w.id), kc_id=kc_id, difficulty=0.5)
-        for w in wqs
-    ]
-    # Fallback: create placeholder items if no wrong questions
-    if not bank:
-        bank = [QuestionItem(question_id=f"{kc_id}-placeholder-{i}", kc_id=kc_id, difficulty=0.5)
-                for i in range(count)]
-    cfg = PracticeSetConfig(target_count=count)
-    try:
-        result = generate_practice_set(bank, config=cfg)
-        items = result.questions
-    except ValueError:
-        # Interleave requires ≥2 KC IDs; return filtered bank directly
-        items = bank[:count]
+    sid = student_id or uuid.uuid4()
+    result = await practice_workflow(
+        config=PracticeConfig(
+            kc_id=kc_id,
+            count=count,
+            difficulty=difficulty,
+            question_type=question_type,
+        ),
+        input_data=None,
+        output_dir=Path(f"/tmp/mneme/practice/{sid}"),
+    )
+    items = result.get("items", [])
     return {
         "kc_id": kc_id,
         "kc_name": kc.get("name", kc_id),
-        "items": [{"question_id": q.question_id, "kc_id": q.kc_id, "difficulty": q.difficulty}
-                  for q in items],
+        "items": items,
+        "status": result.get("status", "ok"),
     }
 
 

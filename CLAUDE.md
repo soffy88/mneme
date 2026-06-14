@@ -38,7 +38,7 @@ Mneme（对外名学鉴）：面向全年级学生的个人学习成长档案 + 
 - **命名扁平**：`from oprim import bkt_update`，不按领域分子模块；元素名不带项目前缀（`solve_conic` 不是 `mneme_solve_conic`）。
 - **单 LLM 调用 = oprim**，不是 oskill（复杂≠层级）。oskill 必须 ≥2 个不同 oprim。
 - **依赖方向**：omodul→oskill→oprim 单向；3O→obase 允许，obase→3O 严禁。
-- **渲染不入主库**：图示数据由 oprim 产出，Mafs/Three.js 渲染在前端（3O 不覆盖 UI）。
+- **渲染不入主库**：图示数据由 oprim产出，Mafs/Three.js 渲染在前端（3O 不覆盖 UI）。
 
 ## 技术栈（不要自行更换）
 
@@ -76,9 +76,7 @@ mneme/
 ```bash
 docker compose up -d
 alembic revision --autogenerate -m "xxx" && alembic upgrade head
-pytest -q
-pytest tests/test_engine.py -q     # 算法回归，必须长绿
-ruff check . && mypy oprim oskill omodul obase services
+./scripts/check.sh                 # CI Quality Gate (Ruff + MyPy + Pytest w/ Cov)
 uvicorn services.main:app --reload
 cd frontend && npm run dev
 ```
@@ -95,7 +93,7 @@ cd frontend && npm run dev
 
 - **算法红线**：P(L)∈(0,0.97]；`effective=long_term×R`；`careless∝P(L)·P(S)`，`dontknow∝(1-P(L))·(1-P(G))`；更新顺序=旧卡片算R→forgetting-aware BKT→答错则classify→FSRS review→落库+追加 interaction_events（只增不改）。
 - **确定性优先红线**：有 `solve_*` 覆盖的题型，数值结论必来自内核（mock LLM 给错值，最终仍以内核为准）。
-- **苏格拉底红线**：任何模式不输出标准答案/完整步骤；每次只问一个问题；错误中间步由 `verify_step` 拦截（确定性，不靠 LLM）；必须有"诱导也不泄露"测试。
+- **苏格拉底红线**：任何模式不输出标准答案/完整步骤；每次只问一个问题；错误中间步由 `verify_step`拦截（确定性，不靠 LLM）；必须有"诱导也不泄露"测试。
 - **同源自检**：lesson_page 图示值==答案==末步值，三处不一致不交付。
 - **交错/检索红线**：相邻题 KC 不同；回顾未作答不可见答案，看答案=Again。
 - **合规红线**：<14 岁无监护人同意注册必失败；删除后数据不可查询。

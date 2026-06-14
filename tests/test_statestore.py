@@ -1,6 +1,5 @@
 import pytest
 import uuid
-import asyncio
 from datetime import datetime, timezone, timedelta
 from sqlalchemy.ext.asyncio import create_async_engine, async_sessionmaker, AsyncSession
 from obase.config import settings
@@ -72,7 +71,7 @@ async def test_store_consistency(db_context):
         assert res_mem.error_type == res_pg.error_type
         assert res_mem.rating == res_pg.rating
         
-    print(f"  InMemoryStore 与 PgStore 序列一致性验证通过 ✓")
+    print("  InMemoryStore 与 PgStore 序列一致性验证通过 ✓")
 
 @pytest.mark.asyncio
 async def test_question_type_priors(db_context):

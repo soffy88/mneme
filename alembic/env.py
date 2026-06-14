@@ -11,11 +11,11 @@ from alembic import context
 # access to the values within the .ini file in use.
 config = context.config
 
-import os
-import sys
+import os  # noqa: E402
+import sys  # noqa: E402
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from obase.config import settings
+from obase.config import settings  # noqa: E402
 config.set_main_option("sqlalchemy.url", settings.DATABASE_URL)
 
 # Interpret the config file for Python logging.
@@ -25,7 +25,7 @@ if config.config_file_name is not None:
 
 # add your model's MetaData object here
 # for 'autogenerate' support
-from services.models import Base
+from services.models import Base  # noqa: E402
 target_metadata = Base.metadata
 
 # other values from the config, defined by the needs of env.py,

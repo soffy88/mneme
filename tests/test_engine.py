@@ -14,7 +14,7 @@ import uuid
 from datetime import datetime, timezone, timedelta
 from oprim import bkt
 from obase.cognitive_store import InMemoryStore as CognitiveStore
-from omodul.cognitive import process_interaction_workflow as process_interaction, review_queue_workflow as review_queue
+from omodul.cognitive import process_interaction_workflow as process_interaction
 from data.guangdong_math_kc import get_bkt_prior
 
 
@@ -82,15 +82,16 @@ def test_auc():
         # 预测第 7 题
         p = bkt.predict_correct(state=s)
         actual = (random.random() < 0.85) if true_mastered else (random.random() < 0.25)
-        preds.append(p); labels.append(1 if actual else 0)
+        preds.append(p)
+        labels.append(1 if actual else 0)
     auc = _auc(preds, labels)
     assert auc > 0.65, f"AUC 应明显优于随机: {auc}"
     print(f"  下一题正确率预测 AUC = {auc:.3f} (随机=0.5)  ✓")
 
 
 def _auc(scores, labels):
-    pos = [s for s, l in zip(scores, labels) if l == 1]
-    neg = [s for s, l in zip(scores, labels) if l == 0]
+    pos = [s for s, label in zip(scores, labels) if label == 1]
+    neg = [s for s, label in zip(scores, labels) if label == 0]
     if not pos or not neg:
         return 0.5
     wins = sum(1 for p in pos for n in neg if p > n)

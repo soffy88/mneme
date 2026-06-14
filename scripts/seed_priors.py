@@ -10,7 +10,7 @@ from sqlalchemy import select, delete
 from sqlalchemy.ext.asyncio import create_async_engine, async_sessionmaker, AsyncSession
 
 from obase.config import settings
-from services.models import BKTPrior, Base
+from services.models import BKTPrior
 from data.guangdong_math_kc import KC_LIST
 
 # 题型对应的默认猜测率 (Master §7 & guangdong_math_kc 建议)
@@ -25,7 +25,7 @@ async def seed_bkt_priors():
     Session = async_sessionmaker(engine, class_=AsyncSession, expire_on_commit=False)
     
     async with Session() as session:
-        print(f"开始同步 BKT 先验参数表 (BKTPrior)...")
+        print("开始同步 BKT 先验参数表 (BKTPrior)...")
         
         # 1. 统计当前数据
         result = await session.execute(select(BKTPrior))

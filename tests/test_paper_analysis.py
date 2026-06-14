@@ -1,9 +1,6 @@
 import pytest
 import uuid
-import asyncio
-from datetime import datetime, timezone
 from unittest.mock import AsyncMock, patch
-from pathlib import Path
 from sqlalchemy.ext.asyncio import create_async_engine, async_sessionmaker, AsyncSession
 
 from obase.config import settings
@@ -94,16 +91,16 @@ async def test_paper_analysis_updates_mastery(db_context):
         assert paper.status == PaperStatus.done
         
         # 2. 应存在 kc_mastery 记录
-        stmt = select(KCMastery).where(KCMastery.student_id == student_id, KCMastery.knowledge_point == "GDMATH-SET-01")
-        mastery = (await session.execute(stmt)).scalar_one_or_none()
+        stmt_mastery = select(KCMastery).where(KCMastery.student_id == student_id, KCMastery.knowledge_point == "GDMATH-SET-01")
+        mastery = (await session.execute(stmt_mastery)).scalar_one_or_none()
         assert mastery is not None
         assert mastery.n_attempts == 1
         # 因为答错了，p_mastery 应低于或等于 p_init (取决于 BKT 逻辑)
         # 初始 p_init 通常是 0.2 或 0.05 等，答错会下降
         
         # 3. 应存在 InteractionEvent 记录
-        stmt = select(InteractionEvent).where(InteractionEvent.student_id == student_id)
-        event = (await session.execute(stmt)).scalar_one_or_none()
+        stmt_event = select(InteractionEvent).where(InteractionEvent.student_id == student_id)
+        event = (await session.execute(stmt_event)).scalar_one_or_none()
         assert event is not None
         assert event.knowledge_point == "GDMATH-SET-01"
         assert event.is_correct is False
