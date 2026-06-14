@@ -173,3 +173,12 @@ async def review_queue(
         {"kc_id": q.kc_id, "due": next(r["due"] for r in raw if r["kc_id"] == q.kc_id)}
         for q in interleaved.selected
     ]
+
+
+async def _get_streak_dict(db: AsyncSession, student_id: UUID) -> dict:
+    """Helper used by parent overview."""
+    from services.models import Streak
+    streak = (await db.execute(select(Streak).where(Streak.student_id == student_id))).scalar_one_or_none()
+    if not streak:
+        return {"current_streak": 0, "longest_streak": 0}
+    return {"current_streak": streak.current_streak or 0, "longest_streak": streak.longest_streak or 0}
