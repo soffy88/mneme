@@ -115,7 +115,8 @@ A → B → C → D → E → F
   ```
   DoD：bkt_priors 行数 = KC数 × 题型数；重启后幂等（不重复插入）。
 
-- [ ] **B.3 [P0]** API 装配：认知状态路由
+- [x] **B.3 [P0]** API 装配：认知状态路由
+  ✅ 新增 GET /v1/mastery/curve/{student_id}/{kc_id}；修复平台包 jwt_sign_hs256 参数名、JWT secret 长度、omodul.auth 缺失 register_student_workflow/login_workflow；认证路由 commit 修复；9 路由测试+2 auth 测试全绿，全套 35 测试通过，覆盖率 90%。
   ```
   api/v1/interaction.py：
     POST /v1/interaction  → 调 cognitive_service.process_interaction → 返回

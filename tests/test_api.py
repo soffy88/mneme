@@ -4,11 +4,10 @@ import asyncio
 from httpx import AsyncClient, ASGITransport
 from datetime import datetime, timezone, timedelta
 from services.main import app
-from services.models import User, UserRole, KCMastery, InteractionEvent
+from services.models import User, UserRole, KCMastery, InteractionEvent, MasterySnapshot
 from sqlalchemy import delete
 from sqlalchemy.ext.asyncio import create_async_engine, async_sessionmaker, AsyncSession
 from obase.config import settings
-from obase.db import get_db
 
 @pytest.fixture(scope="session")
 def event_loop():
@@ -45,6 +44,7 @@ async def test_student(db_session):
     yield student_id
     
     # 清理
+    await db_session.execute(delete(MasterySnapshot).where(MasterySnapshot.student_id == student_id))
     await db_session.execute(delete(InteractionEvent).where(InteractionEvent.student_id == student_id))
     await db_session.execute(delete(KCMastery).where(KCMastery.student_id == student_id))
     await db_session.execute(delete(User).where(User.id == student_id))

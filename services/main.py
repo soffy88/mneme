@@ -36,7 +36,7 @@ from services.cognitive_service import (
     review_queue,
 )
 from services.seed import seed_bkt_priors
-from services.models import User, UserRole
+from services.models import MasterySnapshot, User, UserRole
 from data.guangdong_math_kc import KC_LIST, get_kc
 
 # ===== §8 认证依赖 =====
@@ -103,6 +103,7 @@ async def post_register_student(
         if result["findings"] and isinstance(result["findings"], dict):
             status_code = result["findings"].get("error_code", 400)
         raise HTTPException(status_code=status_code, detail=result["error"])
+    await db.commit()
     return result["findings"]
 
 @app.post("/v1/auth/login")
@@ -158,6 +159,30 @@ async def post_interaction(
     except Exception as e:
         await db.rollback()
         raise HTTPException(status_code=500, detail=str(e))
+
+@app.get("/v1/mastery/curve/{student_id}/{kc_id}")
+async def get_mastery_curve(
+    student_id: UUID,
+    kc_id: str,
+    db: AsyncSession = Depends(get_db)
+):
+    """GET /v1/mastery/curve/{student_id}/{kc_id} — mastery_snapshots 月度时间序列。"""
+    rows = (
+        await db.execute(
+            select(MasterySnapshot)
+            .where(MasterySnapshot.student_id == student_id)
+            .where(MasterySnapshot.knowledge_point == kc_id)
+            .order_by(MasterySnapshot.snapshot_month)
+        )
+    ).scalars().all()
+    return [
+        {
+            "month": r.snapshot_month.isoformat(),
+            "long_term_mastery": round(r.long_term_mastery, 4) if r.long_term_mastery else None,
+            "dominant_error_type": r.dominant_error_type,
+        }
+        for r in rows
+    ]
 
 @app.get("/v1/mastery/{student_id}")
 async def get_mastery(
