@@ -79,7 +79,8 @@ A → B → C → D → E → F
 
 ## B · 认知状态装配（接主库 cognitive_update）
 
-- [ ] **B.1 [P0]** CognitiveStore 装配层
+- [x] **B.1 [P0]** CognitiveStore 装配层
+  ✅ services/cognitive_service.py：process_interaction(写库+upsert月快照)+mastery_overview(百分位+升序)+review_queue(interleave)；migration uq_mastery_snapshots_student_kc_month；5 DoD 测试全绿。
   ```
   services/cognitive_service.py：
   - process_interaction(student_id, kc_id, is_correct, ...) → dict

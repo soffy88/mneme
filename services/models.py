@@ -1,7 +1,7 @@
 import enum
 import uuid
 from datetime import date, datetime
-from typing import Optional, List
+from typing import Optional
 
 from sqlalchemy import (
     String,
@@ -17,7 +17,7 @@ from sqlalchemy import (
     text,
 )
 from sqlalchemy.dialects.postgresql import JSONB, UUID
-from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column, relationship
+from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
 
 class Base(DeclarativeBase):
     pass
@@ -217,6 +217,7 @@ class InteractionEvent(Base):
 
 class MasterySnapshot(Base):
     __tablename__ = "mastery_snapshots"
+    __table_args__ = (UniqueConstraint("student_id", "knowledge_point", "snapshot_month", name="uq_mastery_snapshots_student_kc_month"),)
 
     id: Mapped[uuid.UUID] = mapped_column(UUID(as_uuid=True), primary_key=True, server_default=text("gen_random_uuid()"))
     student_id: Mapped[Optional[uuid.UUID]] = mapped_column(UUID(as_uuid=True), ForeignKey("users.id"))

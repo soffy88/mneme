@@ -1,8 +1,10 @@
 from fastapi import FastAPI, Depends, HTTPException, Query, UploadFile, File
+from fastapi.security import OAuth2PasswordBearer
 from sqlalchemy.ext.asyncio import AsyncSession
+from sqlalchemy import select
 from uuid import UUID
 import uuid
-from typing import List, Optional
+from typing import Optional, List
 from datetime import datetime
 from contextlib import asynccontextmanager
 from pathlib import Path
@@ -10,27 +12,53 @@ import shutil
 import os
 
 from obase.db import get_db, SessionLocal
-from obase.cognitive_store import PgStore
 from obase.prior_provider import PriorProvider
 from obase.llm import register_default_providers
-from omodul.cognitive import (
-    process_interaction_workflow, 
-    InteractionConfig, 
-    InteractionInput,
-    mastery_overview_workflow,
-    review_queue_workflow
-)
+from obase.auth import decode_access_token
+from omodul.cognitive import InteractionInput
 from omodul.auth import (
     send_code_workflow,
+    register_student_workflow,
+    login_workflow,
     AuthConfig,
-    SendCodeInput
+    SendCodeInput,
+    RegisterStudentInput,
+    LoginInput
 )
 from omodul.paper import (
     upload_paper_workflow,
     PaperConfig,
     PaperUploadInput
 )
+from services.cognitive_service import (
+    mastery_overview,
+    process_interaction,
+    review_queue,
+)
+from services.models import User, UserRole
 from data.guangdong_math_kc import KC_LIST, get_kc
+
+# ===== §8 认证依赖 =====
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="v1/auth/login", auto_error=False)
+
+async def get_current_user(
+    token: Optional[str] = Depends(oauth2_scheme), 
+    db: AsyncSession = Depends(get_db)
+) -> User:
+    if not token:
+        raise HTTPException(status_code=401, detail="Not authenticated")
+    payload = decode_access_token(token)
+    if not payload:
+        raise HTTPException(status_code=401, detail="Invalid token")
+    user_id = payload.get("sub")
+    if not user_id:
+        raise HTTPException(status_code=401, detail="Invalid token payload")
+    
+    stmt = select(User).where(User.id == uuid.UUID(user_id))
+    user = (await db.execute(stmt)).scalar_one_or_none()
+    if not user:
+        raise HTTPException(status_code=401, detail="User not found")
+    return user
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -62,6 +90,45 @@ async def post_send_code(
     result = await send_code_workflow(config, payload)
     return result["findings"]
 
+@app.post("/v1/auth/register/student")
+async def post_register_student(
+    payload: RegisterStudentInput,
+    db: AsyncSession = Depends(get_db)
+):
+    """注册学生并返回 Token。"""
+    config = AuthConfig()
+    result = await register_student_workflow(config, payload, db)
+    if result["status"] == "failed":
+        status_code = 400
+        if result["findings"] and isinstance(result["findings"], dict):
+            status_code = result["findings"].get("error_code", 400)
+        raise HTTPException(status_code=status_code, detail=result["error"])
+    return result["findings"]
+
+@app.post("/v1/auth/login")
+async def post_login(
+    payload: LoginInput,
+    db: AsyncSession = Depends(get_db)
+):
+    """登录并返回 Token。"""
+    config = AuthConfig()
+    result = await login_workflow(config, payload, db)
+    if result["status"] == "failed":
+        raise HTTPException(status_code=400, detail=result["error"])
+    return result["findings"]
+
+@app.get("/v1/auth/me")
+async def get_me(
+    user: User = Depends(get_current_user)
+):
+    """获取当前用户信息。"""
+    return {
+        "id": str(user.id),
+        "phone": user.phone,
+        "role": user.role.value,
+        "name": user.name
+    }
+
 # ===== §8 认知状态 API =====
 
 @app.post("/v1/interaction")
@@ -69,17 +136,25 @@ async def post_interaction(
     interaction: InteractionInput,
     db: AsyncSession = Depends(get_db)
 ):
-    """
-    POST /v1/interaction
-    处理一次答题交互并更新认知状态。
-    """
-    store = PgStore(db)
-    config = InteractionConfig()
-    
+    """POST /v1/interaction — 处理一次答题交互并更新认知状态。"""
     try:
-        result = await process_interaction_workflow(config, interaction, store)
+        result = await process_interaction(
+            db,
+            student_id=interaction.student_id,
+            kc_id=interaction.kc_id,
+            is_correct=interaction.is_correct,
+            question_type=interaction.question_type,
+            question_id=interaction.question_id,
+            source=interaction.source,
+            used_answer=interaction.used_answer,
+            struggled=interaction.struggled,
+            effortless=interaction.effortless,
+            is_interleaved=interaction.is_interleaved,
+            time_spent_seconds=interaction.time_spent_seconds,
+            now=interaction.now,
+        )
         await db.commit()
-        return result["findings"]
+        return result
     except Exception as e:
         await db.rollback()
         raise HTTPException(status_code=500, detail=str(e))
@@ -90,14 +165,9 @@ async def get_mastery(
     now: Optional[datetime] = None,
     db: AsyncSession = Depends(get_db)
 ):
-    """
-    GET /v1/mastery/{student_id}
-    获取学生所有知识点的掌握度总览（按薄弱排序）。
-    """
-    store = PgStore(db)
+    """GET /v1/mastery/{student_id} — 掌握度总览（按薄弱排序，含百分位）。"""
     try:
-        result = await mastery_overview_workflow(store, student_id, now=now)
-        return result
+        return await mastery_overview(db, student_id, now=now)
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
@@ -107,14 +177,9 @@ async def get_review_queue(
     now: Optional[datetime] = None,
     db: AsyncSession = Depends(get_db)
 ):
-    """
-    GET /v1/review-queue/{student_id}
-    今日到期复习池。
-    """
-    store = PgStore(db)
+    """GET /v1/review-queue/{student_id} — 今日复习队列（interleaved）。"""
     try:
-        result = await review_queue_workflow(store, student_id, now=now)
-        return result
+        return await review_queue(db, student_id, now=now)
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
