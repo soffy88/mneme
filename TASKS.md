@@ -1,123 +1,455 @@
-# TASKS · Mneme 实施任务看板
+# TASKS · Mneme 服务层装配看板
 
-> 权威设计 = `MNEME_MASTER_DESIGN.md`｜工作约定 = `CLAUDE.md`。
-> Claude Code 按顺序认领。完成后勾选 `[x]` + 写一行「✅ 完成说明」。DoD 见 CLAUDE.md。
-> 标记：`[P0]` 关键路径，`[P1]` 重要，`[P2]` 可延后。
-> 已实现（禁止重写，只能扩展）：`oprim/bkt.py`、`oprim/fsrs_engine.py`、`oskill/cognitive_state.py`、`data/guangdong_math_kc.py`、`tests/test_engine.py`（AUC≈0.77 长绿）。
+> **权威设计** = `MNEME_MASTER_DESIGN.md` ｜ **工程约定** = `CLAUDE.md`
+> **范式规范** = `3O Paradigm SPEC v3.0`
+>
+> ## 核心原则（必读）
+> 主库元素已全部入库，服务层只做装配：
+> **接请求 → 鉴权 → 调 omodul/oservi → 持久化 → 返响应**
+> 禁止在服务层写任何业务逻辑（BKT/OCR/批改/苏格拉底/断点等）。
+>
+> ## 主库状态（已就绪，直接 pip install -e 引用）
+> ```
+> obase  v0.13.0  sympy_runtime + provider_registry + cost_tracker + auth + oss + cache
+> oprim  v3.5.0   bkt_*/fsrs_*/solve_*/verify_step/kernel_to_*/ocr_paper/grade_question/
+>                 profiler_analyze/socratic_turn/find_common_breakpoint/generate_variant/
+>                 generate_svg_diagram/evaluate_diagram/recognition_update/
+>                 compute_effortful_gain/compute_feedback/compute_peer_percentile
+> oskill v3.21.0  cognitive_update/solve_and_visualize/socratic_loop/
+>                 interleave_select/generate_practice_set/longitudinal_pattern
+> omodul v1.27.0  analyze_paper_workflow/socratic_session_workflow/generate_lesson_page/
+>                 practice_workflow/daily_mission_workflow/longitudinal_analysis_workflow/
+>                 quick_question_workflow/export_archive_workflow/delete_user_workflow
+> ```
+>
+> ## 完成定义（DoD）
+> 1. 服务层零业务逻辑（grep 验证）
+> 2. pytest 全绿
+> 3. git add -A && git commit && git push
+> 4. 勾选 + 一行完成说明
 
 ---
 
-## 核心闭环（最先打通）
+## 核心闭环路径（最先打通）
 
 ```
-0.1→0.2→0.3 → 1.1→1.2→1.3→1.4 → 3.1→3.2→3.3→3.4 → 4.1
-= 上传一张广东数学卷 → OCR批改 → 驱动 BKT/FSRS → 看见薄弱点排序
-打通后即可真实用户验证（冷启动钩子 = 3.5 共同断点 + 5.1 苏格拉底顿悟）
+A → B → C → D → E → F
+= 注册登录 → 上传试卷 → Celery 驱动 analyze_paper_workflow
+  → /v1/mastery 看薄弱点 → /v1/missions/today 看今日目标
+  → /v1/socratic 苏格拉底顿悟
 ```
 
 ---
 
-## Epic 0 · 基建
+## A · 基建装配
 
-- [x] **0.1 [P0]** 3O 骨架与配置：建 `oprim/ oskill/ omodul/ obase/ services/ data/ alembic/ tests/`；迁已实现内核入位；`obase/config.py`(pydantic-settings)、`obase/db.py`(async session)、`pyproject.toml`、`.env.example`。DoD：`pytest tests/test_engine.py` 新结构下通过。 ✅ 骨架已建，内核已迁，测试全绿并已 push。
-- [x] **0.2 [P0]** docker-compose（api+postgres16+redis7+minio）。DoD：`docker compose up -d` 全健康。 ✅ docker-compose.yml 已配置，服务已全部健康启动并 push。
-- [x] **0.3 [P0]** Alembic async + baseline。DoD：`alembic upgrade head` 成功。 ✅ Alembic 已初始化，环境配置指向 config 中的 db url，baseline 迁移已成功应用并 push。
-- [ ] **0.4 [P1]** CI 质量门：pytest+ruff+mypy+覆盖率阈值。DoD：一条命令跑完全检查。
+- [x] **A.1 [P0]** 3O骨架 + pyproject.toml（引用主库 pip install -e）+ obase配置（config.py/db.py）+ .env.example
+  ✅ Epic 0.1 已完成（874f7ff）
 
-## Epic 1 · 持久化（接已有内核）
+- [x] **A.2 [P0]** docker-compose（postgres16:5433 / redis7:6380 / minio:9002 / api:8000）全健康
+  ✅ Epic 0.2 已完成
 
-- [x] **1.1 [P0]** 全部 SQLAlchemy models（Master §7 全表+枚举）+ autogenerate migration。DoD：建出所有表，字段与 Master 一致。 ✅ 模型已全，数据库已同步。
-- [x] **1.2 [P0]** StateStore 抽象 + PgStore（重构 `cognitive_state.py`，保留 InMemoryStore）。DoD：同序列 InMemory 与 Pg 结果一致。 ✅ 已实现 BaseCognitiveStore 协议，支持 InMemoryStore 和 PgStore，通过一致性测试并清理了旧代码。
-- [x] **1.3 [P0]** `omodul` 认知落库：`process_interaction` 落 `kc_mastery` + 追加 `interaction_events`（只增不改），严守更新顺序红线。DoD：两表正确写入。 ✅ 已实现 omodul/cognitive.py 业务事务，支持 4 支柱决策轨迹，确保两表持久化及更新顺序。
-- [x] **1.4 [P0]** KC 字典 seed → `bkt_priors`（按题型展开）；`get_bkt_prior` 读库带缓存。DoD：priors 行数 = KC×题型。 ✅ 已通过 scripts/seed_priors.py 展开入库（57 条），实现 obase/prior_provider.py 带缓存获取。
-- [x] **1.5 [P1]** `/v1/interaction`、`/v1/mastery`、`/v1/review-queue`、`/v1/kc` 走服务层+PG。DoD：契约同 Master §8；重启状态不丢。 ✅ 已实现核心认知 API，通过 tests/test_api.py 端到端验证。
+- [x] **A.3 [P0]** Alembic async + baseline migration，alembic upgrade head 成功
+  ✅ Epic 0.3 已完成
 
-## Epic 2 · 用户与合规
+- [x] **A.4 [P0]** SQLAlchemy 2.0 async models（Master §7 全20张表+枚举）+ autogenerate migration
+  ✅ Epic 1.1 已完成（273ccaf）
 
-- [x] **2.1 [P0]** 用户模型 + 短信验证码（dev mock）。 ✅ 用户模型已在 1.1 完成，已实现 obase/sms.py mock 逻辑及 /v1/auth/send-code 接口。
-- [ ] **2.2 [P0]** 注册/登录 + JWT + `get_current_user`（Master §8 auth）。
-- [ ] **2.3 [P0]** 未成年人合规校验：<14 岁强制监护人同意，写 `guardian_consents`，否则 422。DoD：合规红线测试通过。
-- [ ] **2.4 [P1]** 多孩子绑定 + `/v1/parent/children`。DoD：一家长绑 2 孩切换。
+- [x] **A.5 [P0]** pyproject.toml 加主库依赖 + 验证 import
+  ✅ 删除本地 3O stub 目录，pip install -e 平台包；修复 oprim types/cognitive 缺失导出；6/6 test_engine 全绿。
+  ```
+  # pyproject.toml dependencies 加入：
+  "obase @ file:///home/soffy/projects/platform/3O/obase",
+  "oprim @ file:///home/soffy/projects/platform/3O/oprim",
+  "oskill @ file:///home/soffy/projects/platform/3O/oskill",
+  "omodul @ file:///home/soffy/projects/platform/3O/omodul",
+  
+  # 验证：
+  python3 -c "
+  from oprim import bkt_update, ocr_paper, solve_conic
+  from oskill import cognitive_update, socratic_loop
+  from omodul import analyze_paper_workflow
+  from obase.sympy_runtime import run_sympy
+  print('✅ 主库全部可 import')
+  "
+  ```
+  DoD：全部 import 成功，pytest tests/test_engine.py 全绿。
 
-## Epic 3 · 试卷数据入口
+---
 
-- [x] **3.1 [P0]** `obase.oss` 上传 + `papers(processing)`（MinIO hot）。 ✅ 已实现 obase/oss.py 及 omodul/paper.py 业务流，支持 /v1/papers/upload 接口。
-- [x] **3.2 [P0]** `oprim.ocr_paper`（Claude Vision 结构化）；prompt 入 `obase/llm` prompt库。 ✅ 已实现 obase/llm.py 基础设施及 oprim/llm_oprims.py OCR 逻辑，支持 Claude Vision。
-- [x] **3.3 [P0]** `oprim.grade_question` + 错题入库 + KC 关联（LLM 辅助标注）。 ✅ 已实现 oprim/llm_oprims.py 批改与分析算子，以及 oskill/paper_grading.py 入库逻辑。
-- [x] **3.4 [P0]** 接内核：每道错题 → `process_interaction(source='paper')`。DoD：上传后 `/v1/mastery` 反映变化，事件累积。 ✅ 已实现 analyze_paper_workflow 串联 OCR、批改与认知内核更新，并通过集成测试。
-- [ ] **3.5 [P0]** `analyze_paper_workflow` omodul + 共同断点分析（冷启动钩子）。DoD：返回共同断点或诚实"无"，不编造；全 4 支柱产物齐全。
-- [ ] **3.6 [P0]** Celery 串链：upload→ocr→grade→profiler→interaction→breakpoint→done，重试3次。DoD：端到端测试通过（LLM 可 mock）。
-- [ ] **3.7 [P1]** 单题快速录入 `/v1/papers/quick` → 建 socratic session。
+## B · 认知状态装配（接主库 cognitive_update）
 
-## Epic 4 · 认知应用层
+- [ ] **B.1 [P0]** CognitiveStore 装配层
+  ```
+  services/cognitive_service.py：
+  - process_interaction(student_id, kc_id, is_correct, ...) → dict
+    流程：
+    1. 从 kc_mastery 读 KCState + card_dict（不存在则从 bkt_priors 创建）
+    2. 调 oskill.cognitive_update(kc_state, card_dict, is_correct, ...)
+    3. 把更新后的 state + card 写回 kc_mastery（upsert）
+    4. 追加 interaction_events（只增不改）
+    5. 追加 mastery_snapshots（upsert 月度快照）
+    6. 调 oprim.compute_feedback(...) → 返回 feedback 字段
+    返回：{p_mastery, effective_mastery, error_type, rating, feedback, ...}
+  
+  - mastery_overview(student_id) → list
+    从 kc_mastery 读全部KC，实时算 effective_mastery（fsrs_retrievability×long_term），
+    调 oprim.compute_peer_percentile 算百分位，按 effective_mastery 升序
+  
+  - review_queue(student_id) → list
+    读 kc_mastery 中 fsrs_due <= now() 的记录，
+    调 oskill.interleave_select 排布后返回
+  ```
+  DoD：process_interaction 写库正确；mastery_overview 按薄弱排序；交互事件只增不改。
 
-- [ ] **4.1 [P0]** 掌握度总览（按薄弱排序）+ effective。DoD：契约同 Master §8。
-- [ ] **4.2 [P1]** 月度快照 + 成长曲线 `/v1/mastery-curve`（Celery 月度写 `mastery_snapshots`）。
-- [ ] **4.3 [P1]** `longitudinal_analysis_workflow`：个人模式（confidence>0.6 才输出，不编造）。
-- [ ] **4.4 [P0]** `daily_mission_workflow` + Streak（Master §6.5 优先级；晚23点降级）。DoD：`/v1/missions/today` 返回单一目标。
+- [ ] **B.2 [P0]** KC 字典 seed → bkt_priors
+  ```
+  services/seed.py：
+  seed_bkt_priors() — 遍历 data/guangdong_math_kc.KC_LIST，
+  按题型展开（选择p_guess≈0.25/填空≈0.05/解答≈0.02），
+  upsert 到 bkt_priors 表
+  
+  启动时自动执行（在 FastAPI lifespan 里调用）
+  ```
+  DoD：bkt_priors 行数 = KC数 × 题型数；重启后幂等（不重复插入）。
 
-## Epic 5 · 苏格拉底对话
+- [ ] **B.3 [P0]** API 装配：认知状态路由
+  ```
+  api/v1/interaction.py：
+    POST /v1/interaction  → 调 cognitive_service.process_interaction → 返回
+  api/v1/mastery.py：
+    GET  /v1/mastery/{student_id}     → cognitive_service.mastery_overview
+    GET  /v1/mastery/curve/{sid}/{kc} → 读 mastery_snapshots 时间序列
+  api/v1/review.py：
+    GET  /v1/review-queue/{student_id} → cognitive_service.review_queue
+  api/v1/kc.py：
+    GET  /v1/kc         → 读 bkt_priors 返回KC摘要
+    GET  /v1/kc/{kc_id} → 返回单KC详情
+  
+  服务层只做：鉴权 → 调service → 返响应，零业务逻辑
+  ```
+  DoD：5个接口契约同 Master §8；重启状态不丢。
 
-- [ ] **5.1 [P0]** `oprim.socratic_turn` + `oskill.socratic_loop` + `socratic_session_workflow`；SSE 流式；mode 切换。DoD：流式可用；结束映射 FSRS rating 回写内核。
-- [ ] **5.2 [P0]** 不泄露答案红线测试（诱导断言不含答案）。
-- [ ] **5.3 [P1]** 情绪感知 + 家长预警联动（≥3 次写 `parent_alerts`）。
-- [ ] **5.4 [P1]** 逃生出口 `/escape`（记 `used_escape_hatch`，不影响 streak）。
+---
 
-## Epic 6 · 家长端
+## C · 用户与合规装配
 
-- [ ] **6.1 [P0]** `/v1/parent/overview` 成长摘要（**不含绝对分数**）。
-- [ ] **6.2 [P1]** 微信一句话日报（Celery+LLM≤60字，失败降级短信，写 `daily_reports`）。
-- [ ] **6.3 [P1]** 5 类风险预警（emotion/score_drop/task_missing/time_drop/late_night，每类有触发测试）。
+- [ ] **C.1 [P0]** 用户注册/登录
+  ```
+  services/auth_service.py：
+  - send_code(phone) → 生成6位码存 Redis TTL=300s（dev固定123456）
+  - register_student(phone,code,name,birth_date,grade,...) → User
+    合规：birth_date 算年龄，<14岁必须传 guardian_phone+guardian_consent=true
+    否则 raise 422；通过则写 guardian_consents 表
+  - register_parent(phone,code,name) → User（自动生成 invite_code）
+  - login(phone,code) → JWT token（用 obase.auth.create_token）
+  
+  api/v1/auth.py：装配上述service，零业务逻辑
+  ```
+  **合规红线测试（强制）**：
+  ```python
+  def test_minor_without_guardian_rejected():
+      # 13岁 + 无 guardian_phone → 422
+  def test_minor_with_guardian_accepted():
+      # 13岁 + guardian_phone + consent=true → 201
+  def test_deleted_data_not_queryable():
+      # 软删后 /v1/mastery 返回空
+  ```
+  DoD：合规测试全通过；JWT 鉴权在 get_current_user 依赖注入。
 
-## Epic 7 · 前端（最小可用 PWA）
+- [ ] **C.2 [P1]** 多孩子绑定
+  ```
+  POST /v1/auth/bind-child {invite_code} → 写 parent_student
+  GET  /v1/parent/children → 读 parent_student + users
+  ```
+  DoD：一家长绑2孩，切换查询数据隔离。
 
-- [ ] **7.1 [P0]** 脚手架 + 鉴权 + API client（Vite+TS+Tailwind+React Query）。
-- [ ] **7.2 [P0]** 学生核心流程：今日目标→拍题→苏格拉底(流式)→掌握度/成长曲线。
-- [ ] **7.3 [P1]** 家长端：多孩子切换 + 成长摘要 + 预警。
+---
 
-## Epic 8 · 部署与可观测
+## D · 试卷入口装配（Celery + analyze_paper_workflow）
 
-- [ ] **8.1 [P1]** 生产 compose + 健康检查 + 结构化日志。
-- [ ] **8.2 [P2]** 算法监控：定时算线上 AUC，<0.70 告警。
+- [ ] **D.1 [P0]** MinIO 上传 + papers 记录
+  ```
+  api/v1/papers.py：
+    POST /v1/papers/upload（multipart: images[], exam_name?, grade）
+    → 上传图片到 MinIO hot bucket（调 obase.oss）
+    → 写 papers(status='processing')
+    → 触发 Celery task process_paper.delay(paper_id)
+    → 立即返回 {paper_id, status:'processing'}
+  
+  服务层只做 IO 装配，不做任何分析逻辑
+  ```
 
-## Epic 9 · 合规收口
+- [ ] **D.2 [P0]** Celery task 装配 analyze_paper_workflow
+  ```
+  tasks/paper_tasks.py：
+  
+  @celery_app.task(bind=True, max_retries=3,
+                   retry_backoff=True, retry_backoff_max=60)
+  async def process_paper(self, paper_id: str):
+      """装配层：读数据→调omodul→写结果，零业务逻辑"""
+      # 1. 读 papers 表拿 image_urls + student_id
+      # 2. 下载图片 base64（调 obase.oss）
+      # 3. 调 omodul.analyze_paper_workflow(
+      #        config=AnalyzePaperConfig(...),
+      #        input_data=AnalyzePaperInput(image_b64_list=..., student_id=...),
+      #        output_dir=Path(f"/tmp/mneme/{paper_id}"))
+      # 4. 把 findings 写回 papers.ocr_result
+      # 5. 把每道错题写 wrong_questions
+      # 6. 调 cognitive_service.process_interaction(每道错题)
+      # 7. papers.status → 'done' / 'failed'
+  
+  # OCR 失败（网络抖动）：快速重试，max_retries=5，countdown=10
+  # LLM 配额失败：慢速重试，max_retries=2，countdown=300
+  ```
+  DoD：端到端测试（LLM mock）：上传→done→wrong_questions写库→kc_mastery更新→interaction_events累积。
 
-- [ ] **9.1 [P0]** `/v1/parent/export` 导出全部档案（JSON+PDF）。
-- [ ] **9.2 [P0]** `/v1/parent/delete-request` 软删+异步硬删（含 OSS 归档层）。DoD：删除后不可查询（合规测试）。
-- [ ] **9.3 [P1]** 加密 + 儿童信息处理规则页。DoD：Master §10 清单全勾。
+- [ ] **D.3 [P0]** GET /v1/papers/{id} + 列表
+  ```
+  GET /v1/papers/{id} → {paper, wrong_questions[], common_breakpoint}
+  GET /v1/papers?student_id&from&to → {papers[]}
+  ```
 
-## Epic 10 · 确定性求解内核（M-A）
+- [ ] **D.4 [P1]** 单题快录装配
+  ```
+  POST /v1/papers/quick（multipart: image, kc_hint?）
+  → 调 omodul.quick_question_workflow
+  → 返回 {question_id, socratic_session_id}
+  ```
 
-- [ ] **10.1 [P0]** `obase.sympy_runtime` 沙箱（超时/内存/进程隔离）。DoD：病态输入超时被杀。
-- [ ] **10.2 [P0]** `oprim.solve_conic / solve_function / solve_derivative`（高频先做）。DoD：每个 ≥10 样题内核自检。
-- [ ] **10.3 [P1]** `solve_geometry3d / solve_sequence / solve_trig / solve_probability`。
-- [ ] **10.4 [P0]** `oprim.verify_step` + 接入 `socratic_loop`（对话步校验）。DoD：错误中间步被确定性拦截。
-- [ ] **10.5 [P1]** `solve_cache` 去重。
+---
 
-## Epic 11 · 可视化生成（M-D/E）
+## E · 今日目标装配（daily_mission_workflow）
 
-- [ ] **11.1 [P0]** `oprim.kernel_to_plot2d / kernel_to_three`（图示数据，与解题同源）。
-- [ ] **11.2 [P0]** 前端 Mafs(2D) 渲染器 + 数据契约。
-- [ ] **11.3 [P1]** 前端 Three.js(3D) 渲染器（复用 edulab 思路）。
-- [ ] **11.4 [P1]** `oprim.generate_svg_diagram + evaluate_diagram`（LLM 分支+自检+重试≤2+降级）。
-- [ ] **11.5 [P0]** `oskill.solve_and_visualize` + `omodul.generate_lesson_page`。DoD：三处一致自检通过；不合格图不展示。
+- [ ] **E.1 [P0]** 今日目标 API
+  ```
+  services/mission_service.py：
+  - get_or_create_mission(student_id, date) → dict
+    1. 检查 daily_missions 是否已有今日记录（UNIQUE约束）
+    2. 没有则准备 input：
+       - 读 kc_mastery 中 fsrs_due<=now 的记录（复习池）
+       - 读 kc_mastery 全量（掌握度状态）
+       - 读 data/guangdong_math_kc 的 confusion_pairs 配置
+    3. 调 omodul.daily_mission_workflow(
+           config=DailyMissionConfig(student_id_hash=..., date=...,
+                                     hour_of_day=datetime.now().hour),
+           input_data=DailyMissionInput(...),
+           output_dir=...)
+    4. 写 daily_missions 表
+    5. 读 streaks 表
+    返回 {mission, streak}
+  
+  api/v1/missions.py：
+    GET  /v1/missions/today/{student_id} → mission_service.get_or_create_mission
+    POST /v1/missions/{id}/complete     → 更新 daily_missions.completed
+                                          + 更新 streaks（连续/断续/重置）
+  ```
+  DoD：/v1/missions/today 返回单一目标；23点后返回 rest；streak 正确累积/重置。
 
-## Epic 12 · 学习科学机制（M-B/C/F/G）
+---
 
-- [ ] **12.1 [P0]** `oprim.recognition_update` + `cognitive_update` 扩展双维度。DoD：「专项对但混合错」可被识别为 recognition 弱。
-- [ ] **12.2 [P0]** `oskill.interleave_select` + 易混淆 KC 对配置表。DoD：相邻题 KC 不同。
-- [ ] **12.3 [P0]** `daily_mission_workflow` 整合交错 + 检索约束。DoD：回顾未作答不可见答案，看答案=Again。
-- [ ] **12.4 [P1]** 服务层 `InterleaveSchedulerEngine`（配置驱动调度/节流）。
-- [ ] **12.5 [P1]** `oprim.compute_effortful_gain` + 前端努力错觉看板。
-- [ ] **12.6 [P1]** 前端检索练习交互（遮答案/自评/计时）。
+## F · 苏格拉底装配（socratic_session_workflow + SSE）
+
+- [ ] **F.1 [P0]** 苏格拉底会话 API
+  ```
+  services/socratic_service.py：
+  - start_session(question_id, student_id) → {session_id, mode, first_question}
+    1. 读 wrong_questions + kc_mastery（取 effective_mastery 决定 mode）
+    2. 读 profiler_analysis 取 cognitive_break_point
+    3. 调 omodul.socratic_session_workflow 初始化
+    4. 写 socratic_sessions 表
+  
+  api/v1/socratic.py：
+    POST /v1/socratic/start → socratic_service.start_session
+    
+    POST /v1/socratic/{id}/message → SSE 流式
+    # on_step 回调推送每个 delta
+    # 调 oskill.socratic_loop（通过 omodul 包装）
+    # 服务层负责 SSE 格式化，不做对话逻辑
+    
+    POST /v1/socratic/{id}/escape → 返回答案大纲
+    # 写 socratic_sessions.used_escape_hatch=True
+    
+    POST /v1/socratic/{id}/end → 
+    # 从 session 读 outcome → 映射 FSRS rating
+    # 调 cognitive_service.process_interaction(source='socratic')
+    # 写 socratic_sessions.outcome
+  ```
+  
+  **红线测试（强制）**：
+  ```python
+  def test_message_answer_intercepted():
+      # 即使 omodul 返回含正确答案的文字
+      # SSE 流中不得包含 correct_answer 的数值
+  ```
+  DoD：SSE 流式正常；苏格拉底不泄答案红线测试通过；结束后 kc_mastery 更新。
+
+---
+
+## G · 家长端装配
+
+- [ ] **G.1 [P0]** 成长摘要
+  ```
+  GET /v1/parent/overview/{student_id}
+  → 读 kc_mastery 算薄弱点数量/趋势（不含绝对分数）
+  → 读 streaks
+  → 读 socratic_sessions 最近情绪
+  → 返回 {weak_kc_count, weak_kc_trend, streak, emotion, top_improved_kc}
+  服务层只做聚合查询，无业务逻辑
+  ```
+
+- [ ] **G.2 [P1]** 5类预警（alerter引擎装配）
+  ```
+  使用 oservi.alerter 引擎：
+  
+  from oservi import assemble, ServiceManifest
+  
+  parent_alerter = assemble(ServiceManifest(
+      name="mneme-parent-alerter",
+      skeleton="alerter",
+      inject={
+          "evaluators": [
+              check_emotion_alert,    # 扫 socratic_sessions.emotion_log
+              check_task_missing,     # 扫 daily_missions 连续未完成
+              check_time_drop,        # 扫 interaction_events 本周vs上周
+              check_late_night,       # 扫 interaction_events occurred_at
+              check_score_drop,       # 扫 kc_mastery 正确率连续下降
+          ],
+          "channels": [wechat_send],  # obase 通知渠道
+      },
+      trigger={"on_interval": 3600},
+      config={"thresholds": {...}},
+  ))
+  
+  # 5个 evaluator 是 layer4 callable（读项目DB，不入主库）
+  GET /v1/parent/alerts/{student_id} → 读 parent_alerts 表
+  ```
+
+- [ ] **G.3 [P1]** 微信日报
+  ```
+  Celery beat 每晚21:00触发
+  → 调 LLM 生成≤60字日报（调 oprim 的 LLM caller）
+  → 写 daily_reports
+  → 推送微信
+  ```
+
+---
+
+## H · 求解与可视化装配（M-A/D/E）
+
+- [ ] **H.1 [P0]** 求解接口
+  ```
+  POST /v1/solve {kc_id, problem_spec}
+  → 服务层按 kc_id 路由到对应 oprim.solve_*
+  → 调 oprim.kernel_to_plot2d 生成图示数据
+  → 返回 {answer, steps, plot_data, solvable}
+  ```
+
+- [ ] **H.2 [P0]** 讲解页接口
+  ```
+  GET /v1/lesson/{question_id}
+  → 读 lesson_pages 表（fingerprint 缓存命中直接返回）
+  → 未命中：调 omodul.generate_lesson_page(...)
+  → 写 lesson_pages 表
+  → 返回 {plot_data, self_check_passed, solve_steps, answer}
+  ```
+
+- [ ] **H.3 [P0]** 苏格拉底步骤校验接入
+  ```
+  在 /v1/socratic/{id}/message 处理中：
+  若学生输入含等式（含"="且有数学符号）
+  → 调 oprim.verify_step(claim=StepClaim(kc_id, claim_latex, context))
+  → step_check.valid=False：在 SSE 前插入"这一步有问题，再想想"
+  → 服务层只做调用和 SSE 格式化
+  ```
+
+---
+
+## I · 变式题装配（practice_workflow）
+
+- [ ] **I.1 [P0]** 变式题接口
+  ```
+  POST /v1/practice/generate {kc_id, count=3, difficulty=0.5}
+  → 调 omodul.practice_workflow(config=PracticeConfig(...), ...)
+  → 返回 {items:[{question_latex,answer,solution_steps,kernel_verified,plot_data}],
+           all_kernel_verified, kc_name}
+  
+  服务层不做题目生成，只调 omodul
+  ```
+
+---
+
+## J · 纵向分析装配
+
+- [ ] **J.1 [P1]** 个人学习模式
+  ```
+  GET /v1/patterns/{student_id}
+  → 读 mastery_snapshots 时间序列
+  → 调 omodul.longitudinal_analysis_workflow(...)
+  → 写 learning_patterns 表（confidence>0.6才写）
+  → 返回 {patterns[]}
+  ```
+
+---
+
+## K · 合规收口装配
+
+- [ ] **K.1 [P0]** 档案导出
+  ```
+  GET /v1/parent/export/{student_id}
+  → 调 omodul.export_archive_workflow(...)
+  → 返回 JSON 附件（Content-Disposition: attachment）
+  ```
+
+- [ ] **K.2 [P0]** 用户删除
+  ```
+  POST /v1/parent/delete-request/{student_id}
+  → 调 omodul.delete_user_workflow(...)（软删）
+  → Celery 异步硬删
+  
+  合规红线测试（强制）：
+  def test_deleted_user_not_queryable():
+      # 删除后 /v1/mastery 返回空或404
+  ```
+
+---
+
+## L · 部署装配
+
+- [ ] **L.1 [P1]** 生产 Dockerfile + 健康检查
+  ```
+  GET /health → {"status":"ok","version":"x.x.x"}
+  docker compose build → 全服务健康
+  ```
+
+- [ ] **L.2 [P1]** 结构化日志（structlog）+ AUC 监控
+  ```
+  关键路径加 structlog：
+  process_interaction / process_paper / socratic_turn / alert_triggered
+  
+  Celery beat 每日3点：计算7天 AUC
+  调 oprim.bkt_predict_correct 对 interaction_events 预测
+  AUC < 0.60 → logger.warning("auc_degraded")
+  ```
+
+- [ ] **L.3 [P1]** Cloudflare Tunnel 接入
+  ```
+  加入 Aegis Caddyfile：
+  mneme.uex.hk     → mneme-web:3000
+  mneme-api.uex.hk → mneme-api:8000
+  ```
 
 ---
 
 ## 进度总览
 
 ```
-MVP（Epic 0-5 核心 + 选做）：打通"上传卷→内核→薄弱排序→苏格拉底顿悟"
-Phase 2（Epic 6-12）：家长端/前端/合规收口/确定性内核/可视化/学习科学机制
-依赖：0→1→3→4 优先；Epic 10 是 11/12 部分前置。
-保持 tests/test_engine.py 长绿；每完成一个 task 回来勾选并记录。
+核心闭环（MVP）：A → B → C → D → E → F
+                  基建  认知  用户  试卷  目标  苏格拉底
+
+Phase 2：G（家长）+ H（求解可视化）+ I（变式题）+ J（纵向）
+Phase 3：K（合规）+ L（部署）
+
+保持 tests/test_engine.py 长绿。
+每完成一个 task：勾选 + git push + 停下等确认。
 ```
