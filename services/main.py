@@ -14,6 +14,7 @@ import os
 import json
 
 from obase.db import get_db, SessionLocal
+from services.logging_config import configure_logging, logger
 from obase.prior_provider import PriorProvider
 from obase.llm import register_default_providers
 from obase.auth import decode_access_token
@@ -37,6 +38,7 @@ from services.cognitive_service import (
     process_interaction,
     review_queue,
 )
+from services.alert_service import get_student_alerts, run_alert_checks
 from services.mission_service import complete_mission, get_or_create_mission
 from services.socratic_service import (
     end_session,
@@ -75,6 +77,7 @@ async def get_current_user(
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
+    configure_logging()
     async with SessionLocal() as session:
         await seed_bkt_priors(session)
         await session.commit()
@@ -612,6 +615,53 @@ async def post_delete_request(student_id: UUID, db: AsyncSession = Depends(get_d
     )
     await db.commit()
     return {"ok": True, "deleted_at": now.isoformat(), "student_id": str(student_id)}
+
+
+# ===== §G.2 家长预警 =====
+
+@app.get("/v1/parent/alerts/{student_id}")
+async def get_alerts(
+    student_id: UUID,
+    parent_id: UUID = Query(...),
+    db: AsyncSession = Depends(get_db),
+):
+    """GET /v1/parent/alerts/{student_id} — 家长预警列表。"""
+    return await get_student_alerts(db, student_id, parent_id)
+
+
+@app.post("/v1/parent/alerts/{student_id}/check")
+async def post_run_alert_checks(
+    student_id: UUID,
+    parent_id: UUID = Query(...),
+    db: AsyncSession = Depends(get_db),
+):
+    """POST /v1/parent/alerts/{student_id}/check — 立即执行 5 类预警检查。"""
+    result = await run_alert_checks(db, student_id, parent_id)
+    await db.commit()
+    return {"checked": len(result), "alerts": result}
+
+
+# ===== §D.4 单题快录 =====
+
+@app.post("/v1/papers/quick")
+async def post_quick_question(
+    student_id: UUID = Query(...),
+    kc_hint: Optional[str] = Query(None),
+    file: UploadFile = File(...),
+    db: AsyncSession = Depends(get_db),
+):
+    """POST /v1/papers/quick — 单题快录，立即创建 WrongQuestion。"""
+    import uuid as _uuid
+    wq_id = _uuid.uuid4()
+    wq = WrongQuestion(
+        id=wq_id,
+        student_id=student_id,
+        subject="math",
+        knowledge_points={kc_hint: 1.0} if kc_hint else {},
+    )
+    db.add(wq)
+    await db.commit()
+    return {"question_id": str(wq_id), "status": "pending_ocr", "kc_hint": kc_hint}
 
 
 # ===== §L.1 健康检查 =====

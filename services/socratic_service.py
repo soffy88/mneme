@@ -68,8 +68,12 @@ async def socratic_message_stream(
     messages = list(session.messages or [])
     messages.append({"role": "user", "content": student_message})
 
-    # Socratic reply (no LLM in test-safe mode — forward-compatible hook)
-    reply = _socratic_reply(student_message, messages, wq)
+    # H.3: verify_step — deterministic intercept before Socratic reply
+    step_error = _try_verify_step(student_message)
+    if step_error:
+        reply = "这一步有问题，再想想。" + step_error
+    else:
+        reply = _socratic_reply(student_message, messages, wq)
 
     messages.append({"role": "assistant", "content": reply})
     await db.execute(
@@ -81,6 +85,33 @@ async def socratic_message_stream(
     for word in reply.split():
         yield f"data: {json.dumps({'delta': word + ' '})}\n\n"
     yield f"data: {json.dumps({'done': True, 'turn': len([m for m in messages if m['role'] == 'assistant'])})}\n\n"
+
+
+def _try_verify_step(message: str) -> Optional[str]:
+    """Deterministic step check (H.3). Returns error hint or None."""
+    import re
+    if "=" not in message:
+        return None
+    math_pat = re.compile(r"[\+\-\*/\^√\d]")
+    if not math_pat.search(message):
+        return None
+    # Try to extract a simple equation "lhs = rhs"
+    parts = message.split("=")
+    if len(parts) < 2:
+        return None
+    lhs = parts[0].strip().split()[-1] if parts[0].strip() else ""
+    rhs = parts[1].strip().split()[0] if parts[1].strip() else ""
+    if not lhs or not rhs:
+        return None
+    try:
+        from oprim.verify_step import StepVerifyInput, verify_step
+        inp = StepVerifyInput(step_number=1, before_lhs=lhs, after_lhs=lhs, before_rhs="0", after_rhs=rhs)
+        result = verify_step(inp)
+        if not result.is_correct:
+            return f"（代数检验：{result.error_type or '步骤有误'}）"
+    except Exception:
+        pass
+    return None
 
 
 def _socratic_reply(student_message: str, history: list, wq: Optional[WrongQuestion]) -> str:
