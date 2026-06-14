@@ -35,6 +35,7 @@ from services.cognitive_service import (
     process_interaction,
     review_queue,
 )
+from services.seed import seed_bkt_priors
 from services.models import User, UserRole
 from data.guangdong_math_kc import KC_LIST, get_kc
 
@@ -62,11 +63,10 @@ async def get_current_user(
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    # 预热 BKT 先验参数缓存
     async with SessionLocal() as session:
+        await seed_bkt_priors(session)
+        await session.commit()
         await PriorProvider.warm_up(session)
-    
-    # 注册 LLM 提供商
     register_default_providers()
     yield
 

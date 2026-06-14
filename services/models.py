@@ -187,6 +187,7 @@ class KCMastery(Base):
 
 class BKTPrior(Base):
     __tablename__ = "bkt_priors"
+    __table_args__ = (UniqueConstraint("knowledge_point", "question_type", name="uq_bkt_priors_kc_qtype"),)
 
     id: Mapped[uuid.UUID] = mapped_column(UUID(as_uuid=True), primary_key=True, server_default=text("gen_random_uuid()"))
     subject: Mapped[Optional[str]] = mapped_column(String(20))

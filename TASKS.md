@@ -103,7 +103,8 @@ A → B → C → D → E → F
   ```
   DoD：process_interaction 写库正确；mastery_overview 按薄弱排序；交互事件只增不改。
 
-- [ ] **B.2 [P0]** KC 字典 seed → bkt_priors
+- [x] **B.2 [P0]** KC 字典 seed → bkt_priors
+  ✅ services/seed.py upsert 幂等种子；lifespan 自动执行；migration uq_bkt_priors_kc_qtype；3 DoD 测试全绿(行数=57/幂等/p_guess展开)。
   ```
   services/seed.py：
   seed_bkt_priors() — 遍历 data/guangdong_math_kc.KC_LIST，
