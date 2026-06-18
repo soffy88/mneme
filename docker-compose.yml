@@ -42,7 +42,9 @@ services:
       retries: 5
 
   api:
-    build: .
+    build:
+      context: ..
+      dockerfile: mneme/Dockerfile
     restart: always
     ports:
       - "8000:8000"
@@ -53,6 +55,11 @@ services:
       MINIO_ACCESS_KEY: minioadmin
       MINIO_SECRET_KEY: minioadmin
       MINIO_BUCKET: mneme
+    volumes:
+      - .:/app
+    networks:
+      - default
+      - helios-net
     depends_on:
       db:
         condition: service_healthy
@@ -60,3 +67,8 @@ services:
         condition: service_healthy
       minio:
         condition: service_healthy
+
+networks:
+  default:
+  helios-net:
+    external: true

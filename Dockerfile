@@ -11,15 +11,30 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 # Install uv for fast package management
 COPY --from=ghcr.io/astral-sh/uv:latest /uv /bin/uv
 
-# Copy dependency files
-COPY pyproject.toml .
-COPY requirements.txt .
+# Copy and install platform packages (obase/oprim/oskill/omodul)
+# Build context is the parent directory (projects/)
+COPY platform/3O/obase /app/platform/obase
+COPY platform/3O/oprim /app/platform/oprim
+COPY platform/3O/oskill /app/platform/oskill
+COPY platform/3O/omodul /app/platform/omodul
 
-# Install dependencies into the system environment
-RUN uv pip install --system -r requirements.txt .
+RUN uv pip install --system \
+    /app/platform/obase \
+    /app/platform/oprim \
+    /app/platform/oskill \
+    /app/platform/omodul
+# obase  @ v0.15.9
+# oprim  @ v3.10.10
+# oskill @ v3.25.2
+# omodul @ v1.29.2
 
-# Copy project files
-COPY . .
+# Copy mneme dependency files and install base deps
+COPY mneme/requirements.txt .
+COPY mneme/pyproject.toml .
+RUN uv pip install --system -r requirements.txt
+
+# Copy mneme project files
+COPY mneme/ .
 
 # Expose API port
 EXPOSE 8000

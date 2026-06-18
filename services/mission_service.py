@@ -10,7 +10,9 @@ from sqlalchemy import select, update
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from omodul.daily_mission_workflow import DailyMissionConfig, DailyMissionInput, daily_mission_workflow
-from services.models import DailyMission, KCMastery, MissionType, Streak
+from services.models import DailyMission, KCMastery, MissionType, Streak, WrongQuestion
+from oskill.cold_start_single import cold_start_single, ColdStartInput
+from obase.provider_registry import ProviderRegistry
 
 
 async def get_or_create_mission(db: AsyncSession, student_id: uuid.UUID, today: Optional[date] = None) -> dict:
@@ -28,6 +30,40 @@ async def get_or_create_mission(db: AsyncSession, student_id: uuid.UUID, today: 
     )).scalar_one_or_none()
     if existing:
         return {"mission": _mission_dict(existing), "streak": await _get_streak(db, student_id)}
+
+    # 冷启动检查
+    wrong_count = (await db.execute(select(WrongQuestion).where(WrongQuestion.student_id == student_id))).scalars().all()
+    if not wrong_count:
+        # 全新用户，走 cold_start_single
+        caller = ProviderRegistry.get().llm() if ProviderRegistry._instance else None
+        try:
+            cs_res = await cold_start_single(
+                ColdStartInput(
+                    student_id=str(student_id),
+                    input_type="text",
+                    content="欢迎来到 Mneme，请完成以下入学诊断题以帮助我们了解你的水平。"
+                ),
+                caller=caller
+            )
+            content = {"message": "新用户冷启动诊断", "diagnostics": cs_res}
+        except Exception as e:
+            content = {"message": "冷启动初始化", "error": str(e)}
+
+        mission = DailyMission(
+            id=uuid.uuid4(),
+            student_id=student_id,
+            date=today,
+            mission_type=MissionType.knowledge_focus, # Cold start fallback type
+            content=content,
+            estimated_minutes=10,
+        )
+        db.add(mission)
+        await db.flush()
+        
+        # Override mission type string for API response
+        mission_res = _mission_dict(mission)
+        mission_res["mission_type"] = "cold_start"
+        return {"mission": mission_res, "streak": await _get_streak(db, student_id)}
 
     # Gather kc_mastery state
     rows = (await db.execute(select(KCMastery).where(KCMastery.student_id == student_id))).scalars().all()

@@ -20,6 +20,10 @@ from omodul.socratic_session_workflow import (
 )
 from services.models import KCMastery, SocraticMode, SocraticOutcome, SocraticSession, WrongQuestion
 
+from oskill.metacog_scaffold import metacog_scaffold, MetacogScaffoldInput
+from obase.provider_registry import ProviderRegistry
+
+
 
 async def start_session(db: AsyncSession, question_id: uuid.UUID, student_id: uuid.UUID) -> dict:
     """Initialize a Socratic session; call omodul for first_question."""
@@ -54,6 +58,30 @@ async def start_session(db: AsyncSession, question_id: uuid.UUID, student_id: uu
     db.add(session)
     await db.flush()
 
+    # 强制元认知支架 (Metacog Scaffold)
+    metacog_options = []
+    first_q = "请仔细审题，你认为这道题考察的是什么知识点？"
+    if mode != "sprint":
+        caller = ProviderRegistry.get().llm() if ProviderRegistry._instance else None
+        try:
+            meta_res = await metacog_scaffold(
+                MetacogScaffoldInput(
+                    question=wq.question_text or "未知题目",
+                    student_id=str(student_id),
+                    input_content="刚开始看题"
+                ),
+                caller=caller
+            )
+            metacog_data = meta_res.self_eval
+            first_q = metacog_data.get("question", first_q)
+            metacog_options = metacog_data.get("options", [])
+            
+            # Record it as the first system/assistant message in SocraticSession
+            session.messages = [{"role": "assistant", "content": first_q, "options": metacog_options}]
+            await db.flush()
+        except Exception as e:
+            pass # fallback to default if metacog fails
+
     result = await socratic_session_workflow(
         config=SocraticConfig(mode=mode, max_turns=20),
         input_data=SocraticInput(
@@ -68,11 +96,14 @@ async def start_session(db: AsyncSession, question_id: uuid.UUID, student_id: uu
         on_step=None,
     )
 
-    first_q = result.get("first_question", "请仔细审题，你认为这道题考察的是什么知识点？")
+    if mode == "sprint" or not metacog_options:
+        first_q = result.get("first_question", first_q)
+        
     return {
         "session_id": str(session_id),
         "mode": mode,
         "first_question": first_q,
+        "metacog_options": metacog_options
     }
 
 

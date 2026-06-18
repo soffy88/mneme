@@ -8,19 +8,22 @@
 > **接请求 → 鉴权 → 调 omodul/oservi → 持久化 → 返响应**
 > 禁止在服务层写任何业务逻辑（BKT/OCR/批改/苏格拉底/断点等）。
 >
-> ## 主库状态（已就绪，直接 pip install -e 引用）
-> ```
-> obase  v0.13.0  sympy_runtime + provider_registry + cost_tracker + auth + oss + cache
-> oprim  v3.5.0   bkt_*/fsrs_*/solve_*/verify_step/kernel_to_*/ocr_paper/grade_question/
->                 profiler_analyze/socratic_turn/find_common_breakpoint/generate_variant/
->                 generate_svg_diagram/evaluate_diagram/recognition_update/
->                 compute_effortful_gain/compute_feedback/compute_peer_percentile
-> oskill v3.21.0  cognitive_update/solve_and_visualize/socratic_loop/
->                 interleave_select/generate_practice_set/longitudinal_pattern
-> omodul v1.27.0  analyze_paper_workflow/socratic_session_workflow/generate_lesson_page/
->                 practice_workflow/daily_mission_workflow/longitudinal_analysis_workflow/
->                 quick_question_workflow/export_archive_workflow/delete_user_workflow
-> ```
+## 主库状态（已就绪，直接 pip install -e 引用）
+```
+obase  v0.15.9  sympy_runtime + provider_registry + cost_tracker + auth + oss + cache + error_tag_store + interaction_history
+oprim  v3.10.10 bkt_*/fsrs_*/solve_*/verify_step/kernel_to_*/ocr_paper/grade_question/
+                profiler_analyze/socratic_turn/find_common_breakpoint/generate_variant/
+                generate_svg_diagram/evaluate_diagram/recognition_update/
+                compute_effortful_gain/compute_feedback/compute_peer_percentile/
+                speech_to_math/error_classify/due_compute
+oskill v3.25.2  cognitive_update/solve_and_visualize/socratic_loop/
+                interleave_select/generate_practice_set/longitudinal_pattern/
+                socratic_guide_v2/metacog_scaffold/cold_start_single/variant_for_review/essay_guide
+omodul v1.29.2  analyze_paper_workflow/socratic_session_workflow/generate_lesson_page/
+                practice_workflow/daily_mission_workflow/longitudinal_analysis_workflow/
+                quick_question_workflow/export_archive_workflow/delete_user_workflow/
+                instant_solve/error_journal/due_recall_push/parent_review
+```
 >
 > ## 完成定义（DoD）
 > 1. 服务层零业务逻辑（grep 验证）
@@ -461,6 +464,19 @@ A → B → C → D → E → F
   mneme.uex.hk     → mneme-web:3000
   mneme-api.uex.hk → mneme-api:8000
   ```
+
+---
+
+## M · 3O 机制增强装配 (2026-06)
+
+- [x] **M.1 [P0] 护栏与冷启动**
+  ✅ `instant_solve` 随手拍入口；`metacog_scaffold` 苏格拉底前置自评；`cold_start_single` 新用户 Mission 冷启动；全量 pytest 全绿（含 monkey-patch 修复主库兼容性）。
+  ```
+  - POST /v1/instant-solve (调 omodul.instant_solve)
+  - socratic_service.start_session (调 oskill.metacog_scaffold)
+  - mission_service.get_or_create_mission (调 oskill.cold_start_single)
+  ```
+  DoD：随手拍不直接泄露答案；苏格拉底首问包含元认知选项；新用户 Mission 类型为 cold_start。
 
 ---
 

@@ -87,6 +87,15 @@ async def lifespan(app: FastAPI):
 
 app = FastAPI(title="Mneme API", version="0.1.0", lifespan=lifespan)
 
+from fastapi.middleware.cors import CORSMiddleware
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["https://mneme.uex.hk", "http://localhost:3000"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 @app.get("/")
 async def root():
     return {"status": "healthy", "service": "mneme-api"}
@@ -695,3 +704,32 @@ async def post_quick_question(
 async def health_check():
     """GET /health — 服务健康状态。"""
     return {"status": "ok", "version": "0.1.0", "service": "mneme-api"}
+
+# ===== §Instant Solve =====
+
+from fastapi import Form
+from services.instant_solve_service import handle_instant_solve
+import base64
+
+@app.post("/v1/instant-solve")
+async def post_instant_solve(
+    kc_hint: Optional[str] = Form(None),
+    image: UploadFile = File(...),
+    current_user: User = Depends(get_current_user),
+):
+    """
+    POST /v1/instant-solve
+    随手拍单题（不给答案，苏格拉底引导）。
+    """
+    image_bytes = await image.read()
+    image_b64 = base64.b64encode(image_bytes).decode("utf-8")
+    
+    try:
+        result = await handle_instant_solve(
+            student_id=current_user.id,
+            image_b64=image_b64,
+            kc_hint=kc_hint
+        )
+        return result
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
