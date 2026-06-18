@@ -80,6 +80,18 @@ async def get_current_user(
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     configure_logging()
+    
+    # Initialize obase infrastructure tables
+    from obase.config import settings
+    from obase.persistence.pool import PgPool
+    from obase.error_tag_store import ensure_error_tag_table
+    from obase.interaction_history import ensure_interaction_history_table
+    
+    dsn = settings.DATABASE_URL.replace('+asyncpg', '')
+    pool = await PgPool.get_or_create(dsn=dsn)
+    await ensure_error_tag_table(pool)
+    await ensure_interaction_history_table(pool)
+    
     async with SessionLocal() as session:
         await seed_bkt_priors(session)
         await session.commit()
@@ -710,7 +722,7 @@ async def health_check():
 # ===== §Instant Solve =====
 
 from fastapi import Form
-from services.instant_solve_service import handle_instant_solve
+from services.instant_solve_service import handle_instant_solve, get_pg_pool
 import base64
 
 @app.post("/v1/instant-solve")
