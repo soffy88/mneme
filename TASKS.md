@@ -469,7 +469,8 @@ A → B → C → D → E → F
 
 ## M · 3O 机制增强装配 (2026-06)
 
-- [ ] **M.0 [P0-BLOCKER] 移除 monkey-patch，等主库修复 KCState/GradeResult 字段缺失**
+- [x] **M.0 [P0-BLOCKER] 移除 monkey-patch，等主库修复 KCState/GradeResult 字段缺失**
+  ✅ oprim 已升级至 v3.10.12，原生支持 p_recognition/reason 字段；已删除 services/__init__.py 中的临时 patch。
 - [x] **M.1 [P0] 护栏与冷启动**
   ✅ `instant_solve` 随手拍入口；`metacog_scaffold` 苏格拉底前置自评；`cold_start_single` 新用户 Mission 冷启动；全量 pytest 全绿（含 monkey-patch 修复主库兼容性）。
   ```

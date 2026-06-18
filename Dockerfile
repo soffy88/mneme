@@ -24,7 +24,7 @@ RUN uv pip install --system \
     /app/platform/oskill \
     /app/platform/omodul
 # obase  @ v0.15.9
-# oprim  @ v3.10.10
+# oprim  @ v3.10.12
 # oskill @ v3.25.2
 # omodul @ v1.29.2
 
