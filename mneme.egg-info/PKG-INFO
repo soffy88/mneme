@@ -1,0 +1,32 @@
+Metadata-Version: 2.4
+Name: mneme
+Version: 0.1.0
+Summary: Mneme: A personal learning growth archive and self-study tool.
+Author: Mneme Team
+Requires-Python: >=3.12
+Requires-Dist: fsrs>=5.0
+Requires-Dist: sympy>=1.12
+Requires-Dist: numpy>=1.26
+Requires-Dist: anthropic>=0.25
+Requires-Dist: pydantic>=2.0
+Requires-Dist: pydantic-settings>=2.0
+Requires-Dist: fastapi>=0.110
+Requires-Dist: uvicorn[standard]>=0.27
+Requires-Dist: sqlalchemy>=2.0
+Requires-Dist: alembic>=1.13
+Requires-Dist: asyncpg>=0.29
+Requires-Dist: python-dotenv>=1.0
+Requires-Dist: redis>=5.0
+Requires-Dist: celery>=5.3
+Requires-Dist: pyjwt>=2.8
+Requires-Dist: passlib[bcrypt]>=1.7
+Requires-Dist: pytest>=8.0
+Requires-Dist: pytest-asyncio>=0.23
+Requires-Dist: pytest-cov>=4.1
+Requires-Dist: ruff>=0.3
+Requires-Dist: mypy>=1.9
+Requires-Dist: httpx>=0.27
+Requires-Dist: obase @ file:///home/soffy/projects/platform/3O/obase
+Requires-Dist: oprim @ file:///home/soffy/projects/platform/3O/oprim
+Requires-Dist: oskill @ file:///home/soffy/projects/platform/3O/oskill
+Requires-Dist: omodul @ file:///home/soffy/projects/platform/3O/omodul
