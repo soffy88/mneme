@@ -480,6 +480,19 @@ A → B → C → D → E → F
   ```
   DoD：随手拍不直接泄露答案；苏格拉底首问包含元认知选项；新用户 Mission 类型为 cold_start。
 
+- [x] **M.2 [P1] 变式复习、错题本与作文引导**
+  ✅ `variant_for_review` 结合 `due_compute` 的复习链路；`error_journal` 错题本主动入口；`essay_guide` 作文引导 API。
+  ```
+  - GET /v1/review/due/{student_id} (调 due_compute + variant_for_review)
+  - GET /v1/error-journal/{student_id} (调 error_journal)
+  - POST /v1/essay/guide (调 essay_guide，红线：禁止改写，仅引导)
+  ```
+  DoD：复习队列返回变式题；作文引导不含改写正文；全量测试通过。
+
+- [ ] **M.3 [BLOCKED] 英语口语陪练**
+  - 阻塞原因：等待主库入库 `speech_to_text`, `evaluate_pronunciation`, `text_to_speech`, `english_speaking_practice`, `speaking_practice_workflow`。
+  - 目前 oprim 已有原子能力，但 oskill/omodul 编排层缺失。
+
 ---
 
 ## 进度总览

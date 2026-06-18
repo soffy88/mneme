@@ -1,3 +1,5 @@
+from obase.provider_registry import ProviderRegistry
+from pydantic import BaseModel
 from fastapi import FastAPI, Depends, HTTPException, Query, UploadFile, File
 from fastapi.responses import StreamingResponse
 from fastapi.security import OAuth2PasswordBearer
@@ -733,3 +735,106 @@ async def post_instant_solve(
         return result
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
+
+# ===== §Review Due Variants =====
+
+from services.review_service import get_due_variants
+
+@app.get("/v1/review/due/{student_id}")
+async def get_review_due(
+    student_id: UUID,
+    db: AsyncSession = Depends(get_db),
+    current_user: User = Depends(get_current_user)
+):
+    """
+    GET /v1/review/due/{student_id}
+    获取到期的变式复习题。
+    """
+    if student_id != current_user.id and current_user.role != UserRole.parent:
+         raise HTTPException(status_code=403, detail="Permission denied")
+         
+    items = await get_due_variants(db, student_id)
+    return items
+
+# ===== §Error Journal =====
+
+from obase.error_tag_store import get_error_distribution
+from services.cognitive_service import PgStore
+
+@app.get("/v1/error-journal/{student_id}")
+async def get_error_journal(
+    student_id: UUID,
+    kc_id: Optional[str] = Query(None),
+    error_type: Optional[str] = Query(None),
+    limit: int = Query(20),
+    offset: int = Query(0),
+    db: AsyncSession = Depends(get_db),
+    current_user: User = Depends(get_current_user)
+):
+    """
+    GET /v1/error-journal/{student_id}
+    错题本主动入口。
+    """
+    if student_id != current_user.id and current_user.role != UserRole.parent:
+         raise HTTPException(status_code=403, detail="Permission denied")
+
+    # 1. Get distribution
+    pool = await get_pg_pool()
+    dist = await get_error_distribution(pool, student_id, kc_id)
+    
+    # 2. Get detailed wrong questions
+    # Layer 4 query
+    stmt = select(WrongQuestion).where(WrongQuestion.student_id == student_id)
+    if kc_id:
+        stmt = stmt.where(WrongQuestion.knowledge_points.has_key(kc_id))
+    # Note: error_type filtering would require error_tag join if not in wrong_questions
+    
+    stmt = stmt.order_by(WrongQuestion.created_at.desc()).offset(offset).limit(limit)
+    rows = (await db.execute(stmt)).scalars().all()
+    
+    res = []
+    for r in rows:
+        res.append({
+            "question_id": str(r.id),
+            "kc_id": list(r.knowledge_points.keys())[0] if r.knowledge_points else "unknown",
+            "error_tag": r.error_type or "unknown",
+            "wrong_at": r.created_at.isoformat(),
+            "can_practice_variant": True
+        })
+        
+    return {"distribution": dist, "items": res}
+
+# ===== §Essay Guide =====
+
+from oskill import essay_guide, EssayGuideInput
+
+class EssayGuideRequest(BaseModel):
+    essay_text: str
+    grade: str
+    essay_type: str
+
+@app.post("/v1/essay/guide")
+async def post_essay_guide(
+    req: EssayGuideRequest,
+    current_user: User = Depends(get_current_user)
+):
+    """
+    POST /v1/essay/guide
+    作文引导批改（不改写，仅引导）。
+    """
+    caller = ProviderRegistry.get().llm() if ProviderRegistry._instance else None
+    
+    res = await essay_guide(
+        EssayGuideInput(
+            title="Student Essay",
+            content=req.essay_text,
+            requirements=f"Grade: {req.grade}, Type: {req.essay_type}"
+        ),
+        caller=caller
+    )
+    
+    return {
+        "rubric_scores": res.feedback,
+        "guidance_questions": res.suggested_questions,
+        "is_completed": res.is_completed
+    }
