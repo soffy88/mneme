@@ -1,3 +1,9 @@
+# ⚠️ TEMPORARY MONKEY-PATCH — DO NOT TREAT AS PERMANENT
+# 原因：oprim.types.KCState 缺 p_recognition/p_recognition_init 字段，
+#       oprim.types.GradeResult 缺 reason 字段
+# 已提交主库修复请求，等待 oprim 新版本后删除整个 patch 块
+# 跟踪：KCState-p_recognition-missing / GradeResult-reason-missing
+
 import oprim.types
 oprim.types.KCState.p_recognition = None
 oprim.types.KCState.p_recognition_init = 0.20

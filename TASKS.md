@@ -469,6 +469,7 @@ A → B → C → D → E → F
 
 ## M · 3O 机制增强装配 (2026-06)
 
+- [ ] **M.0 [P0-BLOCKER] 移除 monkey-patch，等主库修复 KCState/GradeResult 字段缺失**
 - [x] **M.1 [P0] 护栏与冷启动**
   ✅ `instant_solve` 随手拍入口；`metacog_scaffold` 苏格拉底前置自评；`cold_start_single` 新用户 Mission 冷启动；全量 pytest 全绿（含 monkey-patch 修复主库兼容性）。
   ```
