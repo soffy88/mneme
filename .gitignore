@@ -1,0 +1,8 @@
+.env
+__pycache__/
+*.pyc
+.pytest_cache/
+.coverage
+fix_essay.py
+patch_essay_v2.py
+restore_llm.py

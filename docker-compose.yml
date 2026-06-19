@@ -55,6 +55,7 @@ services:
       MINIO_ACCESS_KEY: minioadmin
       MINIO_SECRET_KEY: minioadmin
       MINIO_BUCKET: mneme
+      DEEPSEEK_API_KEY: ${DEEPSEEK_API_KEY}
     volumes:
       - .:/app
     networks:
