@@ -489,9 +489,8 @@ A → B → C → D → E → F
   ```
   DoD：复习队列返回变式题；作文引导不含改写正文；全量测试通过。
 
-- [ ] **M.3 [BLOCKED] 英语口语陪练**
-  - 阻塞原因：等待主库入库 `speech_to_text`, `evaluate_pronunciation`, `text_to_speech`, `english_speaking_practice`, `speaking_practice_workflow`。
-  - 目前 oprim 已有原子能力，但 oskill/omodul 编排层缺失。
+- [x] **M.3 [P0] 英语口语陪练**
+  - [ ] **M.3.1 [PENDING] 阿里云口语评测真实key接入 — 等用户提供AccessKey**
 
 ---
 

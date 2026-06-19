@@ -346,3 +346,15 @@ class DailyReport(Base):
     delivery_status: Mapped[Optional[str]] = mapped_column(String(20))
 
 
+class SpeakingSession(Base):
+    __tablename__ = "speaking_sessions"
+
+    id: Mapped[str] = mapped_column(String(50), primary_key=True)
+    student_id: Mapped[Optional[uuid.UUID]] = mapped_column(UUID(as_uuid=True), ForeignKey("users.id"))
+    topic: Mapped[Optional[str]] = mapped_column(String(200))
+    turns: Mapped[Optional[dict]] = mapped_column(JSONB)
+    pronunciation_scores: Mapped[Optional[dict]] = mapped_column(JSONB)
+    overall_progress: Mapped[Optional[float]] = mapped_column(Float)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=text("now()"))
+
+

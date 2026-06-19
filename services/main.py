@@ -97,6 +97,42 @@ async def lifespan(app: FastAPI):
         await session.commit()
         await PriorProvider.warm_up(session)
     register_default_providers()
+
+    # Register English speaking practice generic callers (real or mock)
+    from services.providers.aliyun_pronunciation import AliyunPronunciationCaller
+
+    aliyun_key = settings.ALIYUN_ACCESS_KEY_ID
+    aliyun_secret = settings.ALIYUN_ACCESS_KEY_SECRET
+    if aliyun_key and aliyun_secret:
+        ProviderRegistry.register("pronunciation", "aliyun", 
+            AliyunPronunciationCaller(aliyun_key, aliyun_secret, settings.ALIYUN_NLS_APP_KEY))
+        ProviderRegistry.register("pronunciation", "default",
+            AliyunPronunciationCaller(aliyun_key, aliyun_secret, settings.ALIYUN_NLS_APP_KEY))
+    else:
+        logger.warning("阿里云语音评测未配置，口语陪练功能将使用 mock 评分")
+        class MockPronunciationCaller:
+            async def __call__(self, *, audio_b64: str, reference_text: str, **kwargs):
+                from oprim._mneme_speech_types import PronunciationResult
+                return PronunciationResult(
+                    overall_score=0.85,
+                    fluency_score=0.80,
+                    accuracy_score=0.90,
+                    word_scores=[]
+                )
+        ProviderRegistry.register("pronunciation", "aliyun", MockPronunciationCaller())
+        ProviderRegistry.register("pronunciation", "default", MockPronunciationCaller())
+
+    class MockASRCaller:
+        async def __call__(self, *, audio_b64: str, language: str = "zh", **kwargs):
+            return "Yes, this is a mock transcription of the student response."
+            
+    class MockTTSCaller:
+        async def __call__(self, *, text: str, language: str = "en", **kwargs):
+            return "dGVzdF9hdWRpb19kYXRh"
+            
+    ProviderRegistry.register("asr", "default", MockASRCaller())
+    ProviderRegistry.register("tts", "default", MockTTSCaller())
+
     yield
 
 app = FastAPI(title="Mneme API", version="0.1.0", lifespan=lifespan)
@@ -850,3 +886,74 @@ async def post_essay_guide(
         "guidance_questions": res.suggested_questions,
         "is_completed": res.is_completed
     }
+
+
+# ===== §English Speaking Practice =====
+
+from services.speaking_service import handle_speaking_practice
+from services.instant_solve_service import get_pg_pool
+from services.models import SpeakingSession
+
+class SpeakingPracticeRequest(BaseModel):
+    topic: str
+    target_sentences: str
+    grade: str
+
+@app.post("/v1/speaking/practice")
+async def post_speaking_practice(
+    req: SpeakingPracticeRequest,
+    current_user: User = Depends(get_current_user)
+):
+    """
+    POST /v1/speaking/practice
+    开始英语口语陪练。
+    """
+    if current_user.role != UserRole.student:
+        raise HTTPException(status_code=403, detail="Only students can practice speaking")
+        
+    pool = await get_pg_pool()
+    result = await handle_speaking_practice(
+        pool=pool,
+        student_id=current_user.id,
+        topic=req.topic,
+        target_sentences=req.target_sentences,
+        grade=req.grade
+    )
+    
+    if result["status"] == "failed":
+        raise HTTPException(status_code=500, detail=result.get("error", {}).get("message", "Speaking practice failed"))
+        
+    return {
+        "session_id": result["session_id"],
+        "turns": result["turns"],
+        "pronunciation_scores": result["pronunciation_scores"],
+        "overall_progress": result["overall_progress"]
+    }
+
+@app.get("/v1/speaking/history/{student_id}")
+async def get_speaking_history(
+    student_id: UUID,
+    current_user: User = Depends(get_current_user),
+    db: AsyncSession = Depends(get_db)
+):
+    """
+    GET /v1/speaking/history/{student_id}
+    获取学生的口语陪练历史。
+    """
+    # Parent/Student permission check
+    if current_user.id != student_id and current_user.role != UserRole.parent:
+        raise HTTPException(status_code=403, detail="Permission denied")
+        
+    stmt = select(SpeakingSession).where(SpeakingSession.student_id == student_id).order_by(SpeakingSession.created_at.desc())
+    rows = (await db.execute(stmt)).scalars().all()
+    
+    return [
+        {
+            "session_id": str(r.id),
+            "topic": r.topic,
+            "overall_progress": r.overall_progress,
+            "created_at": r.created_at.isoformat()
+        }
+        for r in rows
+    ]
+
