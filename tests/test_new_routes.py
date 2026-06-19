@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import uuid
 from datetime import date, datetime, timezone
+from unittest.mock import AsyncMock, patch
 
 import pytest
 from httpx import ASGITransport, AsyncClient
@@ -144,6 +145,36 @@ async def test_complete_mission(client, student, db):
     assert resp2.status_code == 200
     assert resp2.json()["ok"] is True
     print("  POST /v1/missions/{id}/complete ✓")
+
+
+@pytest.mark.asyncio
+async def test_cold_start_socratic_state_serializable(client, student, db):
+    """cold_start_single 返回含 SocraticStateV2 dataclass 时，写库不应 500。"""
+    from oskill.cold_start_single import SocraticStateV2
+
+    fake_state = SocraticStateV2(question="测试题", correct_answer="")
+    fake_result = {
+        "status": "ready_for_guidance",
+        "recognized_text": "测试题",
+        "metacog": {"self_eval": "不确定"},
+        "socratic_state": fake_state,
+    }
+
+    with patch(
+        "services.mission_service.cold_start_single",
+        new=AsyncMock(return_value=fake_result),
+    ):
+        resp = await client.get(f"/v1/missions/today/{student}")
+
+    assert resp.status_code == 200, f"期望200，得到{resp.status_code}: {resp.text}"
+    data = resp.json()
+    assert "mission" in data
+    diagnostics = data["mission"]["content"].get("diagnostics", {})
+    # SocraticStateV2 必须已被序列化为 dict
+    socratic = diagnostics.get("socratic_state")
+    assert isinstance(socratic, dict), f"socratic_state 应为 dict，实为 {type(socratic)}"
+    assert socratic.get("question") == "测试题"
+    print("  cold_start SocraticStateV2 序列化写库 ✓")
 
 
 # ── G.1 Parent overview ──────────────────────────────────────────────────────

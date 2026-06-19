@@ -1,10 +1,11 @@
 """E.1 — Daily mission service (assembly only)."""
 from __future__ import annotations
 
+import dataclasses
 import uuid
 from datetime import date, datetime, timezone
 from pathlib import Path
-from typing import Optional
+from typing import Any, Optional
 
 from sqlalchemy import select, update
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -13,6 +14,19 @@ from omodul.daily_mission_workflow import DailyMissionConfig, DailyMissionInput,
 from services.models import DailyMission, KCMastery, MissionType, Streak, WrongQuestion
 from oskill.cold_start_single import cold_start_single, ColdStartInput
 from obase.provider_registry import ProviderRegistry
+
+
+def _to_jsonable(obj: Any) -> Any:
+    """Recursively convert dataclass/pydantic instances to JSON-safe dicts."""
+    if dataclasses.is_dataclass(obj) and not isinstance(obj, type):
+        return {k: _to_jsonable(v) for k, v in dataclasses.asdict(obj).items()}
+    if hasattr(obj, "model_dump"):
+        return {k: _to_jsonable(v) for k, v in obj.model_dump().items()}
+    if isinstance(obj, dict):
+        return {k: _to_jsonable(v) for k, v in obj.items()}
+    if isinstance(obj, (list, tuple)):
+        return [_to_jsonable(i) for i in obj]
+    return obj
 
 
 async def get_or_create_mission(db: AsyncSession, student_id: uuid.UUID, today: Optional[date] = None) -> dict:
@@ -45,7 +59,7 @@ async def get_or_create_mission(db: AsyncSession, student_id: uuid.UUID, today: 
                 ),
                 caller=caller
             )
-            content = {"message": "新用户冷启动诊断", "diagnostics": cs_res}
+            content = {"message": "新用户冷启动诊断", "diagnostics": _to_jsonable(cs_res)}
         except Exception as e:
             content = {"message": "冷启动初始化", "error": str(e)}
 
