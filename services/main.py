@@ -1,16 +1,17 @@
 from obase.provider_registry import ProviderRegistry
 from pydantic import BaseModel
-from fastapi import FastAPI, Depends, HTTPException, Query, UploadFile, File
+from fastapi import FastAPI, Depends, HTTPException, Query, UploadFile, File, Form, Response
 from fastapi.responses import StreamingResponse
 from fastapi.security import OAuth2PasswordBearer
 from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy import select, update, delete
+from sqlalchemy import select, update
 from uuid import UUID
 import uuid
-from typing import Optional, List
+from typing import Optional
 from datetime import datetime, date, timezone
 from contextlib import asynccontextmanager
 from pathlib import Path
+import asyncio
 import shutil
 import os
 import json
@@ -50,9 +51,11 @@ from services.socratic_service import (
 )
 from services.seed import seed_bkt_priors
 from services.models import (
-    InteractionEvent, KCMastery, MasterySnapshot, Paper, PaperStatus,
+    InteractionEvent, KCMastery, MasterySnapshot, Paper,
     ParentStudent, SocraticSession, User, UserRole, WrongQuestion,
+    TextbookFile, Highlight, ReadingNote,
 )
+from services.storage import upload_file, download_file, content_type_for
 from data.guangdong_math_kc import KC_LIST, get_kc
 
 # ===== §8 认证依赖 =====
@@ -1011,3 +1014,369 @@ async def get_speaking_history(
         for r in rows
     ]
 
+
+# ===== §教材阅读器 — 文件/高亮/笔记 =====
+
+
+def _new_file_id() -> str:
+    return str(uuid.uuid4())
+
+
+def _new_str_id() -> str:
+    return str(uuid.uuid4())
+
+
+# ── 文件上传 ─────────────────────────────────────────────────────────
+
+@app.post("/v1/textbook-files/upload", status_code=201)
+async def upload_textbook_file(
+    file: UploadFile = File(...),
+    textbook_id: Optional[str] = Form(None),
+    current_user: User = Depends(get_current_user),
+    db: AsyncSession = Depends(get_db),
+):
+    """
+    POST /v1/textbook-files/upload — 上传教材文件(PDF/EPUB)。
+    - 学生上传自己的资料 → owner_student_id = current_user.id
+    - 暂不做管理员角色区分，textbook_id 由调用方传入（平台预置时传，自传时不传）
+    """
+    filename = file.filename or "untitled"
+    ext = filename.rsplit(".", 1)[-1].lower() if "." in filename else ""
+    if ext not in ("pdf", "epub"):
+        raise HTTPException(status_code=400, detail="仅支持 PDF 或 EPUB 文件")
+
+    data = await file.read()
+    file_id = _new_file_id()
+    # 平台预置：textbook_id 有值、owner 为空；学生自传：owner 有值
+    is_platform = textbook_id is not None and current_user.role == UserRole.parent
+    owner_id = None if is_platform else current_user.id
+    storage_path = f"{'platform' if is_platform else str(current_user.id)}/{file_id}.{ext}"
+
+    await asyncio.to_thread(upload_file, storage_path, data, content_type_for(ext))
+
+    tf = TextbookFile(
+        id=file_id,
+        textbook_id=textbook_id,
+        owner_student_id=owner_id,
+        filename=filename,
+        file_type=ext,
+        storage_path=storage_path,
+        file_size=len(data),
+    )
+    db.add(tf)
+    await db.commit()
+
+    return {
+        "file_id": file_id,
+        "filename": filename,
+        "file_type": ext,
+        "file_size": len(data),
+        "storage_path": storage_path,
+    }
+
+
+# ── 文件列表 ─────────────────────────────────────────────────────────
+
+@app.get("/v1/textbook-files")
+async def list_textbook_files(
+    textbook_id: Optional[str] = Query(None),
+    current_user: User = Depends(get_current_user),
+    db: AsyncSession = Depends(get_db),
+):
+    """
+    GET /v1/textbook-files?textbook_id=xxx
+    返回：某教材的平台预置文件 + 当前学生自传的文件。
+    """
+    conditions = []
+    from sqlalchemy import or_
+    if textbook_id:
+        # 平台预置（owner IS NULL） + 该学生自传
+        conditions.append(
+            or_(
+                (TextbookFile.textbook_id == textbook_id) & (TextbookFile.owner_student_id == None),  # noqa: E711
+                TextbookFile.owner_student_id == current_user.id,
+            )
+        )
+    else:
+        # 无 textbook_id：仅返回该学生自传的文件
+        conditions.append(TextbookFile.owner_student_id == current_user.id)
+
+    stmt = select(TextbookFile).where(*conditions).order_by(TextbookFile.uploaded_at.desc())
+    rows = (await db.execute(stmt)).scalars().all()
+    return [
+        {
+            "file_id": r.id,
+            "textbook_id": r.textbook_id,
+            "owner_student_id": str(r.owner_student_id) if r.owner_student_id else None,
+            "filename": r.filename,
+            "file_type": r.file_type,
+            "file_size": r.file_size,
+            "uploaded_at": r.uploaded_at.isoformat(),
+        }
+        for r in rows
+    ]
+
+
+# ── 文件内容下载 ──────────────────────────────────────────────────────
+
+@app.get("/v1/textbook-files/{file_id}/content")
+async def get_textbook_file_content(
+    file_id: str,
+    current_user: User = Depends(get_current_user),
+    db: AsyncSession = Depends(get_db),
+):
+    """
+    GET /v1/textbook-files/{file_id}/content — 下载文件 blob。
+    - 平台预置（owner_student_id IS NULL）：所有认证用户可读
+    - 自传文件：仅 owner 可读
+    """
+    tf = (await db.execute(select(TextbookFile).where(TextbookFile.id == file_id))).scalar_one_or_none()
+    if not tf:
+        raise HTTPException(status_code=404, detail="文件不存在")
+
+    # 权限校验
+    if tf.owner_student_id is not None and tf.owner_student_id != current_user.id:
+        raise HTTPException(status_code=403, detail="无权访问该文件")
+
+    try:
+        data = await asyncio.to_thread(download_file, tf.storage_path)
+    except FileNotFoundError:
+        raise HTTPException(status_code=404, detail="存储对象不存在")
+
+    ct = content_type_for(tf.file_type)
+    return Response(content=data, media_type=ct, headers={
+        "Content-Disposition": f'attachment; filename="{tf.filename}"',
+    })
+
+
+# ── 高亮 CRUD ────────────────────────────────────────────────────────
+
+class HighlightCreate(BaseModel):
+    file_id: str
+    color: str = "yellow"
+    text: str
+    note: Optional[str] = None
+    location_json: dict = {}
+
+
+class HighlightPatch(BaseModel):
+    color: Optional[str] = None
+    note: Optional[str] = None
+
+
+@app.post("/v1/highlights", status_code=201)
+async def create_highlight(
+    body: HighlightCreate,
+    current_user: User = Depends(get_current_user),
+    db: AsyncSession = Depends(get_db),
+):
+    tf = (await db.execute(select(TextbookFile).where(TextbookFile.id == body.file_id))).scalar_one_or_none()
+    if not tf:
+        raise HTTPException(status_code=404, detail="文件不存在")
+    # 仅 owner 或平台预置文件可高亮
+    if tf.owner_student_id is not None and tf.owner_student_id != current_user.id:
+        raise HTTPException(status_code=403, detail="无权访问该文件")
+
+    if body.color not in ("yellow", "green", "blue", "red"):
+        raise HTTPException(status_code=400, detail="color 必须是 yellow/green/blue/red 之一")
+
+    hl = Highlight(
+        id=_new_str_id(),
+        student_id=current_user.id,
+        file_id=body.file_id,
+        color=body.color,
+        highlighted_text=body.text,
+        note=body.note,
+        location_json=body.location_json,
+    )
+    db.add(hl)
+    await db.commit()
+    await db.refresh(hl)
+    return _hl_dict(hl)
+
+
+@app.get("/v1/highlights")
+async def list_highlights(
+    file_id: Optional[str] = Query(None),
+    current_user: User = Depends(get_current_user),
+    db: AsyncSession = Depends(get_db),
+):
+    stmt = select(Highlight).where(Highlight.student_id == current_user.id)
+    if file_id:
+        stmt = stmt.where(Highlight.file_id == file_id)
+    stmt = stmt.order_by(Highlight.created_at.desc())
+    rows = (await db.execute(stmt)).scalars().all()
+    return [_hl_dict(r) for r in rows]
+
+
+@app.patch("/v1/highlights/{highlight_id}")
+async def patch_highlight(
+    highlight_id: str,
+    body: HighlightPatch,
+    current_user: User = Depends(get_current_user),
+    db: AsyncSession = Depends(get_db),
+):
+    hl = (await db.execute(
+        select(Highlight).where(Highlight.id == highlight_id, Highlight.student_id == current_user.id)
+    )).scalar_one_or_none()
+    if not hl:
+        raise HTTPException(status_code=404, detail="高亮不存在")
+
+    if body.color is not None:
+        hl.color = body.color
+    if body.note is not None:
+        hl.note = body.note
+    hl.updated_at = datetime.now(timezone.utc)
+    await db.commit()
+    await db.refresh(hl)
+    return _hl_dict(hl)
+
+
+@app.delete("/v1/highlights/{highlight_id}", status_code=204)
+async def delete_highlight(
+    highlight_id: str,
+    current_user: User = Depends(get_current_user),
+    db: AsyncSession = Depends(get_db),
+):
+    hl = (await db.execute(
+        select(Highlight).where(Highlight.id == highlight_id, Highlight.student_id == current_user.id)
+    )).scalar_one_or_none()
+    if not hl:
+        raise HTTPException(status_code=404, detail="高亮不存在")
+    # 解除 reading_notes 的外键引用，再删除
+    await db.execute(
+        update(ReadingNote).where(ReadingNote.highlight_id == highlight_id).values(highlight_id=None)
+    )
+    await db.delete(hl)
+    await db.commit()
+
+
+def _hl_dict(hl: Highlight) -> dict:
+    return {
+        "id": hl.id,
+        "file_id": hl.file_id,
+        "student_id": str(hl.student_id),
+        "color": hl.color,
+        "text": hl.highlighted_text,
+        "note": hl.note,
+        "location_json": hl.location_json,
+        "created_at": hl.created_at.isoformat(),
+        "updated_at": hl.updated_at.isoformat(),
+    }
+
+
+# ── 独立笔记 CRUD ────────────────────────────────────────────────────
+
+class ReadingNoteCreate(BaseModel):
+    file_id: Optional[str] = None
+    title: Optional[str] = None
+    content: Optional[str] = None
+    highlight_id: Optional[str] = None
+
+
+class ReadingNotePatch(BaseModel):
+    title: Optional[str] = None
+    content: Optional[str] = None
+
+
+@app.post("/v1/reading-notes", status_code=201)
+async def create_reading_note(
+    body: ReadingNoteCreate,
+    current_user: User = Depends(get_current_user),
+    db: AsyncSession = Depends(get_db),
+):
+    if body.highlight_id:
+        hl = (await db.execute(
+            select(Highlight).where(Highlight.id == body.highlight_id, Highlight.student_id == current_user.id)
+        )).scalar_one_or_none()
+        if not hl:
+            raise HTTPException(status_code=404, detail="高亮不存在")
+
+    rn = ReadingNote(
+        id=_new_str_id(),
+        student_id=current_user.id,
+        file_id=body.file_id,
+        title=body.title,
+        content=body.content,
+        highlight_id=body.highlight_id,
+    )
+    db.add(rn)
+    await db.commit()
+    await db.refresh(rn)
+    return _rn_dict(rn)
+
+
+@app.get("/v1/reading-notes")
+async def list_reading_notes(
+    file_id: Optional[str] = Query(None),
+    current_user: User = Depends(get_current_user),
+    db: AsyncSession = Depends(get_db),
+):
+    stmt = (
+        select(ReadingNote)
+        .where(ReadingNote.student_id == current_user.id, ReadingNote.deleted_at == None)  # noqa: E711
+    )
+    if file_id:
+        stmt = stmt.where(ReadingNote.file_id == file_id)
+    stmt = stmt.order_by(ReadingNote.updated_at.desc())
+    rows = (await db.execute(stmt)).scalars().all()
+    return [_rn_dict(r) for r in rows]
+
+
+@app.patch("/v1/reading-notes/{note_id}")
+async def patch_reading_note(
+    note_id: str,
+    body: ReadingNotePatch,
+    current_user: User = Depends(get_current_user),
+    db: AsyncSession = Depends(get_db),
+):
+    rn = (await db.execute(
+        select(ReadingNote).where(
+            ReadingNote.id == note_id,
+            ReadingNote.student_id == current_user.id,
+            ReadingNote.deleted_at == None,  # noqa: E711
+        )
+    )).scalar_one_or_none()
+    if not rn:
+        raise HTTPException(status_code=404, detail="笔记不存在")
+
+    if body.title is not None:
+        rn.title = body.title
+    if body.content is not None:
+        rn.content = body.content
+    rn.updated_at = datetime.now(timezone.utc)
+    await db.commit()
+    await db.refresh(rn)
+    return _rn_dict(rn)
+
+
+@app.delete("/v1/reading-notes/{note_id}", status_code=204)
+async def delete_reading_note(
+    note_id: str,
+    current_user: User = Depends(get_current_user),
+    db: AsyncSession = Depends(get_db),
+):
+    rn = (await db.execute(
+        select(ReadingNote).where(
+            ReadingNote.id == note_id,
+            ReadingNote.student_id == current_user.id,
+            ReadingNote.deleted_at == None,  # noqa: E711
+        )
+    )).scalar_one_or_none()
+    if not rn:
+        raise HTTPException(status_code=404, detail="笔记不存在")
+    rn.deleted_at = datetime.now(timezone.utc)
+    await db.commit()
+
+
+def _rn_dict(rn: ReadingNote) -> dict:
+    return {
+        "id": rn.id,
+        "student_id": str(rn.student_id),
+        "file_id": rn.file_id,
+        "title": rn.title,
+        "content": rn.content,
+        "highlight_id": rn.highlight_id,
+        "created_at": rn.created_at.isoformat(),
+        "updated_at": rn.updated_at.isoformat(),
+    }

@@ -6,6 +6,7 @@ from typing import Optional
 from sqlalchemy import (
     String,
     Integer,
+    BigInteger,
     Float,
     Boolean,
     Date,
@@ -356,5 +357,48 @@ class SpeakingSession(Base):
     pronunciation_scores: Mapped[Optional[dict]] = mapped_column(JSONB)
     overall_progress: Mapped[Optional[float]] = mapped_column(Float)
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=text("now()"))
+
+
+# ===== 教材阅读器 =====
+
+class TextbookFile(Base):
+    __tablename__ = "textbook_files"
+
+    id: Mapped[str] = mapped_column(String(50), primary_key=True)
+    textbook_id: Mapped[Optional[str]] = mapped_column(String(50), nullable=True)  # FK to textbooks.id (DB-level only)
+    owner_student_id: Mapped[Optional[uuid.UUID]] = mapped_column(UUID(as_uuid=True), ForeignKey("users.id"), nullable=True)
+    filename: Mapped[str] = mapped_column(String(255), nullable=False)
+    file_type: Mapped[str] = mapped_column(String(10), nullable=False)
+    storage_path: Mapped[str] = mapped_column(String(500), nullable=False)
+    file_size: Mapped[Optional[int]] = mapped_column(BigInteger, nullable=True)
+    uploaded_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=text("now()"))
+
+
+class Highlight(Base):
+    __tablename__ = "highlights"
+
+    id: Mapped[str] = mapped_column(String(50), primary_key=True)
+    student_id: Mapped[uuid.UUID] = mapped_column(UUID(as_uuid=True), ForeignKey("users.id"), nullable=False)
+    file_id: Mapped[str] = mapped_column(String(50), ForeignKey("textbook_files.id"), nullable=False)
+    color: Mapped[str] = mapped_column(String(10), server_default="yellow", nullable=False)
+    highlighted_text: Mapped[str] = mapped_column("text", Text, nullable=False)
+    note: Mapped[Optional[str]] = mapped_column(Text, nullable=True)
+    location_json: Mapped[dict] = mapped_column(JSONB, server_default=text("'{}'::jsonb"), nullable=False)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=text("now()"))
+    updated_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=text("now()"))
+
+
+class ReadingNote(Base):
+    __tablename__ = "reading_notes"
+
+    id: Mapped[str] = mapped_column(String(50), primary_key=True)
+    student_id: Mapped[uuid.UUID] = mapped_column(UUID(as_uuid=True), ForeignKey("users.id"), nullable=False)
+    file_id: Mapped[Optional[str]] = mapped_column(String(50), ForeignKey("textbook_files.id"), nullable=True)
+    title: Mapped[Optional[str]] = mapped_column(String(200), nullable=True)
+    content: Mapped[Optional[str]] = mapped_column(Text, nullable=True)
+    highlight_id: Mapped[Optional[str]] = mapped_column(String(50), ForeignKey("highlights.id"), nullable=True)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=text("now()"))
+    updated_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=text("now()"))
+    deleted_at: Mapped[Optional[datetime]] = mapped_column(DateTime(timezone=True), nullable=True)
 
 

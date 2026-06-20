@@ -561,6 +561,32 @@ A → B → C → D → E → F
 
 ---
 
+---
+
+## P · 教材阅读器
+
+- [x] **P.1 后端数据层 + 文件存储**
+  ```
+  ✅ Alembic migration dff2ec15ff91：textbook_files / highlights / reading_notes 三表
+  ✅ SQLAlchemy ORM models 新增 TextbookFile / Highlight / ReadingNote
+  ✅ services/storage.py：MinIO textbooks bucket 上传/下载/删除
+  ✅ FastAPI 路由：
+     POST /v1/textbook-files/upload · GET /v1/textbook-files · GET /v1/textbook-files/{id}/content
+     POST/GET/PATCH/DELETE /v1/highlights
+     POST/GET/PATCH/DELETE /v1/reading-notes
+  ✅ 学生隔离：highlights/reading_notes 严格 student_id 锁定，A 看不到 B 的数据
+  ✅ 权限：平台预置文件(owner_student_id=NULL)所有学生可读/高亮；自传文件仅 owner
+  ✅ 软删除：reading_notes 用 deleted_at，不物理删除
+  ✅ tests/test_reader.py 18 测试全绿；pytest 83/83 通过，覆盖率 69%
+  ```
+
+- [ ] **P.2 前端阅读器 UI** ⏳ 等后端确认后启动
+  ```
+  Next.js App Router PDF/EPUB 阅读页 + @react-pdf-viewer/highlight 高亮交互
+  ```
+
+---
+
 ## 进度总览
 
 ```
