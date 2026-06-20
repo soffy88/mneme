@@ -494,6 +494,41 @@ A → B → C → D → E → F
 
 ---
 
+## N · 学科知识体系重构（subject → textbook → kc → ku 四层）
+
+- [x] **N.1 [P0] 阶段1：Schema 扩展**
+  ✅ 新建 textbooks / knowledge_clusters / knowledge_units 三张表；users 新增 textbook_id（可空外键）；清空旧 GDMATH-* KC粒度历史数据（kc_mastery 23行、bkt_priors 57行、interaction_events 23行）；pytest 65 全绿；顺手修 pyproject.toml pythonpath 缺失。（migration: 4ebc8f4ef067）
+
+- [ ] **N.2 [P1] 阶段2：种子数据导入** ⏳ 等 AII 数据交付
+  ```
+  AII 项目产出广东数学人教版 KU 清单后：
+  - 写 data/renjiao_g10_math_ku.py（textbooks + clusters + units 三级数据）
+  - 写 services/seed_ku.py upsert 到三张表
+  - 在 lifespan 注册 seed_ku()
+  ```
+
+- [ ] **N.3 [P1] 阶段3：API 层切换（ku_id 对外）** ⏳ 等阶段2完成
+  ```
+  - Alembic migration：knowledge_point 列改名为 ku_id（kc_mastery/bkt_priors/
+    interaction_events/mastery_snapshots）
+  - main.py/cognitive_service 等：knowledge_point → ku_id
+  - API 响应体/路径参数：kc_id → ku_id，/v1/kc → /v1/ku
+  - 前端 types/api-client 统一换 ku_id/kuId
+  ```
+
+- [ ] **N.4 [P2] 阶段4：用户教材绑定** ⏳ 等阶段3完成
+  ```
+  - 注册/个人设置：让学生选择所用教材（textbook_id）
+  - mastery/practice/mission 等接口按 textbook_id 过滤可见 KU
+  ```
+
+- [ ] **N.5 [P3] 阶段5：主库 KCState 重命名** ⏳ 独立主库决策
+  ```
+  KCState.kc_id → KCState.ku_id，主库版本 bump，需单独排期
+  ```
+
+---
+
 ## 进度总览
 
 ```
