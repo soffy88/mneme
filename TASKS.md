@@ -499,6 +499,38 @@ A → B → C → D → E → F
 - [x] **N.1 [P0] 阶段1：Schema 扩展**
   ✅ 新建 textbooks / knowledge_clusters / knowledge_units 三张表；users 新增 textbook_id（可空外键）；清空旧 GDMATH-* KC粒度历史数据（kc_mastery 23行、bkt_priors 57行、interaction_events 23行）；pytest 65 全绿；顺手修 pyproject.toml pythonpath 缺失。（migration: 4ebc8f4ef067）
 
+---
+
+## O · 四科学习页面前端骨架
+
+- [x] **O.1 [P0] 四科主页骨架 + 每日计划桩接口**
+  ✅ /subjects/{math,physics,english,chinese} 四个学科主页（SRL三阶段布局）；
+  SubjectHub 组件 + ComingSoon 占位组件；20个新模块占位页；
+  MnemeShell 新增"学科"tab；home页加学科入口2×2格；
+  GET /v1/daily-plan/{student_id}?subject=xxx 桩接口（格式对齐规则引擎）。
+
+- [ ] **O.2 [P1] daily-plan 规则引擎实现** ⏳ 等 N.2（KU种子数据）完成
+  ```
+  当前 /v1/daily-plan 返回固定桩数据。
+  未来规则引擎动态生成逻辑：
+  1. 读 kc_mastery WHERE fsrs_due <= now() → review 任务（按 priority 排序）
+  2. 读 kc_mastery WHERE p_mastery < 0.6 ORDER BY p_mastery LIMIT 1 → weak_practice
+  3. 读 wrong_questions WHERE reviewed=false → error_review
+  4. 读考试日期 → exam_countdown_days
+  5. 按 SRL科学 weighting 生成当日推荐任务列表
+  依赖：N.2 KU数据到位后，kc_mastery/wrong_questions 才有真实内容
+  ```
+
+---
+
+## N · 学科知识体系重构（subject → textbook → kc → ku 四层）
+
+- [x] **N.1 [P0] 阶段1：Schema 扩展**
+  ✅ 新建 textbooks / knowledge_clusters / knowledge_units 三张表；users 新增可空
+  textbook_id 外键；清空语义粒度错误的旧 GDMATH-* 数据（kc_mastery 23行、
+  bkt_priors 57行、interaction_events 23行）；pytest 65 全绿；顺手修 pyproject.toml 缺失
+  pythonpath 配置导致无 PYTHONPATH= 时测试不通过问题。（migration: 4ebc8f4ef067）
+
 - [ ] **N.2 [P1] 阶段2：种子数据导入** ⏳ 等 AII 数据交付
   ```
   AII 项目产出广东数学人教版 KU 清单后：

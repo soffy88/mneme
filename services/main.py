@@ -437,6 +437,60 @@ async def post_complete_mission(mission_id: UUID, db: AsyncSession = Depends(get
     return result
 
 
+# ===== §E.2 每日学科计划（桩接口） =====
+
+@app.get("/v1/daily-plan/{student_id}")
+async def get_daily_plan(
+    student_id: UUID,
+    subject: str = Query("math"),
+):
+    """GET /v1/daily-plan/{student_id}?subject=xxx — 每日学科学习计划。
+
+    当前返回结构化桩数据，格式已对齐未来规则引擎输出：
+    - review:        FSRS 到期知识点复习
+    - weak_practice: 掌握度低于阈值的专题练习
+    - error_review:  错题本待巩固题目
+
+    未来实现：规则引擎根据 FSRS到期 + kc_mastery + wrong_questions +
+    考试倒计时动态生成；见 TASKS.md § O.1。
+    """
+    subject_labels = {"math": "数学", "physics": "物理", "english": "英语", "chinese": "语文"}
+    label = subject_labels.get(subject, subject)
+
+    from datetime import date
+    return {
+        "date": date.today().isoformat(),
+        "subject": subject,
+        "exam_countdown_days": 350,
+        "tasks": [
+            {
+                "type": "review",
+                "title": "复习3个到期知识点",
+                "ku_ids": [],
+                "estimated_minutes": 15,
+                "priority": 1,
+                "reason": "FSRS到期",
+            },
+            {
+                "type": "weak_practice",
+                "title": f"薄弱专题：{label}核心考点",
+                "ku_ids": [],
+                "estimated_minutes": 20,
+                "priority": 2,
+                "reason": "掌握度低于60%",
+            },
+            {
+                "type": "error_review",
+                "title": "重做2道错题",
+                "ku_ids": [],
+                "estimated_minutes": 10,
+                "priority": 3,
+                "reason": "错题本待巩固",
+            },
+        ],
+    }
+
+
 # ===== §F.1 苏格拉底会话 =====
 
 @app.post("/v1/socratic/start")
