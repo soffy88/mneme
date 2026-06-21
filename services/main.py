@@ -1244,6 +1244,7 @@ async def list_textbook_files(
             "filename": r.filename,
             "file_type": r.file_type,
             "file_size": r.file_size,
+            "has_text_layer": r.has_text_layer,
             "uploaded_at": r.uploaded_at.isoformat(),
         }
         for r in rows

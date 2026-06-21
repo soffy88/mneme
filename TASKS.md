@@ -595,6 +595,19 @@ A → B → C → D → E → F
   ✅ tests/test_reader.py 18 测试全绿；pytest 83/83 通过，覆盖率 69%
   ```
 
+- [x] **P.1.5 平台教材 PDF 批量导入**
+  ```
+  ✅ scripts/scan_textbooks.py：扫描 ~/books/教材/ 126 PDF，解析学段/年级/学科/版本/册次
+     → scripts/textbook_import_plan.json（119 import / 7 skip）
+  ✅ Alembic migration 3a1f8b920c47：textbook_files 新增 has_text_layer boolean 列
+  ✅ scripts/import_textbooks.py：幂等导入，asyncpg + boto3，大文件 multipart 上传
+     PyMuPDF 前3页文字层检测（TEXT_MIN_CHARS=50）
+  ✅ 导入结果：119/119 成功（48s），textbooks 表 + MinIO textbooks bucket + textbook_files
+     有文字层 26 本 / 扫描版 93 本（has_text_layer=false）
+  ✅ API 验证：GET /v1/textbook-files?textbook_id=RENJIAO-G11-MATH-BX3 返回正确文件+has_text_layer
+  ✅ MinIO 抽查：119 个 object，RENJIAO-G11-MATH-BX3/人教版高中数学必修3.pdf 21MiB 已上传
+  ```
+
 - [ ] **P.2 前端阅读器 UI** ⏳ 等后端确认后启动
   ```
   Next.js App Router PDF/EPUB 阅读页 + @react-pdf-viewer/highlight 高亮交互

@@ -6,3 +6,9 @@ __pycache__/
 fix_essay.py
 patch_essay_v2.py
 restore_llm.py
+
+# 本地书库（不入 git）
+/home/*/books/
+*.pdf
+books/
+

@@ -373,6 +373,7 @@ class TextbookFile(Base):
     file_type: Mapped[str] = mapped_column(String(10), nullable=False)
     storage_path: Mapped[str] = mapped_column(String(500), nullable=False)
     file_size: Mapped[Optional[int]] = mapped_column(BigInteger, nullable=True)
+    has_text_layer: Mapped[Optional[bool]] = mapped_column(Boolean, nullable=True)
     uploaded_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=text("now()"))
 
 
