@@ -62,7 +62,10 @@ async def start_session(db: AsyncSession, question_id: uuid.UUID, student_id: uu
     metacog_options = []
     first_q = "请仔细审题，你认为这道题考察的是什么知识点？"
     if mode != "sprint":
-        caller = ProviderRegistry.get().llm() if ProviderRegistry._instance else None
+        try:
+            caller = ProviderRegistry.get().llm() if ProviderRegistry._instance else None
+        except Exception:
+            caller = None
         try:
             meta_res = await metacog_scaffold(
                 MetacogScaffoldInput(

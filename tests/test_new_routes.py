@@ -160,9 +160,21 @@ async def test_cold_start_socratic_state_serializable(client, student, db):
         "socratic_state": fake_state,
     }
 
+    from datetime import datetime, timezone
+    import services.mission_service as _mm
+
+    _noon = datetime(2026, 6, 22, 12, 0, 0, tzinfo=timezone.utc)
+    _orig = _mm.get_or_create_mission
+
+    async def _noon_mission(db, student_id, today=None, _now=None):
+        return await _orig(db, student_id, today=today, _now=_noon)
+
     with patch(
         "services.mission_service.cold_start_single",
         new=AsyncMock(return_value=fake_result),
+    ), patch(
+        "services.main.get_or_create_mission",
+        new=_noon_mission,
     ):
         resp = await client.get(f"/v1/missions/today/{student}")
 

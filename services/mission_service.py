@@ -29,13 +29,18 @@ def _to_jsonable(obj: Any) -> Any:
     return obj
 
 
-async def get_or_create_mission(db: AsyncSession, student_id: uuid.UUID, today: Optional[date] = None) -> dict:
+async def get_or_create_mission(
+    db: AsyncSession,
+    student_id: uuid.UUID,
+    today: Optional[date] = None,
+    _now: Optional[datetime] = None,
+) -> dict:
+    now = _now or datetime.now(timezone.utc)
     if today is None:
-        today = datetime.now(timezone.utc).date()
+        today = now.date()
 
     # 23:00 after → rest mission
-    hour = datetime.now(timezone.utc).hour
-    if hour >= 23:
+    if now.hour >= 23:
         return {"mission_type": "rest", "content": {}, "streak": await _get_streak(db, student_id)}
 
     # Check existing
