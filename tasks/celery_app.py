@@ -6,6 +6,7 @@ celery_app = Celery(
     "mneme",
     broker=settings.REDIS_URL,
     backend=settings.REDIS_URL,
+    include=["tasks.paper_tasks"],
 )
 celery_app.conf.update(
     task_serializer="json",
