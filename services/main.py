@@ -54,6 +54,7 @@ from services.models import (
     InteractionEvent, KCMastery, MasterySnapshot, Paper,
     ParentStudent, SocraticSession, User, UserRole, WrongQuestion,
     TextbookFile, Highlight, ReadingNote,
+    Textbook, KnowledgeCluster, KnowledgeUnit,
 )
 from services.storage import upload_file, download_file, content_type_for
 from data.guangdong_math_kc import KC_LIST, get_kc
@@ -303,6 +304,98 @@ async def get_kc_detail(kc_id: str):
     if not kc:
         raise HTTPException(status_code=404, detail="Knowledge Component not found")
     return kc
+
+# ===== §2b 知识单元接口（DB 版，替代旧 KC 字典）=====
+
+@app.get("/v1/knowledge-points")
+async def list_knowledge_points(
+    subject: Optional[str] = Query(None),
+    textbook_id: Optional[str] = Query(None),
+    cluster_id: Optional[str] = Query(None),
+    current_user: User = Depends(get_current_user),
+    db: AsyncSession = Depends(get_db),
+):
+    """
+    GET /v1/knowledge-points
+    查询知识单元，支持按 subject / textbook_id / cluster_id 筛选。
+    返回带 cluster 信息和全部 AII 字段的 KU 列表。
+    """
+    stmt = select(KnowledgeUnit, KnowledgeCluster, Textbook).join(
+        KnowledgeCluster, KnowledgeUnit.cluster_id == KnowledgeCluster.id
+    ).join(
+        Textbook, KnowledgeUnit.textbook_id == Textbook.id
+    )
+    if subject:
+        stmt = stmt.where(Textbook.subject == subject)
+    if textbook_id:
+        stmt = stmt.where(KnowledgeUnit.textbook_id == textbook_id)
+    if cluster_id:
+        stmt = stmt.where(KnowledgeUnit.cluster_id == cluster_id)
+    stmt = stmt.order_by(KnowledgeCluster.display_order, KnowledgeUnit.id)
+
+    rows = (await db.execute(stmt)).all()
+    return [
+        {
+            "id":                  ku.id,
+            "name":                ku.name,
+            "description":         ku.description,
+            "textbook_id":         ku.textbook_id,
+            "cluster_id":          ku.cluster_id,
+            "cluster_name":        kc.name,
+            "cluster_order":       kc.display_order,
+            "subject":             tb.subject,
+            "grade":               tb.grade,
+            "edition":             tb.edition,
+            "book_name":           tb.book_name,
+            "prerequisites":       ku.prerequisites,
+            "related_kus":         ku.related_kus,
+            "difficulty":          round(ku.difficulty, 4),
+            "exam_frequency":      ku.exam_frequency,
+            "question_types":      ku.question_types,
+            "ku_type":             ku.ku_type,
+            "curriculum_standard": ku.curriculum_standard,
+            "mastery_levels":      ku.mastery_levels,
+        }
+        for ku, kc, tb in rows
+    ]
+
+
+@app.get("/v1/knowledge-points/{ku_id}")
+async def get_knowledge_point(
+    ku_id: str,
+    current_user: User = Depends(get_current_user),
+    db: AsyncSession = Depends(get_db),
+):
+    """GET /v1/knowledge-points/{ku_id} — 单个 KU 详情。"""
+    row = (await db.execute(
+        select(KnowledgeUnit, KnowledgeCluster, Textbook).join(
+            KnowledgeCluster, KnowledgeUnit.cluster_id == KnowledgeCluster.id
+        ).join(
+            Textbook, KnowledgeUnit.textbook_id == Textbook.id
+        ).where(KnowledgeUnit.id == ku_id)
+    )).first()
+    if not row:
+        raise HTTPException(status_code=404, detail="KnowledgeUnit not found")
+    ku, kc, tb = row
+    return {
+        "id":                  ku.id,
+        "name":                ku.name,
+        "description":         ku.description,
+        "textbook_id":         ku.textbook_id,
+        "cluster_id":          ku.cluster_id,
+        "cluster_name":        kc.name,
+        "subject":             tb.subject,
+        "grade":               tb.grade,
+        "prerequisites":       ku.prerequisites,
+        "related_kus":         ku.related_kus,
+        "difficulty":          round(ku.difficulty, 4),
+        "exam_frequency":      ku.exam_frequency,
+        "question_types":      ku.question_types,
+        "ku_type":             ku.ku_type,
+        "curriculum_standard": ku.curriculum_standard,
+        "mastery_levels":      ku.mastery_levels,
+    }
+
 
 # ===== §3 试卷接口 =====
 

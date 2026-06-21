@@ -402,3 +402,42 @@ class ReadingNote(Base):
     deleted_at: Mapped[Optional[datetime]] = mapped_column(DateTime(timezone=True), nullable=True)
 
 
+# ===== 知识体系 =====
+
+class Textbook(Base):
+    __tablename__ = "textbooks"
+
+    id: Mapped[str]       = mapped_column(String(50),  primary_key=True)
+    subject: Mapped[str]  = mapped_column(String(20),  nullable=False)
+    grade: Mapped[str]    = mapped_column(String(10),  nullable=False)
+    edition: Mapped[str]  = mapped_column(String(30),  nullable=False)
+    book_name: Mapped[str] = mapped_column(String(100), nullable=False)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=text("now()"))
+
+
+class KnowledgeCluster(Base):
+    __tablename__ = "knowledge_clusters"
+
+    id: Mapped[str]           = mapped_column(String(80),  primary_key=True)
+    textbook_id: Mapped[str]  = mapped_column(String(50),  nullable=False)  # FK DB-level only
+    name: Mapped[str]         = mapped_column(String(100), nullable=False)
+    display_order: Mapped[int] = mapped_column(Integer, server_default=text("0"))
+    description: Mapped[Optional[str]] = mapped_column(Text, nullable=True)
+
+
+class KnowledgeUnit(Base):
+    __tablename__ = "knowledge_units"
+
+    id: Mapped[str]             = mapped_column(String(100), primary_key=True)
+    textbook_id: Mapped[str]    = mapped_column(String(50),  nullable=False)  # FK DB-level only
+    cluster_id: Mapped[str]     = mapped_column(String(80),  nullable=False)  # FK DB-level only
+    name: Mapped[str]           = mapped_column(String(200), nullable=False)
+    description: Mapped[Optional[str]]  = mapped_column(Text, nullable=True)
+    prerequisites: Mapped[list]         = mapped_column(JSONB, server_default=text("'[]'::jsonb"))
+    related_kus: Mapped[list]           = mapped_column(JSONB, server_default=text("'[]'::jsonb"))
+    difficulty: Mapped[float]           = mapped_column(Float, server_default=text("0.5"))
+    exam_frequency: Mapped[str]         = mapped_column(String(10), server_default=text("'mid'"))
+    question_types: Mapped[list]        = mapped_column(JSONB, server_default=text("'[]'::jsonb"))
+    ku_type: Mapped[str]                = mapped_column(String(20), server_default=text("'concept'"))
+    curriculum_standard: Mapped[Optional[str]] = mapped_column(Text, nullable=True)
+    mastery_levels: Mapped[list]        = mapped_column(JSONB, server_default=text("'[]'::jsonb"))

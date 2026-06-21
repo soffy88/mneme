@@ -1,0 +1,119 @@
+{
+  "textbook": {
+    "id": "renjiao-math-g10-a",
+    "subject": "math",
+    "grade": "高一",
+    "edition": "人教A版",
+    "book_name": "人教A版高中数学必修第一册"
+  },
+  "clusters": [
+    {
+      "id": "renjiao-math-g10-a-c01",
+      "name": "集合与常用逻辑用语",
+      "display_order": 1,
+      "description": "集合的基本概念与运算，逻辑联结词与充要条件"
+    },
+    {
+      "id": "renjiao-math-g10-a-c02",
+      "name": "函数与基本初等函数",
+      "display_order": 2,
+      "description": "函数概念、性质及幂函数/指数函数/对数函数"
+    }
+  ],
+  "units": [
+    {
+      "id": "renjiao-math-g10-a-ku001",
+      "textbook_id": "renjiao-math-g10-a",
+      "cluster_id": "renjiao-math-g10-a-c01",
+      "name": "集合的概念与表示",
+      "description": "理解集合的含义，掌握集合的表示方法（列举法、描述法、Venn图）",
+      "prerequisites": [],
+      "related_kus": ["renjiao-math-g10-a-ku002"],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": ["选择题", "填空题"],
+      "ku_type": "concept",
+      "curriculum_standard": "B4.1 了解集合的概念，能用自然语言、集合语言描述具体问题",
+      "mastery_levels": [
+        {"level": 1, "label": "认识", "desc": "能识别集合的基本概念"},
+        {"level": 2, "label": "理解", "desc": "能用列举法和描述法表示集合"},
+        {"level": 3, "label": "应用", "desc": "能用Venn图解决集合问题"}
+      ]
+    },
+    {
+      "id": "renjiao-math-g10-a-ku002",
+      "textbook_id": "renjiao-math-g10-a",
+      "cluster_id": "renjiao-math-g10-a-c01",
+      "name": "集合的基本运算",
+      "description": "掌握交集、并集、补集的定义与运算规律",
+      "prerequisites": ["renjiao-math-g10-a-ku001"],
+      "related_kus": [],
+      "difficulty": 0.45,
+      "exam_frequency": "high",
+      "question_types": ["选择题", "填空题", "解答题"],
+      "ku_type": "concept",
+      "curriculum_standard": "B4.2 能进行集合的基本运算（交、并、补），并能用Venn图表示",
+      "mastery_levels": [
+        {"level": 1, "label": "识别", "desc": "能判断两集合的交并补关系"},
+        {"level": 2, "label": "计算", "desc": "能正确完成集合运算"},
+        {"level": 3, "label": "综合", "desc": "能用集合运算解实际问题"}
+      ]
+    },
+    {
+      "id": "renjiao-math-g10-a-ku003",
+      "textbook_id": "renjiao-math-g10-a",
+      "cluster_id": "renjiao-math-g10-a-c01",
+      "name": "充分条件与必要条件",
+      "description": "理解充分条件、必要条件、充要条件的概念并能判断",
+      "prerequisites": ["renjiao-math-g10-a-ku001"],
+      "related_kus": [],
+      "difficulty": 0.55,
+      "exam_frequency": "high",
+      "question_types": ["选择题", "填空题"],
+      "ku_type": "concept",
+      "curriculum_standard": "B4.3 了解充分条件、必要条件和充要条件的意义",
+      "mastery_levels": [
+        {"level": 1, "label": "辨别", "desc": "能判断充分/必要条件"},
+        {"level": 2, "label": "应用", "desc": "能用充要条件证明命题"}
+      ]
+    },
+    {
+      "id": "renjiao-math-g10-a-ku004",
+      "textbook_id": "renjiao-math-g10-a",
+      "cluster_id": "renjiao-math-g10-a-c02",
+      "name": "函数的概念与表示",
+      "description": "理解函数的定义（映射视角），掌握定义域、值域、对应法则",
+      "prerequisites": [],
+      "related_kus": ["renjiao-math-g10-a-ku005"],
+      "difficulty": 0.4,
+      "exam_frequency": "high",
+      "question_types": ["选择题", "填空题", "解答题"],
+      "ku_type": "concept",
+      "curriculum_standard": "B5.1 理解函数的概念，会求函数的定义域和值域",
+      "mastery_levels": [
+        {"level": 1, "label": "认识", "desc": "能识别函数与非函数"},
+        {"level": 2, "label": "求解", "desc": "能求函数的定义域/值域"},
+        {"level": 3, "label": "建模", "desc": "能建立实际问题的函数模型"}
+      ]
+    },
+    {
+      "id": "renjiao-math-g10-a-ku005",
+      "textbook_id": "renjiao-math-g10-a",
+      "cluster_id": "renjiao-math-g10-a-c02",
+      "name": "指数函数与对数函数",
+      "description": "理解指数函数 y=aˣ 与对数函数 y=logₐx 的图像、性质及互为反函数关系",
+      "prerequisites": ["renjiao-math-g10-a-ku004"],
+      "related_kus": [],
+      "difficulty": 0.6,
+      "exam_frequency": "high",
+      "question_types": ["选择题", "填空题", "解答题"],
+      "ku_type": "concept",
+      "curriculum_standard": "B5.4 理解指数函数、对数函数的概念、图像和性质",
+      "mastery_levels": [
+        {"level": 1, "label": "记忆", "desc": "记住图像形态与单调性"},
+        {"level": 2, "label": "计算", "desc": "能解指数/对数方程不等式"},
+        {"level": 3, "label": "综合", "desc": "能解含指数对数的综合题"}
+      ]
+    }
+  ]
+}

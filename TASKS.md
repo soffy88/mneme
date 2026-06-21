@@ -531,12 +531,19 @@ A → B → C → D → E → F
   bkt_priors 57行、interaction_events 23行）；pytest 65 全绿；顺手修 pyproject.toml 缺失
   pythonpath 配置导致无 PYTHONPATH= 时测试不通过问题。（migration: 4ebc8f4ef067）
 
+- [x] **N.1.5 [P0] 阶段1.5：knowledge_units 字段补全 + 导入工具 + DB-backed API**
+  ✅ Alembic migration dd79083265b7：ALTER knowledge_units ADD 8 列（prerequisites/related_kus/
+  difficulty/exam_frequency/question_types/ku_type/curriculum_standard/mastery_levels）+ 3索引；
+  scripts/import_ku_package.py 幂等导入脚本（--dry-run）；scripts/sample_ku_package.json（人教版高一
+  数学 2 cluster / 5 KU）；GET /v1/knowledge-points?subject/textbook_id/cluster_id + GET
+  /v1/knowledge-points/{ku_id} 两端点；Textbook/KnowledgeCluster/KnowledgeUnit ORM 模型；
+  9 个新测试全绿；92/92 pytest 全绿，覆盖率 70%。
+
 - [ ] **N.2 [P1] 阶段2：种子数据导入** ⏳ 等 AII 数据交付
   ```
   AII 项目产出广东数学人教版 KU 清单后：
-  - 写 data/renjiao_g10_math_ku.py（textbooks + clusters + units 三级数据）
-  - 写 services/seed_ku.py upsert 到三张表
-  - 在 lifespan 注册 seed_ku()
+  - 用 scripts/import_ku_package.py 批量导入完整 KU 包
+  - 可在 lifespan 注册 seed_ku() 保证开发环境自动有数据
   ```
 
 - [ ] **N.3 [P1] 阶段3：API 层切换（ku_id 对外）** ⏳ 等阶段2完成
