@@ -509,17 +509,13 @@ A → B → C → D → E → F
   MnemeShell 新增"学科"tab；home页加学科入口2×2格；
   GET /v1/daily-plan/{student_id}?subject=xxx 桩接口（格式对齐规则引擎）。
 
-- [ ] **O.2 [P1] daily-plan 规则引擎实现** ⏳ 等 N.2（KU种子数据）完成
-  ```
-  当前 /v1/daily-plan 返回固定桩数据。
-  未来规则引擎动态生成逻辑：
-  1. 读 kc_mastery WHERE fsrs_due <= now() → review 任务（按 priority 排序）
-  2. 读 kc_mastery WHERE p_mastery < 0.6 ORDER BY p_mastery LIMIT 1 → weak_practice
-  3. 读 wrong_questions WHERE reviewed=false → error_review
-  4. 读考试日期 → exam_countdown_days
-  5. 按 SRL科学 weighting 生成当日推荐任务列表
-  依赖：N.2 KU数据到位后，kc_mastery/wrong_questions 才有真实内容
-  ```
+- [x] **O.2 [P1] daily-plan 规则引擎实现**
+  ✅ services/daily_plan_service.py：四优先级规则引擎（P1 FSRS到期/P2 错题/P3 薄弱/P4 新知识点）；
+  P4 遵守 prerequisites（前置掌握度 < 60% 则不推）；GET /v1/daily-plan/{id} 多科汇总（无 subject）/
+  单科（?subject=xxx）双视图，带 auth；types/api.ts DailyPlanRes 更新（新增 new_learn/subjects_summary/
+  subject per task，exam_countdown_days nullable）；前端首页 home 页加全科任务汇总卡，学科页 SubjectHub
+  加 new_learn 任务类型；17 新测试全绿；109/109 pytest 全绿；Next.js build clean。
+  待办：users 表加 exam_date 字段后 exam_countdown_days 再接入（已留接口，现返回 null）。
 
 ---
 
