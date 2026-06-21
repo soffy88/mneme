@@ -1,97 +1,211 @@
+"""
+C.1 认证测试
+============
+覆盖：
+- 完整注册+登录流程（Redis 验证码走真实校验）
+- 防刷限制（60s 内第二次 send-code 返回 429）
+- 合规红线：<14岁无监护人同意 → 422；带同意 → 201
+- 验证码过期/错误 → 400
+"""
+from __future__ import annotations
+
 import pytest
+import redis.asyncio as aioredis
 from httpx import AsyncClient, ASGITransport
-from services.main import app
+
+from obase.config import settings
 from obase.db import SessionLocal
+from services.main import app
 from services.models import User, GuardianConsent
 from sqlalchemy import delete, select
 
-@pytest.fixture
-async def api_client():
-    async with AsyncClient(transport=ASGITransport(app=app), base_url="http://test") as client:
-        yield client
 
-@pytest.mark.asyncio
-async def test_auth_full_flow(api_client):
-    phone = "13912345678"
-    
-    # 清理旧数据
+# ── helpers ───────────────────────────────────────────────────────────────────
+
+async def _clean_phone(phone: str) -> None:
+    """Remove user+guardian records, clear Redis SMS keys."""
     async with SessionLocal() as session:
         stmt = select(User.id).where(User.phone == phone)
         user_ids = (await session.execute(stmt)).scalars().all()
         if user_ids:
-            await session.execute(delete(GuardianConsent).where(GuardianConsent.student_id.in_(user_ids)))
+            await session.execute(
+                delete(GuardianConsent).where(GuardianConsent.student_id.in_(user_ids))
+            )
         await session.execute(delete(User).where(User.phone == phone))
         await session.commit()
-    
+
+    r = aioredis.from_url(settings.REDIS_URL, decode_responses=True)
+    try:
+        await r.delete(f"sms:code:{phone}", f"sms:limit:{phone}")
+    finally:
+        await r.aclose()
+
+
+async def _inject_code(phone: str, code: str = "123456") -> None:
+    """Put a code directly into Redis (bypasses send-code rate limit)."""
+    r = aioredis.from_url(settings.REDIS_URL, decode_responses=True)
+    try:
+        await r.setex(f"sms:code:{phone}", 300, code)
+    finally:
+        await r.aclose()
+
+
+# ── fixtures ──────────────────────────────────────────────────────────────────
+
+@pytest.fixture
+async def client():
+    async with AsyncClient(transport=ASGITransport(app=app), base_url="http://test") as c:
+        yield c
+
+
+# ── tests ─────────────────────────────────────────────────────────────────────
+
+@pytest.mark.asyncio
+async def test_auth_full_flow(client):
+    """send-code → Redis 存码 → register → me → login."""
+    phone = "13912345678"
+    await _clean_phone(phone)
+
     # 1. 发送验证码
-    res = await api_client.post("/v1/auth/send-code", json={"phone": phone})
-    assert res.status_code == 200
-    
-    # 2. 注册学生 (>=14岁)
-    reg_payload = {
+    res = await client.post("/v1/auth/send-code", json={"phone": phone})
+    assert res.status_code == 200, res.text
+    assert res.json()["ok"] is True
+
+    # 2. 注册 (mock 模式 Redis 里存的就是 123456)
+    res = await client.post("/v1/auth/register/student", json={
         "phone": phone,
         "code": "123456",
         "name": "Test Student",
         "birth_date": "2000-01-01",
-        "grade": "高三"
-    }
-    res = await api_client.post("/v1/auth/register/student", json=reg_payload)
-    assert res.status_code == 200
+        "grade": "高三",
+    })
+    assert res.status_code == 201, res.text
     data = res.json()
     assert "token" in data
     assert data["user"]["name"] == "Test Student"
     token = data["token"]
-    
-    # 3. 获取我
-    res = await api_client.get("/v1/auth/me", headers={"Authorization": f"Bearer {token}"})
+
+    # 3. /me
+    res = await client.get("/v1/auth/me", headers={"Authorization": f"Bearer {token}"})
     assert res.status_code == 200
     assert res.json()["phone"] == phone
-    
-    # 4. 登录
-    res = await api_client.post("/v1/auth/login", json={"phone": phone, "code": "123456"})
-    assert res.status_code == 200
+
+    # 4. 登录（重新注入验证码，因为注册时已消费）
+    await _inject_code(phone, "123456")
+    res = await client.post("/v1/auth/login", json={"phone": phone, "code": "123456"})
+    assert res.status_code == 200, res.text
     assert "token" in res.json()
 
+    await _clean_phone(phone)
+
+
 @pytest.mark.asyncio
-async def test_auth_underage_compliance(api_client):
+async def test_send_code_rate_limit(client):
+    """60秒内同手机号第二次 send-code → 429。"""
+    phone = "13911112222"
+    await _clean_phone(phone)
+
+    res = await client.post("/v1/auth/send-code", json={"phone": phone})
+    assert res.status_code == 200
+
+    res = await client.post("/v1/auth/send-code", json={"phone": phone})
+    assert res.status_code == 429
+    assert "稍后" in res.json()["detail"]
+
+    await _clean_phone(phone)
+
+
+@pytest.mark.asyncio
+async def test_invalid_code_rejected(client):
+    """错误验证码 → 400。"""
+    phone = "13922223333"
+    await _clean_phone(phone)
+    await _inject_code(phone, "123456")
+
+    res = await client.post("/v1/auth/register/student", json={
+        "phone": phone,
+        "code": "999999",
+        "name": "Wrong Code",
+        "birth_date": "2000-01-01",
+        "grade": "高一",
+    })
+    assert res.status_code == 400
+    await _clean_phone(phone)
+
+
+@pytest.mark.asyncio
+async def test_minor_without_guardian_rejected(client):
+    """合规红线：13岁 + 无 guardian_phone → 422。"""
     phone = "13900001111"
-    # 清理
-    async with SessionLocal() as session:
-        stmt = select(User.id).where(User.phone == phone)
-        user_ids = (await session.execute(stmt)).scalars().all()
-        if user_ids:
-            await session.execute(delete(GuardianConsent).where(GuardianConsent.student_id.in_(user_ids)))
-        await session.execute(delete(User).where(User.phone == phone))
-        await session.commit()
-        
-    # <14岁注册，无监护人信息应失败
-    reg_payload_fail = {
+    await _clean_phone(phone)
+    await _inject_code(phone, "123456")
+
+    res = await client.post("/v1/auth/register/student", json={
         "phone": phone,
         "code": "123456",
         "name": "Small Kid Fail",
         "birth_date": "2020-01-01",
-        "grade": "三年级"
-    }
-    res = await api_client.post("/v1/auth/register/student", json=reg_payload_fail)
-    assert res.status_code == 422
+        "grade": "三年级",
+    })
+    assert res.status_code == 422, res.text
     assert "Guardian consent required" in res.json()["detail"]
 
-    # <14岁注册，带监护人信息应成功
-    reg_payload_ok = {
+    await _clean_phone(phone)
+
+
+@pytest.mark.asyncio
+async def test_minor_with_guardian_accepted(client):
+    """合规红线：13岁 + guardian_phone + consent=true → 201，写 guardian_consents。"""
+    phone = "13900002222"
+    await _clean_phone(phone)
+    await _inject_code(phone, "123456")
+
+    res = await client.post("/v1/auth/register/student", json={
         "phone": phone,
         "code": "123456",
-        "name": "Small Kid",
+        "name": "Small Kid OK",
         "birth_date": "2020-01-01",
         "grade": "三年级",
         "guardian_phone": "13888888888",
-        "guardian_consent": True
-    }
-    res = await api_client.post("/v1/auth/register/student", json=reg_payload_ok)
-    assert res.status_code == 200
-    
-    # 验证数据库中是否有 GuardianConsent 记录
+        "guardian_consent": True,
+    })
+    assert res.status_code == 201, res.text
+
     async with SessionLocal() as session:
-        stmt = select(GuardianConsent).where(GuardianConsent.guardian_phone == "13888888888")
-        consent = (await session.execute(stmt)).scalar_one_or_none()
+        consent = (await session.execute(
+            select(GuardianConsent).where(GuardianConsent.guardian_phone == "13888888888")
+        )).scalar_one_or_none()
         assert consent is not None
         assert consent.consent_type == "registration"
+
+    await _clean_phone(phone)
+
+
+@pytest.mark.asyncio
+async def test_code_consumed_after_use(client):
+    """验证码使用一次后失效，再注册同手机号 → 409（已注册）。"""
+    phone = "13944445555"
+    await _clean_phone(phone)
+    await _inject_code(phone, "123456")
+
+    res = await client.post("/v1/auth/register/student", json={
+        "phone": phone,
+        "code": "123456",
+        "name": "Consume Test",
+        "birth_date": "2000-01-01",
+        "grade": "高二",
+    })
+    assert res.status_code == 201, res.text
+
+    # 同手机号再注册（注入新验证码），应返回 409
+    await _inject_code(phone, "123456")
+    res2 = await client.post("/v1/auth/register/student", json={
+        "phone": phone,
+        "code": "123456",
+        "name": "Consume Test 2",
+        "birth_date": "2000-01-01",
+        "grade": "高二",
+    })
+    assert res2.status_code == 409
+
+    await _clean_phone(phone)

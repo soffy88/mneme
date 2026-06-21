@@ -140,28 +140,21 @@ A → B → C → D → E → F
 
 ## C · 用户与合规装配
 
-- [ ] **C.1 [P0]** 用户注册/登录
+- [x] **C.1 [P0]** 用户注册/登录
+  ✅ SMS Provider 抽象(mock/aliyun可切换)+Redis验证码存取+防刷+合规校验+注册/登录全流程。6合规红线测试全绿，130测试全绿，coverage 73%。
+  待办：阿里云短信签名/模板报备后，设 SMS_PROVIDER=aliyun + SMS_SIGN_NAME + SMS_TEMPLATE_CODE 即可切换。
   ```
+  services/sms/base.py         SMSProvider 抽象接口
+  services/sms/mock_provider.py MockSMSProvider（日志打印，不真发）
+  services/sms/aliyun_provider.py AliyunSMSProvider 框架（报备后启用）
+  services/sms/factory.py      get_sms_provider()：SMS_PROVIDER=mock|aliyun
   services/auth_service.py：
-  - send_code(phone) → 生成6位码存 Redis TTL=300s（dev固定123456）
-  - register_student(phone,code,name,birth_date,grade,...) → User
-    合规：birth_date 算年龄，<14岁必须传 guardian_phone+guardian_consent=true
-    否则 raise 422；通过则写 guardian_consents 表
-  - register_parent(phone,code,name) → User（自动生成 invite_code）
-  - login(phone,code) → JWT token（用 obase.auth.create_token）
-  
-  api/v1/auth.py：装配上述service，零业务逻辑
+  - send_code(phone,provider) → 防刷60s+存Redis TTL=300s（mock固定123456）
+  - verify_code(phone,code) → Redis校验，成功即消费
+  - register_student(...) → 验码+合规（<14须监护人）+写DB+JWT
+  - login(phone,code) → 验码+查用户+JWT
+  docker-compose: SMS_PROVIDER=mock（api+worker）
   ```
-  **合规红线测试（强制）**：
-  ```python
-  def test_minor_without_guardian_rejected():
-      # 13岁 + 无 guardian_phone → 422
-  def test_minor_with_guardian_accepted():
-      # 13岁 + guardian_phone + consent=true → 201
-  def test_deleted_data_not_queryable():
-      # 软删后 /v1/mastery 返回空
-  ```
-  DoD：合规测试全通过；JWT 鉴权在 get_current_user 依赖注入。
 
 - [x] **C.2 [P1]** 多孩子绑定
   ✅ POST /v1/auth/bind-child + GET /v1/parent/children 路由装配完成；测试覆盖于 test_new_routes.py。

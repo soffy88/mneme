@@ -1,6 +1,6 @@
 from obase.provider_registry import ProviderRegistry
 from pydantic import BaseModel
-from fastapi import FastAPI, Depends, HTTPException, Query, UploadFile, File, Form, Response
+from fastapi import FastAPI, Depends, HTTPException, Query, UploadFile, File, Form, Response, Request
 from fastapi.responses import StreamingResponse
 from fastapi.security import OAuth2PasswordBearer
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -22,15 +22,9 @@ from obase.prior_provider import PriorProvider
 from obase.llm import register_default_providers
 from obase.auth import decode_access_token
 from omodul.cognitive import InteractionInput
-from omodul.auth import (
-    send_code_workflow,
-    register_student_workflow,
-    login_workflow,
-    AuthConfig,
-    SendCodeInput,
-    RegisterStudentInput,
-    LoginInput
-)
+from omodul.auth import SendCodeInput, RegisterStudentInput, LoginInput
+import services.auth_service as auth_service
+from services.sms import get_sms_provider
 from omodul.paper import (
     upload_paper_workflow,
     PaperConfig,
@@ -137,7 +131,14 @@ async def lifespan(app: FastAPI):
     ProviderRegistry.register("asr", "default", MockASRCaller())
     ProviderRegistry.register("tts", "default", MockTTSCaller())
 
+    # SMS provider (mock by default, switch to aliyun after 报备)
+    import services.main as _self
+    _self._sms_provider = get_sms_provider()
+    logger.info(f"SMS provider: {type(_self._sms_provider).__name__}")
+
     yield
+
+_sms_provider = get_sms_provider()  # module-level default; replaced in lifespan
 
 app = FastAPI(title="Mneme API", version="0.1.0", lifespan=lifespan)
 
@@ -157,44 +158,44 @@ async def root():
 # ===== §8 认证 API =====
 
 @app.post("/v1/auth/send-code")
-async def post_send_code(
-    payload: SendCodeInput
-):
-    """
-    POST /v1/auth/send-code
-    发送短信验证码（dev mock）。
-    """
-    config = AuthConfig()
-    result = await send_code_workflow(config, payload)
-    return result["findings"]
+async def post_send_code(payload: SendCodeInput):
+    """POST /v1/auth/send-code — 发送短信验证码，存 Redis TTL=5min，60s防刷。"""
+    import services.main as _self
+    result = await auth_service.send_code(payload.phone, _self._sms_provider)
+    if not result["ok"]:
+        raise HTTPException(status_code=429, detail=result["message"])
+    return result
 
-@app.post("/v1/auth/register/student")
+
+@app.post("/v1/auth/register/student", status_code=201)
 async def post_register_student(
     payload: RegisterStudentInput,
-    db: AsyncSession = Depends(get_db)
+    db: AsyncSession = Depends(get_db),
 ):
-    """注册学生并返回 Token。"""
-    config = AuthConfig()
-    result = await register_student_workflow(config, payload, db)
-    if result["status"] == "failed":
-        status_code = 400
-        if result["findings"] and isinstance(result["findings"], dict):
-            status_code = result["findings"].get("error_code", 400)
-        raise HTTPException(status_code=status_code, detail=result["error"])
+    """注册学生：Redis验证码校验 + 合规校验 + 写库 + 返回JWT。"""
+    result = await auth_service.register_student(
+        db=db,
+        phone=payload.phone,
+        code=payload.code,
+        name=payload.name,
+        birth_date=payload.birth_date,
+        grade=payload.grade,
+        guardian_phone=payload.guardian_phone,
+        guardian_consent=payload.guardian_consent,
+    )
+    if "error" in result:
+        raise HTTPException(status_code=result["error_code"], detail=result["error"])
     await db.commit()
-    return result["findings"]
+    return result
+
 
 @app.post("/v1/auth/login")
-async def post_login(
-    payload: LoginInput,
-    db: AsyncSession = Depends(get_db)
-):
-    """登录并返回 Token。"""
-    config = AuthConfig()
-    result = await login_workflow(config, payload, db)
-    if result["status"] == "failed":
-        raise HTTPException(status_code=400, detail=result["error"])
-    return result["findings"]
+async def post_login(payload: LoginInput, db: AsyncSession = Depends(get_db)):
+    """登录：Redis验证码校验 → JWT。"""
+    result = await auth_service.login(db=db, phone=payload.phone, code=payload.code)
+    if "error" in result:
+        raise HTTPException(status_code=result["error_code"], detail=result["error"])
+    return result
 
 @app.get("/v1/auth/me")
 async def get_me(

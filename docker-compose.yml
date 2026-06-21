@@ -56,6 +56,9 @@ services:
       MINIO_SECRET_KEY: minioadmin
       MINIO_BUCKET: mneme
       DEEPSEEK_API_KEY: ${DEEPSEEK_API_KEY}
+      SMS_PROVIDER: mock
+      # SMS_SIGN_NAME: ""        # 阿里云短信签名（报备后填写）
+      # SMS_TEMPLATE_CODE: ""    # 阿里云短信模板CODE（报备后填写）
     volumes:
       - .:/app
     networks:
@@ -83,6 +86,7 @@ services:
       MINIO_SECRET_KEY: minioadmin
       MINIO_BUCKET: mneme
       DEEPSEEK_API_KEY: ${DEEPSEEK_API_KEY}
+      SMS_PROVIDER: mock
     volumes:
       - .:/app
     depends_on:
