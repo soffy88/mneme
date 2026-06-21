@@ -4,7 +4,7 @@ from fastapi import FastAPI, Depends, HTTPException, Query, UploadFile, File, Fo
 from fastapi.responses import StreamingResponse
 from fastapi.security import OAuth2PasswordBearer
 from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy import select, update
+from sqlalchemy import select, update, or_
 from uuid import UUID
 import uuid
 from typing import Optional
@@ -1087,21 +1087,19 @@ async def list_textbook_files(
     GET /v1/textbook-files?textbook_id=xxx
     返回：某教材的平台预置文件 + 当前学生自传的文件。
     """
-    conditions = []
-    from sqlalchemy import or_
     if textbook_id:
-        # 平台预置（owner IS NULL） + 该学生自传
-        conditions.append(
+        # 传 textbook_id：该教材的平台预置文件 + 学生在该教材下自传的文件
+        stmt = select(TextbookFile).where(
             or_(
                 (TextbookFile.textbook_id == textbook_id) & (TextbookFile.owner_student_id == None),  # noqa: E711
-                TextbookFile.owner_student_id == current_user.id,
+                (TextbookFile.textbook_id == textbook_id) & (TextbookFile.owner_student_id == current_user.id),
             )
-        )
+        ).order_by(TextbookFile.uploaded_at.desc())
     else:
-        # 无 textbook_id：仅返回该学生自传的文件
-        conditions.append(TextbookFile.owner_student_id == current_user.id)
-
-    stmt = select(TextbookFile).where(*conditions).order_by(TextbookFile.uploaded_at.desc())
+        # 不传 textbook_id：当前学生自传的所有文件（含无 textbook_id 的）
+        stmt = select(TextbookFile).where(
+            TextbookFile.owner_student_id == current_user.id
+        ).order_by(TextbookFile.uploaded_at.desc())
     rows = (await db.execute(stmt)).scalars().all()
     return [
         {
