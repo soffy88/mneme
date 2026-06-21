@@ -70,7 +70,13 @@ async def send_code(phone: str, provider) -> dict:
 # ── 验证码校验 ────────────────────────────────────────────────────────────────
 
 async def verify_code(phone: str, code: str) -> bool:
-    """从 Redis 校验验证码，成功则消费（删除）。"""
+    """从 Redis 校验验证码，成功则消费（删除）。
+    mock 模式下 MOCK_CODE 直接通过，无需先调 send-code。
+    """
+    # mock 万能码旁路——仅限非 aliyun 模式，生产环境此分支永远不走
+    if _is_mock() and code == MOCK_CODE:
+        return True
+
     r = _redis()
     try:
         stored = await r.get(f"sms:code:{phone}")
