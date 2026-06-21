@@ -492,6 +492,25 @@ A → B → C → D → E → F
 - [x] **M.3 [P0] 英语口语陪练**
   - [ ] **M.3.1 [PENDING] 阿里云口语评测真实key接入 — 等用户提供AccessKey**
 
+- [x] **M.4 [P0] 物理受力分析引导**
+  ✅ oskill._physics_force_analysis_guide（ForceAnalysisResult，红线二次检测：检测方程/受力图泄露模式）；
+  omodul.force_analysis_workflow（ForceAnalysisConfig/ForceAnalysisInput，标准签名）；
+  services/physics_service.py（start_force_analysis / force_analysis_message_stream SSE）；
+  POST /v1/physics/force-analysis/start + /message（auth required）；
+  Alembic migration c8a2f31e9d05：SocraticMode 新增 force_analysis 值；
+  前端 /subjects/physics/force-analysis/page.tsx（题目输入→引导对话，equation_ready 徽章）；
+  红线测试 test_force_analysis_never_gives_answer + 16条关联测试，126/126 全绿，覆盖率73%。
+
+- [x] **M.5 [P0] 阅读理解引导（英语/语文）**
+  ✅ oskill._reading_comprehension_guide（ReadingGuideResult，中英双语统，红线二次检测："答案是/the answer is"拦截）；
+  omodul.reading_guide_workflow（ReadingGuideConfig/ReadingGuideInput，subject 字段透传）；
+  services/reading_guide_service.py（start_reading_guide / reading_guide_message_stream SSE）；
+  POST /v1/reading/guide/start + /message（auth required，subject=chinese/english）；
+  Alembic migration c8a2f31e9d05：SocraticMode 新增 reading_guide 值（与M.4共享）；
+  前端 /subjects/english/reading/page.tsx（英文引导，located_passage 徽章）；
+  前端 /subjects/chinese/reading/page.tsx（中文引导，已定位原文 徽章）；
+  红线测试 test_reading_guide_never_gives_answer，lib/api-client.ts 新增 startReadingGuide/readingGuideStream。
+
 ---
 
 ## N · 学科知识体系重构（subject → textbook → kc → ku 四层）

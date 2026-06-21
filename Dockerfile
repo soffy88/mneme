@@ -25,8 +25,8 @@ RUN uv pip install --system \
     /app/platform/omodul
 # obase  @ v0.15.9
 # oprim  @ v3.10.12
-# oskill @ v3.25.2
-# omodul @ v1.29.2
+# oskill @ v3.25.12
+# omodul @ v1.30.7
 
 # Copy mneme dependency files and install base deps
 COPY mneme/requirements.txt .

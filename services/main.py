@@ -1074,6 +1074,81 @@ async def get_speaking_history(
     ]
 
 
+# ===== §M.4 受力分析引导（物理）=====
+
+from services.physics_service import start_force_analysis, force_analysis_message_stream
+
+
+@app.post("/v1/physics/force-analysis/start")
+async def post_force_analysis_start(
+    question_text: str = Query(...),
+    current_user: User = Depends(get_current_user),
+    db: AsyncSession = Depends(get_db),
+):
+    """POST /v1/physics/force-analysis/start — 开始受力分析引导会话。
+
+    返回开场引导问（苏格拉底式，不含答案/受力图）。
+    """
+    result = await start_force_analysis(db, question_text, current_user.id)
+    return result
+
+
+@app.post("/v1/physics/force-analysis/message")
+async def post_force_analysis_message(
+    session_id: UUID = Query(...),
+    message: str = Query(...),
+    current_user: User = Depends(get_current_user),
+    db: AsyncSession = Depends(get_db),
+):
+    """POST /v1/physics/force-analysis/message — 会话中的学生回复（SSE 流式）。
+
+    返回下一个引导问题；equation_ready=true 时可转交 solve_* 列方程。
+    """
+    async def event_stream():
+        async for chunk in force_analysis_message_stream(db, session_id, message):
+            yield chunk
+
+    from fastapi.responses import StreamingResponse
+    return StreamingResponse(event_stream(), media_type="text/event-stream")
+
+
+# ===== §M.5 阅读理解引导（英语/语文）=====
+
+from services.reading_guide_service import start_reading_guide, reading_guide_message_stream
+
+
+@app.post("/v1/reading/guide/start")
+async def post_reading_guide_start(
+    article_text: str = Query(...),
+    question: str = Query(...),
+    subject: str = Query("chinese"),
+    current_user: User = Depends(get_current_user),
+    db: AsyncSession = Depends(get_db),
+):
+    """POST /v1/reading/guide/start — 开始阅读理解引导会话。
+
+    subject: "chinese" 或 "english"。返回开场引导问（不含答案）。
+    """
+    result = await start_reading_guide(db, article_text, question, subject, current_user.id)
+    return result
+
+
+@app.post("/v1/reading/guide/message")
+async def post_reading_guide_message(
+    session_id: UUID = Query(...),
+    message: str = Query(...),
+    current_user: User = Depends(get_current_user),
+    db: AsyncSession = Depends(get_db),
+):
+    """POST /v1/reading/guide/message — 会话中的学生回复（SSE 流式）。"""
+    async def event_stream():
+        async for chunk in reading_guide_message_stream(db, session_id, message):
+            yield chunk
+
+    from fastapi.responses import StreamingResponse
+    return StreamingResponse(event_stream(), media_type="text/event-stream")
+
+
 # ===== §教材阅读器 — 文件/高亮/笔记 =====
 
 

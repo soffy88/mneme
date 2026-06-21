@@ -56,6 +56,8 @@ class SocraticMode(str, enum.Enum):
     deep = "deep"
     mixed = "mixed"
     sprint = "sprint"
+    force_analysis = "force_analysis"
+    reading_guide = "reading_guide"
 
 class SocraticOutcome(str, enum.Enum):
     success = "success"
