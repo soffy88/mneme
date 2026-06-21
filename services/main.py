@@ -4,7 +4,7 @@ from fastapi import FastAPI, Depends, HTTPException, Query, UploadFile, File, Fo
 from fastapi.responses import StreamingResponse
 from fastapi.security import OAuth2PasswordBearer
 from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy import select, update, or_
+from sqlalchemy import func, select, update, or_
 from uuid import UUID
 import uuid
 from typing import Optional
@@ -703,6 +703,54 @@ async def get_lesson(question_id: UUID, db: AsyncSession = Depends(get_db)):
 
 
 # ===== §I.1 变式题 =====
+
+@app.get("/v1/question-bank")
+async def list_question_bank(
+    subject: Optional[str] = Query(None),
+    needs_image: Optional[bool] = Query(None),
+    ku_id: Optional[str] = Query(None),
+    limit: int = Query(50, le=200),
+    offset: int = Query(0),
+    db: AsyncSession = Depends(get_db),
+):
+    """GET /v1/question-bank — 公共题库查询（student_id IS NULL）。
+
+    ?subject=math         按学科筛选
+    ?needs_image=false    只返回纯文本题（专题练习用）
+    ?ku_id=...            按已匹配KU筛选
+    """
+    stmt = select(WrongQuestion).where(WrongQuestion.student_id.is_(None))
+    if subject:
+        stmt = stmt.where(WrongQuestion.subject == subject)
+    if needs_image is not None:
+        stmt = stmt.where(WrongQuestion.needs_image == needs_image)
+    if ku_id:
+        stmt = stmt.where(WrongQuestion.knowledge_points.has_key(ku_id))
+
+    total_stmt = select(func.count()).select_from(stmt.subquery())
+    total = (await db.execute(total_stmt)).scalar_one()
+
+    rows = (await db.execute(
+        stmt.order_by(WrongQuestion.created_at).offset(offset).limit(limit)
+    )).scalars().all()
+
+    return {
+        "total": total,
+        "offset": offset,
+        "limit": limit,
+        "items": [
+            {
+                "id": str(q.id),
+                "subject": q.subject,
+                "question_text": q.question_text,
+                "correct_answer": q.correct_answer,
+                "knowledge_points": q.knowledge_points or {},
+                "needs_image": q.needs_image,
+            }
+            for q in rows
+        ],
+    }
+
 
 @app.post("/v1/practice/generate")
 async def post_practice_generate(

@@ -165,6 +165,8 @@ class WrongQuestion(Base):
     fsrs_due: Mapped[Optional[datetime]] = mapped_column(DateTime(timezone=True))
     fsrs_state: Mapped[Optional[str]] = mapped_column(String(20))
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=text("now()"))
+    ku_match_meta: Mapped[Optional[dict]] = mapped_column(JSONB)
+    needs_image: Mapped[bool] = mapped_column(Boolean, server_default=text("false"), nullable=False)
 
 
 # ===== 认知状态（内核落库）=====
