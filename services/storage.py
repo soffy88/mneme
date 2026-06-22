@@ -2,11 +2,14 @@
 from __future__ import annotations
 
 import io
+from pathlib import Path
 from minio import Minio
 from minio.error import S3Error
 from obase.config import settings
 
 TEXTBOOKS_BUCKET = "textbooks"
+# curriculum_standards/ 文件直接从容器内文件系统读取（无需上传 MinIO）
+_CURRICULUM_DIR = Path("/app/curriculum_standards")
 
 
 def _client() -> Minio:
@@ -37,6 +40,13 @@ def upload_file(object_path: str, data: bytes, content_type: str) -> None:
 
 
 def download_file(object_path: str) -> bytes:
+    # curriculum_standards/ 文件直接从本地文件系统读（不走 MinIO）
+    if object_path.startswith("curriculum_standards/"):
+        filename = object_path[len("curriculum_standards/"):]
+        local = _CURRICULUM_DIR / filename
+        if local.exists():
+            return local.read_bytes()
+        raise FileNotFoundError(f"Curriculum file not found on disk: {local}")
     c = _client()
     try:
         resp = c.get_object(TEXTBOOKS_BUCKET, object_path)

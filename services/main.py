@@ -308,18 +308,62 @@ async def get_kc_detail(kc_id: str):
 
 # ===== §2b 知识单元接口（DB 版，替代旧 KC 字典）=====
 
+async def _textbook_file_map(db: AsyncSession, textbook_ids: list[str]) -> dict[str, str]:
+    """返回 {textbook_id: file_id}，取每个教材的第一个平台预置 PDF。"""
+    if not textbook_ids:
+        return {}
+    rows = (await db.execute(
+        select(TextbookFile.textbook_id, TextbookFile.id)
+        .where(
+            TextbookFile.textbook_id.in_(textbook_ids),
+            TextbookFile.owner_student_id.is_(None),
+            TextbookFile.file_type == "pdf",
+        )
+        .order_by(TextbookFile.uploaded_at)
+    )).all()
+    # 每个 textbook_id 只取第一条
+    result: dict[str, str] = {}
+    for tid, fid in rows:
+        if tid not in result:
+            result[tid] = fid
+    return result
+
+
+async def _mastery_map(db: AsyncSession, student_id: UUID, ku_ids: list[str]) -> dict[str, float]:
+    """返回 {ku_id: p_mastery}，只查询该学生。"""
+    if not ku_ids or not student_id:
+        return {}
+    rows = (await db.execute(
+        select(KCMastery.knowledge_point, KCMastery.p_mastery)
+        .where(KCMastery.student_id == student_id, KCMastery.knowledge_point.in_(ku_ids))
+    )).all()
+    return {kp: (pm or 0.0) for kp, pm in rows}
+
+
+def _mastery_color(p: float | None) -> str:
+    if p is None:
+        return "unknown"
+    if p >= 0.75:
+        return "green"
+    if p >= 0.40:
+        return "yellow"
+    return "red"
+
+
 @app.get("/v1/knowledge-points")
 async def list_knowledge_points(
     subject: Optional[str] = Query(None),
     textbook_id: Optional[str] = Query(None),
     cluster_id: Optional[str] = Query(None),
+    student_id: Optional[UUID] = Query(None),
     current_user: User = Depends(get_current_user),
     db: AsyncSession = Depends(get_db),
 ):
     """
     GET /v1/knowledge-points
     查询知识单元，支持按 subject / textbook_id / cluster_id 筛选。
-    返回带 cluster 信息和全部 AII 字段的 KU 列表。
+    可选 student_id → 附带该生掌握度（p_mastery / mastery_color）。
+    返回带 cluster 信息、textbook_file_id 和 AII 字段的 KU 列表。
     """
     stmt = select(KnowledgeUnit, KnowledgeCluster, Textbook).join(
         KnowledgeCluster, KnowledgeUnit.cluster_id == KnowledgeCluster.id
@@ -335,12 +379,20 @@ async def list_knowledge_points(
     stmt = stmt.order_by(KnowledgeCluster.display_order, KnowledgeUnit.id)
 
     rows = (await db.execute(stmt)).all()
+
+    # 批量查 textbook_file_id 和学生掌握度（各1次查询）
+    all_tb_ids = list({tb.id for _, _, tb in rows})
+    all_ku_ids = [ku.id for ku, _, _ in rows]
+    file_map    = await _textbook_file_map(db, all_tb_ids)
+    mastery_map = await _mastery_map(db, student_id, all_ku_ids) if student_id else {}
+
     return [
         {
             "id":                  ku.id,
             "name":                ku.name,
             "description":         ku.description,
             "textbook_id":         ku.textbook_id,
+            "textbook_file_id":    file_map.get(ku.textbook_id),
             "cluster_id":          ku.cluster_id,
             "cluster_name":        kc.name,
             "cluster_order":       kc.display_order,
@@ -356,6 +408,8 @@ async def list_knowledge_points(
             "ku_type":             ku.ku_type,
             "curriculum_standard": ku.curriculum_standard,
             "mastery_levels":      ku.mastery_levels,
+            "p_mastery":           mastery_map.get(ku.id),
+            "mastery_color":       _mastery_color(mastery_map.get(ku.id)),
         }
         for ku, kc, tb in rows
     ]
@@ -364,10 +418,11 @@ async def list_knowledge_points(
 @app.get("/v1/knowledge-points/{ku_id}")
 async def get_knowledge_point(
     ku_id: str,
+    student_id: Optional[UUID] = Query(None),
     current_user: User = Depends(get_current_user),
     db: AsyncSession = Depends(get_db),
 ):
-    """GET /v1/knowledge-points/{ku_id} — 单个 KU 详情。"""
+    """GET /v1/knowledge-points/{ku_id} — 单个 KU 详情（含掌握度和前置KU掌握度）。"""
     row = (await db.execute(
         select(KnowledgeUnit, KnowledgeCluster, Textbook).join(
             KnowledgeCluster, KnowledgeUnit.cluster_id == KnowledgeCluster.id
@@ -378,11 +433,24 @@ async def get_knowledge_point(
     if not row:
         raise HTTPException(status_code=404, detail="KnowledgeUnit not found")
     ku, kc, tb = row
+
+    file_map    = await _textbook_file_map(db, [ku.textbook_id])
+    # 掌握度：当前 KU + 所有前置 KU
+    prereq_ids  = list(ku.prerequisites) if ku.prerequisites else []
+    all_ids     = [ku_id] + prereq_ids
+    mastery_map = await _mastery_map(db, student_id, all_ids) if student_id else {}
+
+    prereq_mastery = [
+        {"ku_id": pid, "p_mastery": mastery_map.get(pid), "mastery_color": _mastery_color(mastery_map.get(pid))}
+        for pid in prereq_ids
+    ]
+
     return {
         "id":                  ku.id,
         "name":                ku.name,
         "description":         ku.description,
         "textbook_id":         ku.textbook_id,
+        "textbook_file_id":    file_map.get(ku.textbook_id),
         "cluster_id":          ku.cluster_id,
         "cluster_name":        kc.name,
         "subject":             tb.subject,
@@ -395,6 +463,9 @@ async def get_knowledge_point(
         "ku_type":             ku.ku_type,
         "curriculum_standard": ku.curriculum_standard,
         "mastery_levels":      ku.mastery_levels,
+        "p_mastery":           mastery_map.get(ku_id),
+        "mastery_color":       _mastery_color(mastery_map.get(ku_id)),
+        "prereq_mastery":      prereq_mastery,
     }
 
 
@@ -784,6 +855,113 @@ async def post_practice_generate(
         "items": items,
         "status": result.get("status", "ok"),
     }
+
+
+class PracticeSubmitReq(BaseModel):
+    question_id: UUID   # 公共题库行（student_id IS NULL）
+    student_id: UUID
+    student_answer: str = ""
+    is_correct: bool    # 学生自判（看到正确答案后自评）
+    ku_id: str          # 对应知识单元 ID
+
+
+@app.post("/v1/practice/submit")
+async def post_practice_submit(
+    body: PracticeSubmitReq,
+    db: AsyncSession = Depends(get_db),
+):
+    """POST /v1/practice/submit — 提交专题练习答案。
+
+    学生做完一道题库题后调此接口：
+    - 答错 → 写入该生 wrong_questions（不污染公共题库）
+    - 调 cognitive_service.process_interaction 更新 BKT/FSRS
+    - 返回掌握度更新结果
+    """
+    # 1. 读公共题库行，确认 student_id IS NULL
+    bank_q = (await db.execute(
+        select(WrongQuestion)
+        .where(WrongQuestion.id == body.question_id, WrongQuestion.student_id.is_(None))
+    )).scalar_one_or_none()
+    if not bank_q:
+        raise HTTPException(status_code=404, detail="公共题库题目不存在")
+
+    # 2. 答错则写学生错题记录
+    student_wq_id: Optional[UUID] = None
+    if not body.is_correct:
+        student_wq = WrongQuestion(
+            id=uuid.uuid4(),
+            student_id=body.student_id,
+            subject=bank_q.subject,
+            question_text=bank_q.question_text,
+            student_answer=body.student_answer or None,
+            correct_answer=bank_q.correct_answer,
+            knowledge_points=bank_q.knowledge_points or {body.ku_id: body.ku_id},
+            needs_image=bank_q.needs_image,
+        )
+        db.add(student_wq)
+        student_wq_id = student_wq.id
+        await db.flush()
+
+    # 3. BKT/FSRS 更新
+    result = await process_interaction(
+        db,
+        student_id=body.student_id,
+        kc_id=body.ku_id,
+        is_correct=body.is_correct,
+        question_id=bank_q.id,
+        source="review",
+    )
+    await db.commit()
+
+    return {
+        "is_correct":       body.is_correct,
+        "wrong_question_id": str(student_wq_id) if student_wq_id else None,
+        "p_mastery":        result.get("p_mastery"),
+        "mastery_color":    _mastery_color(result.get("p_mastery")),
+        "feedback":         result.get("feedback"),
+    }
+
+
+class SocraticForKuReq(BaseModel):
+    ku_id: str
+    student_id: UUID
+
+
+@app.post("/v1/socratic/start-for-ku")
+async def post_socratic_start_for_ku(
+    body: SocraticForKuReq,
+    db: AsyncSession = Depends(get_db),
+):
+    """POST /v1/socratic/start-for-ku — 为某 KU 知识点发起苏格拉底引导。
+
+    自动创建一个临时 wrong_question（知识点讲解入口），再调 start_session。
+    """
+    # 查 KU 信息
+    row = (await db.execute(
+        select(KnowledgeUnit, KnowledgeCluster)
+        .join(KnowledgeCluster, KnowledgeUnit.cluster_id == KnowledgeCluster.id)
+        .where(KnowledgeUnit.id == body.ku_id)
+    )).first()
+    if not row:
+        raise HTTPException(status_code=404, detail="KnowledgeUnit not found")
+    ku, kc = row
+
+    # 创建引导用的 WrongQuestion（没有 paper_id，学生侧记录）
+    q_text = f"【{ku.name}】\n{ku.description or ''}"
+    wq = WrongQuestion(
+        id=uuid.uuid4(),
+        student_id=body.student_id,
+        subject="math",
+        question_text=q_text,
+        knowledge_points={body.ku_id: ku.name},
+        needs_image=False,
+    )
+    db.add(wq)
+    await db.flush()
+
+    result = await start_session(db, wq.id, body.student_id)
+    await db.commit()
+    return result
 
 
 # ===== §J.1 纵向分析 =====
@@ -1260,6 +1438,32 @@ async def upload_textbook_file(
 
 # ── 文件列表 ─────────────────────────────────────────────────────────
 
+@app.get("/v1/textbook-files/{file_id}/meta")
+async def get_textbook_file_meta(
+    file_id: str,
+    current_user: User = Depends(get_current_user),
+    db: AsyncSession = Depends(get_db),
+):
+    """GET /v1/textbook-files/{file_id}/meta — 单个文件元数据（供阅读器初始化用）。
+    平台预置文件（owner_student_id IS NULL）所有认证用户可查。
+    """
+    tf = (await db.execute(select(TextbookFile).where(TextbookFile.id == file_id))).scalar_one_or_none()
+    if not tf:
+        raise HTTPException(status_code=404, detail="文件不存在")
+    if tf.owner_student_id is not None and tf.owner_student_id != current_user.id:
+        raise HTTPException(status_code=403, detail="无权访问该文件")
+    return {
+        "file_id":          tf.id,
+        "textbook_id":      tf.textbook_id,
+        "owner_student_id": str(tf.owner_student_id) if tf.owner_student_id else None,
+        "filename":         tf.filename,
+        "file_type":        tf.file_type,
+        "file_size":        tf.file_size,
+        "has_text_layer":   tf.has_text_layer,
+        "uploaded_at":      tf.uploaded_at.isoformat(),
+    }
+
+
 @app.get("/v1/textbook-files")
 async def list_textbook_files(
     textbook_id: Optional[str] = Query(None),
@@ -1326,8 +1530,10 @@ async def get_textbook_file_content(
         raise HTTPException(status_code=404, detail="存储对象不存在")
 
     ct = content_type_for(tf.file_type)
+    import urllib.parse
+    safe_name = urllib.parse.quote(tf.filename, safe='')
     return Response(content=data, media_type=ct, headers={
-        "Content-Disposition": f'attachment; filename="{tf.filename}"',
+        "Content-Disposition": f"attachment; filename*=UTF-8''{safe_name}",
     })
 
 
