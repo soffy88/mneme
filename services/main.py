@@ -145,14 +145,14 @@ app = FastAPI(title="Mneme API", version="0.1.0", lifespan=lifespan)
 from fastapi.middleware.cors import CORSMiddleware
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["https://mneme.uex.hk", "http://localhost:3000"],
+    allow_origins=["https://mneme.uex.hk", "http://localhost:3000", "http://localhost:3001", "http://localhost:5173"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
-@app.get("/")
-async def root():
+@app.get("/health")
+async def health():
     return {"status": "healthy", "service": "mneme-api"}
 
 # ===== §8 认证 API =====
@@ -1768,3 +1768,10 @@ def _rn_dict(rn: ReadingNote) -> dict:
         "created_at": rn.created_at.isoformat(),
         "updated_at": rn.updated_at.isoformat(),
     }
+
+
+# ── 前端静态文件（SPA，最后挂载） ─────────────────────────────────────────
+from fastapi.staticfiles import StaticFiles
+_FRONTEND_DIST = Path(__file__).parent.parent / "frontend" / "dist"
+if _FRONTEND_DIST.exists():
+    app.mount("/", StaticFiles(directory=_FRONTEND_DIST, html=True), name="frontend")
