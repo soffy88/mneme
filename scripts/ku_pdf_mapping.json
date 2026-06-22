@@ -1,0 +1,93 @@
+[
+  {
+    "_note": "HIGH CONFIDENCE — 同一本书，ID 命名格式不同",
+    "ku_textbook_id": "renjiao-math-g10-a",
+    "ku_count": 165,
+    "ku_book_name": "人教版·高中数学必修一（A版）",
+    "ku_edition": "2017修订",
+    "ku_grade": "高一/G10",
+    "pdf_textbook_id": "RENJIAO-G10-MATH-BX1",
+    "pdf_book_name": "人教版高一数学必修1",
+    "pdf_filename": "人教版高中数学必修1.pdf",
+    "confidence": "high",
+    "reason": "同一本书（人教A版高中数学必修第一册），KU侧用老格式小写ID(renjiao-math-g10-a)，PDF侧用新格式大写ID(RENJIAO-G10-MATH-BX1)。BX1=必修1=必修一，完全对应。"
+  },
+  {
+    "_note": "NO MATCH — 真缺PDF，选择性必修系列库里没有",
+    "ku_textbook_id": "RENJIAO-G11-MATH-A-SBX1",
+    "ku_count": 170,
+    "ku_book_name": "人教版·高中数学选择性必修一（A版）",
+    "ku_edition": "2017修订",
+    "ku_grade": "G11",
+    "pdf_textbook_id": null,
+    "pdf_book_name": null,
+    "pdf_filename": null,
+    "confidence": "no_match",
+    "reason": "库里 G11 数学只有 BX3(必修3)/BX4(必修4)，是旧课程书；选择性必修一是2017新课标书，两者是不同教材，不可混用。需单独补充选择性必修一PDF。"
+  },
+  {
+    "_note": "NO MATCH — 真缺PDF，选择性必修系列库里没有",
+    "ku_textbook_id": "RENJIAO-G11-MATH-A-SBX2",
+    "ku_count": 84,
+    "ku_book_name": "人教版·高中数学选择性必修二（A版）",
+    "ku_edition": "2017修订",
+    "ku_grade": "G11",
+    "pdf_textbook_id": null,
+    "pdf_book_name": null,
+    "pdf_filename": null,
+    "confidence": "no_match",
+    "reason": "同SBX1，库里无选择性必修二PDF。"
+  },
+  {
+    "_note": "NO MATCH — 真缺PDF，选择性必修系列库里没有",
+    "ku_textbook_id": "RENJIAO-G12-MATH-A-SBX3",
+    "ku_count": 123,
+    "ku_book_name": "人教版·高中数学选择性必修三（A版）",
+    "ku_edition": "2017修订",
+    "ku_grade": "G12",
+    "pdf_textbook_id": null,
+    "pdf_book_name": null,
+    "pdf_filename": null,
+    "confidence": "no_match",
+    "reason": "同SBX1，库里无选择性必修三PDF。G12 有大量选修(XX-*)但那是旧课程另一套，与新课标选择性必修三不是同一本。"
+  },
+  {
+    "_note": "NO MATCH — 真缺PDF，库里有八上(S)无八下(X)",
+    "ku_textbook_id": "RENJIAO-G8-MATH-X",
+    "ku_count": 173,
+    "ku_book_name": "人教版·数学八年级下册",
+    "ku_edition": "2022修订",
+    "ku_grade": "G8",
+    "pdf_textbook_id": null,
+    "pdf_book_name": null,
+    "pdf_filename": null,
+    "confidence": "no_match",
+    "reason": "库里G8数学只有RENJIAO-G8-MATH-S(上册,有PDF)和BEISHIDA-G8-MATH-X(北师大版,出版社不同)。人教版八年级下册PDF缺失，需补充。"
+  },
+  {
+    "_note": "NO MATCH — 真缺PDF，库里有九下(X)无九上(S)",
+    "ku_textbook_id": "RENJIAO-G9-MATH-S",
+    "ku_count": 121,
+    "ku_book_name": "人教版·数学九年级上册",
+    "ku_edition": "2011",
+    "ku_grade": "G9",
+    "pdf_textbook_id": null,
+    "pdf_book_name": null,
+    "pdf_filename": null,
+    "confidence": "no_match",
+    "reason": "库里G9数学只有RENJIAO-G9-MATH-X(九年级下册,25春版)。九年级上册PDF缺失，需补充。"
+  },
+  {
+    "_note": "NO MATCH — 真缺PDF，库里有七上(S)无七下(X)",
+    "ku_textbook_id": "RENJIAO-G7-MATH-X",
+    "ku_count": 120,
+    "ku_book_name": "人教版·数学七年级下册",
+    "ku_edition": "2022修订",
+    "ku_grade": "G7",
+    "pdf_textbook_id": null,
+    "pdf_book_name": null,
+    "pdf_filename": null,
+    "confidence": "no_match",
+    "reason": "库里G7数学只有RENJIAO-G7-MATH-S(七年级上册,有PDF+88KU)和BEISHIDA-G7-MATH-S(北师大版)。人教版七年级下册PDF缺失，需补充。"
+  }
+]
