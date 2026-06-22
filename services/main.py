@@ -15,6 +15,7 @@ import asyncio
 import shutil
 import os
 import json
+import re
 
 from obase.db import get_db, SessionLocal
 from services.logging_config import configure_logging, logger
@@ -1501,6 +1502,73 @@ async def list_textbook_files(
         }
         for r in rows
     ]
+
+
+# ── 平台教材库 ──────────────────────────────────────────────────────
+
+_SUBJECT_ORDER  = ["math", "physics", "chinese", "english", "history"]
+_SUBJECT_NAMES  = {"math": "数学", "physics": "物理", "chinese": "语文",
+                   "english": "英语", "history": "历史"}
+
+def _grade_sort_key(grade: str) -> int:
+    m = re.match(r"G(\d+)$", grade)
+    if m:
+        return int(m.group(1))
+    # "高一/高二/高三" → G10/G11/G12
+    for hs, n in [("高一", 10), ("高二", 11), ("高三", 12)]:
+        if grade.startswith(hs):
+            return n
+    # "初一/初二/初三" → G7/G8/G9
+    for ms, n in [("初一", 7), ("初二", 8), ("初三", 9)]:
+        if grade.startswith(ms):
+            return n
+    return 99
+
+
+@app.get("/v1/library/textbooks")
+async def list_library_textbooks(
+    current_user: User = Depends(get_current_user),
+    db: AsyncSession = Depends(get_db),
+):
+    """
+    GET /v1/library/textbooks
+    返回所有平台预置教材（owner_student_id IS NULL），按学科分组，每科内按年级排序。
+    过滤测试条目（textbook_id LIKE 'tb-lp-%' 或 book_name='练习教材'）。
+    """
+    stmt = (
+        select(TextbookFile, Textbook)
+        .join(Textbook, TextbookFile.textbook_id == Textbook.id)
+        .where(
+            TextbookFile.owner_student_id == None,  # noqa: E711
+            ~Textbook.id.like("tb-lp-%"),
+            Textbook.book_name != "练习教材",
+        )
+    )
+    rows = (await db.execute(stmt)).all()
+
+    grouped: dict[str, list] = {s: [] for s in _SUBJECT_ORDER}
+    for tf, tb in rows:
+        if tb.subject not in grouped:
+            continue
+        grouped[tb.subject].append({
+            "textbook_id": tb.id,
+            "book_name": tb.book_name,
+            "grade": tb.grade,
+            "edition": tb.edition,
+            "file_id": tf.id,
+            "has_text_layer": tf.has_text_layer,
+        })
+
+    subjects = []
+    for subject in _SUBJECT_ORDER:
+        books = sorted(grouped[subject], key=lambda x: _grade_sort_key(x["grade"]))
+        subjects.append({
+            "subject": subject,
+            "name": _SUBJECT_NAMES[subject],
+            "textbooks": books,
+        })
+
+    return {"subjects": subjects}
 
 
 # ── 文件内容下载 ──────────────────────────────────────────────────────
