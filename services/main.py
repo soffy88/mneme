@@ -445,7 +445,13 @@ async def list_knowledge_points(
         for ku, kc, tb in rows
     ]
 
-    if sort == "topic":
+    if sort == "textbook":
+        items.sort(key=lambda x: (
+            _grade_sort_key(x["grade"]),
+            x["textbook_id"].lower(),
+            x["id"],
+        ))
+    elif sort == "topic":
         items.sort(key=lambda x: (x["cluster_name"], x["id"]))
     elif sort == "mastery":
         items.sort(key=lambda x: (
