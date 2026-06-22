@@ -615,6 +615,50 @@ A → B → C → D → E → F
 
 ---
 
+## Q · 知识点讲解 + 专题练习 (主线学习闭环)
+
+- [x] **Q.0 G1-G9 官方KU教材PDF导入**
+  ```
+  ✅ Alembic migration b1e7d4f2c9a5：15本G1-G9官方PDF写入 textbook_files（curriculum_standards/ 路径）
+  ✅ storage.py：curriculum_standards/ 前缀走容器本地文件系统，不过MinIO
+  ✅ 验证：23本有KU的教材均有1个PDF，all has_text_layer=true
+  ```
+
+- [x] **Q.1 知识点讲解后端接口**
+  ```
+  ✅ GET /v1/knowledge-points 新增 student_id 参数，批量查 p_mastery/mastery_color/textbook_file_id（2次查询，无N+1）
+  ✅ GET /v1/knowledge-points/{ku_id} 新增 prereq_mastery（前置知识掌握度列表）
+  ✅ GET /v1/textbook-files/{file_id}/meta：单文件元数据（修复reader页平台文件不可见）
+  ✅ Content-Disposition 改 RFC5987 UTF-8 编码，修复中文文件名下载500
+  ✅ 9个测试全绿（tests/test_lesson_practice.py）
+  ```
+
+- [x] **Q.2 专题练习后端接口**
+  ```
+  ✅ POST /v1/practice/submit：学生自评提交，错误写入个人wrong_questions（student_id≠NULL），BKT更新
+  ✅ POST /v1/socratic/start-for-ku：从知识点直接进苏格拉底，无需先有错题
+  ✅ 公共题库（student_id=NULL）严格隔离，practice/submit不污染银行
+  ```
+
+- [x] **Q.3 知识点讲解前端页面**
+  ```
+  ✅ /subjects/math/lesson：按章节簇折叠分组，2395个KU，掌握度颜色点（绿/黄/红/灰）
+  ✅ 点击KU → 详情面板（学习目标/难度/考频/前置知识带掌握色）
+  ✅ 四个行动按钮：查看教材原文/不懂问一问/做几道题
+  ✅ 苏格拉底跳转支持 URL 参数传 session_id+first_q，直接进入对话
+  ```
+
+- [x] **Q.4 专题练习前端页面**
+  ```
+  ✅ /subjects/math/practice?ku_id=：单题流程，先答题再揭示答案，自评，BKT反馈
+  ✅ 空题库友好提示，完成页展示正确率+最终掌握度
+  ✅ 与知识点详情页"做几道题"按钮联通
+  ✅ npm run build 全通过；pytest 139通过（3个预存失败无关本任务）
+  ✅ 123456登录验证OK；backend/frontend 双仓库已push
+  ```
+
+---
+
 ## 进度总览
 
 ```
