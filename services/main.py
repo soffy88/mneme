@@ -351,12 +351,41 @@ def _mastery_color(p: float | None) -> str:
     return "red"
 
 
+_FREQ_RANK    = {"high": 2, "mid": 1, "low": 0}
+_MASTERY_RANK = {"red": 0, "yellow": 1, "unknown": 2, "green": 3}
+
+
+def _topo_sort_kus(items: list[dict]) -> list[dict]:
+    """Kahn's topological sort on prerequisites (cycles land at end)."""
+    id_map  = {k["id"]: k for k in items}
+    in_deg  = {k["id"]: 0 for k in items}
+    adj: dict[str, list[str]] = {k["id"]: [] for k in items}
+    for ku in items:
+        for p in (ku.get("prerequisites") or []):
+            if p in id_map:
+                in_deg[ku["id"]] += 1
+                adj[p].append(ku["id"])
+    queue  = [k for k in items if in_deg[k["id"]] == 0]
+    result: list[dict] = []
+    while queue:
+        ku = queue.pop(0)
+        result.append(ku)
+        for succ in adj[ku["id"]]:
+            in_deg[succ] -= 1
+            if in_deg[succ] == 0:
+                queue.append(id_map[succ])
+    seen = {k["id"] for k in result}
+    result.extend(k for k in items if k["id"] not in seen)
+    return result
+
+
 @app.get("/v1/knowledge-points")
 async def list_knowledge_points(
     subject: Optional[str] = Query(None),
     textbook_id: Optional[str] = Query(None),
     cluster_id: Optional[str] = Query(None),
     student_id: Optional[UUID] = Query(None),
+    sort: str = Query("chapter"),
     current_user: User = Depends(get_current_user),
     db: AsyncSession = Depends(get_db),
 ):
@@ -364,6 +393,7 @@ async def list_knowledge_points(
     GET /v1/knowledge-points
     查询知识单元，支持按 subject / textbook_id / cluster_id 筛选。
     可选 student_id → 附带该生掌握度（p_mastery / mastery_color）。
+    sort: chapter(默认)|topic|mastery|difficulty|exam_freq|prereq
     返回带 cluster 信息、textbook_file_id 和 AII 字段的 KU 列表。
     """
     stmt = select(KnowledgeUnit, KnowledgeCluster, Textbook).join(
@@ -387,7 +417,7 @@ async def list_knowledge_points(
     file_map    = await _textbook_file_map(db, all_tb_ids)
     mastery_map = await _mastery_map(db, student_id, all_ku_ids) if student_id else {}
 
-    return [
+    items = [
         {
             "id":                  ku.id,
             "name":                ku.name,
@@ -414,6 +444,22 @@ async def list_knowledge_points(
         }
         for ku, kc, tb in rows
     ]
+
+    if sort == "topic":
+        items.sort(key=lambda x: (x["cluster_name"], x["id"]))
+    elif sort == "mastery":
+        items.sort(key=lambda x: (
+            _MASTERY_RANK.get(x["mastery_color"], 2),
+            -(x["p_mastery"] or 0),
+        ))
+    elif sort == "difficulty":
+        items.sort(key=lambda x: x["difficulty"])
+    elif sort == "exam_freq":
+        items.sort(key=lambda x: -_FREQ_RANK.get(x["exam_frequency"], 1))
+    elif sort == "prereq":
+        items = _topo_sort_kus(items)
+
+    return items
 
 
 @app.get("/v1/knowledge-points/{ku_id}")
