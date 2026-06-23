@@ -519,6 +519,7 @@ async def get_knowledge_point(
         "p_mastery":           mastery_map.get(ku_id),
         "mastery_color":       _mastery_color(mastery_map.get(ku_id)),
         "prereq_mastery":      prereq_mastery,
+        "rich_content":        ku.rich_content,
     }
 
 

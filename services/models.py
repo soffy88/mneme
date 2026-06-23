@@ -446,3 +446,4 @@ class KnowledgeUnit(Base):
     ku_type: Mapped[str]                = mapped_column(String(20), server_default=text("'concept'"))
     curriculum_standard: Mapped[Optional[str]] = mapped_column(Text, nullable=True)
     mastery_levels: Mapped[list]        = mapped_column(JSONB, server_default=text("'[]'::jsonb"))
+    rich_content: Mapped[Optional[dict]] = mapped_column(JSONB, nullable=True)
