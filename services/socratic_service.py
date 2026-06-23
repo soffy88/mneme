@@ -89,7 +89,7 @@ async def start_session(db: AsyncSession, question_id: uuid.UUID, student_id: uu
         config=SocraticConfig(mode=mode, max_turns=20),
         input_data=SocraticInput(
             question_text=wq.question_text or "",
-            correct_answer=wq.correct_answer or "\x00",
+            correct_answer=wq.correct_answer or "",
             kc_id=kc_id,
             profiler_result={},
             student_messages=[],
@@ -158,7 +158,7 @@ async def socratic_message_stream(
             ),
             input_data=SocraticInput(
                 question_text=wq.question_text or "",
-                correct_answer=wq.correct_answer or "\x00",
+                correct_answer=wq.correct_answer or "",
                 kc_id=kc_id,
                 profiler_result={},
                 student_messages=student_msgs,
