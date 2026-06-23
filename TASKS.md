@@ -706,6 +706,19 @@ Phase 3：K（合规）+ L（部署）
 
 ---
 
+- [x] **P.4 KU "讲透"内容批量生成 + 前端分层折叠** ✅ 2026-06-23
+  ```
+  ✅ Alembic e7f3a9c21b04: knowledge_units.rich_content JSONB 列
+  ✅ scripts/enrich_ku_content.py: 8线程/幂等/断点续传，按 ku_type 七套 prompt
+  ✅ 数学 G7-G12: 1469/1469 enriched（~12分钟）
+  ✅ 物理 G7-G12: 1551/1551 enriched（~22分钟）
+  ✅ GET /v1/knowledge-points/{ku_id} 返回 rich_content
+  ✅ RichContentView.tsx: 按 ku_type 分层折叠，KaTeX LaTeX，⚠️易错点橙色高亮
+  ✅ KuDetailPanel（知识点地图）/ KuDetail（阅读器侧栏）均接入，懒加载
+  ```
+
+---
+
 ## 当前卡点 / 待办（2026-06-23 更新）
 
 ### 🚧 阻塞中
