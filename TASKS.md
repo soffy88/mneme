@@ -547,11 +547,13 @@ A → B → C → D → E → F
   /v1/knowledge-points/{ku_id} 两端点；Textbook/KnowledgeCluster/KnowledgeUnit ORM 模型；
   9 个新测试全绿；92/92 pytest 全绿，覆盖率 70%。
 
-- [ ] **N.2 [P1] 阶段2：种子数据导入** ⏳ 等 AII 数据交付
+- [x] **N.2 [P1] 阶段2：种子数据导入（数学+物理已完成，语文待完成）**
   ```
-  AII 项目产出广东数学人教版 KU 清单后：
-  - 用 scripts/import_ku_package.py 批量导入完整 KU 包
-  - 可在 lifespan 注册 seed_ku() 保证开发环境自动有数据
+  ✅ 数学：2395 KU / 26 本教材（含 G10-A 人教版必修一~五 + 选必一~三等）
+  ✅ 物理：1551 KU / 9 本教材
+  ⏳ 语文：0 KU（试抽进行，待 prompt 去重纠错修正后批量入库）
+     阻塞原因：语文 KU 粒度界定待定（积累型 vs 鉴赏表达能力型如何分类）
+  ⏳ 英语/历史：待导入
   ```
 
 - [ ] **N.3 [P1] 阶段3：API 层切换（ku_id 对外）** ⏳ 等阶段2完成
@@ -608,9 +610,26 @@ A → B → C → D → E → F
   ✅ MinIO 抽查：119 个 object，RENJIAO-G11-MATH-BX3/人教版高中数学必修3.pdf 21MiB 已上传
   ```
 
-- [ ] **P.2 前端阅读器 UI** ⏳ 等后端确认后启动
+- [x] **P.2 前端阅读器 UI + 教材库页面**
   ```
-  Next.js App Router PDF/EPUB 阅读页 + @react-pdf-viewer/highlight 高亮交互
+  ✅ /library：5科Tab（数学/物理/语文/英语/历史）+ 学段分组（小学/初中/高中）
+     + 96本平台教材卡片 + 阅读按钮 + 学生自传区；
+     GET /v1/library/textbooks（96本，按科目分组，线上验证200）
+  ✅ /reader/[fileId]：三栏布局（知识点侧栏200px / PDF阅读器 / 笔记高亮280px）
+     桌面三栏，移动端底部Tab切换（知识点/阅读/笔记）
+  ✅ 高亮交互（选中文字→颜色选择→POST /v1/highlights）
+  ✅ 读书笔记（浮动输入→POST /v1/reading-notes + 列表展示）
+  ✅ migration dff2ec15ff91 已应用；线上 mneme.uex.hk/library → 200
+  ```
+
+- [x] **P.3 阅读器 KU 侧栏（按教材 cluster 分组）** ✅ 2026-06-22
+  ```
+  ✅ KuSidebar：按 textbook_id 查 KU → 按 cluster(display_order) 分组折叠
+  ✅ 每 KU 行：掌握度颜色点（绿/黄/红/灰）+ 名称
+  ✅ 点击 KU → 内联详情面板（名称/掌握%/难度/考频/"做几道题"/"不懂问一问"）
+  ✅ 无关联教材/暂无数据时有友好空态
+  ✅ 数学/物理教材均验证：RENJIAO-G10-MATH-BX2 → 363 KU / 5 cluster
+  ⚠️ 章节页码跳转暂不实现：99本教材PDF全为无结构扫描件，无章节书签
   ```
 
 ---
@@ -642,10 +661,23 @@ A → B → C → D → E → F
 
 - [x] **Q.3 知识点讲解前端页面**
   ```
-  ✅ /subjects/math/lesson：按章节簇折叠分组，2395个KU，掌握度颜色点（绿/黄/红/灰）
+  ✅ /subjects/math/lesson：KnowledgeMap 通用组件，2395 KU，掌握度颜色点
+  ✅ /subjects/physics/lesson：KnowledgeMap，1551 KU（物理）
+  ✅ /subjects/chinese/lesson：KnowledgeMap（语文 KU 待批量入库后生效）
   ✅ 点击KU → 详情面板（学习目标/难度/考频/前置知识带掌握色）
-  ✅ 四个行动按钮：查看教材原文/不懂问一问/做几道题
+  ✅ 行动按钮：查看教材原文/不懂问一问/做几道题
   ✅ 苏格拉底跳转支持 URL 参数传 session_id+first_q，直接进入对话
+  ```
+
+- [x] **Q.5 知识点地图6种排序 + KnowledgeMap 共用组件** ✅ 2026-06-21
+  ```
+  ✅ 后端 GET /v1/knowledge-points?sort= 新增参数：
+     textbook（学段→年级→教材册三级折叠）/ topic（cluster分组）/
+     mastery（掌握度升序）/ difficulty / exam_freq / prereq（拓扑排序）
+  ✅ 前端 KnowledgeMap 共用组件（src/components/student/KnowledgeMap.tsx）
+     6 种 SortMode；sort=textbook 时 3 层折叠树（学段/年级/册，stage/grade
+     默认展开，textbook 默认折叠）；其余5种按 FlatGroup 分组
+  ✅ 数学/物理/语文 lesson 页均用 KnowledgeMap，math/lesson 从 423 行→36 行
   ```
 
 - [x] **Q.4 专题练习前端页面**
@@ -671,3 +703,25 @@ Phase 3：K（合规）+ L（部署）
 保持 tests/test_engine.py 长绿。
 每完成一个 task：勾选 + git push + 停下等确认。
 ```
+
+---
+
+## 当前卡点 / 待办（2026-06-23 更新）
+
+### 🚧 阻塞中
+
+- **阅读器章节页码跳转（P.3 遗留）**
+  结论：99本教材PDF全为无结构扫描件（无章节书签）；7本有书签但无章节信息（仅扫描页标记）。
+  实现路径：人工录入页码 → `knowledge_clusters.page_start` 字段（需 Alembic migration）。
+  当前不做，等有人力录入数据后再启动。
+
+- **语文 KU 批量入库（N.2）**
+  粒度界定未决：积累型（词语/字音/文学常识）算 KU；鉴赏表达能力型如何分类待定。
+  prompt 去重纠错待修正后再批量抽取入库。
+
+### ⏳ 可启动（前置已完成）
+
+- **N.3 API 层切换 ku_id**（等语文 N.2 完成后启动，其余科目数据稳定）
+- **N.4 用户教材绑定**（注册时选教材 textbook_id）
+- **英语/历史 KU 抽取**（参照数学/物理流程）
+- **exam_date 字段 → exam_countdown_days**（O.2 遗留，users 表加字段即可）
