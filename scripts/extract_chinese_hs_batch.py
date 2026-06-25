@@ -527,6 +527,27 @@ def pg_dsn(url: str) -> str:
     return url.replace("postgresql+asyncpg://", "postgresql://")
 
 
+_TB_GRADE = {
+    "BXS": "G10", "BXX": "G10",
+    "SBXS": "G11", "SBXM": "G11", "SBXX": "G12",
+}
+
+
+async def upsert_textbook(conn: asyncpg.Connection, book: dict) -> None:
+    tb_id = book["tb_id"]
+    suffix = tb_id.split("-")[-1]
+    grade  = _TB_GRADE.get(suffix, "G10")
+    await conn.execute(
+        """
+        INSERT INTO textbooks (id, subject, grade, edition, book_name)
+        VALUES ($1, $2, $3, $4, $5)
+        ON CONFLICT (id) DO UPDATE
+          SET book_name = EXCLUDED.book_name, edition = EXCLUDED.edition
+        """,
+        tb_id, "chinese", grade, "统编版", book["title"],
+    )
+
+
 async def upsert_cluster(conn: asyncpg.Connection, tb_id: str, kc_name: str, order: int) -> str:
     slug = re.sub(r"[^\w一-鿿]", "-", kc_name)[:40].strip("-").lower()
     kc_id = f"{tb_id}-kc-{slug}"
@@ -706,6 +727,7 @@ async def process_book(
 
     conn = await asyncpg.connect(pg_dsn(DB_URL))
     try:
+        await upsert_textbook(conn, book)
         count = await store_kus(conn, tb_id, kus)
         print(f"\n  ✅ {tb_id} 入库 {count} KU", flush=True)
     finally:
