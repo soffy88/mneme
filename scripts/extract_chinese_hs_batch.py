@@ -45,8 +45,13 @@ except ImportError:
 PDF_DIR = Path(os.environ.get("PDF_DIR", str(Path(__file__).parent.parent / "curriculum_standards")))
 DS_KEY  = os.environ.get("DEEPSEEK_API_KEY", "")
 DB_URL  = os.environ.get("DATABASE_URL", "postgresql+asyncpg://postgres:postgres@localhost:5433/mneme")
-CHUNK          = 3_000  # 防止文言文密集单元JSON截断
+CHUNK          = 2_000  # 本地模型输出上限较小，缩小chunk防截断
 FAILED_CHUNKS: list[str] = []  # 失败chunk记录，末尾报告
+
+# provider 配置（由 --provider 覆盖）
+_PROVIDER    = "deepseek"   # 默认，main()会修改
+_OLLAMA_BASE = os.environ.get("OLLAMA_BASE", "http://localhost:11434/v1")
+_OLLAMA_MODEL = os.environ.get("OLLAMA_MODEL", "qwen2.5:7b")
 
 CATALOG = [
     {"tb_id": "TONGBIAN-G10-CHINESE-BXS",  "filename": "H_语文_普通高中教科书·语文必修上册.pdf",      "title": "统编版高中语文必修上册"},
@@ -331,21 +336,43 @@ def _call_llm(client: httpx.Client, unit_name: str, text_chunk: str, part_hint: 
         f"{text_chunk}\n\n"
         f"{focus}"
     )
-    resp = client.post(
-        "https://api.deepseek.com/chat/completions",
-        json={
-            "model": "deepseek-chat",
-            "messages": [
-                {"role": "system", "content": LLM_SYSTEM},
-                {"role": "user", "content": user},
-            ],
-            "max_tokens": 8192,
-            "temperature": 0.1,
-        },
-        timeout=120,
-    )
+    if _PROVIDER == "ollama":
+        resp = client.post(
+            f"{_OLLAMA_BASE}/chat/completions",
+            json={
+                "model": _OLLAMA_MODEL,
+                "messages": [
+                    {"role": "system", "content": LLM_SYSTEM},
+                    {"role": "user", "content": user},
+                ],
+                "stream": False,
+                "options": {"temperature": 0.1, "num_predict": 6144},
+            },
+            timeout=300,  # 本地模型较慢
+        )
+    else:
+        resp = client.post(
+            "https://api.deepseek.com/chat/completions",
+            json={
+                "model": "deepseek-v4-flash",
+                "messages": [
+                    {"role": "system", "content": LLM_SYSTEM},
+                    {"role": "user", "content": user},
+                ],
+                "max_tokens": 8192,
+                "temperature": 0.1,
+            },
+            timeout=120,
+        )
     resp.raise_for_status()
-    raw = resp.json()["choices"][0]["message"]["content"].strip()
+    msg = resp.json()["choices"][0]["message"]
+    raw = (msg.get("content") or "").strip()
+    # thinking 模型（qwen3.5/deepseek-v4）：content 为空时从 reasoning 字段取 JSON
+    if not raw:
+        reasoning = msg.get("reasoning_content") or msg.get("reasoning") or ""
+        if reasoning:
+            m2 = re.search(r"\{.*\}", reasoning, re.DOTALL)
+            raw = m2.group() if m2 else ""
     raw = re.sub(r"^```(?:json)?\s*", "", raw, flags=re.MULTILINE)
     raw = re.sub(r"\s*```$", "", raw, flags=re.MULTILINE).strip()
     m = re.search(r"\{.*\}", raw, re.DOTALL)
@@ -733,14 +760,33 @@ def _match(tb_id: str, book_filter: list[str]) -> bool:
 
 
 async def main() -> None:
+    global _PROVIDER, CHUNK
     parser = argparse.ArgumentParser()
     parser.add_argument("--books", default="", help="逗号分隔后缀（BXS/BXX/SBXS/SBXM/SBXX）")
     parser.add_argument("--dry-run", action="store_true")
     parser.add_argument("--limit", type=int, default=None)
+    parser.add_argument("--provider", default="deepseek", choices=["deepseek", "ollama"],
+                        help="LLM后端（deepseek/ollama，默认deepseek）")
+    parser.add_argument("--model", default="", help="本地模型名（默认qwen3.5:9b）")
+    parser.add_argument("--chunk", type=int, default=0, help="chunk大小（默认deepseek=3000,ollama=2000）")
     args = parser.parse_args()
 
-    if not DS_KEY:
-        sys.exit("需要 DEEPSEEK_API_KEY 环境变量")
+    _PROVIDER = args.provider
+    if args.model:
+        global _OLLAMA_MODEL
+        _OLLAMA_MODEL = args.model
+    if args.chunk:
+        CHUNK = args.chunk
+
+    if _PROVIDER == "deepseek":
+        if not DS_KEY:
+            sys.exit("需要 DEEPSEEK_API_KEY 环境变量")
+        headers = {"Authorization": f"Bearer {DS_KEY}"}
+        if not args.chunk:
+            CHUNK = 3_000
+    else:
+        headers = {}
+        print(f"provider=ollama  model={_OLLAMA_MODEL}  base={_OLLAMA_BASE}", flush=True)
 
     book_filter = [b.strip() for b in args.books.split(",") if b.strip()]
     books = [b for b in CATALOG if _match(b["tb_id"], book_filter)]
@@ -752,7 +798,7 @@ async def main() -> None:
     print(f"CHUNK={CHUNK} | {'dry-run' if args.dry_run else '入库模式'}", flush=True)
 
     results: list[dict] = []
-    with httpx.Client(headers={"Authorization": f"Bearer {DS_KEY}"}, timeout=130) as client:
+    with httpx.Client(headers=headers, timeout=300) as client:
         for book in books:
             r = await process_book(book, client, args.dry_run, args.limit)
             results.append(r)
