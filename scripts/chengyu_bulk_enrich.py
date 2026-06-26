@@ -184,8 +184,10 @@ def save_failed_log(failed: list[str]):
         print(f"  ↳ 失败条目已记录到 {FAILED_LOG} ({len(merged)} 条)")
 
 
-async def run_batch(conn, batch: int, dry_run: bool) -> tuple[list, list]:
-    offset = (batch - 1) * BATCH_SIZE
+async def run_batch(conn, batch: int, dry_run: bool, force_offset: int | None = None) -> tuple[list, list]:
+    # In --all mode, force_offset=0 so each call gets the next unprocessed rows
+    # (each successful write removes rows from the eligible set)
+    offset = force_offset if force_offset is not None else (batch - 1) * BATCH_SIZE
 
     rows = await conn.fetch("""
         SELECT id, name, rich_content
@@ -300,7 +302,7 @@ async def run(batch: int = 1, dry_run: bool = True, run_all: bool = False):
         all_has_error = 0
 
         for b in range(1, total_batches + 1):
-            enriched, failed = await run_batch(conn, b, dry_run)
+            enriched, failed = await run_batch(conn, b, dry_run, force_offset=0)
             sample = print_sample(enriched, b)
             ok = auto_quality_check(sample, b)
             if not ok:
