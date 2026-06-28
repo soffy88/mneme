@@ -31,6 +31,8 @@ async def handle_speaking_practice(pool, student_id, topic, target_sentences, gr
     
     input_data = InputData(
         topic=full_topic,
+        # 注意：speaking_practice_workflow 会把 user_id 落库为 speaking_sessions.student_id，
+        # 故此处必须传真实 id（不可伪名化）。正解是把持久化上移到服务层，属更深重构、未在此处做。
         user_id=str(student_id),
         tts=wrap_tts,
         stt=wrap_stt,

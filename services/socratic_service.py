@@ -20,6 +20,7 @@ from omodul.socratic_session_workflow import (
     socratic_session_workflow,
 )
 from services.models import KCMastery, SocraticMode, SocraticOutcome, SocraticSession, WrongQuestion
+from services.anon import anon_ref
 
 from oskill.metacog_scaffold import metacog_scaffold, MetacogScaffoldInput
 from obase.provider_registry import ProviderRegistry
@@ -94,7 +95,7 @@ async def start_session(db: AsyncSession, question_id: uuid.UUID, student_id: uu
             kc_id=kc_id,
             profiler_result={},
             student_messages=[],
-            user_id=str(student_id),
+            user_id=anon_ref(student_id),
         ),
         output_dir=Path(f"/tmp/mneme/socratic/{session_id}"),
         on_step=None,
@@ -163,7 +164,7 @@ async def socratic_message_stream(
                 kc_id=kc_id,
                 profiler_result={},
                 student_messages=student_msgs,
-                user_id=str(session.student_id),
+                user_id=anon_ref(session.student_id),
             ),
             output_dir=Path(f"/tmp/mneme/socratic/{session_id}"),
             on_step=None,

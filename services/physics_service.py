@@ -14,6 +14,7 @@ from sqlalchemy import select, update
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from services.models import SocraticMode, SocraticSession
+from services.anon import anon_ref
 
 
 async def start_force_analysis(
@@ -32,7 +33,7 @@ async def start_force_analysis(
         input_data=ForceAnalysisInput(
             question_text=question_text,
             student_messages=[],
-            user_id=str(student_id),
+            user_id=anon_ref(student_id),
         ),
         output_dir=output_dir,
     )
@@ -94,7 +95,7 @@ async def force_analysis_message_stream(
         input_data=ForceAnalysisInput(
             question_text=question_text,
             student_messages=student_messages,
-            user_id=str(row.student_id or ""),
+            user_id=anon_ref(row.student_id or ""),
         ),
         output_dir=output_dir,
         on_step=on_step,

@@ -12,6 +12,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from omodul.daily_mission_workflow import DailyMissionConfig, DailyMissionInput, daily_mission_workflow
 from services.models import DailyMission, KCMastery, MissionType, Streak, WrongQuestion
+from services.anon import anon_ref
 from oskill.cold_start_single import cold_start_single, ColdStartInput
 from obase.provider_registry import ProviderRegistry
 
@@ -101,7 +102,7 @@ async def get_or_create_mission(
 
     config = DailyMissionConfig()
     inp = DailyMissionInput(
-        user_id=str(student_id),
+        user_id=anon_ref(student_id),
         mission_date=today.isoformat(),
         available_questions=available,
         kc_mastery=kc_mastery,
