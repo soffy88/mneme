@@ -610,7 +610,7 @@ async def process_book(
     print(f"识别到 {len(units)} 个单元: {[u[0] for u in units]}", flush=True)
 
     if not units:
-        print(f"  ⚠️  未识别到任何单元，跳过", flush=True)
+        print("  ⚠️  未识别到任何单元，跳过", flush=True)
         return {"tb_id": tb_id, "ku_count": 0, "skipped": True}
 
     kus = extract_all_kus(client, units, tb_id, limit=limit)
@@ -626,7 +626,7 @@ async def process_book(
         print(f"    {t:25s}: {c}{flag}", flush=True)
 
     # 每类样本 1 条
-    print(f"\n  ── 样本 ──", flush=True)
+    print("\n  ── 样本 ──", flush=True)
     shown: set = set()
     for ku in kus:
         t = ku.get("ku_type")
@@ -635,7 +635,7 @@ async def process_book(
             print(f"  [{t}] {ku.get('name')} | {ku.get('core','')[:70]}", flush=True)
 
     if dry_run:
-        print(f"\n  [dry-run] 跳过入库", flush=True)
+        print("\n  [dry-run] 跳过入库", flush=True)
         return {"tb_id": tb_id, "ku_count": len(kus), "type_cnt": dict(type_cnt), "track_cnt": dict(track_cnt)}
 
     if not anomaly_check(tb_id, kus):

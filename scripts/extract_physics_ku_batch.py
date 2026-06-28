@@ -524,7 +524,7 @@ async def process_book(
         return None
 
     if dry_run:
-        print(f"  [DRY-RUN] 未入库", flush=True)
+        print("  [DRY-RUN] 未入库", flush=True)
         return len(kus)
 
     conn = await asyncpg.connect(pg_dsn(DB_URL))

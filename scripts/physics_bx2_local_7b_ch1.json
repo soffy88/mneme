@@ -1,0 +1,11 @@
+{
+  "model": "qwen2.5:7b",
+  "book": "高中物理必修第二册",
+  "tb_id": "RENJIAO-G10-PHYSICS-BX2",
+  "elapsed_s": 38,
+  "total_chunks": 9,
+  "json_errors": 0,
+  "ku_total": 0,
+  "ku_type_distribution": {},
+  "samples_by_type": {}
+}

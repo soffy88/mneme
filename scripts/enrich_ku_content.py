@@ -17,9 +17,7 @@ enrich_ku_content.py — 批量为初高中 KU 生成"讲透"内容，写入 ric
 import argparse
 import json
 import os
-import sys
 import time
-import traceback
 from concurrent.futures import ThreadPoolExecutor, as_completed
 
 import psycopg2

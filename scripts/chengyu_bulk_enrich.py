@@ -11,7 +11,11 @@
   python3 scripts/chengyu_bulk_enrich.py --execute --all  # 跑完所有批次
   python3 scripts/chengyu_bulk_enrich.py --retry-failed   # 重试失败条目
 """
-import asyncio, json, os, sys, time
+import asyncio
+import json
+import os
+import sys
+import time
 import asyncpg
 import urllib.request
 
@@ -321,7 +325,7 @@ async def run(batch: int = 1, dry_run: bool = True, run_all: bool = False):
 
         await conn.close()
         print(f"\n{'='*60}")
-        print(f"✅ 全部批次完成")
+        print("✅ 全部批次完成")
         print(f"  共补全:      {all_enriched_count} 条")
         print(f"  有易错点:    {all_has_error} 条 ({all_has_error/max(all_enriched_count,1):.0%})")
         print(f"  古今义争议:  {all_dispute} 条")

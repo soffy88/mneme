@@ -1,0 +1,8033 @@
+[
+  {
+    "id": "ku-001",
+    "name": "沁园春·长沙·意象与情感",
+    "ku_type": "shici_jianshang",
+    "track": "鉴赏",
+    "core": "通过‘万山红遍’‘鹰击长空’等意象，感受壮丽秋景与昂扬向上的青春激情，体会意象的活泼灵动和意境的丰盈深邃。",
+    "source_text": "《沁园春·长沙》毛泽东",
+    "difficulty": 0.5,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "《沁园春·长沙》诗词鉴赏与积累"
+    ],
+    "_unit": "第一单元"
+  },
+  {
+    "id": "ku-002",
+    "name": "沁园春·长沙·炼字选词",
+    "ku_type": "shici_jianshang",
+    "track": "鉴赏",
+    "core": "关注‘击’‘翔’‘竞’等动词的运用，体会其精妙之处，如‘击’形容飞得矫健有力，‘翔’形容鱼游得轻快自由。",
+    "source_text": "《沁园春·长沙》毛泽东",
+    "difficulty": 0.6,
+    "prerequisites": [
+      "沁园春·长沙·意象与情感"
+    ],
+    "extra": null,
+    "_kcs": [
+      "《沁园春·长沙》诗词鉴赏与积累"
+    ],
+    "_unit": "第一单元"
+  },
+  {
+    "id": "ku-003",
+    "name": "沁园春·长沙·背诵全词",
+    "ku_type": "mingpian",
+    "track": "积累",
+    "core": "独立寒秋，湘江北去，橘子洲头。看万山红遍，层林尽染；漫江碧透，百舸争流。鹰击长空，鱼翔浅底，万类霜天竞自由。怅寥廓，问苍茫大地，谁主沉浮？携来百侣曾游。忆往昔峥嵘岁月稠。恰同学少年，风华正茂；书生意气，挥斥方遒。指点江山，激扬文字，粪土当年万户侯。曾记否，到中流击水，浪遏飞舟？",
+    "source_text": "《沁园春·长沙》毛泽东",
+    "difficulty": 0.3,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "《沁园春·长沙》诗词鉴赏与积累"
+    ],
+    "_unit": "第一单元"
+  },
+  {
+    "id": "ku-004",
+    "name": "沁园春·长沙·怅·失意义",
+    "ku_type": "wenyan_word",
+    "track": "积累",
+    "core": "怅，形容词，失意、不畅快。例：怅寥廓。",
+    "source_text": "《沁园春·长沙》毛泽东",
+    "difficulty": 0.3,
+    "prerequisites": [],
+    "extra": {
+      "词性": "形容词",
+      "是否通假": false,
+      "是否古今异义": false,
+      "是否词类活用": false,
+      "活用类型": null,
+      "义项": "失意、不畅快",
+      "例句": "怅寥廓"
+    },
+    "_kcs": [
+      "《沁园春·长沙》诗词鉴赏与积累"
+    ],
+    "_unit": "第一单元"
+  },
+  {
+    "id": "ku-005",
+    "name": "沁园春·长沙·主·主宰义",
+    "ku_type": "wenyan_word",
+    "track": "积累",
+    "core": "主，动词，主宰。例：谁主沉浮。",
+    "source_text": "《沁园春·长沙》毛泽东",
+    "difficulty": 0.3,
+    "prerequisites": [],
+    "extra": {
+      "词性": "动词",
+      "是否通假": false,
+      "是否古今异义": false,
+      "是否词类活用": false,
+      "活用类型": null,
+      "义项": "主宰",
+      "例句": "谁主沉浮"
+    },
+    "_kcs": [
+      "《沁园春·长沙》诗词鉴赏与积累"
+    ],
+    "_unit": "第一单元"
+  },
+  {
+    "id": "ku-006",
+    "name": "沁园春·长沙·沉浮·盛衰义",
+    "ku_type": "wenyan_word",
+    "track": "积累",
+    "core": "沉浮，名词，这里指盛衰。例：谁主沉浮。",
+    "source_text": "《沁园春·长沙》毛泽东",
+    "difficulty": 0.4,
+    "prerequisites": [],
+    "extra": {
+      "词性": "名词",
+      "是否通假": false,
+      "是否古今异义": true,
+      "是否词类活用": false,
+      "活用类型": null,
+      "义项": "盛衰",
+      "例句": "谁主沉浮"
+    },
+    "_kcs": [
+      "《沁园春·长沙》诗词鉴赏与积累"
+    ],
+    "_unit": "第一单元"
+  },
+  {
+    "id": "ku-007",
+    "name": "沁园春·长沙·峥嵘·不平凡义",
+    "ku_type": "wenyan_word",
+    "track": "积累",
+    "core": "峥嵘，形容词，不平凡、不寻常。例：忆往昔峥嵘岁月稠。",
+    "source_text": "《沁园春·长沙》毛泽东",
+    "difficulty": 0.3,
+    "prerequisites": [],
+    "extra": {
+      "词性": "形容词",
+      "是否通假": false,
+      "是否古今异义": false,
+      "是否词类活用": false,
+      "活用类型": null,
+      "义项": "不平凡、不寻常",
+      "例句": "忆往昔峥嵘岁月稠"
+    },
+    "_kcs": [
+      "《沁园春·长沙》诗词鉴赏与积累"
+    ],
+    "_unit": "第一单元"
+  },
+  {
+    "id": "ku-008",
+    "name": "沁园春·长沙·稠·多义",
+    "ku_type": "wenyan_word",
+    "track": "积累",
+    "core": "稠，形容词，多。例：忆往昔峥嵘岁月稠。",
+    "source_text": "《沁园春·长沙》毛泽东",
+    "difficulty": 0.3,
+    "prerequisites": [],
+    "extra": {
+      "词性": "形容词",
+      "是否通假": false,
+      "是否古今异义": false,
+      "是否词类活用": false,
+      "活用类型": null,
+      "义项": "多",
+      "例句": "忆往昔峥嵘岁月稠"
+    },
+    "_kcs": [
+      "《沁园春·长沙》诗词鉴赏与积累"
+    ],
+    "_unit": "第一单元"
+  },
+  {
+    "id": "ku-009",
+    "name": "沁园春·长沙·风华正茂·风采才华正盛",
+    "ku_type": "chengyu",
+    "track": "积累",
+    "core": "风华正茂，风采才华正盛。出自《沁园春·长沙》。",
+    "source_text": "《沁园春·长沙》毛泽东",
+    "difficulty": 0.2,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "《沁园春·长沙》诗词鉴赏与积累"
+    ],
+    "_unit": "第一单元"
+  },
+  {
+    "id": "ku-010",
+    "name": "沁园春·长沙·挥斥方遒·纵放奔放",
+    "ku_type": "chengyu",
+    "track": "积累",
+    "core": "挥斥方遒，纵放、奔放，强劲有力。出自《沁园春·长沙》。",
+    "source_text": "《沁园春·长沙》毛泽东",
+    "difficulty": 0.3,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "《沁园春·长沙》诗词鉴赏与积累"
+    ],
+    "_unit": "第一单元"
+  },
+  {
+    "id": "ku-011",
+    "name": "沁园春·长沙·粪土·意动用法",
+    "ku_type": "wenyan_word",
+    "track": "积累",
+    "core": "粪土，名词用作动词，视……如粪土，表鄙视。例：粪土当年万户侯。",
+    "source_text": "《沁园春·长沙》毛泽东",
+    "difficulty": 0.5,
+    "prerequisites": [],
+    "extra": {
+      "词性": "动词",
+      "是否通假": false,
+      "是否古今异义": false,
+      "是否词类活用": true,
+      "活用类型": "名词作动词",
+      "义项": "视……如粪土",
+      "例句": "粪土当年万户侯"
+    },
+    "_kcs": [
+      "《沁园春·长沙》诗词鉴赏与积累"
+    ],
+    "_unit": "第一单元"
+  },
+  {
+    "id": "ku-012",
+    "name": "沁园春·长沙·遏·阻止义",
+    "ku_type": "wenyan_word",
+    "track": "积累",
+    "core": "遏，动词，阻止。例：浪遏飞舟。",
+    "source_text": "《沁园春·长沙》毛泽东",
+    "difficulty": 0.3,
+    "prerequisites": [],
+    "extra": {
+      "词性": "动词",
+      "是否通假": false,
+      "是否古今异义": false,
+      "是否词类活用": false,
+      "活用类型": null,
+      "义项": "阻止",
+      "例句": "浪遏飞舟"
+    },
+    "_kcs": [
+      "《沁园春·长沙》诗词鉴赏与积累"
+    ],
+    "_unit": "第一单元"
+  },
+  {
+    "id": "ku-013",
+    "name": "立在地球边上放号·意象与情感",
+    "ku_type": "shici_jianshang",
+    "track": "鉴赏",
+    "core": "通过‘怒涌的白云’‘太平洋’‘洪涛’等意象，赞美摧毁旧世界、创造新生活的雄强之力，体现‘五四’自由宏阔、雄奇奔放的气概。",
+    "source_text": "《立在地球边上放号》郭沫若",
+    "difficulty": 0.5,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "现代诗歌鉴赏方法"
+    ],
+    "_unit": "第一单元"
+  },
+  {
+    "id": "ku-014",
+    "name": "红烛·意象与情感",
+    "ku_type": "shici_jianshang",
+    "track": "鉴赏",
+    "core": "化用‘蜡炬’古典意象，赋予‘烧蜡成灰’点亮世界的新含义，赞美奉献精神；通过‘对话’表达青春的困惑与希望及对理想的坚毅追求。",
+    "source_text": "《红烛》闻一多",
+    "difficulty": 0.5,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "现代诗歌鉴赏方法"
+    ],
+    "_unit": "第一单元"
+  },
+  {
+    "id": "ku-015",
+    "name": "峨日朵雪峰之侧·意象与情感",
+    "ku_type": "shici_jianshang",
+    "track": "鉴赏",
+    "core": "通过‘雪峰’‘太阳’‘蜘蛛’等意象，营造凝重而壮美的氛围，感受谦卑而强劲的生命力量。",
+    "source_text": "《峨日朵雪峰之侧》昌耀",
+    "difficulty": 0.5,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "现代诗歌鉴赏方法"
+    ],
+    "_unit": "第一单元"
+  },
+  {
+    "id": "ku-016",
+    "name": "致云雀·象征与比喻",
+    "ku_type": "shici_jianshang",
+    "track": "鉴赏",
+    "core": "云雀象征欢乐、自由、理想；运用新奇比喻（如‘像一片烈火的轻云’）和奇特想象，表现对美好事物的赞美。",
+    "source_text": "《致云雀》雪莱",
+    "difficulty": 0.6,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "现代诗歌鉴赏方法"
+    ],
+    "_unit": "第一单元"
+  },
+  {
+    "id": "ku-017",
+    "name": "百合花·小说叙事与抒情",
+    "ku_type": "xiaoshuo_yuedu",
+    "track": "鉴赏",
+    "core": "把握小说叙事特点（如第一人称视角、细节描写）和抒情手法（如通过‘百合花’意象寄托情感），体会战争背景下的人性美。",
+    "source_text": "《百合花》茹志鹃",
+    "difficulty": 0.5,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "《百合花》小说阅读与积累"
+    ],
+    "_unit": "第一单元"
+  },
+  {
+    "id": "ku-018",
+    "name": "百合花·字音字形·撂",
+    "ku_type": "zixing_ziyin",
+    "track": "积累",
+    "core": "撂（liào），放下、搁置。注意字形，左边是‘扌’。",
+    "source_text": "《百合花》茹志鹃",
+    "difficulty": 0.2,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "《百合花》小说阅读与积累"
+    ],
+    "_unit": "第一单元"
+  },
+  {
+    "id": "ku-019",
+    "name": "百合花·字音字形·讷",
+    "ku_type": "zixing_ziyin",
+    "track": "积累",
+    "core": "讷（nè），说话迟钝。注意读音，不读‘nà’。",
+    "source_text": "《百合花》茹志鹃",
+    "difficulty": 0.3,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "《百合花》小说阅读与积累"
+    ],
+    "_unit": "第一单元"
+  },
+  {
+    "id": "ku-020",
+    "name": "百合花·成语·局促不安",
+    "ku_type": "chengyu",
+    "track": "积累",
+    "core": "局促不安，拘谨不自然。出自《百合花》。",
+    "source_text": "《百合花》茹志鹃",
+    "difficulty": 0.2,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "《百合花》小说阅读与积累"
+    ],
+    "_unit": "第一单元"
+  },
+  {
+    "id": "ku-021",
+    "name": "写作·尝试创作诗歌",
+    "ku_type": "shumian_biaoda",
+    "track": "表达",
+    "core": "学习运用意象、比喻、象征等手法，表达青春情感和理想；注意语言的凝练和节奏感。",
+    "source_text": "第一单元写作板块",
+    "difficulty": 0.7,
+    "prerequisites": [
+      "沁园春·长沙·意象与情感",
+      "立在地球边上放号·意象与情感",
+      "红烛·意象与情感",
+      "致云雀·象征与比喻"
+    ],
+    "extra": null,
+    "_kcs": [
+      "表达与交际技能"
+    ],
+    "_unit": "第一单元"
+  },
+  {
+    "id": "ku-022",
+    "name": "口语交际·朗诵诗歌",
+    "ku_type": "kouyu_jiaoji",
+    "track": "表达",
+    "core": "通过朗读理清抒情脉络，把握意象内涵，运用重音、停顿、语调等技巧传达情感。",
+    "source_text": "第一单元学习提示",
+    "difficulty": 0.5,
+    "prerequisites": [
+      "沁园春·长沙·意象与情感",
+      "立在地球边上放号·意象与情感",
+      "红烛·意象与情感",
+      "致云雀·象征与比喻"
+    ],
+    "extra": null,
+    "_kcs": [
+      "表达与交际技能"
+    ],
+    "_unit": "第一单元"
+  },
+  {
+    "id": "ku-001",
+    "name": "着恼·zháo nǎo",
+    "ku_type": "zixing_ziyin",
+    "track": "积累",
+    "core": "着恼，读zháo nǎo，意为生气。注意“着”在此读zháo，不读zhe。",
+    "source_text": "《百合花》茹志鹃",
+    "difficulty": 0.3,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "《百合花》字音字形"
+    ],
+    "_unit": "第一单元"
+  },
+  {
+    "id": "ku-002",
+    "name": "张皇·zhāng huáng",
+    "ku_type": "zixing_ziyin",
+    "track": "积累",
+    "core": "张皇，读zhāng huáng，意为惊慌不安。注意“皇”不读huang轻声。",
+    "source_text": "《百合花》茹志鹃",
+    "difficulty": 0.3,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "《百合花》字音字形"
+    ],
+    "_unit": "第一单元"
+  },
+  {
+    "id": "ku-003",
+    "name": "讷讷·nè nè",
+    "ku_type": "zixing_ziyin",
+    "track": "积累",
+    "core": "讷讷，读nè nè，形容说话迟钝、不连贯。注意“讷”不读nà。",
+    "source_text": "《百合花》茹志鹃",
+    "difficulty": 0.4,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "《百合花》字音字形"
+    ],
+    "_unit": "第一单元"
+  },
+  {
+    "id": "ku-004",
+    "name": "讪讪·shàn shàn",
+    "ku_type": "zixing_ziyin",
+    "track": "积累",
+    "core": "讪讪，读shàn shàn，形容不好意思、难为情的样子。注意“讪”不读shān。",
+    "source_text": "《百合花》茹志鹃",
+    "difficulty": 0.4,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "《百合花》字音字形"
+    ],
+    "_unit": "第一单元"
+  },
+  {
+    "id": "ku-005",
+    "name": "撂下·liào xià",
+    "ku_type": "zixing_ziyin",
+    "track": "积累",
+    "core": "撂下，读liào xià，意为放下、丢下。注意“撂”不读luò。",
+    "source_text": "《百合花》茹志鹃",
+    "difficulty": 0.3,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "《百合花》字音字形"
+    ],
+    "_unit": "第一单元"
+  },
+  {
+    "id": "ku-006",
+    "name": "局促不安·jú cù bù ān",
+    "ku_type": "chengyu",
+    "track": "积累",
+    "core": "局促不安，形容拘谨、不自然、不安定的样子。出自《百合花》中通讯员的表现。",
+    "source_text": "《百合花》茹志鹃",
+    "difficulty": 0.3,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "《百合花》成语与文化常识"
+    ],
+    "_unit": "第一单元"
+  },
+  {
+    "id": "ku-007",
+    "name": "自告奋勇·zì gào fèn yǒng",
+    "ku_type": "chengyu",
+    "track": "积累",
+    "core": "自告奋勇，指主动要求承担艰巨的任务。出自《百合花》中“我”主动要求去借被子。",
+    "source_text": "《百合花》茹志鹃",
+    "difficulty": 0.3,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "《百合花》成语与文化常识"
+    ],
+    "_unit": "第一单元"
+  },
+  {
+    "id": "ku-008",
+    "name": "百合花·象征意义",
+    "ku_type": "wenhua_changshi",
+    "track": "积累",
+    "core": "百合花在文中象征纯洁、美好、高尚的情感，是新媳妇的嫁妆，也象征军民鱼水情。",
+    "source_text": "《百合花》茹志鹃",
+    "difficulty": 0.5,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "《百合花》成语与文化常识"
+    ],
+    "_unit": "第一单元"
+  },
+  {
+    "id": "ku-009",
+    "name": "小说人物形象分析·细节描写",
+    "ku_type": "xiaoshuo_yuedu",
+    "track": "鉴赏",
+    "core": "通过细节描写（如通讯员枪筒插树枝、新媳妇咬嘴唇笑等）刻画人物性格，展现人物内心。",
+    "source_text": "《百合花》茹志鹃",
+    "difficulty": 0.6,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "小说阅读核心方法"
+    ],
+    "_unit": "第一单元"
+  },
+  {
+    "id": "ku-010",
+    "name": "小说情节结构·线索与悬念",
+    "ku_type": "xiaoshuo_yuedu",
+    "track": "鉴赏",
+    "core": "以“百合花被子”为线索，通过借被、铺被、盖被等情节推进，设置悬念（通讯员牺牲），增强感染力。",
+    "source_text": "《百合花》茹志鹃",
+    "difficulty": 0.6,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "小说阅读核心方法"
+    ],
+    "_unit": "第一单元"
+  },
+  {
+    "id": "ku-011",
+    "name": "小说环境描写·烘托作用",
+    "ku_type": "xiaoshuo_yuedu",
+    "track": "鉴赏",
+    "core": "环境描写（如中秋月夜、炮火照明弹）烘托战争氛围，反衬人物美好心灵，推动情节发展。",
+    "source_text": "《百合花》茹志鹃",
+    "difficulty": 0.5,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "小说阅读核心方法"
+    ],
+    "_unit": "第一单元"
+  },
+  {
+    "id": "ku-012",
+    "name": "记叙文写作·细节描写刻画人物",
+    "ku_type": "shumian_biaoda",
+    "track": "表达",
+    "core": "通过典型细节（如动作、神态、语言）刻画人物性格，使人物形象生动立体。",
+    "source_text": "第一单元写作任务",
+    "difficulty": 0.6,
+    "prerequisites": [
+      "小说人物形象分析·细节描写"
+    ],
+    "extra": null,
+    "_kcs": [
+      "记叙文写作与口语交际"
+    ],
+    "_unit": "第一单元"
+  },
+  {
+    "id": "ku-013",
+    "name": "记叙文写作·线索设置",
+    "ku_type": "shumian_biaoda",
+    "track": "表达",
+    "core": "选择贯穿全文的线索（如物品、情感、人物），使文章结构紧凑，主题突出。",
+    "source_text": "第一单元写作任务",
+    "difficulty": 0.6,
+    "prerequisites": [
+      "小说情节结构·线索与悬念"
+    ],
+    "extra": null,
+    "_kcs": [
+      "记叙文写作与口语交际"
+    ],
+    "_unit": "第一单元"
+  },
+  {
+    "id": "ku-014",
+    "name": "口语交际·得体表达与换位思考",
+    "ku_type": "goutong_chushi",
+    "track": "表达",
+    "core": "在借被子等交际场景中，注意语气、态度，站在对方角度思考，避免冲突，达成沟通目的。",
+    "source_text": "第一单元口语交际任务",
+    "difficulty": 0.5,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "记叙文写作与口语交际"
+    ],
+    "_unit": "第一单元"
+  },
+  {
+    "id": "ku-001",
+    "name": "撂·扔义",
+    "ku_type": "wenyan_word",
+    "track": "积累",
+    "core": "撂，动词，扔、抛。例：反动派不知从哪个屋顶上撂下颗手榴弹来。",
+    "source_text": "《百合花》茹志鹃",
+    "difficulty": 0.3,
+    "prerequisites": [],
+    "extra": {
+      "词性": "动词",
+      "是否通假": false,
+      "是否古今异义": false,
+      "是否词类活用": false,
+      "活用类型": null,
+      "义项": "扔、抛",
+      "例句": "撂下颗手榴弹来"
+    },
+    "_kcs": [
+      "《百合花》文言词语"
+    ],
+    "_unit": "第一单元"
+  },
+  {
+    "id": "ku-002",
+    "name": "磕磕绊绊·形容路不好走或身体不稳",
+    "ku_type": "wenyan_word",
+    "track": "积累",
+    "core": "磕磕绊绊，形容词，形容路不好走或身体不稳。例：我猛然醒悟地跳起身，磕磕绊绊地跑去找医生。",
+    "source_text": "《百合花》茹志鹃",
+    "difficulty": 0.3,
+    "prerequisites": [],
+    "extra": {
+      "词性": "形容词",
+      "是否通假": false,
+      "是否古今异义": false,
+      "是否词类活用": false,
+      "活用类型": null,
+      "义项": "形容路不好走或身体不稳",
+      "例句": "磕磕绊绊地跑去找医生"
+    },
+    "_kcs": [
+      "《百合花》文言词语"
+    ],
+    "_unit": "第一单元"
+  },
+  {
+    "id": "ku-003",
+    "name": "劈手·形容动作迅速",
+    "ku_type": "wenyan_word",
+    "track": "积累",
+    "core": "劈手，副词，形容动作迅速、突然。例：新媳妇这时脸发白，劈手夺过被子。",
+    "source_text": "《百合花》茹志鹃",
+    "difficulty": 0.4,
+    "prerequisites": [],
+    "extra": {
+      "词性": "副词",
+      "是否通假": false,
+      "是否古今异义": false,
+      "是否词类活用": false,
+      "活用类型": null,
+      "义项": "形容动作迅速、突然",
+      "例句": "劈手夺过被子"
+    },
+    "_kcs": [
+      "《百合花》文言词语"
+    ],
+    "_unit": "第一单元"
+  },
+  {
+    "id": "ku-004",
+    "name": "忸怩·形容害羞",
+    "ku_type": "wenyan_word",
+    "track": "积累",
+    "core": "忸怩，形容词，形容害羞、不好意思。例：她刚才那种忸怩羞涩已经完全消失。",
+    "source_text": "《百合花》茹志鹃",
+    "difficulty": 0.3,
+    "prerequisites": [],
+    "extra": {
+      "词性": "形容词",
+      "是否通假": false,
+      "是否古今异义": false,
+      "是否词类活用": false,
+      "活用类型": null,
+      "义项": "害羞、不好意思",
+      "例句": "忸怩羞涩已经完全消失"
+    },
+    "_kcs": [
+      "《百合花》文言词语"
+    ],
+    "_unit": "第一单元"
+  },
+  {
+    "id": "ku-005",
+    "name": "虔诚·恭敬而有诚意",
+    "ku_type": "wenyan_word",
+    "track": "积累",
+    "core": "虔诚，形容词，恭敬而有诚意。例：只是庄严而虔诚地给他拭着身子。",
+    "source_text": "《百合花》茹志鹃",
+    "difficulty": 0.3,
+    "prerequisites": [],
+    "extra": {
+      "词性": "形容词",
+      "是否通假": false,
+      "是否古今异义": false,
+      "是否词类活用": false,
+      "活用类型": null,
+      "义项": "恭敬而有诚意",
+      "例句": "庄严而虔诚地给他拭着身子"
+    },
+    "_kcs": [
+      "《百合花》文言词语"
+    ],
+    "_unit": "第一单元"
+  },
+  {
+    "id": "ku-006",
+    "name": "安详·从容不迫",
+    "ku_type": "wenyan_word",
+    "track": "积累",
+    "core": "安详，形容词，从容不迫、平静。例：他安详地合着眼。",
+    "source_text": "《百合花》茹志鹃",
+    "difficulty": 0.3,
+    "prerequisites": [],
+    "extra": {
+      "词性": "形容词",
+      "是否通假": false,
+      "是否古今异义": false,
+      "是否词类活用": false,
+      "活用类型": null,
+      "义项": "从容不迫、平静",
+      "例句": "安详地合着眼"
+    },
+    "_kcs": [
+      "《百合花》文言词语"
+    ],
+    "_unit": "第一单元"
+  },
+  {
+    "id": "ku-007",
+    "name": "撂·扔义（《哦，香雪》）",
+    "ku_type": "wenyan_word",
+    "track": "积累",
+    "core": "撂，动词，扔、抛。例：有人还悄悄往脸上涂点胭脂。",
+    "source_text": "《哦，香雪》铁凝",
+    "difficulty": 0.3,
+    "prerequisites": [],
+    "extra": {
+      "词性": "动词",
+      "是否通假": false,
+      "是否古今异义": false,
+      "是否词类活用": false,
+      "活用类型": null,
+      "义项": "扔、抛",
+      "例句": "撂下碗就开始梳妆打扮"
+    },
+    "_kcs": [
+      "《哦，香雪》文言词语"
+    ],
+    "_unit": "第一单元"
+  },
+  {
+    "id": "ku-008",
+    "name": "斟酌·反复考虑",
+    "ku_type": "wenyan_word",
+    "track": "积累",
+    "core": "斟酌，动词，反复考虑、权衡。例：她们还是按照自己的心思，刻意斟酌着服饰和容貌。",
+    "source_text": "《哦，香雪》铁凝",
+    "difficulty": 0.4,
+    "prerequisites": [],
+    "extra": {
+      "词性": "动词",
+      "是否通假": false,
+      "是否古今异义": false,
+      "是否词类活用": false,
+      "活用类型": null,
+      "义项": "反复考虑、权衡",
+      "例句": "刻意斟酌着服饰和容貌"
+    },
+    "_kcs": [
+      "《哦，香雪》文言词语"
+    ],
+    "_unit": "第一单元"
+  },
+  {
+    "id": "ku-009",
+    "name": "贪婪·不知满足",
+    "ku_type": "wenyan_word",
+    "track": "积累",
+    "core": "贪婪，形容词，不知满足。例：她们就成帮搭伙地站在村口，翘起下巴，贪婪、专注地仰望着火车。",
+    "source_text": "《哦，香雪》铁凝",
+    "difficulty": 0.3,
+    "prerequisites": [],
+    "extra": {
+      "词性": "形容词",
+      "是否通假": false,
+      "是否古今异义": false,
+      "是否词类活用": false,
+      "活用类型": null,
+      "义项": "不知满足",
+      "例句": "贪婪、专注地仰望着火车"
+    },
+    "_kcs": [
+      "《哦，香雪》文言词语"
+    ],
+    "_unit": "第一单元"
+  },
+  {
+    "id": "ku-010",
+    "name": "虔诚·恭敬而有诚意（《哦，香雪》）",
+    "ku_type": "wenyan_word",
+    "track": "积累",
+    "core": "虔诚，形容词，恭敬而有诚意。例：好像在默默地向大山诉说着自己的虔诚。",
+    "source_text": "《哦，香雪》铁凝",
+    "difficulty": 0.3,
+    "prerequisites": [],
+    "extra": {
+      "词性": "形容词",
+      "是否通假": false,
+      "是否古今异义": false,
+      "是否词类活用": false,
+      "活用类型": null,
+      "义项": "恭敬而有诚意",
+      "例句": "诉说着自己的虔诚"
+    },
+    "_kcs": [
+      "《哦，香雪》文言词语"
+    ],
+    "_unit": "第一单元"
+  },
+  {
+    "id": "ku-011",
+    "name": "惆怅·伤感",
+    "ku_type": "wenyan_word",
+    "track": "积累",
+    "core": "惆怅，形容词，伤感、失意。例：一切又恢复了寂静，静得叫人惆怅。",
+    "source_text": "《哦，香雪》铁凝",
+    "difficulty": 0.3,
+    "prerequisites": [],
+    "extra": {
+      "词性": "形容词",
+      "是否通假": false,
+      "是否古今异义": false,
+      "是否词类活用": false,
+      "活用类型": null,
+      "义项": "伤感、失意",
+      "例句": "静得叫人惆怅"
+    },
+    "_kcs": [
+      "《哦，香雪》文言词语"
+    ],
+    "_unit": "第一单元"
+  },
+  {
+    "id": "ku-012",
+    "name": "五彩缤纷·形容色彩繁多",
+    "ku_type": "chengyu",
+    "track": "积累",
+    "core": "五彩缤纷，形容色彩繁多而美丽。出自《哦，香雪》：哦，五彩缤纷的一分钟。",
+    "source_text": "《哦，香雪》铁凝",
+    "difficulty": 0.2,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "第一单元成语与文化常识"
+    ],
+    "_unit": "第一单元"
+  },
+  {
+    "id": "ku-013",
+    "name": "百合花·象征纯洁与感情",
+    "ku_type": "wenhua_changshi",
+    "track": "积累",
+    "core": "百合花在中国文化中常象征纯洁、美好、感情深厚。在《百合花》中，被子上的百合花象征通讯员与新媳妇之间纯洁的感情。",
+    "source_text": "《百合花》茹志鹃",
+    "difficulty": 0.4,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "第一单元成语与文化常识"
+    ],
+    "_unit": "第一单元"
+  },
+  {
+    "id": "ku-014",
+    "name": "小说细节描写·通过动作神态展现人物心理",
+    "ku_type": "xiaoshuo_yuedu",
+    "track": "鉴赏",
+    "core": "通过人物的动作、神态等细节描写，展现人物内心情感变化。如新媳妇从忸怩到庄严虔诚地拭身、缝破洞，表现其情感升华。",
+    "source_text": "《百合花》茹志鹃",
+    "difficulty": 0.6,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "小说阅读核心方法"
+    ],
+    "_unit": "第一单元"
+  },
+  {
+    "id": "ku-015",
+    "name": "小说象征手法·物象承载主题",
+    "ku_type": "xiaoshuo_yuedu",
+    "track": "鉴赏",
+    "core": "通过具体物象（如百合花被子）象征人物品质或主题，增强作品感染力。",
+    "source_text": "《百合花》茹志鹃",
+    "difficulty": 0.6,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "小说阅读核心方法"
+    ],
+    "_unit": "第一单元"
+  },
+  {
+    "id": "ku-016",
+    "name": "小说人物塑造·对比手法",
+    "ku_type": "xiaoshuo_yuedu",
+    "track": "鉴赏",
+    "core": "通过人物前后行为、态度的对比，突出人物性格发展。如新媳妇从害羞到勇敢，通讯员从腼腆到英勇。",
+    "source_text": "《百合花》茹志鹃",
+    "difficulty": 0.5,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "小说阅读核心方法"
+    ],
+    "_unit": "第一单元"
+  },
+  {
+    "id": "ku-017",
+    "name": "小说环境描写·烘托氛围",
+    "ku_type": "xiaoshuo_yuedu",
+    "track": "鉴赏",
+    "core": "通过环境描写（如月光、枪声）烘托人物心情和故事氛围。如《百合花》中“外边月亮很明，也比平日悬得高”烘托紧张与悲壮。",
+    "source_text": "《百合花》茹志鹃",
+    "difficulty": 0.5,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "小说阅读核心方法"
+    ],
+    "_unit": "第一单元"
+  },
+  {
+    "id": "ku-018",
+    "name": "小说语言·个性化对话",
+    "ku_type": "xiaoshuo_yuedu",
+    "track": "鉴赏",
+    "core": "通过个性化对话展现人物性格。如《哦，香雪》中凤娇的泼辣、香雪的文静，通过对话鲜明体现。",
+    "source_text": "《哦，香雪》铁凝",
+    "difficulty": 0.5,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "小说阅读核心方法"
+    ],
+    "_unit": "第一单元"
+  },
+  {
+    "id": "ku-019",
+    "name": "小说主题·青春与成长",
+    "ku_type": "xiaoshuo_yuedu",
+    "track": "鉴赏",
+    "core": "通过少女对现代文明的向往与追求，展现青春期的成长与自我意识觉醒。如香雪对铅笔盒的渴望象征对知识的追求。",
+    "source_text": "《哦，香雪》铁凝",
+    "difficulty": 0.6,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "小说阅读核心方法"
+    ],
+    "_unit": "第一单元"
+  },
+  {
+    "id": "ku-020",
+    "name": "记叙文写作·细节描写增强感染力",
+    "ku_type": "shumian_biaoda",
+    "track": "表达",
+    "core": "在记叙文中，通过具体细节（如动作、神态、物品）描写，使人物形象更生动，情感更真实。如《百合花》中缝破洞的细节。",
+    "source_text": "第一单元写作任务",
+    "difficulty": 0.5,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "第一单元写作与口语交际技能"
+    ],
+    "_unit": "第一单元"
+  },
+  {
+    "id": "ku-021",
+    "name": "记叙文写作·以小见大",
+    "ku_type": "shumian_biaoda",
+    "track": "表达",
+    "core": "通过平凡小事或普通物品，反映深刻主题。如百合花被子象征纯洁感情，香雪的铅笔盒象征对知识的渴望。",
+    "source_text": "第一单元写作任务",
+    "difficulty": 0.6,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "第一单元写作与口语交际技能"
+    ],
+    "_unit": "第一单元"
+  },
+  {
+    "id": "ku-022",
+    "name": "口语交际·倾听与回应",
+    "ku_type": "kouyu_jiaoji",
+    "track": "表达",
+    "core": "在对话中认真倾听对方，并给予恰当回应。如《哦，香雪》中姑娘们与乘务员的对话，既有提问又有回应。",
+    "source_text": "第一单元口语交际任务",
+    "difficulty": 0.4,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "第一单元写作与口语交际技能"
+    ],
+    "_unit": "第一单元"
+  },
+  {
+    "id": "ku-001",
+    "name": "窸窸窣窣·象声词",
+    "ku_type": "zixing_ziyin",
+    "track": "积累",
+    "core": "窸窸窣窣（xī xī sū sū），形容细小的摩擦声。",
+    "source_text": "《哦，香雪》铁凝",
+    "difficulty": 0.3,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "《哦，香雪》字音字形与成语"
+    ],
+    "_unit": "第一单元"
+  },
+  {
+    "id": "ku-002",
+    "name": "凛冽·字音字形",
+    "ku_type": "zixing_ziyin",
+    "track": "积累",
+    "core": "凛冽（lǐn liè），形容寒冷刺骨。",
+    "source_text": "《哦，香雪》铁凝",
+    "difficulty": 0.3,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "《哦，香雪》字音字形与成语"
+    ],
+    "_unit": "第一单元"
+  },
+  {
+    "id": "ku-003",
+    "name": "端详·字音字形",
+    "ku_type": "zixing_ziyin",
+    "track": "积累",
+    "core": "端详（duān xiang），仔细地看。",
+    "source_text": "《哦，香雪》铁凝",
+    "difficulty": 0.3,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "《哦，香雪》字音字形与成语"
+    ],
+    "_unit": "第一单元"
+  },
+  {
+    "id": "ku-004",
+    "name": "不知所措·成语",
+    "ku_type": "chengyu",
+    "track": "积累",
+    "core": "不知所措（bù zhī suǒ cuò），不知道怎么办才好，形容受窘或发急。",
+    "source_text": "《哦，香雪》铁凝",
+    "difficulty": 0.4,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "《哦，香雪》字音字形与成语"
+    ],
+    "_unit": "第一单元"
+  },
+  {
+    "id": "ku-005",
+    "name": "理直气壮·成语",
+    "ku_type": "chengyu",
+    "track": "积累",
+    "core": "理直气壮（lǐ zhí qì zhuàng），理由充分，说话气势就壮。",
+    "source_text": "《哦，香雪》铁凝",
+    "difficulty": 0.3,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "《哦，香雪》字音字形与成语"
+    ],
+    "_unit": "第一单元"
+  },
+  {
+    "id": "ku-006",
+    "name": "独一无二·成语",
+    "ku_type": "chengyu",
+    "track": "积累",
+    "core": "独一无二（dú yī wú èr），没有相同的或没有可以相比的。",
+    "source_text": "《哦，香雪》铁凝",
+    "difficulty": 0.3,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "《哦，香雪》字音字形与成语"
+    ],
+    "_unit": "第一单元"
+  },
+  {
+    "id": "ku-007",
+    "name": "人民公社·文化常识",
+    "ku_type": "wenhua_changshi",
+    "track": "积累",
+    "core": "人民公社是1958—1982年我国农村中的集体所有制经济组织，一般一乡一社，政社合一。",
+    "source_text": "《哦，香雪》铁凝（课文注释）",
+    "difficulty": 0.4,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "《哦，香雪》文化常识"
+    ],
+    "_unit": "第一单元"
+  },
+  {
+    "id": "ku-008",
+    "name": "小说·细节描写方法",
+    "ku_type": "xiaoshuo_yuedu",
+    "track": "鉴赏",
+    "core": "细节描写：通过细微的动作、神态、物品等刻画人物心理或推动情节。如香雪反复摆弄铅笔盒、新媳妇缝补破洞等。",
+    "source_text": "《哦，香雪》《百合花》铁凝/茹志鹃",
+    "difficulty": 0.6,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "小说阅读核心方法（细节、心理、环境）"
+    ],
+    "_unit": "第一单元"
+  },
+  {
+    "id": "ku-009",
+    "name": "小说·心理描写方法",
+    "ku_type": "xiaoshuo_yuedu",
+    "track": "鉴赏",
+    "core": "心理描写：直接或间接展现人物内心活动，如香雪在火车上、夜归路上的心理变化，表现其自尊与成长。",
+    "source_text": "《哦，香雪》铁凝",
+    "difficulty": 0.6,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "小说阅读核心方法（细节、心理、环境）"
+    ],
+    "_unit": "第一单元"
+  },
+  {
+    "id": "ku-010",
+    "name": "小说·环境描写作用",
+    "ku_type": "xiaoshuo_yuedu",
+    "track": "鉴赏",
+    "core": "环境描写：渲染气氛、烘托人物心情、象征主题。如月光、群山、小溪等自然景物烘托香雪的心理变化。",
+    "source_text": "《哦，香雪》铁凝",
+    "difficulty": 0.6,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "小说阅读核心方法（细节、心理、环境）"
+    ],
+    "_unit": "第一单元"
+  },
+  {
+    "id": "ku-011",
+    "name": "书面表达·细节描写写作方法",
+    "ku_type": "shumian_biaoda",
+    "track": "表达",
+    "core": "细节描写：选取典型动作、物品、神态等，用具体词语刻画，使人物形象生动。如香雪“轻轻一拍盒盖”等。",
+    "source_text": "第一单元学习任务",
+    "difficulty": 0.6,
+    "prerequisites": [
+      "小说·细节描写方法"
+    ],
+    "extra": null,
+    "_kcs": [
+      "写作与口语交际技能（细节描写、心理描写、表达感受）"
+    ],
+    "_unit": "第一单元"
+  },
+  {
+    "id": "ku-012",
+    "name": "书面表达·心理描写写作方法",
+    "ku_type": "shumian_biaoda",
+    "track": "表达",
+    "core": "心理描写：通过内心独白、幻觉、联想等展现人物情感变化，如香雪对铅笔盒的渴望与对未来的憧憬。",
+    "source_text": "第一单元学习任务",
+    "difficulty": 0.6,
+    "prerequisites": [
+      "小说·心理描写方法"
+    ],
+    "extra": null,
+    "_kcs": [
+      "写作与口语交际技能（细节描写、心理描写、表达感受）"
+    ],
+    "_unit": "第一单元"
+  },
+  {
+    "id": "ku-013",
+    "name": "口语交际·表达感受与观点",
+    "ku_type": "kouyu_jiaoji",
+    "track": "表达",
+    "core": "表达感受与观点：结合文本细节，有条理地分享阅读感受，如“香雪最让我感动的地方是……”。",
+    "source_text": "第一单元学习任务",
+    "difficulty": 0.5,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "写作与口语交际技能（细节描写、心理描写、表达感受）"
+    ],
+    "_unit": "第一单元"
+  },
+  {
+    "id": "ku-001",
+    "name": "青春的价值·讨论话题",
+    "ku_type": "kouyu_jiaoji",
+    "track": "表达",
+    "core": "围绕'青春的价值'展开讨论，从最有感触的一点出发，与同学交流，要求结合阅读感受，表达个人思考。",
+    "source_text": "第一单元学习任务",
+    "difficulty": 0.5,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "口语交际与沟通"
+    ],
+    "_unit": "第一单元"
+  },
+  {
+    "id": "ku-002",
+    "name": "意象·诗歌欣赏方法",
+    "ku_type": "shici_jianshang",
+    "track": "鉴赏",
+    "core": "通过分析诗歌中的意象（如《沁园春·长沙》中的'红遍''尽染'），把握意象特点，激发情思，记录思考写札记。",
+    "source_text": "第一单元学习任务",
+    "difficulty": 0.6,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "诗歌鉴赏方法"
+    ],
+    "_unit": "第一单元"
+  },
+  {
+    "id": "ku-003",
+    "name": "诗歌语言·炼字欣赏",
+    "ku_type": "shici_jianshang",
+    "track": "鉴赏",
+    "core": "抓住富有表现力的词语（如'红遍''尽染''碧透'）来欣赏诗歌，分析其表达效果和情感。",
+    "source_text": "第一单元学习任务",
+    "difficulty": 0.5,
+    "prerequisites": [
+      "意象·诗歌欣赏方法"
+    ],
+    "extra": null,
+    "_kcs": [
+      "诗歌鉴赏方法"
+    ],
+    "_unit": "第一单元"
+  },
+  {
+    "id": "ku-004",
+    "name": "小说·细节描写赏析",
+    "ku_type": "xiaoshuo_yuedu",
+    "track": "鉴赏",
+    "core": "阅读《百合花》《哦，香雪》，联系历史背景，揣摩人物心理，分析典型细节描写，并作简要点评。",
+    "source_text": "第一单元学习任务",
+    "difficulty": 0.6,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "小说阅读技法"
+    ],
+    "_unit": "第一单元"
+  },
+  {
+    "id": "ku-005",
+    "name": "学写诗歌·意象选择",
+    "ku_type": "shumian_biaoda",
+    "track": "表达",
+    "core": "写作诗歌时，通过具体形象（意象）表达情感，运用比喻、象征等方式，避免直抒胸臆，使诗作有'诗味'。",
+    "source_text": "第一单元学习任务",
+    "difficulty": 0.7,
+    "prerequisites": [
+      "意象·诗歌欣赏方法"
+    ],
+    "extra": null,
+    "_kcs": [
+      "诗歌写作技法"
+    ],
+    "_unit": "第一单元"
+  },
+  {
+    "id": "ku-006",
+    "name": "学写诗歌·韵律节奏",
+    "ku_type": "shumian_biaoda",
+    "track": "表达",
+    "core": "诗歌写作要安排好韵律和节奏，与情感表达相协调，写后反复朗读修改，以增强音乐性。",
+    "source_text": "第一单元学习任务",
+    "difficulty": 0.6,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "诗歌写作技法"
+    ],
+    "_unit": "第一单元"
+  },
+  {
+    "id": "ku-007",
+    "name": "学写诗歌·语言锤炼",
+    "ku_type": "shumian_biaoda",
+    "track": "表达",
+    "core": "诗歌语言要凝练、含蓄，追求言有尽而意无穷的效果，通过精心选词造句给人留下深刻印象。",
+    "source_text": "第一单元学习任务",
+    "difficulty": 0.7,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "诗歌写作技法"
+    ],
+    "_unit": "第一单元"
+  },
+  {
+    "id": "ku-008",
+    "name": "红遍·炼字",
+    "ku_type": "wenyan_word",
+    "track": "积累",
+    "core": "红遍，形容词用作动词，意为'红遍'，形容范围广、色彩浓烈。例：看万山红遍，层林尽染（《沁园春·长沙》）。",
+    "source_text": "《沁园春·长沙》毛泽东",
+    "difficulty": 0.4,
+    "prerequisites": [],
+    "extra": {
+      "词性": "动词",
+      "是否通假": false,
+      "是否古今异义": false,
+      "是否词类活用": true,
+      "活用类型": "形容词用作动词",
+      "义项": "红遍",
+      "例句": "看万山红遍"
+    },
+    "_kcs": [
+      "《沁园春·长沙》积累"
+    ],
+    "_unit": "第一单元"
+  },
+  {
+    "id": "ku-009",
+    "name": "尽染·炼字",
+    "ku_type": "wenyan_word",
+    "track": "积累",
+    "core": "尽染，动词，意为'全部染上颜色'，形容秋色浓郁。例：层林尽染（《沁园春·长沙》）。",
+    "source_text": "《沁园春·长沙》毛泽东",
+    "difficulty": 0.3,
+    "prerequisites": [],
+    "extra": {
+      "词性": "动词",
+      "是否通假": false,
+      "是否古今异义": false,
+      "是否词类活用": false,
+      "活用类型": null,
+      "义项": "全部染上颜色",
+      "例句": "层林尽染"
+    },
+    "_kcs": [
+      "《沁园春·长沙》积累"
+    ],
+    "_unit": "第一单元"
+  },
+  {
+    "id": "ku-010",
+    "name": "碧透·炼字",
+    "ku_type": "wenyan_word",
+    "track": "积累",
+    "core": "碧透，形容词，意为'碧绿而透明'，形容江水清澈。例：漫江碧透（《沁园春·长沙》）。",
+    "source_text": "《沁园春·长沙》毛泽东",
+    "difficulty": 0.3,
+    "prerequisites": [],
+    "extra": {
+      "词性": "形容词",
+      "是否通假": false,
+      "是否古今异义": false,
+      "是否词类活用": false,
+      "活用类型": null,
+      "义项": "碧绿透明",
+      "例句": "漫江碧透"
+    },
+    "_kcs": [
+      "《沁园春·长沙》积累"
+    ],
+    "_unit": "第一单元"
+  },
+  {
+    "id": "ku-011",
+    "name": "沁园春·长沙·名句",
+    "ku_type": "mingpian",
+    "track": "积累",
+    "core": "看万山红遍，层林尽染；漫江碧透，百舸争流。鹰击长空，鱼翔浅底，万类霜天竞自由。（毛泽东《沁园春·长沙》）",
+    "source_text": "《沁园春·长沙》毛泽东",
+    "difficulty": 0.3,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "《沁园春·长沙》积累"
+    ],
+    "_unit": "第一单元"
+  },
+  {
+    "id": "ku-012",
+    "name": "红烛·核心意象",
+    "ku_type": "shici_jianshang",
+    "track": "鉴赏",
+    "core": "闻一多《红烛》以红烛为核心意象，通过层层渲染和开掘，赋予其丰富的内涵和情感，象征奉献精神。",
+    "source_text": "《红烛》闻一多",
+    "difficulty": 0.6,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "诗歌鉴赏方法"
+    ],
+    "_unit": "第一单元"
+  },
+  {
+    "id": "ku-013",
+    "name": "峨日朵雪峰之侧·意象组合",
+    "ku_type": "shici_jianshang",
+    "track": "鉴赏",
+    "core": "昌耀《峨日朵雪峰之侧》通过几个意象的组合（如雪峰、落日、蜘蛛等），表达情感变化和对人生的思考。",
+    "source_text": "《峨日朵雪峰之侧》昌耀",
+    "difficulty": 0.6,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "诗歌鉴赏方法"
+    ],
+    "_unit": "第一单元"
+  },
+  {
+    "id": "ku-014",
+    "name": "致云雀·意象群",
+    "ku_type": "shici_jianshang",
+    "track": "鉴赏",
+    "core": "雪莱《致云雀》以云雀为中心组成密集的意象群，表达诗人奔放的激情和坚定的理想。",
+    "source_text": "《致云雀》雪莱",
+    "difficulty": 0.6,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "诗歌鉴赏方法"
+    ],
+    "_unit": "第一单元"
+  },
+  {
+    "id": "ku-015",
+    "name": "立在地球边上放号·韵律节奏",
+    "ku_type": "shici_jianshang",
+    "track": "鉴赏",
+    "core": "郭沫若《立在地球边上放号》的雄奇奔放风格与作品的韵律节奏协调一致，体现诗歌音乐性。",
+    "source_text": "《立在地球边上放号》郭沫若",
+    "difficulty": 0.5,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "诗歌鉴赏方法"
+    ],
+    "_unit": "第一单元"
+  },
+  {
+    "id": "ku-016",
+    "name": "百合花·细节描写",
+    "ku_type": "xiaoshuo_yuedu",
+    "track": "鉴赏",
+    "core": "《百合花》通过典型细节描写（如新媳妇的被子、通讯员牺牲等）刻画人物心理，表现革命军人的牺牲精神。",
+    "source_text": "《百合花》茹志鹃",
+    "difficulty": 0.6,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "小说阅读技法"
+    ],
+    "_unit": "第一单元"
+  },
+  {
+    "id": "ku-017",
+    "name": "哦，香雪·心理描写",
+    "ku_type": "xiaoshuo_yuedu",
+    "track": "鉴赏",
+    "core": "《哦，香雪》通过细腻的心理描写，展现山村少女对现代生活的向往，联系改革开放背景理解内涵。",
+    "source_text": "《哦，香雪》铁凝",
+    "difficulty": 0.6,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "小说阅读技法"
+    ],
+    "_unit": "第一单元"
+  },
+  {
+    "id": "ku-018",
+    "name": "青春的价值·讨论表达",
+    "ku_type": "goutong_chushi",
+    "track": "表达",
+    "core": "在讨论'青春的价值'时，学会倾听他人观点，结合自身感受，得体表达个人见解，培养换位思考能力。",
+    "source_text": "第一单元学习任务",
+    "difficulty": 0.5,
+    "prerequisites": [
+      "青春的价值·讨论话题"
+    ],
+    "extra": null,
+    "_kcs": [
+      "口语交际与沟通"
+    ],
+    "_unit": "第一单元"
+  },
+  {
+    "id": "ku-001",
+    "name": "蔸·量词义",
+    "ku_type": "wenyan_word",
+    "track": "积累",
+    "core": "蔸，量词，相当于“棵”或“丛”。例：一蔸形态特异的水稻植株。",
+    "source_text": "《喜看稻菽千重浪》沈英甲",
+    "difficulty": 0.3,
+    "prerequisites": [],
+    "extra": {
+      "词性": "量词",
+      "是否通假": false,
+      "是否古今异义": false,
+      "是否词类活用": false,
+      "活用类型": null,
+      "义项": "棵或丛",
+      "例句": "一蔸形态特异的水稻植株"
+    },
+    "_kcs": [
+      "综合语文知识"
+    ],
+    "_unit": "第二单元"
+  },
+  {
+    "id": "ku-002",
+    "name": "屏气静神·成语",
+    "ku_type": "chengyu",
+    "track": "积累",
+    "core": "屏气静神：暂时抑制呼吸，集中精神。形容注意力高度集中。出自本文。",
+    "source_text": "《喜看稻菽千重浪》沈英甲",
+    "difficulty": 0.3,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "《喜看稻菽千重浪》成语与字音字形"
+    ],
+    "_unit": "第二单元"
+  },
+  {
+    "id": "ku-003",
+    "name": "鹤立鸡群·成语",
+    "ku_type": "chengyu",
+    "track": "积累",
+    "core": "鹤立鸡群：比喻一个人的仪表或才能在周围一群人里显得很突出。出自本文。",
+    "source_text": "《喜看稻菽千重浪》沈英甲",
+    "difficulty": 0.2,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "《喜看稻菽千重浪》成语与字音字形"
+    ],
+    "_unit": "第二单元"
+  },
+  {
+    "id": "ku-004",
+    "name": "义无反顾·成语",
+    "ku_type": "chengyu",
+    "track": "积累",
+    "core": "义无反顾：从道义上只有勇往直前，不能犹豫回顾。出自本文。",
+    "source_text": "《喜看稻菽千重浪》沈英甲",
+    "difficulty": 0.3,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "《喜看稻菽千重浪》成语与字音字形"
+    ],
+    "_unit": "第二单元"
+  },
+  {
+    "id": "ku-005",
+    "name": "亦步亦趋·成语",
+    "ku_type": "chengyu",
+    "track": "积累",
+    "core": "亦步亦趋：比喻由于缺乏主张，或为了讨好，事事模仿或追随别人。出自本文。",
+    "source_text": "《喜看稻菽千重浪》沈英甲",
+    "difficulty": 0.4,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "《喜看稻菽千重浪》成语与字音字形"
+    ],
+    "_unit": "第二单元"
+  },
+  {
+    "id": "ku-006",
+    "name": "刻骨铭心·成语",
+    "ku_type": "chengyu",
+    "track": "积累",
+    "core": "刻骨铭心：铭刻在心灵深处。形容记忆深刻，永远不忘。出自本文。",
+    "source_text": "《喜看稻菽千重浪》沈英甲",
+    "difficulty": 0.2,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "《喜看稻菽千重浪》成语与字音字形"
+    ],
+    "_unit": "第二单元"
+  },
+  {
+    "id": "ku-007",
+    "name": "籼·字音字形",
+    "ku_type": "zixing_ziyin",
+    "track": "积累",
+    "core": "籼，读xiān，指籼稻，水稻的一类。注意字形：左边“米”，右边“山”。",
+    "source_text": "《喜看稻菽千重浪》沈英甲",
+    "difficulty": 0.3,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "《喜看稻菽千重浪》成语与字音字形"
+    ],
+    "_unit": "第二单元"
+  },
+  {
+    "id": "ku-008",
+    "name": "菽·字音字形",
+    "ku_type": "zixing_ziyin",
+    "track": "积累",
+    "core": "菽，读shū，豆类的总称。注意字形：草字头+“叔”。",
+    "source_text": "《喜看稻菽千重浪》沈英甲",
+    "difficulty": 0.3,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "《喜看稻菽千重浪》成语与字音字形"
+    ],
+    "_unit": "第二单元"
+  },
+  {
+    "id": "ku-009",
+    "name": "分蘖·字音字形",
+    "ku_type": "zixing_ziyin",
+    "track": "积累",
+    "core": "分蘖，读fēn niè，稻、麦等植物在幼苗靠近土壤的茎节上生出分枝。注意“蘖”不写作“孽”。",
+    "source_text": "《喜看稻菽千重浪》沈英甲",
+    "difficulty": 0.4,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "《喜看稻菽千重浪》成语与字音字形"
+    ],
+    "_unit": "第二单元"
+  },
+  {
+    "id": "ku-010",
+    "name": "通讯报道角度分析",
+    "ku_type": "xinxi_yuedu",
+    "track": "鉴赏",
+    "core": "分析通讯的报道角度：从典型事件切入（如袁隆平发现天然杂交稻株），通过细节描写（如“蹲下身子翻看土壤”）展现人物精神，注意事实与观点的关系。",
+    "source_text": "《喜看稻菽千重浪》沈英甲",
+    "difficulty": 0.6,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "通讯阅读方法"
+    ],
+    "_unit": "第二单元"
+  },
+  {
+    "id": "ku-011",
+    "name": "通讯中典型事件与人物精神",
+    "ku_type": "xinxi_yuedu",
+    "track": "鉴赏",
+    "core": "通讯通过典型事件（如袁隆平寻找天然雄性不育株）突出人物精神（如坚持、创新、实事求是）。抓住事件中的关键细节（如“第14天”“欣喜异常”）来理解人物。",
+    "source_text": "《喜看稻菽千重浪》沈英甲",
+    "difficulty": 0.5,
+    "prerequisites": [
+      "通讯报道角度分析"
+    ],
+    "extra": null,
+    "_kcs": [
+      "通讯阅读方法"
+    ],
+    "_unit": "第二单元"
+  },
+  {
+    "id": "ku-012",
+    "name": "新闻评论观点阐述方法",
+    "ku_type": "xinxi_yuedu",
+    "track": "鉴赏",
+    "core": "新闻评论（如袁隆平致《人民日报》的信）通过摆事实（数据、事例）、讲道理（逻辑推理）来阐述观点，注意反驳错误观点时的语气和论据选择。",
+    "source_text": "《喜看稻菽千重浪》沈英甲",
+    "difficulty": 0.6,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "新闻评论与议论文写作"
+    ],
+    "_unit": "第二单元"
+  },
+  {
+    "id": "ku-013",
+    "name": "议论文写作·用事实论证观点",
+    "ku_type": "shumian_biaoda",
+    "track": "表达",
+    "core": "在议论文中，用具体事实（数据、事例、对比）来论证观点，增强说服力。如袁隆平用杂交稻增产数据反驳“三不稻”说法。",
+    "source_text": "第二单元学习任务",
+    "difficulty": 0.5,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "新闻评论与议论文写作"
+    ],
+    "_unit": "第二单元"
+  },
+  {
+    "id": "ku-014",
+    "name": "口语交际·有理有据地反驳",
+    "ku_type": "kouyu_jiaoji",
+    "track": "表达",
+    "core": "在口语交际中，面对错误观点时，用平和语气、无可辩驳的事实进行反驳，避免情绪化。如袁隆平写信反驳“三不稻”说法。",
+    "source_text": "第二单元学习任务",
+    "difficulty": 0.5,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "口语交际与沟通处世"
+    ],
+    "_unit": "第二单元"
+  },
+  {
+    "id": "ku-015",
+    "name": "沟通处世·尊重事实与真理",
+    "ku_type": "goutong_chushi",
+    "track": "表达",
+    "core": "在沟通中坚持事实和真理，不惧风险，如袁隆平不顾个人得失，为农民利益挺身而出阐明事实。",
+    "source_text": "第二单元学习任务",
+    "difficulty": 0.4,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "口语交际与沟通处世"
+    ],
+    "_unit": "第二单元"
+  },
+  {
+    "id": "ku-001",
+    "name": "杂交·杂交水稻",
+    "ku_type": "wenyan_word",
+    "track": "积累",
+    "core": "杂交，动词，不同品种交配。例：杂交水稻的研究成功开辟了粮食大幅度增产的新途径。",
+    "source_text": "《喜看稻菽千重浪》沈英甲",
+    "difficulty": 0.3,
+    "prerequisites": [],
+    "extra": {
+      "词性": "动词",
+      "是否通假": false,
+      "是否古今异义": false,
+      "是否词类活用": false,
+      "活用类型": null,
+      "义项": "不同品种交配",
+      "例句": "杂交水稻的研究成功"
+    },
+    "_kcs": [
+      "《喜看稻菽千重浪》文言词语"
+    ],
+    "_unit": "第二单元"
+  },
+  {
+    "id": "ku-002",
+    "name": "开辟·开辟新途径",
+    "ku_type": "wenyan_word",
+    "track": "积累",
+    "core": "开辟，动词，开创、建立。例：杂交水稻的研究成功开辟了粮食大幅度增产的新途径。",
+    "source_text": "《喜看稻菽千重浪》沈英甲",
+    "difficulty": 0.3,
+    "prerequisites": [],
+    "extra": {
+      "词性": "动词",
+      "是否通假": false,
+      "是否古今异义": false,
+      "是否词类活用": false,
+      "活用类型": null,
+      "义项": "开创",
+      "例句": "开辟了粮食大幅度增产的新途径"
+    },
+    "_kcs": [
+      "《喜看稻菽千重浪》文言词语"
+    ],
+    "_unit": "第二单元"
+  },
+  {
+    "id": "ku-003",
+    "name": "大幅度·大幅度增产",
+    "ku_type": "wenyan_word",
+    "track": "积累",
+    "core": "大幅度，副词，表示程度大。例：杂交水稻比常规稻增产20%左右，为大幅度增产提供了可能。",
+    "source_text": "《喜看稻菽千重浪》沈英甲",
+    "difficulty": 0.2,
+    "prerequisites": [],
+    "extra": {
+      "词性": "副词",
+      "是否通假": false,
+      "是否古今异义": false,
+      "是否词类活用": false,
+      "活用类型": null,
+      "义项": "程度大",
+      "例句": "大幅度增产"
+    },
+    "_kcs": [
+      "《喜看稻菽千重浪》文言词语"
+    ],
+    "_unit": "第二单元"
+  },
+  {
+    "id": "ku-004",
+    "name": "选育·超级杂交稻选育",
+    "ku_type": "wenyan_word",
+    "track": "积累",
+    "core": "选育，动词，选择培育。例：袁隆平提出了超级杂交稻选育的指标、株型模式和技术路线。",
+    "source_text": "《喜看稻菽千重浪》沈英甲",
+    "difficulty": 0.3,
+    "prerequisites": [],
+    "extra": {
+      "词性": "动词",
+      "是否通假": false,
+      "是否古今异义": false,
+      "是否词类活用": false,
+      "活用类型": null,
+      "义项": "选择培育",
+      "例句": "超级杂交稻选育的指标"
+    },
+    "_kcs": [
+      "《喜看稻菽千重浪》文言词语"
+    ],
+    "_unit": "第二单元"
+  },
+  {
+    "id": "ku-005",
+    "name": "引种·引种推广",
+    "ku_type": "wenyan_word",
+    "track": "积累",
+    "core": "引种，动词，引进品种。例：杂交水稻已在20多个国家和地区引种推广。",
+    "source_text": "《喜看稻菽千重浪》沈英甲",
+    "difficulty": 0.3,
+    "prerequisites": [],
+    "extra": {
+      "词性": "动词",
+      "是否通假": false,
+      "是否古今异义": false,
+      "是否词类活用": false,
+      "活用类型": null,
+      "义项": "引进品种",
+      "例句": "在20多个国家和地区引种推广"
+    },
+    "_kcs": [
+      "《喜看稻菽千重浪》文言词语"
+    ],
+    "_unit": "第二单元"
+  },
+  {
+    "id": "ku-006",
+    "name": "熙熙攘攘",
+    "ku_type": "chengyu",
+    "track": "积累",
+    "core": "熙熙攘攘，形容人来人往，非常热闹。出自《史记·货殖列传》。",
+    "source_text": "《心有一团火，温暖众人心》林为民",
+    "difficulty": 0.3,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "第二单元成语积累"
+    ],
+    "_unit": "第二单元"
+  },
+  {
+    "id": "ku-007",
+    "name": "体贴入微",
+    "ku_type": "chengyu",
+    "track": "积累",
+    "core": "体贴入微，形容对人照顾或关怀非常细心、周到。",
+    "source_text": "《心有一团火，温暖众人心》林为民",
+    "difficulty": 0.3,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "第二单元成语积累"
+    ],
+    "_unit": "第二单元"
+  },
+  {
+    "id": "ku-008",
+    "name": "和蔼可亲",
+    "ku_type": "chengyu",
+    "track": "积累",
+    "core": "和蔼可亲，态度温和，容易接近。",
+    "source_text": "《心有一团火，温暖众人心》林为民",
+    "difficulty": 0.2,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "第二单元成语积累"
+    ],
+    "_unit": "第二单元"
+  },
+  {
+    "id": "ku-009",
+    "name": "全神贯注",
+    "ku_type": "chengyu",
+    "track": "积累",
+    "core": "全神贯注，全部精神集中在一点上，形容注意力高度集中。",
+    "source_text": "《心有一团火，温暖众人心》林为民",
+    "difficulty": 0.2,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "第二单元成语积累"
+    ],
+    "_unit": "第二单元"
+  },
+  {
+    "id": "ku-010",
+    "name": "精神抖擞",
+    "ku_type": "chengyu",
+    "track": "积累",
+    "core": "精神抖擞，形容精神振奋。",
+    "source_text": "《心有一团火，温暖众人心》林为民",
+    "difficulty": 0.2,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "第二单元成语积累"
+    ],
+    "_unit": "第二单元"
+  },
+  {
+    "id": "ku-011",
+    "name": "感人肺腑",
+    "ku_type": "chengyu",
+    "track": "积累",
+    "core": "感人肺腑，使人内心深受感动。",
+    "source_text": "《心有一团火，温暖众人心》林为民",
+    "difficulty": 0.3,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "第二单元成语积累"
+    ],
+    "_unit": "第二单元"
+  },
+  {
+    "id": "ku-012",
+    "name": "戛然而止",
+    "ku_type": "chengyu",
+    "track": "积累",
+    "core": "戛然而止，形容声音突然终止。",
+    "source_text": "《“探界者”钟扬》叶雨婷",
+    "difficulty": 0.3,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "第二单元成语积累"
+    ],
+    "_unit": "第二单元"
+  },
+  {
+    "id": "ku-013",
+    "name": "信息类文本·通讯报道的阅读方法",
+    "ku_type": "xinxi_yuedu",
+    "track": "鉴赏",
+    "core": "阅读通讯报道时，关注标题、导语、主体、背景和结语；抓住典型事例和细节描写，理解人物精神；分析新闻的真实性和时效性。",
+    "source_text": "第二单元（《喜看稻菽千重浪》《心有一团火，温暖众人心》《“探界者”钟扬》）",
+    "difficulty": 0.5,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "信息类文本阅读方法"
+    ],
+    "_unit": "第二单元"
+  },
+  {
+    "id": "ku-014",
+    "name": "信息类文本·新闻评论的阅读方法",
+    "ku_type": "xinxi_yuedu",
+    "track": "鉴赏",
+    "core": "阅读新闻评论时，把握论点、论据和论证；分析评论的立场和倾向；理解评论的社会意义。",
+    "source_text": "第二单元（《喜看稻菽千重浪》等）",
+    "difficulty": 0.6,
+    "prerequisites": [
+      "信息类文本·通讯报道的阅读方法"
+    ],
+    "extra": null,
+    "_kcs": [
+      "信息类文本阅读方法"
+    ],
+    "_unit": "第二单元"
+  },
+  {
+    "id": "ku-015",
+    "name": "书面表达·新闻写作的基本方法",
+    "ku_type": "shumian_biaoda",
+    "track": "表达",
+    "core": "新闻写作要遵循真实性、时效性、客观性原则；结构上采用倒金字塔式，标题简明，导语概括核心，主体展开细节；语言准确、简洁、生动。",
+    "source_text": "第二单元写作任务",
+    "difficulty": 0.6,
+    "prerequisites": [
+      "信息类文本·通讯报道的阅读方法"
+    ],
+    "extra": null,
+    "_kcs": [
+      "第二单元表达技能"
+    ],
+    "_unit": "第二单元"
+  },
+  {
+    "id": "ku-016",
+    "name": "书面表达·人物通讯的写作方法",
+    "ku_type": "shumian_biaoda",
+    "track": "表达",
+    "core": "人物通讯写作要选取典型事例，通过细节描写展现人物性格；运用对话、动作、心理等描写手法；突出人物精神品质，避免平铺直叙。",
+    "source_text": "第二单元写作任务",
+    "difficulty": 0.7,
+    "prerequisites": [
+      "书面表达·新闻写作的基本方法"
+    ],
+    "extra": null,
+    "_kcs": [
+      "第二单元表达技能"
+    ],
+    "_unit": "第二单元"
+  },
+  {
+    "id": "ku-017",
+    "name": "口语交际·采访的技巧",
+    "ku_type": "kouyu_jiaoji",
+    "track": "表达",
+    "core": "采访前准备问题，了解背景；采访中注意倾听，适时追问；保持礼貌，尊重受访者；记录关键信息。",
+    "source_text": "第二单元口语交际任务",
+    "difficulty": 0.5,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "第二单元表达技能"
+    ],
+    "_unit": "第二单元"
+  },
+  {
+    "id": "ku-018",
+    "name": "沟通处世·以热对冷的沟通策略",
+    "ku_type": "goutong_chushi",
+    "track": "表达",
+    "core": "面对他人冷遇或情绪不佳时，保持热情和耐心，用真诚化解矛盾，变冷为热。",
+    "source_text": "《心有一团火，温暖众人心》林为民",
+    "difficulty": 0.5,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "第二单元表达技能"
+    ],
+    "_unit": "第二单元"
+  },
+  {
+    "id": "ku-001",
+    "name": "雷厉风行·成语",
+    "ku_type": "chengyu",
+    "track": "积累",
+    "core": "雷厉风行：像雷一样猛烈，像风一样快，形容执行政策法令等严格而迅速。也泛指做事情声势大而行动快。",
+    "source_text": "《“探界者”钟扬》",
+    "difficulty": 0.3,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "《“探界者”钟扬》成语积累"
+    ],
+    "_unit": "第二单元"
+  },
+  {
+    "id": "ku-002",
+    "name": "开门见山·成语",
+    "ku_type": "chengyu",
+    "track": "积累",
+    "core": "开门见山：比喻说话或写文章直截了当谈本题，不拐弯抹角。",
+    "source_text": "《“探界者”钟扬》",
+    "difficulty": 0.3,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "《“探界者”钟扬》成语积累"
+    ],
+    "_unit": "第二单元"
+  },
+  {
+    "id": "ku-003",
+    "name": "跌宕起伏·成语",
+    "ku_type": "chengyu",
+    "track": "积累",
+    "core": "跌宕起伏：形容事物多变，不稳定，也比喻音乐声忽大忽小和故事情节的曲折。",
+    "source_text": "《“探界者”钟扬》",
+    "difficulty": 0.3,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "《“探界者”钟扬》成语积累"
+    ],
+    "_unit": "第二单元"
+  },
+  {
+    "id": "ku-004",
+    "name": "戛然而止·成语",
+    "ku_type": "chengyu",
+    "track": "积累",
+    "core": "戛然而止：形容声音突然终止。",
+    "source_text": "《“探界者”钟扬》",
+    "difficulty": 0.3,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "《“探界者”钟扬》成语积累"
+    ],
+    "_unit": "第二单元"
+  },
+  {
+    "id": "ku-005",
+    "name": "通讯·人物通讯阅读方法",
+    "ku_type": "xinxi_yuedu",
+    "track": "鉴赏",
+    "core": "阅读人物通讯：1.抓小标题，理清文章结构（如本文按“英雄少年”“种子达人”“科学队长”“接盘导师”“生命延续”组织）；2.关注典型事例和细节描写，分析人物精神品质；3.品味语言，体会作者情感倾向。",
+    "source_text": "《“探界者”钟扬》",
+    "difficulty": 0.5,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "人物通讯阅读方法"
+    ],
+    "_unit": "第二单元"
+  },
+  {
+    "id": "ku-006",
+    "name": "人物通讯·细节描写作用",
+    "ku_type": "xinxi_yuedu",
+    "track": "鉴赏",
+    "core": "人物通讯中的细节描写：1.增强真实感和感染力；2.突出人物性格特点；3.揭示人物内心世界。如文中钟扬“背着他经典的黑色双肩包，穿着磨白了的牛仔裤”等细节，表现其朴素、执着。",
+    "source_text": "《“探界者”钟扬》",
+    "difficulty": 0.5,
+    "prerequisites": [
+      "通讯·人物通讯阅读方法"
+    ],
+    "extra": null,
+    "_kcs": [
+      "人物通讯阅读方法"
+    ],
+    "_unit": "第二单元"
+  },
+  {
+    "id": "ku-007",
+    "name": "人物通讯·引用人物语言",
+    "ku_type": "xinxi_yuedu",
+    "track": "鉴赏",
+    "core": "人物通讯中引用人物语言：1.直接展现人物观点和性格；2.增强文章说服力和可读性；3.使人物形象更立体。如钟扬说“一个基因能够拯救一个国家”，体现其科学情怀。",
+    "source_text": "《“探界者”钟扬》",
+    "difficulty": 0.4,
+    "prerequisites": [
+      "通讯·人物通讯阅读方法"
+    ],
+    "extra": null,
+    "_kcs": [
+      "人物通讯阅读方法"
+    ],
+    "_unit": "第二单元"
+  },
+  {
+    "id": "ku-008",
+    "name": "写人物通讯·选材与组材",
+    "ku_type": "shumian_biaoda",
+    "track": "表达",
+    "core": "写人物通讯：1.选择典型事例，突出人物特点；2.用小标题组织材料，使结构清晰；3.综合运用叙述、描写、议论、抒情等表达方式；4.注意细节描写和语言引用。",
+    "source_text": "第二单元学习任务",
+    "difficulty": 0.6,
+    "prerequisites": [
+      "通讯·人物通讯阅读方法",
+      "人物通讯·细节描写作用",
+      "人物通讯·引用人物语言"
+    ],
+    "extra": null,
+    "_kcs": [
+      "单元表达技能"
+    ],
+    "_unit": "第二单元"
+  },
+  {
+    "id": "ku-009",
+    "name": "口语交际·采访技巧",
+    "ku_type": "kouyu_jiaoji",
+    "track": "表达",
+    "core": "采访技巧：1.提前准备问题，了解采访对象；2.提问要具体、有针对性；3.注意倾听，适时追问；4.尊重采访对象，营造轻松氛围。",
+    "source_text": "第二单元学习任务",
+    "difficulty": 0.5,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "单元表达技能"
+    ],
+    "_unit": "第二单元"
+  },
+  {
+    "id": "ku-010",
+    "name": "沟通处世·劝说与鼓励",
+    "ku_type": "goutong_chushi",
+    "track": "表达",
+    "core": "劝说与鼓励：1.站在对方角度思考，理解其困难；2.用积极语言给予信心；3.提供具体帮助方案。如钟扬鼓励基础差的学生：“读我的研究生基础差一点没关系，我帮你补。”",
+    "source_text": "《“探界者”钟扬》",
+    "difficulty": 0.4,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "单元表达技能"
+    ],
+    "_unit": "第二单元"
+  },
+  {
+    "id": "ku-001",
+    "name": "采采·茂盛义",
+    "ku_type": "wenyan_word",
+    "track": "积累",
+    "core": "采采，形容词，茂盛的样子。例：采采芣苢，薄言采之。",
+    "source_text": "《芣苢》",
+    "difficulty": 0.3,
+    "prerequisites": [],
+    "extra": {
+      "词性": "形容词",
+      "是否通假": false,
+      "是否古今异义": false,
+      "是否词类活用": false,
+      "活用类型": null,
+      "义项": "茂盛的样子",
+      "例句": "采采芣苢"
+    },
+    "_kcs": [
+      "《芣苢》文言词语"
+    ],
+    "_unit": "第二单元"
+  },
+  {
+    "id": "ku-002",
+    "name": "薄言·助词无实义",
+    "ku_type": "wenyan_word",
+    "track": "积累",
+    "core": "薄言，助词，无实义，用于动词前。例：薄言采之。",
+    "source_text": "《芣苢》",
+    "difficulty": 0.3,
+    "prerequisites": [],
+    "extra": {
+      "词性": "助词",
+      "是否通假": false,
+      "是否古今异义": false,
+      "是否词类活用": false,
+      "活用类型": null,
+      "义项": "助词，无实义",
+      "例句": "薄言采之"
+    },
+    "_kcs": [
+      "《芣苢》文言词语"
+    ],
+    "_unit": "第二单元"
+  },
+  {
+    "id": "ku-003",
+    "name": "有·取得义",
+    "ku_type": "wenyan_word",
+    "track": "积累",
+    "core": "有，动词，取得，获得。例：薄言有之。",
+    "source_text": "《芣苢》",
+    "difficulty": 0.4,
+    "prerequisites": [],
+    "extra": {
+      "词性": "动词",
+      "是否通假": false,
+      "是否古今异义": true,
+      "是否词类活用": false,
+      "活用类型": null,
+      "义项": "取得，获得",
+      "例句": "薄言有之"
+    },
+    "_kcs": [
+      "《芣苢》文言词语"
+    ],
+    "_unit": "第二单元"
+  },
+  {
+    "id": "ku-004",
+    "name": "掇·拾取义",
+    "ku_type": "wenyan_word",
+    "track": "积累",
+    "core": "掇，动词，拾取，摘取。例：薄言掇之。",
+    "source_text": "《芣苢》",
+    "difficulty": 0.3,
+    "prerequisites": [],
+    "extra": {
+      "词性": "动词",
+      "是否通假": false,
+      "是否古今异义": false,
+      "是否词类活用": false,
+      "活用类型": null,
+      "义项": "拾取，摘取",
+      "例句": "薄言掇之"
+    },
+    "_kcs": [
+      "《芣苢》文言词语"
+    ],
+    "_unit": "第二单元"
+  },
+  {
+    "id": "ku-005",
+    "name": "捋·成把取下义",
+    "ku_type": "wenyan_word",
+    "track": "积累",
+    "core": "捋，动词，从茎上成把地取下。例：薄言捋之。",
+    "source_text": "《芣苢》",
+    "difficulty": 0.4,
+    "prerequisites": [],
+    "extra": {
+      "词性": "动词",
+      "是否通假": false,
+      "是否古今异义": false,
+      "是否词类活用": false,
+      "活用类型": null,
+      "义项": "从茎上成把地取下",
+      "例句": "薄言捋之"
+    },
+    "_kcs": [
+      "《芣苢》文言词语"
+    ],
+    "_unit": "第二单元"
+  },
+  {
+    "id": "ku-006",
+    "name": "袺·提起衣襟兜东西",
+    "ku_type": "wenyan_word",
+    "track": "积累",
+    "core": "袺，动词，提起衣襟兜东西。例：薄言袺之。",
+    "source_text": "《芣苢》",
+    "difficulty": 0.5,
+    "prerequisites": [],
+    "extra": {
+      "词性": "动词",
+      "是否通假": false,
+      "是否古今异义": false,
+      "是否词类活用": false,
+      "活用类型": null,
+      "义项": "提起衣襟兜东西",
+      "例句": "薄言袺之"
+    },
+    "_kcs": [
+      "《芣苢》文言词语"
+    ],
+    "_unit": "第二单元"
+  },
+  {
+    "id": "ku-007",
+    "name": "襭·掖衣襟兜东西",
+    "ku_type": "wenyan_word",
+    "track": "积累",
+    "core": "襭，动词，把衣襟掖在腰带上兜东西。例：薄言襭之。",
+    "source_text": "《芣苢》",
+    "difficulty": 0.5,
+    "prerequisites": [],
+    "extra": {
+      "词性": "动词",
+      "是否通假": false,
+      "是否古今异义": false,
+      "是否词类活用": false,
+      "活用类型": null,
+      "义项": "把衣襟掖在腰带上兜东西",
+      "例句": "薄言襭之"
+    },
+    "_kcs": [
+      "《芣苢》文言词语"
+    ],
+    "_unit": "第二单元"
+  },
+  {
+    "id": "ku-008",
+    "name": "兜鍪·头盔义",
+    "ku_type": "wenyan_word",
+    "track": "积累",
+    "core": "兜鍪，名词，古代打仗时战士所戴的头盔。例：笠是兜鍪蓑是甲。",
+    "source_text": "《插秧歌》杨万里",
+    "difficulty": 0.4,
+    "prerequisites": [],
+    "extra": {
+      "词性": "名词",
+      "是否通假": false,
+      "是否古今异义": false,
+      "是否词类活用": false,
+      "活用类型": null,
+      "义项": "古代打仗时战士所戴的头盔",
+      "例句": "笠是兜鍪蓑是甲"
+    },
+    "_kcs": [
+      "《插秧歌》文言词语"
+    ],
+    "_unit": "第二单元"
+  },
+  {
+    "id": "ku-009",
+    "name": "胛·肩胛义",
+    "ku_type": "wenyan_word",
+    "track": "积累",
+    "core": "胛，名词，肩胛。例：雨从头上湿到胛。",
+    "source_text": "《插秧歌》杨万里",
+    "difficulty": 0.3,
+    "prerequisites": [],
+    "extra": {
+      "词性": "名词",
+      "是否通假": false,
+      "是否古今异义": false,
+      "是否词类活用": false,
+      "活用类型": null,
+      "义项": "肩胛",
+      "例句": "雨从头上湿到胛"
+    },
+    "_kcs": [
+      "《插秧歌》文言词语"
+    ],
+    "_unit": "第二单元"
+  },
+  {
+    "id": "ku-010",
+    "name": "渠·他义",
+    "ku_type": "wenyan_word",
+    "track": "积累",
+    "core": "渠，代词，他。例：唤渠朝餐歇半霎。",
+    "source_text": "《插秧歌》杨万里",
+    "difficulty": 0.4,
+    "prerequisites": [],
+    "extra": {
+      "词性": "代词",
+      "是否通假": false,
+      "是否古今异义": true,
+      "是否词类活用": false,
+      "活用类型": null,
+      "义项": "他",
+      "例句": "唤渠朝餐歇半霎"
+    },
+    "_kcs": [
+      "《插秧歌》文言词语"
+    ],
+    "_unit": "第二单元"
+  },
+  {
+    "id": "ku-011",
+    "name": "半霎·极短时间义",
+    "ku_type": "wenyan_word",
+    "track": "积累",
+    "core": "半霎，名词，极短的时间。例：唤渠朝餐歇半霎。",
+    "source_text": "《插秧歌》杨万里",
+    "difficulty": 0.3,
+    "prerequisites": [],
+    "extra": {
+      "词性": "名词",
+      "是否通假": false,
+      "是否古今异义": false,
+      "是否词类活用": false,
+      "活用类型": null,
+      "义项": "极短的时间",
+      "例句": "唤渠朝餐歇半霎"
+    },
+    "_kcs": [
+      "《插秧歌》文言词语"
+    ],
+    "_unit": "第二单元"
+  },
+  {
+    "id": "ku-012",
+    "name": "莳·移栽种植义",
+    "ku_type": "wenyan_word",
+    "track": "积累",
+    "core": "莳，动词，移栽、种植。例：秧根未牢莳未匝。",
+    "source_text": "《插秧歌》杨万里",
+    "difficulty": 0.4,
+    "prerequisites": [],
+    "extra": {
+      "词性": "动词",
+      "是否通假": false,
+      "是否古今异义": false,
+      "是否词类活用": false,
+      "活用类型": null,
+      "义项": "移栽、种植",
+      "例句": "秧根未牢莳未匝"
+    },
+    "_kcs": [
+      "《插秧歌》文言词语"
+    ],
+    "_unit": "第二单元"
+  },
+  {
+    "id": "ku-013",
+    "name": "匝·布满遍及义",
+    "ku_type": "wenyan_word",
+    "track": "积累",
+    "core": "匝，动词，布满、遍及。例：莳未匝。",
+    "source_text": "《插秧歌》杨万里",
+    "difficulty": 0.4,
+    "prerequisites": [],
+    "extra": {
+      "词性": "动词",
+      "是否通假": false,
+      "是否古今异义": false,
+      "是否词类活用": false,
+      "活用类型": null,
+      "义项": "布满、遍及",
+      "例句": "莳未匝"
+    },
+    "_kcs": [
+      "《插秧歌》文言词语"
+    ],
+    "_unit": "第二单元"
+  },
+  {
+    "id": "ku-014",
+    "name": "照管·提防义",
+    "ku_type": "wenyan_word",
+    "track": "积累",
+    "core": "照管，动词，这里是“提防”的意思。例：照管鹅儿与雏鸭。",
+    "source_text": "《插秧歌》杨万里",
+    "difficulty": 0.5,
+    "prerequisites": [],
+    "extra": {
+      "词性": "动词",
+      "是否通假": false,
+      "是否古今异义": true,
+      "是否词类活用": false,
+      "活用类型": null,
+      "义项": "提防",
+      "例句": "照管鹅儿与雏鸭"
+    },
+    "_kcs": [
+      "《插秧歌》文言词语"
+    ],
+    "_unit": "第二单元"
+  },
+  {
+    "id": "ku-015",
+    "name": "采采芣苢·重章叠唱",
+    "ku_type": "mingpian",
+    "track": "积累",
+    "core": "采采芣苢，薄言采之。采采芣苢，薄言有之。采采芣苢，薄言掇之。采采芣苢，薄言捋之。采采芣苢，薄言袺之。采采芣苢，薄言襭之。（《诗经·周南》）",
+    "source_text": "《芣苢》",
+    "difficulty": 0.3,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "第二单元名篇名句"
+    ],
+    "_unit": "第二单元"
+  },
+  {
+    "id": "ku-016",
+    "name": "笠是兜鍪蓑是甲·比喻劳动",
+    "ku_type": "mingpian",
+    "track": "积累",
+    "core": "笠是兜鍪蓑是甲，雨从头上湿到胛。（杨万里《插秧歌》）",
+    "source_text": "《插秧歌》杨万里",
+    "difficulty": 0.4,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "第二单元名篇名句"
+    ],
+    "_unit": "第二单元"
+  },
+  {
+    "id": "ku-017",
+    "name": "成语·炉火纯青",
+    "ku_type": "chengyu",
+    "track": "积累",
+    "core": "炉火纯青：比喻学问、技术或办事达到了纯熟完美的地步。出自《以工匠精神雕琢时代品质》。",
+    "source_text": "《以工匠精神雕琢时代品质》",
+    "difficulty": 0.3,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "第二单元成语与字音字形"
+    ],
+    "_unit": "第二单元"
+  },
+  {
+    "id": "ku-018",
+    "name": "成语·格物致知",
+    "ku_type": "chengyu",
+    "track": "积累",
+    "core": "格物致知：推究事物的原理，从而获得知识。出自《以工匠精神雕琢时代品质》。",
+    "source_text": "《以工匠精神雕琢时代品质》",
+    "difficulty": 0.4,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "第二单元成语与字音字形"
+    ],
+    "_unit": "第二单元"
+  },
+  {
+    "id": "ku-019",
+    "name": "成语·臻于至善",
+    "ku_type": "chengyu",
+    "track": "积累",
+    "core": "臻于至善：达到最完美的境界。出自《以工匠精神雕琢时代品质》。",
+    "source_text": "《以工匠精神雕琢时代品质》",
+    "difficulty": 0.4,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "第二单元成语与字音字形"
+    ],
+    "_unit": "第二单元"
+  },
+  {
+    "id": "ku-020",
+    "name": "字音·芣苢",
+    "ku_type": "zixing_ziyin",
+    "track": "积累",
+    "core": "芣苢（fú yǐ），车前草。注意“芣”不读péi。",
+    "source_text": "《芣苢》",
+    "difficulty": 0.3,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "第二单元成语与字音字形"
+    ],
+    "_unit": "第二单元"
+  },
+  {
+    "id": "ku-021",
+    "name": "字音·兜鍪",
+    "ku_type": "zixing_ziyin",
+    "track": "积累",
+    "core": "兜鍪（dōu móu），头盔。注意“鍪”不读máo。",
+    "source_text": "《插秧歌》杨万里",
+    "difficulty": 0.3,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "第二单元成语与字音字形"
+    ],
+    "_unit": "第二单元"
+  },
+  {
+    "id": "ku-022",
+    "name": "文化常识·《说文解字》",
+    "ku_type": "wenhua_changshi",
+    "track": "积累",
+    "core": "《说文解字》：东汉许慎编著的中国第一部系统的分析汉字字形结构的字书，也是世界最古的字书之一。",
+    "source_text": "《以工匠精神雕琢时代品质》",
+    "difficulty": 0.4,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "第二单元文化常识"
+    ],
+    "_unit": "第二单元"
+  },
+  {
+    "id": "ku-023",
+    "name": "文化常识·《诗经》重章叠唱",
+    "ku_type": "wenhua_changshi",
+    "track": "积累",
+    "core": "《诗经》常用重章叠唱手法，即各章句式基本相同，只更换少数词语，回环往复，增强节奏感和抒情效果。",
+    "source_text": "《芣苢》",
+    "difficulty": 0.4,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "第二单元文化常识"
+    ],
+    "_unit": "第二单元"
+  },
+  {
+    "id": "ku-024",
+    "name": "人物通讯·典型事件表现人物精神",
+    "ku_type": "xiaoshuo_yuedu",
+    "track": "鉴赏",
+    "core": "人物通讯通过选取具有典型意义的事件来表现人物的优秀品质，如袁隆平头顶烈日脚踩淤泥找到雄性不育植株。阅读时注意事件与人物精神的对应关系。",
+    "source_text": "第二单元人物通讯",
+    "difficulty": 0.5,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "人物通讯阅读方法"
+    ],
+    "_unit": "第二单元"
+  },
+  {
+    "id": "ku-025",
+    "name": "人物通讯·细节刻画人物",
+    "ku_type": "xiaoshuo_yuedu",
+    "track": "鉴赏",
+    "core": "人物通讯通过细节描写让人物形象更加丰满，如张秉贵下班后累得扶着墙、钟扬背包里的小纸条。阅读时注意细节对人物塑造的作用。",
+    "source_text": "第二单元人物通讯",
+    "difficulty": 0.5,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "人物通讯阅读方法"
+    ],
+    "_unit": "第二单元"
+  },
+  {
+    "id": "ku-026",
+    "name": "新闻评论·事实与观点的关系",
+    "ku_type": "xinxi_yuedu",
+    "track": "鉴赏",
+    "core": "新闻评论在记述新闻事实时常常表达自己的观点，阅读时要理解事实与观点的关系，把握作者表达观点的方法。",
+    "source_text": "《以工匠精神雕琢时代品质》",
+    "difficulty": 0.6,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "新闻评论阅读方法"
+    ],
+    "_unit": "第二单元"
+  },
+  {
+    "id": "ku-027",
+    "name": "新闻评论·辩证讨论与逻辑性",
+    "ku_type": "xinxi_yuedu",
+    "track": "鉴赏",
+    "core": "新闻评论讲究观点鲜明、针对性强，注重行文的逻辑性。如《以工匠精神雕琢时代品质》辩证地讨论工匠精神的内涵与当代价值，先批评浮躁风气，再澄清误解，最后呼吁践行。",
+    "source_text": "《以工匠精神雕琢时代品质》",
+    "difficulty": 0.6,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "新闻评论阅读方法"
+    ],
+    "_unit": "第二单元"
+  },
+  {
+    "id": "ku-028",
+    "name": "古诗词·《芣苢》重章叠唱与动词变换",
+    "ku_type": "shici_jianshang",
+    "track": "鉴赏",
+    "core": "《芣苢》运用重章叠唱，句式整齐，节奏明朗轻快；通过“采”“有”“掇”“捋”“袺”“襭”一系列动词的变换，细腻描绘劳动过程，表现劳动喜悦。",
+    "source_text": "《芣苢》",
+    "difficulty": 0.5,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "古诗词鉴赏方法"
+    ],
+    "_unit": "第二单元"
+  },
+  {
+    "id": "ku-029",
+    "name": "古诗词·《插秧歌》民歌手法与口语化",
+    "ku_type": "shici_jianshang",
+    "track": "鉴赏",
+    "core": "《插秧歌》运用民歌手法，善用口语，浅白流畅，如“唤渠朝餐歇半霎”“照管鹅儿与雏鸭”，表现农家生活的辛苦与繁忙，富有生活情趣。",
+    "source_text": "《插秧歌》杨万里",
+    "difficulty": 0.5,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "古诗词鉴赏方法"
+    ],
+    "_unit": "第二单元"
+  },
+  {
+    "id": "ku-030",
+    "name": "古诗词·劳动之美与情感体验",
+    "ku_type": "shici_jianshang",
+    "track": "鉴赏",
+    "core": "描写劳动的古诗通过描摹劳动场景，表现劳动时的欢乐与情趣，体会古诗超越时空的魅力。阅读时要展开想象，走进场景，感受诗人的情感。",
+    "source_text": "第二单元古诗词",
+    "difficulty": 0.4,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "古诗词鉴赏方法"
+    ],
+    "_unit": "第二单元"
+  },
+  {
+    "id": "ku-031",
+    "name": "写人·选取典型事例",
+    "ku_type": "shumian_biaoda",
+    "track": "表达",
+    "core": "写人时选取典型事例，勾勒人物形象，反映主要性格和品格。如写袁隆平突出孜孜以求的精神，写钟扬表现火一般的生命激情。",
+    "source_text": "第二单元学习任务·写一个你熟悉的劳动者",
+    "difficulty": 0.6,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "写人写作方法"
+    ],
+    "_unit": "第二单元"
+  },
+  {
+    "id": "ku-032",
+    "name": "写人·真实感人的细节",
+    "ku_type": "shumian_biaoda",
+    "track": "表达",
+    "core": "写人时抓住真实感人的细节（或“画面”），用一二百字就能写活场景中的人，让读者留下深刻印象。如民工有座位也不肯坐、患者家属安慰哭泣的护士。",
+    "source_text": "第二单元学习任务·写一个你熟悉的劳动者",
+    "difficulty": 0.6,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "写人写作方法"
+    ],
+    "_unit": "第二单元"
+  },
+  {
+    "id": "ku-033",
+    "name": "写人·体现性格丰富性",
+    "ku_type": "shumian_biaoda",
+    "track": "表达",
+    "core": "写人要注意体现人物性格的丰富性，避免单一化，可以选取不同的生活侧面真实地表现人物，让人物有“立体感”。",
+    "source_text": "第二单元学习任务·写一个你熟悉的劳动者",
+    "difficulty": 0.7,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "写人写作方法"
+    ],
+    "_unit": "第二单元"
+  },
+  {
+    "id": "ku-034",
+    "name": "新闻评论·选择评论角度",
+    "ku_type": "shumian_biaoda",
+    "track": "表达",
+    "core": "新闻评论的角度选择非常重要，面对某个事实或问题，评论的角度不同，文章面貌往往迥异。学习从不同角度进行评论。",
+    "source_text": "第二单元学习任务",
+    "difficulty": 0.7,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "新闻评论写作与口语交际"
+    ],
+    "_unit": "第二单元"
+  },
+  {
+    "id": "ku-035",
+    "name": "口语交际·小组合作评选新闻",
+    "ku_type": "kouyu_jiaoji",
+    "track": "表达",
+    "core": "小组合作从新闻价值、报道角度、结构层次、语言表达等方面草拟优秀新闻评选标准，并合作撰写推荐书，阐述推荐理由，在全班展示交流。",
+    "source_text": "第二单元学习任务",
+    "difficulty": 0.6,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "新闻评论写作与口语交际"
+    ],
+    "_unit": "第二单元"
+  },
+  {
+    "id": "ku-036",
+    "name": "口语交际·专题研讨劳动话题",
+    "ku_type": "kouyu_jiaoji",
+    "track": "表达",
+    "core": "分组进行专题研讨，从“劳动的崇高与美丽”“劳动的价值与意义”等话题中任选一个，结合课文具体内容进行讨论，培养表达与倾听能力。",
+    "source_text": "第二单元学习任务",
+    "difficulty": 0.5,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "新闻评论写作与口语交际"
+    ],
+    "_unit": "第二单元"
+  },
+  {
+    "id": "ku-000",
+    "name": "当·对义",
+    "ku_type": "wenyan_word",
+    "track": "积累",
+    "core": "当，介词，对着。例：对酒当歌，人生几何。",
+    "source_text": "《短歌行》曹操",
+    "difficulty": 0.3,
+    "prerequisites": [],
+    "extra": {
+      "词性": "介词",
+      "是否通假": false,
+      "是否古今异义": false,
+      "是否词类活用": false,
+      "活用类型": null,
+      "义项": "对着",
+      "例句": "对酒当歌"
+    },
+    "_kcs": [
+      "《短歌行》文言词语"
+    ],
+    "_unit": "第三单元"
+  },
+  {
+    "id": "ku-001",
+    "name": "几何·多少义",
+    "ku_type": "wenyan_word",
+    "track": "积累",
+    "core": "几何，疑问代词，多少。例：人生几何。",
+    "source_text": "《短歌行》曹操",
+    "difficulty": 0.2,
+    "prerequisites": [],
+    "extra": {
+      "词性": "疑问代词",
+      "是否通假": false,
+      "是否古今异义": false,
+      "是否词类活用": false,
+      "活用类型": null,
+      "义项": "多少",
+      "例句": "人生几何"
+    },
+    "_kcs": [
+      "《短歌行》文言词语"
+    ],
+    "_unit": "第三单元"
+  },
+  {
+    "id": "ku-002",
+    "name": "杜康·代酒义",
+    "ku_type": "wenyan_word",
+    "track": "积累",
+    "core": "杜康，名词，代指酒。例：何以解忧？唯有杜康。",
+    "source_text": "《短歌行》曹操",
+    "difficulty": 0.3,
+    "prerequisites": [],
+    "extra": {
+      "词性": "名词",
+      "是否通假": false,
+      "是否古今异义": false,
+      "是否词类活用": false,
+      "活用类型": null,
+      "义项": "代指酒",
+      "例句": "唯有杜康"
+    },
+    "_kcs": [
+      "《短歌行》文言词语"
+    ],
+    "_unit": "第三单元"
+  },
+  {
+    "id": "ku-003",
+    "name": "衿·衣领义",
+    "ku_type": "wenyan_word",
+    "track": "积累",
+    "core": "衿，名词，衣服的交领。例：青青子衿，悠悠我心。",
+    "source_text": "《短歌行》曹操",
+    "difficulty": 0.3,
+    "prerequisites": [],
+    "extra": {
+      "词性": "名词",
+      "是否通假": false,
+      "是否古今异义": false,
+      "是否词类活用": false,
+      "活用类型": null,
+      "义项": "衣服的交领",
+      "例句": "青青子衿"
+    },
+    "_kcs": [
+      "《短歌行》文言词语"
+    ],
+    "_unit": "第三单元"
+  },
+  {
+    "id": "ku-005",
+    "name": "阡陌·田间小路义",
+    "ku_type": "wenyan_word",
+    "track": "积累",
+    "core": "阡陌，名词，田间小路。例：越陌度阡，枉用相存。",
+    "source_text": "《短歌行》曹操",
+    "difficulty": 0.3,
+    "prerequisites": [],
+    "extra": {
+      "词性": "名词",
+      "是否通假": false,
+      "是否古今异义": false,
+      "是否词类活用": false,
+      "活用类型": null,
+      "义项": "田间小路",
+      "例句": "越陌度阡"
+    },
+    "_kcs": [
+      "《短歌行》文言词语"
+    ],
+    "_unit": "第三单元"
+  },
+  {
+    "id": "ku-006",
+    "name": "存·问候义",
+    "ku_type": "wenyan_word",
+    "track": "积累",
+    "core": "存，动词，问候、探望。例：越陌度阡，枉用相存。",
+    "source_text": "《短歌行》曹操",
+    "difficulty": 0.4,
+    "prerequisites": [],
+    "extra": {
+      "词性": "动词",
+      "是否通假": false,
+      "是否古今异义": false,
+      "是否词类活用": false,
+      "活用类型": null,
+      "义项": "问候",
+      "例句": "枉用相存"
+    },
+    "_kcs": [
+      "《短歌行》文言词语"
+    ],
+    "_unit": "第三单元"
+  },
+  {
+    "id": "ku-007",
+    "name": "契阔·聚散义",
+    "ku_type": "wenyan_word",
+    "track": "积累",
+    "core": "契阔，名词，聚散，这里指久别重逢。例：契阔谈讌，心念旧恩。",
+    "source_text": "《短歌行》曹操",
+    "difficulty": 0.5,
+    "prerequisites": [],
+    "extra": {
+      "词性": "名词",
+      "是否通假": false,
+      "是否古今异义": false,
+      "是否词类活用": false,
+      "活用类型": null,
+      "义项": "聚散",
+      "例句": "契阔谈讌"
+    },
+    "_kcs": [
+      "《短歌行》文言词语"
+    ],
+    "_unit": "第三单元"
+  },
+  {
+    "id": "ku-008",
+    "name": "讌·同宴义",
+    "ku_type": "wenyan_word",
+    "track": "积累",
+    "core": "讌，通“宴”，名词，宴会。例：契阔谈讌，心念旧恩。",
+    "source_text": "《短歌行》曹操",
+    "difficulty": 0.4,
+    "prerequisites": [],
+    "extra": {
+      "词性": "名词",
+      "是否通假": true,
+      "是否古今异义": false,
+      "是否词类活用": false,
+      "活用类型": null,
+      "义项": "宴会",
+      "例句": "契阔谈讌"
+    },
+    "_kcs": [
+      "《短歌行》文言词语"
+    ],
+    "_unit": "第三单元"
+  },
+  {
+    "id": "ku-009",
+    "name": "匝·周圈义",
+    "ku_type": "wenyan_word",
+    "track": "积累",
+    "core": "匝，量词，周、圈。例：绕树三匝，何枝可依。",
+    "source_text": "《短歌行》曹操",
+    "difficulty": 0.3,
+    "prerequisites": [],
+    "extra": {
+      "词性": "量词",
+      "是否通假": false,
+      "是否古今异义": false,
+      "是否词类活用": false,
+      "活用类型": null,
+      "义项": "周、圈",
+      "例句": "绕树三匝"
+    },
+    "_kcs": [
+      "《短歌行》文言词语"
+    ],
+    "_unit": "第三单元"
+  },
+  {
+    "id": "ku-010",
+    "name": "厌·满足义",
+    "ku_type": "wenyan_word",
+    "track": "积累",
+    "core": "厌，动词，满足。例：山不厌高，海不厌深。",
+    "source_text": "《短歌行》曹操",
+    "difficulty": 0.4,
+    "prerequisites": [],
+    "extra": {
+      "词性": "动词",
+      "是否通假": false,
+      "是否古今异义": true,
+      "是否词类活用": false,
+      "活用类型": null,
+      "义项": "满足",
+      "例句": "山不厌高"
+    },
+    "_kcs": [
+      "《短歌行》文言词语"
+    ],
+    "_unit": "第三单元"
+  },
+  {
+    "id": "ku-011",
+    "name": "吐哺·吐食义",
+    "ku_type": "wenyan_word",
+    "track": "积累",
+    "core": "吐哺，动词短语，吐出嘴里的食物。例：周公吐哺，天下归心。",
+    "source_text": "《短歌行》曹操",
+    "difficulty": 0.4,
+    "prerequisites": [],
+    "extra": {
+      "词性": "动词短语",
+      "是否通假": false,
+      "是否古今异义": false,
+      "是否词类活用": false,
+      "活用类型": null,
+      "义项": "吐出食物",
+      "例句": "周公吐哺"
+    },
+    "_kcs": [
+      "《短歌行》文言词语"
+    ],
+    "_unit": "第三单元"
+  },
+  {
+    "id": "ku-012",
+    "name": "韵·气质义",
+    "ku_type": "wenyan_word",
+    "track": "积累",
+    "core": "韵，名词，气质，情致。例：少无适俗韵，性本爱丘山。",
+    "source_text": "《归园田居（其一）》陶渊明",
+    "difficulty": 0.3,
+    "prerequisites": [],
+    "extra": {
+      "词性": "名词",
+      "是否通假": false,
+      "是否古今异义": false,
+      "是否词类活用": false,
+      "活用类型": null,
+      "义项": "气质",
+      "例句": "少无适俗韵"
+    },
+    "_kcs": [
+      "《归园田居（其一）》文言词语"
+    ],
+    "_unit": "第三单元"
+  },
+  {
+    "id": "ku-013",
+    "name": "尘网·世俗束缚义",
+    "ku_type": "wenyan_word",
+    "track": "积累",
+    "core": "尘网，名词，指世俗的种种束缚。例：误落尘网中，一去三十年。",
+    "source_text": "《归园田居（其一）》陶渊明",
+    "difficulty": 0.4,
+    "prerequisites": [],
+    "extra": {
+      "词性": "名词",
+      "是否通假": false,
+      "是否古今异义": false,
+      "是否词类活用": false,
+      "活用类型": null,
+      "义项": "世俗束缚",
+      "例句": "误落尘网中"
+    },
+    "_kcs": [
+      "《归园田居（其一）》文言词语"
+    ],
+    "_unit": "第三单元"
+  },
+  {
+    "id": "ku-014",
+    "name": "羁鸟·笼中鸟义",
+    "ku_type": "wenyan_word",
+    "track": "积累",
+    "core": "羁鸟，名词，被关在笼中的鸟。例：羁鸟恋旧林，池鱼思故渊。",
+    "source_text": "《归园田居（其一）》陶渊明",
+    "difficulty": 0.3,
+    "prerequisites": [],
+    "extra": {
+      "词性": "名词",
+      "是否通假": false,
+      "是否古今异义": false,
+      "是否词类活用": false,
+      "活用类型": null,
+      "义项": "笼中鸟",
+      "例句": "羁鸟恋旧林"
+    },
+    "_kcs": [
+      "《归园田居（其一）》文言词语"
+    ],
+    "_unit": "第三单元"
+  },
+  {
+    "id": "ku-015",
+    "name": "守拙·持守愚拙义",
+    "ku_type": "wenyan_word",
+    "track": "积累",
+    "core": "守拙，动词短语，持守愚拙的本性。例：开荒南野际，守拙归园田。",
+    "source_text": "《归园田居（其一）》陶渊明",
+    "difficulty": 0.4,
+    "prerequisites": [],
+    "extra": {
+      "词性": "动词短语",
+      "是否通假": false,
+      "是否古今异义": false,
+      "是否词类活用": false,
+      "活用类型": null,
+      "义项": "持守愚拙",
+      "例句": "守拙归园田"
+    },
+    "_kcs": [
+      "《归园田居（其一）》文言词语"
+    ],
+    "_unit": "第三单元"
+  },
+  {
+    "id": "ku-016",
+    "name": "方·四周围绕义",
+    "ku_type": "wenyan_word",
+    "track": "积累",
+    "core": "方，副词，四周围绕。例：方宅十余亩，草屋八九间。",
+    "source_text": "《归园田居（其一）》陶渊明",
+    "difficulty": 0.4,
+    "prerequisites": [],
+    "extra": {
+      "词性": "副词",
+      "是否通假": false,
+      "是否古今异义": false,
+      "是否词类活用": false,
+      "活用类型": null,
+      "义项": "四周围绕",
+      "例句": "方宅十余亩"
+    },
+    "_kcs": [
+      "《归园田居（其一）》文言词语"
+    ],
+    "_unit": "第三单元"
+  },
+  {
+    "id": "ku-017",
+    "name": "暧暧·迷蒙隐约义",
+    "ku_type": "wenyan_word",
+    "track": "积累",
+    "core": "暧暧，形容词，迷蒙隐约的样子。例：暧暧远人村，依依墟里烟。",
+    "source_text": "《归园田居（其一）》陶渊明",
+    "difficulty": 0.3,
+    "prerequisites": [],
+    "extra": {
+      "词性": "形容词",
+      "是否通假": false,
+      "是否古今异义": false,
+      "是否词类活用": false,
+      "活用类型": null,
+      "义项": "迷蒙隐约",
+      "例句": "暧暧远人村"
+    },
+    "_kcs": [
+      "《归园田居（其一）》文言词语"
+    ],
+    "_unit": "第三单元"
+  },
+  {
+    "id": "ku-018",
+    "name": "依依·隐约义",
+    "ku_type": "wenyan_word",
+    "track": "积累",
+    "core": "依依，形容词，隐约的样子。例：暧暧远人村，依依墟里烟。",
+    "source_text": "《归园田居（其一）》陶渊明",
+    "difficulty": 0.3,
+    "prerequisites": [],
+    "extra": {
+      "词性": "形容词",
+      "是否通假": false,
+      "是否古今异义": false,
+      "是否词类活用": false,
+      "活用类型": null,
+      "义项": "隐约",
+      "例句": "依依墟里烟"
+    },
+    "_kcs": [
+      "《归园田居（其一）》文言词语"
+    ],
+    "_unit": "第三单元"
+  },
+  {
+    "id": "ku-019",
+    "name": "樊笼·束缚本性的俗世义",
+    "ku_type": "wenyan_word",
+    "track": "积累",
+    "core": "樊笼，名词，关鸟兽的笼子，这里指束缚本性的俗世。例：久在樊笼里，复得返自然。",
+    "source_text": "《归园田居（其一）》陶渊明",
+    "difficulty": 0.4,
+    "prerequisites": [],
+    "extra": {
+      "词性": "名词",
+      "是否通假": false,
+      "是否古今异义": false,
+      "是否词类活用": false,
+      "活用类型": null,
+      "义项": "束缚本性的俗世",
+      "例句": "久在樊笼里"
+    },
+    "_kcs": [
+      "《归园田居（其一）》文言词语"
+    ],
+    "_unit": "第三单元"
+  },
+  {
+    "id": "ku-020",
+    "name": "短歌行·名篇名句",
+    "ku_type": "mingpian",
+    "track": "积累",
+    "core": "对酒当歌，人生几何！譬如朝露，去日苦多。慨当以慷，忧思难忘。何以解忧？唯有杜康。青青子衿，悠悠我心。但为君故，沉吟至今。呦呦鹿鸣，食野之苹。我有嘉宾，鼓瑟吹笙。明明如月，何时可掇？忧从中来，不可断绝。越陌度阡，枉用相存。契阔谈讌，心念旧恩。月明星稀，乌鹊南飞。绕树三匝，何枝可依？山不厌高，海不厌深。周公吐哺，天下归心。",
+    "source_text": "《短歌行》曹操",
+    "difficulty": 0.5,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "本单元名篇名句"
+    ],
+    "_unit": "第三单元"
+  },
+  {
+    "id": "ku-021",
+    "name": "归园田居（其一）·名篇名句",
+    "ku_type": "mingpian",
+    "track": "积累",
+    "core": "少无适俗韵，性本爱丘山。误落尘网中，一去三十年。羁鸟恋旧林，池鱼思故渊。开荒南野际，守拙归园田。方宅十余亩，草屋八九间。榆柳荫后檐，桃李罗堂前。暧暧远人村，依依墟里烟。狗吠深巷中，鸡鸣桑树颠。户庭无尘杂，虚室有余闲。久在樊笼里，复得返自然。",
+    "source_text": "《归园田居（其一）》陶渊明",
+    "difficulty": 0.5,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "本单元名篇名句"
+    ],
+    "_unit": "第三单元"
+  },
+  {
+    "id": "ku-022",
+    "name": "比兴手法·古诗词鉴赏",
+    "ku_type": "shici_jianshang",
+    "track": "鉴赏",
+    "core": "比兴：先言他物以引起所咏之辞。如《短歌行》以“青青子衿”起兴，表达对贤才的渴望。",
+    "source_text": "《短歌行》曹操",
+    "difficulty": 0.5,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "古诗词鉴赏方法"
+    ],
+    "_unit": "第三单元"
+  },
+  {
+    "id": "ku-023",
+    "name": "白描手法·古诗词鉴赏",
+    "ku_type": "shici_jianshang",
+    "track": "鉴赏",
+    "core": "白描：用简练的笔墨，不加烘托，勾勒出鲜明生动的形象。如《归园田居》中“方宅十余亩，草屋八九间”等句，寥寥数笔描绘乡村生活。",
+    "source_text": "《归园田居（其一）》陶渊明",
+    "difficulty": 0.5,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "古诗词鉴赏方法"
+    ],
+    "_unit": "第三单元"
+  },
+  {
+    "id": "ku-024",
+    "name": "典故运用·古诗词鉴赏",
+    "ku_type": "shici_jianshang",
+    "track": "鉴赏",
+    "core": "典故：引用历史故事或前人诗句，以增强表达效果。如《短歌行》用“周公吐哺”典故，表达求贤若渴。",
+    "source_text": "《短歌行》曹操",
+    "difficulty": 0.6,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "古诗词鉴赏方法"
+    ],
+    "_unit": "第三单元"
+  },
+  {
+    "id": "ku-025",
+    "name": "意象分析·古诗词鉴赏",
+    "ku_type": "shici_jianshang",
+    "track": "鉴赏",
+    "core": "意象：诗中融入诗人主观情感的客观物象。如《归园田居》中“羁鸟”“池鱼”意象，象征诗人对自由的渴望。",
+    "source_text": "《归园田居（其一）》陶渊明",
+    "difficulty": 0.5,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "古诗词鉴赏方法"
+    ],
+    "_unit": "第三单元"
+  },
+  {
+    "id": "ku-026",
+    "name": "文学短评写作方法",
+    "ku_type": "shumian_biaoda",
+    "track": "表达",
+    "core": "文学短评：针对文学作品进行简要评论。步骤：①选准角度（如意象、手法、情感）；②结合文本分析；③语言简洁有深度。",
+    "source_text": "第三单元学习任务",
+    "difficulty": 0.7,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "单元写作表达"
+    ],
+    "_unit": "第三单元"
+  },
+  {
+    "id": "ku-027",
+    "name": "古诗词诵读方法",
+    "ku_type": "shici_jianshang",
+    "track": "鉴赏",
+    "core": "诵读：通过反复朗读，感受诗歌韵律、节奏，体会情感。如《短歌行》四言句式，节奏短促有力；《归园田居》五言句式，舒缓平和。",
+    "source_text": "第三单元学习提示",
+    "difficulty": 0.4,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "古诗词鉴赏方法"
+    ],
+    "_unit": "第三单元"
+  },
+  {
+    "id": "ku-000",
+    "name": "尊·同樽",
+    "ku_type": "wenyan_word",
+    "track": "积累",
+    "core": "尊，同“樽”，一种盛酒器，这里指酒杯。例：一尊还酹江月。",
+    "source_text": "《念奴娇·赤壁怀古》苏轼",
+    "difficulty": 0.3,
+    "prerequisites": [],
+    "extra": {
+      "词性": "名词",
+      "是否通假": true,
+      "是否古今异义": false,
+      "是否词类活用": false,
+      "活用类型": null,
+      "义项": "同“樽”，酒杯",
+      "例句": "一尊还酹江月"
+    },
+    "_kcs": [
+      "《念奴娇·赤壁怀古》文言词语"
+    ],
+    "_unit": "第三单元"
+  },
+  {
+    "id": "ku-001",
+    "name": "酹·洒酒凭吊",
+    "ku_type": "wenyan_word",
+    "track": "积累",
+    "core": "酹，动词，将酒洒在地上，表示凭吊。例：一尊还酹江月。",
+    "source_text": "《念奴娇·赤壁怀古》苏轼",
+    "difficulty": 0.4,
+    "prerequisites": [],
+    "extra": {
+      "词性": "动词",
+      "是否通假": false,
+      "是否古今异义": false,
+      "是否词类活用": false,
+      "活用类型": null,
+      "义项": "洒酒凭吊",
+      "例句": "一尊还酹江月"
+    },
+    "_kcs": [
+      "《念奴娇·赤壁怀古》文言词语"
+    ],
+    "_unit": "第三单元"
+  },
+  {
+    "id": "ku-002",
+    "name": "纶巾·配有青丝带的头巾",
+    "ku_type": "wenyan_word",
+    "track": "积累",
+    "core": "纶巾，名词，配有青丝带的头巾，儒将装束。例：羽扇纶巾。",
+    "source_text": "《念奴娇·赤壁怀古》苏轼",
+    "difficulty": 0.3,
+    "prerequisites": [],
+    "extra": {
+      "词性": "名词",
+      "是否通假": false,
+      "是否古今异义": false,
+      "是否词类活用": false,
+      "活用类型": null,
+      "义项": "配有青丝带的头巾",
+      "例句": "羽扇纶巾"
+    },
+    "_kcs": [
+      "《念奴娇·赤壁怀古》文言词语"
+    ],
+    "_unit": "第三单元"
+  },
+  {
+    "id": "ku-003",
+    "name": "樯橹·代指战船",
+    "ku_type": "wenyan_word",
+    "track": "积累",
+    "core": "樯橹，名词，代指曹操的战船。樯，挂帆的桅杆；橹，摇船的桨。例：樯橹灰飞烟灭。",
+    "source_text": "《念奴娇·赤壁怀古》苏轼",
+    "difficulty": 0.4,
+    "prerequisites": [],
+    "extra": {
+      "词性": "名词",
+      "是否通假": false,
+      "是否古今异义": false,
+      "是否词类活用": false,
+      "活用类型": null,
+      "义项": "代指战船",
+      "例句": "樯橹灰飞烟灭"
+    },
+    "_kcs": [
+      "《念奴娇·赤壁怀古》文言词语"
+    ],
+    "_unit": "第三单元"
+  },
+  {
+    "id": "ku-004",
+    "name": "华发·花白头发",
+    "ku_type": "wenyan_word",
+    "track": "积累",
+    "core": "华发，名词，花白的头发。例：多情应笑我，早生华发。",
+    "source_text": "《念奴娇·赤壁怀古》苏轼",
+    "difficulty": 0.3,
+    "prerequisites": [],
+    "extra": {
+      "词性": "名词",
+      "是否通假": false,
+      "是否古今异义": false,
+      "是否词类活用": false,
+      "活用类型": null,
+      "义项": "花白的头发",
+      "例句": "早生华发"
+    },
+    "_kcs": [
+      "《念奴娇·赤壁怀古》文言词语"
+    ],
+    "_unit": "第三单元"
+  },
+  {
+    "id": "ku-005",
+    "name": "封狼居胥·登山祭天纪功",
+    "ku_type": "wenyan_word",
+    "track": "积累",
+    "core": "封，动词，登山祭天，以纪功勋。狼居胥，山名。例：封狼居胥。",
+    "source_text": "《永遇乐·京口北固亭怀古》辛弃疾",
+    "difficulty": 0.5,
+    "prerequisites": [],
+    "extra": {
+      "词性": "动词",
+      "是否通假": false,
+      "是否古今异义": false,
+      "是否词类活用": false,
+      "活用类型": null,
+      "义项": "登山祭天纪功",
+      "例句": "封狼居胥"
+    },
+    "_kcs": [
+      "《永遇乐·京口北固亭怀古》文言词语"
+    ],
+    "_unit": "第三单元"
+  },
+  {
+    "id": "ku-006",
+    "name": "草草·轻率",
+    "ku_type": "wenyan_word",
+    "track": "积累",
+    "core": "草草，形容词，轻率。例：元嘉草草。",
+    "source_text": "《永遇乐·京口北固亭怀古》辛弃疾",
+    "difficulty": 0.3,
+    "prerequisites": [],
+    "extra": {
+      "词性": "形容词",
+      "是否通假": false,
+      "是否古今异义": false,
+      "是否词类活用": false,
+      "活用类型": null,
+      "义项": "轻率",
+      "例句": "元嘉草草"
+    },
+    "_kcs": [
+      "《永遇乐·京口北固亭怀古》文言词语"
+    ],
+    "_unit": "第三单元"
+  },
+  {
+    "id": "ku-007",
+    "name": "佛狸·北魏太武帝拓跋焘小名",
+    "ku_type": "wenyan_word",
+    "track": "积累",
+    "core": "佛狸，名词，北魏太武帝拓跋焘的小名。例：佛狸祠下。",
+    "source_text": "《永遇乐·京口北固亭怀古》辛弃疾",
+    "difficulty": 0.4,
+    "prerequisites": [],
+    "extra": {
+      "词性": "名词",
+      "是否通假": false,
+      "是否古今异义": false,
+      "是否词类活用": false,
+      "活用类型": null,
+      "义项": "北魏太武帝拓跋焘小名",
+      "例句": "佛狸祠下"
+    },
+    "_kcs": [
+      "《永遇乐·京口北固亭怀古》文言词语"
+    ],
+    "_unit": "第三单元"
+  },
+  {
+    "id": "ku-008",
+    "name": "社鼓·社日祭祀土地神的鼓声",
+    "ku_type": "wenyan_word",
+    "track": "积累",
+    "core": "社鼓，名词，社日祭祀土地神的鼓声。例：一片神鸦社鼓。",
+    "source_text": "《永遇乐·京口北固亭怀古》辛弃疾",
+    "difficulty": 0.4,
+    "prerequisites": [],
+    "extra": {
+      "词性": "名词",
+      "是否通假": false,
+      "是否古今异义": false,
+      "是否词类活用": false,
+      "活用类型": null,
+      "义项": "社日祭祀土地神的鼓声",
+      "例句": "一片神鸦社鼓"
+    },
+    "_kcs": [
+      "《永遇乐·京口北固亭怀古》文言词语"
+    ],
+    "_unit": "第三单元"
+  },
+  {
+    "id": "ku-009",
+    "name": "廉颇老矣，尚能饭否·典故",
+    "ku_type": "wenyan_word",
+    "track": "积累",
+    "core": "廉颇，战国赵国名将。饭，动词，吃饭。例：凭谁问：廉颇老矣，尚能饭否？",
+    "source_text": "《永遇乐·京口北固亭怀古》辛弃疾",
+    "difficulty": 0.5,
+    "prerequisites": [],
+    "extra": {
+      "词性": "动词",
+      "是否通假": false,
+      "是否古今异义": false,
+      "是否词类活用": false,
+      "活用类型": null,
+      "义项": "吃饭",
+      "例句": "尚能饭否"
+    },
+    "_kcs": [
+      "《永遇乐·京口北固亭怀古》文言词语"
+    ],
+    "_unit": "第三单元"
+  },
+  {
+    "id": "ku-010",
+    "name": "将息·养息休息",
+    "ku_type": "wenyan_word",
+    "track": "积累",
+    "core": "将息，动词，养息，休息。例：最难将息。",
+    "source_text": "《声声慢》李清照",
+    "difficulty": 0.3,
+    "prerequisites": [],
+    "extra": {
+      "词性": "动词",
+      "是否通假": false,
+      "是否古今异义": false,
+      "是否词类活用": false,
+      "活用类型": null,
+      "义项": "养息，休息",
+      "例句": "最难将息"
+    },
+    "_kcs": [
+      "《声声慢》文言词语"
+    ],
+    "_unit": "第三单元"
+  },
+  {
+    "id": "ku-011",
+    "name": "堪·可以能够",
+    "ku_type": "wenyan_word",
+    "track": "积累",
+    "core": "堪，动词，可以，能够。例：如今有谁堪摘？",
+    "source_text": "《声声慢》李清照",
+    "difficulty": 0.3,
+    "prerequisites": [],
+    "extra": {
+      "词性": "动词",
+      "是否通假": false,
+      "是否古今异义": false,
+      "是否词类活用": false,
+      "活用类型": null,
+      "义项": "可以，能够",
+      "例句": "如今有谁堪摘"
+    },
+    "_kcs": [
+      "《声声慢》文言词语"
+    ],
+    "_unit": "第三单元"
+  },
+  {
+    "id": "ku-012",
+    "name": "次第·光景状况",
+    "ku_type": "wenyan_word",
+    "track": "积累",
+    "core": "次第，名词，光景，状况。例：这次第，怎一个愁字了得！",
+    "source_text": "《声声慢》李清照",
+    "difficulty": 0.4,
+    "prerequisites": [],
+    "extra": {
+      "词性": "名词",
+      "是否通假": false,
+      "是否古今异义": false,
+      "是否词类活用": false,
+      "活用类型": null,
+      "义项": "光景，状况",
+      "例句": "这次第"
+    },
+    "_kcs": [
+      "《声声慢》文言词语"
+    ],
+    "_unit": "第三单元"
+  },
+  {
+    "id": "ku-013",
+    "name": "戚戚·悲愁哀伤的样子",
+    "ku_type": "wenyan_word",
+    "track": "积累",
+    "core": "戚戚，形容词，悲愁、哀伤的样子。例：凄凄惨惨戚戚。",
+    "source_text": "《声声慢》李清照",
+    "difficulty": 0.3,
+    "prerequisites": [],
+    "extra": {
+      "词性": "形容词",
+      "是否通假": false,
+      "是否古今异义": false,
+      "是否词类活用": false,
+      "活用类型": null,
+      "义项": "悲愁、哀伤的样子",
+      "例句": "凄凄惨惨戚戚"
+    },
+    "_kcs": [
+      "《声声慢》文言词语"
+    ],
+    "_unit": "第三单元"
+  },
+  {
+    "id": "ku-014",
+    "name": "怎生·怎么怎样",
+    "ku_type": "wenyan_word",
+    "track": "积累",
+    "core": "怎生，疑问代词，怎么、怎样。例：独自怎生得黑？",
+    "source_text": "《声声慢》李清照",
+    "difficulty": 0.3,
+    "prerequisites": [],
+    "extra": {
+      "词性": "代词",
+      "是否通假": false,
+      "是否古今异义": false,
+      "是否词类活用": false,
+      "活用类型": null,
+      "义项": "怎么、怎样",
+      "例句": "独自怎生得黑"
+    },
+    "_kcs": [
+      "《声声慢》文言词语"
+    ],
+    "_unit": "第三单元"
+  },
+  {
+    "id": "ku-015",
+    "name": "大江东去·名句",
+    "ku_type": "mingpian",
+    "track": "积累",
+    "core": "大江东去，浪淘尽，千古风流人物。",
+    "source_text": "《念奴娇·赤壁怀古》苏轼",
+    "difficulty": 0.3,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "本课名篇名句"
+    ],
+    "_unit": "第三单元"
+  },
+  {
+    "id": "ku-016",
+    "name": "江山如画·名句",
+    "ku_type": "mingpian",
+    "track": "积累",
+    "core": "江山如画，一时多少豪杰。",
+    "source_text": "《念奴娇·赤壁怀古》苏轼",
+    "difficulty": 0.3,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "本课名篇名句"
+    ],
+    "_unit": "第三单元"
+  },
+  {
+    "id": "ku-017",
+    "name": "人生如梦·名句",
+    "ku_type": "mingpian",
+    "track": "积累",
+    "core": "人生如梦，一尊还酹江月。",
+    "source_text": "《念奴娇·赤壁怀古》苏轼",
+    "difficulty": 0.3,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "本课名篇名句"
+    ],
+    "_unit": "第三单元"
+  },
+  {
+    "id": "ku-018",
+    "name": "千古江山·名句",
+    "ku_type": "mingpian",
+    "track": "积累",
+    "core": "千古江山，英雄无觅，孙仲谋处。",
+    "source_text": "《永遇乐·京口北固亭怀古》辛弃疾",
+    "difficulty": 0.3,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "本课名篇名句"
+    ],
+    "_unit": "第三单元"
+  },
+  {
+    "id": "ku-019",
+    "name": "凭谁问廉颇老矣尚能饭否·名句",
+    "ku_type": "mingpian",
+    "track": "积累",
+    "core": "凭谁问：廉颇老矣，尚能饭否？",
+    "source_text": "《永遇乐·京口北固亭怀古》辛弃疾",
+    "difficulty": 0.3,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "本课名篇名句"
+    ],
+    "_unit": "第三单元"
+  },
+  {
+    "id": "ku-020",
+    "name": "寻寻觅觅冷冷清清凄凄惨惨戚戚·名句",
+    "ku_type": "mingpian",
+    "track": "积累",
+    "core": "寻寻觅觅，冷冷清清，凄凄惨惨戚戚。",
+    "source_text": "《声声慢》李清照",
+    "difficulty": 0.3,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "本课名篇名句"
+    ],
+    "_unit": "第三单元"
+  },
+  {
+    "id": "ku-021",
+    "name": "梧桐更兼细雨到黄昏点点滴滴·名句",
+    "ku_type": "mingpian",
+    "track": "积累",
+    "core": "梧桐更兼细雨，到黄昏、点点滴滴。",
+    "source_text": "《声声慢》李清照",
+    "difficulty": 0.3,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "本课名篇名句"
+    ],
+    "_unit": "第三单元"
+  },
+  {
+    "id": "ku-022",
+    "name": "这次第怎一个愁字了得·名句",
+    "ku_type": "mingpian",
+    "track": "积累",
+    "core": "这次第，怎一个愁字了得！",
+    "source_text": "《声声慢》李清照",
+    "difficulty": 0.3,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "本课名篇名句"
+    ],
+    "_unit": "第三单元"
+  },
+  {
+    "id": "ku-023",
+    "name": "羽扇纶巾·成语",
+    "ku_type": "chengyu",
+    "track": "积累",
+    "core": "羽扇纶巾，手持羽扇，头戴纶巾，形容儒将风度。出自《念奴娇·赤壁怀古》。",
+    "source_text": "《念奴娇·赤壁怀古》苏轼",
+    "difficulty": 0.4,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "本课成语与字音字形"
+    ],
+    "_unit": "第三单元"
+  },
+  {
+    "id": "ku-024",
+    "name": "灰飞烟灭·成语",
+    "ku_type": "chengyu",
+    "track": "积累",
+    "core": "灰飞烟灭，像灰和烟一样消散，比喻彻底消失。出自《念奴娇·赤壁怀古》。",
+    "source_text": "《念奴娇·赤壁怀古》苏轼",
+    "difficulty": 0.3,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "本课成语与字音字形"
+    ],
+    "_unit": "第三单元"
+  },
+  {
+    "id": "ku-025",
+    "name": "金戈铁马·成语",
+    "ku_type": "chengyu",
+    "track": "积累",
+    "core": "金戈铁马，金属戈和披铁甲的战马，借指战争或戎马生涯。出自《永遇乐·京口北固亭怀古》。",
+    "source_text": "《永遇乐·京口北固亭怀古》辛弃疾",
+    "difficulty": 0.3,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "本课成语与字音字形"
+    ],
+    "_unit": "第三单元"
+  },
+  {
+    "id": "ku-026",
+    "name": "风流人物·成语",
+    "ku_type": "chengyu",
+    "track": "积累",
+    "core": "风流人物，指英俊杰出、有才华或有功绩的人物。出自《念奴娇·赤壁怀古》。",
+    "source_text": "《念奴娇·赤壁怀古》苏轼",
+    "difficulty": 0.3,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "本课成语与字音字形"
+    ],
+    "_unit": "第三单元"
+  },
+  {
+    "id": "ku-027",
+    "name": "樯橹·字音字形",
+    "ku_type": "zixing_ziyin",
+    "track": "积累",
+    "core": "樯橹（qiáng lǔ），注意“樯”不读“qiǎng”，“橹”不读“lú”。",
+    "source_text": "《念奴娇·赤壁怀古》苏轼",
+    "difficulty": 0.3,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "本课成语与字音字形"
+    ],
+    "_unit": "第三单元"
+  },
+  {
+    "id": "ku-028",
+    "name": "纶巾·字音字形",
+    "ku_type": "zixing_ziyin",
+    "track": "积累",
+    "core": "纶巾（guān jīn），注意“纶”不读“lún”。",
+    "source_text": "《念奴娇·赤壁怀古》苏轼",
+    "difficulty": 0.3,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "本课成语与字音字形"
+    ],
+    "_unit": "第三单元"
+  },
+  {
+    "id": "ku-029",
+    "name": "佛狸·字音字形",
+    "ku_type": "zixing_ziyin",
+    "track": "积累",
+    "core": "佛狸（bì lí），注意“佛”不读“fó”。",
+    "source_text": "《永遇乐·京口北固亭怀古》辛弃疾",
+    "difficulty": 0.3,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "本课成语与字音字形"
+    ],
+    "_unit": "第三单元"
+  },
+  {
+    "id": "ku-030",
+    "name": "乍暖还寒·字音字形",
+    "ku_type": "zixing_ziyin",
+    "track": "积累",
+    "core": "乍暖还寒（zhà nuǎn huán hán），注意“还”不读“hái”。",
+    "source_text": "《声声慢》李清照",
+    "difficulty": 0.3,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "本课成语与字音字形"
+    ],
+    "_unit": "第三单元"
+  },
+  {
+    "id": "ku-031",
+    "name": "元嘉·文化常识",
+    "ku_type": "wenhua_changshi",
+    "track": "积累",
+    "core": "元嘉，南朝宋文帝刘义隆的年号（424-453）。",
+    "source_text": "《永遇乐·京口北固亭怀古》辛弃疾",
+    "difficulty": 0.4,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "本课文化常识"
+    ],
+    "_unit": "第三单元"
+  },
+  {
+    "id": "ku-032",
+    "name": "狼居胥·文化常识",
+    "ku_type": "wenhua_changshi",
+    "track": "积累",
+    "core": "狼居胥，山名，即今蒙古国境内的肯特山。霍去病曾在此封山纪功。",
+    "source_text": "《永遇乐·京口北固亭怀古》辛弃疾",
+    "difficulty": 0.4,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "本课文化常识"
+    ],
+    "_unit": "第三单元"
+  },
+  {
+    "id": "ku-033",
+    "name": "社日·文化常识",
+    "ku_type": "wenhua_changshi",
+    "track": "积累",
+    "core": "社日，古代祭祀土地神的日子，分春社和秋社。",
+    "source_text": "《永遇乐·京口北固亭怀古》辛弃疾",
+    "difficulty": 0.4,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "本课文化常识"
+    ],
+    "_unit": "第三单元"
+  },
+  {
+    "id": "ku-034",
+    "name": "怀古词·借古抒怀手法",
+    "ku_type": "shici_jianshang",
+    "track": "鉴赏",
+    "core": "怀古词常通过咏史、用典、对比等手法，借古讽今，抒发个人感慨。学习时注意分析典故的用意和古今对比。",
+    "source_text": "《永遇乐·京口北固亭怀古》辛弃疾",
+    "difficulty": 0.6,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "宋词鉴赏方法"
+    ],
+    "_unit": "第三单元"
+  },
+  {
+    "id": "ku-035",
+    "name": "豪放词·意境与手法",
+    "ku_type": "shici_jianshang",
+    "track": "鉴赏",
+    "core": "豪放词意境雄浑壮阔，多用夸张、想象、典故等手法，情感奔放。学习时注意感受词中的气势和情感张力。",
+    "source_text": "《念奴娇·赤壁怀古》苏轼",
+    "difficulty": 0.5,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "宋词鉴赏方法"
+    ],
+    "_unit": "第三单元"
+  },
+  {
+    "id": "ku-036",
+    "name": "婉约词·意象与情感",
+    "ku_type": "shici_jianshang",
+    "track": "鉴赏",
+    "core": "婉约词意境细腻含蓄，多用叠字、白描、借景抒情等手法，情感深沉。学习时注意品味意象的象征意义和情感层次。",
+    "source_text": "《声声慢》李清照",
+    "difficulty": 0.5,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "宋词鉴赏方法"
+    ],
+    "_unit": "第三单元"
+  },
+  {
+    "id": "ku-037",
+    "name": "叠字运用·增强情感",
+    "ku_type": "shici_jianshang",
+    "track": "鉴赏",
+    "core": "叠字（如寻寻觅觅、冷冷清清）能增强节奏感和情感表达，渲染氛围。学习时注意分析叠字的效果。",
+    "source_text": "《声声慢》李清照",
+    "difficulty": 0.5,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "宋词鉴赏方法"
+    ],
+    "_unit": "第三单元"
+  },
+  {
+    "id": "ku-038",
+    "name": "用典·借古讽今",
+    "ku_type": "shici_jianshang",
+    "track": "鉴赏",
+    "core": "用典是引用历史故事或前人诗句，以含蓄表达情感或观点。学习时注意理解典故的本义和引申义。",
+    "source_text": "《永遇乐·京口北固亭怀古》辛弃疾",
+    "difficulty": 0.6,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "宋词鉴赏方法"
+    ],
+    "_unit": "第三单元"
+  },
+  {
+    "id": "ku-039",
+    "name": "词体风格辨析·豪放与婉约",
+    "ku_type": "shici_jianshang",
+    "track": "鉴赏",
+    "core": "豪放派词风雄浑奔放，婉约派词风细腻含蓄。学习时通过对比分析，把握不同风格的特点。",
+    "source_text": "第三单元",
+    "difficulty": 0.5,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "宋词鉴赏方法"
+    ],
+    "_unit": "第三单元"
+  },
+  {
+    "id": "ku-040",
+    "name": "写作·怀古主题的议论文",
+    "ku_type": "shumian_biaoda",
+    "track": "表达",
+    "core": "写怀古主题的议论文，可先叙述历史事件，再分析其意义，最后联系现实，表达自己的观点。注意史论结合。",
+    "source_text": "第三单元学习任务",
+    "difficulty": 0.7,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "本单元表达技能"
+    ],
+    "_unit": "第三单元"
+  },
+  {
+    "id": "ku-041",
+    "name": "写作·诗词鉴赏短文",
+    "ku_type": "shumian_biaoda",
+    "track": "表达",
+    "core": "写诗词鉴赏短文，可从意象、手法、情感等角度切入，结合具体诗句分析，注意语言精炼，观点明确。",
+    "source_text": "第三单元学习任务",
+    "difficulty": 0.7,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "本单元表达技能"
+    ],
+    "_unit": "第三单元"
+  },
+  {
+    "id": "ku-042",
+    "name": "口语交际·朗诵诗词",
+    "ku_type": "kouyu_jiaoji",
+    "track": "表达",
+    "core": "朗诵诗词时，注意把握节奏、重音和语调，通过声音传达情感。可先理解诗意，再设计朗诵方案。",
+    "source_text": "第三单元学习任务",
+    "difficulty": 0.5,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "本单元表达技能"
+    ],
+    "_unit": "第三单元"
+  },
+  {
+    "id": "ku-001",
+    "name": "念奴娇·赤壁怀古·背诵全词",
+    "ku_type": "mingpian",
+    "track": "积累",
+    "core": "大江东去，浪淘尽，千古风流人物。故垒西边，人道是，三国周郎赤壁。乱石穿空，惊涛拍岸，卷起千堆雪。江山如画，一时多少豪杰。遥想公瑾当年，小乔初嫁了，雄姿英发。羽扇纶巾，谈笑间，樯橹灰飞烟灭。故国神游，多情应笑我，早生华发。人生如梦，一尊还酹江月。",
+    "source_text": "《念奴娇·赤壁怀古》苏轼",
+    "difficulty": 0.3,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "《念奴娇·赤壁怀古》鉴赏与背诵"
+    ],
+    "_unit": "第三单元"
+  },
+  {
+    "id": "ku-002",
+    "name": "永遇乐·京口北固亭怀古·主旨句",
+    "ku_type": "mingpian",
+    "track": "积累",
+    "core": "凭谁问：廉颇老矣，尚能饭否？",
+    "source_text": "《永遇乐·京口北固亭怀古》辛弃疾",
+    "difficulty": 0.4,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "《永遇乐·京口北固亭怀古》鉴赏"
+    ],
+    "_unit": "第三单元"
+  },
+  {
+    "id": "ku-003",
+    "name": "声声慢·叠字运用",
+    "ku_type": "shici_jianshang",
+    "track": "鉴赏",
+    "core": "起句用十四个叠字（寻寻觅觅，冷冷清清，凄凄惨惨戚戚），层层递进，表现愁绪的深化过程。学习时注意体会叠字中包孕的情感及其递进层次。",
+    "source_text": "《声声慢》（寻寻觅觅）李清照",
+    "difficulty": 0.6,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "《声声慢》鉴赏"
+    ],
+    "_unit": "第三单元"
+  },
+  {
+    "id": "ku-004",
+    "name": "念奴娇·赤壁怀古·写景咏史抒情融合",
+    "ku_type": "shici_jianshang",
+    "track": "鉴赏",
+    "core": "词作将写景（如‘乱石穿空，惊涛拍岸’）、咏史（周瑜赤壁之战）、抒情（人生如梦的感慨）融为一体，雄浑苍凉。学习时要体会这种融合手法如何表现词人的生命感悟与人生态度。",
+    "source_text": "《念奴娇·赤壁怀古》苏轼",
+    "difficulty": 0.5,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "《念奴娇·赤壁怀古》鉴赏与背诵"
+    ],
+    "_unit": "第三单元"
+  },
+  {
+    "id": "ku-005",
+    "name": "永遇乐·京口北固亭怀古·用典手法",
+    "ku_type": "shici_jianshang",
+    "track": "鉴赏",
+    "core": "词作多用典，如孙权、刘裕、廉颇等典故。学习时要注意理解每个典故的内涵及其与词人情感、主旨的关系。",
+    "source_text": "《永遇乐·京口北固亭怀古》辛弃疾",
+    "difficulty": 0.6,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "《永遇乐·京口北固亭怀古》鉴赏"
+    ],
+    "_unit": "第三单元"
+  },
+  {
+    "id": "ku-006",
+    "name": "声声慢·渲染愁绪手法",
+    "ku_type": "shici_jianshang",
+    "track": "鉴赏",
+    "core": "通篇写‘愁’，通过外物（如‘梧桐更兼细雨’）触发内心波澜，渲染愁苦。学习时揣摩词人如何借助景物、动作、叠字等手法层层渲染愁绪。",
+    "source_text": "《声声慢》（寻寻觅觅）李清照",
+    "difficulty": 0.5,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "《声声慢》鉴赏"
+    ],
+    "_unit": "第三单元"
+  },
+  {
+    "id": "ku-007",
+    "name": "知人论世·古诗词鉴赏方法",
+    "ku_type": "shici_jianshang",
+    "track": "鉴赏",
+    "core": "通过了解诗人的生平、创作背景等深入理解作品。例如，了解杜甫所处时代有助于理解《登高》的忧国伤时；了解苏轼人生经历有助于理解《念奴娇·赤壁怀古》的壮志难酬与旷达。",
+    "source_text": "第三单元学习任务",
+    "difficulty": 0.4,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "《念奴娇·赤壁怀古》鉴赏与背诵"
+    ],
+    "_unit": "第三单元"
+  },
+  {
+    "id": "ku-008",
+    "name": "文学短评·聚焦小切入口",
+    "ku_type": "shumian_biaoda",
+    "track": "表达",
+    "core": "写文学短评要善于聚焦，从‘小’处切入。选择感触最深的一点，如细节、手法、意象等，避免面面俱到。例如，可聚焦《声声慢》的叠词运用或《百合花》中‘撒满白色百合花’的被子。",
+    "source_text": "第三单元学习任务·学写文学短评",
+    "difficulty": 0.7,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "文学短评写作方法"
+    ],
+    "_unit": "第三单元"
+  },
+  {
+    "id": "ku-009",
+    "name": "文学短评·叙议结合",
+    "ku_type": "shumian_biaoda",
+    "track": "表达",
+    "core": "写文学短评主要运用叙议结合的方式。‘叙’要精当，为‘议’提供支撑；‘议’要紧密结合‘叙’，思路清晰，态度鲜明。例如，评论《归园田居》‘善用白描’时，可从景物选择、近景远景勾勒等方面找出具体词句进行分析。",
+    "source_text": "第三单元学习任务·学写文学短评",
+    "difficulty": 0.7,
+    "prerequisites": [
+      "文学短评·聚焦小切入口"
+    ],
+    "extra": null,
+    "_kcs": [
+      "文学短评写作方法"
+    ],
+    "_unit": "第三单元"
+  },
+  {
+    "id": "ku-010",
+    "name": "诗歌朗诵·设计朗诵脚本",
+    "ku_type": "kouyu_jiaoji",
+    "track": "表达",
+    "core": "朗诵前反复揣摩诗词的情感基调和音韵节奏，设计朗诵脚本。可从网络搜集音频视频资料学习借鉴，为诗词配上合适乐曲和图片增强效果。",
+    "source_text": "第三单元学习任务·班级诗歌朗诵会",
+    "difficulty": 0.5,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "古诗词朗诵与鉴赏基础"
+    ],
+    "_unit": "第三单元"
+  },
+  {
+    "id": "ku-011",
+    "name": "词·声韵句式节奏特点",
+    "ku_type": "wenyan_yuedu",
+    "track": "鉴赏",
+    "core": "与律诗相比，词的声韵、句式、节奏等有更多变化，更为自由灵活。诵读时注意体会这一点。",
+    "source_text": "第三单元导语",
+    "difficulty": 0.3,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "古诗词朗诵与鉴赏基础"
+    ],
+    "_unit": "第三单元"
+  },
+  {
+    "id": "ku-012",
+    "name": "王国维·境界说",
+    "ku_type": "wenhua_changshi",
+    "track": "积累",
+    "core": "王国维《人间词话》提出‘词以境界为最上’，境界包括景物与喜怒哀乐，能写真景物真感情者谓之有境界。又提出‘三境界’说：第一境‘昨夜西风凋碧树，独上高楼，望尽天涯路’；第二境‘衣带渐宽终不悔，为伊消得人憔悴’；第三境‘众里寻他千百度，回头蓦见，那人正在灯火阑珊处’。",
+    "source_text": "第三单元学习提示",
+    "difficulty": 0.6,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "古诗词朗诵与鉴赏基础"
+    ],
+    "_unit": "第三单元"
+  },
+  {
+    "id": "ku-001",
+    "name": "访谈准备与提纲拟定",
+    "ku_type": "kouyu_jiaoji",
+    "track": "表达",
+    "core": "访谈前需查阅资料、确定主题、拟定提纲、选定对象并征得同意。",
+    "source_text": "第四单元 学习活动一",
+    "difficulty": 0.4,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "家乡文化生活·访谈与写作"
+    ],
+    "_unit": "第四单元"
+  },
+  {
+    "id": "ku-002",
+    "name": "访谈提问技巧：具体明确",
+    "ku_type": "kouyu_jiaoji",
+    "track": "表达",
+    "core": "访谈中问题应具体明确，避免笼统含糊，可将问答变为交谈以融洽气氛。",
+    "source_text": "第四单元 学习活动一",
+    "difficulty": 0.5,
+    "prerequisites": [
+      "访谈准备与提纲拟定"
+    ],
+    "extra": null,
+    "_kcs": [
+      "家乡文化生活·访谈与写作"
+    ],
+    "_unit": "第四单元"
+  },
+  {
+    "id": "ku-003",
+    "name": "访谈倾听与回应",
+    "ku_type": "kouyu_jiaoji",
+    "track": "表达",
+    "core": "访谈中注意倾听受访人看法，随时给予积极回应。",
+    "source_text": "第四单元 学习活动一",
+    "difficulty": 0.4,
+    "prerequisites": [
+      "访谈提问技巧：具体明确"
+    ],
+    "extra": null,
+    "_kcs": [
+      "家乡文化生活·访谈与写作"
+    ],
+    "_unit": "第四单元"
+  },
+  {
+    "id": "ku-004",
+    "name": "撰写《家乡人物（风物）志》",
+    "ku_type": "shumian_biaoda",
+    "track": "表达",
+    "core": "以叙述和说明为主，语言准确平实简明，突出家乡特色，融入思考与情感。",
+    "source_text": "第四单元 学习活动一",
+    "difficulty": 0.6,
+    "prerequisites": [
+      "访谈准备与提纲拟定",
+      "访谈提问技巧：具体明确",
+      "访谈倾听与回应"
+    ],
+    "extra": null,
+    "_kcs": [
+      "家乡文化生活·访谈与写作"
+    ],
+    "_unit": "第四单元"
+  },
+  {
+    "id": "ku-005",
+    "name": "调查报告结构",
+    "ku_type": "shumian_biaoda",
+    "track": "表达",
+    "core": "调查报告包括标题、摘要、目录、调查背景与目标、步骤与方法、内容与分析、结论、建议、参考资料。",
+    "source_text": "第四单元 学习活动二",
+    "difficulty": 0.5,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "家乡文化生活·调查与建议"
+    ],
+    "_unit": "第四单元"
+  },
+  {
+    "id": "ku-006",
+    "name": "调查资料整理与图表呈现",
+    "ku_type": "shumian_biaoda",
+    "track": "表达",
+    "core": "对访谈、考察所得零散资料进行整理，可用图表方式呈现，做到一目了然。",
+    "source_text": "第四单元 学习活动二",
+    "difficulty": 0.5,
+    "prerequisites": [
+      "调查报告结构"
+    ],
+    "extra": null,
+    "_kcs": [
+      "家乡文化生活·调查与建议"
+    ],
+    "_unit": "第四单元"
+  },
+  {
+    "id": "ku-007",
+    "name": "撰写建议书",
+    "ku_type": "shumian_biaoda",
+    "track": "表达",
+    "core": "建议书需陈述内容、理由、实施步骤和可行性，从家乡实际出发，具有可操作性，符合社会主义核心价值观。",
+    "source_text": "第四单元 学习活动三",
+    "difficulty": 0.6,
+    "prerequisites": [
+      "调查报告结构"
+    ],
+    "extra": null,
+    "_kcs": [
+      "家乡文化生活·调查与建议"
+    ],
+    "_unit": "第四单元"
+  },
+  {
+    "id": "ku-008",
+    "name": "开调查会的方法",
+    "ku_type": "xinxi_yuedu",
+    "track": "鉴赏",
+    "core": "开调查会要作讨论式调查，选择合适对象，定好纲目，亲身出马，深入调查，自己做记录。",
+    "source_text": "《调查的技术》毛泽东",
+    "difficulty": 0.5,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "学习资源·调查与访谈方法"
+    ],
+    "_unit": "第四单元"
+  },
+  {
+    "id": "ku-009",
+    "name": "访谈法的类型与技巧",
+    "ku_type": "xinxi_yuedu",
+    "track": "鉴赏",
+    "core": "访谈分结构性/非结构性，直接/间接。技巧包括：准备充分、约定时间地点、了解背景、建立关系、控制话题、中立态度、重复提问确认、经同意记录。",
+    "source_text": "《访谈法》王思斌",
+    "difficulty": 0.5,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "学习资源·调查与访谈方法"
+    ],
+    "_unit": "第四单元"
+  },
+  {
+    "id": "ku-010",
+    "name": "节日与文化的辩证关系",
+    "ku_type": "xinxi_yuedu",
+    "track": "鉴赏",
+    "core": "节日产生有主客观原因，既有现实作用（如洒雄黄酒），也有心理需求（如家人团聚），带有时代局限性，但随社会发展会更新。",
+    "source_text": "《节日与文化》钟敬文",
+    "difficulty": 0.6,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "学习资源·调查与访谈方法"
+    ],
+    "_unit": "第四单元"
+  },
+  {
+    "id": "ku-011",
+    "name": "囿于见闻",
+    "ku_type": "chengyu",
+    "track": "积累",
+    "core": "囿于见闻：局限于所见所闻，形容见识狭窄。出自《调查的技术》。",
+    "source_text": "《调查的技术》毛泽东",
+    "difficulty": 0.3,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "家乡文化生活·成语与字音字形"
+    ],
+    "_unit": "第四单元"
+  },
+  {
+    "id": "ku-012",
+    "name": "亲身出马",
+    "ku_type": "chengyu",
+    "track": "积累",
+    "core": "亲身出马：亲自去做某事。出自《调查的技术》。",
+    "source_text": "《调查的技术》毛泽东",
+    "difficulty": 0.2,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "家乡文化生活·成语与字音字形"
+    ],
+    "_unit": "第四单元"
+  },
+  {
+    "id": "ku-013",
+    "name": "假手于人",
+    "ku_type": "chengyu",
+    "track": "积累",
+    "core": "假手于人：借助别人来为自己办事。出自《调查的技术》。",
+    "source_text": "《调查的技术》毛泽东",
+    "difficulty": 0.3,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "家乡文化生活·成语与字音字形"
+    ],
+    "_unit": "第四单元"
+  },
+  {
+    "id": "ku-014",
+    "name": "囿",
+    "ku_type": "zixing_ziyin",
+    "track": "积累",
+    "core": "囿，读yòu，本义为养动物的园子，引申为局限、拘泥。",
+    "source_text": "《调查的技术》毛泽东",
+    "difficulty": 0.3,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "家乡文化生活·成语与字音字形"
+    ],
+    "_unit": "第四单元"
+  },
+  {
+    "id": "ku-015",
+    "name": "掸尘",
+    "ku_type": "zixing_ziyin",
+    "track": "积累",
+    "core": "掸尘，读dǎn chén，指打扫灰尘。",
+    "source_text": "《节日与文化》钟敬文",
+    "difficulty": 0.2,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "家乡文化生活·成语与字音字形"
+    ],
+    "_unit": "第四单元"
+  },
+  {
+    "id": "ku-016",
+    "name": "追傩",
+    "ku_type": "zixing_ziyin",
+    "track": "积累",
+    "core": "追傩，读zhuī nuó，古代驱除疫鬼的仪式。",
+    "source_text": "《节日与文化》钟敬文",
+    "difficulty": 0.4,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "家乡文化生活·成语与字音字形"
+    ],
+    "_unit": "第四单元"
+  },
+  {
+    "id": "ku-017",
+    "name": "文化常识：地方志",
+    "ku_type": "wenhua_changshi",
+    "track": "积累",
+    "core": "地方志，简称方志，是如实记载某一地方历史、地理、风俗、人物等的书或文章。",
+    "source_text": "第四单元 学习活动一",
+    "difficulty": 0.3,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "家乡文化生活·文化常识"
+    ],
+    "_unit": "第四单元"
+  },
+  {
+    "id": "ku-018",
+    "name": "文化常识：调查报告",
+    "ku_type": "wenhua_changshi",
+    "track": "积累",
+    "core": "调查报告是对某一情况或问题经过调查后，将所得材料整理分析后写成的书面报告。",
+    "source_text": "第四单元 学习活动二",
+    "difficulty": 0.3,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "家乡文化生活·文化常识"
+    ],
+    "_unit": "第四单元"
+  },
+  {
+    "id": "ku-019",
+    "name": "文化常识：建议书",
+    "ku_type": "wenhua_changshi",
+    "track": "积累",
+    "core": "建议书是个人或团体向有关方面提出建议的文书，需陈述建议内容、理由和可行性。",
+    "source_text": "第四单元 学习活动三",
+    "difficulty": 0.3,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "家乡文化生活·文化常识"
+    ],
+    "_unit": "第四单元"
+  },
+  {
+    "id": "ku-001",
+    "name": "禳灾·祛除灾祸",
+    "ku_type": "wenyan_word",
+    "track": "积累",
+    "core": "禳，动词，祛除（灾祸）。例：禳灾法术。",
+    "source_text": "《节日与文化》钟敬文",
+    "difficulty": 0.3,
+    "prerequisites": [],
+    "extra": {
+      "词性": "动词",
+      "是否通假": false,
+      "是否古今异义": false,
+      "是否词类活用": false,
+      "活用类型": null,
+      "义项": "祛除灾祸",
+      "例句": "禳灾法术"
+    },
+    "_kcs": [
+      "《节日与文化》文言词语"
+    ],
+    "_unit": "第四单元"
+  },
+  {
+    "id": "ku-002",
+    "name": "事象·事物现象",
+    "ku_type": "wenyan_word",
+    "track": "积累",
+    "core": "事象，名词，事物、现象。例：民间节日，作为一种文化事象。",
+    "source_text": "《节日与文化》钟敬文",
+    "difficulty": 0.3,
+    "prerequisites": [],
+    "extra": {
+      "词性": "名词",
+      "是否通假": false,
+      "是否古今异义": false,
+      "是否词类活用": false,
+      "活用类型": null,
+      "义项": "事物现象",
+      "例句": "作为一种文化事象"
+    },
+    "_kcs": [
+      "《节日与文化》文言词语"
+    ],
+    "_unit": "第四单元"
+  },
+  {
+    "id": "ku-003",
+    "name": "复合性·多种活动集合",
+    "ku_type": "wenyan_word",
+    "track": "积累",
+    "core": "复合性，名词，多种成分组合的特性。例：它的复合性。",
+    "source_text": "《节日与文化》钟敬文",
+    "difficulty": 0.3,
+    "prerequisites": [],
+    "extra": {
+      "词性": "名词",
+      "是否通假": false,
+      "是否古今异义": false,
+      "是否词类活用": false,
+      "活用类型": null,
+      "义项": "多种成分组合的特性",
+      "例句": "它的复合性"
+    },
+    "_kcs": [
+      "《节日与文化》文言词语"
+    ],
+    "_unit": "第四单元"
+  },
+  {
+    "id": "ku-004",
+    "name": "编纂·编辑撰写",
+    "ku_type": "wenyan_word",
+    "track": "积累",
+    "core": "编纂，动词，编辑、撰写（多指资料性书籍）。例：宋人陈元靓编纂的《岁时广记》。",
+    "source_text": "《节日与文化》钟敬文",
+    "difficulty": 0.4,
+    "prerequisites": [],
+    "extra": {
+      "词性": "动词",
+      "是否通假": false,
+      "是否古今异义": false,
+      "是否词类活用": false,
+      "活用类型": null,
+      "义项": "编辑撰写",
+      "例句": "编纂的《岁时广记》"
+    },
+    "_kcs": [
+      "《节日与文化》文言词语"
+    ],
+    "_unit": "第四单元"
+  },
+  {
+    "id": "ku-005",
+    "name": "抹杀·完全否定",
+    "ku_type": "wenyan_word",
+    "track": "积累",
+    "core": "抹杀，动词，完全否定、勾销。例：一笔抹杀它。",
+    "source_text": "《节日与文化》钟敬文",
+    "difficulty": 0.3,
+    "prerequisites": [],
+    "extra": {
+      "词性": "动词",
+      "是否通假": false,
+      "是否古今异义": false,
+      "是否词类活用": false,
+      "活用类型": null,
+      "义项": "完全否定",
+      "例句": "一笔抹杀它"
+    },
+    "_kcs": [
+      "《节日与文化》文言词语"
+    ],
+    "_unit": "第四单元"
+  },
+  {
+    "id": "ku-006",
+    "name": "掸尘·打扫灰尘",
+    "ku_type": "wenyan_word",
+    "track": "积累",
+    "core": "掸，动词，拂去灰尘。例：晒衣物、掸尘等。",
+    "source_text": "《节日与文化》钟敬文",
+    "difficulty": 0.2,
+    "prerequisites": [],
+    "extra": {
+      "词性": "动词",
+      "是否通假": false,
+      "是否古今异义": false,
+      "是否词类活用": false,
+      "活用类型": null,
+      "义项": "拂去灰尘",
+      "例句": "晒衣物、掸尘等"
+    },
+    "_kcs": [
+      "《节日与文化》文言词语"
+    ],
+    "_unit": "第四单元"
+  },
+  {
+    "id": "ku-007",
+    "name": "踏青·春日郊游",
+    "ku_type": "wenyan_word",
+    "track": "积累",
+    "core": "踏青，动词，春日到郊外散步游玩。例：清明踏青。",
+    "source_text": "《节日与文化》钟敬文",
+    "difficulty": 0.2,
+    "prerequisites": [],
+    "extra": {
+      "词性": "动词",
+      "是否通假": false,
+      "是否古今异义": false,
+      "是否词类活用": false,
+      "活用类型": null,
+      "义项": "春日郊游",
+      "例句": "清明踏青"
+    },
+    "_kcs": [
+      "《节日与文化》文言词语"
+    ],
+    "_unit": "第四单元"
+  },
+  {
+    "id": "ku-008",
+    "name": "登高·重阳习俗",
+    "ku_type": "wenyan_word",
+    "track": "积累",
+    "core": "登高，动词，重阳节登高避灾的习俗。例：重阳登高。",
+    "source_text": "《节日与文化》钟敬文",
+    "difficulty": 0.2,
+    "prerequisites": [],
+    "extra": {
+      "词性": "动词",
+      "是否通假": false,
+      "是否古今异义": false,
+      "是否词类活用": false,
+      "活用类型": null,
+      "义项": "重阳节登高",
+      "例句": "重阳登高"
+    },
+    "_kcs": [
+      "《节日与文化》文言词语"
+    ],
+    "_unit": "第四单元"
+  },
+  {
+    "id": "ku-009",
+    "name": "放纸鸢·放风筝",
+    "ku_type": "wenyan_word",
+    "track": "积累",
+    "core": "纸鸢，名词，风筝。例：放纸鸢活动。",
+    "source_text": "《节日与文化》钟敬文",
+    "difficulty": 0.2,
+    "prerequisites": [],
+    "extra": {
+      "词性": "名词",
+      "是否通假": false,
+      "是否古今异义": false,
+      "是否词类活用": false,
+      "活用类型": null,
+      "义项": "风筝",
+      "例句": "放纸鸢活动"
+    },
+    "_kcs": [
+      "《节日与文化》文言词语"
+    ],
+    "_unit": "第四单元"
+  },
+  {
+    "id": "ku-010",
+    "name": "送瘟船·驱瘟习俗",
+    "ku_type": "wenyan_word",
+    "track": "积累",
+    "core": "送瘟船，名词，古代江滨地区驱除瘟神的宗教活动。例：送瘟船。",
+    "source_text": "《节日与文化》钟敬文",
+    "difficulty": 0.3,
+    "prerequisites": [],
+    "extra": {
+      "词性": "名词",
+      "是否通假": false,
+      "是否古今异义": false,
+      "是否词类活用": false,
+      "活用类型": null,
+      "义项": "驱瘟习俗",
+      "例句": "送瘟船"
+    },
+    "_kcs": [
+      "《节日与文化》文言词语"
+    ],
+    "_unit": "第四单元"
+  },
+  {
+    "id": "ku-011",
+    "name": "文化事象·文化现象",
+    "ku_type": "wenyan_word",
+    "track": "积累",
+    "core": "文化事象，名词，文化领域中的具体现象。例：民间节日，作为一种文化事象。",
+    "source_text": "《节日与文化》钟敬文",
+    "difficulty": 0.3,
+    "prerequisites": [],
+    "extra": {
+      "词性": "名词",
+      "是否通假": false,
+      "是否古今异义": false,
+      "是否词类活用": false,
+      "活用类型": null,
+      "义项": "文化现象",
+      "例句": "作为一种文化事象"
+    },
+    "_kcs": [
+      "《节日与文化》文言词语"
+    ],
+    "_unit": "第四单元"
+  },
+  {
+    "id": "ku-012",
+    "name": "文化进化理论·文化发展规律",
+    "ku_type": "wenyan_word",
+    "track": "积累",
+    "core": "文化进化理论，名词，关于文化发展演变的学说。例：增强了文化进化理论的可靠性。",
+    "source_text": "《节日与文化》钟敬文",
+    "difficulty": 0.4,
+    "prerequisites": [],
+    "extra": {
+      "词性": "名词",
+      "是否通假": false,
+      "是否古今异义": false,
+      "是否词类活用": false,
+      "活用类型": null,
+      "义项": "文化发展学说",
+      "例句": "文化进化理论的可靠性"
+    },
+    "_kcs": [
+      "《节日与文化》文言词语"
+    ],
+    "_unit": "第四单元"
+  },
+  {
+    "id": "ku-013",
+    "name": "社会礼制·社会礼仪制度",
+    "ku_type": "wenyan_word",
+    "track": "积累",
+    "core": "社会礼制，名词，社会的礼仪和制度。例：许多社会礼制和观念都起着新的变化。",
+    "source_text": "《节日与文化》钟敬文",
+    "difficulty": 0.3,
+    "prerequisites": [],
+    "extra": {
+      "词性": "名词",
+      "是否通假": false,
+      "是否古今异义": false,
+      "是否词类活用": false,
+      "活用类型": null,
+      "义项": "社会礼仪制度",
+      "例句": "社会礼制和观念"
+    },
+    "_kcs": [
+      "《节日与文化》文言词语"
+    ],
+    "_unit": "第四单元"
+  },
+  {
+    "id": "ku-014",
+    "name": "上层建筑·社会意识形态",
+    "ku_type": "wenyan_word",
+    "track": "积累",
+    "core": "上层建筑，名词，指社会意识形态及其制度。例：作为上层建筑的文化。",
+    "source_text": "《节日与文化》钟敬文",
+    "difficulty": 0.4,
+    "prerequisites": [],
+    "extra": {
+      "词性": "名词",
+      "是否通假": false,
+      "是否古今异义": false,
+      "是否词类活用": false,
+      "活用类型": null,
+      "义项": "社会意识形态",
+      "例句": "作为上层建筑的文化"
+    },
+    "_kcs": [
+      "《节日与文化》文言词语"
+    ],
+    "_unit": "第四单元"
+  },
+  {
+    "id": "ku-015",
+    "name": "传统节日·文化传承",
+    "ku_type": "wenyan_word",
+    "track": "积累",
+    "core": "传统节日，名词，历史上流传下来的节日。例：有些传统节日仍在普遍或局部沿用。",
+    "source_text": "《节日与文化》钟敬文",
+    "difficulty": 0.2,
+    "prerequisites": [],
+    "extra": {
+      "词性": "名词",
+      "是否通假": false,
+      "是否古今异义": false,
+      "是否词类活用": false,
+      "活用类型": null,
+      "义项": "历史流传的节日",
+      "例句": "传统节日仍在沿用"
+    },
+    "_kcs": [
+      "《节日与文化》文言词语"
+    ],
+    "_unit": "第四单元"
+  },
+  {
+    "id": "ku-016",
+    "name": "文化事象的复合性",
+    "ku_type": "wenyan_syntax",
+    "track": "积累",
+    "core": "复合性：指文化事象包含多种社会活动。例：民间节日，包括经济、宗教、伦理、艺术、技艺等活动。",
+    "source_text": "《节日与文化》钟敬文",
+    "difficulty": 0.4,
+    "prerequisites": [
+      "复合性·多种活动集合"
+    ],
+    "extra": null,
+    "_kcs": [
+      "《节日与文化》文言句式"
+    ],
+    "_unit": "第四单元"
+  },
+  {
+    "id": "ku-017",
+    "name": "民间文化的进步性",
+    "ku_type": "wenyan_syntax",
+    "track": "积累",
+    "core": "进步性：指民间文化能自然调节、改进，适应社会发展。例：人民文化具有自然调节、改进的能力。",
+    "source_text": "《节日与文化》钟敬文",
+    "difficulty": 0.4,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "《节日与文化》文言句式"
+    ],
+    "_unit": "第四单元"
+  },
+  {
+    "id": "ku-018",
+    "name": "传统节日的社会功能",
+    "ku_type": "wenyan_syntax",
+    "track": "积累",
+    "core": "社会功能：包括人际团结、社会规范保持、技能表现、医药运用、心理慰藉等。例：民间节日，尽着各种社会的功能。",
+    "source_text": "《节日与文化》钟敬文",
+    "difficulty": 0.5,
+    "prerequisites": [
+      "文化事象的复合性"
+    ],
+    "extra": null,
+    "_kcs": [
+      "《节日与文化》文言句式"
+    ],
+    "_unit": "第四单元"
+  },
+  {
+    "id": "ku-019",
+    "name": "节日与文化·钟敬文",
+    "ku_type": "mingpian",
+    "track": "积累",
+    "core": "民间节日，在过去，尽着各种社会的功能，是民族文化的综合应用。",
+    "source_text": "《节日与文化》钟敬文",
+    "difficulty": 0.3,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "《节日与文化》名篇名句"
+    ],
+    "_unit": "第四单元"
+  },
+  {
+    "id": "ku-020",
+    "name": "文化事象·复合性",
+    "ku_type": "mingpian",
+    "track": "积累",
+    "core": "民间的许多节日是包括社会的多种活动事项在内的。从社会文化的门类说，它包括经济、宗教、伦理、艺术、技艺等活动。",
+    "source_text": "《节日与文化》钟敬文",
+    "difficulty": 0.3,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "《节日与文化》名篇名句"
+    ],
+    "_unit": "第四单元"
+  },
+  {
+    "id": "ku-021",
+    "name": "传统节日·新社会意义",
+    "ku_type": "mingpian",
+    "track": "积累",
+    "core": "这些有长远历史的古老节日，在新社会中就成了新文化的一部分。",
+    "source_text": "《节日与文化》钟敬文",
+    "difficulty": 0.3,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "《节日与文化》名篇名句"
+    ],
+    "_unit": "第四单元"
+  },
+  {
+    "id": "ku-022",
+    "name": "文化事象",
+    "ku_type": "chengyu",
+    "track": "积累",
+    "core": "文化事象：指文化领域中的具体现象或事件。出自钟敬文《节日与文化》。",
+    "source_text": "《节日与文化》钟敬文",
+    "difficulty": 0.3,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "《节日与文化》成语"
+    ],
+    "_unit": "第四单元"
+  },
+  {
+    "id": "ku-023",
+    "name": "禳灾",
+    "ku_type": "chengyu",
+    "track": "积累",
+    "core": "禳灾：指通过祭祀、法术等方式祛除灾祸。例：禳灾法术。",
+    "source_text": "《节日与文化》钟敬文",
+    "difficulty": 0.3,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "《节日与文化》成语"
+    ],
+    "_unit": "第四单元"
+  },
+  {
+    "id": "ku-024",
+    "name": "踏青",
+    "ku_type": "chengyu",
+    "track": "积累",
+    "core": "踏青：春日到郊外散步游玩，是清明节的习俗之一。例：清明踏青。",
+    "source_text": "《节日与文化》钟敬文",
+    "difficulty": 0.2,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "《节日与文化》成语"
+    ],
+    "_unit": "第四单元"
+  },
+  {
+    "id": "ku-025",
+    "name": "登高",
+    "ku_type": "chengyu",
+    "track": "积累",
+    "core": "登高：重阳节登高避灾的习俗。例：重阳登高。",
+    "source_text": "《节日与文化》钟敬文",
+    "difficulty": 0.2,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "《节日与文化》成语"
+    ],
+    "_unit": "第四单元"
+  },
+  {
+    "id": "ku-026",
+    "name": "放纸鸢",
+    "ku_type": "chengyu",
+    "track": "积累",
+    "core": "放纸鸢：即放风筝，古代的一种文娱活动，原为禳灾法术。例：放纸鸢活动。",
+    "source_text": "《节日与文化》钟敬文",
+    "difficulty": 0.2,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "《节日与文化》成语"
+    ],
+    "_unit": "第四单元"
+  },
+  {
+    "id": "ku-027",
+    "name": "送瘟船",
+    "ku_type": "chengyu",
+    "track": "积累",
+    "core": "送瘟船：古代江滨地区驱除瘟神的宗教活动，后与屈原故事联系。例：送瘟船。",
+    "source_text": "《节日与文化》钟敬文",
+    "difficulty": 0.3,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "《节日与文化》成语"
+    ],
+    "_unit": "第四单元"
+  },
+  {
+    "id": "ku-029",
+    "name": "文化进化理论",
+    "ku_type": "wenhua_changshi",
+    "track": "积累",
+    "core": "文化进化理论：认为文化会随着社会发展而自然调节、改进，具有进步性。",
+    "source_text": "《节日与文化》钟敬文",
+    "difficulty": 0.4,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "《节日与文化》文化常识"
+    ],
+    "_unit": "第四单元"
+  },
+  {
+    "id": "ku-030",
+    "name": "传统节日·春节",
+    "ku_type": "wenhua_changshi",
+    "track": "积累",
+    "core": "春节：一年之首的传统节日，活动繁多，包括艺术、技艺等。",
+    "source_text": "《节日与文化》钟敬文",
+    "difficulty": 0.2,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "《节日与文化》文化常识"
+    ],
+    "_unit": "第四单元"
+  },
+  {
+    "id": "ku-031",
+    "name": "传统节日·端午节",
+    "ku_type": "wenhua_changshi",
+    "track": "积累",
+    "core": "端午节：有划龙舟、吃粽子、饮雄黄酒、插艾蒿、挂蒲剑、贴钟馗图、带香囊、穿老虎腰肚、回娘家、送节物等活动。",
+    "source_text": "《节日与文化》钟敬文",
+    "difficulty": 0.3,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "《节日与文化》文化常识"
+    ],
+    "_unit": "第四单元"
+  },
+  {
+    "id": "ku-032",
+    "name": "传统节日·清明节",
+    "ku_type": "wenhua_changshi",
+    "track": "积累",
+    "core": "清明节：传统节日，现主要作为纪念革命烈士的节日，有踏青、踢毽子等活动。",
+    "source_text": "《节日与文化》钟敬文",
+    "difficulty": 0.2,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "《节日与文化》文化常识"
+    ],
+    "_unit": "第四单元"
+  },
+  {
+    "id": "ku-033",
+    "name": "传统节日·重阳节",
+    "ku_type": "wenhua_changshi",
+    "track": "积累",
+    "core": "重阳节：传统节日，有登高、放纸鸢等活动，有些地方改为老人节。",
+    "source_text": "《节日与文化》钟敬文",
+    "difficulty": 0.2,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "《节日与文化》文化常识"
+    ],
+    "_unit": "第四单元"
+  },
+  {
+    "id": "ku-034",
+    "name": "传统节日·七夕",
+    "ku_type": "wenhua_changshi",
+    "track": "积累",
+    "core": "七夕：传统节日，有女儿月下穿针等习俗。",
+    "source_text": "《节日与文化》钟敬文",
+    "difficulty": 0.2,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "《节日与文化》文化常识"
+    ],
+    "_unit": "第四单元"
+  },
+  {
+    "id": "ku-035",
+    "name": "传统节日·中秋",
+    "ku_type": "wenhua_changshi",
+    "track": "积累",
+    "core": "中秋节：传统节日，有玩兔儿爷等习俗。",
+    "source_text": "《节日与文化》钟敬文",
+    "difficulty": 0.2,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "《节日与文化》文化常识"
+    ],
+    "_unit": "第四单元"
+  },
+  {
+    "id": "ku-036",
+    "name": "新节日·青年节",
+    "ku_type": "wenhua_changshi",
+    "track": "积累",
+    "core": "青年节：新中国成立后采用的新节日。",
+    "source_text": "《节日与文化》钟敬文",
+    "difficulty": 0.2,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "《节日与文化》文化常识"
+    ],
+    "_unit": "第四单元"
+  },
+  {
+    "id": "ku-037",
+    "name": "新节日·劳动节",
+    "ku_type": "wenhua_changshi",
+    "track": "积累",
+    "core": "劳动节：新中国成立后采用的新节日。",
+    "source_text": "《节日与文化》钟敬文",
+    "difficulty": 0.2,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "《节日与文化》文化常识"
+    ],
+    "_unit": "第四单元"
+  },
+  {
+    "id": "ku-038",
+    "name": "新节日·建军节",
+    "ku_type": "wenhua_changshi",
+    "track": "积累",
+    "core": "建军节：新中国成立后采用的新节日。",
+    "source_text": "《节日与文化》钟敬文",
+    "difficulty": 0.2,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "《节日与文化》文化常识"
+    ],
+    "_unit": "第四单元"
+  },
+  {
+    "id": "ku-039",
+    "name": "新节日·国庆节",
+    "ku_type": "wenhua_changshi",
+    "track": "积累",
+    "core": "国庆节：新中国成立后采用的新节日。",
+    "source_text": "《节日与文化》钟敬文",
+    "difficulty": 0.2,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "《节日与文化》文化常识"
+    ],
+    "_unit": "第四单元"
+  },
+  {
+    "id": "ku-040",
+    "name": "《岁时广记》",
+    "ku_type": "wenhua_changshi",
+    "track": "积累",
+    "core": "《岁时广记》：宋代陈元靓编纂的岁时民俗类书，记载节日活动与故事。",
+    "source_text": "《节日与文化》钟敬文",
+    "difficulty": 0.3,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "《节日与文化》文化常识"
+    ],
+    "_unit": "第四单元"
+  },
+  {
+    "id": "ku-041",
+    "name": "《武林新年杂咏》",
+    "ku_type": "wenhua_changshi",
+    "track": "积累",
+    "core": "《武林新年杂咏》：18世纪中叶文人学者写作的新年民俗诗集，记录新年活动。",
+    "source_text": "《节日与文化》钟敬文",
+    "difficulty": 0.3,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "《节日与文化》文化常识"
+    ],
+    "_unit": "第四单元"
+  },
+  {
+    "id": "ku-042",
+    "name": "信息类文本·论点与论据",
+    "ku_type": "xinxi_yuedu",
+    "track": "鉴赏",
+    "core": "方法：找出文章的中心论点（如民间文化具有进步性、复合性），并分析支撑论点的论据（如放纸鸢、送瘟船、端午节活动等事例）。",
+    "source_text": "《节日与文化》钟敬文",
+    "difficulty": 0.5,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "信息类文本阅读方法"
+    ],
+    "_unit": "第四单元"
+  },
+  {
+    "id": "ku-043",
+    "name": "信息类文本·论证方法",
+    "ku_type": "xinxi_yuedu",
+    "track": "鉴赏",
+    "core": "方法：识别举例论证（如放纸鸢、送瘟船、端午节活动）、引用论证（如《岁时广记》《武林新年杂咏》）、对比论证（新旧节日对比）。",
+    "source_text": "《节日与文化》钟敬文",
+    "difficulty": 0.5,
+    "prerequisites": [
+      "信息类文本·论点与论据"
+    ],
+    "extra": null,
+    "_kcs": [
+      "信息类文本阅读方法"
+    ],
+    "_unit": "第四单元"
+  },
+  {
+    "id": "ku-044",
+    "name": "信息类文本·结构分析",
+    "ku_type": "xinxi_yuedu",
+    "track": "鉴赏",
+    "core": "方法：分析文章结构——先提出民间文化的进步性，再论述节日的复合性，最后讨论传统节日在新社会的意义。",
+    "source_text": "《节日与文化》钟敬文",
+    "difficulty": 0.5,
+    "prerequisites": [
+      "信息类文本·论点与论据"
+    ],
+    "extra": null,
+    "_kcs": [
+      "信息类文本阅读方法"
+    ],
+    "_unit": "第四单元"
+  },
+  {
+    "id": "ku-045",
+    "name": "书面表达·议论文论点提炼",
+    "ku_type": "shumian_biaoda",
+    "track": "表达",
+    "core": "方法：从材料中提炼核心论点，如“传统节日具有复合性，应辩证看待其社会功能”。",
+    "source_text": "第四单元学习任务",
+    "difficulty": 0.6,
+    "prerequisites": [
+      "信息类文本·论点与论据"
+    ],
+    "extra": null,
+    "_kcs": [
+      "书面表达·议论文写作"
+    ],
+    "_unit": "第四单元"
+  },
+  {
+    "id": "ku-046",
+    "name": "书面表达·举例论证",
+    "ku_type": "shumian_biaoda",
+    "track": "表达",
+    "core": "方法：用具体事例（如端午节活动、春节习俗）支撑论点，增强说服力。",
+    "source_text": "第四单元学习任务",
+    "difficulty": 0.5,
+    "prerequisites": [
+      "书面表达·议论文论点提炼"
+    ],
+    "extra": null,
+    "_kcs": [
+      "书面表达·议论文写作"
+    ],
+    "_unit": "第四单元"
+  },
+  {
+    "id": "ku-047",
+    "name": "书面表达·辩证分析",
+    "ku_type": "shumian_biaoda",
+    "track": "表达",
+    "core": "方法：对传统节日既肯定其文化价值，又指出其需要适应新时代，体现辩证思维。",
+    "source_text": "第四单元学习任务",
+    "difficulty": 0.6,
+    "prerequisites": [
+      "书面表达·议论文论点提炼"
+    ],
+    "extra": null,
+    "_kcs": [
+      "书面表达·议论文写作"
+    ],
+    "_unit": "第四单元"
+  },
+  {
+    "id": "ku-048",
+    "name": "口语交际·讨论传统节日",
+    "ku_type": "kouyu_jiaoji",
+    "track": "表达",
+    "core": "技能：围绕“传统节日是否应该保留”进行讨论，要求观点明确、论据充分、尊重他人意见。",
+    "source_text": "第四单元学习任务",
+    "difficulty": 0.5,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "口语交际与沟通处世"
+    ],
+    "_unit": "第四单元"
+  },
+  {
+    "id": "ku-049",
+    "name": "沟通处世·尊重文化多样性",
+    "ku_type": "goutong_chushi",
+    "track": "表达",
+    "core": "能力：在讨论传统节日时，尊重不同文化背景和观点，避免简单否定或盲目推崇。",
+    "source_text": "第四单元学习任务",
+    "difficulty": 0.5,
+    "prerequisites": [
+      "口语交际·讨论传统节日"
+    ],
+    "extra": null,
+    "_kcs": [
+      "口语交际与沟通处世"
+    ],
+    "_unit": "第四单元"
+  },
+  {
+    "id": "ku-001",
+    "name": "差序格局·概念理解",
+    "ku_type": "wenyan_yuedu",
+    "track": "鉴赏",
+    "core": "抓住核心概念，理解其内涵和比喻解释，联系上下文把握作者观点。",
+    "source_text": "《乡土中国》费孝通",
+    "difficulty": 0.6,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "学术著作阅读方法"
+    ],
+    "_unit": "第五单元"
+  },
+  {
+    "id": "ku-002",
+    "name": "学术著作阅读·粗读与细读",
+    "ku_type": "xinxi_yuedu",
+    "track": "鉴赏",
+    "core": "先粗读（序言、目录、浏览）把握整体框架，再细读（概念、材料、论证）深入理解。",
+    "source_text": "第五单元 整本书阅读",
+    "difficulty": 0.5,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "学术著作阅读方法"
+    ],
+    "_unit": "第五单元"
+  },
+  {
+    "id": "ku-003",
+    "name": "学术著作阅读·关注研究思路",
+    "ku_type": "xinxi_yuedu",
+    "track": "鉴赏",
+    "core": "关注作者从田野调查材料中提炼概念、上升到理论阐释的过程，理解其研究方法和逻辑。",
+    "source_text": "第五单元 整本书阅读",
+    "difficulty": 0.7,
+    "prerequisites": [
+      "学术著作阅读·粗读与细读"
+    ],
+    "extra": null,
+    "_kcs": [
+      "学术著作阅读方法"
+    ],
+    "_unit": "第五单元"
+  },
+  {
+    "id": "ku-004",
+    "name": "学术著作阅读·反复阅读与思考",
+    "ku_type": "xinxi_yuedu",
+    "track": "鉴赏",
+    "core": "遇到难点时多读几遍，调动经验知识积极思考，可参阅资料辅助理解。",
+    "source_text": "第五单元 整本书阅读",
+    "difficulty": 0.4,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "学术著作阅读方法"
+    ],
+    "_unit": "第五单元"
+  },
+  {
+    "id": "ku-005",
+    "name": "学术著作阅读·分析整体框架",
+    "ku_type": "xinxi_yuedu",
+    "track": "鉴赏",
+    "core": "归纳各篇主旨，撰写内容摘要，把握篇章间的内在联系，形成知识体系。",
+    "source_text": "第五单元 整本书阅读",
+    "difficulty": 0.7,
+    "prerequisites": [
+      "差序格局·概念理解",
+      "学术著作阅读·粗读与细读"
+    ],
+    "extra": null,
+    "_kcs": [
+      "学术著作阅读方法"
+    ],
+    "_unit": "第五单元"
+  },
+  {
+    "id": "ku-006",
+    "name": "学术著作阅读·阅读预期",
+    "ku_type": "xinxi_yuedu",
+    "track": "鉴赏",
+    "core": "阅读前明确目的（如了解历史、学习方法、解决现实问题），目标明确才能有效阅读。",
+    "source_text": "第五单元 整本书阅读",
+    "difficulty": 0.3,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "学术著作阅读方法"
+    ],
+    "_unit": "第五单元"
+  },
+  {
+    "id": "ku-007",
+    "name": "差序格局·概念",
+    "ku_type": "wenhua_changshi",
+    "track": "积累",
+    "core": "费孝通提出的概念，指由亲属关系和地缘关系所决定的有差等的次序关系。",
+    "source_text": "《乡土中国》费孝通",
+    "difficulty": 0.5,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "《乡土中国》核心概念"
+    ],
+    "_unit": "第五单元"
+  },
+  {
+    "id": "ku-008",
+    "name": "礼俗社会·概念",
+    "ku_type": "wenhua_changshi",
+    "track": "积累",
+    "core": "费孝通提出的概念，指乡土社会中以礼俗规范行为的社会形态。",
+    "source_text": "《乡土中国》费孝通",
+    "difficulty": 0.5,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "《乡土中国》核心概念"
+    ],
+    "_unit": "第五单元"
+  },
+  {
+    "id": "ku-009",
+    "name": "无讼·概念",
+    "ku_type": "wenhua_changshi",
+    "track": "积累",
+    "core": "费孝通提出的概念，指乡土社会中较少诉讼、依靠调解和礼俗解决纠纷的现象。",
+    "source_text": "《乡土中国》费孝通",
+    "difficulty": 0.5,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "《乡土中国》核心概念"
+    ],
+    "_unit": "第五单元"
+  },
+  {
+    "id": "ku-010",
+    "name": "无为政治·概念",
+    "ku_type": "wenhua_changshi",
+    "track": "积累",
+    "core": "费孝通提出的概念，指乡土社会中政府干预较少、依靠自治和传统秩序的政治形态。",
+    "source_text": "《乡土中国》费孝通",
+    "difficulty": 0.5,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "《乡土中国》核心概念"
+    ],
+    "_unit": "第五单元"
+  },
+  {
+    "id": "ku-011",
+    "name": "田野调查·研究方法",
+    "ku_type": "wenhua_changshi",
+    "track": "积累",
+    "core": "费孝通通过实地调查、收集材料、提炼概念的研究方法，是社会学本土化的重要方法。",
+    "source_text": "《乡土中国》费孝通",
+    "difficulty": 0.6,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "《乡土中国》核心概念"
+    ],
+    "_unit": "第五单元"
+  },
+  {
+    "id": "ku-012",
+    "name": "学术著作·科学性系统性逻辑性",
+    "ku_type": "wenhua_changshi",
+    "track": "积累",
+    "core": "学术著作强调科学性、系统性和逻辑性，重在理论发现或解决实际问题。",
+    "source_text": "第五单元 整本书阅读",
+    "difficulty": 0.4,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "《乡土中国》核心概念"
+    ],
+    "_unit": "第五单元"
+  },
+  {
+    "id": "ku-013",
+    "name": "调查报告·写作方法",
+    "ku_type": "shumian_biaoda",
+    "track": "表达",
+    "core": "围绕话题（如乡村变迁）开展调查访问，从居住环境、精神风貌等角度选一，写不少于1000字的报告，注意数据真实、分析深入。",
+    "source_text": "第五单元 学习任务",
+    "difficulty": 0.8,
+    "prerequisites": [
+      "学术著作阅读·粗读与细读",
+      "学术著作阅读·分析整体框架"
+    ],
+    "extra": null,
+    "_kcs": [
+      "整本书阅读表达与交流"
+    ],
+    "_unit": "第五单元"
+  },
+  {
+    "id": "ku-014",
+    "name": "学术讨论·小组交流方法",
+    "ku_type": "kouyu_jiaoji",
+    "track": "表达",
+    "core": "围绕核心概念（如差序格局）进行小组讨论，清晰表达理解，倾听他人观点，补充或质疑。",
+    "source_text": "第五单元 学习任务",
+    "difficulty": 0.6,
+    "prerequisites": [
+      "差序格局·概念理解"
+    ],
+    "extra": null,
+    "_kcs": [
+      "整本书阅读表达与交流"
+    ],
+    "_unit": "第五单元"
+  },
+  {
+    "id": "ku-015",
+    "name": "拓展阅读·知人论世",
+    "ku_type": "goutong_chushi",
+    "track": "表达",
+    "core": "通过了解作者生平、学术思想，更全面理解著作，培养社会责任感和爱国情怀。",
+    "source_text": "第五单元 学习任务",
+    "difficulty": 0.5,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "整本书阅读表达与交流"
+    ],
+    "_unit": "第五单元"
+  },
+  {
+    "id": "ku-016",
+    "name": "学术著作阅读·概念间联系",
+    "ku_type": "xinxi_yuedu",
+    "track": "鉴赏",
+    "core": "找出核心概念间的逻辑关系，如差序格局与礼俗社会、无讼等的关联，形成概念网络。",
+    "source_text": "第五单元 整本书阅读",
+    "difficulty": 0.7,
+    "prerequisites": [
+      "差序格局·概念理解",
+      "差序格局·概念",
+      "礼俗社会·概念",
+      "无讼·概念"
+    ],
+    "extra": null,
+    "_kcs": [
+      "学术著作阅读方法"
+    ],
+    "_unit": "第五单元"
+  },
+  {
+    "id": "ku-017",
+    "name": "学术著作阅读·对比概念表格",
+    "ku_type": "xinxi_yuedu",
+    "track": "鉴赏",
+    "core": "通过填写对比表格（如乡土社会概念 vs 其他社会概念），加深对概念的理解和区分。",
+    "source_text": "第五单元 学习任务",
+    "difficulty": 0.6,
+    "prerequisites": [
+      "差序格局·概念理解",
+      "差序格局·概念"
+    ],
+    "extra": null,
+    "_kcs": [
+      "学术著作阅读方法"
+    ],
+    "_unit": "第五单元"
+  },
+  {
+    "id": "ku-018",
+    "name": "学术著作阅读·内容摘要撰写",
+    "ku_type": "shumian_biaoda",
+    "track": "表达",
+    "core": "归纳各篇主旨，摘录关键概念，简洁准确地概括作者观点，注意逻辑连贯。",
+    "source_text": "第五单元 学习任务",
+    "difficulty": 0.7,
+    "prerequisites": [
+      "学术著作阅读·粗读与细读",
+      "学术著作阅读·分析整体框架"
+    ],
+    "extra": null,
+    "_kcs": [
+      "整本书阅读表达与交流"
+    ],
+    "_unit": "第五单元"
+  },
+  {
+    "id": "ku-019",
+    "name": "学术著作阅读·问题导向阅读",
+    "ku_type": "xinxi_yuedu",
+    "track": "鉴赏",
+    "core": "关注书中问题的提出与解决，联系现实思考，如传统与现代的碰撞。",
+    "source_text": "第五单元 学习任务",
+    "difficulty": 0.6,
+    "prerequisites": [
+      "学术著作阅读·阅读预期"
+    ],
+    "extra": null,
+    "_kcs": [
+      "学术著作阅读方法"
+    ],
+    "_unit": "第五单元"
+  },
+  {
+    "id": "ku-020",
+    "name": "学术著作阅读·多形式交流",
+    "ku_type": "kouyu_jiaoji",
+    "track": "表达",
+    "core": "运用手抄报、演讲、辩论、网页等多种形式与同学交流学习成果，锻炼表达能力。",
+    "source_text": "第五单元 学习任务",
+    "difficulty": 0.7,
+    "prerequisites": [
+      "学术讨论·小组交流方法"
+    ],
+    "extra": null,
+    "_kcs": [
+      "整本书阅读表达与交流"
+    ],
+    "_unit": "第五单元"
+  },
+  {
+    "id": "ku-001",
+    "name": "劝·鼓励义",
+    "ku_type": "wenyan_word",
+    "track": "积累",
+    "core": "劝，动词，鼓励。例：劝学（《荀子》）。",
+    "source_text": "《劝学》荀子",
+    "difficulty": 0.3,
+    "prerequisites": [],
+    "extra": {
+      "词性": "动词",
+      "是否通假": false,
+      "是否古今异义": false,
+      "是否词类活用": false,
+      "活用类型": null,
+      "义项": "鼓励",
+      "例句": "劝学"
+    },
+    "_kcs": [
+      "《劝学》文言词语"
+    ],
+    "_unit": "第六单元"
+  },
+  {
+    "id": "ku-002",
+    "name": "已·停止义",
+    "ku_type": "wenyan_word",
+    "track": "积累",
+    "core": "已，动词，停止。例：学不可以已（《劝学》）。",
+    "source_text": "《劝学》荀子",
+    "difficulty": 0.3,
+    "prerequisites": [],
+    "extra": {
+      "词性": "动词",
+      "是否通假": false,
+      "是否古今异义": false,
+      "是否词类活用": false,
+      "活用类型": null,
+      "义项": "停止",
+      "例句": "学不可以已"
+    },
+    "_kcs": [
+      "《劝学》文言词语"
+    ],
+    "_unit": "第六单元"
+  },
+  {
+    "id": "ku-003",
+    "name": "中·合乎义",
+    "ku_type": "wenyan_word",
+    "track": "积累",
+    "core": "中，动词，合乎。例：木直中绳（《劝学》）。",
+    "source_text": "《劝学》荀子",
+    "difficulty": 0.4,
+    "prerequisites": [],
+    "extra": {
+      "词性": "动词",
+      "是否通假": false,
+      "是否古今异义": false,
+      "是否词类活用": false,
+      "活用类型": null,
+      "义项": "合乎",
+      "例句": "木直中绳"
+    },
+    "_kcs": [
+      "《劝学》文言词语"
+    ],
+    "_unit": "第六单元"
+  },
+  {
+    "id": "ku-004",
+    "name": "輮·同煣义",
+    "ku_type": "wenyan_word",
+    "track": "积累",
+    "core": "輮，同“煣”，用火烘烤木材使之弯曲。例：輮以为轮（《劝学》）。",
+    "source_text": "《劝学》荀子",
+    "difficulty": 0.5,
+    "prerequisites": [],
+    "extra": {
+      "词性": "动词",
+      "是否通假": true,
+      "是否古今异义": false,
+      "是否词类活用": false,
+      "活用类型": null,
+      "义项": "用火烘烤木材使之弯曲",
+      "例句": "輮以为轮"
+    },
+    "_kcs": [
+      "《劝学》文言词语"
+    ],
+    "_unit": "第六单元"
+  },
+  {
+    "id": "ku-005",
+    "name": "有·同又义",
+    "ku_type": "wenyan_word",
+    "track": "积累",
+    "core": "有，同“又”，副词。例：虽有槁暴（《劝学》）。",
+    "source_text": "《劝学》荀子",
+    "difficulty": 0.4,
+    "prerequisites": [],
+    "extra": {
+      "词性": "副词",
+      "是否通假": true,
+      "是否古今异义": false,
+      "是否词类活用": false,
+      "活用类型": null,
+      "义项": "又",
+      "例句": "虽有槁暴"
+    },
+    "_kcs": [
+      "《劝学》文言词语"
+    ],
+    "_unit": "第六单元"
+  },
+  {
+    "id": "ku-006",
+    "name": "暴·晒干义",
+    "ku_type": "wenyan_word",
+    "track": "积累",
+    "core": "暴，动词，晒干。例：虽有槁暴（《劝学》）。",
+    "source_text": "《劝学》荀子",
+    "difficulty": 0.4,
+    "prerequisites": [],
+    "extra": {
+      "词性": "动词",
+      "是否通假": false,
+      "是否古今异义": false,
+      "是否词类活用": false,
+      "活用类型": null,
+      "义项": "晒干",
+      "例句": "虽有槁暴"
+    },
+    "_kcs": [
+      "《劝学》文言词语"
+    ],
+    "_unit": "第六单元"
+  },
+  {
+    "id": "ku-007",
+    "name": "知·同智义",
+    "ku_type": "wenyan_word",
+    "track": "积累",
+    "core": "知，同“智”，名词，见识。例：则知明而行无过矣（《劝学》）。",
+    "source_text": "《劝学》荀子",
+    "difficulty": 0.4,
+    "prerequisites": [],
+    "extra": {
+      "词性": "名词",
+      "是否通假": true,
+      "是否古今异义": false,
+      "是否词类活用": false,
+      "活用类型": null,
+      "义项": "见识",
+      "例句": "则知明而行无过矣"
+    },
+    "_kcs": [
+      "《劝学》文言词语"
+    ],
+    "_unit": "第六单元"
+  },
+  {
+    "id": "ku-008",
+    "name": "跂·踮脚义",
+    "ku_type": "wenyan_word",
+    "track": "积累",
+    "core": "跂，动词，踮起脚后跟。例：吾尝跂而望矣（《劝学》）。",
+    "source_text": "《劝学》荀子",
+    "difficulty": 0.4,
+    "prerequisites": [],
+    "extra": {
+      "词性": "动词",
+      "是否通假": false,
+      "是否古今异义": false,
+      "是否词类活用": false,
+      "活用类型": null,
+      "义项": "踮起脚后跟",
+      "例句": "吾尝跂而望矣"
+    },
+    "_kcs": [
+      "《劝学》文言词语"
+    ],
+    "_unit": "第六单元"
+  },
+  {
+    "id": "ku-009",
+    "name": "假·借助义",
+    "ku_type": "wenyan_word",
+    "track": "积累",
+    "core": "假，动词，借助。例：假舆马者（《劝学》）。",
+    "source_text": "《劝学》荀子",
+    "difficulty": 0.4,
+    "prerequisites": [],
+    "extra": {
+      "词性": "动词",
+      "是否通假": false,
+      "是否古今异义": false,
+      "是否词类活用": false,
+      "活用类型": null,
+      "义项": "借助",
+      "例句": "假舆马者"
+    },
+    "_kcs": [
+      "《劝学》文言词语"
+    ],
+    "_unit": "第六单元"
+  },
+  {
+    "id": "ku-010",
+    "name": "水·游泳义（名词作动词）",
+    "ku_type": "wenyan_word",
+    "track": "积累",
+    "core": "水，名词作动词，游泳。例：非能水也（《劝学》）。",
+    "source_text": "《劝学》荀子",
+    "difficulty": 0.5,
+    "prerequisites": [],
+    "extra": {
+      "词性": "动词",
+      "是否通假": false,
+      "是否古今异义": false,
+      "是否词类活用": true,
+      "活用类型": "名词作动词",
+      "义项": "游泳",
+      "例句": "非能水也"
+    },
+    "_kcs": [
+      "《劝学》文言词语"
+    ],
+    "_unit": "第六单元"
+  },
+  {
+    "id": "ku-011",
+    "name": "绝·横渡义",
+    "ku_type": "wenyan_word",
+    "track": "积累",
+    "core": "绝，动词，横渡。例：而绝江河（《劝学》）。",
+    "source_text": "《劝学》荀子",
+    "difficulty": 0.4,
+    "prerequisites": [],
+    "extra": {
+      "词性": "动词",
+      "是否通假": false,
+      "是否古今异义": false,
+      "是否词类活用": false,
+      "活用类型": null,
+      "义项": "横渡",
+      "例句": "而绝江河"
+    },
+    "_kcs": [
+      "《劝学》文言词语"
+    ],
+    "_unit": "第六单元"
+  },
+  {
+    "id": "ku-012",
+    "name": "生·同性义",
+    "ku_type": "wenyan_word",
+    "track": "积累",
+    "core": "生，同“性”，名词，天性。例：君子生非异也（《劝学》）。",
+    "source_text": "《劝学》荀子",
+    "difficulty": 0.5,
+    "prerequisites": [],
+    "extra": {
+      "词性": "名词",
+      "是否通假": true,
+      "是否古今异义": false,
+      "是否词类活用": false,
+      "活用类型": null,
+      "义项": "天性",
+      "例句": "君子生非异也"
+    },
+    "_kcs": [
+      "《劝学》文言词语"
+    ],
+    "_unit": "第六单元"
+  },
+  {
+    "id": "ku-013",
+    "name": "焉·兼词于此义",
+    "ku_type": "wenyan_word",
+    "track": "积累",
+    "core": "焉，兼词，相当于“于此”。例：风雨兴焉（《劝学》）。",
+    "source_text": "《劝学》荀子",
+    "difficulty": 0.5,
+    "prerequisites": [],
+    "extra": {
+      "词性": "虚词",
+      "是否通假": false,
+      "是否古今异义": false,
+      "是否词类活用": false,
+      "活用类型": null,
+      "义项": "于此",
+      "例句": "风雨兴焉"
+    },
+    "_kcs": [
+      "《劝学》文言词语"
+    ],
+    "_unit": "第六单元"
+  },
+  {
+    "id": "ku-014",
+    "name": "无以·没有用来……的",
+    "ku_type": "wenyan_word",
+    "track": "积累",
+    "core": "无以，固定结构，没有用来……的，无从。例：无以至千里（《劝学》）。",
+    "source_text": "《劝学》荀子",
+    "difficulty": 0.5,
+    "prerequisites": [],
+    "extra": {
+      "词性": "虚词",
+      "是否通假": false,
+      "是否古今异义": false,
+      "是否词类活用": false,
+      "活用类型": null,
+      "义项": "没有用来……的",
+      "例句": "无以至千里"
+    },
+    "_kcs": [
+      "《劝学》文言词语"
+    ],
+    "_unit": "第六单元"
+  },
+  {
+    "id": "ku-015",
+    "name": "锲·刻义",
+    "ku_type": "wenyan_word",
+    "track": "积累",
+    "core": "锲，动词，刻。例：锲而舍之（《劝学》）。",
+    "source_text": "《劝学》荀子",
+    "difficulty": 0.3,
+    "prerequisites": [],
+    "extra": {
+      "词性": "动词",
+      "是否通假": false,
+      "是否古今异义": false,
+      "是否词类活用": false,
+      "活用类型": null,
+      "义项": "刻",
+      "例句": "锲而舍之"
+    },
+    "_kcs": [
+      "《劝学》文言词语"
+    ],
+    "_unit": "第六单元"
+  },
+  {
+    "id": "ku-016",
+    "name": "镂·雕刻义",
+    "ku_type": "wenyan_word",
+    "track": "积累",
+    "core": "镂，动词，雕刻。例：金石可镂（《劝学》）。",
+    "source_text": "《劝学》荀子",
+    "difficulty": 0.3,
+    "prerequisites": [],
+    "extra": {
+      "词性": "动词",
+      "是否通假": false,
+      "是否古今异义": false,
+      "是否词类活用": false,
+      "活用类型": null,
+      "义项": "雕刻",
+      "例句": "金石可镂"
+    },
+    "_kcs": [
+      "《劝学》文言词语"
+    ],
+    "_unit": "第六单元"
+  },
+  {
+    "id": "ku-017",
+    "name": "一·专一义",
+    "ku_type": "wenyan_word",
+    "track": "积累",
+    "core": "一，形容词，专一。例：用心一也（《劝学》）。",
+    "source_text": "《劝学》荀子",
+    "difficulty": 0.4,
+    "prerequisites": [],
+    "extra": {
+      "词性": "形容词",
+      "是否通假": false,
+      "是否古今异义": false,
+      "是否词类活用": false,
+      "活用类型": null,
+      "义项": "专一",
+      "例句": "用心一也"
+    },
+    "_kcs": [
+      "《劝学》文言词语"
+    ],
+    "_unit": "第六单元"
+  },
+  {
+    "id": "ku-018",
+    "name": "学者·求学的人（古今异义）",
+    "ku_type": "wenyan_word",
+    "track": "积累",
+    "core": "学者，古今异义，古义为求学的人。例：古之学者必有师（《师说》）。",
+    "source_text": "《师说》韩愈",
+    "difficulty": 0.5,
+    "prerequisites": [],
+    "extra": {
+      "词性": "名词",
+      "是否通假": false,
+      "是否古今异义": true,
+      "是否词类活用": false,
+      "活用类型": null,
+      "义项": "求学的人",
+      "例句": "古之学者必有师"
+    },
+    "_kcs": [
+      "《师说》文言词语"
+    ],
+    "_unit": "第六单元"
+  },
+  {
+    "id": "ku-019",
+    "name": "所以·用来……的",
+    "ku_type": "wenyan_word",
+    "track": "积累",
+    "core": "所以，固定结构，用来……的。例：师者，所以传道受业解惑也（《师说》）。",
+    "source_text": "《师说》韩愈",
+    "difficulty": 0.5,
+    "prerequisites": [],
+    "extra": {
+      "词性": "虚词",
+      "是否通假": false,
+      "是否古今异义": false,
+      "是否词类活用": false,
+      "活用类型": null,
+      "义项": "用来……的",
+      "例句": "所以传道受业解惑也"
+    },
+    "_kcs": [
+      "《师说》文言词语"
+    ],
+    "_unit": "第六单元"
+  },
+  {
+    "id": "ku-020",
+    "name": "受·同授义",
+    "ku_type": "wenyan_word",
+    "track": "积累",
+    "core": "受，同“授”，动词，传授。例：所以传道受业解惑也（《师说》）。",
+    "source_text": "《师说》韩愈",
+    "difficulty": 0.4,
+    "prerequisites": [],
+    "extra": {
+      "词性": "动词",
+      "是否通假": true,
+      "是否古今异义": false,
+      "是否词类活用": false,
+      "活用类型": null,
+      "义项": "传授",
+      "例句": "所以传道受业解惑也"
+    },
+    "_kcs": [
+      "《师说》文言词语"
+    ],
+    "_unit": "第六单元"
+  },
+  {
+    "id": "ku-021",
+    "name": "师·学习义（名词作动词）",
+    "ku_type": "wenyan_word",
+    "track": "积累",
+    "core": "师，名词作动词，学习。例：吾师道也（《师说》）。",
+    "source_text": "《师说》韩愈",
+    "difficulty": 0.5,
+    "prerequisites": [],
+    "extra": {
+      "词性": "动词",
+      "是否通假": false,
+      "是否古今异义": false,
+      "是否词类活用": true,
+      "活用类型": "名词作动词",
+      "义项": "学习",
+      "例句": "吾师道也"
+    },
+    "_kcs": [
+      "《师说》文言词语"
+    ],
+    "_unit": "第六单元"
+  },
+  {
+    "id": "ku-022",
+    "name": "庸·表示反问语气",
+    "ku_type": "wenyan_word",
+    "track": "积累",
+    "core": "庸，副词，表示反问语气。例：夫庸知其年之先后生于吾乎（《师说》）。",
+    "source_text": "《师说》韩愈",
+    "difficulty": 0.5,
+    "prerequisites": [],
+    "extra": {
+      "词性": "副词",
+      "是否通假": false,
+      "是否古今异义": false,
+      "是否词类活用": false,
+      "活用类型": null,
+      "义项": "表示反问语气",
+      "例句": "夫庸知其年之先后生于吾乎"
+    },
+    "_kcs": [
+      "《师说》文言词语"
+    ],
+    "_unit": "第六单元"
+  },
+  {
+    "id": "ku-023",
+    "name": "不·同否义",
+    "ku_type": "wenyan_word",
+    "track": "积累",
+    "core": "不，同“否”，副词。例：或师焉，或不焉（《师说》）。",
+    "source_text": "《师说》韩愈",
+    "difficulty": 0.4,
+    "prerequisites": [],
+    "extra": {
+      "词性": "副词",
+      "是否通假": true,
+      "是否古今异义": false,
+      "是否词类活用": false,
+      "活用类型": null,
+      "义项": "否",
+      "例句": "或师焉，或不焉"
+    },
+    "_kcs": [
+      "《师说》文言词语"
+    ],
+    "_unit": "第六单元"
+  },
+  {
+    "id": "ku-024",
+    "name": "小学·小的方面学习（古今异义）",
+    "ku_type": "wenyan_word",
+    "track": "积累",
+    "core": "小学，古今异义，古义为小的方面学习。例：小学而大遗（《师说》）。",
+    "source_text": "《师说》韩愈",
+    "difficulty": 0.5,
+    "prerequisites": [],
+    "extra": {
+      "词性": "名词",
+      "是否通假": false,
+      "是否古今异义": true,
+      "是否词类活用": false,
+      "活用类型": null,
+      "义项": "小的方面学习",
+      "例句": "小学而大遗"
+    },
+    "_kcs": [
+      "《师说》文言词语"
+    ],
+    "_unit": "第六单元"
+  },
+  {
+    "id": "ku-025",
+    "name": "不齿·不与同列",
+    "ku_type": "wenyan_word",
+    "track": "积累",
+    "core": "不齿，动词，不与同列，看不起。例：君子不齿（《师说》）。",
+    "source_text": "《师说》韩愈",
+    "difficulty": 0.4,
+    "prerequisites": [],
+    "extra": {
+      "词性": "动词",
+      "是否通假": false,
+      "是否古今异义": false,
+      "是否词类活用": false,
+      "活用类型": null,
+      "义项": "不与同列",
+      "例句": "君子不齿"
+    },
+    "_kcs": [
+      "《师说》文言词语"
+    ],
+    "_unit": "第六单元"
+  },
+  {
+    "id": "ku-026",
+    "name": "乃·竟义",
+    "ku_type": "wenyan_word",
+    "track": "积累",
+    "core": "乃，副词，竟。例：今其智乃反不能及（《师说》）。",
+    "source_text": "《师说》韩愈",
+    "difficulty": 0.4,
+    "prerequisites": [],
+    "extra": {
+      "词性": "副词",
+      "是否通假": false,
+      "是否古今异义": false,
+      "是否词类活用": false,
+      "活用类型": null,
+      "义项": "竟",
+      "例句": "今其智乃反不能及"
+    },
+    "_kcs": [
+      "《师说》文言词语"
+    ],
+    "_unit": "第六单元"
+  },
+  {
+    "id": "ku-027",
+    "name": "不必·不一定（古今异义）",
+    "ku_type": "wenyan_word",
+    "track": "积累",
+    "core": "不必，古今异义，古义为不一定。例：弟子不必不如师（《师说》）。",
+    "source_text": "《师说》韩愈",
+    "difficulty": 0.5,
+    "prerequisites": [],
+    "extra": {
+      "词性": "副词",
+      "是否通假": false,
+      "是否古今异义": true,
+      "是否词类活用": false,
+      "活用类型": null,
+      "义项": "不一定",
+      "例句": "弟子不必不如师"
+    },
+    "_kcs": [
+      "《师说》文言词语"
+    ],
+    "_unit": "第六单元"
+  },
+  {
+    "id": "ku-028",
+    "name": "贻·赠送义",
+    "ku_type": "wenyan_word",
+    "track": "积累",
+    "core": "贻，动词，赠送。例：作《师说》以贻之（《师说》）。",
+    "source_text": "《师说》韩愈",
+    "difficulty": 0.3,
+    "prerequisites": [],
+    "extra": {
+      "词性": "动词",
+      "是否通假": false,
+      "是否古今异义": false,
+      "是否词类活用": false,
+      "活用类型": null,
+      "义项": "赠送",
+      "例句": "作《师说》以贻之"
+    },
+    "_kcs": [
+      "《师说》文言词语"
+    ],
+    "_unit": "第六单元"
+  },
+  {
+    "id": "ku-029",
+    "name": "而·连词用法（并列/承接/递进/转折/修饰）",
+    "ku_type": "wenyan_syntax",
+    "track": "积累",
+    "core": "而，连词，可表并列（如“青，取之于蓝，而青于蓝”）、承接（如“登高而招”）、递进（如“君子博学而日参省乎己”）、转折（如“而寒于水”）、修饰（如“吾尝终日而思矣”）。",
+    "source_text": "《劝学》《师说》",
+    "difficulty": 0.6,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "综合语文知识"
+    ],
+    "_unit": "第六单元"
+  },
+  {
+    "id": "ku-030",
+    "name": "青，取之于蓝，而青于蓝",
+    "ku_type": "mingpian",
+    "track": "积累",
+    "core": "青，取之于蓝，而青于蓝（《劝学》）。",
+    "source_text": "《劝学》荀子",
+    "difficulty": 0.3,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "《劝学》《师说》名篇名句"
+    ],
+    "_unit": "第六单元"
+  },
+  {
+    "id": "ku-031",
+    "name": "故木受绳则直，金就砺则利",
+    "ku_type": "mingpian",
+    "track": "积累",
+    "core": "故木受绳则直，金就砺则利（《劝学》）。",
+    "source_text": "《劝学》荀子",
+    "difficulty": 0.3,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "《劝学》《师说》名篇名句"
+    ],
+    "_unit": "第六单元"
+  },
+  {
+    "id": "ku-032",
+    "name": "吾尝终日而思矣，不如须臾之所学也",
+    "ku_type": "mingpian",
+    "track": "积累",
+    "core": "吾尝终日而思矣，不如须臾之所学也（《劝学》）。",
+    "source_text": "《劝学》荀子",
+    "difficulty": 0.3,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "《劝学》《师说》名篇名句"
+    ],
+    "_unit": "第六单元"
+  },
+  {
+    "id": "ku-033",
+    "name": "君子生非异也，善假于物也",
+    "ku_type": "mingpian",
+    "track": "积累",
+    "core": "君子生非异也，善假于物也（《劝学》）。",
+    "source_text": "《劝学》荀子",
+    "difficulty": 0.3,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "《劝学》《师说》名篇名句"
+    ],
+    "_unit": "第六单元"
+  },
+  {
+    "id": "ku-034",
+    "name": "积土成山，风雨兴焉",
+    "ku_type": "mingpian",
+    "track": "积累",
+    "core": "积土成山，风雨兴焉（《劝学》）。",
+    "source_text": "《劝学》荀子",
+    "difficulty": 0.3,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "《劝学》《师说》名篇名句"
+    ],
+    "_unit": "第六单元"
+  },
+  {
+    "id": "ku-035",
+    "name": "故不积跬步，无以至千里",
+    "ku_type": "mingpian",
+    "track": "积累",
+    "core": "故不积跬步，无以至千里（《劝学》）。",
+    "source_text": "《劝学》荀子",
+    "difficulty": 0.3,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "《劝学》《师说》名篇名句"
+    ],
+    "_unit": "第六单元"
+  },
+  {
+    "id": "ku-036",
+    "name": "锲而不舍，金石可镂",
+    "ku_type": "mingpian",
+    "track": "积累",
+    "core": "锲而不舍，金石可镂（《劝学》）。",
+    "source_text": "《劝学》荀子",
+    "difficulty": 0.3,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "《劝学》《师说》名篇名句"
+    ],
+    "_unit": "第六单元"
+  },
+  {
+    "id": "ku-037",
+    "name": "师者，所以传道受业解惑也",
+    "ku_type": "mingpian",
+    "track": "积累",
+    "core": "师者，所以传道受业解惑也（《师说》）。",
+    "source_text": "《师说》韩愈",
+    "difficulty": 0.3,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "《劝学》《师说》名篇名句"
+    ],
+    "_unit": "第六单元"
+  },
+  {
+    "id": "ku-038",
+    "name": "道之所存，师之所存也",
+    "ku_type": "mingpian",
+    "track": "积累",
+    "core": "道之所存，师之所存也（《师说》）。",
+    "source_text": "《师说》韩愈",
+    "difficulty": 0.3,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "《劝学》《师说》名篇名句"
+    ],
+    "_unit": "第六单元"
+  },
+  {
+    "id": "ku-039",
+    "name": "三人行，则必有我师",
+    "ku_type": "mingpian",
+    "track": "积累",
+    "core": "三人行，则必有我师（《师说》）。",
+    "source_text": "《师说》韩愈",
+    "difficulty": 0.3,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "《劝学》《师说》名篇名句"
+    ],
+    "_unit": "第六单元"
+  },
+  {
+    "id": "ku-040",
+    "name": "弟子不必不如师，师不必贤于弟子",
+    "ku_type": "mingpian",
+    "track": "积累",
+    "core": "弟子不必不如师，师不必贤于弟子（《师说》）。",
+    "source_text": "《师说》韩愈",
+    "difficulty": 0.3,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "《劝学》《师说》名篇名句"
+    ],
+    "_unit": "第六单元"
+  },
+  {
+    "id": "ku-041",
+    "name": "锲而不舍",
+    "ku_type": "chengyu",
+    "track": "积累",
+    "core": "锲而不舍，比喻坚持不懈。出自《劝学》：“锲而不舍，金石可镂。”",
+    "source_text": "《劝学》荀子",
+    "difficulty": 0.3,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "《劝学》《师说》成语"
+    ],
+    "_unit": "第六单元"
+  },
+  {
+    "id": "ku-042",
+    "name": "青出于蓝",
+    "ku_type": "chengyu",
+    "track": "积累",
+    "core": "青出于蓝，比喻学生超过老师或后人胜过前人。出自《劝学》：“青，取之于蓝，而青于蓝。”",
+    "source_text": "《劝学》荀子",
+    "difficulty": 0.3,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "《劝学》《师说》成语"
+    ],
+    "_unit": "第六单元"
+  },
+  {
+    "id": "ku-043",
+    "name": "跬步千里",
+    "ku_type": "chengyu",
+    "track": "积累",
+    "core": "跬步千里，比喻做事只要坚持不懈，就能获得成功。出自《劝学》：“故不积跬步，无以至千里。”",
+    "source_text": "《劝学》荀子",
+    "difficulty": 0.3,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "《劝学》《师说》成语"
+    ],
+    "_unit": "第六单元"
+  },
+  {
+    "id": "ku-044",
+    "name": "传道受业",
+    "ku_type": "chengyu",
+    "track": "积累",
+    "core": "传道受业，传授道理，教授学业。出自《师说》：“师者，所以传道受业解惑也。”",
+    "source_text": "《师说》韩愈",
+    "difficulty": 0.3,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "《劝学》《师说》成语"
+    ],
+    "_unit": "第六单元"
+  },
+  {
+    "id": "ku-045",
+    "name": "不耻相师",
+    "ku_type": "chengyu",
+    "track": "积累",
+    "core": "不耻相师，不以互相学习为耻。出自《师说》：“巫医乐师百工之人，不耻相师。”",
+    "source_text": "《师说》韩愈",
+    "difficulty": 0.3,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "《劝学》《师说》成语"
+    ],
+    "_unit": "第六单元"
+  },
+  {
+    "id": "ku-046",
+    "name": "字音字形·中（zhòng）",
+    "ku_type": "zixing_ziyin",
+    "track": "积累",
+    "core": "中，读zhòng，动词，合乎。例：木直中绳。",
+    "source_text": "《劝学》荀子",
+    "difficulty": 0.3,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "《劝学》《师说》字音字形与文化常识"
+    ],
+    "_unit": "第六单元"
+  },
+  {
+    "id": "ku-047",
+    "name": "字音字形·参省（cān xǐng）",
+    "ku_type": "zixing_ziyin",
+    "track": "积累",
+    "core": "参省，读cān xǐng，检验省察。例：君子博学而日参省乎己。",
+    "source_text": "《劝学》荀子",
+    "difficulty": 0.4,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "《劝学》《师说》字音字形与文化常识"
+    ],
+    "_unit": "第六单元"
+  },
+  {
+    "id": "ku-048",
+    "name": "字音字形·句读（dòu）",
+    "ku_type": "zixing_ziyin",
+    "track": "积累",
+    "core": "句读，读jù dòu，指断开句子的知识。例：授之书而习其句读者。",
+    "source_text": "《师说》韩愈",
+    "difficulty": 0.4,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "《劝学》《师说》字音字形与文化常识"
+    ],
+    "_unit": "第六单元"
+  },
+  {
+    "id": "ku-049",
+    "name": "文化常识·荀子与性恶论",
+    "ku_type": "wenhua_changshi",
+    "track": "积累",
+    "core": "荀子，战国末期思想家，主张性恶论，认为人性本恶，需通过后天学习改造。",
+    "source_text": "《劝学》荀子",
+    "difficulty": 0.5,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "《劝学》《师说》字音字形与文化常识"
+    ],
+    "_unit": "第六单元"
+  },
+  {
+    "id": "ku-050",
+    "name": "文化常识·韩愈与古文运动",
+    "ku_type": "wenhua_changshi",
+    "track": "积累",
+    "core": "韩愈，唐代文学家，古文运动倡导者，主张文以载道，反对骈文。",
+    "source_text": "《师说》韩愈",
+    "difficulty": 0.5,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "《劝学》《师说》字音字形与文化常识"
+    ],
+    "_unit": "第六单元"
+  },
+  {
+    "id": "ku-051",
+    "name": "文化常识·六艺经传",
+    "ku_type": "wenhua_changshi",
+    "track": "积累",
+    "core": "六艺，指《诗》《书》《礼》《乐》《易》《春秋》六种经书。传，解释经书的著作。",
+    "source_text": "《师说》韩愈",
+    "difficulty": 0.5,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "《劝学》《师说》字音字形与文化常识"
+    ],
+    "_unit": "第六单元"
+  },
+  {
+    "id": "ku-052",
+    "name": "文言文阅读·把握作者观点与写作背景",
+    "ku_type": "wenyan_yuedu",
+    "track": "鉴赏",
+    "core": "阅读文言文时，要联系作者的思想主张和写作背景来理解观点。如荀子强调后天学习源于性恶论，韩愈倡导师道回归针对士大夫耻学于师的风气。",
+    "source_text": "《劝学》《师说》",
+    "difficulty": 0.7,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "文言文阅读方法"
+    ],
+    "_unit": "第六单元"
+  },
+  {
+    "id": "ku-053",
+    "name": "文言文阅读·分析论证方法",
+    "ku_type": "wenyan_yuedu",
+    "track": "鉴赏",
+    "core": "分析文言文论证方法，如《劝学》用比喻论证（青出于蓝、木受绳则直）和对比论证（骐骥与驽马），《师说》用举例论证（孔子师郯子等）和对比论证（古之圣人与今之众人）。",
+    "source_text": "《劝学》《师说》",
+    "difficulty": 0.7,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "文言文阅读方法"
+    ],
+    "_unit": "第六单元"
+  },
+  {
+    "id": "ku-054",
+    "name": "书面表达·有针对性地表达观点",
+    "ku_type": "shumian_biaoda",
+    "track": "表达",
+    "core": "写作时，要准确把握自己的观点和态度，关注思考问题的角度，学习有针对性地表达观点的方法。如《劝学》针对学习意义，《师说》针对从师风尚。",
+    "source_text": "第六单元学习提示",
+    "difficulty": 0.6,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "书面表达方法"
+    ],
+    "_unit": "第六单元"
+  },
+  {
+    "id": "ku-055",
+    "name": "书面表达·从合适角度阐述看法",
+    "ku_type": "shumian_biaoda",
+    "track": "表达",
+    "core": "阐述看法时，要选择合适的角度和恰当的方式。如从学习之道出发，结合自身经验，用比喻、对比等手法增强说服力。",
+    "source_text": "第六单元学习提示",
+    "difficulty": 0.6,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "书面表达方法"
+    ],
+    "_unit": "第六单元"
+  },
+  {
+    "id": "ku-056",
+    "name": "书面表达·梳理探究反思形成学习观",
+    "ku_type": "shumian_biaoda",
+    "track": "表达",
+    "core": "通过梳理、探究和反思，形成正确的学习观，改进学习方法，提高学习能力。写作中可结合经典论述和自身实践。",
+    "source_text": "第六单元学习提示",
+    "difficulty": 0.6,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "书面表达方法"
+    ],
+    "_unit": "第六单元"
+  },
+  {
+    "id": "ku-001",
+    "name": "檄文·古代文书",
+    "ku_type": "wenyan_word",
+    "track": "积累",
+    "core": "檄，名词，古代用于晓谕、征召、声讨等的文书，特指声讨敌人或叛逆者的文书。例：上面这八条，就是我们申讨党八股的檄文。",
+    "source_text": "《反对党八股》毛泽东",
+    "difficulty": 0.3,
+    "prerequisites": [],
+    "extra": {
+      "词性": "名词",
+      "是否通假": false,
+      "是否古今异义": false,
+      "是否词类活用": false,
+      "活用类型": null,
+      "义项": "古代用于晓谕、征召、声讨等的文书",
+      "例句": "上面这八条，就是我们申讨党八股的檄文"
+    },
+    "_kcs": [
+      "《反对党八股》文言词语"
+    ],
+    "_unit": "第六单元"
+  },
+  {
+    "id": "ku-002",
+    "name": "蹩脚·含义",
+    "ku_type": "wenyan_word",
+    "track": "积累",
+    "core": "蹩，形容词，本领不强。例：我们也不需要这样蹩脚的不中用的宣传家。",
+    "source_text": "《反对党八股》毛泽东",
+    "difficulty": 0.2,
+    "prerequisites": [],
+    "extra": {
+      "词性": "形容词",
+      "是否通假": false,
+      "是否古今异义": false,
+      "是否词类活用": false,
+      "活用类型": null,
+      "义项": "本领不强",
+      "例句": "我们也不需要这样蹩脚的不中用的宣传家"
+    },
+    "_kcs": [
+      "《反对党八股》文言词语"
+    ],
+    "_unit": "第六单元"
+  },
+  {
+    "id": "ku-003",
+    "name": "瘪三·含义",
+    "ku_type": "wenyan_word",
+    "track": "积累",
+    "core": "瘪三，名词，新中国成立前上海人称城市中无正当职业而以乞讨或偷窃为生的游民。例：语言无味，像个瘪三。",
+    "source_text": "《反对党八股》毛泽东",
+    "difficulty": 0.3,
+    "prerequisites": [],
+    "extra": {
+      "词性": "名词",
+      "是否通假": false,
+      "是否古今异义": false,
+      "是否词类活用": false,
+      "活用类型": null,
+      "义项": "无正当职业的游民",
+      "例句": "语言无味，像个瘪三"
+    },
+    "_kcs": [
+      "《反对党八股》文言词语"
+    ],
+    "_unit": "第六单元"
+  },
+  {
+    "id": "ku-004",
+    "name": "对牛弹琴·成语含义",
+    "ku_type": "chengyu",
+    "track": "积累",
+    "core": "对牛弹琴，比喻说话不看对象，或对不懂道理的人讲道理。出自《庄子·齐物论》郭象注。",
+    "source_text": "《反对党八股》毛泽东",
+    "difficulty": 0.3,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "《反对党八股》成语"
+    ],
+    "_unit": "第六单元"
+  },
+  {
+    "id": "ku-005",
+    "name": "下笔千言，离题万里·成语含义",
+    "ku_type": "chengyu",
+    "track": "积累",
+    "core": "下笔千言，离题万里，形容写文章时下笔很快，但内容离题很远。出自《反对党八股》。",
+    "source_text": "《反对党八股》毛泽东",
+    "difficulty": 0.3,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "《反对党八股》成语"
+    ],
+    "_unit": "第六单元"
+  },
+  {
+    "id": "ku-006",
+    "name": "装腔作势·成语含义",
+    "ku_type": "chengyu",
+    "track": "积累",
+    "core": "装腔作势，故意装出一种腔调，做出一种姿态，用来吓唬人或引人注意。出自《反对党八股》。",
+    "source_text": "《反对党八股》毛泽东",
+    "difficulty": 0.2,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "《反对党八股》成语"
+    ],
+    "_unit": "第六单元"
+  },
+  {
+    "id": "ku-007",
+    "name": "无的放矢·成语含义",
+    "ku_type": "chengyu",
+    "track": "积累",
+    "core": "无的放矢，没有目标乱射箭，比喻说话做事没有明确目的，或不看对象。出自《反对党八股》。",
+    "source_text": "《反对党八股》毛泽东",
+    "difficulty": 0.2,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "《反对党八股》成语"
+    ],
+    "_unit": "第六单元"
+  },
+  {
+    "id": "ku-008",
+    "name": "《解放日报》·文化常识",
+    "ku_type": "wenhua_changshi",
+    "track": "积累",
+    "core": "《解放日报》，当时中共中央的机关报，1941年5月16日在延安创刊，1947年3月27日停刊。",
+    "source_text": "《反对党八股》毛泽东",
+    "difficulty": 0.3,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "《反对党八股》文化常识"
+    ],
+    "_unit": "第六单元"
+  },
+  {
+    "id": "ku-009",
+    "name": "斯大林七月三日演说·文化常识",
+    "ku_type": "wenhua_changshi",
+    "track": "积累",
+    "core": "1941年6月22日，纳粹德国进攻苏联。斯大林在7月3日发表广播演说，号召苏联人民保卫祖国，全文不到4000字。",
+    "source_text": "《反对党八股》毛泽东",
+    "difficulty": 0.3,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "《反对党八股》文化常识"
+    ],
+    "_unit": "第六单元"
+  },
+  {
+    "id": "ku-010",
+    "name": "信息类文本·批判性阅读方法",
+    "ku_type": "xinxi_yuedu",
+    "track": "鉴赏",
+    "core": "阅读论述类文本时，要抓住作者批判的对象和提出的主张，分析其论证逻辑和针对性。本文通过列举党八股八条罪状，逐条批判，同时提出正确文风。",
+    "source_text": "《反对党八股》毛泽东",
+    "difficulty": 0.5,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "信息类文本阅读方法"
+    ],
+    "_unit": "第六单元"
+  },
+  {
+    "id": "ku-011",
+    "name": "信息类文本·论证结构分析",
+    "ku_type": "xinxi_yuedu",
+    "track": "鉴赏",
+    "core": "分析论述文的论证结构：先提出论点（党八股有罪状），再分条列举（每条罪状+分析+对策），最后总结（抛弃党八股，发展新文风）。",
+    "source_text": "《反对党八股》毛泽东",
+    "difficulty": 0.5,
+    "prerequisites": [
+      "信息类文本·批判性阅读方法"
+    ],
+    "extra": null,
+    "_kcs": [
+      "信息类文本阅读方法"
+    ],
+    "_unit": "第六单元"
+  },
+  {
+    "id": "ku-012",
+    "name": "书面表达·议论文论证方法：列举法",
+    "ku_type": "shumian_biaoda",
+    "track": "表达",
+    "core": "议论文中可以用列举法来展开论证：将论点分解为若干方面，逐条列出并分析，每条先提出分论点，再举例或说理，最后总结。本文用八条罪状结构。",
+    "source_text": "《反对党八股》毛泽东",
+    "difficulty": 0.6,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "议论文写作与口语交际技法"
+    ],
+    "_unit": "第六单元"
+  },
+  {
+    "id": "ku-013",
+    "name": "书面表达·议论文语言：生动形象",
+    "ku_type": "shumian_biaoda",
+    "track": "表达",
+    "core": "议论文可以运用比喻、俗语等生动语言增强说服力。如本文用'开中药铺''洗脸照镜子'等比喻，使抽象道理形象化。",
+    "source_text": "《反对党八股》毛泽东",
+    "difficulty": 0.5,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "议论文写作与口语交际技法"
+    ],
+    "_unit": "第六单元"
+  },
+  {
+    "id": "ku-014",
+    "name": "书面表达·议论文针对性写作",
+    "ku_type": "shumian_biaoda",
+    "track": "表达",
+    "core": "写议论文要针对现实问题，明确批判对象，提出正面主张。本文针对当时党内文风问题，批判党八股，倡导马克思列宁主义文风。",
+    "source_text": "《反对党八股》毛泽东",
+    "difficulty": 0.6,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "议论文写作与口语交际技法"
+    ],
+    "_unit": "第六单元"
+  },
+  {
+    "id": "ku-015",
+    "name": "口语交际·演说要有对象意识",
+    "ku_type": "kouyu_jiaoji",
+    "track": "表达",
+    "core": "演说或讲话要了解听众，看对象说话，避免'无的放矢'。本文强调'射箭要看靶子，弹琴要看听众'，写文章做演说要看读者听众。",
+    "source_text": "《反对党八股》毛泽东",
+    "difficulty": 0.5,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "议论文写作与口语交际技法"
+    ],
+    "_unit": "第六单元"
+  },
+  {
+    "id": "ku-016",
+    "name": "口语交际·演说语言要生动",
+    "ku_type": "kouyu_jiaoji",
+    "track": "表达",
+    "core": "演说语言要避免'语言无味，像个瘪三'，要学习人民群众、外国和古人语言中有生命的东西，使语言丰富生动。",
+    "source_text": "《反对党八股》毛泽东",
+    "difficulty": 0.5,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "议论文写作与口语交际技法"
+    ],
+    "_unit": "第六单元"
+  },
+  {
+    "id": "ku-017",
+    "name": "沟通处世·负责任地表达",
+    "ku_type": "goutong_chushi",
+    "track": "表达",
+    "core": "写文章、做演说要负责任，像洗脸一样认真准备和检查，避免'下笔千言，离题万里'，因为这是影响别人思想和行动的事。",
+    "source_text": "《反对党八股》毛泽东",
+    "difficulty": 0.5,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "议论文写作与口语交际技法"
+    ],
+    "_unit": "第六单元"
+  },
+  {
+    "id": "ku-001",
+    "name": "礼尚往来·成语",
+    "ku_type": "chengyu",
+    "track": "积累",
+    "core": "礼尚往来：在礼节上讲究有来有往。尚，注重。出自《礼记·曲礼上》。",
+    "source_text": "《拿来主义》鲁迅",
+    "difficulty": 0.3,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "《拿来主义》文化常识与成语"
+    ],
+    "_unit": "第六单元"
+  },
+  {
+    "id": "ku-002",
+    "name": "残羹冷炙·成语",
+    "ku_type": "chengyu",
+    "track": "积累",
+    "core": "残羹冷炙：吃剩的饭菜，喻指权贵的施舍。羹，带汁的肉；炙，烤肉。",
+    "source_text": "《拿来主义》鲁迅",
+    "difficulty": 0.3,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "《拿来主义》文化常识与成语"
+    ],
+    "_unit": "第六单元"
+  },
+  {
+    "id": "ku-003",
+    "name": "冠冕·字音字形",
+    "ku_type": "zixing_ziyin",
+    "track": "积累",
+    "core": "冠冕（guān miǎn）：很体面，有气派。冕，天子、诸侯、卿大夫所戴的礼帽。注意“冕”字写法，上为“曰”非“日”。",
+    "source_text": "《拿来主义》鲁迅",
+    "difficulty": 0.2,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "《拿来主义》字音字形"
+    ],
+    "_unit": "第六单元"
+  },
+  {
+    "id": "ku-004",
+    "name": "孱头·字音字形",
+    "ku_type": "zixing_ziyin",
+    "track": "积累",
+    "core": "孱头（càn tou）：懦弱无能的人。注意“孱”读càn，不读chán。",
+    "source_text": "《拿来主义》鲁迅",
+    "difficulty": 0.2,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "《拿来主义》字音字形"
+    ],
+    "_unit": "第六单元"
+  },
+  {
+    "id": "ku-005",
+    "name": "国粹·文化常识",
+    "ku_type": "wenhua_changshi",
+    "track": "积累",
+    "core": "国粹：原指我国固有文化中的精华。鲁迅在《拿来主义》中用作反语，讽刺那些把烟枪烟灯当作国粹的人。",
+    "source_text": "《拿来主义》鲁迅",
+    "difficulty": 0.3,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "《拿来主义》文化常识与成语"
+    ],
+    "_unit": "第六单元"
+  },
+  {
+    "id": "ku-006",
+    "name": "闭关主义·文化常识",
+    "ku_type": "wenhua_changshi",
+    "track": "积累",
+    "core": "闭关主义：指清政府奉行的闭关自守政策，限制对外交往。",
+    "source_text": "《拿来主义》鲁迅",
+    "difficulty": 0.2,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "《拿来主义》文化常识与成语"
+    ],
+    "_unit": "第六单元"
+  },
+  {
+    "id": "ku-007",
+    "name": "送去主义·文化常识",
+    "ku_type": "wenhua_changshi",
+    "track": "积累",
+    "core": "送去主义：鲁迅在《拿来主义》中批判的一种现象，指一味向外国送东西、讨好外国的做法。",
+    "source_text": "《拿来主义》鲁迅",
+    "difficulty": 0.3,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "《拿来主义》文化常识与成语"
+    ],
+    "_unit": "第六单元"
+  },
+  {
+    "id": "ku-008",
+    "name": "拿来主义·文化常识",
+    "ku_type": "wenhua_changshi",
+    "track": "积累",
+    "core": "拿来主义：鲁迅提出的对待外来文化的正确态度——运用脑髓，放出眼光，自己来拿，即主动选择、占有、挑选。",
+    "source_text": "《拿来主义》鲁迅",
+    "difficulty": 0.4,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "《拿来主义》文化常识与成语"
+    ],
+    "_unit": "第六单元"
+  },
+  {
+    "id": "ku-009",
+    "name": "破立结合·论述方法",
+    "ku_type": "xinxi_yuedu",
+    "track": "鉴赏",
+    "core": "破立结合：先批驳错误观点（闭关主义、送去主义、送来主义），再确立自己的观点（拿来主义），使论证更有针对性。",
+    "source_text": "《拿来主义》鲁迅",
+    "difficulty": 0.5,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "《拿来主义》论述方法"
+    ],
+    "_unit": "第六单元"
+  },
+  {
+    "id": "ku-010",
+    "name": "比喻论证·论述方法",
+    "ku_type": "xinxi_yuedu",
+    "track": "鉴赏",
+    "core": "比喻论证：用具体事物（大宅子、鱼翅、鸦片、烟枪烟灯、姨太太）比喻抽象道理（对待文化遗产的态度），使说理生动形象。",
+    "source_text": "《拿来主义》鲁迅",
+    "difficulty": 0.5,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "《拿来主义》论述方法"
+    ],
+    "_unit": "第六单元"
+  },
+  {
+    "id": "ku-011",
+    "name": "论证的针对性·论述方法",
+    "ku_type": "xinxi_yuedu",
+    "track": "鉴赏",
+    "core": "论证的针对性：议论文要针对现实问题（如盲目排外、全盘西化）提出观点，使文章有现实意义。",
+    "source_text": "《拿来主义》鲁迅",
+    "difficulty": 0.4,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "《拿来主义》论述方法"
+    ],
+    "_unit": "第六单元"
+  },
+  {
+    "id": "ku-012",
+    "name": "望洋兴叹·成语",
+    "ku_type": "chengyu",
+    "track": "积累",
+    "core": "望洋兴叹：原指在伟大的事物面前感叹自己的渺小，现多比喻做事时因力不胜任或没有条件而感到无可奈何。望洋，仰视的样子。",
+    "source_text": "《读书：目的和前提》黑塞",
+    "difficulty": 0.3,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "《读书：目的和前提》积累型KU"
+    ],
+    "_unit": "第六单元"
+  },
+  {
+    "id": "ku-013",
+    "name": "戕害·字音字形",
+    "ku_type": "zixing_ziyin",
+    "track": "积累",
+    "core": "戕害（qiāng hài）：伤害，损害。注意“戕”读qiāng，不读qiáng。",
+    "source_text": "《读书：目的和前提》黑塞",
+    "difficulty": 0.2,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "《读书：目的和前提》积累型KU"
+    ],
+    "_unit": "第六单元"
+  },
+  {
+    "id": "ku-014",
+    "name": "卷帙·字音字形",
+    "ku_type": "zixing_ziyin",
+    "track": "积累",
+    "core": "卷帙（juàn zhì）：书籍（指数量）。帙，书套。注意“帙”读zhì，不读shī。",
+    "source_text": "《读书：目的和前提》黑塞",
+    "difficulty": 0.2,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "《读书：目的和前提》积累型KU"
+    ],
+    "_unit": "第六单元"
+  },
+  {
+    "id": "ku-015",
+    "name": "读书的目的·阅读方法",
+    "ku_type": "sanwen_yuedu",
+    "track": "鉴赏",
+    "core": "读书的目的：真正的修养不追求具体目的，而在于找到生活的意义，使人生充实、高尚、有意义。",
+    "source_text": "《读书：目的和前提》黑塞",
+    "difficulty": 0.4,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "《读书：目的和前提》阅读方法"
+    ],
+    "_unit": "第六单元"
+  },
+  {
+    "id": "ku-016",
+    "name": "读书的方法·阅读方法",
+    "ku_type": "sanwen_yuedu",
+    "track": "鉴赏",
+    "core": "读书的方法：要认识自己，凭爱好去读，走爱之路而非义务之路；不强迫自己读不感兴趣的书；从个人兴趣出发，逐步扩展。",
+    "source_text": "《读书：目的和前提》黑塞",
+    "difficulty": 0.5,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "《读书：目的和前提》阅读方法"
+    ],
+    "_unit": "第六单元"
+  },
+  {
+    "id": "ku-017",
+    "name": "议论文写作·破立结合",
+    "ku_type": "shumian_biaoda",
+    "track": "表达",
+    "core": "破立结合：先批驳错误观点或现象，再确立自己的正确观点，使论证更有针对性和说服力。",
+    "source_text": "第六单元学习任务",
+    "difficulty": 0.6,
+    "prerequisites": [
+      "破立结合·论述方法"
+    ],
+    "extra": null,
+    "_kcs": [
+      "第六单元议论文写作技法"
+    ],
+    "_unit": "第六单元"
+  },
+  {
+    "id": "ku-018",
+    "name": "议论文写作·比喻论证",
+    "ku_type": "shumian_biaoda",
+    "track": "表达",
+    "core": "比喻论证：用具体、熟悉的事物比喻抽象、陌生的道理，使说理生动形象、深入浅出。注意比喻要贴切、新颖。",
+    "source_text": "第六单元学习任务",
+    "difficulty": 0.6,
+    "prerequisites": [
+      "比喻论证·论述方法"
+    ],
+    "extra": null,
+    "_kcs": [
+      "第六单元议论文写作技法"
+    ],
+    "_unit": "第六单元"
+  },
+  {
+    "id": "ku-019",
+    "name": "议论文写作·论证的针对性",
+    "ku_type": "shumian_biaoda",
+    "track": "表达",
+    "core": "论证的针对性：写议论文要针对现实问题或错误观点，明确写作目的，使文章有现实意义和批判力量。",
+    "source_text": "第六单元学习任务",
+    "difficulty": 0.5,
+    "prerequisites": [
+      "论证的针对性·论述方法"
+    ],
+    "extra": null,
+    "_kcs": [
+      "第六单元议论文写作技法"
+    ],
+    "_unit": "第六单元"
+  },
+  {
+    "id": "ku-000",
+    "name": "属·劝酒义",
+    "ku_type": "wenyan_word",
+    "track": "积累",
+    "core": "属，动词，劝人饮酒。例：举酒属客，诵明月之诗。",
+    "source_text": "《赤壁赋》苏轼",
+    "difficulty": 0.4,
+    "prerequisites": [],
+    "extra": {
+      "词性": "动词",
+      "是否通假": false,
+      "是否古今异义": false,
+      "是否词类活用": false,
+      "活用类型": null,
+      "义项": "劝酒",
+      "例句": "举酒属客"
+    },
+    "_kcs": [
+      "综合语文知识"
+    ],
+    "_unit": "第六单元"
+  },
+  {
+    "id": "ku-001",
+    "name": "劝学·学不可以已",
+    "ku_type": "mingpian",
+    "track": "积累",
+    "core": "学不可以已。",
+    "source_text": "《劝学》荀子",
+    "difficulty": 0.3,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "第六单元名篇名句"
+    ],
+    "_unit": "第六单元"
+  },
+  {
+    "id": "ku-002",
+    "name": "师说·道之所存师之所存",
+    "ku_type": "mingpian",
+    "track": "积累",
+    "core": "道之所存，师之所存也。",
+    "source_text": "《师说》韩愈",
+    "difficulty": 0.3,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "第六单元名篇名句"
+    ],
+    "_unit": "第六单元"
+  },
+  {
+    "id": "ku-003",
+    "name": "反对党八股·禁绝一切空话",
+    "ku_type": "mingpian",
+    "track": "积累",
+    "core": "我们应当禁绝一切空话。",
+    "source_text": "《反对党八股》毛泽东",
+    "difficulty": 0.3,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "第六单元名篇名句"
+    ],
+    "_unit": "第六单元"
+  },
+  {
+    "id": "ku-004",
+    "name": "拿来主义·先破后立",
+    "ku_type": "xinxi_yuedu",
+    "track": "鉴赏",
+    "core": "先破后立：先批判错误观点或现象，再提出自己的主张，使论证更有针对性和说服力。",
+    "source_text": "《拿来主义》鲁迅",
+    "difficulty": 0.6,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "议论文说理方法"
+    ],
+    "_unit": "第六单元"
+  },
+  {
+    "id": "ku-005",
+    "name": "议论文·对比论证方法",
+    "ku_type": "xinxi_yuedu",
+    "track": "鉴赏",
+    "core": "对比论证：将正反两方面的事实或观点进行对比，突出论点，增强说服力。如《劝学》中“青出于蓝”与“冰寒于水”的对比。",
+    "source_text": "第六单元课文",
+    "difficulty": 0.5,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "议论文说理方法"
+    ],
+    "_unit": "第六单元"
+  },
+  {
+    "id": "ku-006",
+    "name": "议论文·比喻论证方法",
+    "ku_type": "xinxi_yuedu",
+    "track": "鉴赏",
+    "core": "比喻论证：用具体、生动的事物比喻抽象的道理，使说理形象易懂。如《劝学》中“登高而招”比喻借助学习提升。",
+    "source_text": "第六单元课文",
+    "difficulty": 0.5,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "议论文说理方法"
+    ],
+    "_unit": "第六单元"
+  },
+  {
+    "id": "ku-007",
+    "name": "议论文·现实针对性",
+    "ku_type": "shumian_biaoda",
+    "track": "表达",
+    "core": "写议论文要有现实针对性：针对现实问题或社会现象发表议论，不空发议论。可从新闻事件、社会现象、争议说法中发掘议论对象。",
+    "source_text": "第六单元学习任务·议论要有针对性",
+    "difficulty": 0.7,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "议论文写作技法"
+    ],
+    "_unit": "第六单元"
+  },
+  {
+    "id": "ku-008",
+    "name": "议论文·读者意识",
+    "ku_type": "shumian_biaoda",
+    "track": "表达",
+    "core": "写议论文要有读者意识：根据读者年龄、知识层次、阅读喜好选择内容、调整表达方法，使议论更有针对性。",
+    "source_text": "第六单元学习任务·议论要有针对性",
+    "difficulty": 0.6,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "议论文写作技法"
+    ],
+    "_unit": "第六单元"
+  },
+  {
+    "id": "ku-009",
+    "name": "议论文·个别与一般结合",
+    "ku_type": "shumian_biaoda",
+    "track": "表达",
+    "core": "写议论文要从具体问题中得出普遍意义：将个别之事与一般之理结合，使文章具有超越一时一事的认识价值。",
+    "source_text": "第六单元学习任务·议论要有针对性",
+    "difficulty": 0.7,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "议论文写作技法"
+    ],
+    "_unit": "第六单元"
+  },
+  {
+    "id": "ku-010",
+    "name": "读书：目的和前提·修养与读书",
+    "ku_type": "sanwen_yuedu",
+    "track": "鉴赏",
+    "core": "随笔阅读方法：关注作者从切身体会出发的思考，品味睿智而温暖的论述，找出关于读书与修养的名句。",
+    "source_text": "《读书：目的和前提》黑塞",
+    "difficulty": 0.5,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "随笔阅读方法"
+    ],
+    "_unit": "第六单元"
+  },
+  {
+    "id": "ku-011",
+    "name": "上图书馆·图书馆礼赞",
+    "ku_type": "sanwen_yuedu",
+    "track": "鉴赏",
+    "core": "随笔阅读方法：体会作者对图书馆氛围与乐趣的描写，结合引用台词理解对知识的崇敬，联系自身读书经历。",
+    "source_text": "《上图书馆》王佐良",
+    "difficulty": 0.5,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "随笔阅读方法"
+    ],
+    "_unit": "第六单元"
+  },
+  {
+    "id": "ku-012",
+    "name": "劝学·青出于蓝",
+    "ku_type": "wenyan_word",
+    "track": "积累",
+    "core": "青，名词，靛青。于，介词，从。蓝，名词，蓼蓝。例：青，取之于蓝，而青于蓝。",
+    "source_text": "《劝学》荀子",
+    "difficulty": 0.4,
+    "prerequisites": [],
+    "extra": {
+      "词性": "名词",
+      "是否通假": false,
+      "是否古今异义": false,
+      "是否词类活用": false,
+      "活用类型": null,
+      "义项": "靛青",
+      "例句": "青，取之于蓝"
+    },
+    "_kcs": [
+      "《劝学》文言词语"
+    ],
+    "_unit": "第六单元"
+  },
+  {
+    "id": "ku-013",
+    "name": "劝学·輮以为轮",
+    "ku_type": "wenyan_word",
+    "track": "积累",
+    "core": "輮，动词，用火烤使木弯曲。以为，以之为，把它做成。例：輮以为轮。",
+    "source_text": "《劝学》荀子",
+    "difficulty": 0.5,
+    "prerequisites": [],
+    "extra": {
+      "词性": "动词",
+      "是否通假": false,
+      "是否古今异义": false,
+      "是否词类活用": false,
+      "活用类型": null,
+      "义项": "用火烤使木弯曲",
+      "例句": "輮以为轮"
+    },
+    "_kcs": [
+      "《劝学》文言词语"
+    ],
+    "_unit": "第六单元"
+  },
+  {
+    "id": "ku-014",
+    "name": "劝学·金就砺则利",
+    "ku_type": "wenyan_word",
+    "track": "积累",
+    "core": "金，名词，金属制的刀剑等。就，动词，接近、靠近。砺，名词，磨刀石。例：金就砺则利。",
+    "source_text": "《劝学》荀子",
+    "difficulty": 0.4,
+    "prerequisites": [],
+    "extra": {
+      "词性": "名词",
+      "是否通假": false,
+      "是否古今异义": false,
+      "是否词类活用": false,
+      "活用类型": null,
+      "义项": "金属制的刀剑",
+      "例句": "金就砺则利"
+    },
+    "_kcs": [
+      "《劝学》文言词语"
+    ],
+    "_unit": "第六单元"
+  },
+  {
+    "id": "ku-015",
+    "name": "劝学·假舆马者",
+    "ku_type": "wenyan_word",
+    "track": "积累",
+    "core": "假，动词，借助。舆，名词，车。例：假舆马者，非利足也，而致千里。",
+    "source_text": "《劝学》荀子",
+    "difficulty": 0.4,
+    "prerequisites": [],
+    "extra": {
+      "词性": "动词",
+      "是否通假": false,
+      "是否古今异义": false,
+      "是否词类活用": false,
+      "活用类型": null,
+      "义项": "借助",
+      "例句": "假舆马者"
+    },
+    "_kcs": [
+      "《劝学》文言词语"
+    ],
+    "_unit": "第六单元"
+  },
+  {
+    "id": "ku-016",
+    "name": "劝学·君子生非异也",
+    "ku_type": "wenyan_word",
+    "track": "积累",
+    "core": "生，通“性”，名词，资质、禀赋。例：君子生非异也，善假于物也。",
+    "source_text": "《劝学》荀子",
+    "difficulty": 0.5,
+    "prerequisites": [],
+    "extra": {
+      "词性": "名词",
+      "是否通假": true,
+      "是否古今异义": false,
+      "是否词类活用": false,
+      "活用类型": null,
+      "义项": "资质、禀赋",
+      "例句": "君子生非异也"
+    },
+    "_kcs": [
+      "《劝学》文言词语"
+    ],
+    "_unit": "第六单元"
+  },
+  {
+    "id": "ku-017",
+    "name": "师说·师者所以传道受业解惑",
+    "ku_type": "wenyan_word",
+    "track": "积累",
+    "core": "所以，用来……的。受，通“授”，传授。例：师者，所以传道受业解惑也。",
+    "source_text": "《师说》韩愈",
+    "difficulty": 0.5,
+    "prerequisites": [],
+    "extra": {
+      "词性": "虚词",
+      "是否通假": true,
+      "是否古今异义": false,
+      "是否词类活用": false,
+      "活用类型": null,
+      "义项": "用来……的",
+      "例句": "所以传道受业解惑"
+    },
+    "_kcs": [
+      "《师说》文言词语"
+    ],
+    "_unit": "第六单元"
+  },
+  {
+    "id": "ku-018",
+    "name": "师说·吾师道也",
+    "ku_type": "wenyan_word",
+    "track": "积累",
+    "core": "师，动词，学习。道，名词，道理。例：吾师道也，夫庸知其年之先后生于吾乎？",
+    "source_text": "《师说》韩愈",
+    "difficulty": 0.5,
+    "prerequisites": [],
+    "extra": {
+      "词性": "动词",
+      "是否通假": false,
+      "是否古今异义": false,
+      "是否词类活用": true,
+      "活用类型": "名词作动词",
+      "义项": "学习",
+      "例句": "吾师道也"
+    },
+    "_kcs": [
+      "《师说》文言词语"
+    ],
+    "_unit": "第六单元"
+  },
+  {
+    "id": "ku-019",
+    "name": "师说·其闻道也固先乎吾",
+    "ku_type": "wenyan_word",
+    "track": "积累",
+    "core": "闻，动词，知道、懂得。固，副词，本来。乎，介词，比。例：其闻道也固先乎吾。",
+    "source_text": "《师说》韩愈",
+    "difficulty": 0.4,
+    "prerequisites": [],
+    "extra": {
+      "词性": "动词",
+      "是否通假": false,
+      "是否古今异义": false,
+      "是否词类活用": false,
+      "活用类型": null,
+      "义项": "知道、懂得",
+      "例句": "其闻道也固先乎吾"
+    },
+    "_kcs": [
+      "《师说》文言词语"
+    ],
+    "_unit": "第六单元"
+  },
+  {
+    "id": "ku-020",
+    "name": "师说·余嘉其能行古道",
+    "ku_type": "wenyan_word",
+    "track": "积累",
+    "core": "嘉，动词，赞许。行，动词，遵行。古道，名词，古人从师之道。例：余嘉其能行古道。",
+    "source_text": "《师说》韩愈",
+    "difficulty": 0.4,
+    "prerequisites": [],
+    "extra": {
+      "词性": "动词",
+      "是否通假": false,
+      "是否古今异义": false,
+      "是否词类活用": false,
+      "活用类型": null,
+      "义项": "赞许",
+      "例句": "余嘉其能行古道"
+    },
+    "_kcs": [
+      "《师说》文言词语"
+    ],
+    "_unit": "第六单元"
+  },
+  {
+    "id": "ku-021",
+    "name": "拿来主义·送去主义",
+    "ku_type": "chengyu",
+    "track": "积累",
+    "core": "送去主义：指一味送出去、不拿进来的做法，比喻盲目崇洋媚外。出自鲁迅《拿来主义》。",
+    "source_text": "《拿来主义》鲁迅",
+    "difficulty": 0.4,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "第六单元成语"
+    ],
+    "_unit": "第六单元"
+  },
+  {
+    "id": "ku-022",
+    "name": "拿来主义·拿来主义",
+    "ku_type": "chengyu",
+    "track": "积累",
+    "core": "拿来主义：指有选择地吸收外来文化或事物，取其精华、去其糟粕。出自鲁迅《拿来主义》。",
+    "source_text": "《拿来主义》鲁迅",
+    "difficulty": 0.4,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "第六单元成语"
+    ],
+    "_unit": "第六单元"
+  },
+  {
+    "id": "ku-023",
+    "name": "反对党八股·党八股",
+    "ku_type": "chengyu",
+    "track": "积累",
+    "core": "党八股：指革命队伍中某些人写文章、作报告时形式主义、空话连篇的作风。出自毛泽东《反对党八股》。",
+    "source_text": "《反对党八股》毛泽东",
+    "difficulty": 0.4,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "第六单元成语"
+    ],
+    "_unit": "第六单元"
+  },
+  {
+    "id": "ku-024",
+    "name": "上图书馆·豁然开朗",
+    "ku_type": "chengyu",
+    "track": "积累",
+    "core": "豁然开朗：形容由狭窄幽暗突然变得宽阔明亮，也比喻突然领悟。出自《上图书馆》。",
+    "source_text": "《上图书馆》王佐良",
+    "difficulty": 0.3,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "第六单元成语"
+    ],
+    "_unit": "第六单元"
+  },
+  {
+    "id": "ku-025",
+    "name": "上图书馆·独拥书城自吟啸",
+    "ku_type": "mingpian",
+    "track": "积累",
+    "core": "独拥书城自吟啸。",
+    "source_text": "《上图书馆》王佐良",
+    "difficulty": 0.3,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "第六单元名篇名句"
+    ],
+    "_unit": "第六单元"
+  },
+  {
+    "id": "ku-026",
+    "name": "读书：目的和前提·珍珠",
+    "ku_type": "wenyan_yuedu",
+    "track": "鉴赏",
+    "core": "文言文整体阅读方法：理解比喻义，如“捞取珍珠”比喻在书中获取精华。",
+    "source_text": "《读书：目的和前提》黑塞",
+    "difficulty": 0.4,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "随笔阅读方法"
+    ],
+    "_unit": "第六单元"
+  },
+  {
+    "id": "ku-028",
+    "name": "师说·耻学于师",
+    "ku_type": "wenyan_word",
+    "track": "积累",
+    "core": "耻，形容词的意动用法，以……为耻。于，介词，向。例：耻学于师。",
+    "source_text": "《师说》韩愈",
+    "difficulty": 0.5,
+    "prerequisites": [],
+    "extra": {
+      "词性": "形容词",
+      "是否通假": false,
+      "是否古今异义": false,
+      "是否词类活用": true,
+      "活用类型": "意动用法",
+      "义项": "以……为耻",
+      "例句": "耻学于师"
+    },
+    "_kcs": [
+      "《师说》文言词语"
+    ],
+    "_unit": "第六单元"
+  },
+  {
+    "id": "ku-029",
+    "name": "拿来主义·大圆顶台词",
+    "ku_type": "wenhua_changshi",
+    "track": "积累",
+    "core": "莎士比亚《哈姆莱特》台词：“这个覆盖众生的苍穹，这一顶壮丽的帐幕……”表达了人文主义思想。",
+    "source_text": "《上图书馆》王佐良",
+    "difficulty": 0.5,
+    "prerequisites": [],
+    "extra": null,
+    "_kcs": [
+      "文化常识与背景"
+    ],
+    "_unit": "第六单元"
+  }
+]

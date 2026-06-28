@@ -7,7 +7,11 @@ vs v1 新增:
   3. 改名不确定的条目 → 标记"需人工"，不改、不合并
 """
 
-import asyncio, asyncpg, re, os, json
+import asyncio
+import asyncpg
+import re
+import os
+import json
 from collections import defaultdict
 from difflib import SequenceMatcher
 

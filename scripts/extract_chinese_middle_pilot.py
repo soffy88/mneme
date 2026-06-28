@@ -661,7 +661,7 @@ def main() -> None:
     }
     missing = [f"{t} ({desc})" for t, desc in MUST_HAVE.items() if type_cnt.get(t, 0) == 0]
     if missing:
-        print(f"\n⚠️  缺少必有类型：", flush=True)
+        print("\n⚠️  缺少必有类型：", flush=True)
         for m in missing:
             print(f"   - {m}", flush=True)
     else:

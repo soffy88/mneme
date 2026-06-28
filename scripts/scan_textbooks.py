@@ -7,10 +7,8 @@
 from __future__ import annotations
 
 import json
-import os
 import re
 from pathlib import Path
-from typing import Optional
 
 SOURCE_DIR = Path.home() / "books" / "教材"
 OUTPUT_FILE = Path(__file__).parent / "textbook_import_plan.json"

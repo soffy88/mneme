@@ -1,7 +1,6 @@
 import pytest
 from uuid import uuid4
 from services.instant_solve_service import handle_instant_solve
-import asyncio
 from unittest.mock import patch, MagicMock
 
 @pytest.mark.asyncio
@@ -24,7 +23,7 @@ async def test_instant_solve_never_returns_raw_answer():
         }
     }
     
-    with patch("services.instant_solve_service.instant_solve", return_value=mock_result) as mock_omodul_solve, \
+    with patch("services.instant_solve_service.instant_solve", return_value=mock_result), \
          patch("services.instant_solve_service.get_pg_pool", return_value=MagicMock()):
         
         result = await handle_instant_solve(student_id, image_b64)

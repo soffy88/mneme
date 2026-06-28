@@ -254,8 +254,11 @@ async def process_one(
                 used_ds   = True
 
         # 构建新 knowledge_points {ku_id: ku_name}
+        # LLM 偶尔返回字符串列表而不是 dict 列表，跳过非 dict 元素
         new_kp: dict[str, str] = {}
         for m in matched:
+            if not isinstance(m, dict):
+                continue
             kid  = m.get("id", "")
             kname = m.get("name", "")
             if kid and kname:

@@ -167,7 +167,7 @@ async def _get_streak(db: AsyncSession, student_id: uuid.UUID) -> dict:
 
 def _mission_dict(m: DailyMission) -> dict:
     mt = m.mission_type
-    mission_type_str = mt.value if hasattr(mt, "value") else str(mt) if mt else None
+    mission_type_str = mt.value if mt is not None else None
     return {
         "id": str(m.id),
         "date": m.date.isoformat() if m.date else None,

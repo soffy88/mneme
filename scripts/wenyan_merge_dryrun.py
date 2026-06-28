@@ -11,7 +11,11 @@ wenyan_merge_dryrun.py  —— 文言实词 同词多条合并 dry-run预览
   跨textbook不合并
 """
 
-import asyncio, asyncpg, re, os, json
+import asyncio
+import asyncpg
+import re
+import os
+import json
 from collections import defaultdict
 from difflib import SequenceMatcher
 
@@ -236,8 +240,8 @@ async def run():
     lines.append(f"**数据库**: {DB_URL.split('@')[-1]}\n")
 
     lines.append("## 1. 总量变化\n")
-    lines.append(f"| 指标 | 数量 |")
-    lines.append(f"|---|---|")
+    lines.append("| 指标 | 数量 |")
+    lines.append("|---|---|")
     lines.append(f"| 合并前总条数 | {total_before} |")
     lines.append(f"| 合并后总条数 | {total_after} |")
     lines.append(f"| 减少条数 | {total_before - total_after} |")
