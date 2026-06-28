@@ -4,7 +4,7 @@
 from __future__ import annotations
 
 import uuid
-from datetime import date, datetime, timezone
+from datetime import datetime, timezone
 from unittest.mock import AsyncMock, patch
 
 import pytest
@@ -160,7 +160,6 @@ async def test_cold_start_socratic_state_serializable(client, student, db):
         "socratic_state": fake_state,
     }
 
-    from datetime import datetime, timezone
     import services.mission_service as _mm
 
     _noon = datetime(2026, 6, 22, 12, 0, 0, tzinfo=timezone.utc)
@@ -317,7 +316,7 @@ async def test_export_archive(client, student):
 
 @pytest.mark.asyncio
 async def test_socratic_start_no_question(client, student):
-    resp = await client.post(f"/v1/socratic/start",
+    resp = await client.post("/v1/socratic/start",
                               params={"question_id": str(uuid.uuid4()), "student_id": str(student)})
     assert resp.status_code == 404
     print("  POST /v1/socratic/start 404 ✓")
@@ -352,7 +351,7 @@ async def test_socratic_full_flow(client, student, db):
     assert "data:" in content
     # Red line: correct_answer text must NOT appear in SSE stream
     assert "圆心(0,0), 半径5" not in content, "苏格拉底红线: 不得泄露完整答案"
-    print(f"  SSE 内容不含完整答案 ✓")
+    print("  SSE 内容不含完整答案 ✓")
 
     # Escape
     resp3 = await client.post(f"/v1/socratic/{session_id}/escape")
@@ -360,7 +359,7 @@ async def test_socratic_full_flow(client, student, db):
     assert "outline" in resp3.json()
     note = resp3.json().get("note", "")
     assert "标准答案" not in note or "非标准答案" in note or note == ""
-    print(f"  escape → outline 非完整答案 ✓")
+    print("  escape → outline 非完整答案 ✓")
 
     # End
     resp4 = await client.post(f"/v1/socratic/{session_id}/end", params={"outcome": "partial"})
