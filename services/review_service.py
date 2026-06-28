@@ -55,10 +55,12 @@ async def get_due_variants(db: AsyncSession, student_id: uuid.UUID) -> List[dict
                     caller=caller
                 )
                 
+                # VariantItem.question 是变式题面；.answer 生成后恒为空（需内核求解），
+                # 故复习参考答案回退到原题答案 orig_a。
                 due_items.append({
                     "kc_id": m.knowledge_point,
-                    "variant_question": variant.question_text,
-                    "variant_answer": variant.correct_answer,
+                    "variant_question": variant.question,
+                    "variant_answer": (variant.answer or orig_a or "（参考原题思路自行验证）"),
                     "due_since": m.last_interaction_at.isoformat() if m.last_interaction_at else None,
                     "fsrs_interval": m.fsrs_card_json.get("stability", 0)
                 })

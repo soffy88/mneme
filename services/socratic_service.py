@@ -183,29 +183,52 @@ async def socratic_message_stream(
     yield f"data: {json.dumps({'done': True, 'turn': turn})}\n\n"
 
 
+import re as _re
+
+# 纯算术片段：仅数字/运算符/括号/小数/常见 unicode 运算符（无变量/文字）
+_ARITH_CHARS = r"\d\s+\-*/^().,×÷·"
+_ARITH_LEFT = _re.compile(rf"[{_ARITH_CHARS}]+$")
+_ARITH_RIGHT = _re.compile(rf"^[{_ARITH_CHARS}]+")
+
+
+def _normalize_arith(s: str) -> str:
+    """归一为 sympy 可解析：× ÷ · → * /，^ → **，去千分位逗号/空格。"""
+    return (s.replace("×", "*").replace("·", "*").replace("÷", "/")
+             .replace("^", "**").replace(",", "").replace("，", "").strip())
+
+
 def _try_verify_step(message: str) -> Optional[str]:
-    """Deterministic step check (H.3). Returns error hint or None."""
-    import re
+    """确定性步骤拦截（H.3，红线：确定性、不泄露答案）。
+
+    只拦**纯算术等式且不成立**的情形（如 "2+3=6"）——用 sympy(verify_step) 判定。
+    含变量的等式（如 "x=2"）无法脱离上下文判真伪，一律**不拦**，避免误伤正确步骤。
+    返回错误提示（不含正确数值）或 None。
+    """
     if "=" not in message:
         return None
-    math_pat = re.compile(r"[\+\-\*/\^√\d]")
-    if not math_pat.search(message):
-        return None
-    parts = message.split("=")
-    if len(parts) < 2:
-        return None
-    lhs = parts[0].strip().split()[-1] if parts[0].strip() else ""
-    rhs = parts[1].strip().split()[0] if parts[1].strip() else ""
-    if not lhs or not rhs:
-        return None
-    try:
-        from oprim.verify_step import StepVerifyInput, verify_step
-        inp = StepVerifyInput(step_number=1, before_lhs=lhs, after_lhs=lhs, before_rhs="0", after_rhs=rhs)
-        result = verify_step(inp)
-        if not result.is_correct:
-            return f"（代数检验：{result.error_type or '步骤有误'}）"
-    except Exception:
-        pass
+    for m in _re.finditer("=", message):
+        i = m.start()
+        left = _ARITH_LEFT.search(message[:i])
+        right = _ARITH_RIGHT.search(message[i + 1:])
+        if not left or not right:
+            continue
+        a, b = left.group().strip(), right.group().strip()
+        # 两侧都必须含数字，且都是纯算术（否则可能含变量/文字 → 跳过）
+        if not (_re.search(r"\d", a) and _re.search(r"\d", b)):
+            continue
+        try:
+            from oprim.verify_step import StepVerifyInput, verify_step
+            result = verify_step(StepVerifyInput(
+                step_number=1,
+                before_lhs=_normalize_arith(a), before_rhs=_normalize_arith(b),
+                after_lhs="0", after_rhs="0",   # 检验 a == b 是否成立
+            ))
+            if result.error_type == "parse_error":
+                continue
+            if not result.is_correct:
+                return "（这一步的算式好像对不上，自己再算一遍这步看看。）"
+        except Exception:
+            continue
     return None
 
 
@@ -244,4 +267,32 @@ async def end_session(db: AsyncSession, session_id: uuid.UUID, outcome: str = "p
         .values(outcome=soc_outcome, duration_seconds=duration)
     )
     await db.flush()
-    return {"session_id": str(session_id), "outcome": outcome, "duration_seconds": duration}
+
+    # 苏格拉底结果驱动认知更新（Master：outcome 映射 FSRS rating）
+    #   success → 答对；failed → 答错(struggled)；partial/abandoned → 不更新
+    kc_updated = False
+    if outcome in ("success", "failed"):
+        wq = (await db.execute(
+            select(WrongQuestion).where(WrongQuestion.id == session.question_id)
+        )).scalar_one_or_none()
+        if wq and wq.knowledge_points:
+            kc_id = next(iter(wq.knowledge_points.keys()))
+            from services.cognitive_service import process_interaction
+            await process_interaction(
+                db,
+                student_id=session.student_id,
+                kc_id=kc_id,
+                is_correct=(outcome == "success"),
+                question_type="solve",
+                question_id=session.question_id,
+                source="socratic",
+                struggled=True,   # 苏格拉底本身即"吃力"过程（努力收益 M-F）
+            )
+            kc_updated = True
+
+    return {
+        "session_id": str(session_id),
+        "outcome": outcome,
+        "duration_seconds": duration,
+        "kc_updated": kc_updated,
+    }
