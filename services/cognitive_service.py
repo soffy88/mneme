@@ -5,12 +5,12 @@ Cognitive service — Layer 4 装配层
 """
 from __future__ import annotations
 
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 from typing import Optional
 from uuid import UUID
 
 from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy import select
+from sqlalchemy import func, select
 from sqlalchemy.dialects.postgresql import insert as pg_insert
 
 from obase.cognitive_store import PgStore
@@ -25,7 +25,112 @@ from oprim.compute_feedback import compute_feedback
 from oprim.compute_peer_percentile import compute_peer_percentile
 from oskill.interleave_select import QuestionItem, interleave_select
 
-from services.models import KCMastery, MasterySnapshot
+from services.models import EffortfulGain, InteractionEvent, KCMastery, MasterySnapshot, SocraticSession
+
+
+async def daily_report(db: AsyncSession, student_id: UUID, day=None) -> dict:
+    """家长日报：把某天的学习活动汇成一句话（看成长非分数）。"""
+    now = datetime.now(timezone.utc)
+    d = day or now.date()
+    start = datetime(d.year, d.month, d.day, tzinfo=timezone.utc)
+    end = start + timedelta(days=1)
+
+    rows = (await db.execute(
+        select(InteractionEvent.knowledge_point, InteractionEvent.is_correct)
+        .where(InteractionEvent.student_id == student_id)
+        .where(InteractionEvent.occurred_at >= start, InteractionEvent.occurred_at < end)
+    )).all()
+    n = len(rows)
+    kcs = len({r[0] for r in rows})
+    correct = sum(1 for r in rows if r[1])
+
+    socratic = (await db.execute(
+        select(func.count()).select_from(SocraticSession)
+        .where(SocraticSession.student_id == student_id)
+        .where(SocraticSession.created_at >= start, SocraticSession.created_at < end)
+    )).scalar() or 0
+
+    weak = (await db.execute(
+        select(func.count()).select_from(KCMastery)
+        .where(KCMastery.student_id == student_id).where(KCMastery.p_mastery < 0.5)
+    )).scalar() or 0
+
+    dig = await weekly_digest(db, student_id, now=now)
+    streak = dig["current_streak"]
+
+    if n == 0:
+        text = f"{d.isoformat()}：今天还没有学习记录。"
+    else:
+        text = f"{d.isoformat()} 学习日报：练了 {n} 道、覆盖 {kcs} 个知识点，正确率 {round(correct / n * 100)}%"
+        if socratic:
+            text += f"，自主攻克 {int(socratic)} 次苏格拉底引导"
+        text += f"。当前连续 {streak} 天，薄弱点 {int(weak)} 个。"
+
+    return {
+        "date": d.isoformat(),
+        "report_text": text,
+        "n_interactions": n,
+        "distinct_kcs": kcs,
+        "socratic": int(socratic),
+        "current_streak": streak,
+        "weak_kc_count": int(weak),
+    }
+
+
+async def weekly_digest(
+    db: AsyncSession,
+    student_id: UUID,
+    now: Optional[datetime] = None,
+) -> dict:
+    """留存引擎：连续学习天数（任何练习都算）+ 本周成长摘要。
+    streak 直接从 interaction_events 的活跃日算，反映真实活动而非"完成任务"。
+    """
+    now = now or datetime.now(timezone.utc)
+    since60 = now - timedelta(days=60)
+    rows = (await db.execute(
+        select(InteractionEvent.occurred_at, InteractionEvent.knowledge_point, InteractionEvent.is_correct)
+        .where(InteractionEvent.student_id == student_id)
+        .where(InteractionEvent.occurred_at >= since60)
+    )).all()
+
+    today = now.date()
+    days = {r[0].date() for r in rows}
+    # 连续天数：从今天（或昨天，若今天还没练）往回数连续活跃日
+    streak = 0
+    cursor = today if today in days else today - timedelta(days=1)
+    while cursor in days:
+        streak += 1
+        cursor -= timedelta(days=1)
+    active_today = today in days
+
+    since7 = now - timedelta(days=7)
+    recent = [r for r in rows if r[0] >= since7]
+    n = len(recent)
+    distinct_kcs = len({r[1] for r in recent})
+    n_correct = sum(1 for r in recent if r[2])
+    days_active_7d = len({r[0].date() for r in recent})
+    accuracy = round(n_correct / n, 4) if n else None
+
+    effort_7d = (await db.execute(
+        select(func.count()).select_from(EffortfulGain)
+        .where(EffortfulGain.student_id == student_id)
+        .where(EffortfulGain.occurred_at >= since7)
+    )).scalar() or 0
+
+    headline = f"本周练了 {n} 道、{distinct_kcs} 个知识点，活跃 {days_active_7d} 天"
+    if streak:
+        headline += f"，已连续 {streak} 天 🔥"
+
+    return {
+        "current_streak": streak,
+        "active_today": active_today,
+        "n_interactions_7d": n,
+        "distinct_kcs_7d": distinct_kcs,
+        "accuracy_7d": accuracy,
+        "days_active_7d": days_active_7d,
+        "effort_gains_7d": int(effort_7d),
+        "headline": headline,
+    }
 
 
 async def process_interaction(
@@ -42,12 +147,27 @@ async def process_interaction(
     effortless: bool = False,
     is_interleaved: bool = False,
     time_spent_seconds: Optional[int] = None,
+    difficulty: Optional[float] = None,
+    predicted_confidence: Optional[float] = None,
     student_answer: Optional[str] = None,
     correct_answer: Optional[str] = None,
     now: Optional[datetime] = None,
 ) -> dict:
     """处理一次答题交互，落 kc_mastery + interaction_events + mastery_snapshots。"""
     now = now or datetime.now(timezone.utc)
+    # Phase 2（IRT 通电）：未显式给难度时，按 kc_id 取 KU 难度；非 KU 知识点保持 None（行为不变）
+    if difficulty is None:
+        from services.models import KnowledgeUnit
+        difficulty = (await db.execute(
+            select(KnowledgeUnit.difficulty).where(KnowledgeUnit.id == kc_id)
+        )).scalar_one_or_none()
+    # 努力收益（M-F）：记下更新前的 FSRS 稳定性，用于算 retention_delta
+    old_card = (await db.execute(
+        select(KCMastery.fsrs_card_json)
+        .where(KCMastery.student_id == student_id, KCMastery.knowledge_point == kc_id)
+    )).scalar_one_or_none()
+    old_stability = float((old_card or {}).get("stability") or 0.0)
+
     store = PgStore(db)
     config = InteractionConfig()
     input_data = InteractionInput(
@@ -62,6 +182,8 @@ async def process_interaction(
         effortless=effortless,
         is_interleaved=is_interleaved,
         time_spent_seconds=time_spent_seconds,
+        difficulty=difficulty,
+        predicted_confidence=predicted_confidence,
         now=now,
     )
     result = await process_interaction_workflow(config, input_data, store)
@@ -87,6 +209,24 @@ async def process_interaction(
         )
     )
     await db.execute(stmt)
+
+    # 努力收益（M-F）：effortful_gain = struggle_score × retention_delta（FSRS 稳定性增量）
+    #   仅在"吃力且确有记忆增益"时记录——对应"难但学得最牢"的信号
+    new_card = (await db.execute(
+        select(KCMastery.fsrs_card_json)
+        .where(KCMastery.student_id == student_id, KCMastery.knowledge_point == kc_id)
+    )).scalar_one_or_none()
+    new_stability = float((new_card or {}).get("stability") or 0.0)
+    retention_delta = max(0.0, new_stability - old_stability)
+    struggle_score = min(max((time_spent_seconds or 0) / 120.0, 0.0), 1.0) * 0.7 + (0.3 if struggled else 0.0)
+    if is_correct and struggle_score > 0.0 and retention_delta > 0.0:
+        db.add(EffortfulGain(
+            student_id=student_id,
+            question_id=question_id,
+            struggle_score=round(struggle_score, 4),
+            retention_delta=round(retention_delta, 4),
+            effortful_gain=round(struggle_score * retention_delta, 4),
+        ))
 
     feedback = None
     if student_answer is not None:
@@ -133,6 +273,62 @@ async def mastery_overview(
         result.append(item)
 
     return result
+
+
+async def weakness_roots(
+    db: AsyncSession,
+    student_id: UUID,
+    *,
+    mastery_threshold: float = 0.6,
+    limit: int = 10,
+) -> list[dict]:
+    """前置图谱归因：对学生的薄弱知识点，沿 KU.prerequisites 上溯，找出
+    同样薄弱/未练的前置——"你薄弱不在 X，而在前置 Y"。先补根、再补叶。
+    """
+    from services.models import KnowledgeUnit
+
+    rows = (await db.execute(
+        select(KCMastery.knowledge_point, KCMastery.p_mastery)
+        .where(KCMastery.student_id == student_id)
+    )).all()
+    mastery: dict[str, float] = {kp: (pm if pm is not None else 0.0) for kp, pm in rows}
+    weak_kps = [kp for kp, pm in mastery.items() if pm < mastery_threshold]
+    if not weak_kps:
+        return []
+
+    weak_kus = (await db.execute(
+        select(KnowledgeUnit.id, KnowledgeUnit.name, KnowledgeUnit.prerequisites)
+        .where(KnowledgeUnit.id.in_(weak_kps))
+    )).all()
+
+    prereq_ids = {p for _, _, prereqs in weak_kus for p in (prereqs or [])}
+    prereq_names: dict[str, str] = {}
+    if prereq_ids:
+        prereq_names = {
+            i: n for i, n in (await db.execute(
+                select(KnowledgeUnit.id, KnowledgeUnit.name).where(KnowledgeUnit.id.in_(prereq_ids))
+            )).all()
+        }
+
+    result: list[dict] = []
+    for ku_id, name, prereqs in weak_kus:
+        gaps = []
+        for p in (prereqs or []):
+            pm = mastery.get(p)
+            if pm is None:
+                gaps.append({"ku_id": p, "name": prereq_names.get(p, p), "p_mastery": None, "status": "unpracticed"})
+            elif pm < mastery_threshold:
+                gaps.append({"ku_id": p, "name": prereq_names.get(p, p), "p_mastery": round(pm, 4), "status": "weak"})
+        if gaps:
+            result.append({
+                "ku_id": ku_id,
+                "name": name,
+                "p_mastery": round(mastery.get(ku_id, 0.0), 4),
+                "weak_prerequisites": gaps,
+            })
+
+    result.sort(key=lambda x: x["p_mastery"])
+    return result[:limit]
 
 
 async def review_queue(

@@ -219,6 +219,8 @@ class InteractionEvent(Base):
     time_spent_seconds: Mapped[Optional[int]] = mapped_column(Integer)
     days_since_last: Mapped[Optional[float]] = mapped_column(Float)
     is_interleaved: Mapped[Optional[bool]] = mapped_column(Boolean, server_default="false")
+    item_difficulty: Mapped[Optional[float]] = mapped_column(Float)   # 题目难度 b∈[0,1]（IRT），供 DKT/校准
+    predicted_confidence: Mapped[Optional[float]] = mapped_column(Float)  # JOL：作答前自评把握 ∈[0,1]
     occurred_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=text("now()"))
 
 class MasterySnapshot(Base):
