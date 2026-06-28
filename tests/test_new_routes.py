@@ -268,23 +268,35 @@ async def test_practice_generate_kc_not_found(client):
 
 @pytest.mark.asyncio
 async def test_delete_student_soft_delete(client, student, db):
-    """软删后 deleted_at 设置；/v1/mastery 应返回空（合规红线）。"""
-    resp = await client.post(f"/v1/parent/delete-request/{student}")
-    assert resp.status_code == 200
-    data = resp.json()
-    assert data["ok"] is True
-    assert "deleted_at" in data
-    # verify in DB
-    user = (await db.execute(select(User).where(User.id == student))).scalar_one()
-    assert user.deleted_at is not None, "合规红线: 软删后 deleted_at 必须有值"
-    print("  POST /v1/parent/delete-request 合规红线 ✓")
+    """本人鉴权下软删 → deleted_at 设置（合规红线）。"""
+    from types import SimpleNamespace
+    from services.main import get_current_user
+    app.dependency_overrides[get_current_user] = lambda: SimpleNamespace(id=student)
+    try:
+        resp = await client.post(f"/v1/parent/delete-request/{student}")
+        assert resp.status_code == 200, resp.text
+        data = resp.json()
+        assert data["ok"] is True
+        assert "deleted_at" in data
+        user = (await db.execute(select(User).where(User.id == student))).scalar_one()
+        assert user.deleted_at is not None, "合规红线: 软删后 deleted_at 必须有值"
+    finally:
+        app.dependency_overrides = {}
+    print("  POST /v1/parent/delete-request 本人软删 ✓")
 
 
 @pytest.mark.asyncio
-async def test_delete_student_not_found(client):
-    resp = await client.post(f"/v1/parent/delete-request/{uuid.uuid4()}")
-    assert resp.status_code == 404
-    print("  POST /v1/parent/delete-request 404 ✓")
+async def test_delete_student_forbidden_for_non_owner(client, student):
+    """鉴权红线：登录用户删非本人/非绑定的学生 → 403。"""
+    from types import SimpleNamespace
+    from services.main import get_current_user
+    app.dependency_overrides[get_current_user] = lambda: SimpleNamespace(id=student)
+    try:
+        resp = await client.post(f"/v1/parent/delete-request/{uuid.uuid4()}")
+        assert resp.status_code == 403, resp.text
+    finally:
+        app.dependency_overrides = {}
+    print("  POST /v1/parent/delete-request 越权拦截 ✓")
 
 
 # ── K.1 Archive export ───────────────────────────────────────────────────────

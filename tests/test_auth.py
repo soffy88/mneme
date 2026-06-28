@@ -9,6 +9,9 @@ C.1 认证测试
 """
 from __future__ import annotations
 
+import uuid
+from datetime import datetime, timezone
+
 import pytest
 import redis.asyncio as aioredis
 from httpx import AsyncClient, ASGITransport
@@ -17,7 +20,7 @@ from obase.config import settings
 from obase.db import SessionLocal
 from services.main import app
 from services.models import User, GuardianConsent, ParentStudent
-from sqlalchemy import delete, select
+from sqlalchemy import delete, select, update
 
 
 # ── helpers ───────────────────────────────────────────────────────────────────
@@ -209,6 +212,48 @@ async def test_code_consumed_after_use(client):
     assert res2.status_code == 409
 
     await _clean_phone(phone)
+
+
+@pytest.mark.asyncio
+async def test_deleted_user_cannot_login_or_query(client):
+    """合规红线：软删除后不可登录、已签发 token 失效（删除后数据不可查询）。"""
+    phone = "13900007777"
+    await _clean_phone(phone)
+    await _inject_code(phone)
+
+    rs = await client.post("/v1/auth/register/student", json={
+        "phone": phone, "code": "123456", "name": "ToDelete", "birth_date": "2000-01-01", "grade": "高三",
+    })
+    assert rs.status_code == 201, rs.text
+    token = rs.json()["token"]
+    student_id = rs.json()["user"]["id"]
+
+    # 删除前 token 可用
+    assert (await client.get("/v1/auth/me", headers={"Authorization": f"Bearer {token}"})).status_code == 200
+
+    # 软删除
+    async with SessionLocal() as s:
+        await s.execute(update(User).where(User.id == uuid.UUID(student_id)).values(
+            deleted_at=datetime.now(timezone.utc)))
+        await s.commit()
+
+    # 删除后：已签发 token 失效
+    rme = await client.get("/v1/auth/me", headers={"Authorization": f"Bearer {token}"})
+    assert rme.status_code == 401, rme.text
+
+    # 删除后：无法再登录
+    await _inject_code(phone)
+    rl = await client.post("/v1/auth/login", json={"phone": phone, "code": "123456"})
+    assert rl.status_code == 404, rl.text
+
+    await _clean_phone(phone)
+
+
+@pytest.mark.asyncio
+async def test_delete_request_requires_auth(client):
+    """删除端点必须鉴权：无 token → 401（防任意人删任意学生）。"""
+    res = await client.post(f"/v1/parent/delete-request/{uuid.uuid4()}")
+    assert res.status_code == 401, res.text
 
 
 @pytest.mark.asyncio

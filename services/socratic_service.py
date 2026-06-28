@@ -5,6 +5,7 @@ Layer-4 rule: assembly + DB only; business logic lives in omodul/oskill.
 from __future__ import annotations
 
 import json
+import re as _re
 import uuid
 from datetime import datetime, timezone
 from pathlib import Path
@@ -82,7 +83,7 @@ async def start_session(db: AsyncSession, question_id: uuid.UUID, student_id: uu
             # Record it as the first system/assistant message in SocraticSession
             session.messages = [{"role": "assistant", "content": first_q, "options": metacog_options}]
             await db.flush()
-        except Exception as e:
+        except Exception:
             pass # fallback to default if metacog fails
 
     result = await socratic_session_workflow(
@@ -181,9 +182,6 @@ async def socratic_message_stream(
     for chunk in sse_chunks:
         yield f"data: {json.dumps({'delta': chunk + ' '})}\n\n"
     yield f"data: {json.dumps({'done': True, 'turn': turn})}\n\n"
-
-
-import re as _re
 
 # 纯算术片段：仅数字/运算符/括号/小数/常见 unicode 运算符（无变量/文字）
 _ARITH_CHARS = r"\d\s+\-*/^().,×÷·"

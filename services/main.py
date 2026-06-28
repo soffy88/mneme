@@ -71,16 +71,33 @@ async def get_current_user(
     if not user_id:
         raise HTTPException(status_code=401, detail="Invalid token payload")
     
-    stmt = select(User).where(User.id == uuid.UUID(user_id))
+    stmt = select(User).where(User.id == uuid.UUID(user_id), User.deleted_at.is_(None))
     user = (await db.execute(stmt)).scalar_one_or_none()
     if not user:
         raise HTTPException(status_code=401, detail="User not found")
     return user
 
+def _assert_prod_safety() -> None:
+    """生产环境(MNEME_ENV=prod)安全闸门：默认 JWT 密钥 / mock 万能码 一律拒启动。
+    demo/dev 环境放行（mock 是无短信通道时的演示机制）。"""
+    import os as _os
+    from obase.config import settings as _s
+    if _os.environ.get("MNEME_ENV", "dev").lower() != "prod":
+        return
+    problems = []
+    if _s.JWT_SECRET == "mneme-dev-secret-change-in-prod!":
+        problems.append("JWT_SECRET 仍是默认开发密钥（可伪造任意 token）")
+    if _os.environ.get("SMS_PROVIDER", "mock").lower() != "aliyun":
+        problems.append("SMS_PROVIDER 非 aliyun（123456 万能码可登录任何人）")
+    if problems:
+        raise RuntimeError("❌ 生产环境安全校验失败，拒绝启动：" + "；".join(problems))
+
+
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     configure_logging()
-    
+    _assert_prod_safety()
+
     # Initialize obase infrastructure tables
     from obase.config import settings
     from obase.persistence.pool import PgPool
@@ -1213,8 +1230,22 @@ async def get_export(student_id: UUID, db: AsyncSession = Depends(get_db)):
 # ===== §K.2 用户删除（合规） =====
 
 @app.post("/v1/parent/delete-request/{student_id}")
-async def post_delete_request(student_id: UUID, db: AsyncSession = Depends(get_db)):
-    """POST /v1/parent/delete-request/{student_id} — 软删除学生数据（合规红线）。"""
+async def post_delete_request(
+    student_id: UUID,
+    current_user: User = Depends(get_current_user),
+    db: AsyncSession = Depends(get_db),
+):
+    """POST /v1/parent/delete-request/{student_id} — 软删除学生数据（合规红线）。
+    鉴权：仅学生本人或其绑定家长可操作。"""
+    if current_user.id != student_id:
+        link = (await db.execute(
+            select(ParentStudent).where(
+                ParentStudent.parent_id == current_user.id,
+                ParentStudent.student_id == student_id,
+            )
+        )).scalar_one_or_none()
+        if not link:
+            raise HTTPException(status_code=403, detail="无权删除该学生数据")
     user = (await db.execute(select(User).where(User.id == student_id))).scalar_one_or_none()
     if not user:
         raise HTTPException(status_code=404, detail="Student not found")

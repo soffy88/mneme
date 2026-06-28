@@ -200,7 +200,9 @@ async def login(db: AsyncSession, phone: str, code: str) -> dict:
     if not await verify_code(phone, code):
         return {"error_code": 400, "error": "验证码无效或已过期"}
 
-    user = (await db.execute(select(User).where(User.phone == phone))).scalar_one_or_none()
+    user = (await db.execute(
+        select(User).where(User.phone == phone, User.deleted_at.is_(None))
+    )).scalar_one_or_none()
     if not user:
         return {"error_code": 404, "error": "用户不存在，请先注册"}
 
