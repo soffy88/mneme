@@ -23,6 +23,7 @@ from omodul.cognitive import (
 )
 from oprim.compute_feedback import compute_feedback
 from oprim.compute_peer_percentile import compute_peer_percentile
+from oprim.learning_metrics import consecutive_active_days, weekly_digest_metrics, daily_report_text
 from oskill.interleave_select import QuestionItem, interleave_select
 
 from services.models import EffortfulGain, InteractionEvent, KCMastery, MasterySnapshot, SocraticSession
@@ -58,13 +59,10 @@ async def daily_report(db: AsyncSession, student_id: UUID, day=None) -> dict:
     dig = await weekly_digest(db, student_id, now=now)
     streak = dig["current_streak"]
 
-    if n == 0:
-        text = f"{d.isoformat()}：今天还没有学习记录。"
-    else:
-        text = f"{d.isoformat()} 学习日报：练了 {n} 道、覆盖 {kcs} 个知识点，正确率 {round(correct / n * 100)}%"
-        if socratic:
-            text += f"，自主攻克 {int(socratic)} 次苏格拉底引导"
-        text += f"。当前连续 {streak} 天，薄弱点 {int(weak)} 个。"
+    text = daily_report_text(   # 成文在 oprim
+        day_iso=d.isoformat(), n=n, distinct_kcs=kcs, correct=correct,
+        socratic=int(socratic), streak=streak, weak_kc_count=int(weak),
+    )
 
     return {
         "date": d.isoformat(),
@@ -94,22 +92,12 @@ async def weekly_digest(
     )).all()
 
     today = now.date()
-    days = {r[0].date() for r in rows}
-    # 连续天数：从今天（或昨天，若今天还没练）往回数连续活跃日
-    streak = 0
-    cursor = today if today in days else today - timedelta(days=1)
-    while cursor in days:
-        streak += 1
-        cursor -= timedelta(days=1)
-    active_today = today in days
+    active_dates = {r[0].date() for r in rows}
+    streak = consecutive_active_days(active_dates, today)   # 算法在 oprim
 
     since7 = now - timedelta(days=7)
     recent = [r for r in rows if r[0] >= since7]
-    n = len(recent)
-    distinct_kcs = len({r[1] for r in recent})
-    n_correct = sum(1 for r in recent if r[2])
     days_active_7d = len({r[0].date() for r in recent})
-    accuracy = round(n_correct / n, 4) if n else None
 
     effort_7d = (await db.execute(
         select(func.count()).select_from(EffortfulGain)
@@ -117,20 +105,13 @@ async def weekly_digest(
         .where(EffortfulGain.occurred_at >= since7)
     )).scalar() or 0
 
-    headline = f"本周练了 {n} 道、{distinct_kcs} 个知识点，活跃 {days_active_7d} 天"
-    if streak:
-        headline += f"，已连续 {streak} 天 🔥"
-
-    return {
-        "current_streak": streak,
-        "active_today": active_today,
-        "n_interactions_7d": n,
-        "distinct_kcs_7d": distinct_kcs,
-        "accuracy_7d": accuracy,
-        "days_active_7d": days_active_7d,
-        "effort_gains_7d": int(effort_7d),
-        "headline": headline,
-    }
+    return weekly_digest_metrics(
+        interactions_7d=recent,
+        days_active_7d=days_active_7d,
+        effort_gains_7d=int(effort_7d),
+        streak=streak,
+        active_today=(today in active_dates),
+    )
 
 
 async def process_interaction(

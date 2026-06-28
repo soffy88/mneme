@@ -40,6 +40,12 @@ Mneme（对外名学鉴）：面向全年级学生的个人学习成长档案 + 
 - **依赖方向**：omodul→oskill→oprim 单向；3O→obase 允许，obase→3O 严禁。
 - **渲染不入主库**：图示数据由 oprim产出，Mafs/Three.js 渲染在前端（3O 不覆盖 UI）。
 
+**写要求升级（2026-06 实战修复后；权威见 `platform/3O/HELIOS_3O_SPEC_v3_0.md` §1.4/§5.5.1/§7.4）：**
+- **单源**：写新元素前先 grep 有无同源；同一逻辑禁两份实现，历史双份须留一份 canonical、另一份改 re-export/委托 + `test_*_single_source` 守卫。
+- **obase 不反向依赖**：基础设施需要的"状态/数据类型"归 obase，算法归 oprim（`obase/cognitive_types.py` 是范例）；判据"数据长什么样 vs 怎么算"。
+- **指纹/轨迹禁真实 PII**：`_fingerprint_fields`/decision_trail 不得含真实 user_id；服务层调 omodul 前用 `services/anon.py` 伪名化（涉未成年人 MUST）。
+- **omodul 必填 `_enabled_pillars`**（≥1）。
+
 ## 技术栈（不要自行更换）
 
 Python 3.12 / FastAPI(async) / SQLAlchemy 2.0 async + Alembic / PostgreSQL 16 / Redis 7 / Celery / py-fsrs / sympy / Anthropic SDK / React+TS+Vite+Tailwind+Mafs+Three.js / Docker Compose / pytest。详见 Master §9。
