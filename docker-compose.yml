@@ -59,6 +59,12 @@ services:
       SMS_PROVIDER: mock
       # SMS_SIGN_NAME: ""        # 阿里云短信签名（报备后填写）
       # SMS_TEMPLATE_CODE: ""    # 阿里云短信模板CODE（报备后填写）
+      # 文本 LLM 走本机 Ollama（DeepSeek 余额不足时）；OCR/VLM 不受影响
+      MNEME_LLM: ollama
+      OLLAMA_BASE_URL: http://host.docker.internal:11434/v1
+      OLLAMA_MODEL: qwen2.5:7b
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
     volumes:
       - .:/app
     networks:
@@ -87,6 +93,11 @@ services:
       MINIO_BUCKET: mneme
       DEEPSEEK_API_KEY: ${DEEPSEEK_API_KEY}
       SMS_PROVIDER: mock
+      MNEME_LLM: ollama
+      OLLAMA_BASE_URL: http://host.docker.internal:11434/v1
+      OLLAMA_MODEL: qwen2.5:7b
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
     volumes:
       - .:/app
     depends_on:

@@ -28,11 +28,15 @@ from openai import OpenAI
 
 # ── 连接配置 ──────────────────────────────────────────────────
 DB_DSN = "host=localhost port=5433 dbname=mneme user=postgres password=postgres"
-DEEPSEEK_API_KEY = os.environ.get("DEEPSEEK_API_KEY", "")
-WORKERS = 8
+# LLM 端点可换：默认 DeepSeek；本地 Ollama 用
+#   LLM_BASE_URL=http://localhost:11434/v1 LLM_MODEL=qwen3.5:9b LLM_API_KEY=ollama
+LLM_BASE_URL = os.environ.get("LLM_BASE_URL", "https://api.deepseek.com")
+LLM_MODEL = os.environ.get("LLM_MODEL", "deepseek-chat")
+LLM_API_KEY = os.environ.get("LLM_API_KEY") or os.environ.get("DEEPSEEK_API_KEY", "") or "local"
+WORKERS = int(os.environ.get("LLM_WORKERS", "8"))
 GRADES_TARGET = ("G7", "G8", "G9", "G10", "G11", "G12")
 
-client = OpenAI(api_key=DEEPSEEK_API_KEY, base_url="https://api.deepseek.com")
+client = OpenAI(api_key=LLM_API_KEY, base_url=LLM_BASE_URL)
 
 # ── 系统提示 ──────────────────────────────────────────────────
 SYSTEM = """你是一名经验丰富的中学数理学科教师，为学科知识单元生成结构化"讲透"内容。
@@ -163,19 +167,19 @@ def generate_rich_content(ku: dict) -> dict | None:
     for attempt in range(3):
         try:
             resp = client.chat.completions.create(
-                model="deepseek-chat",
+                model=LLM_MODEL,
                 messages=[
                     {"role": "system", "content": SYSTEM},
                     {"role": "user",   "content": prompt},
                 ],
                 temperature=0.2,
-                max_tokens=900,
+                max_tokens=int(os.environ.get("LLM_MAX_TOKENS", "900")),
             )
-            raw = resp.choices[0].message.content.strip()
+            raw = (resp.choices[0].message.content or "").strip()
             # 去掉可能的 ```json ... ``` 包裹
             if raw.startswith("```"):
                 raw = raw.split("\n", 1)[1].rsplit("```", 1)[0].strip()
-            return json.loads(raw)
+            return _parse_json_lenient(raw)
         except json.JSONDecodeError as e:
             if attempt == 2:
                 return {"_raw": raw, "_error": f"JSON parse failed: {e}"}
@@ -189,17 +193,33 @@ def generate_rich_content(ku: dict) -> dict | None:
 
 # ── 数据库工具 ────────────────────────────────────────────────
 
-def fetch_pending(conn, subject: str, limit: int | None) -> list[dict]:
-    """查出待处理的 KU（rich_content IS NULL，grade in G7-G12）。"""
-    grade_placeholders = ",".join([f"'{g}'" for g in GRADES_TARGET])
+def fetch_pending(conn, subject: str, limit: int | None, retry_failed: bool = False,
+                  all_grades: bool = False, grades: list[str] | None = None) -> list[dict]:
+    """查出待处理的 KU。
+    retry_failed=False → rich_content IS NULL（未生成）；True → 含 _error/_raw（破损）。
+    年级过滤：grades 指定 → 用之；否则 all_grades=True → 不限；默认 → G7-G12。
+    """
+    if grades:
+        glist: list[str] | None = grades
+    elif all_grades:
+        glist = None
+    else:
+        glist = list(GRADES_TARGET)
+    grade_clause = ""
+    if glist is not None:
+        grade_clause = "AND t.grade IN (%s)" % ",".join("'%s'" % g for g in glist)
+    where_content = (
+        "(jsonb_exists(ku.rich_content, '_error') OR jsonb_exists(ku.rich_content, '_raw'))"
+        if retry_failed else "ku.rich_content IS NULL"
+    )
     sql = f"""
         SELECT ku.id, ku.name, ku.ku_type, ku.description,
                t.grade, t.subject
         FROM knowledge_units ku
         JOIN textbooks t ON ku.textbook_id = t.id
-        WHERE ku.rich_content IS NULL
+        WHERE {where_content}
           AND t.subject = %s
-          AND t.grade IN ({grade_placeholders})
+          {grade_clause}
         ORDER BY t.grade, ku.id
         {f'LIMIT {limit}' if limit else ''}
     """
@@ -236,32 +256,50 @@ def count_total(conn, subject: str) -> tuple[int, int]:
 
 # ── 并发处理 ──────────────────────────────────────────────────
 
+import re as _re
+# 匹配"非法 JSON 转义"的反斜杠（后面不是合法转义字符）——本地模型常把 LaTeX 写成单反斜杠
+_BAD_ESC = _re.compile(r'\\(?!["\\/bfnrtu])')
+
+def _parse_json_lenient(raw: str) -> dict:
+    """容错解析：直接 → 修反斜杠转义 → 截取{…} → 截取后修转义。
+    解决本地模型把 $\\vec{a}$ 写成单反斜杠导致 JSON 非法的问题。"""
+    cands = [raw]
+    i, j = raw.find("{"), raw.rfind("}")
+    if i != -1 and j > i:
+        cands.append(raw[i:j + 1])
+    for cand in cands:
+        for variant in (cand, _BAD_ESC.sub(r'\\\\', cand)):
+            try:
+                return json.loads(variant)
+            except json.JSONDecodeError:
+                continue
+    raise json.JSONDecodeError("lenient parse failed", raw, 0)
+
+
 def process_one(ku: dict) -> tuple[str, dict | None, float]:
     t0 = time.time()
     result = generate_rich_content(ku)
     return ku["id"], result, time.time() - t0
 
 
-def run(subject: str, limit: int | None):
+def run(subject: str, limit: int | None, retry_failed: bool = False,
+        all_grades: bool = False, grades: list[str] | None = None):
     conn = psycopg2.connect(DB_DSN)
+    kus = fetch_pending(conn, subject, limit, retry_failed=retry_failed,
+                        all_grades=all_grades, grades=grades)
+    conn.close()  # 每个线程用独立连接
+    effective = len(kus)
 
-    pending_count, done_count = count_total(conn, subject)
-    total = pending_count + done_count
-    effective = min(limit, pending_count) if limit else pending_count
-
+    grade_label = ",".join(grades) if grades else ("全部" if all_grades else "G7-G12")
     print(f"\n{'='*60}")
-    print(f"科目: {subject}  |  G7-G12 总KU: {total}")
-    print(f"已完成: {done_count}  |  待处理: {pending_count}  |  本次: {effective}")
-    print(f"并发: {WORKERS}线程")
+    print(f"科目: {subject}  |  模式: {'重试失败(_error/_raw)' if retry_failed else '正常(IS NULL)'}"
+          f"  |  年级: {grade_label}")
+    print(f"本次处理: {effective}  |  并发: {WORKERS}线程")
     print("="*60)
 
     if effective == 0:
         print("✅ 无待处理KU，退出。")
-        conn.close()
         return
-
-    kus = fetch_pending(conn, subject, limit)
-    conn.close()  # 每个线程用独立连接
 
     ok = err = skip = 0
     start = time.time()
@@ -270,8 +308,10 @@ def run(subject: str, limit: int | None):
         thread_conn = psycopg2.connect(DB_DSN)
         try:
             ku_id, result, elapsed = process_one(ku)
-            if result is None:
-                return ku_id, "error", elapsed
+            # 失败（None / 含 _error / 含 _raw）不落库——避免把破损内容当"完成"持久化
+            if result is None or "_error" in result or "_raw" in result:
+                msg = (result or {}).get("_error", "no result") if result else "no result"
+                return ku_id, f"error:{msg[:60]}", elapsed
             save_rich_content(thread_conn, ku_id, result)
             status = "skip" if "_skipped" in result else "ok"
             return ku_id, status, elapsed
@@ -320,5 +360,13 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--subject", choices=["math", "physics"], required=True)
     parser.add_argument("--limit",   type=int, default=None, help="只处理N条（抽查用）")
+    parser.add_argument("--retry-failed", action="store_true",
+                        help="重试 rich_content 含 _error/_raw 的失败项（质检发现的破损）")
+    parser.add_argument("--all-grades", action="store_true",
+                        help="不限年级（含 G1-G6/高一 等，默认仅 G7-G12）")
+    parser.add_argument("--grades", type=str, default=None,
+                        help="只处理指定年级（逗号分隔，如 '高一' 或 'G1,G2'）")
     args = parser.parse_args()
-    run(args.subject, args.limit)
+    _grades = [g.strip() for g in args.grades.split(",")] if args.grades else None
+    run(args.subject, args.limit, retry_failed=args.retry_failed,
+        all_grades=args.all_grades, grades=_grades)
