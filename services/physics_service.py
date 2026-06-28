@@ -8,7 +8,7 @@ from __future__ import annotations
 
 import uuid
 from pathlib import Path
-from typing import AsyncGenerator, Optional
+from typing import AsyncGenerator
 
 from sqlalchemy import select, update
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -70,7 +70,7 @@ async def force_analysis_message_stream(
     )).scalar_one_or_none()
 
     if not row:
-        yield f"data: {{'error':'session not found'}}\n\n"
+        yield "data: {'error':'session not found'}\n\n"
         return
 
     messages_data: dict = row.messages or {"question_text": "", "history": []}

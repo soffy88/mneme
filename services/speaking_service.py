@@ -2,7 +2,7 @@ from pathlib import Path
 import tempfile
 import uuid
 import logging
-from typing import Any, List, Dict
+from typing import Any
 from obase.provider_registry import ProviderRegistry
 from omodul.speaking_practice_workflow import speaking_practice_workflow, Config, InputData
 

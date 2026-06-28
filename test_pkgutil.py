@@ -1,4 +1,3 @@
-import pkgutil
 import sys
 sys.path.insert(0, ".") # make sure local is first
 import oprim
