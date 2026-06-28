@@ -46,6 +46,7 @@ from services.socratic_service import (
 )
 from services.seed import seed_bkt_priors
 from services.models import (
+    EffortfulGain,
     InteractionEvent, KCMastery, MasterySnapshot, Paper,
     ParentStudent, SocraticSession, User, UserRole, WrongQuestion,
     TextbookFile, Highlight, ReadingNote,
@@ -96,6 +97,13 @@ async def lifespan(app: FastAPI):
         await session.commit()
         await PriorProvider.warm_up(session)
     register_default_providers()
+
+    # 可选：把文本 LLM 的 default 切到本机 Ollama（DeepSeek 余额不足时；不影响 VLM/OCR）
+    if os.environ.get("MNEME_LLM", "").lower() == "ollama":
+        from services.providers.ollama_caller import OllamaCaller
+        from obase.provider_registry import ProviderRegistry
+        ProviderRegistry.get().register_llm("default", OllamaCaller())
+        ProviderRegistry.get().register_llm("ollama", OllamaCaller())
 
     # Register English speaking practice generic callers (real or mock)
     from services.providers.aliyun_pronunciation import AliyunPronunciationCaller
@@ -152,10 +160,6 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-@app.get("/health")
-async def health():
-    return {"status": "healthy", "service": "mneme-api"}
-
 # ===== §8 认证 API =====
 
 @app.post("/v1/auth/send-code")
@@ -183,6 +187,32 @@ async def post_register_student(
         grade=payload.grade,
         guardian_phone=payload.guardian_phone,
         guardian_consent=payload.guardian_consent,
+    )
+    if "error" in result:
+        raise HTTPException(status_code=result["error_code"], detail=result["error"])
+    await db.commit()
+    return result
+
+
+class RegisterParentInput(BaseModel):
+    phone: str
+    code: str
+    name: str
+    invite_code: str
+
+
+@app.post("/v1/auth/register/parent", status_code=201)
+async def post_register_parent(
+    payload: RegisterParentInput,
+    db: AsyncSession = Depends(get_db),
+):
+    """注册家长：验证码校验 + 手机唯一 + 凭 invite_code 绑定孩子 + 返回JWT。"""
+    result = await auth_service.register_parent(
+        db=db,
+        phone=payload.phone,
+        code=payload.code,
+        name=payload.name,
+        invite_code=payload.invite_code,
     )
     if "error" in result:
         raise HTTPException(status_code=result["error_code"], detail=result["error"])
@@ -232,6 +262,8 @@ async def post_interaction(
             effortless=interaction.effortless,
             is_interleaved=interaction.is_interleaved,
             time_spent_seconds=interaction.time_spent_seconds,
+            difficulty=interaction.difficulty,
+            predicted_confidence=interaction.predicted_confidence,
             now=interaction.now,
         )
         await db.commit()
@@ -677,6 +709,102 @@ async def get_daily_plan(
     """
     from services.daily_plan_service import build_daily_plan
     return await build_daily_plan(db, student_id, subject=subject)
+
+
+# ===== §F.0 努力收益看板（M-F）=====
+
+@app.get("/v1/effortful-gains/{student_id}")
+async def get_effortful_gains(
+    student_id: UUID,
+    limit: int = Query(10, ge=1, le=50),
+    db: AsyncSession = Depends(get_db),
+):
+    """GET /v1/effortful-gains/{student_id} — 努力收益看板（M-F）。
+    展示"做得吃力、但记忆稳定性提升最多"的题，按 effortful_gain 降序。
+    """
+    rows = (await db.execute(
+        select(EffortfulGain)
+        .where(EffortfulGain.student_id == student_id)
+        .order_by(EffortfulGain.effortful_gain.desc())
+        .limit(limit)
+    )).scalars().all()
+
+    qids = [r.question_id for r in rows if r.question_id]
+    kc_map: dict = {}
+    if qids:
+        wqs = (await db.execute(
+            select(WrongQuestion.id, WrongQuestion.knowledge_points)
+            .where(WrongQuestion.id.in_(qids))
+        )).all()
+        for qid, kps in wqs:
+            kc_map[qid] = next(iter((kps or {}).values()), None)
+
+    return {"top_gains": [
+        {
+            "question_id": str(r.question_id) if r.question_id else None,
+            "kc": kc_map.get(r.question_id),
+            "struggle_score": r.struggle_score,
+            "retention_delta": r.retention_delta,
+            "effortful_gain": r.effortful_gain,
+            "occurred_at": r.occurred_at.isoformat() if r.occurred_at else None,
+        }
+        for r in rows
+    ]}
+
+
+@app.get("/v1/weak-roots/{student_id}")
+async def get_weak_roots(student_id: UUID, db: AsyncSession = Depends(get_db)):
+    """GET /v1/weak-roots/{student_id} — 前置图谱归因。
+    对薄弱知识点上溯前置链，找出"先补根再补叶"的薄弱/未练前置。
+    """
+    from services.cognitive_service import weakness_roots
+    return {"roots": await weakness_roots(db, student_id)}
+
+
+@app.get("/v1/weekly-digest/{student_id}")
+async def get_weekly_digest(student_id: UUID, db: AsyncSession = Depends(get_db)):
+    """GET /v1/weekly-digest/{student_id} — 留存引擎：连续天数 + 本周成长摘要。"""
+    from services.cognitive_service import weekly_digest
+    return await weekly_digest(db, student_id)
+
+
+@app.get("/v1/parent/report/{student_id}")
+async def get_parent_report(
+    student_id: UUID,
+    date: Optional[date] = Query(None),
+    db: AsyncSession = Depends(get_db),
+):
+    """GET /v1/parent/report/{student_id}?date — 家长学习日报（可转发微信）。"""
+    from services.cognitive_service import daily_report
+    return await daily_report(db, student_id, date)
+
+
+@app.get("/v1/calibration/{student_id}")
+async def get_calibration(student_id: UUID, db: AsyncSession = Depends(get_db)):
+    """GET /v1/calibration/{student_id} — JOL 校准（判断学习的准度）。
+    比较作答前自评把握(predicted_confidence)与实际对错：
+    brier 越低越准；overconfidence>0=高估自己(努力错觉)，<0=低估自己。
+    """
+    rows = (await db.execute(
+        select(InteractionEvent.predicted_confidence, InteractionEvent.is_correct)
+        .where(InteractionEvent.student_id == student_id)
+        .where(InteractionEvent.predicted_confidence.is_not(None))
+    )).all()
+    n = len(rows)
+    if n == 0:
+        return {"n": 0, "brier": None, "mean_predicted": None, "accuracy": None, "overconfidence": None}
+    preds = [float(p) for p, _ in rows]
+    actuals = [1.0 if c else 0.0 for _, c in rows]
+    brier = sum((p - a) ** 2 for p, a in zip(preds, actuals)) / n
+    mean_pred = sum(preds) / n
+    acc = sum(actuals) / n
+    return {
+        "n": n,
+        "brier": round(brier, 4),
+        "mean_predicted": round(mean_pred, 4),
+        "accuracy": round(acc, 4),
+        "overconfidence": round(mean_pred - acc, 4),
+    }
 
 
 # ===== §F.1 苏格拉底会话 =====
@@ -1893,6 +2021,18 @@ def _rn_dict(rn: ReadingNote) -> dict:
 
 # ── 前端静态文件（SPA，最后挂载） ─────────────────────────────────────────
 from fastapi.staticfiles import StaticFiles
+from fastapi.responses import FileResponse
 _FRONTEND_DIST = Path(__file__).parent.parent / "frontend" / "dist"
 if _FRONTEND_DIST.exists():
-    app.mount("/", StaticFiles(directory=_FRONTEND_DIST, html=True), name="frontend")
+    # 构建产物（哈希文件名）走 StaticFiles；其余任意路径回退 index.html 支持 SPA 客户端路由
+    app.mount("/assets", StaticFiles(directory=_FRONTEND_DIST / "assets"), name="assets")
+
+    @app.get("/{full_path:path}", include_in_schema=False)
+    async def spa_fallback(full_path: str):
+        # 未匹配的 API 路径仍返回 404，不要吞掉
+        if full_path.startswith(("v1/", "v1", "health", "docs", "redoc", "openapi.json")):
+            raise HTTPException(status_code=404, detail="Not Found")
+        candidate = _FRONTEND_DIST / full_path
+        if full_path and candidate.is_file():
+            return FileResponse(candidate)
+        return FileResponse(_FRONTEND_DIST / "index.html")

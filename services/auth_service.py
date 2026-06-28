@@ -134,6 +134,7 @@ async def register_student(
         name=name,
         role=UserRole.student,
         grade=grade,
+        invite_code=uuid.uuid4().hex[:6].upper(),   # 供家长绑定
     )
     db.add(user)
     await db.flush()
@@ -151,7 +152,44 @@ async def register_student(
     token = create_access_token({"sub": str(user.id), "role": user.role.value})
     return {
         "token": token,
-        "user": {"id": str(user.id), "name": user.name, "phone": user.phone},
+        "user": {"id": str(user.id), "name": user.name, "phone": user.phone,
+                 "invite_code": user.invite_code},
+    }
+
+
+async def register_parent(
+    db: AsyncSession,
+    phone: str,
+    code: str,
+    name: str,
+    invite_code: str,
+) -> dict:
+    """注册家长：验证码校验 → 手机唯一 → 写 users(parent) → 凭 invite_code 绑定孩子 → JWT。"""
+    from services.models import ParentStudent, User, UserRole
+
+    if not await verify_code(phone, code):
+        return {"error_code": 400, "error": "验证码无效或已过期"}
+
+    existing = (await db.execute(select(User).where(User.phone == phone))).scalar_one_or_none()
+    if existing:
+        return {"error_code": 409, "error": "该手机号已注册"}
+
+    student = (await db.execute(
+        select(User).where(User.invite_code == invite_code, User.role == UserRole.student)
+    )).scalar_one_or_none()
+    if not student:
+        return {"error_code": 404, "error": "邀请码无效"}
+
+    parent = User(id=uuid.uuid4(), phone=phone, name=name, role=UserRole.parent)
+    db.add(parent)
+    await db.flush()
+    db.add(ParentStudent(parent_id=parent.id, student_id=student.id))
+    await db.flush()
+
+    token = create_access_token({"sub": str(parent.id), "role": parent.role.value})
+    return {
+        "token": token,
+        "user": {"id": str(parent.id), "name": parent.name, "phone": parent.phone},
     }
 
 

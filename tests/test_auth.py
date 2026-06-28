@@ -16,7 +16,7 @@ from httpx import AsyncClient, ASGITransport
 from obase.config import settings
 from obase.db import SessionLocal
 from services.main import app
-from services.models import User, GuardianConsent
+from services.models import User, GuardianConsent, ParentStudent
 from sqlalchemy import delete, select
 
 
@@ -209,3 +209,54 @@ async def test_code_consumed_after_use(client):
     assert res2.status_code == 409
 
     await _clean_phone(phone)
+
+
+@pytest.mark.asyncio
+async def test_register_parent_binds_child(client):
+    """学生注册得 invite_code → 家长用 invite_code 注册并绑定 → /parent/children 含该生。"""
+    s_phone = "13988880001"
+    p_phone = "13988880002"
+
+    async def _cleanup():
+        async with SessionLocal() as s:
+            ids = (await s.execute(select(User.id).where(User.phone.in_([s_phone, p_phone])))).scalars().all()
+            if ids:
+                await s.execute(delete(ParentStudent).where(
+                    (ParentStudent.parent_id.in_(ids)) | (ParentStudent.student_id.in_(ids))))
+                await s.commit()
+        await _clean_phone(p_phone)
+        await _clean_phone(s_phone)
+
+    await _cleanup()
+    try:
+        # 学生注册（≥14，无需监护人同意），拿到 invite_code
+        await _inject_code(s_phone)
+        rs = await client.post("/v1/auth/register/student", json={
+            "phone": s_phone, "code": "123456", "name": "娃", "birth_date": "2008-01-01", "grade": "高一",
+        })
+        assert rs.status_code == 201, rs.text
+        invite = rs.json()["user"]["invite_code"]
+        assert invite and len(invite) == 6
+
+        # 家长注册 + 凭 invite_code 绑定
+        await _inject_code(p_phone)
+        rp = await client.post("/v1/auth/register/parent", json={
+            "phone": p_phone, "code": "123456", "name": "家长", "invite_code": invite,
+        })
+        assert rp.status_code == 201, rp.text
+        ptok = rp.json()["token"]
+
+        # 家长能看到孩子
+        rc = await client.get("/v1/parent/children", headers={"Authorization": f"Bearer {ptok}"})
+        assert rc.status_code == 200, rc.text
+        assert "娃" in [c["name"] for c in rc.json()]
+
+        # 错误邀请码 → 404
+        await _inject_code("13988880003")
+        rbad = await client.post("/v1/auth/register/parent", json={
+            "phone": "13988880003", "code": "123456", "name": "X", "invite_code": "ZZZZZZ",
+        })
+        assert rbad.status_code == 404
+    finally:
+        await _clean_phone("13988880003")
+        await _cleanup()

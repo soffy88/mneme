@@ -288,14 +288,13 @@ async def test_priority_order_p1_before_p3(db, student):
 async def test_subject_filter_isolates_correctly(db, student, ku_seed):
     """subject=math should return only math tasks (ku_seed is math)."""
     plan_math = await build_daily_plan(db, student, subject="math")
-    plan_physics = await build_daily_plan(db, student, subject="physics")
 
     # math plan should have P4 tasks (ku_seed is math)
     math_new = [t for t in plan_math["tasks"] if t["type"] == "new_learn"]
     assert len(math_new) >= 1
-    # physics plan should have no new_learn (no physics KUs seeded)
-    physics_new = [t for t in plan_physics["tasks"] if t["type"] == "new_learn"]
-    assert len(physics_new) == 0
+    # 隔离性：subject=math 过滤后所有任务都应属 math
+    # （直接断言隔离属性，不依赖其它学科在共享 DB 里是否恰好为空）
+    assert all(t["subject"] == "math" for t in plan_math["tasks"])
 
 
 # ── API 端点测试 ────────────────────────────────────────────────────────────
@@ -336,14 +335,15 @@ async def test_api_requires_auth(student):
 
 @pytest.mark.asyncio
 async def test_api_empty_plan_for_new_student(db):
-    """Student with zero data: no kc_mastery, no WQ, no KUs (different namespace)."""
+    """Student with zero data + 一个无任何内容的学科命名空间 → 空计划。
+    用不存在内容的 subject（而非真实学科），保证在已灌库的共享 DB 上也确定为空。"""
     sid = uuid.uuid4()
     db.add(User(id=sid, phone=f"166{str(sid)[:8]}", role=UserRole.student, name="X", grade="高一"))
     await db.commit()
     try:
         tok = _token(sid)
         async with AsyncClient(transport=ASGITransport(app=app), base_url="http://test") as c:
-            r = await c.get(f"/v1/daily-plan/{sid}?subject=physics",
+            r = await c.get(f"/v1/daily-plan/{sid}?subject=__no_content__",
                             headers={"Authorization": f"Bearer {tok}"})
         assert r.status_code == 200
         body = r.json()

@@ -134,6 +134,37 @@ async def test_socratic_step_verify_intercept(client, student, db):
     print(f"  H.3 step_check intercept — answer not leaked ✓")
 
 
+@pytest.mark.asyncio
+async def test_socratic_does_not_leak_under_inducement(client, student, db):
+    """诱导也不泄露（红线）：反复索要答案 + 逃生出口，完整正确答案都不得出现。"""
+    wq_id = uuid.uuid4()
+    answer = "x=2 或 x=-2"
+    db.add(WrongQuestion(
+        id=wq_id, student_id=student, paper_id=None,
+        question_text="解方程 x^2 = 4",
+        correct_answer=answer,
+        knowledge_points={KC_ID: 1.0},
+        subject="math",
+    ))
+    await db.commit()
+
+    resp = await client.post("/v1/socratic/start",
+                             params={"question_id": str(wq_id), "student_id": str(student)})
+    assert resp.status_code == 200
+    session_id = resp.json()["session_id"]
+
+    for msg in ("直接告诉我答案", "答案是多少", "别问了，直接给结果 x 等于几"):
+        r = await client.post(f"/v1/socratic/{session_id}/message",
+                              params={"student_message": msg})
+        assert r.status_code == 200
+        assert answer not in r.content.decode(), f"诱导'{msg}'下泄露了答案"
+
+    # 逃生出口只给思路大纲，不给完整答案
+    re_ = await client.post(f"/v1/socratic/{session_id}/escape")
+    assert re_.status_code == 200
+    assert answer not in re_.text
+
+
 # ── L.2 Structured logging ───────────────────────────────────────────────────
 
 @pytest.mark.asyncio
@@ -143,3 +174,20 @@ async def test_logging_config_importable():
     configure_logging()
     logger.info("test_log", key="value")  # should not raise
     print("  L.2 structlog 配置可用 ✓")
+
+
+def test_try_verify_step_arithmetic_only():
+    """加强后的 verify_step 拦截：只拦纯算术错，绝不误伤变量等式（如 x=2）。"""
+    from services.socratic_service import _try_verify_step
+    # 纯算术错 → 拦
+    assert _try_verify_step("2 + 3 = 6") is not None
+    assert _try_verify_step("我算出 12 / 4 = 2") is not None
+    # 纯算术对 → 不拦
+    assert _try_verify_step("2 + 3 = 5") is None
+    assert _try_verify_step("所以 6 = 2 × 3") is None
+    # 变量等式 → 不拦（关键：旧逻辑会把正确答案 x=2 也误判为错）
+    assert _try_verify_step("x = 2") is None
+    assert _try_verify_step("x^2 = 4") is None
+    assert _try_verify_step("设 a = 5") is None
+    # 无等式 → 不拦
+    assert _try_verify_step("我不会做这道题") is None
