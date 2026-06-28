@@ -7,12 +7,16 @@
 5. 导入50个高考高频易错成语 + DeepSeek 补全
 6. 导出供抽查
 """
-import asyncio, json, sys, time, hashlib
+import os
+import asyncio
+import json
+import sys
+import time
 import asyncpg
 import urllib.request
 
 DB_URL  = "postgresql://postgres:postgres@localhost:5433/mneme"
-DS_KEY  = "sk-b3f05c1f0e32484daee698170181f9ac"
+DS_KEY  = os.environ.get("DEEPSEEK_API_KEY", "")
 DS_URL  = "https://api.deepseek.com/chat/completions"
 
 GAOKAO_TEXTBOOK_ID = "GAOKAO-CHINESE-GAOKAO"
@@ -241,7 +245,7 @@ async def run(dry_run: bool = True):
             """, GAOKAO_TEXTBOOK_ID)
         print(f"  {'✅ 创建' if not dry_run else '[DRY] 创建'} textbook: {GAOKAO_TEXTBOOK_ID}")
     else:
-        print(f"  ✓ textbook 已存在")
+        print("  ✓ textbook 已存在")
 
     kc_exists = await conn.fetchval("SELECT id FROM knowledge_clusters WHERE id=$1", GAOKAO_CLUSTER_ID)
     if not kc_exists:
@@ -253,7 +257,7 @@ async def run(dry_run: bool = True):
             """, GAOKAO_CLUSTER_ID, GAOKAO_TEXTBOOK_ID)
         print(f"  {'✅ 创建' if not dry_run else '[DRY] 创建'} cluster: {GAOKAO_CLUSTER_ID}")
     else:
-        print(f"  ✓ cluster 已存在")
+        print("  ✓ cluster 已存在")
 
     # ── Step 5: 导入50个高考成语 ──────────────────────────────
     print(f"\n=== Step 5: 导入50个高考高频成语 ({'DRY-RUN' if dry_run else '写库'}) ===")
@@ -336,7 +340,7 @@ async def run(dry_run: bool = True):
         print()
 
     if dry_run:
-        print(f"\n=== DRY-RUN 完毕。确认内容无误后传 --execute 写库 ===")
+        print("\n=== DRY-RUN 完毕。确认内容无误后传 --execute 写库 ===")
     else:
         print(f"\n=== 写库完成：{len(results)} 个高考成语已导入 ===")
 

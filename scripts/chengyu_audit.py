@@ -248,7 +248,7 @@ async def run():
 
     print()
     print("─" * 65)
-    print(f"汇总:")
+    print("汇总:")
     print(f"  A-转类型:     {len(cat_a):>4} 条")
     print(f"  B-清理括号:   {len(cat_b):>4} 条")
     print(f"  C1-转mingpian:{len(cat_c_ming):>4} 条")

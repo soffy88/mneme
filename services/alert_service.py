@@ -3,7 +3,7 @@ from __future__ import annotations
 
 import uuid
 from datetime import datetime, timedelta, timezone
-from typing import Optional
+from typing import Any
 
 from sqlalchemy import select, func
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -32,7 +32,7 @@ async def get_student_alerts(db: AsyncSession, student_id: uuid.UUID, parent_id:
 
 async def run_alert_checks(db: AsyncSession, student_id: uuid.UUID, parent_id: uuid.UUID) -> list[dict]:
     """Run all 5 alert evaluators. Layer 4 only — reads DB, no business logic."""
-    alerts = []
+    alerts: list[dict[str, Any]] = []
     now = datetime.now(timezone.utc)
 
     # 1. emotion: recent socratic sessions with high session count

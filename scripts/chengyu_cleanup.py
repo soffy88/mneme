@@ -3,7 +3,10 @@
 dry-run: python3 scripts/chengyu_cleanup.py
 执行:    python3 scripts/chengyu_cleanup.py --execute
 """
-import asyncio, json, re, sys
+import asyncio
+import json
+import re
+import sys
 import asyncpg
 
 DB_URL = "postgresql://postgres:postgres@localhost:5433/mneme"
@@ -303,7 +306,7 @@ async def run(dry_run: bool = True):
 
     print()
     print("─" * 68)
-    print(f"汇总:")
+    print("汇总:")
     print(f"  删除:              {len(ops_delete):>4} 条")
     print(f"  转 cizu_yunyong:   {total_cizu:>4} 条")
     print(f"  转 zixing_ziyin:   {total_ziyin:>4} 条")
@@ -390,7 +393,7 @@ async def run(dry_run: bool = True):
 
     await conn.close()
 
-    print(f"\n✅ 执行完成:")
+    print("\n✅ 执行完成:")
     print(f"   删除 {deleted} 条")
     print(f"   转类型 {retyped} 条")
     print(f"   改名(去括号) {renamed} 条")

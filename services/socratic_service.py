@@ -81,7 +81,7 @@ async def start_session(db: AsyncSession, question_id: uuid.UUID, student_id: uu
             metacog_options = metacog_data.get("options", [])
             
             # Record it as the first system/assistant message in SocraticSession
-            session.messages = [{"role": "assistant", "content": first_q, "options": metacog_options}]
+            session.messages = [{"role": "assistant", "content": first_q, "options": metacog_options}]  # type: ignore[assignment]  # JSONB column 实际存放消息列表
             await db.flush()
         except Exception:
             pass # fallback to default if metacog fails
@@ -276,6 +276,7 @@ async def end_session(db: AsyncSession, session_id: uuid.UUID, outcome: str = "p
         if wq and wq.knowledge_points:
             kc_id = next(iter(wq.knowledge_points.keys()))
             from services.cognitive_service import process_interaction
+            assert session.student_id is not None
             await process_interaction(
                 db,
                 student_id=session.student_id,

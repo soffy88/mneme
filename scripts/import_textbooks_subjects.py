@@ -9,7 +9,8 @@ textbook_id 规则：{PUBLISHER}-{GRADE}-{SUBJECT}-{VOLUME}
   VOLUME: S/X(上/下) BX1/2/3(必修) SBX1/2/3(选必) QYC(全一册) 等
 """
 
-import os, sys, uuid, hashlib
+import os
+import hashlib
 from pathlib import Path
 
 import psycopg2

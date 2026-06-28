@@ -77,7 +77,7 @@ async def reading_guide_message_stream(
     )).scalar_one_or_none()
 
     if not row:
-        yield f"data: {{'error':'session not found'}}\n\n"
+        yield "data: {'error':'session not found'}\n\n"
         return
 
     messages_data: dict = row.messages or {"article_text": "", "question": "", "subject": "chinese", "history": []}

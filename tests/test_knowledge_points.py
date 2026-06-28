@@ -108,7 +108,6 @@ def _headers(token: str) -> dict:
 
 @pytest.mark.asyncio
 async def test_list_by_subject_returns_seeded_kus(seed, student):
-    tb_id = seed["tb_id"]
     async with AsyncClient(transport=ASGITransport(app=app), base_url="http://test") as c:
         r = await c.get("/v1/knowledge-points", params={"subject": "math"},
                         headers=_headers(student))

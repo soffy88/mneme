@@ -2,7 +2,6 @@
 from __future__ import annotations
 
 import asyncio
-import uuid
 from pathlib import Path
 
 from tasks.celery_app import celery_app

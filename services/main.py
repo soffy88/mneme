@@ -23,6 +23,8 @@ from obase.prior_provider import PriorProvider
 from obase.llm import register_default_providers
 from obase.auth import decode_access_token
 from omodul.cognitive import InteractionInput
+from oprim.prereq_graph import topo_sort_by_prereq
+from oprim.calibration import brier_calibration
 from omodul.auth import SendCodeInput, RegisterStudentInput, LoginInput
 import services.auth_service as auth_service
 from services.sms import get_sms_provider
@@ -404,29 +406,7 @@ _FREQ_RANK    = {"high": 2, "mid": 1, "low": 0}
 _MASTERY_RANK = {"red": 0, "yellow": 1, "unknown": 2, "green": 3}
 
 
-def _topo_sort_kus(items: list[dict]) -> list[dict]:
-    """Kahn's topological sort on prerequisites (cycles land at end)."""
-    id_map  = {k["id"]: k for k in items}
-    in_deg  = {k["id"]: 0 for k in items}
-    adj: dict[str, list[str]] = {k["id"]: [] for k in items}
-    for ku in items:
-        for p in (ku.get("prerequisites") or []):
-            if p in id_map:
-                in_deg[ku["id"]] += 1
-                adj[p].append(ku["id"])
-    queue  = [k for k in items if in_deg[k["id"]] == 0]
-    result: list[dict] = []
-    while queue:
-        ku = queue.pop(0)
-        result.append(ku)
-        for succ in adj[ku["id"]]:
-            in_deg[succ] -= 1
-            if in_deg[succ] == 0:
-                queue.append(id_map[succ])
-    seen = {k["id"] for k in result}
-    result.extend(k for k in items if k["id"] not in seen)
-    return result
-
+# 拓扑排序已上移至 oprim.prereq_graph.topo_sort_by_prereq（确定性算法归 oprim）
 
 @app.get("/v1/knowledge-points")
 async def list_knowledge_points(
@@ -512,7 +492,7 @@ async def list_knowledge_points(
     elif sort == "exam_freq":
         items.sort(key=lambda x: -_FREQ_RANK.get(x["exam_frequency"], 1))
     elif sort == "prereq":
-        items = _topo_sort_kus(items)
+        items = topo_sort_by_prereq(items)
 
     return items
 
@@ -807,21 +787,10 @@ async def get_calibration(student_id: UUID, db: AsyncSession = Depends(get_db)):
         .where(InteractionEvent.student_id == student_id)
         .where(InteractionEvent.predicted_confidence.is_not(None))
     )).all()
-    n = len(rows)
-    if n == 0:
-        return {"n": 0, "brier": None, "mean_predicted": None, "accuracy": None, "overconfidence": None}
-    preds = [float(p) for p, _ in rows]
-    actuals = [1.0 if c else 0.0 for _, c in rows]
-    brier = sum((p - a) ** 2 for p, a in zip(preds, actuals)) / n
-    mean_pred = sum(preds) / n
-    acc = sum(actuals) / n
-    return {
-        "n": n,
-        "brier": round(brier, 4),
-        "mean_predicted": round(mean_pred, 4),
-        "accuracy": round(acc, 4),
-        "overconfidence": round(mean_pred - acc, 4),
-    }
+    return brier_calibration(
+        predicted=[float(p) for p, _ in rows],
+        actual=[1.0 if c else 0.0 for _, c in rows],
+    )
 
 
 # ===== §F.1 苏格拉底会话 =====

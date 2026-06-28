@@ -705,7 +705,7 @@ async def process_book(
         print(f"    {t:25s}: {c}{flag}", flush=True)
 
     # 每类样本1条（002字段）
-    print(f"\n  ── 样本 ──", flush=True)
+    print("\n  ── 样本 ──", flush=True)
     shown: set = set()
     for ku in kus:
         t = ku.get("ku_type")
@@ -718,7 +718,7 @@ async def process_book(
                 print(f"    → why: {why_preview}", flush=True)
 
     if dry_run:
-        print(f"\n  [dry-run] 跳过入库", flush=True)
+        print("\n  [dry-run] 跳过入库", flush=True)
         return {"tb_id": tb_id, "ku_count": len(kus), "type_cnt": dict(type_cnt)}
 
     if not anomaly_check(tb_id, kus):

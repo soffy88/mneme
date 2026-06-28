@@ -3,6 +3,8 @@ services/seed.py — 启动时 BKT 先验参数种子填充（幂等）
 """
 from __future__ import annotations
 
+from typing import cast
+
 from sqlalchemy.dialects.postgresql import insert as pg_insert
 from sqlalchemy.ext.asyncio import AsyncSession
 
@@ -16,8 +18,8 @@ async def seed_bkt_priors(db: AsyncSession) -> int:
     """Upsert KC × 题型 先验参数到 bkt_priors 表，返回 upsert 行数。"""
     rows = []
     for kc in KC_LIST:
-        bkt = kc["bkt"]
-        for q_type in kc.get("question_types", ["solve"]):
+        bkt = cast("dict[str, float]", kc["bkt"])
+        for q_type in cast("list[str]", kc.get("question_types", ["solve"])):
             rows.append(
                 {
                     "subject": "math",
