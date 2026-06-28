@@ -738,3 +738,154 @@ Phase 3：K（合规）+ L（部署）
 - **N.4 用户教材绑定**（注册时选教材 textbook_id）
 - **英语/历史 KU 抽取**（参照数学/物理流程）
 - **exam_date 字段 → exam_countdown_days**（O.2 遗留，users 表加字段即可）
+
+---
+
+## R · 数学单科学生闭环前端（2026-06-28）
+
+- [x] **R.1 [P0] 数学单科学生认知闭环前端**（对标盘点后聚焦 MVP 主科；物理/语文零改动）
+  ✅ `types.ts` MATH_KU_TYPE_META；`pages/math/` MathHome/MathLesson/MathDashboard/PaperUpload/ErrorJournal；
+  通用 `pages/SocraticDialog.tsx`（SSE 流式+逃生出口）；`components/` MasteryOverview/GrowthCurve(手写SVG)/DailyPlanCard；
+  `api.ts` 扩 10 个认知端点封装；`App.tsx` 数学路由+导航、默认落地页改 /subjects/math；
+  闭环：上传试卷→薄弱排序→成长曲线→今日计划→苏格拉底→错题本。
+  验收：`tsc -b && vite build` 通过，新增文件 0 lint 问题。
+  详见 `ASSESSMENT_02_MATH_FRONTEND_TASKS.md`。
+  待办：努力看板（缺 /v1/effortful-gains 端点）；真实后端联调（需 compose+LLM key）；
+  `subject="math"` 硬编码（main.py:1008/1140）留待开放其它学科时再去。
+
+- [x] **R.2 [P1] BKT+IRT Phase 0 内核改造（零行为变化）** ✅ 2026-06-28
+  ✅ 内核 `oprim/bkt.py`(生产链路) + 孪生 `_cognitive.py` 加 `difficulty: float|None=None`（logit 空间调制
+  slip/guess，None/0.5 逐位等价）；私有 `_item_adjust`，未碰 KCState/更新顺序/DB。
+  ✅ `oprim/tests/test_bkt_irt.py` R1/R2/R3/R6 共 69 passed；既有 test_cognitive 18 passed 零回归；
+  mneme 生产链路 test_engine/cognitive_service/paper(_analysis) 13 passed。
+  详见 `ASSESSMENT_03_BKT_IRT_DESIGN.md`。
+  待办（Phase 1）：透传难度到 oskill/服务层 + `interaction_events.item_difficulty` 列(migration) +
+  R4 AUC 增益测试 + 群体校准；D5 BKT 单源收敛（现两份同步未合并）。
+
+- [x] **R.3 [P1] D5 BKT 单源收敛 + BKT+IRT Phase 1（难度透传落库）** ✅ 2026-06-28
+  ✅ D5：差分实证 19440 组合逐位一致(max|Δ|=0)→ `oprim/bkt.py` 改为指向 `_cognitive`(canonical) 的纯别名层；
+  `test_bkt_single_source.py` 守卫防再 fork。
+  ✅ Phase 1：difficulty 全链路透传 `POST /v1/interaction → cognitive_service → omodul → oskill → oprim.bkt`；
+  `InteractionEvent.item_difficulty` 列 + Alembic `d049051a89f6`（live Postgres upgrade/downgrade/re-upgrade 可逆）；
+  R4 AUC 增益测试（难度感知≥难度盲）。
+  验收：内核 90 passed（含 R1-R6+单源守卫）；mneme 生产链路 16 passed；live 端到端 process_interaction(difficulty=0.8)
+  回写 item_difficulty=0.8。详见 `ASSESSMENT_03`。
+  注：mneme 全量 pytest 有 6 个预存在失败(health/daily_plan空计划/socratic kc_updated)，与本变更无关(源码仅4行增量)。
+  待办（Phase 2）：question_id join questions.difficulty 自动取难度；群体校准；2PL/DKT。
+
+- [x] **R.4 [P1] 收尾：测试转绿 + IRT Phase 2 + 数学前端 live 联调** ✅ 2026-06-28
+  ✅ 修 4 个真实 bug：① `/health` 重复路由（155 行遮蔽 1151 官方版，删重复）；② `end_session` 不更新认知状态
+  （补：success→答对/failed→答错+事件/abandoned→不更新，返回 kc_updated）×3 测试。
+  ✅ 2 个 daily_plan 测试改为确定性（直接断言 subject 隔离属性 / 用无内容命名空间），不依赖共享 DB 中物理是否为空、不弱化。
+  ✅ IRT Phase 2：`process_interaction` 未显式给难度时按 kc_id 自动取 `KnowledgeUnit.difficulty`（非 KU 保持 None）+ 测试。
+  ✅ 数学前端 live 联调（api:8000+DB）：knowledge-points/mastery/mastery-curve/daily-plan/socratic-start-for-ku
+  契约全部对齐前端 TS 接口；**修复 app 级 auth bug**（api.ts login 读 `access_token`，后端返回 `token`→ 全站登录失效）。
+  验收：mneme 全量 **143 passed**（此前 6 failed）；内核 BKT 90 passed；前端 build 通过。
+
+- [x] **R.5 [P2] 努力收益看板（M-F）端点+前端** ✅ 2026-06-28
+  ✅ 后端：`process_interaction` 算 `effortful_gain = struggle_score × retention_delta`（FSRS 稳定性增量），
+  仅"吃力且做对且确有记忆增益"时落 `EffortfulGain`（表已存在，无需 migration）；`end_session` 苏格拉底 outcome
+  标 struggled=True；新端点 `GET /v1/effortful-gains/{sid}`（按 effortful_gain 降序 + question_id→kc 解析）。
+  ✅ 前端：`api.ts getEffortfulGains`；`components/EffortBoard.tsx`（努力错觉对抗文案+收益条）；接入 `MathDashboard`。
+  验收：mneme **145 passed**（+2 努力测试，含 ASGI 端到端）；内核 BKT 90 passed；前端 build 通过、新文件 0 lint。
+  注：oprim `compute_effortful_gain` 是 cohort 聚合指标（非单次 struggle×delta），故单次按 Master M-F 公式内联算。
+  待 api 容器 rebuild 后新端点才在 :8000 生效（测试走 ASGI 对当前源码已验证）。
+
+- [x] **R.6 [P1/P2] 收尾批量：重建上线 + 文档漂移 + 前置图谱 + 内容质检 + 家长端** ✅ 2026-06-28
+  ✅ **重建上线**：`docker compose up -d --build api worker`，验证 `/health`→ok（去重修复）、`/v1/effortful-gains`→200、内核 BKT+IRT 全量上线。
+  ✅ **① 文档漂移**（ASSESSMENT_01）：D1 AUC 0.77→诚实(0.65/目标)；D3 `scripts/dump_routes.py`(导出66路由)+修 mastery/curve 路径；D4/D7/D8 归层/KC计数/删根目录死 test_engine.py。
+  ✅ **③ 前置图谱进模型**：`cognitive_service.weakness_roots`（薄弱KU上溯薄弱/未练前置）+ `GET /v1/weak-roots/{sid}` + 前端 `WeakRoots.tsx`（接入 MathDashboard，"先补根"跳苏格拉底）+ 测试；live 验证（正负数→上溯自然数/小数）。
+  ✅ **⑤ 内容质检门**：`scripts/qc_rich_content.py`（生成失败/拒答/LaTeX不配对/过薄，有问题退出码1）；扫出真实债：数学 20、物理 1 个 KU 破损（修复需 `enrich_ku_content.py --retry-failed`，外部 LLM key）。
+  ✅ **④ 家长端**（补 2 个后端缺口）：实现 `register/parent` 端点 + `register_student` 发 invite_code；`auth_service.register_parent`（凭码绑定）+ 测试；前端 `pages/parent/ParentHome.tsx`（成长摘要非分数）+ App 角色路由；**全流程 live 验证**（建生→邀请码→注册家长→children→overview）。
+  验收：mneme **147 passed**；内核 BKT 90 passed；前端 build 通过、新文件 0 lint。
+  剩余（需外部依赖）：rich_content 21 破损重生成、试卷 OCR 运行时（均需 LLM key）；② 补救阶梯/JOL（待答题表单 UI 落地）；D6 socratic verify_step 核验。
+
+- [x] **R.7 [P2] rich_content 破损修复（改用本地 Ollama 模型）** ✅ 2026-06-28
+  DeepSeek 账户余额不足(402)，改用本地 Ollama `qwen2.5:7b`。诊断+修了 3 个真实问题：
+  ① `enrich_ku_content.py` LLM 端点/模型/并发/tokens 改为 env 可配（`LLM_BASE_URL/LLM_MODEL/LLM_API_KEY/LLM_WORKERS/LLM_MAX_TOKENS`）；
+  ② **worker bug**：含 `_error`/`_raw` 的失败结果原被当 ok 落库（破损静默持久化）→ 改为失败不落库报❌；
+  ③ **本地模型 JSON 修复**：qwen 把 LaTeX 写成单反斜杠($\\vec→\\v 非法转义)致 JSON 失败 → 加 `_parse_json_lenient`（双反斜杠+截{…}）；
+  ④ qc 拒答标记收窄（"无法完成"误伤"职工无法完成销售指标"正常内容）。
+  结果：**物理 1551/1551 全绿；数学 20 个破损全修复(0 _error/_raw)**，仅剩 1 个 LaTeX 奇数$(双曲线弦长公式，内容有效、cosmetic)。
+  跑法：`set -a;. ./.env;set +a; LLM_BASE_URL=http://localhost:11434/v1 LLM_MODEL=qwen2.5:7b LLM_API_KEY=ollama LLM_MAX_TOKENS=2000 .venv/bin/python scripts/enrich_ku_content.py --subject math --retry-failed`
+  备注：数学仍有 926 个未生成(NULL，P.4 只做了1469)，现可用本地模型补全（~2.5h）；`目标管理与销售指标建议` 实为合法统计应用KU(非坏KU)。
+
+- [x] **R.8 [P2] 补救阶梯（样例→淡出→苏格拉底→独立，掌握度自适应）** ✅ 2026-06-28
+  对抗冷启动挫败/专家逆转：纯前端，复用 KU.rich_content（"讲透"）+ p_mastery，无需新后端。
+  `components/RemediationLadder.tsx`（4 级脚手架，入口按掌握度：<0.4 看讲解 / <0.7 抓重点 / ≥0.7 直接苏格拉底；
+  "↓要更多帮助 / ↑我会了"可上可下）；`pages/math/MathPractice.tsx`（取 KU 详情→渲染阶梯）；
+  App 路由 `/subjects/math/practice`；MathLesson 的"✏️做几道题"接入。
+  发现：此 Vite 前端**此前根本没渲染 rich_content**（RichContentView 是旧 Next.js 前端的），补救阶梯是"讲透"内容的首次落地。
+  验收：build 通过、新文件 0 lint；live 验证（学生 p_mastery=0.38 → 自适应入口阶段0 看讲解，rich_content 字段齐）。
+  ✅ KaTeX 增强（先改 Master §9 依赖清单再加）：装 katex@0.17 + @types/katex；main.tsx 引 katex CSS；
+  `components/MathText.tsx`（解析 $...$/$$...$$ 渲染 LaTeX，含 qwen 单反斜杠 \vec 场景）；接入 RemediationLadder。
+  验收：build 通过（59 个 katex 字体已打包进 dist）、0 lint、katex 渲染 sanity 通过。bundle JS 增至 172kB gzip（math 应用可接受）。
+
+- [x] **R.9 [P2] D6 verify_step 核验 + MathText 扩面 + JOL 校准** ✅ 2026-06-28
+  ✅ **D6 苏格拉底 verify_step 核验**：确认 `oprim/verify_step.py` 真实(sympy `simplify(after-before)==0`) + mneme `socratic_service` H.3 已接线 + 红线测试存在(test_remaining)。补了缺失的**"诱导也不泄露"红线测试**（反复索要答案+逃生出口，完整答案均不泄露）。遗留：`_try_verify_step` 启发式较糙(硬编码 before_rhs="0"、朴素分词)，只接住简单 `x=数` 步，非阻塞但可加强。
+  ✅ **MathText 扩面**：`KUDetailPanel` 的描述/适用条件改用 MathText 渲染公式（知识地图各科都受益，纯增量安全）。
+  ✅ **JOL 判断准度校准**：`interaction_events.predicted_confidence` 列(Alembic f1a2b3c4d5e6) + 全链路透传(omodul/obase/service/api，同 item_difficulty)；`GET /v1/calibration/{sid}`(Brier + overconfidence)；前端 `JolSelfTest.tsx`(预测把握→自己做→自评对错→高估/低估反馈) + `CalibrationCard`(接入 MathDashboard) + 路由 + 补救阶梯"独立"阶段入口。
+  验收：mneme **149 passed**(+JOL +诱导测试)；前端 build 通过、新文件 0 lint；migration live 落库确认；calibration 算法测试(brier=0.725/overconfidence=+0.05)通过。
+  注：JOL 改了 kernel(omodul/obase) → 需 rebuild 容器才在 :8000 生效。
+
+- [x] **R.10 [P2] 留存引擎 + verify_step 加强** ✅ 2026-06-28
+  ✅ **`_try_verify_step` 加强（红线）**：原逻辑等价于"判 rhs 是否=0"，把所有非零等式(含正确答案 x=2)都误判为错——纯假阳性。
+  改为：只拦**纯算术等式且不成立**(如 2+3=6，用 sympy verify_step 判定)，含变量等式一律不拦(避免误伤)。+ 8 例单元测试。
+  ✅ **留存引擎**：`cognitive_service.weekly_digest`(连续天数从 interaction_events 真实活跃日算 + 本周练题/知识点/正确率/努力收益摘要) +
+  `GET /v1/weekly-digest/{sid}` + 前端 `WeeklyDigest.tsx`(🔥连续天数 + headline + 未活跃时"别断了连续"轻提醒) 接入 MathHome 顶部。
+  验收：mneme **151 passed**(+streak +verify_step)；前端 build 通过 0 lint；live 冒烟(weekly-digest 返回真实摘要)。
+  备注：真 push 通知需 PWA service worker + 推送服务(独立 infra)，本次做的是 in-app 再触达提醒。
+
+- [~] **R.11 [P3] 数学 KU 本地补全（高一，进行中）** 🔄 2026-06-28
+  发现：原 926 个"未生成"中 755 个是小学 G1-G6（Master 定位初中高中，范围外，跳过），171 个是高一（标签从 G10 写成"高一"，被 P.4 的 G7-G12 过滤漏掉）。
+  脚本增强：`enrich_ku_content.py` 加 `--grades`(指定年级) + `--all-grades`(不限) 选项。
+  **后台启动**：171 个高一用本地 qwen2.5:7b 补全（commits per-KU 可断点续）。
+  注意：当前机器 GPU 被占/部分跑 CPU，单 KU >120s（R.7 时 ~12s），全量较慢；完成后跑 qc_rich_content 验证。
+  ⏸ 已停手动任务（已生成 9 个，162 个待续，进度保留）。
+  ⏰ 设本地 crontab 每天 01:00 自动跑 `scripts/run_enrich_gaoyi.sh`（含 Ollama 守护检测 + 5h 封顶 + 断点续 + UTF-8 wrapper），
+     避开其它 AII 夜间 GPU 任务（2:30/4:00）。日志 `scripts/enrich_gaoyi_cron.log`。完成后跑 qc 验证、可 `crontab -e` 删行。
+
+- [x] **R.12 [P2] MathText 扩面 + 家长端每周摘要复用** ✅ 2026-06-28
+  ✅ MathText 接到更多展示点：`SocraticDialog`(AI 追问含公式，流式逐段渲染) + `MathPractice` 标题。累计渲染点：补救阶梯/KUDetailPanel描述/苏格拉底/练习页。
+  ✅ 家长端复用 weekly_digest：`WeeklyDigest` 加 `forParent` prop(改提醒文案为家长视角)；`ParentHome` 的 ChildCard 嵌入孩子的每周成长摘要(连续天数+本周练题/知识点/正确率)。weekly_digest 端点无角色校验，家长 token 可直接取孩子数据。
+  验收：前端 build 通过、新文件改动 0 lint。无后端改动(端点 R.10 已 live)。
+
+- [x] **R.13 [P2] 家长端 5 类预警接前端** ✅ 2026-06-28
+  `api.ts` getAlerts/runAlertChecks；`components/ParentAlerts.tsx`（5 类预警 emotion/task_missing/time_drop/late_night/score_drop 图标+按 level red/amber/gray 着色 + "立即检查"按钮触发 run_alert_checks）；接入 ParentHome ChildCard（parent_id 取家长 JWT sub）。
+  验收：前端 build 通过 0 lint；**全流程 live**（注册家长→POST /check 跑出 task_missing/important "连续3天未完成任务"→GET /alerts 返回，形状对齐前端）；测试数据已清理。无后端改动（端点已有）。
+
+- [x] **R.14 [P2] 错题本检索练习流（M-C 红线）** ✅ 2026-06-28
+  `pages/math/ReviewPractice.tsx`：到期复习逐题，**未作答不可见答案**；先主动回忆→"我做完了自评"(秒杀/正常/吃力/没做出 映射 FSRS Easy/Good/Hard/Again) 或"看答案"→**used_answer=True=Again(记忆重置)**；揭示参考答案(MathText 渲染公式)→下一题。
+  `api.ts` getDueReview + postInteraction 扩 used_answer/effortless；App 路由 /subjects/math/review；ErrorJournal 加"🔁开始检索复习"入口。
+  验收：前端 build 0 lint；**红线 live 验证**：看答案(used_answer)→rating=Again、秒杀(effortless)→Easy、review/due→200。
+  备注：review/due 的变式题由 LLM(variant_for_review)生成，DeepSeek 余额不足时返回空(前端"暂无到期复习"优雅降级)，待 LLM 可用/切本地后填充。无后端改动。
+
+- [x] **R.15 [P2] 变式生成切本地 Ollama + 家长日报 + 交错练习前端** ✅ 2026-06-28
+  ✅ **#3 交错练习前端**：`components/InterleaveCard.tsx`（review-queue 序列摊开+KC配色+"相邻是否不同"判定，可视化 M-B 交错机制）接入 MathDashboard。
+  ✅ **#2 家长微信日报**（Master §8 端点缺失→补）：`cognitive_service.daily_report`（当天活动汇成一句话）+ `GET /v1/parent/report/{sid}?date`；前端 `DailyReportCard.tsx`（一键复制转发微信）接入 ParentHome。测试通过。
+  ✅ **#1 变式生成切本地 Ollama**（DeepSeek 余额不足）：`services/providers/ollama_caller.py`（OpenAI 兼容 caller）；main.py lifespan 在 `MNEME_LLM=ollama` 时把内核 LLM default 注册为 OllamaCaller（不影响 VLM/OCR）；docker-compose api+worker 加 `extra_hosts: host.docker.internal:host-gateway` + OLLAMA_* env；容器已重建。
+  **验证**：容器内 python 访问宿主 Ollama `host.docker.internal:11434 → 200(7模型)`；api 启动无错；mneme **152 passed**；前端 build 通过。
+  注意：本机 GPU 当前慢，review/due 内联生成变式较慢（夜间 GPU 空闲快）；苏格拉底回复也随之走本地 Ollama（不再 fallback）。
+
+  ⚠️→✅ 修复：切到 Ollama 后 review/due 仍返回 0——查出 `review_service` 用错属性名
+  （VariantItem 是 `.question`/`.answer` 非 `.question_text`/`.correct_answer`，且 `.answer` 生成后恒空需内核求解），
+  之前被 DeepSeek 402 提前失败掩盖。改为 `.question` + 答案回退 orig_a。
+  **端到端验证**：`/v1/review/due` 现返回 2 道 Ollama 生成的变式题（正负数应用/集合）。检索复习流(R.14)现真有题。
+  待优化：变式答案理想应由内核 solve_* 求解（现回退原题答案）。
+
+- [x] **R.16 [P3] 前端美化：立设计系统 + 统一收口（沉静·镜子）** ✅ 2026-06-28
+  方向：靛蓝(indigo)主色 + 石板灰(slate)中性 + 语义强调(emerald正向/amber注意/red警示/sky强调)。
+  ✅ 设计 token：tailwind.config 加 primary(indigo)/accent(sky)/中文友好字体栈/柔阴影(card/soft)；index.css 设 slate-50 底+字体+`.card`。
+  ✅ 颜色收口：全局 sed 把 14 种杂色(blue/purple/violet→indigo, gray→slate, green/teal→emerald, orange→amber, rose→red, cyan→sky)合并为 6 套；
+  保留 types.ts 数据调色板(掌握度渐变/KU类型标签)的刻意多样性并修复被扫平的重复色。
+  ✅ 外壳精修：NavBar(sticky+毛玻璃+品牌徽标"鉴"+统一 indigo 激活态)；LoginForm(徽标+"一面照见学习轨迹的镜子"标语+柔化)；MathHome(全色卡片→白卡+彩色图标chip，更克制)。
+  验收：build 通过、改动 0 lint。无浏览器无法截图——`cd frontend && npm run dev` 可看(连 :8000 api)。
+  待续(可选)：把各仪表盘组件的内联卡片样式统一到 `.card`；其余页面逐页精修(现已统一配色，结构性精修可后续)。
+
+- [x] **R.17 [P3] 美化精修续：全应用统一收口** ✅ 2026-06-28
+  ✅ 卡片统一：13 处内联卡片 → `.card`（统一圆角/柔阴影）。
+  ✅ 共享原语 `components/ui.tsx`：PageHeader / EmptyState / Loading / Button(primary/secondary/ghost) / Badge。
+  ✅ 全应用应用：math 7 页 + 物理(Home/Lesson) + 语文(Home/Lesson) 页头统一 PageHeader；物理/语文首页工具卡从满色→白卡+彩色图标chip（同数学）；修复被全局扫平的类型/轨道调色板重复色。
+  ✅ 空/加载态统一(ErrorJournal/ReviewPractice)。
+  验收：build 通过、改动 0 lint（仅余既有 ForceAnalysisPage）。三科视觉语言现已统一。
+  待续(可选)：Button 原语广泛替换现有内联按钮；列表行 hover 微调。

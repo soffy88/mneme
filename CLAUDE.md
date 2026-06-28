@@ -16,7 +16,7 @@ Mneme（对外名学鉴）：面向全年级学生的个人学习成长档案 + 
 ## 黄金规则
 
 1. **`MNEME_MASTER_DESIGN.md` 是唯一事实来源。** 实现与之冲突，先改 Master 再写代码，禁止擅自偏离契约（数据模型/API/算法/3O 分层）。
-2. **不重写已验证内核。** `oprim/bkt.py`、`oprim/fsrs_engine.py`、`oskill/cognitive_state.py` 已验证（AUC≈0.77），只能扩展，不能推翻其算法契约。
+2. **不重写已验证内核。** `oprim/bkt.py`、`oprim/fsrs_engine.py`、`oskill/cognitive_state.py` 已验证（合成数据回归 AUC≥0.65；0.77 为目标，真实数据待验证），只能扩展，不能推翻其算法契约。
 3. **一次只做一个 `TASKS.md` 的 task。** 完成后勾选 `[x]` + 写一行完成说明。
 4. **每个改动都要能自测。** 写代码必带测试。
 5. **数据库只走 Alembic migration。** 禁止手改库。

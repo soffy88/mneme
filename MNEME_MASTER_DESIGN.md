@@ -227,7 +227,7 @@ p_recognition ：混合情境下认不认得出该用这个 KC（新增）
 
 ### 4.7 演进与已验证结果
 
-- **已验证**（`tests/test_engine.py` 全绿）：掌握度收敛合理并封顶 0.97；同一 KC 能区分粗心/不会；forgetting-aware 衰减正常；下一题预测 **AUC ≈ 0.77**（达 DKT 阶段目标，随机=0.5）；KT+FSRS 端到端正常。
+- **已验证**（内核 `oprim/tests/test_cognitive.py`、`test_bkt_irt.py` 全绿）：掌握度收敛合理并封顶 0.97；同一 KC 能区分粗心/不会；forgetting-aware 衰减正常；下一题预测**合成数据 AUC≥0.65**（随机=0.5；**0.77 为目标，真实数据待验证**）；KT+FSRS 端到端正常。
 - **DKT 演进（Phase 3）**：数据充足后引入 LSTM/Transformer 建模序列，捕捉跨知识点迁移，支撑跨学段衔接分析；用 AUC 对比 BKT 决定切换；保留 BKT 作可解释层。
 
 ---
@@ -310,7 +310,7 @@ def verify_step(*, kc_id: str, claim: str, context: dict) -> StepCheck:
 | `socratic_session_workflow` | {trail, cost} |
 | `generate_lesson_page`（求解+可视化+自检+组装） | {fingerprint, report} |
 | `daily_mission_workflow`（交错+检索约束+努力错觉） | {decision_trail} |
-| `longitudinal_analysis_workflow` | {decision_trail} |
+| 纵向模式分析 | {decision_trail} |（现状：由 `oskill.longitudinal_pattern` + 服务层 `GET /v1/patterns` 实现；未单独建 omodul 包装）|
 | 轻业务 `send_parent_report` / `export_archive` / `register_student` | 按需 |
 
 ### 6.5 obase（基础设施）
@@ -454,6 +454,8 @@ CREATE TABLE daily_reports (
 
 全部前缀 `/v1`，除 auth 外需 `Authorization: Bearer <jwt>`。
 
+> 本节为**核心契约**（节选）。**实际路由全表以代码为准**：`python scripts/dump_routes.py [--md]` 从 FastAPI 导出（现 66 条），避免手抄漂移（DRIFT D3）。
+
 ```
 # 认证
 POST /v1/auth/send-code        {phone} → {ok}
@@ -473,7 +475,7 @@ POST /v1/papers/quick    multipart(image,kc_hint?) → {question_id,socratic_ses
 POST /v1/interaction  {kc_id,is_correct,used_answer?,struggled?,effortless?,source,question_id?,is_interleaved?}
      → {p_mastery,long_term_mastery,effective_mastery,p_recognition,error_type?,rating,next_review_due,n_attempts}
 GET  /v1/mastery/{student_id} → {knowledge_points[]}   # 按薄弱排序
-GET  /v1/mastery-curve/{student_id}/{kc_id} → {points:[{month,mastery}]}
+GET  /v1/mastery/curve/{student_id}/{kc_id} → [{month,long_term_mastery,dominant_error_type}]
 GET  /v1/review-queue/{student_id} → {due_today[]}      # 经 interleave_select 排布
 GET  /v1/patterns/{student_id} → {patterns[]}
 GET  /v1/kc · GET /v1/kc/{kc_id} → KC 字典
@@ -515,7 +517,7 @@ POST /v1/parent/delete-request/{student_id} → 触发删除（合规）
 | LLM | Anthropic Claude（经 obase.ProviderRegistry） | key 走环境变量 |
 | 间隔重复 | py-fsrs | 不自研 |
 | 求解 | sympy/numpy（obase.sympy_runtime 沙箱） | 超时/内存限 |
-| 前端 | React+TS+Vite+Tailwind+Mafs+Three.js | PWA |
+| 前端 | React+TS+Vite+Tailwind+Mafs+Three.js+KaTeX | PWA；KaTeX 渲染 rich_content/讲解中的 LaTeX 公式 |
 | 测试 | pytest + pytest-asyncio | service≥80% 总≥70% |
 
 全局：配置走 pydantic-settings；数值在 API 边界 round；未成年人数据操作必过合规校验；错误统一 `{detail}`。存储分层：结构化数据（小而值钱）永久在线，原图（大）分层降冷，分析依赖结构化数据故原图归档不影响纵向分析。
@@ -620,7 +622,7 @@ POST /v1/parent/delete-request/{student_id} → 触发删除（合规）
 
 ## 附录 A · KC 知识点字典
 
-广东高中数学（新高考人教A版），已实现 29 个二级知识点，覆盖必修一/二、选必一/二/三全部模块。每个 KC 含：父节点、前置链（递归至初中占位，支撑跨学段分析）、题型分布、高考权重、BKT 先验四参数。详见 `data/guangdong_math_kc.py`。MVP 扩展目标 ≥50 个，权重按真实高考占比归一化。
+**两套粒度并存（勿混淆）**：① **KC**（粗粒度，BKT 先验/掌握度建模单位）——广东高中数学 `data/guangdong_math_kc.py`，含父节点、前置链、题型分布、高考权重、BKT 先验四参数；② **KU**（细粒度，知识单元，讲解/练习/地图单位）——已入库**数学 ~2395、物理 ~1551**（DB `knowledge_units`，含 rich_content）。掌握度建模走 KC；学习内容组织走 KU；二者通过 `knowledge_point` 关联。详见记忆 `project_knowledge_system_refactor`。
 
 ## 附录 B · 术语表
 
@@ -644,7 +646,7 @@ POST /v1/parent/delete-request/{student_id} → 触发删除（合规）
 | PRD v1.0/1.1 | 高考作战系统（已废弃——合规/LTV/预估分三大风险） |
 | PRD v1.2 | 战略重定位为全年级自我助学 + 永久档案，化解三风险 |
 | PRD v1.3 | KT/FSRS 算法内核 + forgetting-aware 统一 |
-| 代码内核 | BKT/FSRS/KC 字典实现并验证（AUC≈0.77） |
+| 代码内核 | BKT/FSRS/KC 字典实现并验证（合成数据 AUC≥0.65；0.77 为目标） |
 | SPEC v1 | 工程实施（DDL/API/任务） |
 | SPEC v2 | 3O 归层 + 七大机制增强 |
 | **Master v1.0** | **整合全部为唯一 SSOT（本文档）** |
