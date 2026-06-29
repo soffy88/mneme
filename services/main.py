@@ -1052,11 +1052,50 @@ async def list_practice_topics(
     return {"topics": [{"ku_id": r[0], "count": int(r[1])} for r in rows]}
 
 
+@app.get("/v1/achievements/{student_id}")
+async def get_achievements(student_id: UUID, db: AsyncSession = Depends(get_db)):
+    """学生成就/徽章（从真实数据算）——驱动"愿意用"的动机钩子。多档位，含下一档进度。"""
+    now = datetime.now(timezone.utc)
+    rows = (await db.execute(
+        select(InteractionEvent.occurred_at).where(
+            InteractionEvent.student_id == student_id,
+            InteractionEvent.occurred_at >= now - timedelta(days=120),
+        )
+    )).all()
+    active = {r[0].date() for r in rows}
+    cur, streak = (now.date() if now.date() in active else now.date() - timedelta(days=1)), 0
+    while cur in active:
+        streak += 1
+        cur -= timedelta(days=1)
+    total_correct = (await db.execute(select(func.count()).select_from(InteractionEvent).where(
+        InteractionEvent.student_id == student_id, InteractionEvent.is_correct.is_(True)))).scalar() or 0
+    mastered = (await db.execute(select(func.count()).select_from(KCMastery).where(
+        KCMastery.student_id == student_id, KCMastery.p_mastery >= 0.7))).scalar() or 0
+    effort = (await db.execute(select(func.count()).select_from(EffortfulGain).where(
+        EffortfulGain.student_id == student_id))).scalar() or 0
+
+    defs = [
+        ("streak", "🔥", "坚持不懈", [3, 7, 30], "天连续", streak),
+        ("correct", "✅", "做题能手", [10, 50, 200], "题做对", int(total_correct)),
+        ("mastered", "⭐", "融会贯通", [5, 20, 50], "个知识点掌握", int(mastered)),
+        ("effort", "💪", "真努力", [5, 20, 60], "次有效努力", int(effort)),
+    ]
+    out = []
+    for aid, icon, name, tiers, unit, val in defs:
+        level = sum(1 for t in tiers if val >= t)
+        out.append({
+            "id": aid, "icon": icon, "name": name, "unit": unit, "value": val,
+            "level": level, "max_level": len(tiers),
+            "next_target": tiers[level] if level < len(tiers) else None,
+        })
+    return {"achievements": out}
+
+
 class PracticeSubmitReq(BaseModel):
     question_id: UUID   # 公共题库行（student_id IS NULL）
     student_id: UUID
     student_answer: str = ""
-    is_correct: bool    # 学生自判（看到正确答案后自评）
+    is_correct: Optional[bool] = None   # None=先让后端自动判；自由作答判不了时再带自评二次提交
     ku_id: str          # 对应知识单元 ID
 
 
@@ -1080,9 +1119,29 @@ async def post_practice_submit(
     if not bank_q:
         raise HTTPException(status_code=404, detail="公共题库题目不存在")
 
-    # 2. 答错则写学生错题记录
+    # 2. 自动判分（选择题/短答确定性判对错；自由作答判 unsure → 交学生对照答案自评）
+    from oprim.answer_judge import judge_answer
+    verdict = judge_answer(body.student_answer or "", bank_q.correct_answer or "")["verdict"]
+    auto_judged = verdict in ("correct", "wrong")
+    if auto_judged:
+        is_correct = verdict == "correct"
+    elif body.is_correct is not None:
+        is_correct = body.is_correct      # 第二次提交：带学生自评
+    else:
+        # 判不了 + 学生还没自评 → 揭示答案让其自评，先不落库
+        return {
+            "needs_self_grade": True,
+            "auto_judged": False,
+            "is_correct": None,
+            "correct_answer": bank_q.correct_answer,
+            "p_mastery": None,
+            "mastery_color": _mastery_color(None),
+            "feedback": None,
+        }
+
+    # 3. 答错则写学生错题记录
     student_wq_id: Optional[UUID] = None
-    if not body.is_correct:
+    if not is_correct:
         student_wq = WrongQuestion(
             id=uuid.uuid4(),
             student_id=body.student_id,
@@ -1097,19 +1156,22 @@ async def post_practice_submit(
         student_wq_id = student_wq.id
         await db.flush()
 
-    # 3. BKT/FSRS 更新
+    # 4. BKT/FSRS 更新
     result = await process_interaction(
         db,
         student_id=body.student_id,
         kc_id=body.ku_id,
-        is_correct=body.is_correct,
+        is_correct=is_correct,
         question_id=bank_q.id,
         source="review",
     )
     await db.commit()
 
     return {
-        "is_correct":       body.is_correct,
+        "is_correct":       is_correct,
+        "auto_judged":      auto_judged,
+        "needs_self_grade": False,
+        "correct_answer":   bank_q.correct_answer,
         "wrong_question_id": str(student_wq_id) if student_wq_id else None,
         "p_mastery":        result.get("p_mastery"),
         "mastery_color":    _mastery_color(result.get("p_mastery")),
