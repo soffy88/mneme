@@ -256,7 +256,8 @@ async def get_me(
         "id": str(user.id),
         "phone": user.phone,
         "role": user.role.value,
-        "name": user.name
+        "name": user.name,
+        "grade": getattr(user, "grade", None),
     }
 
 # ===== §8 认知状态 API =====
