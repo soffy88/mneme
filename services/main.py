@@ -1488,6 +1488,8 @@ async def get_error_journal(
             "question_id": str(r.id),
             "kc_id": kid,
             "kc_name": name_map.get(kid, kid),
+            "question_text": r.question_text or "",
+            "correct_answer": r.correct_answer or "",
             "error_tag": r.error_type or "unknown",
             "wrong_at": r.created_at.isoformat(),
             "can_practice_variant": True
