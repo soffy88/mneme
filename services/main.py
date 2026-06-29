@@ -1056,8 +1056,9 @@ async def list_practice_topics(
     rows = (await db.execute(
         text(
             """
-            select key as ku_id, count(*) as n
+            select key as ku_id, count(*) as n, max(ku.name) as ku_name
             from wrong_questions, jsonb_object_keys(knowledge_points) as key
+            left join knowledge_units ku on ku.id = key
             where student_id is null and subject = :subject and needs_image = false
               and correct_answer is not null and correct_answer <> ''
             group by key having count(*) >= :min_count
@@ -1066,7 +1067,7 @@ async def list_practice_topics(
         ),
         {"subject": subject, "min_count": min_count},
     )).all()
-    return {"topics": [{"ku_id": r[0], "count": int(r[1])} for r in rows]}
+    return {"topics": [{"ku_id": r[0], "count": int(r[1]), "ku_name": r[2] or r[0]} for r in rows]}
 
 
 @app.get("/v1/achievements/{student_id}")
