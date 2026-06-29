@@ -307,14 +307,19 @@ async def get_mastery_curve(
             .order_by(MasterySnapshot.snapshot_month)
         )
     ).scalars().all()
-    return [
-        {
-            "month": r.snapshot_month.isoformat(),
-            "long_term_mastery": round(r.long_term_mastery, 4) if r.long_term_mastery else None,
-            "dominant_error_type": r.dominant_error_type,
-        }
-        for r in rows
-    ]
+    kc = await db.get(KnowledgeUnit, kc_id)
+    return {
+        "kc_id": kc_id,
+        "kc_name": (kc.name if kc else kc_id),
+        "points": [
+            {
+                "month": r.snapshot_month.isoformat(),
+                "mastery": round(r.long_term_mastery, 4) if r.long_term_mastery else 0,
+                "dominant_error_type": r.dominant_error_type,
+            }
+            for r in rows
+        ],
+    }
 
 @app.get("/v1/mastery/{student_id}")
 async def get_mastery(
@@ -324,7 +329,18 @@ async def get_mastery(
 ):
     """GET /v1/mastery/{student_id} — 掌握度总览（按薄弱排序，含百分位）。"""
     try:
-        return await mastery_overview(db, student_id, now=now)
+        items = await mastery_overview(db, student_id, now=now)
+        # 补 KU 友好名称（命名已统一），避免前端标题空白/显示原始 id
+        if isinstance(items, list) and items:
+            ids = list({it.get("kc_id") for it in items if it.get("kc_id")})
+            if ids:
+                krows = (await db.execute(
+                    select(KnowledgeUnit.id, KnowledgeUnit.name).where(KnowledgeUnit.id.in_(ids))
+                )).all()
+                nm = {kid: name for kid, name in krows}
+                for it in items:
+                    it["kc_name"] = nm.get(it.get("kc_id"), it.get("kc_id"))
+        return items
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
@@ -1628,19 +1644,23 @@ async def post_force_analysis_message(
 from services.reading_guide_service import start_reading_guide, reading_guide_message_stream
 
 
+class ReadingGuideStartReq(BaseModel):
+    article_text: str
+    question: str
+    subject: str = "chinese"
+
+
 @app.post("/v1/reading/guide/start")
 async def post_reading_guide_start(
-    article_text: str = Query(...),
-    question: str = Query(...),
-    subject: str = Query("chinese"),
+    body: ReadingGuideStartReq,
     current_user: User = Depends(get_current_user),
     db: AsyncSession = Depends(get_db),
 ):
     """POST /v1/reading/guide/start — 开始阅读理解引导会话。
 
-    subject: "chinese" 或 "english"。返回开场引导问（不含答案）。
+    subject: "chinese" 或 "english"。文章正文走 body（可能很长）。返回开场引导问（不含答案）。
     """
-    result = await start_reading_guide(db, article_text, question, subject, current_user.id)
+    result = await start_reading_guide(db, body.article_text, body.question, body.subject, current_user.id)
     return result
 
 
