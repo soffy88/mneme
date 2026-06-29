@@ -8,7 +8,7 @@ from sqlalchemy import func, select, update, or_, text
 from uuid import UUID
 import uuid
 from typing import Optional
-from datetime import datetime, date, timezone
+from datetime import datetime, date, timezone, timedelta
 from contextlib import asynccontextmanager
 from pathlib import Path
 import asyncio
@@ -1118,10 +1118,11 @@ async def post_practice_submit(
     )).scalar_one_or_none()
     if not bank_q:
         raise HTTPException(status_code=404, detail="公共题库题目不存在")
+    correct_ans = bank_q.correct_answer or ""   # 先取出，避免 commit 后对象过期触发懒加载(MissingGreenlet)
 
     # 2. 自动判分（选择题/短答确定性判对错；自由作答判 unsure → 交学生对照答案自评）
     from oprim.answer_judge import judge_answer
-    verdict = judge_answer(body.student_answer or "", bank_q.correct_answer or "")["verdict"]
+    verdict = judge_answer(body.student_answer or "", correct_ans)["verdict"]
     auto_judged = verdict in ("correct", "wrong")
     if auto_judged:
         is_correct = verdict == "correct"
@@ -1133,7 +1134,7 @@ async def post_practice_submit(
             "needs_self_grade": True,
             "auto_judged": False,
             "is_correct": None,
-            "correct_answer": bank_q.correct_answer,
+            "correct_answer": correct_ans,
             "p_mastery": None,
             "mastery_color": _mastery_color(None),
             "feedback": None,
@@ -1171,7 +1172,7 @@ async def post_practice_submit(
         "is_correct":       is_correct,
         "auto_judged":      auto_judged,
         "needs_self_grade": False,
-        "correct_answer":   bank_q.correct_answer,
+        "correct_answer":   correct_ans,
         "wrong_question_id": str(student_wq_id) if student_wq_id else None,
         "p_mastery":        result.get("p_mastery"),
         "mastery_color":    _mastery_color(result.get("p_mastery")),
