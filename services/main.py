@@ -1456,16 +1456,27 @@ async def get_error_journal(
     stmt = stmt.order_by(WrongQuestion.created_at.desc()).offset(offset).limit(limit)
     rows = (await db.execute(stmt)).scalars().all()
     
+    kc_ids = [list(r.knowledge_points.keys())[0] if r.knowledge_points else "unknown" for r in rows]
+    # 批量取 KU 友好名称（命名已统一，题库 KU 也在 knowledge_units），避免前端显示原始 id
+    name_map: dict[str, str] = {}
+    real_ids = [k for k in set(kc_ids) if k != "unknown"]
+    if real_ids:
+        krows = (await db.execute(
+            select(KnowledgeUnit.id, KnowledgeUnit.name).where(KnowledgeUnit.id.in_(real_ids))
+        )).all()
+        name_map = {kid: nm for kid, nm in krows}
+
     res = []
-    for r in rows:
+    for r, kid in zip(rows, kc_ids):
         res.append({
             "question_id": str(r.id),
-            "kc_id": list(r.knowledge_points.keys())[0] if r.knowledge_points else "unknown",
+            "kc_id": kid,
+            "kc_name": name_map.get(kid, kid),
             "error_tag": r.error_type or "unknown",
             "wrong_at": r.created_at.isoformat(),
             "can_practice_variant": True
         })
-        
+
     return {"distribution": dist, "items": res}
 
 # ===== §Essay Guide =====
