@@ -4,7 +4,7 @@ from fastapi import FastAPI, Depends, HTTPException, Query, UploadFile, File, Fo
 from fastapi.responses import StreamingResponse
 from fastapi.security import OAuth2PasswordBearer
 from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy import func, select, update, or_
+from sqlalchemy import func, select, update, or_, text
 from uuid import UUID
 import uuid
 from typing import Optional
@@ -1023,6 +1023,33 @@ async def post_practice_generate(
         "items": items,
         "status": result.get("status", "ok"),
     }
+
+
+@app.get("/v1/practice/topics")
+async def list_practice_topics(
+    subject: str = Query("math"),
+    min_count: int = Query(5),
+    db: AsyncSession = Depends(get_db),
+):
+    """GET /v1/practice/topics — 列出"有真实题库题（纯文本+带答案）"的练习主题及题量。
+
+    供练习选题页用：知识体系是 GDMATH-* 命名，而题库题映射到 cmm-math-g{年级}-{主题} 键，
+    这里直接列出有内容的 KU，避免学生点开练习是空的。
+    """
+    rows = (await db.execute(
+        text(
+            """
+            select key as ku_id, count(*) as n
+            from wrong_questions, jsonb_object_keys(knowledge_points) as key
+            where student_id is null and subject = :subject and needs_image = false
+              and correct_answer is not null and correct_answer <> ''
+            group by key having count(*) >= :min_count
+            order by key
+            """
+        ),
+        {"subject": subject, "min_count": min_count},
+    )).all()
+    return {"topics": [{"ku_id": r[0], "count": int(r[1])} for r in rows]}
 
 
 class PracticeSubmitReq(BaseModel):
