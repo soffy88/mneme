@@ -1469,13 +1469,23 @@ async def get_error_journal(
         stmt = stmt.where(WrongQuestion.knowledge_points.has_key(kc_id))
     # Note: error_type filtering would require error_tag join if not in wrong_questions
     
-    stmt = stmt.order_by(WrongQuestion.created_at.desc()).offset(offset).limit(limit)
-    rows = (await db.execute(stmt)).scalars().all()
-    
-    kc_ids = [list(r.knowledge_points.keys())[0] if r.knowledge_points else "unknown" for r in rows]
-    # 批量取 KU 友好名称（命名已统一，题库 KU 也在 knowledge_units），避免前端显示原始 id
+    stmt = stmt.order_by(WrongQuestion.created_at.desc())
+    all_rows = (await db.execute(stmt)).scalars().all()
+
+    # 按题干去重：同一道题错多次合并成一条（计 wrong_count），保留最新一次
+    seen: dict[str, dict] = {}
+    for r in all_rows:
+        key = (r.question_text or "").strip() or str(r.id)
+        if key in seen:
+            seen[key]["wrong_count"] += 1
+        else:
+            kid = list(r.knowledge_points.keys())[0] if r.knowledge_points else "unknown"
+            seen[key] = {"row": r, "kc_id": kid, "wrong_count": 1}
+    deduped = list(seen.values())          # dict 保序；all_rows 已按时间倒序
+    page = deduped[offset: offset + limit]
+
+    real_ids = {d["kc_id"] for d in page if d["kc_id"] != "unknown"}
     name_map: dict[str, str] = {}
-    real_ids = [k for k in set(kc_ids) if k != "unknown"]
     if real_ids:
         krows = (await db.execute(
             select(KnowledgeUnit.id, KnowledgeUnit.name).where(KnowledgeUnit.id.in_(real_ids))
@@ -1483,16 +1493,19 @@ async def get_error_journal(
         name_map = {kid: nm for kid, nm in krows}
 
     res = []
-    for r, kid in zip(rows, kc_ids):
+    for d in page:
+        r, kid = d["row"], d["kc_id"]
         res.append({
             "question_id": str(r.id),
             "kc_id": kid,
             "kc_name": name_map.get(kid, kid),
             "question_text": r.question_text or "",
+            "student_answer": r.student_answer or "",
             "correct_answer": r.correct_answer or "",
-            "error_tag": r.error_type or "unknown",
+            "error_tag": (r.error_type.value if r.error_type else "unknown"),
             "wrong_at": r.created_at.isoformat(),
-            "can_practice_variant": True
+            "wrong_count": d["wrong_count"],
+            "can_practice_variant": True,
         })
 
     return {"distribution": dist, "items": res}
