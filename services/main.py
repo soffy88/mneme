@@ -308,9 +308,10 @@ async def get_mastery_curve(
         )
     ).scalars().all()
     kc = await db.get(KnowledgeUnit, kc_id)
+    _kcd = get_kc(kc_id)
     return {
         "kc_id": kc_id,
-        "kc_name": (kc.name if kc else kc_id),
+        "kc_name": (kc.name if kc else ((_kcd.get("name") if _kcd else None) or kc_id)),
         "points": [
             {
                 "month": r.snapshot_month.isoformat(),
@@ -339,7 +340,12 @@ async def get_mastery(
                 )).all()
                 nm = {kid: name for kid, name in krows}
                 for it in items:
-                    it["kc_name"] = nm.get(it.get("kc_id"), it.get("kc_id"))
+                    kid = it.get("kc_id")
+                    name = nm.get(kid)
+                    if not name:                       # 回退广东 KC 字典(GDMATH-* 等老命名)
+                        kc = get_kc(kid)
+                        name = (kc.get("name") if kc else None) or kid
+                    it["kc_name"] = name
         return items
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
@@ -1496,10 +1502,14 @@ async def get_error_journal(
     res = []
     for d in page:
         r, kid = d["row"], d["kc_id"]
+        _name = name_map.get(kid)
+        if not _name:
+            _kcd = get_kc(kid)
+            _name = (_kcd.get("name") if _kcd else None) or kid
         res.append({
             "question_id": str(r.id),
             "kc_id": kid,
-            "kc_name": name_map.get(kid, kid),
+            "kc_name": _name,
             "question_text": r.question_text or "",
             "student_answer": r.student_answer or "",
             "correct_answer": r.correct_answer or "",
