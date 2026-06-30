@@ -627,11 +627,20 @@ async def post_paper_upload(
         )
         
         result = await upload_paper_workflow(config, payload, db)
-        
+
         if result["status"] == "failed":
             raise HTTPException(status_code=500, detail=result["error"])
-            
-        return result["findings"]
+
+        # 触发异步分析（OCR→批改→共同断点→认知更新）。
+        # 冷启动钩子核心：上传后试卷由 Celery 真正分析，前端轮询 GET /v1/papers/{id} 状态。
+        findings = result["findings"]
+        try:
+            from tasks.paper_tasks import process_paper
+            process_paper.delay(findings["paper_id"])
+        except Exception as exc:  # noqa: BLE001 — broker 不可用不应阻断上传
+            logger.error(f"dispatch process_paper failed for {findings.get('paper_id')}: {exc}")
+
+        return findings
         
     finally:
         # 清理临时文件
@@ -1151,6 +1160,7 @@ class PracticeSubmitReq(BaseModel):
     student_answer: str = ""
     is_correct: Optional[bool] = None   # None=先让后端自动判；自由作答判不了时再带自评二次提交
     ku_id: str          # 对应知识单元 ID
+    interleaved: bool = False   # 该题是否来自交错(混合KC)复习；True 才训练识别维度 p_recognition (M-G §4.5)
 
 
 @app.post("/v1/practice/submit")
@@ -1219,6 +1229,7 @@ async def post_practice_submit(
         is_correct=is_correct,
         question_id=bank_q.id,
         source="review",
+        is_interleaved=body.interleaved,
     )
     await db.commit()
 
