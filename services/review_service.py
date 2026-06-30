@@ -73,6 +73,8 @@ async def get_due_variants(
                 "kc_id": m.knowledge_point,
                 "variant_question": question_text,
                 "requires_retrieval": True,
+                # 原错题 id（供复习页"问问AI"接苏格拉底；无原题则 None）
+                "question_id": str(wq.id) if wq else None,
                 "due_since": m.last_interaction_at.isoformat() if m.last_interaction_at else None,
                 "fsrs_interval": m.fsrs_card_json.get("stability", 0)
             })
