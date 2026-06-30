@@ -119,6 +119,15 @@ async def lifespan(app: FastAPI):
     configure_logging()
     _assert_prod_safety()
 
+    # 3O 内核契约自检：内核仓静默回退（丢字段）会让去抖/个性化/苏格拉底续接等
+    # 悄悄失效而不报错，这里启动期显式告警，便于第一时间发现。
+    from services.kernel_selfcheck import check_kernel_contract
+    _missing = check_kernel_contract()
+    if _missing:
+        logger.error(
+            "⚠️ 3O 内核契约缺失（功能可能静默失效，检查内核仓分支是否为 feat/edu-audit-fixes）: %s",
+            ", ".join(_missing))
+
     # Initialize obase infrastructure tables
     from obase.config import settings
     from obase.persistence.pool import PgPool
