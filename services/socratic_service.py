@@ -60,9 +60,17 @@ async def start_session(db: AsyncSession, question_id: uuid.UUID, student_id: uu
     db.add(session)
     await db.flush()
 
+    # 首问扣题（确定性优先）：基于真实题面构造锚定问题，不让 LLM 漂成通用问句
+    q_snippet = " ".join((wq.question_text or "").split())
+    if len(q_snippet) > 60:
+        q_snippet = q_snippet[:60] + "…"
+    anchored_q = (
+        f"我们来看这道题：「{q_snippet}」。先别急着算——你觉得这道题在考查什么？打算从哪一步入手？"
+        if q_snippet else "请仔细审题，你认为这道题考察的是什么知识点？"
+    )
     # 强制元认知支架 (Metacog Scaffold)
     metacog_options = []
-    first_q = "请仔细审题，你认为这道题考察的是什么知识点？"
+    first_q = anchored_q
     if mode != "sprint":
         try:
             caller = ProviderRegistry.get().llm() if ProviderRegistry._instance else None
@@ -78,7 +86,7 @@ async def start_session(db: AsyncSession, question_id: uuid.UUID, student_id: uu
                 caller=caller
             )
             metacog_data = meta_res.self_eval
-            first_q = metacog_data.get("question", first_q)
+            # 保留确定性锚定首问；仅采用 metacog 的识别脚手架选项
             metacog_options = metacog_data.get("options", [])
             
             # Record it as the first system/assistant message in SocraticSession
@@ -101,7 +109,7 @@ async def start_session(db: AsyncSession, question_id: uuid.UUID, student_id: uu
         on_step=None,
     )
 
-    if mode == "sprint" or not metacog_options:
+    if mode == "sprint":
         first_q = result.get("first_question", first_q)
         
     return {

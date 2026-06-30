@@ -242,6 +242,20 @@ async def mastery_overview(
         for kc, pm in rows:
             peer_data.setdefault(kc, []).append(pm)
 
+    # 本学生各 KC 的识别维度 p_recognition（M-G，对抗惰性知识）
+    recognition_map: dict[str, float] = {}
+    if kc_ids:
+        rec_rows = (
+            await db.execute(
+                select(KCMastery.knowledge_point, KCMastery.p_recognition)
+                .where(KCMastery.student_id == student_id)
+                .where(KCMastery.knowledge_point.in_(kc_ids))
+                .where(KCMastery.p_recognition.is_not(None))
+            )
+        ).all()
+        for kc, pr in rec_rows:
+            recognition_map[kc] = pr
+
     result = []
     for item in items:
         kc = item["kc_id"]
@@ -251,6 +265,7 @@ async def mastery_overview(
             item = {**item, "peer_percentile": pct.percentile}
         except (ValueError, ZeroDivisionError):
             item = {**item, "peer_percentile": None}
+        item = {**item, "p_recognition": recognition_map.get(kc)}
         result.append(item)
 
     return result
