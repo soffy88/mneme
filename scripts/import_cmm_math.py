@@ -66,21 +66,28 @@ async def question_exists(conn: asyncpg.Connection, cmm_id: str) -> bool:
     return row is not None
 
 
+# item 10：学科参数化（默认数学，向后兼容）。其他学科传 --subject/--subject-code。
+#   _SUBJECT       入 wrong_questions.subject 列的值（须与查询端一致）
+#   _SUBJECT_CODE  KP 占位键/来源标识前缀（cmm-{code}-{grade}-*，供 match 脚本提取年级）
+_SUBJECT = "数学"
+_SUBJECT_CODE = "math"
+
+
 async def insert_question(conn: asyncpg.Connection, ex: dict[str, Any]) -> None:
     level   = ex.get("level", "")
     grade   = LEVEL_TO_GRADE.get(level, "G1")
-    subject = ex.get("subject", "数学")
+    subject = ex.get("subject", _SUBJECT)
     cmm_id  = str(ex.get("id", ""))
     images  = ex.get("image") or []
     if isinstance(images, str):
         images = [images] if images else []
 
-    # 占位 knowledge_points key，格式保留 cmm-math-{grade_lower}-* 以供 match 脚本提取年级
-    kp_key = f"cmm-math-{grade.lower()}-{_slug(subject)}"
+    # 占位 knowledge_points key，格式 cmm-{code}-{grade_lower}-* 以供 match 脚本提取年级
+    kp_key = f"cmm-{_SUBJECT_CODE}-{grade.lower()}-{_slug(subject)}"
     knowledge_points = {kp_key: "待匹配"}
 
     profiler: dict[str, Any] = {
-        "source":          "cmm-math",
+        "source":          f"cmm-{_SUBJECT_CODE}",
         "cmm_id":          cmm_id,
         "grade":           level,          # 中文年级（一年级…高三）
         "grade_code":      grade,          # G1…G12
@@ -95,13 +102,14 @@ async def insert_question(conn: asyncpg.Connection, ex: dict[str, Any]) -> None:
         """INSERT INTO wrong_questions
                (id, paper_id, student_id, subject, question_text,
                 student_answer, correct_answer, knowledge_points, profiler_analysis)
-           VALUES (gen_random_uuid(), NULL, NULL, '数学', $1,
+           VALUES (gen_random_uuid(), NULL, NULL, $5, $1,
                    NULL, $2, $3::jsonb, $4::jsonb)
         """,
         ex.get("question", ""),
         ex.get("answer", ""),
         json.dumps(knowledge_points, ensure_ascii=False),
         json.dumps(profiler, ensure_ascii=False),
+        _SUBJECT,
     )
 
 
@@ -170,7 +178,14 @@ def main() -> None:
     parser.add_argument("--input",   default="cmm_math_train.jsonl")
     parser.add_argument("--dry-run", action="store_true")
     parser.add_argument("--limit",   type=int, default=None)
+    parser.add_argument("--subject", default="数学",
+                        help="入 wrong_questions.subject 列的值（须与练习查询端一致）")
+    parser.add_argument("--subject-code", default="math",
+                        help="KP 占位键/来源前缀：cmm-{code}-{grade}-*")
     args = parser.parse_args()
+
+    global _SUBJECT, _SUBJECT_CODE
+    _SUBJECT, _SUBJECT_CODE = args.subject, args.subject_code
 
     path = Path(args.input)
     if not path.exists():
