@@ -79,6 +79,25 @@ async def get_current_user(
         raise HTTPException(status_code=401, detail="User not found")
     return user
 
+async def require_student_access(
+    student_id: UUID,
+    current_user: User = Depends(get_current_user),
+    db: AsyncSession = Depends(get_db),
+) -> User:
+    """越权防护：仅学生本人或其绑定家长可访问该学生数据（合规红线，含未成年人）。
+    student_id 从路径自动解析。"""
+    if current_user.id == student_id:
+        return current_user
+    link = (await db.execute(
+        select(ParentStudent).where(
+            ParentStudent.parent_id == current_user.id,
+            ParentStudent.student_id == student_id,
+        )
+    )).scalar_one_or_none()
+    if not link:
+        raise HTTPException(status_code=403, detail="无权访问该学生数据")
+    return current_user
+
 def _assert_prod_safety() -> None:
     """生产环境(MNEME_ENV=prod)安全闸门：默认 JWT 密钥 / mock 万能码 一律拒启动。
     demo/dev 环境放行（mock 是无短信通道时的演示机制）。"""
@@ -296,6 +315,7 @@ async def post_interaction(
 async def get_mastery_curve(
     student_id: UUID,
     kc_id: str,
+    _auth: User = Depends(require_student_access),
     db: AsyncSession = Depends(get_db)
 ):
     """GET /v1/mastery/curve/{student_id}/{kc_id} — mastery_snapshots 月度时间序列。"""
@@ -326,6 +346,7 @@ async def get_mastery_curve(
 async def get_mastery(
     student_id: UUID,
     now: Optional[datetime] = None,
+    _auth: User = Depends(require_student_access),
     db: AsyncSession = Depends(get_db)
 ):
     """GET /v1/mastery/{student_id} — 掌握度总览（按薄弱排序，含百分位）。"""
@@ -354,6 +375,7 @@ async def get_mastery(
 async def get_review_queue(
     student_id: UUID,
     now: Optional[datetime] = None,
+    _auth: User = Depends(require_student_access),
     db: AsyncSession = Depends(get_db)
 ):
     """GET /v1/review-queue/{student_id} — 今日复习队列（interleaved）。"""
@@ -693,7 +715,8 @@ async def get_children(
 # ===== §E.1 今日目标 =====
 
 @app.get("/v1/missions/today/{student_id}")
-async def get_today_mission(student_id: UUID, db: AsyncSession = Depends(get_db)):
+async def get_today_mission(student_id: UUID, _auth: User = Depends(require_student_access),
+    db: AsyncSession = Depends(get_db)):
     """GET /v1/missions/today/{student_id} — 获取或创建今日目标。"""
     try:
         result = await get_or_create_mission(db, student_id)
@@ -737,6 +760,7 @@ async def get_daily_plan(
 async def get_effortful_gains(
     student_id: UUID,
     limit: int = Query(10, ge=1, le=50),
+    _auth: User = Depends(require_student_access),
     db: AsyncSession = Depends(get_db),
 ):
     """GET /v1/effortful-gains/{student_id} — 努力收益看板（M-F）。
@@ -773,7 +797,8 @@ async def get_effortful_gains(
 
 
 @app.get("/v1/weak-roots/{student_id}")
-async def get_weak_roots(student_id: UUID, db: AsyncSession = Depends(get_db)):
+async def get_weak_roots(student_id: UUID, _auth: User = Depends(require_student_access),
+    db: AsyncSession = Depends(get_db)):
     """GET /v1/weak-roots/{student_id} — 前置图谱归因。
     对薄弱知识点上溯前置链，找出"先补根再补叶"的薄弱/未练前置。
     """
@@ -782,7 +807,8 @@ async def get_weak_roots(student_id: UUID, db: AsyncSession = Depends(get_db)):
 
 
 @app.get("/v1/weekly-digest/{student_id}")
-async def get_weekly_digest(student_id: UUID, db: AsyncSession = Depends(get_db)):
+async def get_weekly_digest(student_id: UUID, _auth: User = Depends(require_student_access),
+    db: AsyncSession = Depends(get_db)):
     """GET /v1/weekly-digest/{student_id} — 留存引擎：连续天数 + 本周成长摘要。"""
     from services.cognitive_service import weekly_digest
     return await weekly_digest(db, student_id)
@@ -792,6 +818,7 @@ async def get_weekly_digest(student_id: UUID, db: AsyncSession = Depends(get_db)
 async def get_parent_report(
     student_id: UUID,
     date: Optional[date] = Query(None),
+    _auth: User = Depends(require_student_access),
     db: AsyncSession = Depends(get_db),
 ):
     """GET /v1/parent/report/{student_id}?date — 家长学习日报（可转发微信）。"""
@@ -800,7 +827,8 @@ async def get_parent_report(
 
 
 @app.get("/v1/calibration/{student_id}")
-async def get_calibration(student_id: UUID, db: AsyncSession = Depends(get_db)):
+async def get_calibration(student_id: UUID, _auth: User = Depends(require_student_access),
+    db: AsyncSession = Depends(get_db)):
     """GET /v1/calibration/{student_id} — JOL 校准（判断学习的准度）。
     比较作答前自评把握(predicted_confidence)与实际对错：
     brier 越低越准；overconfidence>0=高估自己(努力错觉)，<0=低估自己。
@@ -870,7 +898,8 @@ async def post_socratic_end(
 # ===== §G.1 家长成长摘要 =====
 
 @app.get("/v1/parent/overview/{student_id}")
-async def get_parent_overview(student_id: UUID, db: AsyncSession = Depends(get_db)):
+async def get_parent_overview(student_id: UUID, _auth: User = Depends(require_student_access),
+    db: AsyncSession = Depends(get_db)):
     """GET /v1/parent/overview/{student_id} — 学生学习摘要（家长视角）。"""
     rows = (await db.execute(select(KCMastery).where(KCMastery.student_id == student_id))).scalars().all()
     weak_kc = [r for r in rows if (r.p_mastery or 0) < 0.5]
@@ -1077,7 +1106,8 @@ async def list_practice_topics(
 
 
 @app.get("/v1/achievements/{student_id}")
-async def get_achievements(student_id: UUID, db: AsyncSession = Depends(get_db)):
+async def get_achievements(student_id: UUID, _auth: User = Depends(require_student_access),
+    db: AsyncSession = Depends(get_db)):
     """学生成就/徽章（从真实数据算）——驱动"愿意用"的动机钩子。多档位，含下一档进度。"""
     now = datetime.now(timezone.utc)
     rows = (await db.execute(
@@ -1249,7 +1279,8 @@ async def post_socratic_start_for_ku(
 # ===== §J.1 纵向分析 =====
 
 @app.get("/v1/patterns/{student_id}")
-async def get_patterns(student_id: UUID, db: AsyncSession = Depends(get_db)):
+async def get_patterns(student_id: UUID, _auth: User = Depends(require_student_access),
+    db: AsyncSession = Depends(get_db)):
     """GET /v1/patterns/{student_id} — 个人学习模式分析。"""
     from oskill.longitudinal_pattern import AttemptRecord, longitudinal_pattern
     events = (await db.execute(
@@ -1287,7 +1318,8 @@ async def get_patterns(student_id: UUID, db: AsyncSession = Depends(get_db)):
 # ===== §K.1 档案导出 =====
 
 @app.get("/v1/parent/export/{student_id}")
-async def get_export(student_id: UUID, db: AsyncSession = Depends(get_db)):
+async def get_export(student_id: UUID, _auth: User = Depends(require_student_access),
+    db: AsyncSession = Depends(get_db)):
     """GET /v1/parent/export/{student_id} — 导出学生学习档案 JSON。"""
     user = (await db.execute(select(User).where(User.id == student_id))).scalar_one_or_none()
     if not user:
@@ -1346,6 +1378,7 @@ async def post_delete_request(
 async def get_alerts(
     student_id: UUID,
     parent_id: UUID = Query(...),
+    _auth: User = Depends(require_student_access),
     db: AsyncSession = Depends(get_db),
 ):
     """GET /v1/parent/alerts/{student_id} — 家长预警列表。"""
@@ -1356,6 +1389,7 @@ async def get_alerts(
 async def post_run_alert_checks(
     student_id: UUID,
     parent_id: UUID = Query(...),
+    _auth: User = Depends(require_student_access),
     db: AsyncSession = Depends(get_db),
 ):
     """POST /v1/parent/alerts/{student_id}/check — 立即执行 5 类预警检查。"""
