@@ -13,7 +13,10 @@ from sqlalchemy.pool import NullPool
 from obase.config import settings
 from services.fsrs_optimize_service import (
     evaluate_weights,
+    fit_and_store_weights,
+    fit_weights,
     load_cohort_weights,
+    load_weights_for_student,
     reconstruct_review_logs,
     select_best_weights,
 )
@@ -107,3 +110,48 @@ async def test_insufficient_reviews_not_stored(db):
     result = await select_best_weights(s, [None], cohort=COHORT, min_reviews=30)
     await s.commit()
     assert result["stored"] is False
+
+
+def test_fit_weights_returns_valid_or_default(db_unused=None):
+    """scipy 拟合：返回合法权重或 None（不优于默认），不崩、不超界。"""
+    import math
+    from datetime import datetime, timedelta, timezone
+    base = datetime(2026, 3, 1, tzinfo=timezone.utc)
+    # 合成多张卡片序列（错→对→对，间隔数天）
+    seqs = []
+    for _ in range(8):
+        seqs.append([(base, 1, False), (base + timedelta(days=2), 3, True),
+                     (base + timedelta(days=6), 3, True)])
+    best, best_loss, default_loss = fit_weights(seqs, maxiter=2)
+    assert math.isfinite(default_loss)
+    if best is not None:
+        assert len(best) == 21
+        assert best_loss <= default_loss + 1e-9
+        # 合法性：能构造 Scheduler
+        from oprim.fsrs_engine import fsrs_review, fsrs_new_card
+        from fsrs import Rating
+        fsrs_review(card_dict=fsrs_new_card(), rating=Rating.Good, now=base, parameters=best)
+
+
+@pytest.mark.asyncio
+async def test_fit_and_store_and_student_precedence(db):
+    s, sids = db
+    await _seed(s, sids, n_students=16)  # 32 复习对 ≥ min_reviews
+    # 全体拟合落 global
+    r = await fit_and_store_weights(s, cohort=COHORT, min_reviews=30, maxiter=2)
+    await s.commit()
+    assert r["stored"] is True and r["n_reviews"] >= 30
+
+    # 个体优先：写一个 student:{id} 权重，load_weights_for_student 应优先取它
+    sid0 = sids[0]
+    from fsrs import Scheduler
+    from services.fsrs_optimize_service import _store_weights
+    custom = tuple(p * 1.02 for p in Scheduler().parameters)
+    await _store_weights(s, f"student:{sid0}", custom, 0.5, 99)
+    await s.commit()
+    loaded = await load_weights_for_student(s, sid0)
+    assert loaded is not None and abs(loaded[0] - custom[0]) < 1e-9
+    # 清理 student 权重
+    from sqlalchemy import delete
+    await s.execute(delete(FSRSWeights).where(FSRSWeights.cohort == f"student:{sid0}"))
+    await s.commit()

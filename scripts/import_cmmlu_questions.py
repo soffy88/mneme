@@ -43,7 +43,7 @@ def load_df() -> pd.DataFrame:
     url = _PARQUET_URL
     with tempfile.NamedTemporaryFile(suffix=".parquet", delete=False) as tf:
         path = tf.name
-    print(f"下载 CMMLU parquet…")
+    print("下载 CMMLU parquet…")
     urllib.request.urlretrieve(url, path)
     return pd.read_parquet(path)
 

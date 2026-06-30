@@ -154,9 +154,9 @@ async def process_interaction(
 
     store = PgStore(db)
     config = InteractionConfig()
-    # 个性化 FSRS 调度：加载按群体从真实复习日志优化出的权重（无则用默认）。
-    from services.fsrs_optimize_service import load_cohort_weights
-    fsrs_params = await load_cohort_weights(db)
+    # 个性化 FSRS 调度：个体优先→群体→默认（无则用默认权重）。
+    from services.fsrs_optimize_service import load_weights_for_student
+    fsrs_params = await load_weights_for_student(db, student_id)
     input_data = InteractionInput(
         student_id=student_id,
         kc_id=kc_id,

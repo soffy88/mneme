@@ -33,18 +33,20 @@ _EPS = 1e-6
 _MIN_REVIEWS = 30  # 复习对不足则不优化（样本太少不可信）
 
 
-async def reconstruct_review_logs(db: AsyncSession) -> list[list[tuple]]:
+async def reconstruct_review_logs(db: AsyncSession, student_id=None) -> list[list[tuple]]:
     """从 interaction_events 还原复习序列：[[(occurred_at, fsrs_rating, is_correct), ...], ...]，
-    每个子列表是一张 (student,kc) 卡片按时间排序的作答。"""
-    rows = (await db.execute(
-        select(
-            InteractionEvent.student_id,
-            InteractionEvent.knowledge_point,
-            InteractionEvent.occurred_at,
-            InteractionEvent.fsrs_rating,
-            InteractionEvent.is_correct,
-        )
-    )).all()
+    每个子列表是一张 (student,kc) 卡片按时间排序的作答。
+    student_id 给定时只取该学生（个体拟合用）。"""
+    stmt = select(
+        InteractionEvent.student_id,
+        InteractionEvent.knowledge_point,
+        InteractionEvent.occurred_at,
+        InteractionEvent.fsrs_rating,
+        InteractionEvent.is_correct,
+    )
+    if student_id is not None:
+        stmt = stmt.where(InteractionEvent.student_id == student_id)
+    rows = (await db.execute(stmt)).all()
     by_card: dict[tuple, list] = defaultdict(list)
     for sid, kc, ts, rating, correct in rows:
         if kc is None or rating is None:
@@ -148,9 +150,76 @@ def propose_candidates(base: Sequence[float], n: int = 8, jitter: float = 0.08, 
     return out
 
 
+def fit_weights(seqs, base: Optional[Sequence[float]] = None, maxiter: int = 40):
+    """导数无关拟合（scipy Powell）最小化 log-loss。不引入 torch（前向不可微）。
+
+    返回 (best_params|None, best_loss, default_loss)。best_params=None 表示没拟合出
+    优于默认的权重（用默认）。无效权重在目标里记大惩罚，优化器自然避开。
+    """
+    try:
+        import numpy as np
+        from scipy.optimize import minimize
+        from fsrs import Scheduler
+    except Exception:
+        base_loss, _ = evaluate_weights(seqs, None)
+        return (None, base_loss, base_loss)
+
+    if base is None:
+        base = list(Scheduler().parameters)
+    default_loss, n = evaluate_weights(seqs, None)
+    if n == 0:
+        return (None, default_loss, default_loss)
+
+    def obj(x):
+        loss, _ = evaluate_weights(seqs, tuple(float(v) for v in x))
+        return loss if math.isfinite(loss) else 1e6
+
+    res = minimize(obj, np.array(base, dtype=float), method="Powell",
+                   options={"maxiter": maxiter, "xtol": 1e-3, "ftol": 1e-3})
+    best = tuple(float(v) for v in np.atleast_1d(res.x))
+    best_loss, _ = evaluate_weights(seqs, best)
+    if math.isfinite(best_loss) and best_loss < default_loss - _EPS:
+        return (best, best_loss, default_loss)
+    return (None, default_loss, default_loss)
+
+
+async def _store_weights(db: AsyncSession, cohort: str, params, logloss: float, n: int) -> None:
+    row = (await db.execute(
+        select(FSRSWeights).where(FSRSWeights.cohort == cohort))).scalar_one_or_none()
+    pj = list(params) if params else None
+    if row:
+        row.parameters, row.logloss, row.n_reviews = pj, round(logloss, 6), n
+    else:
+        db.add(FSRSWeights(cohort=cohort, parameters=pj, logloss=round(logloss, 6), n_reviews=n))
+    await db.flush()
+
+
+async def fit_and_store_weights(
+    db: AsyncSession, *, cohort: str = "global", student_id=None,
+    min_reviews: int = _MIN_REVIEWS, maxiter: int = 40,
+) -> dict:
+    """拟合并落库某 cohort 的 FSRS 权重（student_id 给定则按个体日志拟合）。"""
+    seqs = await reconstruct_review_logs(db, student_id=student_id)
+    _, n = evaluate_weights(seqs, None)
+    if n < min_reviews:
+        return {"cohort": cohort, "n_reviews": n, "stored": False, "reason": "insufficient_reviews"}
+    best, best_loss, default_loss = fit_weights(seqs, maxiter=maxiter)
+    await _store_weights(db, cohort, best, best_loss, n)
+    return {"cohort": cohort, "n_reviews": n, "default_logloss": round(default_loss, 6),
+            "best_logloss": round(best_loss, 6), "improved": best is not None, "stored": True}
+
+
 async def load_cohort_weights(db: AsyncSession, cohort: str = "global") -> Optional[tuple]:
     """读取该 cohort 的已优化 FSRS 权重；无则 None（用默认）。"""
     row = (await db.execute(
         select(FSRSWeights.parameters).where(FSRSWeights.cohort == cohort)
     )).scalar_one_or_none()
     return tuple(row) if row else None
+
+
+async def load_weights_for_student(db: AsyncSession, student_id) -> Optional[tuple]:
+    """个体优先：先 student:{id} 个性化权重，无则 global，再无则默认（None）。"""
+    w = await load_cohort_weights(db, cohort=f"student:{student_id}")
+    if w is not None:
+        return w
+    return await load_cohort_weights(db, cohort="global")

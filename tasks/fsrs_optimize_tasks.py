@@ -11,7 +11,7 @@ import logging
 from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_async_engine
 
 from obase.config import settings
-from services.fsrs_optimize_service import propose_candidates, select_best_weights
+from services.fsrs_optimize_service import fit_and_store_weights
 
 from tasks.celery_app import celery_app
 
@@ -23,12 +23,24 @@ async def _run() -> dict:
     factory = async_sessionmaker(bind=engine, class_=AsyncSession, expire_on_commit=False)
     try:
         async with factory() as db:
-            from fsrs import Scheduler
-            default = list(Scheduler().parameters)
-            candidates = [None, *propose_candidates(default, n=8, jitter=0.08)]
-            result = await select_best_weights(db, candidates, cohort="global")
+            # 全体：scipy 导数无关拟合（强于随机搜索）。
+            result = await fit_and_store_weights(db, cohort="global")
+            # 个体：对复习量足够的活跃学生各自拟合 student:{id}（个体优先加载）。
+            from sqlalchemy import func, select
+            from services.models import InteractionEvent
+            active = (await db.execute(
+                select(InteractionEvent.student_id)
+                .where(InteractionEvent.student_id.is_not(None))
+                .group_by(InteractionEvent.student_id)
+                .having(func.count() >= 60)
+            )).scalars().all()
+            per_student = 0
+            for sid in active:
+                r = await fit_and_store_weights(db, cohort=f"student:{sid}", student_id=sid)
+                if r.get("stored"):
+                    per_student += 1
             await db.commit()
-            return result
+            return {**result, "per_student_fitted": per_student}
     except Exception as exc:  # 不让任务崩 worker
         _log.exception("fsrs optimize failed: %s", exc)
         return {"status": "error", "error": str(exc)}
