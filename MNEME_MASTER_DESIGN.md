@@ -187,6 +187,17 @@ dontknow ∝ (1-P(L))·(1-P(G)) # 低掌握答错 → 不会
 
 **工程**：直接用官方 `py-fsrs`，不自研。Card 状态序列化入库。
 
+### 4.3.1 FSRS 权重个性化（从真实复习日志优化，护城河兑现）
+
+**问题**：默认 `py-fsrs` 用一套全局 FSRS-6 权重，人人吃群体默认间隔——"KT/FSRS 个性化精度"这条护城河没真正兑现。
+
+**设计**（数据飞轮）：
+- `fsrs_engine` 的 `fsrs_review/retrievability` 接受可选 `parameters`（21 维权重）；`None`=全局默认（行为不变）。缓存按权重的 `Scheduler`。
+- `interaction_events`（只增）即复习日志。`fsrs_optimize_service` 重放每张卡片序列，以「复习前预测可提取性 R vs 真实回忆结果」的**对数损失**为目标函数。
+- **优化方法：导数无关（derivative-free）的 `scipy.optimize`（Powell/Nelder-Mead）**，直接最小化上述 log-loss——**不引入 torch**：py-fsrs 前向不可微，且 scipy 已在 numpy/sympy 技术栈内，无需重写 FSRS 前向或加重型依赖。超出 FSRS 合法区间的权重记 `inf`，自然被排除。
+- **两级粒度**：cohort=`global`（全体）兜底；cohort=`student:{id}`（个体，复习量足够才拟合）。`process_interaction` 加载时**先个体后全体**，都无则默认。权重存 `fsrs_weights(cohort UNIQUE, parameters JSONB, logloss, n_reviews)`。
+- 离线任务（Celery beat）周期性拟合；权重只读加载进调度，不改已验证的 BKT/FSRS 算法契约。
+
 ### 4.4 forgetting-aware 统一模型（KT 与 FSRS 协同）
 
 解决"KT 说掌握了、FSRS 说该复习了"的矛盾：让两者共享"遗忘"事实。
@@ -516,6 +527,7 @@ POST /v1/parent/delete-request/{student_id} → 触发删除（合规）
 | 存储 | S3 兼容（MinIO→OSS） | 试卷原图冷热分层 |
 | LLM | Anthropic Claude（经 obase.ProviderRegistry） | key 走环境变量 |
 | 间隔重复 | py-fsrs | 不自研 |
+| FSRS 权重拟合 | scipy.optimize（导数无关） | §4.3.1；**不引入 torch**（前向不可微，scipy 已在栈内足够） |
 | 求解 | sympy/numpy（obase.sympy_runtime 沙箱） | 超时/内存限 |
 | 前端 | React+TS+Vite+Tailwind+Mafs+Three.js+KaTeX | PWA；KaTeX 渲染 rich_content/讲解中的 LaTeX 公式 |
 | 测试 | pytest + pytest-asyncio | service≥80% 总≥70% |
