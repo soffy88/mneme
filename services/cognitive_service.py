@@ -28,6 +28,9 @@ from oskill.interleave_select import QuestionItem, interleave_select
 
 from services.models import EffortfulGain, InteractionEvent, KCMastery, MasterySnapshot, SocraticSession
 
+# 集中练习去抖阈值（小时）：见 process_interaction 内说明。
+_MASSED_PRACTICE_DEBOUNCE_HOURS = 20.0
+
 
 async def daily_report(db: AsyncSession, student_id: UUID, day=None) -> dict:
     """家长日报：把某天的学习活动汇成一句话（看成长非分数）。"""
@@ -165,6 +168,10 @@ async def process_interaction(
         time_spent_seconds=time_spent_seconds,
         difficulty=difficulty,
         predicted_confidence=predicted_confidence,
+        # 集中练习去抖（学习科学：间隔重复≠集中练习）：距上次 FSRS 复习不足 20h 的
+        # 重复作答只更新掌握度、不推进调度。真正的到期复习相隔数天，不受影响；
+        # 同卷/同日连答不再把生题排到几天后导致"学了就忘"。
+        min_review_interval_hours=_MASSED_PRACTICE_DEBOUNCE_HOURS,
         now=now,
     )
     result = await process_interaction_workflow(config, input_data, store)

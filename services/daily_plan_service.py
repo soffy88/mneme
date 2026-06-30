@@ -212,6 +212,13 @@ async def build_daily_plan(
             "estimated_minutes": min(n, 2) * MINUTES_PER_NEW_KU,
         })
 
+    # ── 5.5 交错练习队列（item 8）：把"到期(P1)+薄弱(P3)"的 KC 用 interleave_select
+    #        排成相邻 KC 不同的检索序列（交错优于阻塞式同 KC 连练，利于迁移与长期保持）。
+    interleaved_queue = _build_interleaved_queue(
+        masteries, due_by_subject, weak_by_subject, ku_subject_map,
+        {ku.id: ku.difficulty for ku in ku_rows},
+    )
+
     # ── 6. 排序：priority ASC，同 priority 按科目固定顺序 ─────────────────
     subject_order = {s: i for i, s in enumerate(ALL_SUBJECTS)}
     tasks.sort(key=lambda t: (t["priority"], subject_order.get(t["subject"], 99)))
@@ -235,4 +242,45 @@ async def build_daily_plan(
         "exam_countdown_days": None,  # TODO: 待 users 表添加 exam_date 字段
         "subjects_summary":  subjects_summary,
         "tasks":             tasks,
+        "interleaved_queue": interleaved_queue,
     }
+
+
+def _build_interleaved_queue(
+    masteries: list[KCMastery],
+    due_by_subject: dict[str, list[str]],
+    weak_by_subject: dict[str, list[str]],
+    ku_subject_map: dict[str, str],
+    ku_difficulty_map: dict[str, float],
+) -> list[dict]:
+    """把到期+薄弱 KC 交错成相邻不同 KC 的练习序列。<2 个不同 KC 时原样返回（不交错）。"""
+    from oskill.interleave_select import QuestionItem, interleave_select
+
+    mastery_map = {m.knowledge_point: (m.p_mastery or 0.0) for m in masteries}
+    # kc → (subject, source)；到期优先于薄弱
+    pool: dict[str, tuple[str, str]] = {}
+    for subj, kcs in weak_by_subject.items():
+        for kc in kcs:
+            pool[kc] = (subj, "weak")
+    for subj, kcs in due_by_subject.items():
+        for kc in kcs:
+            pool[kc] = (subj, "review")  # 到期覆盖薄弱标注
+
+    if not pool:
+        return []
+    items = [
+        QuestionItem(
+            question_id=kc, kc_id=kc,
+            difficulty=float(ku_difficulty_map.get(kc, 0.5)),
+            mastery=float(mastery_map.get(kc, 0.5)),
+        )
+        for kc in pool
+    ]
+    if len({it.kc_id for it in items}) < 2:
+        ordered = items  # 不足 2 个不同 KC，无法交错
+    else:
+        ordered = interleave_select(items).selected
+    return [
+        {"kc_id": it.kc_id, "subject": pool[it.kc_id][0], "source": pool[it.kc_id][1]}
+        for it in ordered
+    ]

@@ -1,5 +1,6 @@
 """Celery application factory."""
 from celery import Celery
+from celery.schedules import crontab
 from celery.signals import worker_process_init
 from obase.config import settings
 
@@ -7,7 +8,7 @@ celery_app = Celery(
     "mneme",
     broker=settings.REDIS_URL,
     backend=settings.REDIS_URL,
-    include=["tasks.paper_tasks"],
+    include=["tasks.paper_tasks", "tasks.calibration_tasks", "tasks.textbook_tasks"],
 )
 celery_app.conf.update(
     task_serializer="json",
@@ -16,6 +17,13 @@ celery_app.conf.update(
     timezone="Asia/Shanghai",
     enable_utc=True,
     task_track_started=True,
+    # item 5：数据飞轮——每日 03:30 从累积作答校准 BKT 先验。
+    beat_schedule={
+        "daily-bkt-calibration": {
+            "task": "tasks.calibrate_bkt_priors",
+            "schedule": crontab(hour=3, minute=30),
+        },
+    },
 )
 
 
