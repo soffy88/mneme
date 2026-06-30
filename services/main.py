@@ -1046,6 +1046,9 @@ async def list_question_bank(
                 "correct_answer": q.correct_answer,
                 "knowledge_points": q.knowledge_points or {},
                 "needs_image": q.needs_image,
+                # 解析（答后展示，助学生看"为什么"）：取 gaokao analysis / ceval explanation
+                "explanation": (q.profiler_analysis or {}).get("analysis")
+                or (q.profiler_analysis or {}).get("explanation") or "",
             }
             for q in rows
         ],
