@@ -67,6 +67,23 @@ def test_next_day_review_advances_despite_debounce():
     assert r2.card_dict.get("last_review") != last1
 
 
+def test_fsrs_parameters_change_scheduling():
+    """个性化基础设施：自定义 FSRS 权重改变调度（默认 None 行为不变）。"""
+    from fsrs import Rating, Scheduler
+    from oprim.fsrs_engine import fsrs_new_card, fsrs_review
+    now = _NOW
+    default = tuple(Scheduler().parameters)
+    perturbed = tuple(p * 1.05 for p in default)  # 小幅扰动，保持在 FSRS 合法区间内
+    card = fsrs_new_card()
+    d1 = fsrs_review(card_dict=card, rating=Rating.Good, now=now)            # 默认
+    d2 = fsrs_review(card_dict=card, rating=Rating.Good, now=now, parameters=perturbed)
+    # 不同权重 → 不同稳定性/到期
+    assert d1.get("stability") != d2.get("stability") or d1.get("due") != d2.get("due")
+    # 默认显式传 None == 不传
+    d3 = fsrs_review(card_dict=card, rating=Rating.Good, now=now, parameters=None)
+    assert d3.get("due") == d1.get("due")
+
+
 def test_due_compute_unified_semantics():
     """item 13：missing due → 不到期；已排程且过期 → 到期。"""
     from oprim.due_compute import due_compute

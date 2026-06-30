@@ -206,6 +206,21 @@ class BKTPrior(Base):
     calibrated_from_n: Mapped[Optional[int]] = mapped_column(Integer, server_default="0")
     updated_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=text("now()"))
 
+
+class FSRSWeights(Base):
+    """按群体（cohort）从真实复习日志择优出的 FSRS 权重（个性化调度基础设施）。
+    parameters=NULL 表示该 cohort 用 FSRS 默认权重最优。"""
+    __tablename__ = "fsrs_weights"
+    __table_args__ = (UniqueConstraint("cohort", name="uq_fsrs_weights_cohort"),)
+
+    id: Mapped[uuid.UUID] = mapped_column(UUID(as_uuid=True), primary_key=True, server_default=text("gen_random_uuid()"))
+    cohort: Mapped[str] = mapped_column(String(50), nullable=False)
+    parameters: Mapped[Optional[list]] = mapped_column(JSONB, nullable=True)  # 21 维 FSRS-6 权重
+    logloss: Mapped[Optional[float]] = mapped_column(Float)
+    n_reviews: Mapped[Optional[int]] = mapped_column(Integer, server_default="0")
+    updated_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=text("now()"))
+
+
 class InteractionEvent(Base):
     __tablename__ = "interaction_events"
 

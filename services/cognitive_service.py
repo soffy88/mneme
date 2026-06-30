@@ -154,6 +154,9 @@ async def process_interaction(
 
     store = PgStore(db)
     config = InteractionConfig()
+    # 个性化 FSRS 调度：加载按群体从真实复习日志优化出的权重（无则用默认）。
+    from services.fsrs_optimize_service import load_cohort_weights
+    fsrs_params = await load_cohort_weights(db)
     input_data = InteractionInput(
         student_id=student_id,
         kc_id=kc_id,
@@ -172,6 +175,7 @@ async def process_interaction(
         # 重复作答只更新掌握度、不推进调度。真正的到期复习相隔数天，不受影响；
         # 同卷/同日连答不再把生题排到几天后导致"学了就忘"。
         min_review_interval_hours=_MASSED_PRACTICE_DEBOUNCE_HOURS,
+        fsrs_parameters=fsrs_params,
         now=now,
     )
     result = await process_interaction_workflow(config, input_data, store)

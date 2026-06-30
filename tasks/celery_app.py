@@ -8,7 +8,8 @@ celery_app = Celery(
     "mneme",
     broker=settings.REDIS_URL,
     backend=settings.REDIS_URL,
-    include=["tasks.paper_tasks", "tasks.calibration_tasks", "tasks.textbook_tasks"],
+    include=["tasks.paper_tasks", "tasks.calibration_tasks", "tasks.textbook_tasks",
+             "tasks.fsrs_optimize_tasks"],
 )
 celery_app.conf.update(
     task_serializer="json",
@@ -22,6 +23,11 @@ celery_app.conf.update(
         "daily-bkt-calibration": {
             "task": "tasks.calibrate_bkt_priors",
             "schedule": crontab(hour=3, minute=30),
+        },
+        # 每周一 04:00 从复习日志优化 FSRS 权重（个性化调度基础设施）。
+        "weekly-fsrs-optimize": {
+            "task": "tasks.optimize_fsrs_weights",
+            "schedule": crontab(hour=4, minute=0, day_of_week=1),
         },
     },
 )
