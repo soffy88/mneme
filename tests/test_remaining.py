@@ -14,10 +14,16 @@ from obase.config import settings
 from services.main import app
 from services.models import (
     InteractionEvent, KCMastery, MasterySnapshot, Paper, ParentAlert,
-    ParentStudent, SocraticSession, Streak, User, UserRole, WrongQuestion, DailyMission,
+    SocraticSession, Streak, User, UserRole, WrongQuestion, DailyMission,
 )
 
 KC_ID = "GDMATH-CONIC-01"
+
+
+@pytest.fixture(autouse=True)
+def _auth(bypass_auth):
+    """自访问正向测试统一绕过 IDOR 鉴权。"""
+
 
 
 @pytest.fixture(scope="function")
@@ -131,7 +137,7 @@ async def test_socratic_step_verify_intercept(client, student, db):
     assert "data:" in content
     # Red line: complete correct answer must not appear
     assert "x=2 或 x=-2" not in content
-    print(f"  H.3 step_check intercept — answer not leaked ✓")
+    print("  H.3 step_check intercept — answer not leaked ✓")
 
 
 @pytest.mark.asyncio

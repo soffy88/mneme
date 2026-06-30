@@ -25,6 +25,12 @@ from services.models import InteractionEvent, KCMastery, MasterySnapshot, User, 
 KC_ID = "GDMATH-CONIC-01"
 
 
+@pytest.fixture(autouse=True)
+def _auth(bypass_auth):
+    """本文件全为自访问正向测试：统一绕过 IDOR 鉴权。"""
+
+
+
 # ── fixtures ─────────────────────────────────────────────────────────────────
 
 @pytest.fixture(scope="function")
@@ -105,7 +111,7 @@ async def test_mastery_overview_sorted(client, student):
     vals = [it["effective_mastery"] for it in items]
     assert vals == sorted(vals), "掌握度应升序"
     assert all("peer_percentile" in it for it in items), "每项应含 peer_percentile"
-    print(f"  GET /v1/mastery 升序+百分位 ✓")
+    print("  GET /v1/mastery 升序+百分位 ✓")
 
 
 # ── GET /v1/mastery/curve/{student_id}/{kc_id} ───────────────────────────────
@@ -114,17 +120,17 @@ async def test_mastery_overview_sorted(client, student):
 async def test_mastery_curve_empty_then_filled(client, student):
     resp = await client.get(f"/v1/mastery/curve/{student}/{KC_ID}")
     assert resp.status_code == 200
-    assert resp.json() == [], "无数据时应返回空列表"
+    assert resp.json()["points"] == [], "无数据时 points 应为空"
 
     await client.post("/v1/interaction", json={
         "student_id": str(student), "kc_id": KC_ID, "is_correct": True,
     })
     resp = await client.get(f"/v1/mastery/curve/{student}/{KC_ID}")
     assert resp.status_code == 200
-    curve = resp.json()
+    curve = resp.json()["points"]   # 当前契约：{kc_id, kc_name, points:[...]}
     assert len(curve) == 1
     assert "month" in curve[0]
-    assert "long_term_mastery" in curve[0]
+    assert "mastery" in curve[0]
     assert "dominant_error_type" in curve[0]
     print(f"  GET /v1/mastery/curve → {curve[0]['month']} ✓")
 
@@ -134,7 +140,9 @@ async def test_mastery_curve_no_conflict_with_overview(client, student):
     """确认 /mastery/curve/... 路由不被 /mastery/{student_id} 吞掉。"""
     resp = await client.get(f"/v1/mastery/curve/{student}/{KC_ID}")
     assert resp.status_code == 200
-    assert isinstance(resp.json(), list), "curve 路由应返回 list，不是掌握度 overview"
+    body = resp.json()
+    # 当前契约：curve 返回 {kc_id, kc_name, points:[...]}，非掌握度 overview 列表
+    assert isinstance(body, dict) and "points" in body and body["kc_id"] == KC_ID
     print("  curve 路由优先级正确，未被 {student_id} 路由拦截 ✓")
 
 

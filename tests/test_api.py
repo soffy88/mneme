@@ -9,6 +9,12 @@ from sqlalchemy import delete
 from sqlalchemy.ext.asyncio import create_async_engine, async_sessionmaker, AsyncSession
 from obase.config import settings
 
+
+@pytest.fixture(autouse=True)
+def _auth(bypass_auth):
+    """自访问正向测试统一绕过 IDOR 鉴权。"""
+
+
 @pytest.fixture(scope="session")
 def event_loop():
     try:

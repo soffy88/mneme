@@ -14,7 +14,7 @@ from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_asyn
 
 from obase.config import settings
 from obase.prior_provider import PriorProvider
-from services.cognitive_service import mastery_overview, process_interaction, review_queue
+from services.cognitive_service import mastery_overview, process_interaction
 from services.models import (
     EffortfulGain,
     InteractionEvent,
@@ -24,6 +24,11 @@ from services.models import (
     User,
     UserRole,
 )
+
+
+@pytest.fixture(autouse=True)
+def _auth(bypass_auth):
+    """自访问正向测试统一绕过 IDOR 鉴权。"""
 
 
 @pytest.fixture(scope="function")
@@ -168,7 +173,7 @@ async def test_mastery_overview_has_peer_percentile(db_with_student):
     assert len(items) >= 1
     for item in items:
         assert "peer_percentile" in item, "每项应含 peer_percentile 字段"
-    print(f"  peer_percentile 字段存在 ✓")
+    print("  peer_percentile 字段存在 ✓")
 
 
 @pytest.mark.asyncio

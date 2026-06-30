@@ -110,7 +110,7 @@ async def test_paper_detail(client, student, db):
 # ── E.1 Daily mission ────────────────────────────────────────────────────────
 
 @pytest.mark.asyncio
-async def test_today_mission_no_mastery(client, student):
+async def test_today_mission_no_mastery(client, student, bypass_auth):
     """无掌握度数据时也能正常返回。"""
     resp = await client.get(f"/v1/missions/today/{student}")
     assert resp.status_code == 200
@@ -120,7 +120,7 @@ async def test_today_mission_no_mastery(client, student):
 
 
 @pytest.mark.asyncio
-async def test_today_mission_idempotent(client, student):
+async def test_today_mission_idempotent(client, student, bypass_auth):
     """同一天多次调用返回同一任务。"""
     r1 = await client.get(f"/v1/missions/today/{student}")
     r2 = await client.get(f"/v1/missions/today/{student}")
@@ -148,7 +148,7 @@ async def test_complete_mission(client, student, db):
 
 
 @pytest.mark.asyncio
-async def test_cold_start_socratic_state_serializable(client, student, db):
+async def test_cold_start_socratic_state_serializable(client, student, db, bypass_auth):
     """cold_start_single 返回含 SocraticStateV2 dataclass 时，写库不应 500。"""
     from oskill.cold_start_single import SocraticStateV2
 
@@ -191,7 +191,7 @@ async def test_cold_start_socratic_state_serializable(client, student, db):
 # ── G.1 Parent overview ──────────────────────────────────────────────────────
 
 @pytest.mark.asyncio
-async def test_parent_overview_empty(client, student):
+async def test_parent_overview_empty(client, student, bypass_auth):
     resp = await client.get(f"/v1/parent/overview/{student}")
     assert resp.status_code == 200
     data = resp.json()
@@ -222,7 +222,7 @@ async def test_solve_linear(client):
 # ── J.1 Patterns ─────────────────────────────────────────────────────────────
 
 @pytest.mark.asyncio
-async def test_patterns_empty(client, student):
+async def test_patterns_empty(client, student, bypass_auth):
     resp = await client.get(f"/v1/patterns/{student}")
     assert resp.status_code == 200
     data = resp.json()
@@ -231,7 +231,7 @@ async def test_patterns_empty(client, student):
 
 
 @pytest.mark.asyncio
-async def test_patterns_with_interactions(client, student):
+async def test_patterns_with_interactions(client, student, bypass_auth):
     """答了几道题后，patterns 有数据。"""
     for _ in range(3):
         await client.post("/v1/interaction", json={
@@ -301,7 +301,7 @@ async def test_delete_student_forbidden_for_non_owner(client, student):
 # ── K.1 Archive export ───────────────────────────────────────────────────────
 
 @pytest.mark.asyncio
-async def test_export_archive(client, student):
+async def test_export_archive(client, student, bypass_auth):
     resp = await client.get(f"/v1/parent/export/{student}")
     assert resp.status_code == 200
     assert "attachment" in resp.headers.get("content-disposition", "")

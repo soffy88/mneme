@@ -8,7 +8,6 @@
 from __future__ import annotations
 
 import uuid
-from unittest.mock import AsyncMock, patch
 
 import pytest
 from httpx import ASGITransport, AsyncClient
@@ -70,7 +69,7 @@ _GUIDE_QUESTION_MARKERS = [
 @pytest.mark.asyncio
 async def test_force_analysis_never_gives_answer():
     """红线测试：受力分析引导绝不直接给出受力图描述或完整方程。"""
-    from oskill._physics_force_analysis_guide import physics_force_analysis_guide, ForceAnalysisResult
+    from oskill._physics_force_analysis_guide import physics_force_analysis_guide
 
     # 模拟一个"恶意"LLM，试图直接给出答案
     class LeakyLLM:
@@ -283,7 +282,7 @@ async def test_reading_guide_start_api(db, student):
     async with AsyncClient(transport=ASGITransport(app=app), base_url="http://test") as c:
         r = await c.post(
             "/v1/reading/guide/start",
-            params={
+            json={
                 "article_text": "鲁迅在文章中描述了故乡的变迁。",
                 "question": "文章表达了作者怎样的情感？",
                 "subject": "chinese",
@@ -304,7 +303,7 @@ async def test_reading_guide_english_subject(db, student):
     async with AsyncClient(transport=ASGITransport(app=app), base_url="http://test") as c:
         r = await c.post(
             "/v1/reading/guide/start",
-            params={
+            json={
                 "article_text": "The quick brown fox jumps over the lazy dog.",
                 "question": "What does the author describe?",
                 "subject": "english",
@@ -324,7 +323,7 @@ async def test_reading_guide_message_api(db, student):
     async with AsyncClient(transport=ASGITransport(app=app), base_url="http://test") as c:
         start_r = await c.post(
             "/v1/reading/guide/start",
-            params={
+            json={
                 "article_text": "春天来了，万物复苏。",
                 "question": "作者想表达什么？",
                 "subject": "chinese",
@@ -358,7 +357,7 @@ async def test_reading_guide_requires_auth():
     async with AsyncClient(transport=ASGITransport(app=app), base_url="http://test") as c:
         r = await c.post(
             "/v1/reading/guide/start",
-            params={"article_text": "test", "question": "test", "subject": "english"},
+            json={"article_text": "test", "question": "test", "subject": "english"},
         )
     assert r.status_code == 401
 

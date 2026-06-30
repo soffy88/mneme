@@ -5,7 +5,10 @@ from obase.llm import register_mock_providers
 
 @pytest.fixture(autouse=True)
 def setup_mock_llm():
-    register_mock_providers()
+    try:
+        register_mock_providers()
+    except Exception:
+        pass  # 同一 pytest 进程已注册即可复用
 
 @pytest.mark.asyncio
 async def test_ocr_paper_mock():
