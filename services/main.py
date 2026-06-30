@@ -1100,13 +1100,14 @@ async def list_practice_topics(
     rows = (await db.execute(
         text(
             """
-            select key as ku_id, count(*) as n, max(ku.name) as ku_name
-            from wrong_questions, jsonb_object_keys(knowledge_points) as key
-            left join knowledge_units ku on ku.id = key
+            select kv.key as ku_id, count(*) as n,
+                   coalesce(max(ku.name), max(kv.value)) as ku_name
+            from wrong_questions, jsonb_each_text(knowledge_points) as kv
+            left join knowledge_units ku on ku.id = kv.key
             where student_id is null and subject = :subject and needs_image = false
               and correct_answer is not null and correct_answer <> ''
-            group by key having count(*) >= :min_count
-            order by key
+            group by kv.key having count(*) >= :min_count
+            order by kv.key
             """
         ),
         {"subject": subject, "min_count": min_count},
