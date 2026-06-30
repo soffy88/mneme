@@ -110,7 +110,8 @@ async def test_mastery_snapshot_upserted(db_with_student):
     """每次 process_interaction 后应 upsert 本月快照，同月第二次不新增行。"""
     session, student_id = db_with_student
     kc_id = "GDMATH-SEQ-01"
-    now = datetime.now(timezone.utc)
+    # 固定月中时刻：避免 now 落在月末附近时 +2h 跨月，产生 2 条不同月份快照（曾偶发）。
+    now = datetime.now(timezone.utc).replace(day=15, hour=10, minute=0, second=0, microsecond=0)
 
     await process_interaction(session, student_id, kc_id, is_correct=False, now=now)
     await session.commit()
