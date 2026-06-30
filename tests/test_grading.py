@@ -1,18 +1,24 @@
 import pytest
 import uuid
 from sqlalchemy.ext.asyncio import create_async_engine, async_sessionmaker, AsyncSession
+from sqlalchemy.pool import NullPool
 from sqlalchemy import select, delete
 from obase.config import settings
 from obase.llm import register_mock_providers
 from oskill.paper_grading import process_single_question
 from services.models import WrongQuestion, User, UserRole
 
-engine = create_async_engine(settings.DATABASE_URL)
+# NullPool：避免模块级 engine 的连接在 pytest-asyncio 各用例独立事件循环间复用导致
+# asyncpg "another operation is in progress"。
+engine = create_async_engine(settings.DATABASE_URL, poolclass=NullPool)
 SessionLocal = async_sessionmaker(bind=engine, class_=AsyncSession, expire_on_commit=False)
 
 @pytest.fixture(autouse=True)
 def setup_mock_llm():
-    register_mock_providers()
+    try:
+        register_mock_providers()
+    except Exception:
+        pass  # 已注册（同一 pytest 进程多用例）即可复用
 
 @pytest.fixture
 async def test_student():
@@ -60,3 +66,38 @@ async def test_process_single_question_wrong(test_student):
         assert wq.student_id == test_student
         assert wq.student_answer == "3"
         assert wq.error_type is not None
+
+
+@pytest.mark.asyncio
+async def test_paper_grading_deterministic_correct_beats_llm(test_student):
+    """确定性优先红线：选项/可规范化答案正确时走 deterministic，
+    即便 mock LLM 会判错也不调用 LLM。"""
+    async with SessionLocal() as session:
+        # 选择题：学生 B，标准答案 B → 确定性判对（mock LLM 解析失败会判错）
+        res = await process_single_question(
+            session=session,
+            student_id=test_student,
+            paper_id=None,
+            question_text="下列哪项正确？",
+            student_answer="B",
+            correct_answer="B",
+        )
+        assert res["status"] == "correct"
+        assert res["grade_method"] == "deterministic"
+
+
+@pytest.mark.asyncio
+async def test_paper_grading_deterministic_wrong_choice(test_student):
+    """选择题答错走确定性判定（不靠 LLM）。"""
+    async with SessionLocal() as session:
+        res = await process_single_question(
+            session=session,
+            student_id=test_student,
+            paper_id=None,
+            question_text="下列哪项正确？",
+            student_answer="A",
+            correct_answer="C",
+        )
+        assert res["status"] == "wrong"
+        assert res["grade_method"] == "deterministic"
+        await session.commit()

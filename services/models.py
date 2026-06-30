@@ -449,3 +449,12 @@ class KnowledgeUnit(Base):
     curriculum_standard: Mapped[Optional[str]] = mapped_column(Text, nullable=True)
     mastery_levels: Mapped[list]        = mapped_column(JSONB, server_default=text("'[]'::jsonb"))
     rich_content: Mapped[Optional[dict]] = mapped_column(JSONB, nullable=True)
+    # 提取可信度（item 2，防 AI 幻觉污染学习）：
+    #   provenance     — 溯源元数据 {chunk_id, page_hint, extract_model, extracted_at}
+    #   source_excerpt — 该 KU 所依据的**原文片段**（源内容与 AI 内容分离）
+    #   ai_generated   — 是否 LLM 生成（默认 True）
+    #   verified       — 是否过校验门/人工核验（默认 False，未核验不应被当权威真值）
+    provenance: Mapped[Optional[dict]]  = mapped_column(JSONB, nullable=True)
+    source_excerpt: Mapped[Optional[str]] = mapped_column(Text, nullable=True)
+    ai_generated: Mapped[bool]          = mapped_column(Boolean, server_default=text("true"))
+    verified: Mapped[bool]              = mapped_column(Boolean, server_default=text("false"))
