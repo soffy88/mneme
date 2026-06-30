@@ -9,7 +9,7 @@ celery_app = Celery(
     broker=settings.REDIS_URL,
     backend=settings.REDIS_URL,
     include=["tasks.paper_tasks", "tasks.calibration_tasks", "tasks.textbook_tasks",
-             "tasks.fsrs_optimize_tasks"],
+             "tasks.fsrs_optimize_tasks", "tasks.evaluation_tasks"],
 )
 celery_app.conf.update(
     task_serializer="json",
@@ -28,6 +28,11 @@ celery_app.conf.update(
         "weekly-fsrs-optimize": {
             "task": "tasks.optimize_fsrs_weights",
             "schedule": crontab(hour=4, minute=0, day_of_week=1),
+        },
+        # 每周一 05:00 评估护城河：KT/FSRS 对真实作答的预测 AUC（实证监控）。
+        "weekly-moat-eval": {
+            "task": "tasks.evaluate_moat",
+            "schedule": crontab(hour=5, minute=0, day_of_week=1),
         },
     },
 )
