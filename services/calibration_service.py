@@ -22,8 +22,10 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from services.models import BKTPrior, InteractionEvent
 
 _SLIP_MIN, _SLIP_MAX = 0.01, 0.40
+_TRANSIT_MIN, _TRANSIT_MAX = 0.01, 0.60
 _PSEUDO = 10.0   # 伪计数 K
 _MIN_WARM = 15   # 暖样本不足则不校准该 KC
+_MIN_TRANSIT_OPP = 10  # 学习转移机会不足则不校准 p_transit
 
 
 async def calibrate_bkt_priors(
@@ -52,18 +54,28 @@ async def calibrate_bkt_priors(
             continue
         by_kc_student[kc][sid].append((ts, bool(is_correct)))
 
-    # 暖样本：每个 (student,kc) 第 2 次及以后的作答
-    warm_stats: dict[str, list[int]] = {}  # kc → [errors, total]
+    # 暖样本(slip)：每个 (student,kc) 第 2 次及以后的作答错误率。
+    # 学习转移(transit)：连续对里"前错→后对"的比例，估计 p_transit。
+    warm_stats: dict[str, list[int]] = {}     # kc → [errors, total]
+    transit_stats: dict[str, list[int]] = {}  # kc → [transitions, opportunities]
     for kc, students in by_kc_student.items():
         errors = total = 0
+        transitions = opps = 0
         for _sid, seq in students.items():
             seq.sort(key=lambda x: x[0])
             for _ts, correct in seq[1:]:   # 跳过首次（冷样本）
                 total += 1
                 if not correct:
                     errors += 1
+            for (_, c0), (_, c1) in zip(seq, seq[1:]):
+                if not c0:                  # 前一次错 → 一次学习机会
+                    opps += 1
+                    if c1:                  # 后一次对 → 发生转移
+                        transitions += 1
         if total > 0:
             warm_stats[kc] = [errors, total]
+        if opps > 0:
+            transit_stats[kc] = [transitions, opps]
 
     calibrated_kcs = 0
     total_warm = 0
@@ -79,10 +91,18 @@ async def calibrate_bkt_priors(
         if not prior_rows:
             continue
         calibrated_kcs += 1
+        trans = transit_stats.get(kc)
         for pr in prior_rows:
             prior_slip = pr.p_slip if pr.p_slip is not None else 0.12
             cal = (total * emp_slip + pseudo * prior_slip) / (total + pseudo)
             pr.p_slip = min(_SLIP_MAX, max(_SLIP_MIN, cal))
+            # p_transit：学习转移机会足够才校准
+            if trans and trans[1] >= _MIN_TRANSIT_OPP:
+                t_trans, t_opp = trans
+                emp_transit = t_trans / t_opp
+                prior_transit = pr.p_transit if pr.p_transit is not None else 0.2
+                cal_t = (t_opp * emp_transit + pseudo * prior_transit) / (t_opp + pseudo)
+                pr.p_transit = min(_TRANSIT_MAX, max(_TRANSIT_MIN, cal_t))
             pr.calibrated_from_n = (pr.calibrated_from_n or 0) + total
             updated_rows += 1
     await db.flush()

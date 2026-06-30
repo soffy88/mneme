@@ -74,6 +74,32 @@ async def test_calibration_moves_slip_and_sets_n(db):
 
 
 @pytest.mark.asyncio
+async def test_calibration_updates_transit(db):
+    s, sids = db
+    # 构造大量"错→对"转移：每学生 错,对,错,对... → 高 emp_transit
+    base = datetime(2026, 2, 1, tzinfo=timezone.utc)
+    for _ in range(8):
+        sid = uuid.uuid4()
+        sids.append(sid)
+        s.add(User(id=sid, phone=f"1{str(sid.int)[:10]}", role=UserRole.student))
+        await s.flush()
+        for a, correct in enumerate([False, True, False, True, False, True]):
+            s.add(InteractionEvent(
+                student_id=sid, knowledge_point=KC, source=InteractionSource.quick,
+                is_correct=correct, occurred_at=base + timedelta(hours=a),
+            ))
+    await s.flush()
+    before = (await s.execute(select(BKTPrior).where(BKTPrior.knowledge_point == KC))).scalar_one()
+    transit_before = before.p_transit
+    await calibrate_bkt_priors(s, min_warm=10)
+    await s.commit()
+    after = (await s.execute(select(BKTPrior).where(BKTPrior.knowledge_point == KC))).scalar_one()
+    # 错→对转移率高(=1.0) → p_transit 应高于种子 0.2
+    assert after.p_transit > transit_before
+    assert 0.01 <= after.p_transit <= 0.60
+
+
+@pytest.mark.asyncio
 async def test_insufficient_warm_samples_skipped(db):
     s, sids = db
     await _add_events(s, sids, students=1, attempts=3, warm_error_rate=0.5)  # 暖样本仅 2

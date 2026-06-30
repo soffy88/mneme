@@ -92,3 +92,26 @@ async def test_due_list_has_no_answer(db_student_wq):
     assert items, "应有到期复习项"
     assert "variant_answer" not in items[0]
     assert items[0].get("requires_retrieval") is True
+
+
+@pytest.mark.asyncio
+async def test_due_item_survives_variant_failure(db_student_wq):
+    """变式生成失败不丢到期项（回退原题面）。"""
+    from unittest.mock import patch
+    from oprim.fsrs_engine import fsrs_new_card
+    from services.review_service import get_due_variants
+    db, sid = db_student_wq
+    card = fsrs_new_card()
+    card["due"] = "2020-01-01T00:00:00+00:00"
+    card["last_review"] = "2019-12-01T00:00:00+00:00"
+    db.add(KCMastery(
+        student_id=sid, knowledge_point=KC, fsrs_card_json=card, p_mastery=0.3,
+        p_init=0.2, p_transit=0.2, p_guess=0.15, p_slip=0.12,
+    ))
+    await db.flush()
+    with patch("services.review_service.variant_for_review", side_effect=RuntimeError("LLM down")):
+        with patch("services.review_service.due_recall_push_workflow", return_value=None):
+            items = await get_due_variants(db, sid)
+    assert items, "变式失败也不应丢到期项"
+    assert items[0]["kc_id"] == KC
+    assert items[0]["variant_question"]  # 回退到原题面，非空

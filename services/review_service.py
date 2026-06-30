@@ -43,7 +43,10 @@ async def get_due_variants(db: AsyncSession, student_id: uuid.UUID) -> List[dict
             
             orig_q = wq.question_text if wq else "已知知识点为 " + m.knowledge_point
             orig_a = wq.correct_answer if wq else "无"
-            
+
+            # 变式生成失败不再丢弃到期项（否则到期卡片静默消失=学了就忘）：
+            # 回退到原题面，学生照样能完成检索练习。
+            question_text = orig_q
             try:
                 variant = await variant_for_review(
                     ReviewVariantInput(
@@ -54,19 +57,21 @@ async def get_due_variants(db: AsyncSession, student_id: uuid.UUID) -> List[dict
                     ),
                     caller=caller
                 )
-                
-                # 检索练习红线（item 4）：到期复习只发题面，**不附答案**——
-                # 学生必须先尝试回忆作答；答案只能经 reveal/submit 显式获取，
-                # 而"看答案=放弃检索"会被 reveal 记为 FSRS Again。
-                due_items.append({
-                    "kc_id": m.knowledge_point,
-                    "variant_question": variant.question,
-                    "requires_retrieval": True,
-                    "due_since": m.last_interaction_at.isoformat() if m.last_interaction_at else None,
-                    "fsrs_interval": m.fsrs_card_json.get("stability", 0)
-                })
+                if variant and variant.question:
+                    question_text = variant.question
             except Exception:
-                continue # Skip if variant generation fails
+                pass  # 用原题面兜底，不丢到期项
+
+            # 检索练习红线（item 4）：到期复习只发题面，**不附答案**——
+            # 学生必须先尝试回忆作答；答案只能经 reveal/submit 显式获取，
+            # 而"看答案=放弃检索"会被 reveal 记为 FSRS Again。
+            due_items.append({
+                "kc_id": m.knowledge_point,
+                "variant_question": question_text,
+                "requires_retrieval": True,
+                "due_since": m.last_interaction_at.isoformat() if m.last_interaction_at else None,
+                "fsrs_interval": m.fsrs_card_json.get("stability", 0)
+            })
                 
     if due_items:
         # 4. Wrap with due_recall_push (omodul)
