@@ -16,51 +16,55 @@ async def get_pg_pool() -> PgPool:
     dsn = settings.DATABASE_URL.replace('+asyncpg', '')
     return await PgPool.get_or_create(dsn=dsn)
 
-async def get_due_variants(db: AsyncSession, student_id: uuid.UUID) -> List[dict]:
+async def get_due_variants(
+    db: AsyncSession, student_id: uuid.UUID, *, generate_variants: bool = False
+) -> List[dict]:
+    """到期复习池。默认**不**逐卡同步调 LLM 生成变式（性能/稳定性）——直接发原题面
+    供检索练习；generate_variants=True 才生成变式（变式纯锦上添花，非闭环必需）。"""
     # 1. Fetch all mastery for student
     stmt = select(KCMastery).where(KCMastery.student_id == student_id)
     masteries = (await db.execute(stmt)).scalars().all()
-    
+
     due_items = []
     now = datetime.now(timezone.utc)
-    
-    caller = ProviderRegistry.get().llm() if ProviderRegistry._instance else None
-    
+
+    caller = (ProviderRegistry.get().llm() if ProviderRegistry._instance else None) if generate_variants else None
+
     for m in masteries:
         if not m.fsrs_card_json:
             continue
-            
+
         # 2. Check if due
         is_due = due_compute(card_dict=m.fsrs_card_json, now=now)
         if is_due:
-            # 3. Generate variant
             # Find an original question for context
             wq_stmt = select(WrongQuestion).where(
                 WrongQuestion.student_id == student_id,
                 WrongQuestion.knowledge_points.has_key(m.knowledge_point)
             ).limit(1)
             wq = (await db.execute(wq_stmt)).scalar_one_or_none()
-            
+
             orig_q = wq.question_text if wq else "已知知识点为 " + m.knowledge_point
             orig_a = wq.correct_answer if wq else "无"
 
-            # 变式生成失败不再丢弃到期项（否则到期卡片静默消失=学了就忘）：
-            # 回退到原题面，学生照样能完成检索练习。
+            # 默认走原题面（无 LLM、无 N+1 延迟）；仅在显式开启变式时调 LLM，
+            # 失败也回退原题面（不丢到期项=不让"学了就忘"）。
             question_text = orig_q
-            try:
-                variant = await variant_for_review(
-                    ReviewVariantInput(
-                        student_id=str(student_id),
-                        kc_id=m.knowledge_point,
-                        original_question=orig_q,
-                        original_answer=orig_a
-                    ),
-                    caller=caller
-                )
-                if variant and variant.question:
-                    question_text = variant.question
-            except Exception:
-                pass  # 用原题面兜底，不丢到期项
+            if generate_variants:
+                try:
+                    variant = await variant_for_review(
+                        ReviewVariantInput(
+                            student_id=str(student_id),
+                            kc_id=m.knowledge_point,
+                            original_question=orig_q,
+                            original_answer=orig_a
+                        ),
+                        caller=caller
+                    )
+                    if variant and variant.question:
+                        question_text = variant.question
+                except Exception:
+                    pass  # 用原题面兜底，不丢到期项
 
             # 检索练习红线（item 4）：到期复习只发题面，**不附答案**——
             # 学生必须先尝试回忆作答；答案只能经 reveal/submit 显式获取，

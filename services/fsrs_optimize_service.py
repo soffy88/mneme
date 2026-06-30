@@ -218,8 +218,15 @@ async def load_cohort_weights(db: AsyncSession, cohort: str = "global") -> Optio
 
 
 async def load_weights_for_student(db: AsyncSession, student_id) -> Optional[tuple]:
-    """个体优先：先 student:{id} 个性化权重，无则 global，再无则默认（None）。"""
-    w = await load_cohort_weights(db, cohort=f"student:{student_id}")
-    if w is not None:
-        return w
-    return await load_cohort_weights(db, cohort="global")
+    """个体优先：先 student:{id} 个性化权重，无则 global，再无则默认（None）。
+
+    单次查询取两 cohort（热路径每答一题都调，避免 2 次往返）。
+    """
+    skey = f"student:{student_id}"
+    rows = (await db.execute(
+        select(FSRSWeights.cohort, FSRSWeights.parameters)
+        .where(FSRSWeights.cohort.in_([skey, "global"]))
+    )).all()
+    found = {c: p for c, p in rows}
+    params = found.get(skey) or found.get("global")
+    return tuple(params) if params else None
