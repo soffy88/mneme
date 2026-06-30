@@ -1,6 +1,6 @@
 from obase.provider_registry import ProviderRegistry
 from pydantic import BaseModel
-from fastapi import FastAPI, Depends, HTTPException, Query, UploadFile, File, Form, Response, Request
+from fastapi import FastAPI, Depends, HTTPException, Query, UploadFile, File, Form, Response, Request, Body
 from fastapi.responses import StreamingResponse
 from fastapi.security import OAuth2PasswordBearer
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -989,7 +989,7 @@ async def get_lesson(question_id: UUID, db: AsyncSession = Depends(get_db)):
         )
         db.add(cached_row)
         try:
-            await db.flush()
+            await db.commit()   # 原仅 flush 无 commit → 会话关闭即回滚，lesson_pages 永远为 0
         except Exception:
             await db.rollback()
     return {
@@ -1488,6 +1488,44 @@ async def get_review_due(
     items = await get_due_variants(db, student_id)
     return items
 
+
+@app.post("/v1/review/reveal/{student_id}")
+async def post_review_reveal(
+    student_id: UUID,
+    payload: dict = Body(...),
+    db: AsyncSession = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+):
+    """检索练习红线：揭示复习答案 = 放弃检索 → 记 FSRS Again，再返回答案。"""
+    if student_id != current_user.id:
+        raise HTTPException(status_code=403, detail="Permission denied")
+    kc_id = payload.get("kc_id")
+    if not kc_id:
+        raise HTTPException(status_code=422, detail="kc_id required")
+    from services.review_service import reveal_review_answer
+    result = await reveal_review_answer(db, student_id, kc_id)
+    await db.commit()
+    return result
+
+
+@app.post("/v1/review/submit/{student_id}")
+async def post_review_submit(
+    student_id: UUID,
+    payload: dict = Body(...),
+    db: AsyncSession = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+):
+    """提交复习作答（先检索后核对）：确定性判分入 BKT/FSRS，返回参考答案。"""
+    if student_id != current_user.id:
+        raise HTTPException(status_code=403, detail="Permission denied")
+    kc_id = payload.get("kc_id")
+    if not kc_id:
+        raise HTTPException(status_code=422, detail="kc_id required")
+    from services.review_service import submit_review_answer
+    result = await submit_review_answer(db, student_id, kc_id, str(payload.get("answer", "")))
+    await db.commit()
+    return result
+
 # ===== §Error Journal =====
 
 from obase.error_tag_store import get_error_distribution
@@ -1802,12 +1840,24 @@ async def upload_textbook_file(
     db.add(tf)
     await db.commit()
 
+    # item 7：平台预置教材（有 textbook_id）上传后触发可信知识抽取（异步）。
+    #   学生自传资料无 textbook 归属，不灌权威课程库（避免污染）。
+    extraction_triggered = False
+    if textbook_id:
+        try:
+            from tasks.textbook_tasks import extract_textbook_file_task
+            extract_textbook_file_task.delay(file_id)
+            extraction_triggered = True
+        except Exception:
+            pass  # broker 不可用不应阻断上传
+
     return {
         "file_id": file_id,
         "filename": filename,
         "file_type": ext,
         "file_size": len(data),
         "storage_path": storage_path,
+        "extraction_triggered": extraction_triggered,
     }
 
 

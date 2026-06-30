@@ -55,12 +55,13 @@ async def get_due_variants(db: AsyncSession, student_id: uuid.UUID) -> List[dict
                     caller=caller
                 )
                 
-                # VariantItem.question 是变式题面；.answer 生成后恒为空（需内核求解），
-                # 故复习参考答案回退到原题答案 orig_a。
+                # 检索练习红线（item 4）：到期复习只发题面，**不附答案**——
+                # 学生必须先尝试回忆作答；答案只能经 reveal/submit 显式获取，
+                # 而"看答案=放弃检索"会被 reveal 记为 FSRS Again。
                 due_items.append({
                     "kc_id": m.knowledge_point,
                     "variant_question": variant.question,
-                    "variant_answer": (variant.answer or orig_a or "（参考原题思路自行验证）"),
+                    "requires_retrieval": True,
                     "due_since": m.last_interaction_at.isoformat() if m.last_interaction_at else None,
                     "fsrs_interval": m.fsrs_card_json.get("stability", 0)
                 })
@@ -80,5 +81,56 @@ async def get_due_variants(db: AsyncSession, student_id: uuid.UUID) -> List[dict
             ),
             pool=pool
         )
-        
+
     return due_items
+
+
+async def _original_answer_for_kc(db: AsyncSession, student_id: uuid.UUID, kc_id: str) -> str:
+    """取该 kc 一条原错题的参考答案（复习核对/揭示用）。"""
+    wq = (await db.execute(
+        select(WrongQuestion).where(
+            WrongQuestion.student_id == student_id,
+            WrongQuestion.knowledge_points.has_key(kc_id),
+        ).limit(1)
+    )).scalar_one_or_none()
+    return (wq.correct_answer if wq else "") or ""
+
+
+async def reveal_review_answer(db: AsyncSession, student_id: uuid.UUID, kc_id: str) -> dict:
+    """揭示复习答案（学生放弃检索）。检索练习红线：看答案 = FSRS Again。
+
+    记一次 used_answer=True 的交互（映射 Again，掌握度按答错衰减），再返回答案。
+    """
+    from services.cognitive_service import process_interaction
+    answer = await _original_answer_for_kc(db, student_id, kc_id)
+    await process_interaction(
+        db,
+        student_id=student_id,
+        kc_id=kc_id,
+        is_correct=False,
+        question_type="solve",
+        source="review",
+        used_answer=True,   # 看答案 → fsrs_map_rating 返回 Again
+    )
+    return {"kc_id": kc_id, "answer": answer, "recorded_again": True}
+
+
+async def submit_review_answer(
+    db: AsyncSession, student_id: uuid.UUID, kc_id: str, student_answer: str
+) -> dict:
+    """提交复习作答（先检索后核对）。确定性判分并记入 BKT/FSRS，再返回参考答案。"""
+    from oprim.answer_judge import judge_answer
+    from services.cognitive_service import process_interaction
+    answer = await _original_answer_for_kc(db, student_id, kc_id)
+    verdict = judge_answer(student_answer, answer).get("verdict", "unsure")
+    # unsure（自由作答）按"未确定"不武断判错：交学生自评，这里仅在可判定时入算法
+    if verdict in ("correct", "wrong"):
+        await process_interaction(
+            db,
+            student_id=student_id,
+            kc_id=kc_id,
+            is_correct=(verdict == "correct"),
+            question_type="solve",
+            source="review",
+        )
+    return {"kc_id": kc_id, "verdict": verdict, "answer": answer}
