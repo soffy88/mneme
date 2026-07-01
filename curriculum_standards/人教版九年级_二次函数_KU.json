@@ -1,0 +1,377 @@
+{
+  "kus": [
+    {
+      "id": "qf-ku-01",
+      "name": "二次函数定义",
+      "definition_or_formula": "形如y=ax²+bx+c（a,b,c是常数，a≠0）的函数叫做二次函数。",
+      "page_hint": "P36",
+      "difficulty": 0.3,
+      "prerequisites": [
+        "函数概念"
+      ]
+    },
+    {
+      "id": "qf-ku-02",
+      "name": "二次函数各项名称",
+      "definition_or_formula": "a是二次项系数，b是一次项系数，c是常数项。",
+      "page_hint": "P36",
+      "difficulty": 0.2,
+      "prerequisites": [
+        "二次函数定义"
+      ]
+    },
+    {
+      "id": "qf-ku-03",
+      "name": "描点法画二次函数图象",
+      "definition_or_formula": "列表、描点、用平滑曲线顺次连接各点。",
+      "page_hint": "P37",
+      "difficulty": 0.4,
+      "prerequisites": [
+        "二次函数定义"
+      ]
+    },
+    {
+      "id": "qf-ku-04",
+      "name": "二次函数图象是抛物线",
+      "definition_or_formula": "二次函数的图象都是抛物线，开口向上或向下。",
+      "page_hint": "P37",
+      "difficulty": 0.3,
+      "prerequisites": [
+        "描点法画二次函数图象"
+      ]
+    },
+    {
+      "id": "qf-ku-05",
+      "name": "抛物线对称轴",
+      "definition_or_formula": "抛物线与对称轴的交点叫做顶点，对称轴是直线x=h。",
+      "page_hint": "P37",
+      "difficulty": 0.4,
+      "prerequisites": [
+        "二次函数图象是抛物线"
+      ]
+    },
+    {
+      "id": "qf-ku-06",
+      "name": "抛物线顶点",
+      "definition_or_formula": "抛物线与对称轴的交点，是抛物线的最低点或最高点。",
+      "page_hint": "P37",
+      "difficulty": 0.4,
+      "prerequisites": [
+        "抛物线对称轴"
+      ]
+    },
+    {
+      "id": "qf-ku-07",
+      "name": "y=ax²的图象和性质（a>0）",
+      "definition_or_formula": "开口向上，对称轴是y轴，顶点是原点，顶点是最低点，a越大开口越小。",
+      "page_hint": "P38",
+      "difficulty": 0.5,
+      "prerequisites": [
+        "二次函数图象是抛物线"
+      ]
+    },
+    {
+      "id": "qf-ku-08",
+      "name": "y=ax²的图象和性质（a<0）",
+      "definition_or_formula": "开口向下，对称轴是y轴，顶点是原点，顶点是最高点，a越小开口越小。",
+      "page_hint": "P38",
+      "difficulty": 0.5,
+      "prerequisites": [
+        "二次函数图象是抛物线"
+      ]
+    },
+    {
+      "id": "qf-ku-09",
+      "name": "y=ax²的单调性",
+      "definition_or_formula": "a>0时，x<0时y随x增大而减小，x>0时y随x增大而增大；a<0时相反。",
+      "page_hint": "P39",
+      "difficulty": 0.6,
+      "prerequisites": [
+        "y=ax²的图象和性质（a>0）",
+        "y=ax²的图象和性质（a<0）"
+      ]
+    },
+    {
+      "id": "qf-ku-10",
+      "name": "y=ax²+k的图象与y=ax²的关系",
+      "definition_or_formula": "y=ax²向上平移k个单位得y=ax²+k，向下平移k个单位得y=ax²-k。",
+      "page_hint": "P40",
+      "difficulty": 0.5,
+      "prerequisites": [
+        "y=ax²的图象和性质（a>0）"
+      ]
+    },
+    {
+      "id": "qf-ku-11",
+      "name": "y=a(x-h)²的图象与y=ax²的关系",
+      "definition_or_formula": "y=ax²向左平移h个单位得y=a(x+h)²，向右平移h个单位得y=a(x-h)²。",
+      "page_hint": "P41",
+      "difficulty": 0.5,
+      "prerequisites": [
+        "y=ax²的图象和性质（a>0）"
+      ]
+    },
+    {
+      "id": "qf-ku-12",
+      "name": "y=a(x-h)²+k的图象特点",
+      "definition_or_formula": "开口方向由a决定，对称轴是x=h，顶点是(h,k)。",
+      "page_hint": "P43",
+      "difficulty": 0.5,
+      "prerequisites": [
+        "y=a(x-h)²的图象与y=ax²的关系",
+        "y=ax²+k的图象与y=ax²的关系"
+      ]
+    },
+    {
+      "id": "qf-ku-13",
+      "name": "y=a(x-h)²+k的平移规律",
+      "definition_or_formula": "y=ax²上下左右平移可得y=a(x-h)²+k，平移方向距离由h,k决定。",
+      "page_hint": "P43",
+      "difficulty": 0.6,
+      "prerequisites": [
+        "y=a(x-h)²+k的图象特点"
+      ]
+    },
+    {
+      "id": "qf-ku-14",
+      "name": "y=a(x-h)²+k的单调性",
+      "definition_or_formula": "a>0时，x<h时y随x增大而减小，x>h时y随x增大而增大；a<0时相反。",
+      "page_hint": "P43",
+      "difficulty": 0.6,
+      "prerequisites": [
+        "y=a(x-h)²+k的图象特点"
+      ]
+    },
+    {
+      "id": "qf-ku-15",
+      "name": "配方法化一般式为顶点式",
+      "definition_or_formula": "y=ax²+bx+c = a(x+b/(2a))² + (4ac-b²)/(4a)。",
+      "page_hint": "P45",
+      "difficulty": 0.7,
+      "prerequisites": [
+        "二次函数定义",
+        "完全平方公式"
+      ]
+    },
+    {
+      "id": "qf-ku-16",
+      "name": "一般式对称轴和顶点公式",
+      "definition_or_formula": "对称轴x=-b/(2a)，顶点(-b/(2a), (4ac-b²)/(4a))。",
+      "page_hint": "P45",
+      "difficulty": 0.7,
+      "prerequisites": [
+        "配方法化一般式为顶点式"
+      ]
+    },
+    {
+      "id": "qf-ku-17",
+      "name": "一般式的单调性",
+      "definition_or_formula": "a>0时，x<-b/(2a)时y随x增大而减小，x>-b/(2a)时y随x增大而增大；a<0时相反。",
+      "page_hint": "P46",
+      "difficulty": 0.6,
+      "prerequisites": [
+        "一般式对称轴和顶点公式"
+      ]
+    },
+    {
+      "id": "qf-ku-18",
+      "name": "待定系数法求二次函数解析式",
+      "definition_or_formula": "设y=ax²+bx+c，代入三点坐标得三元一次方程组，解出a,b,c。",
+      "page_hint": "P47",
+      "difficulty": 0.7,
+      "prerequisites": [
+        "二次函数定义",
+        "解三元一次方程组"
+      ]
+    },
+    {
+      "id": "qf-ku-19",
+      "name": "二次函数与一元二次方程的关系",
+      "definition_or_formula": "二次函数y=ax²+bx+c的值为0时，对应一元二次方程ax²+bx+c=0。",
+      "page_hint": "P51",
+      "difficulty": 0.5,
+      "prerequisites": [
+        "二次函数定义",
+        "一元二次方程"
+      ]
+    },
+    {
+      "id": "qf-ku-20",
+      "name": "图象法求一元二次方程的根",
+      "definition_or_formula": "二次函数图象与x轴交点的横坐标即为一元二次方程的根。",
+      "page_hint": "P52",
+      "difficulty": 0.6,
+      "prerequisites": [
+        "二次函数与一元二次方程的关系"
+      ]
+    },
+    {
+      "id": "qf-ku-21",
+      "name": "二次函数图象与x轴的位置关系",
+      "definition_or_formula": "与x轴有两个公共点、一个公共点、没有公共点，对应方程有两个不等实根、两个相等实根、无实根。",
+      "page_hint": "P52",
+      "difficulty": 0.6,
+      "prerequisites": [
+        "图象法求一元二次方程的根"
+      ]
+    },
+    {
+      "id": "qf-ku-22",
+      "name": "利用图象估计一元二次方程的根",
+      "definition_or_formula": "通过观察图象与x轴交点，得到根的近似值。",
+      "page_hint": "P53",
+      "difficulty": 0.6,
+      "prerequisites": [
+        "图象法求一元二次方程的根"
+      ]
+    },
+    {
+      "id": "qf-ku-23",
+      "name": "二分法求一元二次方程的近似根",
+      "definition_or_formula": "通过取平均数不断缩小根所在的范围，得到根的近似值。",
+      "page_hint": "P53",
+      "difficulty": 0.7,
+      "prerequisites": [
+        "利用图象估计一元二次方程的根"
+      ]
+    },
+    {
+      "id": "qf-ku-24",
+      "name": "二次函数顶点式应用（实际问题）",
+      "definition_or_formula": "已知顶点和另一点，可设y=a(x-h)²+k，代入求a。",
+      "page_hint": "P43",
+      "difficulty": 0.7,
+      "prerequisites": [
+        "y=a(x-h)²+k的图象特点"
+      ]
+    },
+    {
+      "id": "qf-ku-25",
+      "name": "二次函数与一元二次方程的实际应用",
+      "definition_or_formula": "将实际问题中的高度等代入函数解析式，解一元二次方程。",
+      "page_hint": "P50",
+      "difficulty": 0.7,
+      "prerequisites": [
+        "二次函数与一元二次方程的关系"
+      ]
+    },
+    {
+      "id": "qf-ku-26",
+      "name": "二次函数的最大值与最小值",
+      "definition_or_formula": "当a>0时，抛物线y=ax²+bx+c的顶点是最低点，函数在x=-b/(2a)处取得最小值(4ac-b²)/(4a)；当a<0时，顶点是最高点，函数在x=-b/(2a)处取得最大值(4ac-b²)/(4a)。",
+      "page_hint": "P56",
+      "difficulty": 0.6,
+      "prerequisites": [
+        "qf-ku-1",
+        "qf-ku-2"
+      ]
+    },
+    {
+      "id": "qf-ku-27",
+      "name": "利用二次函数解决实际最优化问题的方法步骤",
+      "definition_or_formula": "步骤：1. 分析实际问题，确定变量之间的关系，建立二次函数模型；2. 确定自变量的取值范围；3. 利用二次函数的图象和性质（如顶点坐标）求出函数的最大值或最小值；4. 结合实际意义给出答案。",
+      "page_hint": "P56-P58",
+      "difficulty": 0.7,
+      "prerequisites": [
+        "qf-ku-26",
+        "qf-ku-1"
+      ]
+    },
+    {
+      "id": "qf-ku-28",
+      "name": "二次函数图象与x轴的交点与一元二次方程根的关系",
+      "definition_or_formula": "二次函数y=ax²+bx+c的图象与x轴的交点横坐标即为对应一元二次方程ax²+bx+c=0的根。借助计算机软件画抛物线并显示与x轴交点坐标，可求出方程的根。",
+      "page_hint": "P55",
+      "difficulty": 0.5,
+      "prerequisites": [
+        "qf-ku-1",
+        "qf-ku-2"
+      ]
+    },
+    {
+      "id": "qf-ku-29",
+      "name": "二次函数在抛物线形拱桥问题中的应用",
+      "definition_or_formula": "建立适当的坐标系（如以抛物线的顶点为原点，对称轴为y轴），设二次函数为y=ax²，利用已知点坐标求出a，再根据水面高度变化求水面宽度。",
+      "page_hint": "P58",
+      "difficulty": 0.7,
+      "prerequisites": [
+        "qf-ku-1",
+        "qf-ku-2",
+        "qf-ku-26"
+      ]
+    }
+  ],
+  "kcs": [
+    {
+      "id": "qf-kc-01",
+      "name": "二次函数的概念与表示",
+      "logic_reason": "包含二次函数的定义、各项名称及解析式的求法。",
+      "ku_ids": [
+        "qf-ku-01",
+        "qf-ku-02",
+        "qf-ku-18"
+      ]
+    },
+    {
+      "id": "qf-kc-02",
+      "name": "二次函数y=ax²的图象与性质",
+      "logic_reason": "从最简单的二次函数开始，研究其图象、开口、对称轴、顶点及单调性。",
+      "ku_ids": [
+        "qf-ku-03",
+        "qf-ku-04",
+        "qf-ku-05",
+        "qf-ku-06",
+        "qf-ku-07",
+        "qf-ku-08",
+        "qf-ku-09"
+      ]
+    },
+    {
+      "id": "qf-kc-03",
+      "name": "二次函数y=a(x-h)²+k的图象与性质",
+      "logic_reason": "通过平移得到顶点式，研究其图象特点、平移规律及单调性。",
+      "ku_ids": [
+        "qf-ku-10",
+        "qf-ku-11",
+        "qf-ku-12",
+        "qf-ku-13",
+        "qf-ku-14"
+      ]
+    },
+    {
+      "id": "qf-kc-04",
+      "name": "二次函数一般式的图象与性质",
+      "logic_reason": "通过配方将一般式化为顶点式，得到对称轴、顶点公式及单调性。",
+      "ku_ids": [
+        "qf-ku-15",
+        "qf-ku-16",
+        "qf-ku-17"
+      ]
+    },
+    {
+      "id": "qf-kc-05",
+      "name": "二次函数与一元二次方程",
+      "logic_reason": "从二次函数的角度看一元二次方程，利用图象求方程的根。",
+      "ku_ids": [
+        "qf-ku-19",
+        "qf-ku-20",
+        "qf-ku-21",
+        "qf-ku-22",
+        "qf-ku-23",
+        "qf-ku-25",
+        "qf-ku-28"
+      ]
+    },
+    {
+      "id": "qf-kc-06",
+      "name": "最值与实际应用",
+      "logic_reason": "利用顶点求最大最小值，以及将实际优化问题建模为二次函数求解",
+      "ku_ids": [
+        "qf-ku-26",
+        "qf-ku-27",
+        "qf-ku-24",
+        "qf-ku-29"
+      ]
+    }
+  ]
+}

@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from "react"
 import { Link } from "react-router-dom"
 
-const BASE = import.meta.env.VITE_API_BASE ?? "http://localhost:8000"
+const BASE = import.meta.env.VITE_API_BASE ?? ""
 
 interface Msg { role: "user" | "assistant"; text: string }
 
@@ -70,7 +70,7 @@ export function ForceAnalysisPage() {
           }
         }
       }
-    } catch (e: unknown) {
+    } catch {
       setMsgs(m => [...m, { role: "assistant", text: "⚠️ 连接中断，请重试" }])
     } finally {
       setStreaming(false)
@@ -79,28 +79,28 @@ export function ForceAnalysisPage() {
 
   return (
     <div className="max-w-2xl mx-auto px-4 py-6 flex flex-col h-screen">
-      <div className="flex items-center gap-2 mb-4 text-sm text-gray-500">
-        <Link to="/subjects/physics" className="hover:text-blue-600">物理</Link>
+      <div className="flex items-center gap-2 mb-4 text-sm text-slate-500">
+        <Link to="/subjects/physics" className="hover:text-indigo-600">物理</Link>
         <span>›</span>
         <span>受力分析引导</span>
       </div>
 
-      <h1 className="text-lg font-bold text-gray-900 mb-4">⚡ 受力分析苏格拉底引导</h1>
+      <h1 className="text-lg font-bold text-slate-900 mb-4">⚡ 受力分析苏格拉底引导</h1>
 
       {!sessionId ? (
         <div className="space-y-4">
-          <p className="text-sm text-gray-500">描述一个力学情景（如：一个木块在斜面上静止，斜面倾角30°），AI 将一步步引导你分析所有力。</p>
+          <p className="text-sm text-slate-500">描述一个力学情景（如：一个木块在斜面上静止，斜面倾角30°），AI 将一步步引导你分析所有力。</p>
           <textarea
             value={scenario}
             onChange={e => setScenario(e.target.value)}
             placeholder="例如：一个质量为2kg的木块放在倾角30°的光滑斜面上，由一根平行于斜面的绳子拉住，绳子另一端固定在墙上。"
             rows={4}
-            className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none"
+            className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 resize-none"
           />
           <button
             onClick={startSession}
             disabled={starting || !scenario.trim()}
-            className="w-full bg-purple-600 text-white rounded-lg py-2.5 font-medium hover:bg-purple-700 disabled:opacity-50"
+            className="w-full bg-indigo-600 text-white rounded-lg py-2.5 font-medium hover:bg-indigo-700 disabled:opacity-50"
           >
             {starting ? "正在启动..." : "开始受力分析"}
           </button>
@@ -112,8 +112,8 @@ export function ForceAnalysisPage() {
               <div key={i} className={`flex ${m.role === "user" ? "justify-end" : "justify-start"}`}>
                 <div className={`max-w-[85%] rounded-2xl px-4 py-2.5 text-sm whitespace-pre-wrap ${
                   m.role === "user"
-                    ? "bg-purple-600 text-white rounded-br-sm"
-                    : "bg-white border border-gray-200 text-gray-800 rounded-bl-sm"
+                    ? "bg-indigo-600 text-white rounded-br-sm"
+                    : "bg-white border border-slate-200 text-slate-800 rounded-bl-sm"
                 }`}>
                   {m.text || (streaming ? "▋" : "")}
                 </div>
@@ -121,19 +121,19 @@ export function ForceAnalysisPage() {
             ))}
             <div ref={bottomRef} />
           </div>
-          <div className="flex gap-2 pt-3 border-t border-gray-100">
+          <div className="flex gap-2 pt-3 border-t border-slate-100">
             <input
               value={input}
               onChange={e => setInput(e.target.value)}
               onKeyDown={e => e.key === "Enter" && !e.shiftKey && sendMessage()}
               placeholder="输入你的回答..."
               disabled={streaming}
-              className="flex-1 border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500 disabled:bg-gray-50"
+              className="flex-1 border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 disabled:bg-slate-50"
             />
             <button
               onClick={sendMessage}
               disabled={streaming || !input.trim()}
-              className="px-4 py-2 bg-purple-600 text-white rounded-lg text-sm hover:bg-purple-700 disabled:opacity-50"
+              className="px-4 py-2 bg-indigo-600 text-white rounded-lg text-sm hover:bg-indigo-700 disabled:opacity-50"
             >
               发送
             </button>

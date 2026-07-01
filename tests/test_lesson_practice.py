@@ -284,7 +284,6 @@ async def test_socratic_start_for_ku_creates_session(db, seed_ku, student):
     assert len(d["first_question"]) > 0
 
     # cleanup
-    from services.models import SocraticSession
     wq_cleanup = (await db.execute(
         select(WrongQuestion)
         .where(WrongQuestion.student_id == sid, WrongQuestion.question_text.like(f"%{ku2_id[:10]}%"))

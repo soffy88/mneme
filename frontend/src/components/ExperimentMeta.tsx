@@ -19,7 +19,7 @@ export function ExperimentMeta({ exp }: { exp: NonNullable<ParsedDesc["experimen
         {rows.map(r => (
           <div key={r.label} className="grid grid-cols-[5rem_1fr] gap-2 text-sm">
             <dt className="text-amber-700 font-medium shrink-0">{r.label}</dt>
-            <dd className="text-gray-700">{r.value}</dd>
+            <dd className="text-slate-700">{r.value}</dd>
           </div>
         ))}
       </dl>

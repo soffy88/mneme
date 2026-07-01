@@ -1,6 +1,5 @@
 import pytest
 import uuid
-from unittest.mock import patch, MagicMock
 from services.main import app, get_current_user
 from services.models import User, UserRole, SpeakingSession
 from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_async_engine

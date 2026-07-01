@@ -1,0 +1,8 @@
+source: HuggingFace  ecnu-icalk/cmm-math
+split:  train
+count:  22248
+test:   5821 (not imported)
+fields: id, image, answer, solution, level, question, options, subject, analysis
+file:   ~/projects/mneme/cmm_math_train.jsonl
+downloaded: 2026-06-21
+note:   images.zip (278MB) not downloaded; image questions flagged needs_image_review

@@ -1,5 +1,5 @@
 import pytest
-from unittest.mock import patch, MagicMock, AsyncMock
+from unittest.mock import patch, MagicMock
 from services.main import app, get_current_user
 from httpx import AsyncClient, ASGITransport
 import uuid

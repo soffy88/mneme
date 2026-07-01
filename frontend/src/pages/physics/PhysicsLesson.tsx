@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom"
 import type { KU } from "../../api"
 import { listKUs } from "../../api"
 import { KCGroup } from "../../components/KCGroup"
+import { PageHeader } from "../../components/ui"
 import { KU_TYPE_META } from "../../types"
 
 export function PhysicsLesson() {
@@ -68,7 +69,7 @@ export function PhysicsLesson() {
 
   if (loading) return (
     <div className="flex items-center justify-center min-h-64">
-      <div className="text-gray-500 text-sm animate-pulse">加载物理知识点中…</div>
+      <div className="text-slate-500 text-sm animate-pulse">加载物理知识点中…</div>
     </div>
   )
   if (err) return <div className="p-6 text-red-500 text-sm">{err}</div>
@@ -76,10 +77,7 @@ export function PhysicsLesson() {
   return (
     <div className="max-w-3xl mx-auto px-4 py-6">
       {/* 标题 */}
-      <div className="mb-5">
-        <h1 className="text-2xl font-bold text-gray-900">物理知识体系</h1>
-        <p className="text-sm text-gray-500 mt-1">共 {kus.length} 个知识点，{Object.keys(grouped).length === 0 ? 0 : grouped.length} 个知识簇</p>
-      </div>
+      <PageHeader title="物理知识体系" subtitle={`共 ${kus.length} 个知识点，${Object.keys(grouped).length === 0 ? 0 : grouped.length} 个知识簇`} />
 
       {/* 知识类型统计条 */}
       <div className="flex flex-wrap gap-2 mb-4">
@@ -90,7 +88,7 @@ export function PhysicsLesson() {
             className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-medium transition-all border ${
               filterType === t
                 ? `${meta.bg} ${meta.color} border-current shadow-sm`
-                : "bg-white text-gray-500 border-gray-200 hover:border-gray-400"
+                : "bg-white text-slate-500 border-slate-200 hover:border-slate-400"
             }`}
           >
             {meta.label}
@@ -102,7 +100,7 @@ export function PhysicsLesson() {
         {filterType !== "all" && (
           <button
             onClick={() => setFilterType("all")}
-            className="text-xs text-gray-400 hover:text-gray-600 px-2"
+            className="text-xs text-slate-400 hover:text-slate-600 px-2"
           >
             清除筛选 ×
           </button>
@@ -114,7 +112,7 @@ export function PhysicsLesson() {
         <select
           value={filterGrade}
           onChange={e => { setFilterGrade(e.target.value); setFilterBook("all") }}
-          className="text-xs border border-gray-300 rounded-lg px-2 py-1.5 text-gray-700 bg-white focus:outline-none"
+          className="text-xs border border-slate-300 rounded-lg px-2 py-1.5 text-slate-700 bg-white focus:outline-none"
         >
           <option value="all">全部年级</option>
           {grades.map(g => <option key={g} value={g}>{g}</option>)}
@@ -122,7 +120,7 @@ export function PhysicsLesson() {
         <select
           value={filterBook}
           onChange={e => setFilterBook(e.target.value)}
-          className="flex-1 text-xs border border-gray-300 rounded-lg px-2 py-1.5 text-gray-700 bg-white focus:outline-none"
+          className="flex-1 text-xs border border-slate-300 rounded-lg px-2 py-1.5 text-slate-700 bg-white focus:outline-none"
         >
           <option value="all">全部教材</option>
           {books
@@ -134,12 +132,12 @@ export function PhysicsLesson() {
 
       {/* 筛选结果数 */}
       {(filterType !== "all" || filterBook !== "all" || filterGrade !== "all") && (
-        <div className="text-xs text-gray-400 mb-3">筛选结果：{filtered.length} 个知识点</div>
+        <div className="text-xs text-slate-400 mb-3">筛选结果：{filtered.length} 个知识点</div>
       )}
 
       {/* KC 知识簇列表 */}
       {grouped.length === 0 ? (
-        <div className="text-center text-gray-400 py-16 text-sm">没有匹配的知识点</div>
+        <div className="text-center text-slate-400 py-16 text-sm">没有匹配的知识点</div>
       ) : (
         grouped.map(g => (
           <KCGroup

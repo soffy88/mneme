@@ -1,3 +1,20 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+  body {
+    @apply bg-slate-50 text-slate-800 antialiased;
+    text-rendering: optimizeLegibility;
+  }
+}
+
+@layer components {
+  /* 统一卡片 */
+  .card {
+    @apply bg-white rounded-2xl border border-slate-100 shadow-card;
+  }
+}
