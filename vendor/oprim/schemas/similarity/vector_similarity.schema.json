@@ -1,0 +1,11 @@
+{
+  "title": "VectorSimilarity Input",
+  "type": "object",
+  "required": ["query", "corpus"],
+  "properties": {
+    "query": {"type": "array", "items": {"type": "number"}, "minItems": 1},
+    "corpus": {"type": "array", "items": {"type": "array", "items": {"type": "number"}}},
+    "metric": {"enum": ["cosine", "dot", "euclidean", "manhattan"], "default": "cosine"},
+    "normalize": {"type": "boolean", "default": true}
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://3o-spec.org/schemas/oprim/mean_reversion/ornstein_uhlenbeck_half_life.schema.json",
+  "title": "ornstein_uhlenbeck_half_life Input",
+  "description": "Estimate half-life of mean reversion. References: López de Prado (2018); Chan (2013).",
+  "type": "object",
+  "required": ["series"],
+  "properties": {
+    "series": {
+      "description": "Time series of the process",
+      "type": "array",
+      "items": {"type": "number"},
+      "minItems": 2
+    },
+    "method": {
+      "description": "Estimation method: 'regression' (OLS) or 'mle'.",
+      "type": "string",
+      "enum": ["regression", "mle"],
+      "default": "regression"
+    }
+  }
+}

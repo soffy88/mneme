@@ -1,0 +1,20 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://3o-spec.org/schemas/oprim/technical/donchian_channel.schema.json",
+  "title": "Donchian Channel Input",
+  "type": "object",
+  "required": ["highs", "lows"],
+  "properties": {
+    "highs": {
+      "type": "array",
+      "items": {"type": "number"},
+      "minItems": 1
+    },
+    "lows": {
+      "type": "array",
+      "items": {"type": "number"},
+      "minItems": 1
+    },
+    "window": {"type": "integer", "minimum": 1, "default": 20}
+  }
+}

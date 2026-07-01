@@ -1,0 +1,11 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://3o-spec.org/schemas/oprim/crypto/hmac_sha256.schema.json",
+  "title": "HMAC-SHA-256 Input",
+  "type": "object",
+  "required": ["key", "data"],
+  "properties": {
+    "key": {"description": "HMAC key (hex-encoded bytes)", "type": "string"},
+    "data": {"description": "Data to authenticate (bytes or str)", "type": "string"}
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://3o-spec.org/schemas/oprim/technical/ema.schema.json",
+  "title": "EMA Input",
+  "type": "object",
+  "required": ["prices", "window"],
+  "properties": {
+    "prices": {
+      "description": "Time-ordered price series",
+      "type": "array",
+      "items": {"type": "number"},
+      "minItems": 1
+    },
+    "window": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "adjust": {
+      "type": "boolean",
+      "default": false
+    }
+  }
+}

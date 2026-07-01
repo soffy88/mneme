@@ -1,0 +1,22 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://3o-spec.org/schemas/oprim/mean_reversion/ornstein_uhlenbeck_fit.schema.json",
+  "title": "ornstein_uhlenbeck_fit Input",
+  "description": "Fit OU process parameters via closed-form MLE. Reference: Smith (2010).",
+  "type": "object",
+  "required": ["series"],
+  "properties": {
+    "series": {
+      "description": "Time series of the process (at least 30 observations)",
+      "type": "array",
+      "items": {"type": "number"},
+      "minItems": 30
+    },
+    "dt": {
+      "description": "Time step between observations.",
+      "type": "number",
+      "exclusiveMinimum": 0,
+      "default": 1.0
+    }
+  }
+}

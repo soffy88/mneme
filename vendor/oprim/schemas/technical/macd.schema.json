@@ -1,0 +1,17 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://3o-spec.org/schemas/oprim/technical/macd.schema.json",
+  "title": "MACD Input",
+  "type": "object",
+  "required": ["prices"],
+  "properties": {
+    "prices": {
+      "type": "array",
+      "items": {"type": "number"},
+      "minItems": 1
+    },
+    "fast_period": {"type": "integer", "minimum": 1, "default": 12},
+    "slow_period": {"type": "integer", "minimum": 2, "default": 26},
+    "signal_period": {"type": "integer", "minimum": 1, "default": 9}
+  }
+}

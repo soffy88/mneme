@@ -1,0 +1,6 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://3o-spec.org/schemas/oprim/serialization/canonical_json.schema.json",
+  "title": "Canonical JSON Input",
+  "description": "RFC 8785 JSON Canonicalization Scheme input — any JSON-serializable value"
+}

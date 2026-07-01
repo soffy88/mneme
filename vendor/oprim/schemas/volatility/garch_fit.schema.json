@@ -1,0 +1,46 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://3o-spec.org/schemas/oprim/volatility/garch_fit.schema.json",
+  "title": "garch_fit Input",
+  "description": "Fit GARCH(p,q) model via MLE. Reference: Bollerslev (1986).",
+  "type": "object",
+  "required": ["returns"],
+  "properties": {
+    "returns": {
+      "description": "Return series (at least 50 observations)",
+      "type": "array",
+      "items": {"type": "number"},
+      "minItems": 50
+    },
+    "p": {
+      "description": "ARCH order.",
+      "type": "integer",
+      "minimum": 1,
+      "default": 1
+    },
+    "q": {
+      "description": "GARCH order.",
+      "type": "integer",
+      "minimum": 1,
+      "default": 1
+    },
+    "mean": {
+      "description": "Mean model type.",
+      "type": "string",
+      "enum": ["constant"],
+      "default": "constant"
+    },
+    "distribution": {
+      "description": "Error distribution.",
+      "type": "string",
+      "enum": ["normal", "t"],
+      "default": "normal"
+    },
+    "max_iter": {
+      "description": "Maximum optimizer iterations.",
+      "type": "integer",
+      "minimum": 1,
+      "default": 1000
+    }
+  }
+}

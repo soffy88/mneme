@@ -1,0 +1,2 @@
+class GpuLock:
+    pass

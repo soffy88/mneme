@@ -1,0 +1,38 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://3o-spec.org/schemas/oprim/volatility/garch_forecast.schema.json",
+  "title": "garch_forecast Input",
+  "description": "Forecast GARCH(1,1) conditional variance. References: Bollerslev (1986); Hamilton (1994).",
+  "type": "object",
+  "required": ["params", "last_residual", "last_variance"],
+  "properties": {
+    "params": {
+      "description": "GARCH parameters dict with keys omega, alpha, beta.",
+      "type": "object",
+      "required": ["omega", "alpha", "beta"],
+      "properties": {
+        "omega": {"type": "number"},
+        "alpha": {"type": "number"},
+        "beta": {"type": "number"},
+        "mu": {"type": "number"}
+      }
+    },
+    "last_residual": {
+      "description": "Most recent residual eps_t.",
+      "type": "number"
+    },
+    "last_variance": {
+      "description": "Most recent conditional variance sigma_t^2.",
+      "type": "number",
+      "exclusiveMinimum": 0
+    },
+    "horizon": {
+      "description": "Forecast horizon (number of periods ahead).",
+      "type": "integer",
+      "minimum": 1,
+      "default": 1
+    },
+    "p": {"type": "integer", "minimum": 1, "default": 1},
+    "q": {"type": "integer", "minimum": 1, "default": 1}
+  }
+}

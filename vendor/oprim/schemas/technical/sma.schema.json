@@ -1,0 +1,19 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://3o-spec.org/schemas/oprim/technical/sma.schema.json",
+  "title": "SMA Input",
+  "type": "object",
+  "required": ["prices", "window"],
+  "properties": {
+    "prices": {
+      "description": "Time-ordered price series (numeric array or pandas Series)",
+      "type": "array",
+      "items": {"type": "number"},
+      "minItems": 1
+    },
+    "window": {
+      "type": "integer",
+      "minimum": 1
+    }
+  }
+}

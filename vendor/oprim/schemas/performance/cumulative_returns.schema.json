@@ -1,0 +1,28 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://3o-spec.org/schemas/oprim/performance/cumulative_returns.schema.json",
+  "title": "cumulative_returns Input",
+  "description": "Compute cumulative returns from a period return series.",
+  "type": "object",
+  "required": ["returns"],
+  "properties": {
+    "returns": {
+      "description": "Period return series (e.g., 0.01 for 1%)",
+      "type": "array",
+      "items": {"type": "number"},
+      "minItems": 1
+    },
+    "starting_value": {
+      "description": "Initial portfolio value. Must be > 0.",
+      "type": "number",
+      "exclusiveMinimum": 0,
+      "default": 1.0
+    },
+    "method": {
+      "description": "Compounding method: 'simple' or 'log'.",
+      "type": "string",
+      "enum": ["simple", "log"],
+      "default": "simple"
+    }
+  }
+}

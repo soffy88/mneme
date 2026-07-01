@@ -1,0 +1,14 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://3o-spec.org/schemas/oprim/technical/chandelier_exit.schema.json",
+  "title": "Chandelier Exit Input",
+  "type": "object",
+  "required": ["highs", "lows", "closes"],
+  "properties": {
+    "highs": {"type": "array", "items": {"type": "number"}, "minItems": 1},
+    "lows": {"type": "array", "items": {"type": "number"}, "minItems": 1},
+    "closes": {"type": "array", "items": {"type": "number"}, "minItems": 1},
+    "period": {"type": "integer", "minimum": 1, "default": 22},
+    "multiplier": {"type": "number", "exclusiveMinimum": 0, "default": 3.0}
+  }
+}

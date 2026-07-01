@@ -1,0 +1,16 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://3o-spec.org/schemas/oprim/technical/bollinger_bands.schema.json",
+  "title": "Bollinger Bands Input",
+  "type": "object",
+  "required": ["prices"],
+  "properties": {
+    "prices": {
+      "type": "array",
+      "items": {"type": "number"},
+      "minItems": 1
+    },
+    "window": {"type": "integer", "minimum": 1, "default": 20},
+    "num_std": {"type": "number", "exclusiveMinimum": 0, "default": 2.0}
+  }
+}

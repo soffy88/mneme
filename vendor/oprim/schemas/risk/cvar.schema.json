@@ -1,0 +1,26 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://3o-spec.org/schemas/oprim/risk/cvar.schema.json",
+  "title": "CVaR Input",
+  "type": "object",
+  "required": ["returns"],
+  "properties": {
+    "returns": {
+      "description": "Return series (numeric array)",
+      "type": "array",
+      "items": {"type": "number"},
+      "minItems": 1
+    },
+    "alpha": {
+      "type": "number",
+      "exclusiveMinimum": 0,
+      "exclusiveMaximum": 1,
+      "default": 0.05
+    },
+    "method": {
+      "type": "string",
+      "enum": ["historical", "gaussian"],
+      "default": "historical"
+    }
+  }
+}

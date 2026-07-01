@@ -1,0 +1,2 @@
+class TtsClient:
+    pass

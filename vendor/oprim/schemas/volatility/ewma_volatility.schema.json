@@ -1,0 +1,39 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://3o-spec.org/schemas/oprim/volatility/ewma_volatility.schema.json",
+  "title": "ewma_volatility Input",
+  "description": "EWMA volatility (RiskMetrics model). Reference: JP Morgan RiskMetrics (1996).",
+  "type": "object",
+  "required": ["returns"],
+  "properties": {
+    "returns": {
+      "description": "Return series",
+      "type": "array",
+      "items": {"type": "number"},
+      "minItems": 1
+    },
+    "lambda_": {
+      "description": "Decay factor in (0, 1) exclusive.",
+      "type": "number",
+      "exclusiveMinimum": 0,
+      "exclusiveMaximum": 1,
+      "default": 0.94
+    },
+    "initial_variance": {
+      "description": "Seed variance. If null, uses var(returns).",
+      "type": ["number", "null"],
+      "default": null
+    },
+    "annualize": {
+      "description": "If true, multiply output by sqrt(periods_per_year).",
+      "type": "boolean",
+      "default": false
+    },
+    "periods_per_year": {
+      "description": "Periods per year for annualization.",
+      "type": "integer",
+      "minimum": 1,
+      "default": 252
+    }
+  }
+}

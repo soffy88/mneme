@@ -41,7 +41,9 @@ packages = ["services", "tests"]
 [tool.pytest.ini_options]
 asyncio_mode = "auto"
 testpaths = ["tests"]
-pythonpath = ["."]
+# vendor 优先：用 mneme 自带的内核副本（含 edu-audit 改动），不受共享 platform/3O
+# 被切分支影响。见 vendor/README。
+pythonpath = ["vendor", "."]
 addopts = "--cov=services --cov-report=term-missing"
 
 [tool.coverage.run]

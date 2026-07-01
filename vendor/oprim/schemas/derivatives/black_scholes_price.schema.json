@@ -1,0 +1,45 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://3o-spec.org/schemas/oprim/derivatives/black_scholes_price.schema.json",
+  "title": "black_scholes_price Input",
+  "description": "Black-Scholes-Merton option price. References: Black & Scholes (1973); Merton (1973).",
+  "type": "object",
+  "required": ["spot", "strike", "time_to_expiry", "risk_free_rate", "volatility"],
+  "properties": {
+    "spot": {
+      "description": "Current asset price",
+      "type": "number",
+      "minimum": 0
+    },
+    "strike": {
+      "description": "Strike price",
+      "type": "number",
+      "minimum": 0
+    },
+    "time_to_expiry": {
+      "description": "Time to expiry in years",
+      "type": "number",
+      "minimum": 0
+    },
+    "risk_free_rate": {
+      "description": "Continuously compounded risk-free rate",
+      "type": "number"
+    },
+    "volatility": {
+      "description": "Implied volatility",
+      "type": "number",
+      "minimum": 0
+    },
+    "option_type": {
+      "description": "Option type: 'call' or 'put'",
+      "type": "string",
+      "enum": ["call", "put"],
+      "default": "call"
+    },
+    "dividend_yield": {
+      "description": "Continuous dividend yield",
+      "type": "number",
+      "default": 0.0
+    }
+  }
+}

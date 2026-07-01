@@ -1,0 +1,2 @@
+class OskillError(Exception):
+    pass
