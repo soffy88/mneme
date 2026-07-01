@@ -8,6 +8,7 @@ Revises: a3f9c2d1e4b8
 Create Date: 2026-06-22
 """
 from typing import Sequence, Union
+import re
 import uuid
 from alembic import op
 import sqlalchemy as sa
@@ -38,6 +39,19 @@ _PDFS = [
 
 def upgrade() -> None:
     for textbook_id, filename, file_size in _PDFS:
+        # 幂等补 textbooks 父行：这些父行原由外部脚本 import_textbooks.py 导入，
+        # 全新库未跑该脚本时缺失会触发 fk_tf_textbook 外键失败。这里从 id/filename
+        # 自派生元数据补齐；已存在（prod 已导入）则 ON CONFLICT 跳过，为 no-op。
+        _g = re.search(r'G(\d+)', textbook_id, re.I)
+        op.execute(sa.text("""
+            INSERT INTO textbooks (id, subject, grade, edition, book_name)
+            VALUES (:id, 'math', :grade, 'RENJIAO', :book_name)
+            ON CONFLICT (id) DO NOTHING
+        """).bindparams(
+            id=textbook_id,
+            grade=f"G{_g.group(1)}" if _g else 'G0',
+            book_name=re.sub(r'\.pdf$', '', re.sub(r'^G\d+_\d+_', '', filename), flags=re.I),
+        ))
         op.execute(sa.text("""
             INSERT INTO textbook_files
               (id, textbook_id, filename, file_type, storage_path,

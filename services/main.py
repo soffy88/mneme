@@ -149,8 +149,8 @@ async def lifespan(app: FastAPI):
     if os.environ.get("MNEME_LLM", "").lower() == "ollama":
         from services.providers.ollama_caller import OllamaCaller
         from obase.provider_registry import ProviderRegistry
-        ProviderRegistry.get().register_llm("default", OllamaCaller())
-        ProviderRegistry.get().register_llm("ollama", OllamaCaller())
+        ProviderRegistry.get().register_llm("default", OllamaCaller(), replace=True)
+        ProviderRegistry.get().register_llm("ollama", OllamaCaller(), replace=True)
 
     # Register English speaking practice generic callers (real or mock)
     from services.providers.aliyun_pronunciation import AliyunPronunciationCaller
