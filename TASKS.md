@@ -929,8 +929,9 @@ Phase 3：K（合规）+ L（部署）
   ✅ exp1 重构出 run_exp1(seed,n_students,n_study_days) 纯计算快速档（100 学生×20 学习日 ~1s/seed；30 seed 扫描 min 0.654/mean 0.677，与全量档 0.677 一致）；tests/test_moat_guard.py（@pytest.mark.moat + MOAT!=1 skipif，seed 42/7/2026 → AUC 0.675/0.683/0.673，overall+warm 双门≥0.65，3.97s）；check.sh MOAT=1 追加守卫步（--no-cov 单文件跑，不设 MOAT 行为不变）；README 加 CI 守卫段。check.sh 两模式全绿（240 passed / 5 skipped）。
 
 ### 第 2 步：两记组合拳（超越点）
-- [ ] **T.5 [P0] FIRe×BKT 前置回写（先改 Master）**
+- [x] **T.5 [P0] FIRe×BKT 前置回写（先改 Master）** ✅ 2026-07-02
   DoD：Master 新增算法契约(按 P(L) 缺口加权的前置复习信用回写，折扣系数/触发条件/红线交互)；moat_eval exp4 仿真验证复习量压缩比；内核 oskill 实现+omodul 接线；红线测试(更新顺序不破坏/只增不改)；check.sh 绿。
+  ✅ 按 Master §4.8 全链落地：oskill `fire_propagate`(κ=κ0·P(L)、τ 截断、new_due=max(due,now+κ·S)、只顺延不改 D/S/R)+omodul cognitive 主链落库后回写 verified 前置(不级联、20h 去抖为真实检索门)+migration a3c9e51fb217(enum 加 fire_credit + fire_meta 列)+分析消费方(评估重放/校准/学习量/预警)排除 fire_credit 记账事件；exp4 仿真(seed 42,1500 三层链)：FIRe 世界(ρ=0.3/0.5)复习量压缩仅 4.7~6.0%(<10% 门槛)、对抗世界(ρ=0)保留率损失 4.8pp(>2pp) → **未达接线门槛，默认关**，env FIRE_ENABLED=1 才开；14 个新测试(κ/τ/max 语义/D-S-R 逐位不变/BKT 不动/unverified 边不触发/不级联/去抖/默认关)。pytest 254 passed / 5 skipped，check.sh 与 MOAT=1 均全绿。
 - [ ] **T.6 [P0] 拍卷过程批改（OCR 步骤 × verify_step）**
   DoD：analyze_paper 路径对含步骤 OCR 输出逐步过 verify_step(确定性)，定位首个错步落 wrong_questions/事件；careless/dontknow 分类吃步骤信号；Mock VLM 测试含"错步被定位"断言；check.sh 绿。
 

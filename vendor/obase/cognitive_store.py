@@ -11,6 +11,8 @@ from uuid import UUID
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select, update, insert
 
+import uuid as _uuid
+
 from obase.cognitive_types import KCState, new_state_from_prior, fsrs_new_card
 from obase.prior_provider import PriorProvider
 from services.models import KCMastery, InteractionEvent
@@ -38,8 +40,14 @@ class BaseCognitiveStore(Protocol):
 
     async def append_event(
         self, student_id: UUID, kc_id: str, event_data: dict
-    ) -> None:
-        """追加交互事件（只增不改）。"""
+    ) -> Optional[UUID]:
+        """追加交互事件（只增不改），返回事件 id（供 FIRe 等溯源）。"""
+        ...
+
+    async def get_verified_prerequisites(self, kc_id: str) -> List[str]:
+        """kc_id 的 verified 前置边（FIRe M-H §4.8）：仅当该 KU 自身 verified
+        且前置 KU 存在并 verified 时返回——未过校验门的 LLM 前置边不参与，
+        防幻觉边扩散信用。非 KU 知识点返回 []。"""
         ...
 
 
@@ -50,6 +58,8 @@ class InMemoryStore:
         self._states: Dict[str, KCState] = {}
         self._cards: Dict[str, dict] = {}
         self._events: List[dict] = []
+        # 测试可直接注入：kc_id → verified 前置 kc_id 列表
+        self._verified_prereqs: Dict[str, List[str]] = {}
 
     def _key(self, student_id: UUID, kc_id: str) -> str:
         return f"{student_id}::{kc_id}"
@@ -89,13 +99,18 @@ class InMemoryStore:
 
     async def append_event(
         self, student_id: UUID, kc_id: str, event_data: dict
-    ) -> None:
+    ) -> Optional[UUID]:
         event = event_data.copy()
+        event["id"] = _uuid.uuid4()
         event["student_id"] = student_id
         event["knowledge_point"] = kc_id
         if "occurred_at" not in event:
             event["occurred_at"] = datetime.now(timezone.utc)
         self._events.append(event)
+        return event["id"]
+
+    async def get_verified_prerequisites(self, kc_id: str) -> List[str]:
+        return list(self._verified_prereqs.get(kc_id, []))
 
 
 class PgStore:
@@ -191,20 +206,56 @@ class PgStore:
 
     async def append_event(
         self, student_id: UUID, kc_id: str, event_data: dict
-    ) -> None:
-        ins_stmt = insert(InteractionEvent).values(
-            student_id=student_id,
-            knowledge_point=kc_id,
-            question_id=event_data.get("question_id"),
-            source=event_data.get("source"),
-            is_correct=event_data.get("is_correct"),
-            fsrs_rating=event_data.get("fsrs_rating"),
-            time_spent_seconds=event_data.get("time_spent_seconds"),
-            days_since_last=event_data.get("days_since_last"),
-            is_interleaved=event_data.get("is_interleaved", False),
-            item_difficulty=event_data.get("item_difficulty"),
-            predicted_confidence=event_data.get("predicted_confidence"),
-            predicted_r=event_data.get("predicted_r"),
-            occurred_at=event_data.get("occurred_at", datetime.now(timezone.utc)),
+    ) -> Optional[UUID]:
+        ins_stmt = (
+            insert(InteractionEvent)
+            .values(
+                student_id=student_id,
+                knowledge_point=kc_id,
+                question_id=event_data.get("question_id"),
+                source=event_data.get("source"),
+                is_correct=event_data.get("is_correct"),
+                fsrs_rating=event_data.get("fsrs_rating"),
+                time_spent_seconds=event_data.get("time_spent_seconds"),
+                days_since_last=event_data.get("days_since_last"),
+                is_interleaved=event_data.get("is_interleaved", False),
+                item_difficulty=event_data.get("item_difficulty"),
+                predicted_confidence=event_data.get("predicted_confidence"),
+                predicted_r=event_data.get("predicted_r"),
+                fire_meta=event_data.get("fire_meta"),
+                occurred_at=event_data.get("occurred_at", datetime.now(timezone.utc)),
+            )
+            .returning(InteractionEvent.id)
         )
-        await self.session.execute(ins_stmt)
+        result = await self.session.execute(ins_stmt)
+        return result.scalar_one_or_none()
+
+    async def get_verified_prerequisites(self, kc_id: str) -> List[str]:
+        """kc_id 的 verified 前置边（M-H §4.8）：KU 自身与前置 KU 均须 verified。"""
+        from services.models import KnowledgeUnit
+
+        row = (
+            await self.session.execute(
+                select(KnowledgeUnit.prerequisites, KnowledgeUnit.verified).where(
+                    KnowledgeUnit.id == kc_id
+                )
+            )
+        ).one_or_none()
+        if row is None or not row[1]:
+            return []
+        prereq_ids = [p for p in (row[0] or []) if isinstance(p, str)]
+        if not prereq_ids:
+            return []
+        verified_ids = (
+            (
+                await self.session.execute(
+                    select(KnowledgeUnit.id)
+                    .where(KnowledgeUnit.id.in_(prereq_ids))
+                    .where(KnowledgeUnit.verified.is_(True))
+                )
+            )
+            .scalars()
+            .all()
+        )
+        keep = set(verified_ids)
+        return [p for p in prereq_ids if p in keep]

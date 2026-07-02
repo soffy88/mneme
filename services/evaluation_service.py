@@ -21,7 +21,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from obase.cognitive_types import new_state_from_prior
 from oprim import bkt_predict_correct, bkt_update
 from oprim.fsrs_engine import fsrs_new_card, fsrs_retrievability, fsrs_review
-from services.models import EvaluationRun, InteractionEvent
+from services.models import EvaluationRun, InteractionEvent, InteractionSource
 
 try:
     from fsrs import Rating
@@ -44,6 +44,9 @@ async def reconstruct_eval_logs(
         InteractionEvent.is_correct,
         InteractionEvent.fsrs_rating,
         InteractionEvent.item_difficulty,
+    ).where(
+        # fire_credit（M-H §4.8）是调度记账事件、非真实作答，不进模型评估重放
+        InteractionEvent.source != InteractionSource.fire_credit
     )
     if student_id is not None:
         stmt = stmt.where(InteractionEvent.student_id == student_id)

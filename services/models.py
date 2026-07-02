@@ -58,6 +58,9 @@ class InteractionSource(str, enum.Enum):
     review = "review"
     socratic = "socratic"
     probe = "probe"  # 保留探针：远未到期的稳定卡混入复习队列，实测召回 vs 预测 R
+    # FIRe-lite 前置信用回写（M-H §4.8）：综合题答对顺延前置 due 的记账事件。
+    # 非真实作答：不进 BKT/FSRS 重放/校准/学习量统计，且不得再触发 FIRe（不级联）。
+    fire_credit = "fire_credit"
 
 
 class SocraticMode(str, enum.Enum):
@@ -356,6 +359,9 @@ class InteractionEvent(Base):
     predicted_r: Mapped[Optional[float]] = mapped_column(
         Float
     )  # 保留探针：作答时 FSRS 预测的可提取性 R ∈[0,1]（source=probe 时填）
+    fire_meta: Mapped[Optional[dict]] = mapped_column(
+        JSONB
+    )  # FIRe（source=fire_credit 时填）：{trigger_kc_id, trigger_event_id, kappa, due_before, due_after}
     occurred_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True), server_default=text("now()")
     )

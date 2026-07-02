@@ -34,6 +34,7 @@ from oskill.interleave_select import QuestionItem, interleave_select
 from services.models import (
     EffortfulGain,
     InteractionEvent,
+    InteractionSource,
     KCMastery,
     MasterySnapshot,
     SocraticSession,
@@ -58,6 +59,8 @@ async def daily_report(db: AsyncSession, student_id: UUID, day=None) -> dict:
                 InteractionEvent.occurred_at >= start,
                 InteractionEvent.occurred_at < end,
             )
+            # fire_credit（M-H §4.8）是调度记账事件、非真实作答，不计学习量
+            .where(InteractionEvent.source != InteractionSource.fire_credit)
         )
     ).all()
     n = len(rows)
@@ -127,6 +130,8 @@ async def weekly_digest(
             )
             .where(InteractionEvent.student_id == student_id)
             .where(InteractionEvent.occurred_at >= since60)
+            # fire_credit（M-H §4.8）是调度记账事件、非真实作答，不计学习量
+            .where(InteractionEvent.source != InteractionSource.fire_credit)
         )
     ).all()
 

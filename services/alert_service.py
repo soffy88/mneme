@@ -14,10 +14,14 @@ from services.models import (
     AlertType,
     DailyMission,
     InteractionEvent,
+    InteractionSource,
     ParentAlert,
     SocraticSession,
     KCMastery,
 )
+
+# fire_credit（M-H §4.8）是调度记账事件、非真实作答，不计入活动量类预警
+_NOT_FIRE = InteractionEvent.source != InteractionSource.fire_credit
 
 
 async def get_student_alerts(
@@ -114,6 +118,7 @@ async def run_alert_checks(
             .where(
                 InteractionEvent.student_id == student_id,
                 InteractionEvent.occurred_at >= now - timedelta(days=7),
+                _NOT_FIRE,
             )
         )
     ).scalar() or 0
@@ -126,6 +131,7 @@ async def run_alert_checks(
                 InteractionEvent.occurred_at.between(
                     now - timedelta(days=14), now - timedelta(days=7)
                 ),
+                _NOT_FIRE,
             )
         )
     ).scalar() or 0
@@ -147,6 +153,7 @@ async def run_alert_checks(
                 InteractionEvent.student_id == student_id,
                 InteractionEvent.occurred_at >= now - timedelta(days=3),
                 func.extract("hour", InteractionEvent.occurred_at) >= 23,
+                _NOT_FIRE,
             )
         )
     ).scalar() or 0

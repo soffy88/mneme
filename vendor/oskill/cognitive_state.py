@@ -14,14 +14,12 @@ from pydantic import BaseModel
 
 from oprim import KCState
 from oprim.bkt import bkt_update, classify_error
-from oprim.fsrs_engine import (
-    fsrs_retrievability, 
-    fsrs_review, 
-    fsrs_map_rating
-)
+from oprim.fsrs_engine import fsrs_retrievability, fsrs_review, fsrs_map_rating
+
 
 class CognitiveUpdateInput(BaseModel):
     """认知更新输入。"""
+
     state: KCState
     card_dict: dict
     is_correct: bool
@@ -29,7 +27,7 @@ class CognitiveUpdateInput(BaseModel):
     struggled: bool = False
     effortless: bool = False
     is_interleaved: bool = False
-    difficulty: float | None = None   # 题目难度 b∈[0,1]（IRT）；None 时不改变行为
+    difficulty: float | None = None  # 题目难度 b∈[0,1]（IRT）；None 时不改变行为
     now: datetime | None = None
     # 集中练习去抖：距上次 FSRS 复习不足该时长(小时)的重复作答视为"集中练习"，
     # 只更新掌握度(BKT)、不推进间隔重复调度，避免同卷连对把卡片排到几天后→遗忘。
@@ -38,16 +36,24 @@ class CognitiveUpdateInput(BaseModel):
     # 个性化 FSRS 权重（按群体/学生从真实复习日志优化）；None → 全局默认（行为不变）。
     fsrs_parameters: tuple | None = None
 
+
 class CognitiveUpdateResult(BaseModel):
     """认知更新结果。"""
+
     state: KCState
     card_dict: dict
     error_type: str | None
     rating: str
     rating_val: int
     effective_mastery: float
+    # 本次是否推进了 FSRS 调度（过了集中练习去抖）。FIRe-lite（M-H §4.8）用它
+    # 判定"真实检索"：未推进调度的集中练习不触发前置信用回写。
+    schedule_advanced: bool = True
 
-def _should_advance_schedule(card_dict: dict, now: datetime, min_interval_hours: float) -> bool:
+
+def _should_advance_schedule(
+    card_dict: dict, now: datetime, min_interval_hours: float
+) -> bool:
     """是否推进 FSRS 调度。min_interval_hours<=0（默认）恒 True，行为不变。
     新卡片(无 last_review)必推进(首次复习需建立调度)；否则距上次复习≥阈值才推进。"""
     if min_interval_hours <= 0.0:
@@ -74,7 +80,7 @@ def cognitive_update(*, input: CognitiveUpdateInput) -> CognitiveUpdateResult:
     - oprim.classify_error       (粗心/不会判定)
     - oprim.fsrs_review          (FSRS 卡片更新)
     - oprim.fsrs_map_rating      (表现→Rating)
-    
+
     更新顺序（MUST，与 CLAUDE.md 红线一致）：
     1. 用旧卡片算 R
     2. forgetting-aware BKT 更新（R 衰减先验）
@@ -86,24 +92,34 @@ def cognitive_update(*, input: CognitiveUpdateInput) -> CognitiveUpdateResult:
 
     # 1. 算 R (遗忘因子)
     R = fsrs_retrievability(card_dict=input.card_dict, now=now, parameters=fsrs_params)
-    
+
     # 2. BKT 更新 (forgetting-aware + 难度感知)
-    bkt_update(state=input.state, is_correct=input.is_correct, retrievability=R, difficulty=input.difficulty)
+    bkt_update(
+        state=input.state,
+        is_correct=input.is_correct,
+        retrievability=R,
+        difficulty=input.difficulty,
+    )
 
     # 3. 错误分类
     error_type = None
     if not input.is_correct:
         error_type = classify_error(state=input.state, difficulty=input.difficulty)
-        
+
     # 4. FSRS 更新
     rating = fsrs_map_rating(
-        is_correct=input.is_correct, 
+        is_correct=input.is_correct,
         used_answer=input.used_answer,
-        struggled=input.struggled, 
-        effortless=input.effortless
+        struggled=input.struggled,
+        effortless=input.effortless,
     )
-    if _should_advance_schedule(input.card_dict, now, input.min_review_interval_hours):
-        new_card = fsrs_review(card_dict=input.card_dict, rating=rating, now=now, parameters=fsrs_params)
+    schedule_advanced = _should_advance_schedule(
+        input.card_dict, now, input.min_review_interval_hours
+    )
+    if schedule_advanced:
+        new_card = fsrs_review(
+            card_dict=input.card_dict, rating=rating, now=now, parameters=fsrs_params
+        )
     else:
         # 集中练习去抖：保持原调度（不推进 due/stability），掌握度已在步骤2更新。
         new_card = input.card_dict
@@ -124,23 +140,29 @@ def cognitive_update(*, input: CognitiveUpdateInput) -> CognitiveUpdateResult:
         input.state.p_recognition = max(0.001, min(0.97, pr))  # 与 mastery 同封顶 0.97
 
     input.state.last_interaction_ts = now.timestamp()
-    
+
     eff = (input.state.long_term_mastery or input.state.current()) * R
-    
+
     return CognitiveUpdateResult(
         state=input.state,
         card_dict=new_card,
         error_type=error_type,
         rating=rating.name,
         rating_val=rating.value,
-        effective_mastery=eff
+        effective_mastery=eff,
+        schedule_advanced=schedule_advanced,
     )
+
 
 __version__ = "0.3.0"
 __manifest__ = {
     "version": __version__,
     "updated_at": "2026-06-13",
     "elements": [
-        {"name": "cognitive_update", "layer": "oskill", "summary": "BKT+FSRS 统一更新算法"},
-    ]
+        {
+            "name": "cognitive_update",
+            "layer": "oskill",
+            "summary": "BKT+FSRS 统一更新算法",
+        },
+    ],
 }

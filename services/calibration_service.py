@@ -12,6 +12,7 @@
 经验贝叶斯收缩：cal = (n_warm·emp + K·prior) / (n_warm + K)，K 为伪计数，
 样本少时贴近种子先验，样本多时贴近经验值。结果 clamp 到 [0.01, 0.40]。
 """
+
 from __future__ import annotations
 
 from collections import defaultdict
@@ -19,12 +20,12 @@ from collections import defaultdict
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from services.models import BKTPrior, InteractionEvent
+from services.models import BKTPrior, InteractionEvent, InteractionSource
 
 _SLIP_MIN, _SLIP_MAX = 0.01, 0.40
 _TRANSIT_MIN, _TRANSIT_MAX = 0.01, 0.60
-_PSEUDO = 10.0   # 伪计数 K
-_MIN_WARM = 15   # 暖样本不足则不校准该 KC
+_PSEUDO = 10.0  # 伪计数 K
+_MIN_WARM = 15  # 暖样本不足则不校准该 KC
 _MIN_TRANSIT_OPP = 10  # 学习转移机会不足则不校准 p_transit
 
 
@@ -38,14 +39,19 @@ async def calibrate_bkt_priors(
 
     Returns {calibrated_kcs, total_warm_events, updated_prior_rows}。
     """
-    rows = (await db.execute(
-        select(
-            InteractionEvent.knowledge_point,
-            InteractionEvent.student_id,
-            InteractionEvent.occurred_at,
-            InteractionEvent.is_correct,
+    rows = (
+        await db.execute(
+            select(
+                InteractionEvent.knowledge_point,
+                InteractionEvent.student_id,
+                InteractionEvent.occurred_at,
+                InteractionEvent.is_correct,
+            ).where(
+                # fire_credit（M-H §4.8）是调度记账事件、非真实作答，不进先验校准
+                InteractionEvent.source != InteractionSource.fire_credit
+            )
         )
-    )).all()
+    ).all()
 
     # 按 (kc) → (student) → 时间序列收集
     by_kc_student: dict[str, dict] = defaultdict(lambda: defaultdict(list))
@@ -56,21 +62,21 @@ async def calibrate_bkt_priors(
 
     # 暖样本(slip)：每个 (student,kc) 第 2 次及以后的作答错误率。
     # 学习转移(transit)：连续对里"前错→后对"的比例，估计 p_transit。
-    warm_stats: dict[str, list[int]] = {}     # kc → [errors, total]
+    warm_stats: dict[str, list[int]] = {}  # kc → [errors, total]
     transit_stats: dict[str, list[int]] = {}  # kc → [transitions, opportunities]
     for kc, students in by_kc_student.items():
         errors = total = 0
         transitions = opps = 0
         for _sid, seq in students.items():
             seq.sort(key=lambda x: x[0])
-            for _ts, correct in seq[1:]:   # 跳过首次（冷样本）
+            for _ts, correct in seq[1:]:  # 跳过首次（冷样本）
                 total += 1
                 if not correct:
                     errors += 1
             for (_, c0), (_, c1) in zip(seq, seq[1:]):
-                if not c0:                  # 前一次错 → 一次学习机会
+                if not c0:  # 前一次错 → 一次学习机会
                     opps += 1
-                    if c1:                  # 后一次对 → 发生转移
+                    if c1:  # 后一次对 → 发生转移
                         transitions += 1
         if total > 0:
             warm_stats[kc] = [errors, total]
@@ -85,9 +91,11 @@ async def calibrate_bkt_priors(
         if total < min_warm:
             continue
         emp_slip = errors / total
-        prior_rows = (await db.execute(
-            select(BKTPrior).where(BKTPrior.knowledge_point == kc)
-        )).scalars().all()
+        prior_rows = (
+            (await db.execute(select(BKTPrior).where(BKTPrior.knowledge_point == kc)))
+            .scalars()
+            .all()
+        )
         if not prior_rows:
             continue
         calibrated_kcs += 1
@@ -101,7 +109,9 @@ async def calibrate_bkt_priors(
                 t_trans, t_opp = trans
                 emp_transit = t_trans / t_opp
                 prior_transit = pr.p_transit if pr.p_transit is not None else 0.2
-                cal_t = (t_opp * emp_transit + pseudo * prior_transit) / (t_opp + pseudo)
+                cal_t = (t_opp * emp_transit + pseudo * prior_transit) / (
+                    t_opp + pseudo
+                )
                 pr.p_transit = min(_TRANSIT_MAX, max(_TRANSIT_MIN, cal_t))
             pr.calibrated_from_n = (pr.calibrated_from_n or 0) + total
             updated_rows += 1
