@@ -1,4 +1,4 @@
-# CLAUDE.md · Mneme（学鉴）项目约定
+# CLAUDE.md · Mneme（善学记）项目约定
 
 > Claude Code 在本仓库工作时**首先读取本文件**。
 > **唯一权威设计** = `MNEME_MASTER_DESIGN.md`（SSOT）。**执行看板** = `TASKS.md`。
@@ -6,7 +6,8 @@
 
 ## 这是什么项目
 
-Mneme（对外名学鉴）：面向全年级学生的个人学习成长档案 + 自主学习工具。
+Mneme（对外名**善学记**，旧名"学鉴"已废弃）：面向全年级学生的个人学习成长档案 + 自主学习工具。
+线上真前端在独立仓库 `/data/soffy/projects/mneme-web`（Next.js App Router PWA）；本仓库 `frontend/` 是废弃旧版，勿开发勿审计。
 核心是 **KT(知识追踪 BKT)+ FSRS(间隔重复)算法内核**，先做**广东数学**。
 按 **3O 范式** 组织代码。产品理念三主线（详见 Master §1.2）：
 1. 确定性内核兜住"算"和"图"，LLM 只"问"和"讲"。
@@ -73,7 +74,7 @@ mneme/
 │   └── sympy_runtime.py               # 求解沙箱(超时/内存/隔离)
 ├── data/guangdong_math_kc.py          # ✅ KC 字典(地基)
 ├── services/                # Layer 4：FastAPI/鉴权/合规/SSE/Celery/调度引擎
-├── frontend/                # React PWA(Mafs/Three.js/检索交互/努力看板)
+├── frontend/                # ⚠️ 废弃旧版（学鉴 React+Vite）；真前端见 mneme-web 仓库
 ├── alembic/ · tests/
 ```
 
@@ -84,7 +85,7 @@ docker compose up -d
 alembic revision --autogenerate -m "xxx" && alembic upgrade head
 ./scripts/check.sh                 # CI Quality Gate (Ruff + MyPy + Pytest w/ Cov)
 uvicorn services.main:app --reload
-cd frontend && npm run dev
+cd /data/soffy/projects/mneme-web && npm run dev   # 真前端（善学记）；本仓库 frontend/ 已废弃
 ```
 
 ## 编码规范

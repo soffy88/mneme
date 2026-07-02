@@ -1,4 +1,5 @@
 """Celery application factory."""
+
 from celery import Celery
 from celery.schedules import crontab
 from celery.signals import worker_process_init
@@ -8,8 +9,14 @@ celery_app = Celery(
     "mneme",
     broker=settings.REDIS_URL,
     backend=settings.REDIS_URL,
-    include=["tasks.paper_tasks", "tasks.calibration_tasks", "tasks.textbook_tasks",
-             "tasks.fsrs_optimize_tasks", "tasks.evaluation_tasks"],
+    include=[
+        "tasks.paper_tasks",
+        "tasks.calibration_tasks",
+        "tasks.textbook_tasks",
+        "tasks.fsrs_optimize_tasks",
+        "tasks.evaluation_tasks",
+        "tasks.alert_tasks",
+    ],
 )
 celery_app.conf.update(
     task_serializer="json",
@@ -34,6 +41,11 @@ celery_app.conf.update(
             "task": "tasks.evaluate_moat",
             "schedule": crontab(hour=5, minute=0, day_of_week=1),
         },
+        # 每日 20:00 对全部家长-学生绑定跑 5 类预警检查（G.2 定时化，原仅手动触发）。
+        "daily-parent-alerts": {
+            "task": "tasks.run_parent_alert_checks",
+            "schedule": crontab(hour=20, minute=0),
+        },
     },
 )
 
@@ -42,4 +54,5 @@ celery_app.conf.update(
 def _register_providers(**_kwargs):
     """worker 进程不跑 FastAPI lifespan，需自行注册 LLM/VLM provider，否则 OCR 无 VLM。"""
     from obase.llm import register_default_providers
+
     register_default_providers()

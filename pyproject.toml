@@ -66,7 +66,8 @@ exclude_lines = [
 [tool.ruff]
 line-length = 88
 target-version = "py312"
-exclude = ["main.py", "test_engine.py", "mnt", ".venv"]
+# vendor/ 是 3O 内核的 vendored 副本（上游有自己的 CI），不在本仓 lint 范围。
+exclude = ["main.py", "test_engine.py", "mnt", ".venv", "vendor"]
 
 [tool.ruff.lint.per-file-ignores]
 # scripts/ 是一次性数据管线脚本（抽取/合并/导入/审计），不进运行时主库。
@@ -85,4 +86,25 @@ check_untyped_defs = false
 # tasks/paper_tasks.py: 与当前 omodul.analyze_paper 契约严重脱节（旧版按 image_paths/
 #   手动写 WrongQuestion，新版 workflow 已内部完成 OCR+认知更新+Paper 状态并返回
 #   AnalyzePaperFindings），属需重写的集成缺陷而非 lint，且无测试覆盖，暂排除待真实修复。
-exclude = "(main\\.py|test_engine\\.py|test_proxy\\.py|tasks/paper_tasks\\.py|mnt/.*|\\.venv/.*|data/.*|tests/.*|scripts/.*)"
+# vendor/: 3O 内核 vendored 副本，不作为本仓检查目标；但通过 mypy_path 提供给
+#   第一方代码做类型解析（否则 mypy 解析到 site-packages 里镜像构建时装入的旧版内核，
+#   报出与运行时不符的 "Unexpected keyword argument"）。
+# alembic/versions/: 一次性数据迁移脚本（多为自动生成/数据管线），与 scripts/ 同类。
+exclude = "(main\\.py|test_engine\\.py|test_proxy\\.py|tasks/paper_tasks\\.py|mnt/.*|\\.venv/.*|data/.*|tests/.*|scripts/.*|vendor/.*|alembic/versions/.*)"
+# 让 oprim/oskill/omodul/obase 解析到 vendor 副本（与运行时 sys.path 注入一致）。
+mypy_path = "vendor"
+
+# vendor 内核模块：静默跟随 import（提供准确签名给第一方代码，但不报告内核自身错误）。
+[[tool.mypy.overrides]]
+module = [
+    "oprim",
+    "oprim.*",
+    "oskill",
+    "oskill.*",
+    "omodul",
+    "omodul.*",
+    "obase",
+    "obase.*",
+]
+follow_imports = "silent"
+ignore_errors = true

@@ -5,6 +5,7 @@
   test_force_analysis_never_gives_answer
   test_reading_guide_never_gives_answer
 """
+
 from __future__ import annotations
 
 import uuid
@@ -21,10 +22,13 @@ from services.models import SocraticSession, SocraticMode, User, UserRole
 
 # ── fixtures ─────────────────────────────────────────────────────────────────
 
+
 @pytest.fixture(scope="function")
 async def db():
     engine = create_async_engine(settings.DATABASE_URL)
-    factory = async_sessionmaker(bind=engine, class_=AsyncSession, expire_on_commit=False)
+    factory = async_sessionmaker(
+        bind=engine, class_=AsyncSession, expire_on_commit=False
+    )
     async with factory() as session:
         yield session
     await engine.dispose()
@@ -33,7 +37,15 @@ async def db():
 @pytest.fixture(scope="function")
 async def student(db: AsyncSession):
     sid = uuid.uuid4()
-    db.add(User(id=sid, phone=f"155{str(sid)[:8]}", role=UserRole.student, name="G", grade="高二"))
+    db.add(
+        User(
+            id=sid,
+            phone=f"155{str(sid)[:8]}",
+            role=UserRole.student,
+            name="G",
+            grade="高二",
+        )
+    )
     await db.commit()
     yield sid, create_access_token({"sub": str(sid)})
     await db.execute(delete(SocraticSession).where(SocraticSession.student_id == sid))
@@ -61,8 +73,23 @@ _ANSWER_PATTERNS = [
 ]
 
 _GUIDE_QUESTION_MARKERS = [
-    "？", "吗", "呢", "如何", "什么", "哪", "你觉得", "分析", "请", "怎么",
-    "?", "what", "how", "which", "can you", "do you", "where"
+    "？",
+    "吗",
+    "呢",
+    "如何",
+    "什么",
+    "哪",
+    "你觉得",
+    "分析",
+    "请",
+    "怎么",
+    "?",
+    "what",
+    "how",
+    "which",
+    "can you",
+    "do you",
+    "where",
 ]
 
 
@@ -77,7 +104,7 @@ async def test_force_analysis_never_gives_answer():
             # 返回一个含有答案的响应
             return {
                 "content": '{"assistant_text":"这个物体受重力mg向下，支持力N向上，合力为零，N-mg=0","equation_ready":true,"answer_leaked":false}',
-                "usage": {"input_tokens": 0, "output_tokens": 0}
+                "usage": {"input_tokens": 0, "output_tokens": 0},
             }
 
     result = await physics_force_analysis_guide(
@@ -91,8 +118,9 @@ async def test_force_analysis_never_gives_answer():
     # 回复必须是引导式，不能含完整方程
     response = result.assistant_text
     for pattern in ["N - mg", "合力为零", "mg向下，支持力N向上"]:
-        assert pattern not in response, \
+        assert pattern not in response, (
             f"红线违规：回复包含答案片段 '{pattern}': {response!r}"
+        )
     # 回复必须是问句或引导语
     has_guide_marker = any(m in response for m in _GUIDE_QUESTION_MARKERS)
     assert has_guide_marker, f"回复不是引导式提问: {response!r}"
@@ -123,7 +151,7 @@ async def test_force_analysis_clean_response_passes():
         async def __call__(self, **kwargs):
             return {
                 "content": '{"assistant_text":"你觉得这个物体处于什么运动状态？","equation_ready":false,"answer_leaked":false}',
-                "usage": {"input_tokens": 0, "output_tokens": 0}
+                "usage": {"input_tokens": 0, "output_tokens": 0},
             }
 
     result = await physics_force_analysis_guide(
@@ -137,6 +165,7 @@ async def test_force_analysis_clean_response_passes():
 
 # ── reading guide 红线测试（核心）─────────────────────────────────────────────
 
+
 @pytest.mark.asyncio
 async def test_reading_guide_never_gives_answer():
     """红线测试：阅读引导绝不直接给出题目答案。"""
@@ -147,7 +176,7 @@ async def test_reading_guide_never_gives_answer():
             # 试图直接给出答案
             return {
                 "content": '{"assistant_text":"这道题的答案是：作者表达了对故乡的深切思念，具体体现在第二段第三句话中。","located_passage":true,"answer_leaked":false}',
-                "usage": {"input_tokens": 0, "output_tokens": 0}
+                "usage": {"input_tokens": 0, "output_tokens": 0},
             }
 
     result = await reading_comprehension_guide(
@@ -159,8 +188,9 @@ async def test_reading_guide_never_gives_answer():
     )
 
     # 回复不应包含"答案是"
-    assert "答案是" not in result.assistant_text, \
+    assert "答案是" not in result.assistant_text, (
         f"红线违规：直接给出答案: {result.assistant_text!r}"
+    )
 
 
 @pytest.mark.asyncio
@@ -194,9 +224,13 @@ async def test_reading_guide_english_opening_is_question():
     )
     assert result.answer_leaked is False
     # 应该是英文
-    assert any(c.isalpha() and ord(c) < 128 for c in result.assistant_text), \
+    assert any(c.isalpha() and ord(c) < 128 for c in result.assistant_text), (
         "英文引导应包含英文字符"
-    has_guide = any(m in result.assistant_text.lower() for m in ["?", "what", "where", "can you", "do you"])
+    )
+    has_guide = any(
+        m in result.assistant_text.lower()
+        for m in ["?", "what", "where", "can you", "do you"]
+    )
     assert has_guide, f"英文开场不是引导问: {result.assistant_text!r}"
 
 
@@ -227,11 +261,14 @@ async def test_reading_guide_subject_distinction():
 
 # ── API 端点测试 ──────────────────────────────────────────────────────────────
 
+
 @pytest.mark.asyncio
 async def test_force_analysis_start_api(db, student):
     sid, token = student
 
-    async with AsyncClient(transport=ASGITransport(app=app), base_url="http://test") as c:
+    async with AsyncClient(
+        transport=ASGITransport(app=app), base_url="http://test"
+    ) as c:
         r = await c.post(
             "/v1/physics/force-analysis/start",
             params={"question_text": "一个物体静止在斜面上，分析受力。"},
@@ -244,9 +281,14 @@ async def test_force_analysis_start_api(db, student):
     assert body["first_question"]  # 非空
     # 验证 session 已入库
     from sqlalchemy import select
-    sess = (await db.execute(
-        select(SocraticSession).where(SocraticSession.id == uuid.UUID(body["session_id"]))
-    )).scalar_one_or_none()
+
+    sess = (
+        await db.execute(
+            select(SocraticSession).where(
+                SocraticSession.id == uuid.UUID(body["session_id"])
+            )
+        )
+    ).scalar_one_or_none()
     assert sess is not None
     assert sess.mode == SocraticMode.force_analysis
 
@@ -255,7 +297,9 @@ async def test_force_analysis_start_api(db, student):
 async def test_force_analysis_message_api(db, student):
     sid, token = student
 
-    async with AsyncClient(transport=ASGITransport(app=app), base_url="http://test") as c:
+    async with AsyncClient(
+        transport=ASGITransport(app=app), base_url="http://test"
+    ) as c:
         start_r = await c.post(
             "/v1/physics/force-analysis/start",
             params={"question_text": "一个小球在水中匀速下沉，分析受力。"},
@@ -263,7 +307,9 @@ async def test_force_analysis_message_api(db, student):
         )
     session_id = start_r.json()["session_id"]
 
-    async with AsyncClient(transport=ASGITransport(app=app), base_url="http://test") as c:
+    async with AsyncClient(
+        transport=ASGITransport(app=app), base_url="http://test"
+    ) as c:
         msg_r = await c.post(
             "/v1/physics/force-analysis/message",
             params={"session_id": session_id, "message": "受重力和浮力？"},
@@ -279,7 +325,9 @@ async def test_force_analysis_message_api(db, student):
 async def test_reading_guide_start_api(db, student):
     sid, token = student
 
-    async with AsyncClient(transport=ASGITransport(app=app), base_url="http://test") as c:
+    async with AsyncClient(
+        transport=ASGITransport(app=app), base_url="http://test"
+    ) as c:
         r = await c.post(
             "/v1/reading/guide/start",
             json={
@@ -300,7 +348,9 @@ async def test_reading_guide_start_api(db, student):
 async def test_reading_guide_english_subject(db, student):
     sid, token = student
 
-    async with AsyncClient(transport=ASGITransport(app=app), base_url="http://test") as c:
+    async with AsyncClient(
+        transport=ASGITransport(app=app), base_url="http://test"
+    ) as c:
         r = await c.post(
             "/v1/reading/guide/start",
             json={
@@ -320,7 +370,9 @@ async def test_reading_guide_english_subject(db, student):
 async def test_reading_guide_message_api(db, student):
     sid, token = student
 
-    async with AsyncClient(transport=ASGITransport(app=app), base_url="http://test") as c:
+    async with AsyncClient(
+        transport=ASGITransport(app=app), base_url="http://test"
+    ) as c:
         start_r = await c.post(
             "/v1/reading/guide/start",
             json={
@@ -332,7 +384,9 @@ async def test_reading_guide_message_api(db, student):
         )
     session_id = start_r.json()["session_id"]
 
-    async with AsyncClient(transport=ASGITransport(app=app), base_url="http://test") as c:
+    async with AsyncClient(
+        transport=ASGITransport(app=app), base_url="http://test"
+    ) as c:
         msg_r = await c.post(
             "/v1/reading/guide/message",
             params={"session_id": session_id, "message": "表达了对春天的喜爱？"},
@@ -344,7 +398,9 @@ async def test_reading_guide_message_api(db, student):
 
 @pytest.mark.asyncio
 async def test_force_analysis_requires_auth():
-    async with AsyncClient(transport=ASGITransport(app=app), base_url="http://test") as c:
+    async with AsyncClient(
+        transport=ASGITransport(app=app), base_url="http://test"
+    ) as c:
         r = await c.post(
             "/v1/physics/force-analysis/start",
             params={"question_text": "测试"},
@@ -354,7 +410,9 @@ async def test_force_analysis_requires_auth():
 
 @pytest.mark.asyncio
 async def test_reading_guide_requires_auth():
-    async with AsyncClient(transport=ASGITransport(app=app), base_url="http://test") as c:
+    async with AsyncClient(
+        transport=ASGITransport(app=app), base_url="http://test"
+    ) as c:
         r = await c.post(
             "/v1/reading/guide/start",
             json={"article_text": "test", "question": "test", "subject": "english"},
@@ -364,19 +422,22 @@ async def test_reading_guide_requires_auth():
 
 @pytest.mark.asyncio
 async def test_force_analysis_session_not_found(db, student):
+    """会话不存在：鉴权加固后先做归属校验，直接 404（原为 SSE 内嵌 error）。"""
     sid, token = student
     fake_sid = str(uuid.uuid4())
-    async with AsyncClient(transport=ASGITransport(app=app), base_url="http://test") as c:
+    async with AsyncClient(
+        transport=ASGITransport(app=app), base_url="http://test"
+    ) as c:
         r = await c.post(
             "/v1/physics/force-analysis/message",
             params={"session_id": fake_sid, "message": "hello"},
             headers=_headers(token),
         )
-    assert r.status_code == 200
-    assert "error" in r.text or "[DONE]" in r.text
+    assert r.status_code == 404
 
 
 # ── omodul 层测试 ─────────────────────────────────────────────────────────────
+
 
 @pytest.mark.asyncio
 async def test_force_analysis_workflow_returns_dict():

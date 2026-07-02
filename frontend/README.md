@@ -1,3 +1,11 @@
+# ⚠️ 已废弃（DEPRECATED）— 旧版"学鉴"前端
+
+> 本目录是废弃的旧版前端（学鉴，React+Vite），**不再开发、不代表产品现状**。
+> 线上真前端（**善学记**）在独立仓库：`/data/soffy/projects/mneme-web`（Next.js App Router PWA）。
+> 保留原因：`services/main.py` 的 SPA 兜底仍会在 `frontend/dist` 存在时挂载它；确认生产不依赖后可整目录删除。
+
+---
+
 # React + TypeScript + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.

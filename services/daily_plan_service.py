@@ -13,6 +13,7 @@ daily_plan_service.py — 每日计划规则引擎
   P4 新知识点学习   — knowledge_units 中未出现在 kc_mastery 的 KU，
                       且其 prerequisites 均已掌握
 """
+
 from __future__ import annotations
 
 import uuid
@@ -27,11 +28,11 @@ from services.models import KCMastery, KnowledgeUnit, Textbook, WrongQuestion
 
 # ── 常量 ────────────────────────────────────────────────────────────────────
 
-MASTERY_THRESHOLD      = 0.6   # p_mastery 低于此值视为薄弱
-MINUTES_PER_REVIEW_KU  = 5
-MINUTES_PER_WQ         = 5
-MINUTES_PER_WEAK_KU    = 15
-MINUTES_PER_NEW_KU     = 20
+MASTERY_THRESHOLD = 0.6  # p_mastery 低于此值视为薄弱
+MINUTES_PER_REVIEW_KU = 5
+MINUTES_PER_WQ = 5
+MINUTES_PER_WEAK_KU = 15
+MINUTES_PER_NEW_KU = 20
 
 ALL_SUBJECTS = ["math", "physics", "english", "chinese"]
 
@@ -50,6 +51,7 @@ def _kc_to_subject(kp: str, ku_subject_map: dict[str, str]) -> str:
 
 # ── 核心入口 ─────────────────────────────────────────────────────────────────
 
+
 async def build_daily_plan(
     db: AsyncSession,
     student_id: uuid.UUID,
@@ -67,9 +69,9 @@ async def build_daily_plan(
 
     # ── 1. 拉取该学生所有 kc_mastery ──────────────────────────────────────
     masteries: list[KCMastery] = list(
-        (await db.execute(
-            select(KCMastery).where(KCMastery.student_id == student_id)
-        )).scalars().all()
+        (await db.execute(select(KCMastery).where(KCMastery.student_id == student_id)))
+        .scalars()
+        .all()
     )
 
     # ── 2. 拉取所有 knowledge_units（已导入的）及其 subject 映射 ──────────
@@ -81,9 +83,9 @@ async def build_daily_plan(
     tb_map: dict[str, Textbook] = {}
     if tb_ids:
         tb_rows = list(
-            (await db.execute(
-                select(Textbook).where(Textbook.id.in_(tb_ids))
-            )).scalars().all()
+            (await db.execute(select(Textbook).where(Textbook.id.in_(tb_ids))))
+            .scalars()
+            .all()
         )
         tb_map = {tb.id: tb for tb in tb_rows}
 
@@ -97,7 +99,8 @@ async def build_daily_plan(
     # ── 3. 已掌握的 knowledge_point 集合（p_mastery >= threshold）──────────
     #    用于 P4 前置检查
     mastered_kp_set: set[str] = {
-        m.knowledge_point for m in masteries
+        m.knowledge_point
+        for m in masteries
         if (m.p_mastery or 0.0) >= MASTERY_THRESHOLD
     }
     # 已"接触过"的 kp（不论掌握度）
@@ -107,9 +110,7 @@ async def build_daily_plan(
     wq_stmt = select(WrongQuestion).where(WrongQuestion.student_id == student_id)
     if subject:
         wq_stmt = wq_stmt.where(WrongQuestion.subject == subject)
-    wq_list: list[WrongQuestion] = list(
-        (await db.execute(wq_stmt)).scalars().all()
-    )
+    wq_list: list[WrongQuestion] = list((await db.execute(wq_stmt)).scalars().all())
 
     # ── 5. 生成任务 ────────────────────────────────────────────────────────
     tasks: list[dict] = []
@@ -127,15 +128,17 @@ async def build_daily_plan(
 
     for subj, kp_ids in due_by_subject.items():
         n = len(kp_ids)
-        tasks.append({
-            "type": "review",
-            "title": f"复习{n}个到期知识点",
-            "subject": subj,
-            "ku_ids": kp_ids,
-            "priority": 1,
-            "reason": "遗忘曲线临界，该复习了",
-            "estimated_minutes": n * MINUTES_PER_REVIEW_KU,
-        })
+        tasks.append(
+            {
+                "type": "review",
+                "title": f"复习{n}个到期知识点",
+                "subject": subj,
+                "ku_ids": kp_ids,
+                "priority": 1,
+                "reason": "遗忘曲线临界，该复习了",
+                "estimated_minutes": n * MINUTES_PER_REVIEW_KU,
+            }
+        )
 
     # ── P2: 错题巩固 ────────────────────────────────────────────────────────
     if wq_list:
@@ -148,15 +151,17 @@ async def build_daily_plan(
 
         for subj, wq_ids in wq_by_subject.items():
             n = len(wq_ids)
-            tasks.append({
-                "type": "error_review",
-                "title": f"重做{n}道错题",
-                "subject": subj,
-                "ku_ids": [],
-                "priority": 2,
-                "reason": "错题待巩固",
-                "estimated_minutes": n * MINUTES_PER_WQ,
-            })
+            tasks.append(
+                {
+                    "type": "error_review",
+                    "title": f"重做{n}道错题",
+                    "subject": subj,
+                    "ku_ids": [],
+                    "priority": 2,
+                    "reason": "错题待巩固",
+                    "estimated_minutes": n * MINUTES_PER_WQ,
+                }
+            )
 
     # ── P3: 薄弱知识点 ─────────────────────────────────────────────────────
     weak_by_subject: dict[str, list[str]] = {}
@@ -170,15 +175,17 @@ async def build_daily_plan(
 
     for subj, kp_ids in weak_by_subject.items():
         n = len(kp_ids)
-        tasks.append({
-            "type": "weak_practice",
-            "title": f"专项突破：{n}个薄弱知识点",
-            "subject": subj,
-            "ku_ids": kp_ids,
-            "priority": 3,
-            "reason": f"掌握度低于{int(MASTERY_THRESHOLD*100)}%",
-            "estimated_minutes": min(n, 3) * MINUTES_PER_WEAK_KU,
-        })
+        tasks.append(
+            {
+                "type": "weak_practice",
+                "title": f"专项突破：{n}个薄弱知识点",
+                "subject": subj,
+                "ku_ids": kp_ids,
+                "priority": 3,
+                "reason": f"掌握度低于{int(MASTERY_THRESHOLD * 100)}%",
+                "estimated_minutes": min(n, 3) * MINUTES_PER_WEAK_KU,
+            }
+        )
 
     # ── P4: 新知识点（按科目过滤，遵守 prerequisites）────────────────────
     new_by_subject: dict[str, list[KnowledgeUnit]] = {}
@@ -198,24 +205,34 @@ async def build_daily_plan(
         new_by_subject.setdefault(subj, []).append(ku)
 
     for subj, kus in new_by_subject.items():
+        # verified 优先：未过校验门/人工核验的 LLM 产物（verified=False）
+        # 不应驱动新学路径；仅当该科目没有任何 verified 候选时才兜底用 unverified。
+        verified_kus = [k for k in kus if k.verified]
+        if verified_kus:
+            kus = verified_kus
         # 按 difficulty 升序，先推简单的
         kus_sorted = sorted(kus, key=lambda k: k.difficulty)
         ku_ids = [k.id for k in kus_sorted]
         n = len(ku_ids)
-        tasks.append({
-            "type": "new_learn",
-            "title": f"学习{n}个新知识点",
-            "subject": subj,
-            "ku_ids": ku_ids,
-            "priority": 4,
-            "reason": "按课程进度，前置已掌握",
-            "estimated_minutes": min(n, 2) * MINUTES_PER_NEW_KU,
-        })
+        tasks.append(
+            {
+                "type": "new_learn",
+                "title": f"学习{n}个新知识点",
+                "subject": subj,
+                "ku_ids": ku_ids,
+                "priority": 4,
+                "reason": "按课程进度，前置已掌握",
+                "estimated_minutes": min(n, 2) * MINUTES_PER_NEW_KU,
+            }
+        )
 
     # ── 5.5 交错练习队列（item 8）：把"到期(P1)+薄弱(P3)"的 KC 用 interleave_select
     #        排成相邻 KC 不同的检索序列（交错优于阻塞式同 KC 连练，利于迁移与长期保持）。
     interleaved_queue = _build_interleaved_queue(
-        masteries, due_by_subject, weak_by_subject, ku_subject_map,
+        masteries,
+        due_by_subject,
+        weak_by_subject,
+        ku_subject_map,
         {ku.id: ku.difficulty for ku in ku_rows},
     )
 
@@ -238,10 +255,10 @@ async def build_daily_plan(
     )
 
     return {
-        "date":              now.date().isoformat(),
+        "date": now.date().isoformat(),
         "exam_countdown_days": None,  # TODO: 待 users 表添加 exam_date 字段
-        "subjects_summary":  subjects_summary,
-        "tasks":             tasks,
+        "subjects_summary": subjects_summary,
+        "tasks": tasks,
         "interleaved_queue": interleaved_queue,
     }
 
@@ -270,7 +287,8 @@ def _build_interleaved_queue(
         return []
     items = [
         QuestionItem(
-            question_id=kc, kc_id=kc,
+            question_id=kc,
+            kc_id=kc,
             difficulty=float(ku_difficulty_map.get(kc, 0.5)),
             mastery=float(mastery_map.get(kc, 0.5)),
         )

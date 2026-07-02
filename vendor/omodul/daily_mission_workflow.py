@@ -5,6 +5,7 @@ Selects practice items using spaced-repetition priority + mastery gap weighting.
 
 Pillars: fingerprint + decision_trail
 """
+
 from __future__ import annotations
 
 from pathlib import Path
@@ -12,7 +13,14 @@ from typing import Any, ClassVar
 
 from pydantic import BaseModel
 
-from omodul._base import BaseConfig, CostTracker, Trail, build_result, compute_fingerprint
+from omodul._base import (
+    BaseConfig,
+    CostTracker,
+    Trail,
+    build_result,
+    compute_fingerprint,
+)
+from oskill.interleave_select import QuestionItem, interleave_select
 
 
 class DailyMissionConfig(BaseConfig):
@@ -49,6 +57,45 @@ def _mission_priority(item: MissionItem) -> float:
     return mastery_gap * 0.6 + item.difficulty * 0.4 + review_bonus
 
 
+def _interleave_missions(
+    selected: list[MissionItem],
+    all_items: list[MissionItem],
+    mission_count: int,
+) -> list[MissionItem]:
+    """交错红线：相邻任务 KC 不同（委托 oskill.interleave_select 保证）。
+
+    候选不足 2 个不同 KC 时无法交错，原样返回。
+    被相邻约束挤掉的位次，从未入选池按优先级回填（仍守相邻异 KC）；
+    凑不满则接受更短任务单（红线优先于数量）。
+    """
+    if len(selected) <= 1 or len({it.kc_id for it in selected}) < 2:
+        return selected
+
+    by_id = {it.question_id: it for it in selected}
+    result = interleave_select(
+        [
+            QuestionItem(
+                question_id=it.question_id,
+                kc_id=it.kc_id,
+                difficulty=it.difficulty,
+                mastery=it.mastery,
+            )
+            for it in selected
+        ]
+    )
+    ordered = [by_id[q.question_id] for q in result.selected]
+
+    if len(ordered) < mission_count:
+        backfill = [it for it in all_items if it.question_id not in by_id]
+        backfill.sort(key=_mission_priority, reverse=True)
+        for it in backfill:
+            if len(ordered) >= mission_count:
+                break
+            if not ordered or it.kc_id != ordered[-1].kc_id:
+                ordered.append(it)
+    return ordered[:mission_count]
+
+
 def daily_mission_workflow(
     config: DailyMissionConfig,
     input_data: DailyMissionInput,
@@ -63,7 +110,9 @@ def daily_mission_workflow(
     output_dir.mkdir(parents=True, exist_ok=True)
 
     try:
-        trail.record(event="start", user_id=input_data.user_id, date=input_data.mission_date)
+        trail.record(
+            event="start", user_id=input_data.user_id, date=input_data.mission_date
+        )
 
         items = [
             MissionItem(
@@ -73,7 +122,9 @@ def daily_mission_workflow(
                 mastery=input_data.kc_mastery.get(
                     q.get("kc_id", ""), float(q.get("mastery", 0.5))
                 ),
-                days_since_last=input_data.last_seen_dates.get(q.get("question_id", ""), 99),
+                days_since_last=input_data.last_seen_dates.get(
+                    q.get("question_id", ""), 99
+                ),
             )
             for i, q in enumerate(input_data.available_questions)
         ]
@@ -85,19 +136,26 @@ def daily_mission_workflow(
         review_pool.sort(key=_mission_priority, reverse=True)
         new_pool.sort(key=_mission_priority, reverse=True)
 
-        selected = review_pool[:review_target] + new_pool[:config.mission_count - review_target]
+        selected = (
+            review_pool[:review_target]
+            + new_pool[: config.mission_count - review_target]
+        )
         if len(selected) < config.mission_count:
             remaining = [it for it in items if it not in selected]
             remaining.sort(key=_mission_priority, reverse=True)
-            selected += remaining[:config.mission_count - len(selected)]
+            selected += remaining[: config.mission_count - len(selected)]
 
-        selected = selected[:config.mission_count]
+        selected = selected[: config.mission_count]
+        # 交错红线：相邻题 KC 不同（委托 oskill.interleave_select）
+        selected = _interleave_missions(selected, items, config.mission_count)
         trail.record(event="missions_selected", count=len(selected))
 
-        fp = compute_fingerprint({
-            "user_id": input_data.user_id,
-            "mission_date": input_data.mission_date,
-        })
+        fp = compute_fingerprint(
+            {
+                "user_id": input_data.user_id,
+                "mission_date": input_data.mission_date,
+            }
+        )
 
         missions = [
             {
@@ -127,7 +185,9 @@ def daily_mission_workflow(
                     kc_id=q.get("kc_id", "unknown"),
                     difficulty=float(q.get("difficulty", 0.5)),
                     mastery=input_data.kc_mastery.get(q.get("kc_id", ""), 0.5),
-                    days_since_last=input_data.last_seen_dates.get(q.get("question_id", ""), 99)
+                    days_since_last=input_data.last_seen_dates.get(
+                        q.get("question_id", ""), 99
+                    ),
                 )
                 for q in q_list
             ]
@@ -136,9 +196,9 @@ def daily_mission_workflow(
                 {
                     "question_id": it.question_id,
                     "kc_id": it.kc_id,
-                    "difficulty": it.difficulty
+                    "difficulty": it.difficulty,
                 }
-                for it in subj_items[:2] # 每科取2个作为演示
+                for it in subj_items[:2]  # 每科取2个作为演示
             ]
 
         trail_path = trail.write(output_dir)
@@ -153,8 +213,8 @@ def daily_mission_workflow(
             "decision_trail": trail.steps,
             "trail_path": str(trail_path),
             "cost_usd": cost.total_usd,
-            "missions": missions, # 旧契约保留
-            "subjects": subjects_missions # 新增多科目分组契约
+            "missions": missions,  # 旧契约保留
+            "subjects": subjects_missions,  # 新增多科目分组契约
         }
 
     except Exception as exc:

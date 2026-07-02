@@ -889,3 +889,24 @@ Phase 3：K（合规）+ L（部署）
   ✅ 空/加载态统一(ErrorJournal/ReviewPractice)。
   验收：build 通过、改动 0 lint（仅余既有 ForceAnalysisPage）。三科视觉语言现已统一。
   待续(可选)：Button 原语广泛替换现有内联按钮；列表行 hover 微调。
+
+---
+
+## S · 教育审计修复批次（2026-07-02，对应 MNEME_EDU_AUDIT_20260702.md）
+
+- [x] **S.1 [P0] 后端核心写接口鉴权加固** ✅ 2026-07-02
+  ✅ interaction/practice-submit/socratic 全组/missions-complete/papers 组挂 JWT+归属校验（本人或绑定家长；写操作仅本人）；会话劫持修复（socratic/physics/reading message 按会话归属）；daily-plan/knowledge-points/review-due/error-journal/speaking-history 补越权防护。
+  ✅ /v1/auth/me 补 invite_code（供家长绑定）。
+  ✅ parent/alerts parent_id 冒用堵住（家长身份必须本人）；预警按 (parent,student,type,当日) 去重。
+  ✅ 新增 tests/test_authz.py 15 测试（匿名401/越权403/家长读写边界/me契约）。pytest 219 passed / 0 failed。
+- [x] **S.2 [P0/P1] 善学记前端批量修复（mneme-web 仓）** ✅ 2026-07-02
+  ✅ 家长链路：登录页家长注册 tab + 学生首页邀请码卡 + 家长身份 /parent 入口。
+  ✅ IME isComposing 守卫×7 处；生产隐藏"验证码123456"提示；JOL 三档把握度采集随 practice/submit 上报；/lesson 接入练习判错卡+错题本两入口；KC/KU 人名化两处漏网；USE_MOCK 缺省 false；卸载 three 系死依赖；苏格拉底显式结束；essay/speaking 年级随用户。typecheck 零错。
+- [x] **S.3 [P1] JOL 后端透传** ✅ 2026-07-02
+  ✅ PracticeSubmitReq.predicted_confidence(0-1) → process_interaction 透传落 interaction_events，校准链路(/v1/calibration)从此有米下锅。
+- [x] **S.4 [P1] 质量门收口** ✅ 2026-07-02
+  ✅ ruff/mypy exclude vendor + mypy_path=vendor（内核双源假错消除，解析与运行时一致）；check.sh 环境自适应（.venv/docker 透传，SKIP_PYTEST 支持）；socratic_service narrowing 修复。ruff 0 错 / mypy 0 错。
+- [x] **S.5 [P1] 内核学习科学三项** ✅ 2026-07-02
+  ✅ daily_mission 过 interleave_select（相邻异 KC 红线，挤掉位次按优先级回填）；daily_plan P4 新知 verified 优先 + /v1/knowledge-points 带 verified 字段并优先排序（prereq 拓扑序除外）；paper_grading 接 solve_and_visualize——可解题型内核值覆盖 OCR 答案（answer_source=kernel|ocr），含"OCR 抄错也不误判对"红线测试。pytest 226 passed / 0 failed。
+- [x] **S.6 [实证] 护城河飞轮实验** ✅ 2026-07-02
+  ✅ scripts/moat_eval/（seed=42 可复跑，隔离库已 DROP）：实验1 内核合成回归 AUC 0.677≥0.65 门槛；实验2 经验贝叶斯先验校准 +0.014 AUC（飞轮实证有增益），FSRS Powell 拟合合成数据过拟合→默认关闭待真实日志；实验3 FSRS 同保留目标省约一半复习量（2.47 vs 5.0 次达 R=0.913），护城河主张应表述为"效率"而非"同预算保留率"。详见 MNEME_MOAT_ROADMAP_20260702.md。

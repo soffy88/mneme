@@ -2,6 +2,7 @@
 
 Layer-4 rule: assembly + DB only; business logic lives in omodul/oskill.
 """
+
 from __future__ import annotations
 
 import json
@@ -19,32 +20,47 @@ from omodul.socratic_session_workflow import (
     SocraticInput,
     socratic_session_workflow,
 )
-from services.models import KCMastery, SocraticMode, SocraticOutcome, SocraticSession, WrongQuestion
+from services.models import (
+    KCMastery,
+    SocraticMode,
+    SocraticOutcome,
+    SocraticSession,
+    WrongQuestion,
+)
 from services.anon import anon_ref
 
 from oskill.metacog_scaffold import metacog_scaffold, MetacogScaffoldInput
 from obase.provider_registry import ProviderRegistry
 
 
-
-async def start_session(db: AsyncSession, question_id: uuid.UUID, student_id: uuid.UUID) -> dict:
+async def start_session(
+    db: AsyncSession, question_id: uuid.UUID, student_id: uuid.UUID
+) -> dict:
     """Initialize a Socratic session; call omodul for first_question."""
-    wq = (await db.execute(
-        select(WrongQuestion).where(WrongQuestion.id == question_id)
-    )).scalar_one_or_none()
+    wq = (
+        await db.execute(select(WrongQuestion).where(WrongQuestion.id == question_id))
+    ).scalar_one_or_none()
     if not wq:
         return {"error": "question not found"}
 
     kc_id = ""
     mastery_row = None
     if wq.knowledge_points:
-        kc_ids = list(wq.knowledge_points.keys()) if isinstance(wq.knowledge_points, dict) else []
+        kc_ids = (
+            list(wq.knowledge_points.keys())
+            if isinstance(wq.knowledge_points, dict)
+            else []
+        )
         if kc_ids:
             kc_id = kc_ids[0]
-            mastery_row = (await db.execute(
-                select(KCMastery)
-                .where(KCMastery.student_id == student_id, KCMastery.knowledge_point == kc_id)
-            )).scalar_one_or_none()
+            mastery_row = (
+                await db.execute(
+                    select(KCMastery).where(
+                        KCMastery.student_id == student_id,
+                        KCMastery.knowledge_point == kc_id,
+                    )
+                )
+            ).scalar_one_or_none()
 
     p_mastery = mastery_row.p_mastery if mastery_row else 0.5
     mode = "deep" if (p_mastery or 0) < 0.4 else "mixed"
@@ -66,14 +82,17 @@ async def start_session(db: AsyncSession, question_id: uuid.UUID, student_id: uu
         q_snippet = q_snippet[:60] + "…"
     anchored_q = (
         f"我们来看这道题：「{q_snippet}」。先别急着算——你觉得这道题在考查什么？打算从哪一步入手？"
-        if q_snippet else "请仔细审题，你认为这道题考察的是什么知识点？"
+        if q_snippet
+        else "请仔细审题，你认为这道题考察的是什么知识点？"
     )
     # 强制元认知支架 (Metacog Scaffold)
     metacog_options = []
     first_q = anchored_q
     if mode != "sprint":
         try:
-            caller = ProviderRegistry.get().llm() if ProviderRegistry._instance else None
+            caller = (
+                ProviderRegistry.get().llm() if ProviderRegistry._instance else None
+            )
         except Exception:
             caller = None
         try:
@@ -81,19 +100,21 @@ async def start_session(db: AsyncSession, question_id: uuid.UUID, student_id: uu
                 MetacogScaffoldInput(
                     question=wq.question_text or "未知题目",
                     student_id=str(student_id),
-                    input_content="刚开始看题"
+                    input_content="刚开始看题",
                 ),
-                caller=caller
+                caller=caller,
             )
             metacog_data = meta_res.self_eval
             # 保留确定性锚定首问；仅采用 metacog 的识别脚手架选项
             metacog_options = metacog_data.get("options", [])
-            
+
             # Record it as the first system/assistant message in SocraticSession
-            session.messages = [{"role": "assistant", "content": first_q, "options": metacog_options}]  # type: ignore[assignment]  # JSONB column 实际存放消息列表
+            session.messages = [
+                {"role": "assistant", "content": first_q, "options": metacog_options}
+            ]  # type: ignore[assignment]  # JSONB column 实际存放消息列表
             await db.flush()
         except Exception:
-            pass # fallback to default if metacog fails
+            pass  # fallback to default if metacog fails
 
     result = await socratic_session_workflow(
         config=SocraticConfig(mode=mode, max_turns=20),
@@ -111,12 +132,12 @@ async def start_session(db: AsyncSession, question_id: uuid.UUID, student_id: uu
 
     if mode == "sprint":
         first_q = result.get("first_question", first_q)
-        
+
     return {
         "session_id": str(session_id),
         "mode": mode,
         "first_question": first_q,
-        "metacog_options": metacog_options
+        "metacog_options": metacog_options,
     }
 
 
@@ -126,23 +147,31 @@ async def socratic_message_stream(
     student_message: str,
 ) -> AsyncGenerator[str, None]:
     """Yield SSE events for a Socratic turn via omodul (red line: no answer leakage)."""
-    session = (await db.execute(
-        select(SocraticSession).where(SocraticSession.id == session_id)
-    )).scalar_one_or_none()
+    session = (
+        await db.execute(
+            select(SocraticSession).where(SocraticSession.id == session_id)
+        )
+    ).scalar_one_or_none()
     if not session:
         yield f"data: {json.dumps({'error': 'session not found'})}\n\n"
         return
 
-    wq = (await db.execute(
-        select(WrongQuestion).where(WrongQuestion.id == session.question_id)
-    )).scalar_one_or_none()
+    wq = (
+        await db.execute(
+            select(WrongQuestion).where(WrongQuestion.id == session.question_id)
+        )
+    ).scalar_one_or_none()
     if not wq:
         yield f"data: {json.dumps({'error': 'question not found'})}\n\n"
         return
 
     kc_id = ""
     if wq.knowledge_points:
-        kcs = list(wq.knowledge_points.keys()) if isinstance(wq.knowledge_points, dict) else []
+        kcs = (
+            list(wq.knowledge_points.keys())
+            if isinstance(wq.knowledge_points, dict)
+            else []
+        )
         if kcs:
             kc_id = kcs[0]
 
@@ -187,7 +216,9 @@ async def socratic_message_stream(
     messages.append({"role": "user", "content": student_message})
     messages.append({"role": "assistant", "content": reply})
     await db.execute(
-        update(SocraticSession).where(SocraticSession.id == session_id).values(messages=messages)
+        update(SocraticSession)
+        .where(SocraticSession.id == session_id)
+        .values(messages=messages)
     )
     await db.flush()
 
@@ -196,14 +227,25 @@ async def socratic_message_stream(
         yield f"data: {json.dumps({'delta': chunk + ' '})}\n\n"
     yield f"data: {json.dumps({'done': True, 'turn': turn})}\n\n"
 
+
 # 纯算术片段：仅数字/运算符/括号/小数/常见 unicode 运算符（无变量/文字）
 _ARITH_CHARS = r"\d\s+\-*/^().,×÷·"
 _ARITH_LEFT = _re.compile(rf"[{_ARITH_CHARS}]+$")
 _ARITH_RIGHT = _re.compile(rf"^[{_ARITH_CHARS}]+")
 
 # 上标数字 → **n（x² → x**2）
-_SUPERS = {"⁰": "0", "¹": "1", "²": "2", "³": "3", "⁴": "4",
-           "⁵": "5", "⁶": "6", "⁷": "7", "⁸": "8", "⁹": "9"}
+_SUPERS = {
+    "⁰": "0",
+    "¹": "1",
+    "²": "2",
+    "³": "3",
+    "⁴": "4",
+    "⁵": "5",
+    "⁶": "6",
+    "⁷": "7",
+    "⁸": "8",
+    "⁹": "9",
+}
 _SUPER_RE = _re.compile("[" + "".join(_SUPERS) + "]+")
 # 等式分隔：标点 + 中文推导连接词
 _EQ_SPLIT = _re.compile(r"[,;，；]|所以|因此|于是|=>|⟹|→|得到|得|则|故")
@@ -212,8 +254,15 @@ _EQ_SPLIT = _re.compile(r"[,;，；]|所以|因此|于是|=>|⟹|→|得到|得|
 def _normalize_arith(s: str) -> str:
     """归一为 sympy 可解析：× ÷ · → * /，^ → **，上标 → **n，去千分位逗号/空格。"""
     s = _SUPER_RE.sub(lambda m: "**" + "".join(_SUPERS[c] for c in m.group()), s)
-    return (s.replace("×", "*").replace("·", "*").replace("÷", "/")
-             .replace("^", "**").replace(",", "").replace("，", "").strip())
+    return (
+        s.replace("×", "*")
+        .replace("·", "*")
+        .replace("÷", "/")
+        .replace("^", "**")
+        .replace(",", "")
+        .replace("，", "")
+        .strip()
+    )
 
 
 def _verify_assignments(message: str) -> Optional[str]:
@@ -239,7 +288,9 @@ def _verify_assignments(message: str) -> Optional[str]:
     try:
         import sympy as sp
         from sympy.parsing.sympy_parser import (
-            parse_expr, standard_transformations, implicit_multiplication_application,
+            parse_expr,
+            standard_transformations,
+            implicit_multiplication_application,
         )
     except Exception:
         return None
@@ -298,7 +349,7 @@ def _try_verify_step(message: str) -> Optional[str]:
     for m in _re.finditer("=", message):
         i = m.start()
         left = _ARITH_LEFT.search(message[:i])
-        right = _ARITH_RIGHT.search(message[i + 1:])
+        right = _ARITH_RIGHT.search(message[i + 1 :])
         if not left or not right:
             continue
         a, b = left.group().strip(), right.group().strip()
@@ -307,11 +358,16 @@ def _try_verify_step(message: str) -> Optional[str]:
             continue
         try:
             from oprim.verify_step import StepVerifyInput, verify_step
-            result = verify_step(StepVerifyInput(
-                step_number=1,
-                before_lhs=_normalize_arith(a), before_rhs=_normalize_arith(b),
-                after_lhs="0", after_rhs="0",   # 检验 a == b 是否成立
-            ))
+
+            result = verify_step(
+                StepVerifyInput(
+                    step_number=1,
+                    before_lhs=_normalize_arith(a),
+                    before_rhs=_normalize_arith(b),
+                    after_lhs="0",
+                    after_rhs="0",  # 检验 a == b 是否成立
+                )
+            )
             if result.error_type == "parse_error":
                 continue
             if not result.is_correct:
@@ -323,19 +379,27 @@ def _try_verify_step(message: str) -> Optional[str]:
 
 async def escape_session(db: AsyncSession, session_id: uuid.UUID) -> dict:
     """Return answer outline; never reveal full correct_answer (red line)."""
-    session = (await db.execute(
-        select(SocraticSession).where(SocraticSession.id == session_id)
-    )).scalar_one_or_none()
+    session = (
+        await db.execute(
+            select(SocraticSession).where(SocraticSession.id == session_id)
+        )
+    ).scalar_one_or_none()
     if not session:
         return {"error": "session not found"}
     await db.execute(
-        update(SocraticSession).where(SocraticSession.id == session_id)
+        update(SocraticSession)
+        .where(SocraticSession.id == session_id)
         .values(used_escape_hatch=True)
     )
-    return {"outline": ["分析题意", "列出公式", "代入计算", "验证答案"], "note": "思路提示，非标准答案"}
+    return {
+        "outline": ["分析题意", "列出公式", "代入计算", "验证答案"],
+        "note": "思路提示，非标准答案",
+    }
 
 
-async def end_session(db: AsyncSession, session_id: uuid.UUID, outcome: str = "partial") -> dict:
+async def end_session(
+    db: AsyncSession, session_id: uuid.UUID, outcome: str = "partial"
+) -> dict:
     """End session, map outcome to FSRS rating.
 
     红线（item 9，数据完整性）：outcome 由客户端给只是**提示**，不可信。
@@ -350,22 +414,28 @@ async def end_session(db: AsyncSession, session_id: uuid.UUID, outcome: str = "p
         "abandoned": SocraticOutcome.abandoned,
     }
     now = datetime.now(timezone.utc)
-    session = (await db.execute(
-        select(SocraticSession).where(SocraticSession.id == session_id)
-    )).scalar_one_or_none()
+    session = (
+        await db.execute(
+            select(SocraticSession).where(SocraticSession.id == session_id)
+        )
+    ).scalar_one_or_none()
     if not session:
         return {"error": "session not found"}
 
-    wq = (await db.execute(
-        select(WrongQuestion).where(WrongQuestion.id == session.question_id)
-    )).scalar_one_or_none()
+    wq = (
+        await db.execute(
+            select(WrongQuestion).where(WrongQuestion.id == session.question_id)
+        )
+    ).scalar_one_or_none()
 
     # 确定性核对：仅当存在标准答案(answer key)时才核实——有真值才谈得上防伪报。
-    has_answer_key = bool(wq and wq.correct_answer and wq.correct_answer.strip())
+    answer_key = (wq.correct_answer or "").strip() if wq else ""
+    has_answer_key = bool(answer_key)
     verified_success = False
     if has_answer_key:
         from oprim.answer_judge import judge_answer
-        for m in (session.messages or []):
+
+        for m in session.messages or []:
             if m.get("role") != "user":
                 continue
             content = str(m.get("content", ""))
@@ -373,7 +443,9 @@ async def end_session(db: AsyncSession, session_id: uuid.UUID, outcome: str = "p
             cands = [content]
             if "=" in content:
                 cands.append(content.rsplit("=", 1)[-1])
-            if any(judge_answer(c, wq.correct_answer).get("verdict") == "correct" for c in cands):
+            if any(
+                judge_answer(c, answer_key).get("verdict") == "correct" for c in cands
+            ):
                 verified_success = True
                 break
 
@@ -388,9 +460,12 @@ async def end_session(db: AsyncSession, session_id: uuid.UUID, outcome: str = "p
         effective = outcome
 
     soc_outcome = outcome_map.get(effective, SocraticOutcome.partial)
-    duration = int((now - session.created_at).total_seconds()) if session.created_at else 0
+    duration = (
+        int((now - session.created_at).total_seconds()) if session.created_at else 0
+    )
     await db.execute(
-        update(SocraticSession).where(SocraticSession.id == session_id)
+        update(SocraticSession)
+        .where(SocraticSession.id == session_id)
         .values(outcome=soc_outcome, duration_seconds=duration)
     )
     await db.flush()
@@ -401,6 +476,7 @@ async def end_session(db: AsyncSession, session_id: uuid.UUID, outcome: str = "p
     if effective in ("success", "failed") and wq and wq.knowledge_points:
         kc_id = next(iter(wq.knowledge_points.keys()))
         from services.cognitive_service import process_interaction
+
         assert session.student_id is not None
         await process_interaction(
             db,
@@ -410,7 +486,7 @@ async def end_session(db: AsyncSession, session_id: uuid.UUID, outcome: str = "p
             question_type="solve",
             question_id=session.question_id,
             source="socratic",
-            struggled=True,   # 苏格拉底本身即"吃力"过程（努力收益 M-F）
+            struggled=True,  # 苏格拉底本身即"吃力"过程（努力收益 M-F）
         )
         kc_updated = True
 

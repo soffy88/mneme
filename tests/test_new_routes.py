@@ -1,6 +1,7 @@
 """
 综合新路由测试 — 覆盖 D.3/E.1/G.1/H.1/I.1/J.1/K.1/K.2/L.1/C.2/F.1
 """
+
 from __future__ import annotations
 
 import uuid
@@ -15,19 +16,37 @@ from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_asyn
 from obase.config import settings
 from services.main import app
 from services.models import (
-    DailyMission, InteractionEvent, KCMastery, MasterySnapshot,
-    Paper, PaperStatus, ParentStudent, SocraticSession, Streak, User, UserRole, WrongQuestion,
+    DailyMission,
+    InteractionEvent,
+    KCMastery,
+    MasterySnapshot,
+    Paper,
+    PaperStatus,
+    ParentStudent,
+    SocraticSession,
+    Streak,
+    User,
+    UserRole,
+    WrongQuestion,
 )
 
 KC_ID = "GDMATH-CONIC-01"
 
 
+@pytest.fixture(autouse=True)
+def _auth(bypass_auth):
+    """IDOR 加固后本文件正向测试统一绕过鉴权（负向测试在测试内自行 override）。"""
+
+
 # ── fixtures ─────────────────────────────────────────────────────────────────
+
 
 @pytest.fixture(scope="function")
 async def db():
     engine = create_async_engine(settings.DATABASE_URL)
-    factory = async_sessionmaker(bind=engine, class_=AsyncSession, expire_on_commit=False)
+    factory = async_sessionmaker(
+        bind=engine, class_=AsyncSession, expire_on_commit=False
+    )
     async with factory() as session:
         yield session
     await engine.dispose()
@@ -36,11 +55,27 @@ async def db():
 @pytest.fixture(scope="function")
 async def student(db):
     sid = uuid.uuid4()
-    db.add(User(id=sid, phone=f"181{str(sid)[:8]}", role=UserRole.student, name="Test", grade="高三"))
+    db.add(
+        User(
+            id=sid,
+            phone=f"181{str(sid)[:8]}",
+            role=UserRole.student,
+            name="Test",
+            grade="高三",
+        )
+    )
     await db.commit()
     yield sid
-    for model in (MasterySnapshot, InteractionEvent, KCMastery, SocraticSession,
-                  DailyMission, Streak, Paper, WrongQuestion):
+    for model in (
+        MasterySnapshot,
+        InteractionEvent,
+        KCMastery,
+        SocraticSession,
+        DailyMission,
+        Streak,
+        Paper,
+        WrongQuestion,
+    ):
         await db.execute(delete(model).where(model.student_id == sid))
     await db.execute(delete(User).where(User.id == sid))
     await db.commit()
@@ -49,8 +84,15 @@ async def student(db):
 @pytest.fixture(scope="function")
 async def parent_user(db):
     pid = uuid.uuid4()
-    db.add(User(id=pid, phone=f"182{str(pid)[:8]}", role=UserRole.parent, name="Parent",
-                invite_code=str(pid)[:6]))
+    db.add(
+        User(
+            id=pid,
+            phone=f"182{str(pid)[:8]}",
+            role=UserRole.parent,
+            name="Parent",
+            invite_code=str(pid)[:6],
+        )
+    )
     await db.commit()
     yield pid
     await db.execute(delete(ParentStudent).where(ParentStudent.parent_id == pid))
@@ -60,11 +102,14 @@ async def parent_user(db):
 
 @pytest.fixture(scope="function")
 async def client():
-    async with AsyncClient(transport=ASGITransport(app=app), base_url="http://test") as c:
+    async with AsyncClient(
+        transport=ASGITransport(app=app), base_url="http://test"
+    ) as c:
         yield c
 
 
 # ── L.1 Health ───────────────────────────────────────────────────────────────
+
 
 @pytest.mark.asyncio
 async def test_health_check(client):
@@ -77,6 +122,7 @@ async def test_health_check(client):
 
 
 # ── D.3 Papers read ──────────────────────────────────────────────────────────
+
 
 @pytest.mark.asyncio
 async def test_papers_list_empty(client, student):
@@ -97,7 +143,9 @@ async def test_paper_detail_not_found(client):
 async def test_paper_detail(client, student, db):
     # Create a paper directly
     paper_id = uuid.uuid4()
-    db.add(Paper(id=paper_id, student_id=student, subject="math", status=PaperStatus.done))
+    db.add(
+        Paper(id=paper_id, student_id=student, subject="math", status=PaperStatus.done)
+    )
     await db.commit()
     resp = await client.get(f"/v1/papers/{paper_id}")
     assert resp.status_code == 200
@@ -108,6 +156,7 @@ async def test_paper_detail(client, student, db):
 
 
 # ── E.1 Daily mission ────────────────────────────────────────────────────────
+
 
 @pytest.mark.asyncio
 async def test_today_mission_no_mastery(client, student, bypass_auth):
@@ -168,12 +217,15 @@ async def test_cold_start_socratic_state_serializable(client, student, db, bypas
     async def _noon_mission(db, student_id, today=None, _now=None):
         return await _orig(db, student_id, today=today, _now=_noon)
 
-    with patch(
-        "services.mission_service.cold_start_single",
-        new=AsyncMock(return_value=fake_result),
-    ), patch(
-        "services.main.get_or_create_mission",
-        new=_noon_mission,
+    with (
+        patch(
+            "services.mission_service.cold_start_single",
+            new=AsyncMock(return_value=fake_result),
+        ),
+        patch(
+            "services.main.get_or_create_mission",
+            new=_noon_mission,
+        ),
     ):
         resp = await client.get(f"/v1/missions/today/{student}")
 
@@ -183,12 +235,15 @@ async def test_cold_start_socratic_state_serializable(client, student, db, bypas
     diagnostics = data["mission"]["content"].get("diagnostics", {})
     # SocraticStateV2 必须已被序列化为 dict
     socratic = diagnostics.get("socratic_state")
-    assert isinstance(socratic, dict), f"socratic_state 应为 dict，实为 {type(socratic)}"
+    assert isinstance(socratic, dict), (
+        f"socratic_state 应为 dict，实为 {type(socratic)}"
+    )
     assert socratic.get("question") == "测试题"
     print("  cold_start SocraticStateV2 序列化写库 ✓")
 
 
 # ── G.1 Parent overview ──────────────────────────────────────────────────────
+
 
 @pytest.mark.asyncio
 async def test_parent_overview_empty(client, student, bypass_auth):
@@ -202,9 +257,12 @@ async def test_parent_overview_empty(client, student, bypass_auth):
 
 # ── H.1 Solve ────────────────────────────────────────────────────────────────
 
+
 @pytest.mark.asyncio
 async def test_solve_conic(client):
-    resp = await client.post("/v1/solve", params={"kc_id": KC_ID, "expression": "x^2 + y^2 = 25"})
+    resp = await client.post(
+        "/v1/solve", params={"kc_id": KC_ID, "expression": "x^2 + y^2 = 25"}
+    )
     assert resp.status_code == 200
     data = resp.json()
     assert "solvable" in data
@@ -214,12 +272,15 @@ async def test_solve_conic(client):
 
 @pytest.mark.asyncio
 async def test_solve_linear(client):
-    resp = await client.post("/v1/solve", params={"kc_id": "GDMATH-FUNC-01", "expression": "y = 2*x + 1"})
+    resp = await client.post(
+        "/v1/solve", params={"kc_id": "GDMATH-FUNC-01", "expression": "y = 2*x + 1"}
+    )
     assert resp.status_code == 200
     print("  POST /v1/solve (linear) ✓")
 
 
 # ── J.1 Patterns ─────────────────────────────────────────────────────────────
+
 
 @pytest.mark.asyncio
 async def test_patterns_empty(client, student, bypass_auth):
@@ -234,9 +295,14 @@ async def test_patterns_empty(client, student, bypass_auth):
 async def test_patterns_with_interactions(client, student, bypass_auth):
     """答了几道题后，patterns 有数据。"""
     for _ in range(3):
-        await client.post("/v1/interaction", json={
-            "student_id": str(student), "kc_id": KC_ID, "is_correct": True,
-        })
+        await client.post(
+            "/v1/interaction",
+            json={
+                "student_id": str(student),
+                "kc_id": KC_ID,
+                "is_correct": True,
+            },
+        )
     resp = await client.get(f"/v1/patterns/{student}")
     assert resp.status_code == 200
     data = resp.json()
@@ -246,9 +312,12 @@ async def test_patterns_with_interactions(client, student, bypass_auth):
 
 # ── I.1 Practice generate ────────────────────────────────────────────────────
 
+
 @pytest.mark.asyncio
 async def test_practice_generate(client):
-    resp = await client.post("/v1/practice/generate", params={"kc_id": KC_ID, "count": 3})
+    resp = await client.post(
+        "/v1/practice/generate", params={"kc_id": KC_ID, "count": 3}
+    )
     assert resp.status_code == 200
     data = resp.json()
     assert data["kc_id"] == KC_ID
@@ -258,18 +327,22 @@ async def test_practice_generate(client):
 
 @pytest.mark.asyncio
 async def test_practice_generate_kc_not_found(client):
-    resp = await client.post("/v1/practice/generate", params={"kc_id": "NOT-EXIST", "count": 3})
+    resp = await client.post(
+        "/v1/practice/generate", params={"kc_id": "NOT-EXIST", "count": 3}
+    )
     assert resp.status_code == 404
     print("  POST /v1/practice/generate 404 ✓")
 
 
 # ── K.2 User deletion (compliance red line) ─────────────────────────────────
 
+
 @pytest.mark.asyncio
 async def test_delete_student_soft_delete(client, student, db):
     """本人鉴权下软删 → deleted_at 设置（合规红线）。"""
     from types import SimpleNamespace
     from services.main import get_current_user
+
     app.dependency_overrides[get_current_user] = lambda: SimpleNamespace(id=student)
     try:
         resp = await client.post(f"/v1/parent/delete-request/{student}")
@@ -289,6 +362,7 @@ async def test_delete_student_forbidden_for_non_owner(client, student):
     """鉴权红线：登录用户删非本人/非绑定的学生 → 403。"""
     from types import SimpleNamespace
     from services.main import get_current_user
+
     app.dependency_overrides[get_current_user] = lambda: SimpleNamespace(id=student)
     try:
         resp = await client.post(f"/v1/parent/delete-request/{uuid.uuid4()}")
@@ -300,12 +374,14 @@ async def test_delete_student_forbidden_for_non_owner(client, student):
 
 # ── K.1 Archive export ───────────────────────────────────────────────────────
 
+
 @pytest.mark.asyncio
 async def test_export_archive(client, student, bypass_auth):
     resp = await client.get(f"/v1/parent/export/{student}")
     assert resp.status_code == 200
     assert "attachment" in resp.headers.get("content-disposition", "")
     import json as _json
+
     data = _json.loads(resp.content)
     assert data["student_id"] == str(student)
     assert "kc_mastery" in data
@@ -314,10 +390,13 @@ async def test_export_archive(client, student, bypass_auth):
 
 # ── F.1 Socratic session ─────────────────────────────────────────────────────
 
+
 @pytest.mark.asyncio
 async def test_socratic_start_no_question(client, student):
-    resp = await client.post("/v1/socratic/start",
-                              params={"question_id": str(uuid.uuid4()), "student_id": str(student)})
+    resp = await client.post(
+        "/v1/socratic/start",
+        params={"question_id": str(uuid.uuid4()), "student_id": str(student)},
+    )
     assert resp.status_code == 404
     print("  POST /v1/socratic/start 404 ✓")
 
@@ -327,25 +406,33 @@ async def test_socratic_full_flow(client, student, db):
     """开始→发消息(SSE)→escape→end 全流程。"""
     # Create a wrong question
     wq_id = uuid.uuid4()
-    db.add(WrongQuestion(
-        id=wq_id, student_id=student, paper_id=None,
-        question_text="x^2 + y^2 = 25，求圆心和半径",
-        correct_answer="圆心(0,0), 半径5",
-        knowledge_points={KC_ID: 1.0},
-        subject="math",
-    ))
+    db.add(
+        WrongQuestion(
+            id=wq_id,
+            student_id=student,
+            paper_id=None,
+            question_text="x^2 + y^2 = 25，求圆心和半径",
+            correct_answer="圆心(0,0), 半径5",
+            knowledge_points={KC_ID: 1.0},
+            subject="math",
+        )
+    )
     await db.commit()
 
     # Start
-    resp = await client.post("/v1/socratic/start",
-                              params={"question_id": str(wq_id), "student_id": str(student)})
+    resp = await client.post(
+        "/v1/socratic/start",
+        params={"question_id": str(wq_id), "student_id": str(student)},
+    )
     assert resp.status_code == 200
     session_id = resp.json()["session_id"]
     assert resp.json()["mode"] in ("deep", "mixed", "sprint")
 
     # Message (SSE — collect full response)
-    resp2 = await client.post(f"/v1/socratic/{session_id}/message",
-                               params={"student_message": "我不知道怎么做"})
+    resp2 = await client.post(
+        f"/v1/socratic/{session_id}/message",
+        params={"student_message": "我不知道怎么做"},
+    )
     assert resp2.status_code == 200
     content = resp2.content.decode()
     assert "data:" in content
@@ -362,7 +449,9 @@ async def test_socratic_full_flow(client, student, db):
     print("  escape → outline 非完整答案 ✓")
 
     # End
-    resp4 = await client.post(f"/v1/socratic/{session_id}/end", params={"outcome": "partial"})
+    resp4 = await client.post(
+        f"/v1/socratic/{session_id}/end", params={"outcome": "partial"}
+    )
     assert resp4.status_code == 200
     assert resp4.json()["outcome"] == "partial"
     print("  POST /v1/socratic end ✓")
