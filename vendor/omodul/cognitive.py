@@ -17,11 +17,13 @@ from obase.cognitive_store import BaseCognitiveStore
 from oprim.fsrs_engine import fsrs_due_date, fsrs_retrievability
 from oprim.due_compute import due_compute
 
+
 class InteractionConfig(BaseConfig):
     _omodul_name = "process_interaction_workflow"
     _omodul_version = "0.1.0"
     _fingerprint_fields = set()
     _enabled_pillars = {"decision_trail"}
+
 
 class InteractionInput(BaseModel):
     student_id: UUID
@@ -35,11 +37,19 @@ class InteractionInput(BaseModel):
     effortless: bool = False
     is_interleaved: bool = False
     time_spent_seconds: Optional[int] = None
-    difficulty: Optional[float] = None   # 题目难度 b∈[0,1]（IRT）；None 时不改变行为
-    predicted_confidence: Optional[float] = None  # JOL：作答前自评把握 ∈[0,1]（仅记录，不入算法）
+    difficulty: Optional[float] = None  # 题目难度 b∈[0,1]（IRT）；None 时不改变行为
+    predicted_confidence: Optional[float] = (
+        None  # JOL：作答前自评把握 ∈[0,1]（仅记录，不入算法）
+    )
+    predicted_r: Optional[float] = (
+        None  # 保留探针：作答时 FSRS 预测可提取性 R（仅记录，不入算法）
+    )
     now: Optional[datetime] = None
-    min_review_interval_hours: float = 0.0  # 集中练习去抖阈值，透传 cognitive_update；默认 0 不改变行为
-    fsrs_parameters: tuple | None = None    # 个性化 FSRS 权重；None → 全局默认
+    min_review_interval_hours: float = (
+        0.0  # 集中练习去抖阈值，透传 cognitive_update；默认 0 不改变行为
+    )
+    fsrs_parameters: tuple | None = None  # 个性化 FSRS 权重；None → 全局默认
+
 
 class InteractionFindings(BaseModel):
     kc_id: str
@@ -50,6 +60,7 @@ class InteractionFindings(BaseModel):
     rating: str
     next_review_due: Optional[str]
     n_attempts: int
+
 
 async def process_interaction_workflow(
     config: InteractionConfig,
@@ -63,10 +74,12 @@ async def process_interaction_workflow(
     支持按照题型扩展。
     """
     now = input_data.now or datetime.now(timezone.utc)
-    
+
     # 1. 获取当前状态 (传题型以获取正确的先验)
-    state, card_dict = await store.get_or_create(input_data.student_id, input_data.kc_id, input_data.question_type)
-    
+    state, card_dict = await store.get_or_create(
+        input_data.student_id, input_data.kc_id, input_data.question_type
+    )
+
     # 2. 调用认知更新算法 (oskill)
     update_input = CognitiveUpdateInput(
         state=state,
@@ -79,18 +92,22 @@ async def process_interaction_workflow(
         difficulty=input_data.difficulty,
         min_review_interval_hours=input_data.min_review_interval_hours,
         fsrs_parameters=input_data.fsrs_parameters,
-        now=now
+        now=now,
     )
     result = cognitive_update(input=update_input)
-    
+
     # 3. 落库：更新 kc_mastery
-    await store.save(input_data.student_id, input_data.kc_id, result.state, result.card_dict)
-    
+    await store.save(
+        input_data.student_id, input_data.kc_id, result.state, result.card_dict
+    )
+
     # 4. 落库：追加 interaction_events
     days_since_last = None
     if state.last_interaction_ts:
-        days_since_last = (now - datetime.fromtimestamp(state.last_interaction_ts, timezone.utc)).total_seconds() / 86400.0
-        
+        days_since_last = (
+            now - datetime.fromtimestamp(state.last_interaction_ts, timezone.utc)
+        ).total_seconds() / 86400.0
+
     event_data = {
         "question_id": input_data.question_id,
         "source": input_data.source,
@@ -101,36 +118,46 @@ async def process_interaction_workflow(
         "is_interleaved": input_data.is_interleaved,
         "item_difficulty": input_data.difficulty,
         "predicted_confidence": input_data.predicted_confidence,
-        "occurred_at": now
+        "predicted_r": input_data.predicted_r,
+        "occurred_at": now,
     }
     await store.append_event(input_data.student_id, input_data.kc_id, event_data)
-    
+
     # 5. 组装结果
     findings = InteractionFindings(
         kc_id=input_data.kc_id,
         p_mastery=round(result.state.current(), 4),
-        long_term_mastery=round(result.state.long_term_mastery or result.state.current(), 4),
+        long_term_mastery=round(
+            result.state.long_term_mastery or result.state.current(), 4
+        ),
         effective_mastery=round(result.effective_mastery, 4),
         error_type=result.error_type,
         rating=result.rating,
         next_review_due=fsrs_due_date(card_dict=result.card_dict),
-        n_attempts=result.state.n_attempts
+        n_attempts=result.state.n_attempts,
     )
-    
+
     trail = [
-        {"step": "get_state", "kc_id": input_data.kc_id, "question_type": input_data.question_type},
+        {
+            "step": "get_state",
+            "kc_id": input_data.kc_id,
+            "question_type": input_data.question_type,
+        },
         {"step": "cognitive_update", "result": findings.model_dump()},
         {"step": "save_state"},
-        {"step": "append_event"}
+        {"step": "append_event"},
     ]
-    
+
     return standard_return(
         findings=findings,
         status="completed",
-        trail=trail if "decision_trail" in config._enabled_pillars else None
+        trail=trail if "decision_trail" in config._enabled_pillars else None,
     )
 
-async def mastery_overview_workflow(store: BaseCognitiveStore, student_id: UUID, now: Optional[datetime] = None):
+
+async def mastery_overview_workflow(
+    store: BaseCognitiveStore, student_id: UUID, now: Optional[datetime] = None
+):
     """获取掌握度总览（业务逻辑）。"""
     now = now or datetime.now(timezone.utc)
     states_map = await store.get_all_states(student_id)
@@ -138,16 +165,21 @@ async def mastery_overview_workflow(store: BaseCognitiveStore, student_id: UUID,
     for kc_id, (state, card) in states_map.items():
         R = fsrs_retrievability(card_dict=card, now=now)
         long_term = state.long_term_mastery or state.current()
-        out.append({
-            "kc_id": kc_id,
-            "long_term_mastery": round(long_term, 4),
-            # 红线：effective = long_term × R（与 process 路径同口径，非 current()×R）
-            "effective_mastery": round(long_term * R, 4),
-            "n_attempts": state.n_attempts,
-        })
+        out.append(
+            {
+                "kc_id": kc_id,
+                "long_term_mastery": round(long_term, 4),
+                # 红线：effective = long_term × R（与 process 路径同口径，非 current()×R）
+                "effective_mastery": round(long_term * R, 4),
+                "n_attempts": state.n_attempts,
+            }
+        )
     return sorted(out, key=lambda x: x["effective_mastery"])
 
-async def review_queue_workflow(store: BaseCognitiveStore, student_id: UUID, now: Optional[datetime] = None):
+
+async def review_queue_workflow(
+    store: BaseCognitiveStore, student_id: UUID, now: Optional[datetime] = None
+):
     """今日到期复习池（业务逻辑）。"""
     now = now or datetime.now(timezone.utc)
     states_map = await store.get_all_states(student_id)

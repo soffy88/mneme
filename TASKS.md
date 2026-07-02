@@ -919,8 +919,9 @@ Phase 3：K（合规）+ L（部署）
 - [x] **T.1 [P0] 评估 AUC 落表 + 历史查询** ✅ 2026-07-02
   DoD：evaluation_runs 表(migration)；evaluation_service 每周结果落表(AUC/log-loss/n/窗口)；GET /v1/moat/evaluation-history(登录可读)；测试；check.sh 绿。
   ✅ evaluation_runs 表(migration bfeae2b93814)；evaluate_model 全体评估末尾单独 commit 落行(样本不足也记 n_events，重放计算仍只读)；GET /v1/moat/evaluation-history(登录可读，ran_at 倒序，数值 4 位)；4 个新测试(落表字段/端点/匿名401)。pytest 229 passed / 2 skipped，check.sh 全绿。
-- [ ] **T.2 [P0] 留存三指标 + 30天保留抽测埋点**
+- [x] **T.2 [P0] 留存三指标 + 30天保留抽测埋点** ✅ 2026-07-02
   DoD：复习队列按 ~1/20 概率混入"保留探针"(远未到期的稳定卡，probe 标记落 interaction_events)；GET /v1/moat/retention-metrics 返回 D7 留存/到期复习完成率/探针实测召回 vs 预测 R；测试；check.sh 绿。
+  ✅ 复习队列 sha256(学生+日期) 确定性门 ~1/20 混入探针卡（due 最远/近7天未抽中，不带答案过检索门）；提交侧按"卡未到期+距上次复习≥24h"识别 → source=probe + predicted_r 落 interaction_events（migration 75da13d304e9：enum 加 probe + predicted_r 列），照常更新 BKT/FSRS；GET /v1/moat/retention-metrics（登录可读，聚合无 PII）返回 D7 留存(首交互锚点,近8周)/到期复习完成率(近14天,due×events 对齐)/探针校准(整体+0-0.5/0.5-0.8/0.8-1.0 分桶)；8 个新测试。pytest 237 passed / 2 skipped，check.sh 全绿。
 - [ ] **T.3 [P1] FSRS 权重拟合阈值门控**
   DoD：Powell 拟合默认关闭改为代码级门控——真实间隔复习(间隔>1天)≥400 条/科方可启用，env 可强制关；先验校准不受影响；测试；check.sh 绿。
 - [ ] **T.4 [P1] moat_eval 进 CI 守卫**

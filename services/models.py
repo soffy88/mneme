@@ -57,6 +57,7 @@ class InteractionSource(str, enum.Enum):
     quick = "quick"
     review = "review"
     socratic = "socratic"
+    probe = "probe"  # 保留探针：远未到期的稳定卡混入复习队列，实测召回 vs 预测 R
 
 
 class SocraticMode(str, enum.Enum):
@@ -352,6 +353,9 @@ class InteractionEvent(Base):
     predicted_confidence: Mapped[Optional[float]] = mapped_column(
         Float
     )  # JOL：作答前自评把握 ∈[0,1]
+    predicted_r: Mapped[Optional[float]] = mapped_column(
+        Float
+    )  # 保留探针：作答时 FSRS 预测的可提取性 R ∈[0,1]（source=probe 时填）
     occurred_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True), server_default=text("now()")
     )

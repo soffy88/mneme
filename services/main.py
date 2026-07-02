@@ -1135,6 +1135,21 @@ async def get_evaluation_history(
     }
 
 
+@app.get("/v1/moat/retention-metrics")
+async def get_retention_metrics(
+    _auth: User = Depends(get_current_user),
+    db: AsyncSession = Depends(get_db),
+):
+    """GET /v1/moat/retention-metrics — 留存三指标（T.2）。
+
+    D7 留存 / 到期复习完成率 / 保留探针校准（实测召回 vs FSRS 预测 R）。
+    登录即可读（全体聚合数据，无个人信息）；口径见 services.retention_service。
+    """
+    from services.retention_service import retention_metrics
+
+    return await retention_metrics(db)
+
+
 # ===== §F.1 苏格拉底会话 =====
 
 

@@ -3,6 +3,7 @@ Cognitive service — Layer 4 装配层
 接 process_interaction / mastery_overview / review_queue，
 调 omodul/oskill/oprim，不写业务逻辑。
 """
+
 from __future__ import annotations
 
 from datetime import datetime, timedelta, timezone
@@ -23,10 +24,20 @@ from omodul.cognitive import (
 )
 from oprim.compute_feedback import compute_feedback
 from oprim.compute_peer_percentile import compute_peer_percentile
-from oprim.learning_metrics import consecutive_active_days, weekly_digest_metrics, daily_report_text
+from oprim.learning_metrics import (
+    consecutive_active_days,
+    weekly_digest_metrics,
+    daily_report_text,
+)
 from oskill.interleave_select import QuestionItem, interleave_select
 
-from services.models import EffortfulGain, InteractionEvent, KCMastery, MasterySnapshot, SocraticSession
+from services.models import (
+    EffortfulGain,
+    InteractionEvent,
+    KCMastery,
+    MasterySnapshot,
+    SocraticSession,
+)
 
 # 集中练习去抖阈值（小时）：见 process_interaction 内说明。
 _MASSED_PRACTICE_DEBOUNCE_HOURS = 20.0
@@ -39,32 +50,51 @@ async def daily_report(db: AsyncSession, student_id: UUID, day=None) -> dict:
     start = datetime(d.year, d.month, d.day, tzinfo=timezone.utc)
     end = start + timedelta(days=1)
 
-    rows = (await db.execute(
-        select(InteractionEvent.knowledge_point, InteractionEvent.is_correct)
-        .where(InteractionEvent.student_id == student_id)
-        .where(InteractionEvent.occurred_at >= start, InteractionEvent.occurred_at < end)
-    )).all()
+    rows = (
+        await db.execute(
+            select(InteractionEvent.knowledge_point, InteractionEvent.is_correct)
+            .where(InteractionEvent.student_id == student_id)
+            .where(
+                InteractionEvent.occurred_at >= start,
+                InteractionEvent.occurred_at < end,
+            )
+        )
+    ).all()
     n = len(rows)
     kcs = len({r[0] for r in rows})
     correct = sum(1 for r in rows if r[1])
 
-    socratic = (await db.execute(
-        select(func.count()).select_from(SocraticSession)
-        .where(SocraticSession.student_id == student_id)
-        .where(SocraticSession.created_at >= start, SocraticSession.created_at < end)
-    )).scalar() or 0
+    socratic = (
+        await db.execute(
+            select(func.count())
+            .select_from(SocraticSession)
+            .where(SocraticSession.student_id == student_id)
+            .where(
+                SocraticSession.created_at >= start, SocraticSession.created_at < end
+            )
+        )
+    ).scalar() or 0
 
-    weak = (await db.execute(
-        select(func.count()).select_from(KCMastery)
-        .where(KCMastery.student_id == student_id).where(KCMastery.p_mastery < 0.5)
-    )).scalar() or 0
+    weak = (
+        await db.execute(
+            select(func.count())
+            .select_from(KCMastery)
+            .where(KCMastery.student_id == student_id)
+            .where(KCMastery.p_mastery < 0.5)
+        )
+    ).scalar() or 0
 
     dig = await weekly_digest(db, student_id, now=now)
     streak = dig["current_streak"]
 
-    text = daily_report_text(   # 成文在 oprim
-        day_iso=d.isoformat(), n=n, distinct_kcs=kcs, correct=correct,
-        socratic=int(socratic), streak=streak, weak_kc_count=int(weak),
+    text = daily_report_text(  # 成文在 oprim
+        day_iso=d.isoformat(),
+        n=n,
+        distinct_kcs=kcs,
+        correct=correct,
+        socratic=int(socratic),
+        streak=streak,
+        weak_kc_count=int(weak),
     )
 
     return {
@@ -88,25 +118,34 @@ async def weekly_digest(
     """
     now = now or datetime.now(timezone.utc)
     since60 = now - timedelta(days=60)
-    rows = (await db.execute(
-        select(InteractionEvent.occurred_at, InteractionEvent.knowledge_point, InteractionEvent.is_correct)
-        .where(InteractionEvent.student_id == student_id)
-        .where(InteractionEvent.occurred_at >= since60)
-    )).all()
+    rows = (
+        await db.execute(
+            select(
+                InteractionEvent.occurred_at,
+                InteractionEvent.knowledge_point,
+                InteractionEvent.is_correct,
+            )
+            .where(InteractionEvent.student_id == student_id)
+            .where(InteractionEvent.occurred_at >= since60)
+        )
+    ).all()
 
     today = now.date()
     active_dates = {r[0].date() for r in rows}
-    streak = consecutive_active_days(active_dates, today)   # 算法在 oprim
+    streak = consecutive_active_days(active_dates, today)  # 算法在 oprim
 
     since7 = now - timedelta(days=7)
     recent = [r for r in rows if r[0] >= since7]
     days_active_7d = len({r[0].date() for r in recent})
 
-    effort_7d = (await db.execute(
-        select(func.count()).select_from(EffortfulGain)
-        .where(EffortfulGain.student_id == student_id)
-        .where(EffortfulGain.occurred_at >= since7)
-    )).scalar() or 0
+    effort_7d = (
+        await db.execute(
+            select(func.count())
+            .select_from(EffortfulGain)
+            .where(EffortfulGain.student_id == student_id)
+            .where(EffortfulGain.occurred_at >= since7)
+        )
+    ).scalar() or 0
 
     return weekly_digest_metrics(
         interactions_7d=recent,
@@ -133,6 +172,7 @@ async def process_interaction(
     time_spent_seconds: Optional[int] = None,
     difficulty: Optional[float] = None,
     predicted_confidence: Optional[float] = None,
+    predicted_r: Optional[float] = None,
     student_answer: Optional[str] = None,
     correct_answer: Optional[str] = None,
     now: Optional[datetime] = None,
@@ -142,20 +182,27 @@ async def process_interaction(
     # Phase 2（IRT 通电）：未显式给难度时，按 kc_id 取 KU 难度；非 KU 知识点保持 None（行为不变）
     if difficulty is None:
         from services.models import KnowledgeUnit
-        difficulty = (await db.execute(
-            select(KnowledgeUnit.difficulty).where(KnowledgeUnit.id == kc_id)
-        )).scalar_one_or_none()
+
+        difficulty = (
+            await db.execute(
+                select(KnowledgeUnit.difficulty).where(KnowledgeUnit.id == kc_id)
+            )
+        ).scalar_one_or_none()
     # 努力收益（M-F）：记下更新前的 FSRS 稳定性，用于算 retention_delta
-    old_card = (await db.execute(
-        select(KCMastery.fsrs_card_json)
-        .where(KCMastery.student_id == student_id, KCMastery.knowledge_point == kc_id)
-    )).scalar_one_or_none()
+    old_card = (
+        await db.execute(
+            select(KCMastery.fsrs_card_json).where(
+                KCMastery.student_id == student_id, KCMastery.knowledge_point == kc_id
+            )
+        )
+    ).scalar_one_or_none()
     old_stability = float((old_card or {}).get("stability") or 0.0)
 
     store = PgStore(db)
     config = InteractionConfig()
     # 个性化 FSRS 调度：个体优先→群体→默认（无则用默认权重）。
     from services.fsrs_optimize_service import load_weights_for_student
+
     fsrs_params = await load_weights_for_student(db, student_id)
     input_data = InteractionInput(
         student_id=student_id,
@@ -171,6 +218,7 @@ async def process_interaction(
         time_spent_seconds=time_spent_seconds,
         difficulty=difficulty,
         predicted_confidence=predicted_confidence,
+        predicted_r=predicted_r,
         # 集中练习去抖（学习科学：间隔重复≠集中练习）：距上次 FSRS 复习不足 20h 的
         # 重复作答只更新掌握度、不推进调度。真正的到期复习相隔数天，不受影响；
         # 同卷/同日连答不再把生题排到几天后导致"学了就忘"。
@@ -204,21 +252,28 @@ async def process_interaction(
 
     # 努力收益（M-F）：effortful_gain = struggle_score × retention_delta（FSRS 稳定性增量）
     #   仅在"吃力且确有记忆增益"时记录——对应"难但学得最牢"的信号
-    new_card = (await db.execute(
-        select(KCMastery.fsrs_card_json)
-        .where(KCMastery.student_id == student_id, KCMastery.knowledge_point == kc_id)
-    )).scalar_one_or_none()
+    new_card = (
+        await db.execute(
+            select(KCMastery.fsrs_card_json).where(
+                KCMastery.student_id == student_id, KCMastery.knowledge_point == kc_id
+            )
+        )
+    ).scalar_one_or_none()
     new_stability = float((new_card or {}).get("stability") or 0.0)
     retention_delta = max(0.0, new_stability - old_stability)
-    struggle_score = min(max((time_spent_seconds or 0) / 120.0, 0.0), 1.0) * 0.7 + (0.3 if struggled else 0.0)
+    struggle_score = min(max((time_spent_seconds or 0) / 120.0, 0.0), 1.0) * 0.7 + (
+        0.3 if struggled else 0.0
+    )
     if is_correct and struggle_score > 0.0 and retention_delta > 0.0:
-        db.add(EffortfulGain(
-            student_id=student_id,
-            question_id=question_id,
-            struggle_score=round(struggle_score, 4),
-            retention_delta=round(retention_delta, 4),
-            effortful_gain=round(struggle_score * retention_delta, 4),
-        ))
+        db.add(
+            EffortfulGain(
+                student_id=student_id,
+                question_id=question_id,
+                struggle_score=round(struggle_score, 4),
+                retention_delta=round(retention_delta, 4),
+                effortful_gain=round(struggle_score * retention_delta, 4),
+            )
+        )
 
     feedback = None
     if student_answer is not None:
@@ -294,45 +349,72 @@ async def weakness_roots(
     """
     from services.models import KnowledgeUnit
 
-    rows = (await db.execute(
-        select(KCMastery.knowledge_point, KCMastery.p_mastery)
-        .where(KCMastery.student_id == student_id)
-    )).all()
+    rows = (
+        await db.execute(
+            select(KCMastery.knowledge_point, KCMastery.p_mastery).where(
+                KCMastery.student_id == student_id
+            )
+        )
+    ).all()
     mastery: dict[str, float] = {kp: (pm if pm is not None else 0.0) for kp, pm in rows}
     weak_kps = [kp for kp, pm in mastery.items() if pm < mastery_threshold]
     if not weak_kps:
         return []
 
-    weak_kus = (await db.execute(
-        select(KnowledgeUnit.id, KnowledgeUnit.name, KnowledgeUnit.prerequisites)
-        .where(KnowledgeUnit.id.in_(weak_kps))
-    )).all()
+    weak_kus = (
+        await db.execute(
+            select(
+                KnowledgeUnit.id, KnowledgeUnit.name, KnowledgeUnit.prerequisites
+            ).where(KnowledgeUnit.id.in_(weak_kps))
+        )
+    ).all()
 
     prereq_ids = {p for _, _, prereqs in weak_kus for p in (prereqs or [])}
     prereq_names: dict[str, str] = {}
     if prereq_ids:
         prereq_names = {
-            i: n for i, n in (await db.execute(
-                select(KnowledgeUnit.id, KnowledgeUnit.name).where(KnowledgeUnit.id.in_(prereq_ids))
-            )).all()
+            i: n
+            for i, n in (
+                await db.execute(
+                    select(KnowledgeUnit.id, KnowledgeUnit.name).where(
+                        KnowledgeUnit.id.in_(prereq_ids)
+                    )
+                )
+            ).all()
         }
 
     result: list[dict] = []
     for ku_id, name, prereqs in weak_kus:
         gaps = []
-        for p in (prereqs or []):
+        for p in prereqs or []:
             pm = mastery.get(p)
             if pm is None:
-                gaps.append({"ku_id": p, "name": prereq_names.get(p, p), "p_mastery": None, "status": "unpracticed"})
+                gaps.append(
+                    {
+                        "ku_id": p,
+                        "name": prereq_names.get(p, p),
+                        "p_mastery": None,
+                        "status": "unpracticed",
+                    }
+                )
             elif pm < mastery_threshold:
-                gaps.append({"ku_id": p, "name": prereq_names.get(p, p), "p_mastery": round(pm, 4), "status": "weak"})
+                gaps.append(
+                    {
+                        "ku_id": p,
+                        "name": prereq_names.get(p, p),
+                        "p_mastery": round(pm, 4),
+                        "status": "weak",
+                    }
+                )
         if gaps:
-            result.append({
-                "ku_id": ku_id,
-                "name": name,
-                "p_mastery": round(mastery.get(ku_id, 0.0), 4),
-                "weak_prerequisites": gaps,
-            })
+            result.append(
+                {
+                    "ku_id": ku_id,
+                    "name": name,
+                    "p_mastery": round(mastery.get(ku_id, 0.0), 4),
+                    "weak_prerequisites": gaps,
+                }
+            )
 
     result.sort(key=lambda x: x["p_mastery"])
     return result[:limit]
@@ -381,7 +463,13 @@ async def review_queue(
 async def _get_streak_dict(db: AsyncSession, student_id: UUID) -> dict:
     """Helper used by parent overview."""
     from services.models import Streak
-    streak = (await db.execute(select(Streak).where(Streak.student_id == student_id))).scalar_one_or_none()
+
+    streak = (
+        await db.execute(select(Streak).where(Streak.student_id == student_id))
+    ).scalar_one_or_none()
     if not streak:
         return {"current_streak": 0, "longest_streak": 0}
-    return {"current_streak": streak.current_streak or 0, "longest_streak": streak.longest_streak or 0}
+    return {
+        "current_streak": streak.current_streak or 0,
+        "longest_streak": streak.longest_streak or 0,
+    }
