@@ -910,3 +910,38 @@ Phase 3：K（合规）+ L（部署）
   ✅ daily_mission 过 interleave_select（相邻异 KC 红线，挤掉位次按优先级回填）；daily_plan P4 新知 verified 优先 + /v1/knowledge-points 带 verified 字段并优先排序（prereq 拓扑序除外）；paper_grading 接 solve_and_visualize——可解题型内核值覆盖 OCR 答案（answer_source=kernel|ocr），含"OCR 抄错也不误判对"红线测试。pytest 226 passed / 0 failed。
 - [x] **S.6 [实证] 护城河飞轮实验** ✅ 2026-07-02
   ✅ scripts/moat_eval/（seed=42 可复跑，隔离库已 DROP）：实验1 内核合成回归 AUC 0.677≥0.65 门槛；实验2 经验贝叶斯先验校准 +0.014 AUC（飞轮实证有增益），FSRS Powell 拟合合成数据过拟合→默认关闭待真实日志；实验3 FSRS 同保留目标省约一半复习量（2.47 vs 5.0 次达 R=0.913），护城河主张应表述为"效率"而非"同预算保留率"。详见 MNEME_MOAT_ROADMAP_20260702.md。
+
+---
+
+## T · 登顶路线实施（2026-07-02 起，源自 MNEME_MOAT_ROADMAP_20260702.md；严格一次一个）
+
+### 第 1 步：实证地基
+- [x] **T.1 [P0] 评估 AUC 落表 + 历史查询** ✅ 2026-07-02
+  DoD：evaluation_runs 表(migration)；evaluation_service 每周结果落表(AUC/log-loss/n/窗口)；GET /v1/moat/evaluation-history(登录可读)；测试；check.sh 绿。
+  ✅ evaluation_runs 表(migration bfeae2b93814)；evaluate_model 全体评估末尾单独 commit 落行(样本不足也记 n_events，重放计算仍只读)；GET /v1/moat/evaluation-history(登录可读，ran_at 倒序，数值 4 位)；4 个新测试(落表字段/端点/匿名401)。pytest 229 passed / 2 skipped，check.sh 全绿。
+- [ ] **T.2 [P0] 留存三指标 + 30天保留抽测埋点**
+  DoD：复习队列按 ~1/20 概率混入"保留探针"(远未到期的稳定卡，probe 标记落 interaction_events)；GET /v1/moat/retention-metrics 返回 D7 留存/到期复习完成率/探针实测召回 vs 预测 R；测试；check.sh 绿。
+- [ ] **T.3 [P1] FSRS 权重拟合阈值门控**
+  DoD：Powell 拟合默认关闭改为代码级门控——真实间隔复习(间隔>1天)≥400 条/科方可启用，env 可强制关；先验校准不受影响；测试；check.sh 绿。
+- [ ] **T.4 [P1] moat_eval 进 CI 守卫**
+  DoD：exp1 快速模式(缩规模,<60s)；pytest 标记 moat 的回归测试断言 AUC≥0.65；check.sh 支持 MOAT=1 附加步骤；文档一段。
+
+### 第 2 步：两记组合拳（超越点）
+- [ ] **T.5 [P0] FIRe×BKT 前置回写（先改 Master）**
+  DoD：Master 新增算法契约(按 P(L) 缺口加权的前置复习信用回写，折扣系数/触发条件/红线交互)；moat_eval exp4 仿真验证复习量压缩比；内核 oskill 实现+omodul 接线；红线测试(更新顺序不破坏/只增不改)；check.sh 绿。
+- [ ] **T.6 [P0] 拍卷过程批改（OCR 步骤 × verify_step）**
+  DoD：analyze_paper 路径对含步骤 OCR 输出逐步过 verify_step(确定性)，定位首个错步落 wrong_questions/事件；careless/dontknow 分类吃步骤信号；Mock VLM 测试含"错步被定位"断言；check.sh 绿。
+
+### 第 3 步：留存与场景
+- [ ] **T.7 [P1] 考期感知调度**
+  DoD：users.exam_date(migration)+设置端点；daily_plan/复习按临考压缩(目标可提取性上调+间隔不超过剩余天数)；前端设置入口+倒计时展示；测试；check.sh 绿。
+- [ ] **T.8 [P1] 周期限时小测（检索检查点）**
+  DoD：每 N 天生成限时 quiz mission(5题,到期/薄弱KC,交错)；提交计时判分回写 BKT/FSRS；失败 KC 自动生成复习任务；前端小测页；测试；check.sh 绿。
+- [ ] **T.9 [P2] 错题本打印/导出**
+  DoD：mneme-web 错题本打印视图(可选含变式、可隐藏答案供重做)；typecheck 绿。
+- [ ] **T.10 [P1] 非数学接入认知主线**
+  DoD：物理题库灌内容(现有 import 脚本)；physics/reading/speaking 会话结果接 process_interaction(伪名化红线保持)；PhysicsPractice 指向真练习流；测试；check.sh 绿。
+
+### 阻塞在人（🚨 Needs Human）
+- 阿里云短信报备（完成前勿开公网注册）
+- 真实学生数据（0.77 AUC 验证、FSRS 权重拟合启用、FIRe 上线 A/B 均以此为前提）

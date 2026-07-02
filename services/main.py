@@ -57,6 +57,7 @@ from services.seed import seed_bkt_priors
 from services.models import (
     DailyMission,
     EffortfulGain,
+    EvaluationRun,
     InteractionEvent,
     KCMastery,
     MasterySnapshot,
@@ -1096,6 +1097,42 @@ async def get_calibration(
         predicted=[float(p) for p, _ in rows],
         actual=[1.0 if c else 0.0 for _, c in rows],
     )
+
+
+@app.get("/v1/moat/evaluation-history")
+async def get_evaluation_history(
+    limit: int = Query(52, ge=1, le=520),
+    _auth: User = Depends(get_current_user),
+    db: AsyncSession = Depends(get_db),
+):
+    """GET /v1/moat/evaluation-history — 护城河实证历史（周评估 AUC/log-loss 落表）。
+    登录即可读（模型质量是全体聚合数据，无个人信息）；按 ran_at 倒序。
+    """
+    rows = (
+        (
+            await db.execute(
+                select(EvaluationRun).order_by(EvaluationRun.ran_at.desc()).limit(limit)
+            )
+        )
+        .scalars()
+        .all()
+    )
+    return {
+        "runs": [
+            {
+                "id": str(r.id),
+                "ran_at": r.ran_at.isoformat() if r.ran_at else None,
+                "window_start": r.window_start.isoformat() if r.window_start else None,
+                "window_end": r.window_end.isoformat() if r.window_end else None,
+                "n_events": r.n_events,
+                "n_students": r.n_students,
+                "auc": round(r.auc, 4) if r.auc is not None else None,
+                "log_loss": round(r.log_loss, 4) if r.log_loss is not None else None,
+                "meta": r.meta,
+            }
+            for r in rows
+        ]
+    }
 
 
 # ===== §F.1 苏格拉底会话 =====
