@@ -1,6 +1,6 @@
-# Mneme（学鉴）· 主设计文档
+# Mneme（善学记）· 主设计文档
 
-> **工程代号** Mneme（希腊记忆女神）｜**对外中文名** 学鉴
+> **工程代号** Mneme（希腊记忆女神）｜**对外中文名** 善学记（旧名"学鉴"已于 2026-07 废弃）
 > **文档状态** 唯一事实来源（SSOT）｜**版本** Master v1.0｜**日期** 2026-06
 >
 > 本文档是 Mneme 的**唯一权威设计**，整合并取代以下历史文档：PRD v1.0/v1.1（高考作战系统，已废弃方向）、PRD v1.2（战略重定位）、PRD v1.3（算法内核）、SPEC v1（工程实施）、SPEC v2（3O 机制增强）。历史文档转为"设计演进记录"，不再作为施工依据。
@@ -241,6 +241,26 @@ p_recognition ：混合情境下认不认得出该用这个 KC（新增）
 - **已验证**（内核 `oprim/tests/test_cognitive.py`、`test_bkt_irt.py` 全绿）：掌握度收敛合理并封顶 0.97；同一 KC 能区分粗心/不会；forgetting-aware 衰减正常；下一题预测**合成数据 AUC≥0.65**（随机=0.5；**0.77 为目标，真实数据待验证**）；KT+FSRS 端到端正常。
 - **DKT 演进（Phase 3）**：数据充足后引入 LSTM/Transformer 建模序列，捕捉跨知识点迁移，支撑跨学段衔接分析；用 AUC 对比 BKT 决定切换；保留 BKT 作可解释层。
 
+### 4.8 FIRe-lite：前置复习信用回写（机制 M-H，2026-07 新增契约）
+
+> 借鉴 Math Academy FIRe（Fractional Implicit Repetition）：成功解出综合题 = 隐式检索了其前置知识，应按比例折算前置的复习信用，压缩总复习量。本契约为保守的 **lite 版**：只顺延调度，不改记忆状态。
+
+**触发条件**（全部满足）：
+1. 一次交互 `is_correct=True` 落在 KC/KU `c`，且 `c` 在前置图上有 `verified` 的前置边（未过校验门的 LLM 前置边不参与——防幻觉边扩散信用）；
+2. 该交互为真实检索（过了 20h 集中练习去抖、非 fire_credit 自身产生）。
+
+**回写规则**：对每个前置 `p ∈ prereq(c)`：
+- 信用系数 `κ_p = κ0 · P(L)_p`，`κ0 = 0.5` 默认。**乘 P(L)_p 而非缺口**：前置掌握度高者，综合题成功才可信地意味着它被真正提取；掌握度低者可能被绕过/蒙对，不应免除其复习（这与 Math Academy 的全额隐式重复刻意不同，是防信号污染的保守化）。
+- `κ_p < τ`（τ=0.3）不回写。
+- 回写动作 = **仅顺延 due**：`new_due_p = max(due_p, now + κ_p × S_p 天)`（S_p 为该卡当前 stability）。**不执行 FSRS review、不改 D/S/R、不更新 BKT P(L)**——前置未被直接观测，只延后"什么时候需要再看"。
+- 事件：interaction_events 追加 `source="fire_credit"` 一条（只增不改），记录触发交互 id、p、κ_p、顺延前后 due。
+
+**红线交互**：更新顺序红线（§红线）不受影响——FIRe 回写发生在主更新链完成并落库之后，是独立后续步骤；P(L)∈(0,0.97] 无涉；检索门无涉；`fire_credit` 事件不得再触发 FIRe（无级联）。
+
+**3O 归层**：oskill `fire_propagate`（组合 `due_compute` + `fsrs_retrievability` 读状态 + 纯计算顺延，stateless）；omodul cognitive 事务在主链后调用；服务层不感知。
+
+**上线门槛（顺序不可跳）**：① `scripts/moat_eval` exp4 仿真：同等 30 天保留率下总复习量压缩 ≥10% 才允许接线，否则调 κ0/τ 回炉；② 真实数据 A/B（对照组无 FIRe）确认保留率不降后全量。
+
 ---
 
 ## 5. 七大机制增强
@@ -254,6 +274,7 @@ p_recognition ：混合情境下认不认得出该用这个 KC（新增）
 | M-E | LLM 图示 + 自检 | SVG 中间表示 + 自动评估 | oprim `generate_svg`/`evaluate_diagram` |
 | M-F | 努力错觉对抗 | 展示"难但有效"的学习收益 | oprim `compute_effortful_gain`；前端 |
 | M-G | 识别能力训练 | 区分掌握 vs 识别（见 §4.5） | oprim `recognition_update` |
+| M-H | FIRe-lite 前置信用回写 | 综合题答对按 κ=κ0·P(L) 顺延前置 due，压缩复习量（见 §4.8） | oskill `fire_propagate`；omodul cognitive |
 
 ### M-A 确定性求解内核
 
