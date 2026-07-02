@@ -42,6 +42,24 @@ docker compose exec -T db psql -U postgres -c "DROP DATABASE mneme_moat_eval;"
 - **exp3_scheduling.py**：30 天记忆模拟，同预算下对比 FSRS 调度 / 固定 3 天 /
   不复习的第 30 天保留率；两种真值遗忘模型（对抗形 exp、同族形 fsrs）。
 
+## CI 守卫（T.4）
+
+exp1 有快速档（100 学生 × 20 学习日，`run_exp1(seed, n_students, n_study_days)`，
+单 seed ~1s，纯计算不碰任何库），已接进质量门做内核判别力回归守卫：
+
+```bash
+MOAT=1 bash scripts/check.sh                       # 常规三步 + 守卫步
+docker compose exec -T -e MOAT=1 api \
+  python -m pytest tests/test_moat_guard.py -q --no-cov   # 只跑守卫
+```
+
+- **阈值**：合成 AUC ≥ 0.65（overall 与 warm_only 双门），seed=42/7/2026 三档全过。
+  快速档稳定性：30 seed 扫描 min 0.654 / mean 0.677，与全量档（200×25，0.677）一致。
+- **何时跑**：任何触碰调度/先验/内核（`oprim/bkt`、`oprim/fsrs_engine`、
+  `oskill/cognitive_state`、种子先验、`predict_correct` 路径）的改动，
+  **提交前先跑守卫**；常规 `bash scripts/check.sh` 不设 MOAT 时自动跳过（不变慢）。
+- 守卫红 = 判别力被打回 0.65 以下，视为回归，task 未完成（红线同级）。
+
 ## 已知局限（读结果前必看）
 
 1. **合成 ≠ 真实**：全部结论只证明"内核在其建模假设近似成立时可辨别/可校准"，

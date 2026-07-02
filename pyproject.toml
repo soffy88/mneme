@@ -45,6 +45,9 @@ testpaths = ["tests"]
 # 被切分支影响。见 vendor/README。
 pythonpath = ["vendor", "."]
 addopts = "--cov=services --cov-report=term-missing"
+markers = [
+    "moat: moat_eval CI 守卫（重测试，默认跳过，MOAT=1 时才运行）",
+]
 
 [tool.coverage.run]
 source = ["services"]

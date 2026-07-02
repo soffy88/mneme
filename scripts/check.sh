@@ -8,6 +8,7 @@
 #   3. 两者都无        → 报错退出
 #
 # SKIP_PYTEST=1 可跳过 pytest 步骤（如 DB 被其他任务占用时），ruff/mypy 仍必须通过。
+# MOAT=1 追加第四步：moat 守卫（tests/test_moat_guard.py，内核合成 AUC≥0.65 回归门）。
 
 set -e
 
@@ -43,6 +44,16 @@ if [ "${SKIP_PYTEST:-0}" = "1" ]; then
 else
     echo -e "\n${GREEN}==> Running Pytest with Coverage...${NC}"
     "${RUN[@]}" pytest
+fi
+
+if [ "${MOAT:-0}" = "1" ]; then
+    echo -e "\n${GREEN}==> Running Moat Guard (MOAT=1, kernel synthetic AUC gate)...${NC}"
+    # 单独跑守卫文件：--no-cov 关闭覆盖率（fail_under 针对全量套件，不适用单文件）。
+    if [ -x ".venv/bin/python" ]; then
+        MOAT=1 .venv/bin/python -m pytest tests/test_moat_guard.py -q --no-cov
+    else
+        docker compose exec -T -e MOAT=1 api python -m pytest tests/test_moat_guard.py -q --no-cov
+    fi
 fi
 
 echo -e "\n${GREEN}==> All checks passed!${NC}"
