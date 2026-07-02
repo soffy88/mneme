@@ -13,8 +13,14 @@ from datetime import datetime, timezone
 from pydantic import BaseModel
 
 from oprim import KCState
-from oprim.bkt import bkt_update, classify_error
+from oprim.bkt import bkt_update, classify_error, error_weights
 from oprim.fsrs_engine import fsrs_retrievability, fsrs_review, fsrs_map_rating
+
+# 步骤证据打破平局的接近度阈值：两假设权重之比 min/max ≥ 该值才视为"接近"。
+# 依据：红线公式 careless∝P(L)·P(S)、dontknow∝(1-P(L))·(1-P(G)) 是权威先验，
+# 确定性步骤证据（verify_step 链）只允许在两类权重相差 <20% 的近平局时改判，
+# 权重悬殊时 BKT 判定不可被推翻（红线公式本身不改）。
+_STEP_EVIDENCE_TIE_RATIO = 0.8
 
 
 class CognitiveUpdateInput(BaseModel):
@@ -35,6 +41,12 @@ class CognitiveUpdateInput(BaseModel):
     min_review_interval_hours: float = 0.0
     # 个性化 FSRS 权重（按群体/学生从真实复习日志优化）；None → 全局默认（行为不变）。
     fsrs_parameters: tuple | None = None
+    # 步骤证据（T.6，verify_step 确定性链产出，仅答错时有意义）：
+    #   "careless" —— 步骤全部通过校验（或仅末步出错）→ 更像粗心；
+    #   "dontknow" —— 首个错步出现在前 1/3 → 更像不会。
+    # None（默认）完全不改变行为；给定时也只在两类权重近平局时打破平局
+    # （见 _STEP_EVIDENCE_TIE_RATIO），不触碰 classify 红线公式。
+    step_evidence: str | None = None
 
 
 class CognitiveUpdateResult(BaseModel):
@@ -78,6 +90,7 @@ def cognitive_update(*, input: CognitiveUpdateInput) -> CognitiveUpdateResult:
     - oprim.fsrs_retrievability  (算 R)
     - oprim.bkt_update           (forgetting-aware 掌握度更新)
     - oprim.classify_error       (粗心/不会判定)
+    - oprim.error_weights        (步骤证据平局判定用的两假设权重，红线公式单源)
     - oprim.fsrs_review          (FSRS 卡片更新)
     - oprim.fsrs_map_rating      (表现→Rating)
 
@@ -105,6 +118,17 @@ def cognitive_update(*, input: CognitiveUpdateInput) -> CognitiveUpdateResult:
     error_type = None
     if not input.is_correct:
         error_type = classify_error(state=input.state, difficulty=input.difficulty)
+        # 3b. 步骤证据后验平局判定（T.6）：红线公式判定为权威；确定性
+        #     verify_step 链的证据只在 careless/dontknow 两假设权重接近
+        #     （min/max ≥ _STEP_EVIDENCE_TIE_RATIO）时打破平局，悬殊时不改判。
+        if (
+            input.step_evidence in ("careless", "dontknow")
+            and input.step_evidence != error_type
+        ):
+            cw, dw = error_weights(state=input.state, difficulty=input.difficulty)
+            hi, lo = max(cw, dw), min(cw, dw)
+            if hi > 0 and lo / hi >= _STEP_EVIDENCE_TIE_RATIO:
+                error_type = input.step_evidence
 
     # 4. FSRS 更新
     rating = fsrs_map_rating(

@@ -13,17 +13,18 @@ from anthropic import AsyncAnthropic
 from obase.config import settings
 from obase.provider_registry import ProviderRegistry
 
+
 class ClaudeCaller:
     """Anthropic Claude API 调用封装。"""
-    
+
     def __init__(self, api_key: str, model: str = "claude-3-5-sonnet-20240620"):
         self.client = AsyncAnthropic(api_key=api_key)
         self.model = model
 
     async def __call__(
-        self, 
-        *, 
-        messages: List[Dict[str, str]], 
+        self,
+        *,
+        messages: List[Dict[str, str]],
         max_tokens: int = 1000,
         tools: Optional[List[Dict[str, Any]]] = None,
         response_format: Optional[str] = None,
@@ -37,44 +38,41 @@ class ClaudeCaller:
                 system_prompt = m["content"]
             else:
                 user_messages.append({"role": m["role"], "content": m["content"]})
-        
+
         # 处理 JSON 强制模式 (Claude 3.5 Sonnet 支持)
         # 简单模拟 response_format="json"
-        
+
         response = await self.client.messages.create(
             model=self.model,
             max_tokens=max_tokens,
             system=system_prompt,
             messages=user_messages,
         )
-        
+
         content = response.content[0].text
-        
+
         return {
             "content": content,
             "usage": {
                 "input_tokens": response.usage.input_tokens,
-                "output_tokens": response.usage.output_tokens
-            }
+                "output_tokens": response.usage.output_tokens,
+            },
         }
+
 
 class ClaudeVLMCaller:
     """Claude Vision 调用封装。"""
-    
+
     def __init__(self, api_key: str, model: str = "claude-3-5-sonnet-20240620"):
         self.client = AsyncAnthropic(api_key=api_key)
         self.model = model
 
     async def __call__(
-        self, 
-        *, 
-        prompt: str, 
-        image_b64: str,
-        response_format: str = "text"
+        self, *, prompt: str, image_b64: str, response_format: str = "text"
     ) -> Dict[str, Any]:
-        
+
         # 如果 image_b64 是本地路径，则读取并编码 (可选，协议要求是 b64)
-        
+
         message_content = [
             {
                 "type": "image",
@@ -84,22 +82,17 @@ class ClaudeVLMCaller:
                     "data": image_b64,
                 },
             },
-            {
-                "type": "text",
-                "text": prompt
-            }
+            {"type": "text", "text": prompt},
         ]
-        
+
         response = await self.client.messages.create(
             model=self.model,
             max_tokens=2000,
-            messages=[
-                {"role": "user", "content": message_content}
-            ],
+            messages=[{"role": "user", "content": message_content}],
         )
-        
+
         raw_text = response.content[0].text
-        
+
         # 简单解析 JSON 如果要求的话
         parsed = raw_text
         if response_format == "json":
@@ -115,21 +108,21 @@ class ClaudeVLMCaller:
                     parsed = json.loads(raw_text)
                 except:
                     pass
-                    
+
         return {
             "content": parsed,
             "raw_text": raw_text,
             "usage": {
                 "input_tokens": response.usage.input_tokens,
-                "output_tokens": response.usage.output_tokens
-            }
+                "output_tokens": response.usage.output_tokens,
+            },
         }
-
 
 
 # ---------------------------------------------------------------------------
 # DeepSeekCaller — OpenAI 兼容接口，中国网信办已备案
 # ---------------------------------------------------------------------------
+
 
 class DeepSeekCaller:
     """DeepSeek API 调用封装（OpenAI 兼容接口）。
@@ -155,6 +148,7 @@ class DeepSeekCaller:
         system: Optional[str] = None,
     ) -> Dict[str, Any]:
         import httpx
+
         headers = {
             "Authorization": f"Bearer {self.api_key}",
             "Content-Type": "application/json",
@@ -192,6 +186,7 @@ class DeepSeekCaller:
 # OpenAICaller — GPT-4o / GPT-4o-mini 等
 # ---------------------------------------------------------------------------
 
+
 class OpenAICaller:
     """OpenAI API 调用封装（GPT-4o / GPT-4o-mini）。
 
@@ -213,6 +208,7 @@ class OpenAICaller:
         system: Optional[str] = None,
     ) -> Dict[str, Any]:
         import httpx
+
         headers = {
             "Authorization": f"Bearer {self.api_key}",
             "Content-Type": "application/json",
@@ -252,6 +248,7 @@ class OpenAICaller:
 # QwenCaller — 阿里云 DashScope Qwen 系列，中国已备案
 # ---------------------------------------------------------------------------
 
+
 class QwenCaller:
     """阿里云 DashScope Qwen 调用封装。
 
@@ -276,6 +273,7 @@ class QwenCaller:
         system: Optional[str] = None,
     ) -> Dict[str, Any]:
         import httpx
+
         headers = {
             "Authorization": f"Bearer {self.api_key}",
             "Content-Type": "application/json",
@@ -313,6 +311,7 @@ class QwenCaller:
 # GeminiCaller — Google Gemini
 # ---------------------------------------------------------------------------
 
+
 class GeminiCaller:
     """Google Gemini API 调用封装。
 
@@ -334,6 +333,7 @@ class GeminiCaller:
         system: Optional[str] = None,
     ) -> Dict[str, Any]:
         import httpx
+
         # 转换为 Gemini 格式
         contents = []
         system_text = system or ""
@@ -392,7 +392,9 @@ def register_default_providers():
         registry.register_llm("deepseek", DeepSeekCaller(deepseek_key))
         _llm_registered = True
 
-    qwen_key = getattr(settings, "QWEN_API_KEY", None) or getattr(settings, "DASHSCOPE_API_KEY", None)
+    qwen_key = getattr(settings, "QWEN_API_KEY", None) or getattr(
+        settings, "DASHSCOPE_API_KEY", None
+    )
     if qwen_key and qwen_key not in ("", "your_key_here"):
         caller = QwenCaller(qwen_key)
         if not _llm_registered:
@@ -443,35 +445,43 @@ def register_default_providers():
         registry.register_vlm("default", _MockVLM())
 
 
-
 # ---------------------------------------------------------------------------
 # Mock providers（开发/CI 用）
 # ---------------------------------------------------------------------------
 
+
 class _MockLLM:
     async def __call__(self, **kwargs):
-        return {"content": "Mock Response", "usage": {"input_tokens": 0, "output_tokens": 0}}
+        return {
+            "content": "Mock Response",
+            "usage": {"input_tokens": 0, "output_tokens": 0},
+        }
+
 
 class _MockVLM:
-    async def __call__(self, **kwargs):
-        return {"content": {"questions": []}, "raw_text": "Mock VLM Response",
-                "usage": {"input_tokens": 0, "output_tokens": 0}}
+    """Mock VLM。questions 可注入 OCR 罐头输出（T.6：含 student_steps 的题目结构），
+    默认空列表 —— 与历史行为完全一致。"""
 
-def register_mock_providers():
-    """注册用于开发/CI 的 Mock 提供商。"""
-    class MockLLM:
-        async def __call__(self, **kwargs):
-            return {"content": "Mock Response", "usage": {"input_tokens": 0, "output_tokens": 0}}
-            
-    class MockVLM:
-        async def __call__(self, **kwargs):
-            # 默认返回一个空的 questions 列表
-            return {
-                "content": {"questions": []}, 
-                "raw_text": "Mock VLM Response", 
-                "usage": {"input_tokens": 0, "output_tokens": 0}
-            }
-            
+    def __init__(self, questions: list | None = None):
+        self._questions = questions or []
+
+    async def __call__(self, **kwargs):
+        return {
+            "content": {"questions": self._questions},
+            "raw_text": "Mock VLM Response",
+            "usage": {"input_tokens": 0, "output_tokens": 0},
+        }
+
+
+def register_mock_providers(vlm_questions: list | None = None):
+    """注册用于开发/CI 的 Mock 提供商。
+
+    vlm_questions：可选的 OCR 罐头题目列表（每项形如
+    {no, question_text, student_answer, correct_answer, student_steps}），
+    供测试走真实 ocr_paper 路径。缺省 None 行为不变（空 questions，
+    重复注册仍抛冲突）；给定时以 replace 方式覆盖注册（测试注入罐头输出）。
+    """
     registry = ProviderRegistry.get()
-    registry.register_llm("default", _MockLLM())
-    registry.register_vlm("default", _MockVLM())
+    replace = vlm_questions is not None
+    registry.register_llm("default", _MockLLM(), replace=replace)
+    registry.register_vlm("default", _MockVLM(vlm_questions), replace=replace)

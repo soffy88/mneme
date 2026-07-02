@@ -932,8 +932,9 @@ Phase 3：K（合规）+ L（部署）
 - [x] **T.5 [P0] FIRe×BKT 前置回写（先改 Master）** ✅ 2026-07-02
   DoD：Master 新增算法契约(按 P(L) 缺口加权的前置复习信用回写，折扣系数/触发条件/红线交互)；moat_eval exp4 仿真验证复习量压缩比；内核 oskill 实现+omodul 接线；红线测试(更新顺序不破坏/只增不改)；check.sh 绿。
   ✅ 按 Master §4.8 全链落地：oskill `fire_propagate`(κ=κ0·P(L)、τ 截断、new_due=max(due,now+κ·S)、只顺延不改 D/S/R)+omodul cognitive 主链落库后回写 verified 前置(不级联、20h 去抖为真实检索门)+migration a3c9e51fb217(enum 加 fire_credit + fire_meta 列)+分析消费方(评估重放/校准/学习量/预警)排除 fire_credit 记账事件；exp4 仿真(seed 42,1500 三层链)：FIRe 世界(ρ=0.3/0.5)复习量压缩仅 4.7~6.0%(<10% 门槛)、对抗世界(ρ=0)保留率损失 4.8pp(>2pp) → **未达接线门槛，默认关**，env FIRE_ENABLED=1 才开；14 个新测试(κ/τ/max 语义/D-S-R 逐位不变/BKT 不动/unverified 边不触发/不级联/去抖/默认关)。pytest 254 passed / 5 skipped，check.sh 与 MOAT=1 均全绿。
-- [ ] **T.6 [P0] 拍卷过程批改（OCR 步骤 × verify_step）**
+- [x] **T.6 [P0] 拍卷过程批改（OCR 步骤 × verify_step）** ✅ 2026-07-02
   DoD：analyze_paper 路径对含步骤 OCR 输出逐步过 verify_step(确定性)，定位首个错步落 wrong_questions/事件；careless/dontknow 分类吃步骤信号；Mock VLM 测试含"错步被定位"断言；check.sh 绿。
+  ✅ OCR 契约加 `student_steps`(prompt+归一，Mock VLM 可注罐头)；oskill `verify_steps_chain`(并进 paper_grading，纯 verify_step 判步：算术等式 ok/wrong、变量赋值代回前序同变量方程 ok/wrong、一般变形 unknown 不误伤) → first_wrong_step(0-based) 随 step_analysis 落 wrong_questions(migration e2d7c40a91b3)；分类信号走后验平局判定(oprim 新 `bkt_error_weights` 单源导出权重，步骤证据只在两假设权重 min/max≥0.8 近平局时改判，红线公式不动)；苏格拉底首问附"第 N 步出错"位置提示(不泄内容)；13 个新测试(红线"错步被定位+无 LLM 判步"/证据映射/平局改判与悬殊不可推翻/无步骤基线/OCR 契约/全链落库)。pytest 267 passed / 5 skipped，check.sh 与 MOAT=1 均全绿。
 
 ### 第 3 步：留存与场景
 - [ ] **T.7 [P1] 考期感知调度**

@@ -14,39 +14,48 @@ from oprim.types import SolveResult, GradeResult
 
 # ── §5.1 ocr_paper ───────────────────────────────────────────────────────────
 
+
 class PaperOCRResult(BaseModel):
-    questions: List[Dict[str, Any]]  # [{no, question_text, student_answer, correct_answer, subject}]
+    questions: List[
+        Dict[str, Any]
+    ]  # [{no, question_text, student_answer, correct_answer, student_steps, subject}]
     raw_text: str
 
+
 async def ocr_paper(*, image_b64: str, subject: str = "math") -> PaperOCRResult:
-    """单 Vision 调用：试卷图片 → 结构化题目列表。"""
+    """单 Vision 调用：试卷图片 → 结构化题目列表（含学生手写步骤 student_steps）。"""
     vlm = ProviderRegistry.get().vlm()
     prompt = _OCR_PROMPT.format(subject=subject)
-    
+
     response = await vlm(prompt=prompt, image_b64=image_b64, response_format="json")
-    
+
     content = response.get("content", {})
     if not isinstance(content, dict):
         return PaperOCRResult(questions=[], raw_text=response.get("raw_text", ""))
-        
+
     questions = content.get("questions", [])
     for q in questions:
         if not q.get("question_text"):
             q["question_text"] = "[OCR失败]"
-            
-    return PaperOCRResult(
-        questions=questions,
-        raw_text=response.get("raw_text", "")
-    )
+        # T.6 输出契约：student_steps 恒为 list[str]（缺失/非法 → []，行为兼容旧输出）
+        steps = q.get("student_steps")
+        if not isinstance(steps, list):
+            q["student_steps"] = []
+        else:
+            q["student_steps"] = [str(s) for s in steps if str(s).strip()]
+
+    return PaperOCRResult(questions=questions, raw_text=response.get("raw_text", ""))
+
 
 _OCR_PROMPT = """
 你是一个专业的试卷 OCR 系统。分析图片中的{subject}试卷，提取每道题目。
 严格返回 JSON，结构：
-{{"questions":[{{"no":"题号","question_text":"题干(LaTeX)","student_answer":"学生答案","correct_answer":"标准答案"}}]}}
-无法识别的字段填 "[OCR失败]"，不要遗漏任何题号。
+{{"questions":[{{"no":"题号","question_text":"题干(LaTeX)","student_answer":"学生答案","correct_answer":"标准答案","student_steps":["学生手写解题步骤，按书写顺序逐行提取，每行一个等式/推导；没有过程则为空列表"]}}]}}
+无法识别的字段填 "[OCR失败]"（student_steps 无法识别时填 []），不要遗漏任何题号。
 """
 
 # ── §5.2 grade_question ───────────────────────────────────────────────────────
+
 
 async def grade_question(
     *,
@@ -57,13 +66,15 @@ async def grade_question(
     solve_result: SolveResult | None = None,
 ) -> GradeResult:
     """单题批改（确定性优先）。"""
-    
+
     # 确定性优先：有内核结果且可解，则比对内核答案
     if solve_result and solve_result.solvable:
         # TODO: 更好的 LaTeX 等价性比对
-        is_correct = (student_answer.strip() == solve_result.answer.strip())
-        return GradeResult(is_correct=is_correct, method="kernel", reason="Kernel verified")
-        
+        is_correct = student_answer.strip() == solve_result.answer.strip()
+        return GradeResult(
+            is_correct=is_correct, method="kernel", reason="Kernel verified"
+        )
+
     # 否则使用 LLM
     llm = ProviderRegistry.get().llm()
     prompt = f"""
@@ -74,20 +85,24 @@ async def grade_question(
     
     仅返回 JSON: {{"is_correct": bool, "reason": "简短原因"}}
     """
-    
-    response = await llm(messages=[{"role": "user", "content": prompt}], response_format="json")
-    
+
+    response = await llm(
+        messages=[{"role": "user", "content": prompt}], response_format="json"
+    )
+
     try:
         data = json.loads(response["content"])
         return GradeResult(
             is_correct=data.get("is_correct", False),
             method="llm",
-            reason=data.get("reason")
+            reason=data.get("reason"),
         )
     except:
         return GradeResult(is_correct=False, method="llm", reason="LLM Parse Error")
 
+
 # ── §5.3 profiler_analyze ─────────────────────────────────────────────────────
+
 
 class ProfilerResult(BaseModel):
     error_type: Literal["conceptual", "transfer", "careless", "logic_break", "dontknow"]
@@ -97,6 +112,7 @@ class ProfilerResult(BaseModel):
     socratic_questions: List[str]
     mastery_estimate: float
     parent_note: str
+
 
 async def profiler_analyze(
     *,
@@ -111,11 +127,13 @@ async def profiler_analyze(
         question_text=question_text,
         student_answer=student_answer,
         correct_answer=correct_answer,
-        kc_candidates=kc_candidates
+        kc_candidates=kc_candidates,
     )
-    
-    response = await llm(messages=[{"role": "user", "content": prompt}], response_format="json")
-    
+
+    response = await llm(
+        messages=[{"role": "user", "content": prompt}], response_format="json"
+    )
+
     try:
         # 简单清洗 markdown
         raw = response["content"]
@@ -132,8 +150,9 @@ async def profiler_analyze(
             cognitive_break_point="Unknown",
             socratic_questions=["你能再读一遍题吗？"],
             mastery_estimate=0.1,
-            parent_note="分析遇到一点小问题。"
+            parent_note="分析遇到一点小问题。",
         )
+
 
 _PROFILER_PROMPT = """
 你是高中教育心理学专家，精通高考考纲。
@@ -156,7 +175,11 @@ __manifest__ = {
     "updated_at": "2026-06-13",
     "elements": [
         {"name": "ocr_paper", "layer": "oprim", "summary": "Claude Vision 结构化 OCR"},
-        {"name": "grade_question", "layer": "oprim", "summary": "题目批改（确定性优先）"},
+        {
+            "name": "grade_question",
+            "layer": "oprim",
+            "summary": "题目批改（确定性优先）",
+        },
         {"name": "profiler_analyze", "layer": "oprim", "summary": "错题深度认知分析"},
-    ]
+    ],
 }

@@ -230,6 +230,9 @@ class WrongQuestion(Base):
     needs_image: Mapped[bool] = mapped_column(
         Boolean, server_default=text("false"), nullable=False
     )
+    step_analysis: Mapped[Optional[dict]] = mapped_column(
+        JSONB
+    )  # T.6 步骤链批改：{student_steps, step_verdicts, first_wrong_step(0-based|null)}
 
 
 # ===== 认知状态（内核落库）=====

@@ -85,6 +85,12 @@ async def start_session(
         if q_snippet
         else "请仔细审题，你认为这道题考察的是什么知识点？"
     )
+    # T.6：拍卷步骤批改定位过首个错步（verify_step 确定性）→ 首问附带位置提示。
+    # 只指出"第几步"，不含正确答案/步骤内容（苏格拉底红线）。
+    if isinstance(wq.step_analysis, dict):
+        fw = wq.step_analysis.get("first_wrong_step")
+        if isinstance(fw, int) and fw >= 0:
+            anchored_q += f"（提示：你当时的解题过程从第 {fw + 1} 步开始出了问题，可以先回想一下那一步。）"
     # 强制元认知支架 (Metacog Scaffold)
     metacog_options = []
     first_q = anchored_q
