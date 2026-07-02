@@ -922,8 +922,8 @@ Phase 3：K（合规）+ L（部署）
 - [x] **T.2 [P0] 留存三指标 + 30天保留抽测埋点** ✅ 2026-07-02
   DoD：复习队列按 ~1/20 概率混入"保留探针"(远未到期的稳定卡，probe 标记落 interaction_events)；GET /v1/moat/retention-metrics 返回 D7 留存/到期复习完成率/探针实测召回 vs 预测 R；测试；check.sh 绿。
   ✅ 复习队列 sha256(学生+日期) 确定性门 ~1/20 混入探针卡（due 最远/近7天未抽中，不带答案过检索门）；提交侧按"卡未到期+距上次复习≥24h"识别 → source=probe + predicted_r 落 interaction_events（migration 75da13d304e9：enum 加 probe + predicted_r 列），照常更新 BKT/FSRS；GET /v1/moat/retention-metrics（登录可读，聚合无 PII）返回 D7 留存(首交互锚点,近8周)/到期复习完成率(近14天,due×events 对齐)/探针校准(整体+0-0.5/0.5-0.8/0.8-1.0 分桶)；8 个新测试。pytest 237 passed / 2 skipped，check.sh 全绿。
-- [ ] **T.3 [P1] FSRS 权重拟合阈值门控**
-  DoD：Powell 拟合默认关闭改为代码级门控——真实间隔复习(间隔>1天)≥400 条/科方可启用，env 可强制关；先验校准不受影响；测试；check.sh 绿。
+- [x] **T.3 [P1] FSRS 权重拟合阈值门控** ✅ 2026-07-02
+  ✅ fit_and_store_weights 双重门控：FSRS_FIT_ENABLED=0 一票否决；count_spaced_reviews(间隔≥24h)≥400 方可 Powell 拟合（exp2 过拟合防线）；select_best_weights 候选择优不受限（exp2 证明中性）。3 新测试（massed 日志被拦/env 开关/间隔计数）。check.sh 全绿 240 passed。
 - [ ] **T.4 [P1] moat_eval 进 CI 守卫**
   DoD：exp1 快速模式(缩规模,<60s)；pytest 标记 moat 的回归测试断言 AUC≥0.65；check.sh 支持 MOAT=1 附加步骤；文档一段。
 
