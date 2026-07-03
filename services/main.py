@@ -1230,6 +1230,35 @@ async def post_placement_estimate(
     }
 
 
+class CatResponse(BaseModel):
+    difficulty: float = Field(ge=0.0, le=1.0)
+    is_correct: bool
+
+
+class CatNextReq(BaseModel):
+    subject: str = "math"
+    responses: list[CatResponse] = Field(default_factory=list)
+    served_ku_ids: list[str] = Field(default_factory=list)
+
+
+@app.post("/v1/placement/next")
+async def post_placement_next(
+    body: CatNextReq,
+    _auth: User = Depends(get_current_user),
+    db: AsyncSession = Depends(get_db),
+):
+    """L3 自适应定位会话(CAT,无状态)：交累积 (难度,对错) → 估 θ,SE<阈值或达上限即停,
+    否则返回难度就近 θ 的下一题 KU。客户端累积 responses/served_ku_ids 逐轮调用。"""
+    from services.placement_service import cat_next
+
+    return await cat_next(
+        db,
+        subject=body.subject,
+        responses=[r.model_dump() for r in body.responses],
+        served_ku_ids=body.served_ku_ids,
+    )
+
+
 # ===== §F.1 苏格拉底会话 =====
 
 

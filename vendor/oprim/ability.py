@@ -9,7 +9,7 @@ from __future__ import annotations
 
 import math
 
-_SCALE = 6.0  # 难度[0,1] → logit 斜率（6 ≈ 把 0–1 难度铺满 ±3 logit）
+_SCALE = 2.0  # 难度[0,1] → logit 斜率（缓，使 CAT 约 20–30 题到 SE<0.10 停）
 
 
 def _p_correct(theta: float, b: float, scale: float = _SCALE) -> float:
