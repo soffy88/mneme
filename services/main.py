@@ -34,6 +34,7 @@ from obase.prior_provider import PriorProvider
 from obase.auth import decode_access_token
 from omodul.cognitive import InteractionInput
 from oprim.prereq_graph import topo_sort_by_prereq, fringe_status
+from services.learner_model import MASTERED as _MASTERED
 from oprim.calibration import brier_calibration
 from omodul.auth import SendCodeInput, RegisterStudentInput, LoginInput
 import services.auth_service as auth_service
@@ -580,13 +581,10 @@ async def _mastery_map(
 
 
 def _mastery_color(p: float | None) -> str:
-    if p is None:
-        return "unknown"
-    if p >= 0.75:
-        return "green"
-    if p >= 0.40:
-        return "yellow"
-    return "red"
+    # L1 单源：委托 learner_model.mastery_color（阈值统一在那里）
+    from services.learner_model import mastery_color
+
+    return mastery_color(p)
 
 
 _FREQ_RANK = {"high": 2, "mid": 1, "low": 0}
@@ -1165,6 +1163,45 @@ async def get_retention_metrics(
     return await retention_metrics(db)
 
 
+@app.get("/v1/moat/learning-metrics")
+async def get_learning_metrics(
+    _auth: User = Depends(get_current_user),
+    db: AsyncSession = Depends(get_db),
+):
+    """GET /v1/moat/learning-metrics — L0 学习层北极星四指标（架构重排）。
+
+    掌握速度 / 延迟保持率(探针升格) / 迁移率 / 校准度。**一级指标**——模型层(AUC)与
+    产品层(留存)降为从属。登录可读，全体聚合无 PII。红线：留存涨而学习平 = 回滚。
+    """
+    from services.learning_metrics_service import compute_learning_metrics
+
+    return await compute_learning_metrics(db)
+
+
+@app.get("/v1/teaching/policy")
+async def get_teaching_policy(
+    student_id: UUID,
+    kc_id: str,
+    context: str = Query("system_taught"),
+    _auth: User = Depends(require_student_access),
+    db: AsyncSession = Depends(get_db),
+):
+    """L2 教学引擎：返回该 (学生, KU, 情境) 下的答案分级政策 + 当前学习阶段。
+    情境 context: system_taught(系统同构新知) / own_homework(自带原题) / writing(写作) / stuck(卡壳)。
+    前端据此决定"给完整样例"还是"苏格拉底提问"。红线：own_homework/writing 恒不给。
+    教学引擎 feature-flag(TEACHING_ENGINE_ENABLED) 关闭时保守回退 never。"""
+    import os as _os
+
+    from oprim.answer_policy import answer_policy
+    from services.learner_model import get_mastery, get_stage
+
+    m = await get_mastery(db, student_id, kc_id)
+    stage = get_stage(m["p"])
+    enabled = _os.environ.get("TEACHING_ENGINE_ENABLED", "0").lower() in ("1", "true", "yes")
+    pol = answer_policy(context, stage, enabled=enabled)
+    return {"stage": stage, "engine_enabled": enabled, **pol}
+
+
 # ===== §F.1 苏格拉底会话 =====
 
 
@@ -1554,7 +1591,7 @@ async def get_achievements(
         await db.execute(
             select(func.count())
             .select_from(KCMastery)
-            .where(KCMastery.student_id == student_id, KCMastery.p_mastery >= 0.7)
+            .where(KCMastery.student_id == student_id, KCMastery.p_mastery >= _MASTERED)
         )
     ).scalar() or 0
     effort = (
@@ -1621,7 +1658,7 @@ async def get_league(
         .where(
             User.role == UserRole.student,
             User.deleted_at.is_(None),
-            KCMastery.p_mastery >= 0.7,
+            KCMastery.p_mastery >= _MASTERED,
         )
     )
     if grade:
