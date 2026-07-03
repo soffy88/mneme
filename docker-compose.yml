@@ -13,10 +13,14 @@ services:
       interval: 5s
       timeout: 5s
       retries: 5
+    volumes:
+      - mneme_pg_data:/var/lib/postgresql/data
 
   redis:
     image: redis:7-alpine
     restart: always
+    # 开启 AOF 持久化，重启不丢队列/验证码/缓存
+    command: redis-server --appendonly yes
     ports:
       - "6380:6379"
     healthcheck:
@@ -24,6 +28,8 @@ services:
       interval: 5s
       timeout: 5s
       retries: 5
+    volumes:
+      - mneme_redis_data:/data
 
   minio:
     image: minio/minio
@@ -35,6 +41,8 @@ services:
       MINIO_ROOT_USER: minioadmin
       MINIO_ROOT_PASSWORD: minioadmin
     command: server /data --console-address ":9001"
+    volumes:
+      - mneme_minio_data:/data
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:9000/minio/health/live"]
       interval: 5s
@@ -116,3 +124,10 @@ networks:
   default:
   helios-net:
     external: true
+
+# 命名卷：有状态服务数据显式持久化，`docker compose down` 不再丢数据
+# （此前 db 用匿名卷、minio/redis 无卷，重建即清零——审计 2026-07-03 头号缺陷根因）
+volumes:
+  mneme_pg_data:
+  mneme_minio_data:
+  mneme_redis_data:
