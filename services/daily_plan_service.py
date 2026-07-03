@@ -28,7 +28,7 @@ from services.models import KCMastery, KnowledgeUnit, Textbook, WrongQuestion
 
 # ── 常量 ────────────────────────────────────────────────────────────────────
 
-MASTERY_THRESHOLD = 0.6  # p_mastery 低于此值视为薄弱
+from services.learner_model import GATE as MASTERY_THRESHOLD  # L1 单源(=0.6)
 _NEAR_EXAM_DAYS = 14  # 距考 ≤ 此天数进入临考窗口：停推新知，向复习/巩固倾斜
 MINUTES_PER_REVIEW_KU = 5
 MINUTES_PER_WQ = 5

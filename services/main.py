@@ -34,6 +34,7 @@ from obase.prior_provider import PriorProvider
 from obase.auth import decode_access_token
 from omodul.cognitive import InteractionInput
 from oprim.prereq_graph import topo_sort_by_prereq, fringe_status
+from services.learner_model import MASTERED as _MASTERED
 from oprim.calibration import brier_calibration
 from omodul.auth import SendCodeInput, RegisterStudentInput, LoginInput
 import services.auth_service as auth_service
@@ -580,13 +581,10 @@ async def _mastery_map(
 
 
 def _mastery_color(p: float | None) -> str:
-    if p is None:
-        return "unknown"
-    if p >= 0.75:
-        return "green"
-    if p >= 0.40:
-        return "yellow"
-    return "red"
+    # L1 单源：委托 learner_model.mastery_color（阈值统一在那里）
+    from services.learner_model import mastery_color
+
+    return mastery_color(p)
 
 
 _FREQ_RANK = {"high": 2, "mid": 1, "low": 0}
@@ -1554,7 +1552,7 @@ async def get_achievements(
         await db.execute(
             select(func.count())
             .select_from(KCMastery)
-            .where(KCMastery.student_id == student_id, KCMastery.p_mastery >= 0.7)
+            .where(KCMastery.student_id == student_id, KCMastery.p_mastery >= _MASTERED)
         )
     ).scalar() or 0
     effort = (
@@ -1621,7 +1619,7 @@ async def get_league(
         .where(
             User.role == UserRole.student,
             User.deleted_at.is_(None),
-            KCMastery.p_mastery >= 0.7,
+            KCMastery.p_mastery >= _MASTERED,
         )
     )
     if grade:
