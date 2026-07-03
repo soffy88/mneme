@@ -308,12 +308,25 @@ async def post_send_code(payload: SendCodeInput):
     return result
 
 
+def _require_registration_open() -> None:
+    """公网注册闸门（默认关）。SMS 仍是 mock（万能码 123456）时公网放开注册 = 任何人
+    可注册（含 <14 岁绕过）。阿里云短信报备 + 关 mock 码前，用 REGISTRATION_OPEN=1 才开。"""
+    import os as _os
+
+    if _os.environ.get("REGISTRATION_OPEN", "0").lower() not in ("1", "true", "yes"):
+        raise HTTPException(
+            status_code=403,
+            detail="注册暂未开放（公网注册需短信实名，报备后开启）",
+        )
+
+
 @app.post("/v1/auth/register/student", status_code=201)
 async def post_register_student(
     payload: RegisterStudentInput,
     db: AsyncSession = Depends(get_db),
 ):
     """注册学生：Redis验证码校验 + 合规校验 + 写库 + 返回JWT。"""
+    _require_registration_open()
     result = await auth_service.register_student(
         db=db,
         phone=payload.phone,
@@ -343,6 +356,7 @@ async def post_register_parent(
     db: AsyncSession = Depends(get_db),
 ):
     """注册家长：验证码校验 + 手机唯一 + 凭 invite_code 绑定孩子 + 返回JWT。"""
+    _require_registration_open()
     result = await auth_service.register_parent(
         db=db,
         phone=payload.phone,
