@@ -1,5 +1,10 @@
 # TASKS · Mneme 服务层装配看板
 
+> ⚠️ **前端验收门（2026-07-03 审计止血）**：真前端 = `mneme-web` 仓（Next.js）。
+> 本仓 `frontend/`（Vite）**已废弃**（见 `frontend/DEPRECATED.md`），R.1–R.17 误建于此、
+> 已被 mneme-web 重做。**任何前端验收一律用 `cd mneme-web && npx tsc --noEmit && npm run build`，
+> 禁用 `vite build` 作为验收标准。**
+
 > **权威设计** = `MNEME_MASTER_DESIGN.md` ｜ **工程约定** = `CLAUDE.md`
 > **范式规范** = `3O Paradigm SPEC v3.0`
 >
