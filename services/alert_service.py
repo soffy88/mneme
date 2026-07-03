@@ -24,6 +24,28 @@ from services.models import (
 _NOT_FIRE = InteractionEvent.source != InteractionSource.fire_credit
 
 
+# L6 家长端"监控→支持"：每类预警配一个具体支持动作 + 对话话术（不是缺陷通报，是"对话时机"）。
+# 依据 Hill & Tyson 2009：作业监控型参与≈零/负相关，学业社会化(谈价值/过程)才最强正相关。
+_ALERT_SUPPORT: dict[str, dict] = {
+    "emotion": {"support_action": "陪伴而非追问",
+                "conversation_script": "今晚可以这样问他：那道题你是怎么一步步想的？卡在哪一步了？——聊过程，不聊对错。"},
+    "task_missing": {"support_action": "了解阻力，一起拆小",
+                     "conversation_script": "最近是不是有点累或有别的事？我们一起看看哪个任务最难，拆小一点再开始？"},
+    "time_drop": {"support_action": "不质问，找原因",
+                  "conversation_script": "这周好像忙别的了？有什么我能帮你把时间安排开的吗？"},
+    "late_night": {"support_action": "关心睡眠而非成绩",
+                   "conversation_script": "看到你昨晚很晚还在学，睡够了吗？早点休息，第二天脑子更清楚——睡眠也是在巩固记忆。"},
+    "score_drop": {"support_action": "过程归因，非结果批评",
+                   "conversation_script": "最近哪个知识点感觉最吃力？我们一起找个例子看看，不是你不行，是这个点还没通。"},
+}
+
+
+def _support_for(alert_type) -> dict:
+    key = alert_type.value if alert_type is not None else ""
+    return _ALERT_SUPPORT.get(key, {"support_action": "先陪伴、后了解", "conversation_script": "聊聊今天学得怎么样？"})
+
+
+
 async def get_student_alerts(
     db: AsyncSession, student_id: uuid.UUID, parent_id: uuid.UUID
 ) -> list[dict]:
@@ -51,6 +73,7 @@ async def get_student_alerts(
             "content": r.content,
             "is_read": r.is_read,
             "created_at": r.created_at.isoformat() if r.created_at else None,
+            **_support_for(r.alert_type),  # L6 对话时机：支持动作+话术
         }
         for r in rows
     ]
