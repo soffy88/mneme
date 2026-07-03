@@ -1251,8 +1251,18 @@ async def get_parent_overview(
 # ===== §H.1 求解接口 =====
 
 
+from services.ratelimit import rate_limit
+
+# 匿名昂贵端点限流：每 IP 60s 内 30 次求解（防刷算力）
+_solve_rate_limit = rate_limit(limit=30, window_seconds=60, scope="solve")
+
+
 @app.post("/v1/solve")
-async def post_solve(kc_id: str = Query(...), expression: str = Query(...)):
+async def post_solve(
+    kc_id: str = Query(...),
+    expression: str = Query(...),
+    _: None = Depends(_solve_rate_limit),
+):
     """POST /v1/solve — 调 oskill.solve_and_visualize 确定性求解。"""
     from oskill.solve_and_visualize import SolveAndVisualizeInput, solve_and_visualize
 
