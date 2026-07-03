@@ -31,7 +31,6 @@ import re
 from obase.db import get_db, SessionLocal
 from services.logging_config import configure_logging, logger
 from obase.prior_provider import PriorProvider
-from obase.llm import register_default_providers
 from obase.auth import decode_access_token
 from omodul.cognitive import InteractionInput
 from oprim.prereq_graph import topo_sort_by_prereq
@@ -213,15 +212,11 @@ async def lifespan(app: FastAPI):
         await seed_bkt_priors(session)
         await session.commit()
         await PriorProvider.warm_up(session)
-    register_default_providers()
+    # LLM/VLM provider 装配（单源，API 与 worker 共用；含 MNEME_LLM=ollama 覆盖）
+    from services.providers.setup import configure_llm_providers
 
-    # 可选：把文本 LLM 的 default 切到本机 Ollama（DeepSeek 余额不足时；不影响 VLM/OCR）
-    if os.environ.get("MNEME_LLM", "").lower() == "ollama":
-        from services.providers.ollama_caller import OllamaCaller
-        from obase.provider_registry import ProviderRegistry
-
-        ProviderRegistry.get().register_llm("default", OllamaCaller(), replace=True)
-        ProviderRegistry.get().register_llm("ollama", OllamaCaller(), replace=True)
+    _llm_tag = configure_llm_providers()
+    logger.info(f"LLM default provider: {_llm_tag}")
 
     # Register English speaking practice generic callers (real or mock)
     from services.providers.aliyun_pronunciation import AliyunPronunciationCaller

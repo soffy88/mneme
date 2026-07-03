@@ -52,7 +52,11 @@ celery_app.conf.update(
 
 @worker_process_init.connect
 def _register_providers(**_kwargs):
-    """worker 进程不跑 FastAPI lifespan，需自行注册 LLM/VLM provider，否则 OCR 无 VLM。"""
-    from obase.llm import register_default_providers
+    """worker 进程不跑 FastAPI lifespan，需自行注册 LLM/VLM provider，否则 OCR 无 VLM。
 
-    register_default_providers()
+    审计 P0-4：与 API lifespan 共用同一装配函数，确保 MNEME_LLM=ollama 覆盖也在 worker 生效
+    （此前 worker 只调 register_default_providers → 用死 DeepSeek key，异步链跑不通）。
+    """
+    from services.providers.setup import configure_llm_providers
+
+    configure_llm_providers()
