@@ -112,6 +112,7 @@ class User(Base):
     birth_date: Mapped[Optional[date]] = mapped_column(Date)
     grade: Mapped[Optional[str]] = mapped_column(String(10))
     province: Mapped[Optional[str]] = mapped_column(String(10), server_default="广东")
+    exam_date: Mapped[Optional[date]] = mapped_column(Date)  # 考期感知(06)
     invite_code: Mapped[Optional[str]] = mapped_column(String(6), unique=True)
     created_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True), server_default=text("now()")

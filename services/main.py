@@ -1720,6 +1720,31 @@ async def get_learner_model(
     }
 
 
+class ExamDateReq(BaseModel):
+    exam_date: Optional[date] = None  # None 清除
+
+
+@app.post("/v1/users/{student_id}/exam-date")
+async def set_exam_date(
+    student_id: UUID,
+    body: ExamDateReq,
+    current_user: User = Depends(get_current_user),
+    db: AsyncSession = Depends(get_db),
+):
+    """设置本人考试日期（教育理念 06 考期感知）。临考(≤14天)日计划停推新知、向巩固倾斜。"""
+    if student_id != current_user.id:
+        raise HTTPException(status_code=403, detail="只能设置本人考试日期")
+    await db.execute(
+        update(User).where(User.id == student_id).values(exam_date=body.exam_date)
+    )
+    await db.commit()
+    countdown = (body.exam_date - date.today()).days if body.exam_date else None
+    return {
+        "exam_date": body.exam_date.isoformat() if body.exam_date else None,
+        "exam_countdown_days": countdown,
+    }
+
+
 class PracticeSubmitReq(BaseModel):
     question_id: UUID  # 公共题库行（student_id IS NULL）
     student_id: UUID

@@ -713,6 +713,9 @@ POST /v1/parent/delete-request/{student_id} → 触发删除（合规）
 - **05 成长型思维反馈框架（Dweck）**：`oprim.growth_feedback.growth_message`(纯函数)按
   (对错×错因×是否吃力)选成长型措辞——过程表扬(努力/策略)非"聪明"、"还没(not yet)"、错误正常化；
   `process_interaction` 返回 `growth_message` 字段供前端各反馈位统一语气。
+- **06 考期感知调度**：`users.exam_date`(migration f6d3e4a5b8c9)+`POST /v1/users/{sid}/exam-date`；
+  `build_daily_plan` 算 `exam_countdown_days`，临考窗口(≤14天)`near_exam=True` 停推新知 P4、
+  向复习/薄弱巩固倾斜(分布式练习压缩)。FSRS 目标 R 上调/间隔封顶待后续。
 
 ---
 
