@@ -34,6 +34,7 @@ from obase.prior_provider import PriorProvider
 from obase.auth import decode_access_token
 from omodul.cognitive import InteractionInput
 from oprim.prereq_graph import topo_sort_by_prereq, fringe_status
+from oprim.chinese_track import chinese_track as _chinese_track
 from services.learner_model import MASTERED as _MASTERED
 from oprim.calibration import brier_calibration
 from omodul.auth import SendCodeInput, RegisterStudentInput, LoginInput
@@ -664,6 +665,8 @@ async def list_knowledge_points(
                 if student_id
                 else None
             ),
+            # L4 语文双轨：记诵轨(FSRS)/素养轨(策略)，供前端路由；非语文为 None
+            "track": _chinese_track(ku.ku_type) if tb.subject == "chinese" else None,
         }
         for ku, kc, tb in rows
     ]
