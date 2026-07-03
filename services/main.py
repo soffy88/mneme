@@ -1202,6 +1202,88 @@ async def get_teaching_policy(
     return {"stage": stage, "engine_enabled": enabled, **pol}
 
 
+class PlacementResponse(BaseModel):
+    difficulty: float = Field(ge=0.0, le=1.0)
+    is_correct: bool
+
+
+class PlacementReq(BaseModel):
+    responses: list[PlacementResponse]
+
+
+@app.post("/v1/placement/estimate")
+async def post_placement_estimate(
+    body: PlacementReq,
+    _auth: User = Depends(get_current_user),
+):
+    """L3 自适应定位：从一批 (难度, 对错) 响应估学生能力 θ(Rasch)+ SE + ZPD 难度带 +
+    建议下一题难度。冷启动/入学定位用；θ 也可喂 learner_model.get_zpd_band。纯计算不落库。"""
+    from oprim.ability import estimate_ability, next_item_difficulty
+    from services.learner_model import get_zpd_band
+
+    est = estimate_ability([(r.difficulty, r.is_correct) for r in body.responses])
+    theta = est["theta"]
+    return {
+        **est,
+        "zpd_band": get_zpd_band(None, theta=theta),
+        "next_difficulty": next_item_difficulty(theta),
+    }
+
+
+class CatResponse(BaseModel):
+    difficulty: float = Field(ge=0.0, le=1.0)
+    is_correct: bool
+
+
+class CatNextReq(BaseModel):
+    subject: str = "math"
+    responses: list[CatResponse] = Field(default_factory=list)
+    served_ku_ids: list[str] = Field(default_factory=list)
+
+
+@app.post("/v1/placement/next")
+async def post_placement_next(
+    body: CatNextReq,
+    _auth: User = Depends(get_current_user),
+    db: AsyncSession = Depends(get_db),
+):
+    """L3 自适应定位会话(CAT,无状态)：交累积 (难度,对错) → 估 θ,SE<阈值或达上限即停,
+    否则返回难度就近 θ 的下一题 KU。客户端累积 responses/served_ku_ids 逐轮调用。"""
+    from services.placement_service import cat_next
+
+    return await cat_next(
+        db,
+        subject=body.subject,
+        responses=[r.model_dump() for r in body.responses],
+        served_ku_ids=body.served_ku_ids,
+    )
+
+
+@app.get("/v1/misconception/{ku_id}")
+async def get_misconception(
+    ku_id: str,
+    distractor: Optional[str] = Query(None),
+    _auth: User = Depends(get_current_user),
+    db: AsyncSession = Depends(get_db),
+):
+    """L3 误解诊断（骨架）：答错时挂误解 ID + 重建方向，用于概念重建微课而非同类题再刷。
+    优先精确干扰项映射(教研逐题填)，否则按 KU 名关键词退回候选(heuristic)。"""
+    from oprim.misconception import diagnose_misconception
+
+    row = (
+        await db.execute(
+            select(KnowledgeUnit.name, Textbook.subject)
+            .join(Textbook, KnowledgeUnit.textbook_id == Textbook.id)
+            .where(KnowledgeUnit.id == ku_id)
+        )
+    ).first()
+    if row is None:
+        return {"misconception": None, "note": "KU 不存在"}
+    name, subject = row
+    m = diagnose_misconception(subject or "", name or "", ku_id=ku_id, distractor=distractor)
+    return {"ku_id": ku_id, "misconception": m}
+
+
 # ===== §F.1 苏格拉底会话 =====
 
 
