@@ -150,9 +150,20 @@ networks:
   helios-net:
     external: true
 
-# 命名卷：有状态服务数据显式持久化，`docker compose down` 不再丢数据
-# （此前 db 用匿名卷、minio/redis 无卷，重建即清零——审计 2026-07-03 头号缺陷根因）
+# 外部命名卷：数据显式持久化，且 **`docker compose down -v` 也删不掉**（外部卷不受 compose 管理）。
+# 审计 2026-07-03：此前 db 用匿名卷、minio/redis 无卷，一次 down -v 清零了 11646 个 KU
+# （后从 D 盘 6-28 备份恢复）。外部化 = 结构性防呆，杜绝重演。
+# 注：全新机器首次部署前需先建卷：
+#   docker volume create mneme_mneme_pg_data
+#   docker volume create mneme_mneme_minio_data
+#   docker volume create mneme_mneme_redis_data
 volumes:
   mneme_pg_data:
+    external: true
+    name: mneme_mneme_pg_data
   mneme_minio_data:
+    external: true
+    name: mneme_mneme_minio_data
   mneme_redis_data:
+    external: true
+    name: mneme_mneme_redis_data
