@@ -1178,6 +1178,30 @@ async def get_learning_metrics(
     return await compute_learning_metrics(db)
 
 
+@app.get("/v1/teaching/policy")
+async def get_teaching_policy(
+    student_id: UUID,
+    kc_id: str,
+    context: str = Query("system_taught"),
+    _auth: User = Depends(require_student_access),
+    db: AsyncSession = Depends(get_db),
+):
+    """L2 教学引擎：返回该 (学生, KU, 情境) 下的答案分级政策 + 当前学习阶段。
+    情境 context: system_taught(系统同构新知) / own_homework(自带原题) / writing(写作) / stuck(卡壳)。
+    前端据此决定"给完整样例"还是"苏格拉底提问"。红线：own_homework/writing 恒不给。
+    教学引擎 feature-flag(TEACHING_ENGINE_ENABLED) 关闭时保守回退 never。"""
+    import os as _os
+
+    from oprim.answer_policy import answer_policy
+    from services.learner_model import get_mastery, get_stage
+
+    m = await get_mastery(db, student_id, kc_id)
+    stage = get_stage(m["p"])
+    enabled = _os.environ.get("TEACHING_ENGINE_ENABLED", "0").lower() in ("1", "true", "yes")
+    pol = answer_policy(context, stage, enabled=enabled)
+    return {"stage": stage, "engine_enabled": enabled, **pol}
+
+
 # ===== §F.1 苏格拉底会话 =====
 
 
