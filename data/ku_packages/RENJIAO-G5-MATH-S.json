@@ -1,0 +1,1762 @@
+{
+  "textbook": {
+    "id": "RENJIAO-G5-MATH-S",
+    "subject": "math",
+    "grade": "G5",
+    "edition": "2011",
+    "book_name": "人教版·数学五年级上册"
+  },
+  "clusters": [
+    {
+      "id": "RENJIAO-G5-MATH-S-kc-小数乘法的基本计算方法",
+      "name": "小数乘法的基本计算方法",
+      "display_order": 1,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G5-MATH-S-kc-小数乘法的规律与验算",
+      "name": "小数乘法的规律与验算",
+      "display_order": 2,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G5-MATH-S-kc-小数乘法的应用与简便计算",
+      "name": "小数乘法的应用与简便计算",
+      "display_order": 3,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G5-MATH-S-kc-小数除法基础",
+      "name": "小数除法基础",
+      "display_order": 4,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G5-MATH-S-kc-商的近似与循环小数",
+      "name": "商的近似与循环小数",
+      "display_order": 5,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G5-MATH-S-kc-小数除法的应用与规律",
+      "name": "小数除法的应用与规律",
+      "display_order": 6,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G5-MATH-S-kc-可能性初步",
+      "name": "可能性初步",
+      "display_order": 7,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G5-MATH-S-kc-用字母表示数",
+      "name": "用字母表示数",
+      "display_order": 8,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G5-MATH-S-kc-用字母表示数及数量关系",
+      "name": "用字母表示数及数量关系",
+      "display_order": 9,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G5-MATH-S-kc-方程的意义与等式的性质",
+      "name": "方程的意义与等式的性质",
+      "display_order": 10,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G5-MATH-S-kc-简单方程的解法",
+      "name": "简单方程的解法",
+      "display_order": 11,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G5-MATH-S-kc-列方程解决实际问题",
+      "name": "列方程解决实际问题",
+      "display_order": 12,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G5-MATH-S-kc-平行四边形面积",
+      "name": "平行四边形面积",
+      "display_order": 13,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G5-MATH-S-kc-三角形面积",
+      "name": "三角形面积",
+      "display_order": 14,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G5-MATH-S-kc-梯形面积",
+      "name": "梯形面积",
+      "display_order": 15,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G5-MATH-S-kc-组合图形与不规则图形面积",
+      "name": "组合图形与不规则图形面积",
+      "display_order": 16,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G5-MATH-S-kc-植树问题",
+      "name": "植树问题",
+      "display_order": 17,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G5-MATH-S-kc-总复习中的代数与几何",
+      "name": "总复习中的代数与几何",
+      "display_order": 18,
+      "description": null
+    }
+  ],
+  "units": [
+    {
+      "id": "RENJIAO-G5-MATH-S-ku-一个数除以小数",
+      "textbook_id": "RENJIAO-G5-MATH-S",
+      "cluster_id": "RENJIAO-G5-MATH-S-kc-小数除法基础",
+      "name": "一个数除以小数",
+      "description": "把除数转化为整数，除数小数点右移几位，被除数小数点也右移几位，位数不够补0。",
+      "prerequisites": [
+        "小数除以整数"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G5-MATH-S-ku-三角形的面积公式",
+      "textbook_id": "RENJIAO-G5-MATH-S",
+      "cluster_id": "RENJIAO-G5-MATH-S-kc-三角形面积",
+      "name": "三角形的面积公式",
+      "description": "S=ah÷2，其中S表示面积，a表示底，h表示高。",
+      "prerequisites": [
+        "平行四边形的面积公式"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G5-MATH-S-ku-三角形面积公式的推导-拼合法",
+      "textbook_id": "RENJIAO-G5-MATH-S",
+      "cluster_id": "RENJIAO-G5-MATH-S-kc-三角形面积",
+      "name": "三角形面积公式的推导（拼合法）",
+      "description": "用两个完全一样的三角形拼成一个平行四边形，三角形面积是平行四边形的一半。",
+      "prerequisites": [
+        "平行四边形的面积公式"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G5-MATH-S-ku-不规则图形的面积估算-数方格法",
+      "textbook_id": "RENJIAO-G5-MATH-S",
+      "cluster_id": "RENJIAO-G5-MATH-S-kc-组合图形与不规则图形面积",
+      "name": "不规则图形的面积估算（数方格法）",
+      "description": "在方格纸上数出满格和半格，按半格计算，得到近似面积。",
+      "prerequisites": [],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G5-MATH-S-ku-不规则图形的面积估算-近似图形法",
+      "textbook_id": "RENJIAO-G5-MATH-S",
+      "cluster_id": "RENJIAO-G5-MATH-S-kc-组合图形与不规则图形面积",
+      "name": "不规则图形的面积估算（近似图形法）",
+      "description": "将不规则图形近似看作学过的图形，用公式计算面积。",
+      "prerequisites": [
+        "平行四边形的面积公式",
+        "三角形的面积公式",
+        "梯形的面积公式"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G5-MATH-S-ku-代入求值",
+      "textbook_id": "RENJIAO-G5-MATH-S",
+      "cluster_id": "RENJIAO-G5-MATH-S-kc-用字母表示数及数量关系",
+      "name": "代入求值",
+      "description": "将字母的具体数值代入含字母的式子，计算出结果。",
+      "prerequisites": [
+        "ku-001"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G5-MATH-S-ku-分段计费问题",
+      "textbook_id": "RENJIAO-G5-MATH-S",
+      "cluster_id": "RENJIAO-G5-MATH-S-kc-小数乘法的应用与简便计算",
+      "name": "分段计费问题",
+      "description": "根据不同的计费标准（如出租车、水费、邮费），将总费用分成几段分别计算再相加。",
+      "prerequisites": [
+        "小数乘法",
+        "小数加法"
+      ],
+      "related_kus": [],
+      "difficulty": 0.6,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G5-MATH-S-ku-列方程解决含有两个未知数的问题",
+      "textbook_id": "RENJIAO-G5-MATH-S",
+      "cluster_id": "RENJIAO-G5-MATH-S-kc-列方程解决实际问题",
+      "name": "列方程解决含有两个未知数的问题",
+      "description": "设其中一个未知数为x，用含x的式子表示另一个未知数，根据等量关系列方程。",
+      "prerequisites": [
+        "ku-016",
+        "ku-018"
+      ],
+      "related_kus": [],
+      "difficulty": 0.7,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G5-MATH-S-ku-列方程解决实际问题-一步",
+      "textbook_id": "RENJIAO-G5-MATH-S",
+      "cluster_id": "RENJIAO-G5-MATH-S-kc-列方程解决实际问题",
+      "name": "列方程解决实际问题（一步）",
+      "description": "设未知数，根据等量关系列出形如x+a=b或ax=b的方程并求解。",
+      "prerequisites": [
+        "ku-011",
+        "ku-012"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G5-MATH-S-ku-列方程解决实际问题-两步",
+      "textbook_id": "RENJIAO-G5-MATH-S",
+      "cluster_id": "RENJIAO-G5-MATH-S-kc-列方程解决实际问题",
+      "name": "列方程解决实际问题（两步）",
+      "description": "设未知数，根据等量关系列出形如ax+b=c的方程并求解。",
+      "prerequisites": [
+        "ku-014",
+        "ku-017"
+      ],
+      "related_kus": [],
+      "difficulty": 0.6,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G5-MATH-S-ku-列方程解决相遇问题",
+      "textbook_id": "RENJIAO-G5-MATH-S",
+      "cluster_id": "RENJIAO-G5-MATH-S-kc-列方程解决实际问题",
+      "name": "列方程解决相遇问题",
+      "description": "利用速度×时间=路程，根据两人路程和等于总路程列方程。",
+      "prerequisites": [
+        "ku-016",
+        "ku-018"
+      ],
+      "related_kus": [],
+      "difficulty": 0.7,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G5-MATH-S-ku-去尾法取近似值",
+      "textbook_id": "RENJIAO-G5-MATH-S",
+      "cluster_id": "RENJIAO-G5-MATH-S-kc-小数除法的应用与规律",
+      "name": "去尾法取近似值",
+      "description": "解决实际问题时，不管小数部分是多少，都舍去尾数取整数。",
+      "prerequisites": [
+        "商的近似数"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G5-MATH-S-ku-可能性-一定-可能-不可能",
+      "textbook_id": "RENJIAO-G5-MATH-S",
+      "cluster_id": "RENJIAO-G5-MATH-S-kc-可能性初步",
+      "name": "可能性（一定、可能、不可能）",
+      "description": "事件发生的可能性分为一定、可能、不可能三种情况。",
+      "prerequisites": [],
+      "related_kus": [],
+      "difficulty": 0.2,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G5-MATH-S-ku-可能性大小比较",
+      "textbook_id": "RENJIAO-G5-MATH-S",
+      "cluster_id": "RENJIAO-G5-MATH-S-kc-可能性初步",
+      "name": "可能性大小比较",
+      "description": "事件发生的可能性大小可以通过实验或推理比较。",
+      "prerequisites": [
+        "可能性（一定、可能、不可能）"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G5-MATH-S-ku-可能性的大小",
+      "textbook_id": "RENJIAO-G5-MATH-S",
+      "cluster_id": "RENJIAO-G5-MATH-S-kc-总复习中的代数与几何",
+      "name": "可能性的大小",
+      "description": "根据转盘上颜色区域的大小判断可能性大小。",
+      "prerequisites": [],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G5-MATH-S-ku-含字母式子的化简",
+      "textbook_id": "RENJIAO-G5-MATH-S",
+      "cluster_id": "RENJIAO-G5-MATH-S-kc-用字母表示数及数量关系",
+      "name": "含字母式子的化简",
+      "description": "利用运算律合并同类项，如3x+4x=7x。",
+      "prerequisites": [
+        "ku-001",
+        "ku-002"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G5-MATH-S-ku-含有字母的式子",
+      "textbook_id": "RENJIAO-G5-MATH-S",
+      "cluster_id": "RENJIAO-G5-MATH-S-kc-用字母表示数",
+      "name": "含有字母的式子",
+      "description": "用含有字母的式子表示数量关系或公式。",
+      "prerequisites": [
+        "用字母表示数"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G5-MATH-S-ku-商小于1的判断",
+      "textbook_id": "RENJIAO-G5-MATH-S",
+      "cluster_id": "RENJIAO-G5-MATH-S-kc-小数除法基础",
+      "name": "商小于1的判断",
+      "description": "当被除数小于除数时，商小于1。",
+      "prerequisites": [
+        "小数除以整数"
+      ],
+      "related_kus": [],
+      "difficulty": 0.2,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G5-MATH-S-ku-商的近似数",
+      "textbook_id": "RENJIAO-G5-MATH-S",
+      "cluster_id": "RENJIAO-G5-MATH-S-kc-商的近似与循环小数",
+      "name": "商的近似数",
+      "description": "根据实际需要，用四舍五入法保留一定位数的小数。",
+      "prerequisites": [
+        "小数除法"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G5-MATH-S-ku-小数乘小数的计算方法",
+      "textbook_id": "RENJIAO-G5-MATH-S",
+      "cluster_id": "RENJIAO-G5-MATH-S-kc-小数乘法的基本计算方法",
+      "name": "小数乘小数的计算方法",
+      "description": "先按整数乘法算出积，再看因数中一共有几位小数，就从积的右边起数出几位点上小数点。",
+      "prerequisites": [
+        "小数乘整数的计算方法"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G5-MATH-S-ku-小数乘整数的计算方法",
+      "textbook_id": "RENJIAO-G5-MATH-S",
+      "cluster_id": "RENJIAO-G5-MATH-S-kc-小数乘法的基本计算方法",
+      "name": "小数乘整数的计算方法",
+      "description": "将小数乘整数转化为整数乘法，按整数乘法算出积，再根据因数中小数的位数从积右边起数出相同位数点上小数点。",
+      "prerequisites": [
+        "整数乘法",
+        "小数的意义"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G5-MATH-S-ku-小数乘法的验算方法",
+      "textbook_id": "RENJIAO-G5-MATH-S",
+      "cluster_id": "RENJIAO-G5-MATH-S-kc-小数乘法的规律与验算",
+      "name": "小数乘法的验算方法",
+      "description": "交换因数的位置再乘一遍，或用计算器验算，也可根据积与因数的大小关系判断。",
+      "prerequisites": [
+        "小数乘法的计算方法"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G5-MATH-S-ku-小数乘除法的转化思想",
+      "textbook_id": "RENJIAO-G5-MATH-S",
+      "cluster_id": "RENJIAO-G5-MATH-S-kc-总复习中的代数与几何",
+      "name": "小数乘除法的转化思想",
+      "description": "小数乘除法转化为整数乘除法计算。",
+      "prerequisites": [
+        "小数乘法",
+        "小数除法"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G5-MATH-S-ku-小数四则混合运算的顺序",
+      "textbook_id": "RENJIAO-G5-MATH-S",
+      "cluster_id": "RENJIAO-G5-MATH-S-kc-小数乘法的应用与简便计算",
+      "name": "小数四则混合运算的顺序",
+      "description": "小数四则混合运算的顺序与整数四则混合运算的顺序相同：先乘除，后加减，有括号先算括号里的。",
+      "prerequisites": [
+        "整数四则混合运算"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G5-MATH-S-ku-小数除以整数",
+      "textbook_id": "RENJIAO-G5-MATH-S",
+      "cluster_id": "RENJIAO-G5-MATH-S-kc-小数除法基础",
+      "name": "小数除以整数",
+      "description": "除数是整数的小数除法，按整数除法计算，商的小数点与被除数小数点对齐。",
+      "prerequisites": [
+        "整数除法"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G5-MATH-S-ku-已知三角形面积和底求高",
+      "textbook_id": "RENJIAO-G5-MATH-S",
+      "cluster_id": "RENJIAO-G5-MATH-S-kc-三角形面积",
+      "name": "已知三角形面积和底求高",
+      "description": "h=2S÷a，由面积公式变形得到。",
+      "prerequisites": [
+        "三角形的面积公式"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G5-MATH-S-ku-已知平行四边形面积和底求高",
+      "textbook_id": "RENJIAO-G5-MATH-S",
+      "cluster_id": "RENJIAO-G5-MATH-S-kc-平行四边形面积",
+      "name": "已知平行四边形面积和底求高",
+      "description": "h=S÷a，由面积公式变形得到。",
+      "prerequisites": [
+        "平行四边形的面积公式"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G5-MATH-S-ku-已知梯形面积-上底-下底求高",
+      "textbook_id": "RENJIAO-G5-MATH-S",
+      "cluster_id": "RENJIAO-G5-MATH-S-kc-梯形面积",
+      "name": "已知梯形面积、上底、下底求高",
+      "description": "h=2S÷(a+b)，由面积公式变形得到。",
+      "prerequisites": [
+        "梯形的面积公式"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G5-MATH-S-ku-已知梯形面积-上底和高求下底",
+      "textbook_id": "RENJIAO-G5-MATH-S",
+      "cluster_id": "RENJIAO-G5-MATH-S-kc-梯形面积",
+      "name": "已知梯形面积、上底和高求下底",
+      "description": "b=2S÷h - a，由面积公式变形得到。",
+      "prerequisites": [
+        "梯形的面积公式"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G5-MATH-S-ku-平行四边形的面积公式",
+      "textbook_id": "RENJIAO-G5-MATH-S",
+      "cluster_id": "RENJIAO-G5-MATH-S-kc-平行四边形面积",
+      "name": "平行四边形的面积公式",
+      "description": "S=ah，其中S表示面积，a表示底，h表示高。",
+      "prerequisites": [
+        "长方形面积"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G5-MATH-S-ku-平行四边形面积公式的推导-转化法",
+      "textbook_id": "RENJIAO-G5-MATH-S",
+      "cluster_id": "RENJIAO-G5-MATH-S-kc-平行四边形面积",
+      "name": "平行四边形面积公式的推导（转化法）",
+      "description": "通过剪拼将平行四边形转化为长方形，底对应长，高对应宽。",
+      "prerequisites": [
+        "长方形面积"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G5-MATH-S-ku-形如a-x-b--c的方程解法",
+      "textbook_id": "RENJIAO-G5-MATH-S",
+      "cluster_id": "RENJIAO-G5-MATH-S-kc-简单方程的解法",
+      "name": "形如a(x+b)=c的方程解法",
+      "description": "方法一：把(x+b)看作整体，先除以a；方法二：利用乘法分配律展开后解。",
+      "prerequisites": [
+        "ku-014",
+        "ku-002"
+      ],
+      "related_kus": [],
+      "difficulty": 0.6,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G5-MATH-S-ku-形如a-x-b的方程解法",
+      "textbook_id": "RENJIAO-G5-MATH-S",
+      "cluster_id": "RENJIAO-G5-MATH-S-kc-简单方程的解法",
+      "name": "形如a-x=b的方程解法",
+      "description": "方程两边同时加x，转化为a=b+x，再解。",
+      "prerequisites": [
+        "ku-011"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G5-MATH-S-ku-形如ax-b-c的方程解法",
+      "textbook_id": "RENJIAO-G5-MATH-S",
+      "cluster_id": "RENJIAO-G5-MATH-S-kc-简单方程的解法",
+      "name": "形如ax+b=c的方程解法",
+      "description": "把ax看作一个整体，先利用等式性质1消去b，再利用等式性质2解ax。",
+      "prerequisites": [
+        "ku-011",
+        "ku-012"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G5-MATH-S-ku-形如ax-bx-c的方程解法",
+      "textbook_id": "RENJIAO-G5-MATH-S",
+      "cluster_id": "RENJIAO-G5-MATH-S-kc-简单方程的解法",
+      "name": "形如ax+bx=c的方程解法",
+      "description": "利用乘法分配律合并同类项，化为(a+b)x=c，再解。",
+      "prerequisites": [
+        "ku-005",
+        "ku-012"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G5-MATH-S-ku-形如ax-b的方程解法",
+      "textbook_id": "RENJIAO-G5-MATH-S",
+      "cluster_id": "RENJIAO-G5-MATH-S-kc-简单方程的解法",
+      "name": "形如ax=b的方程解法",
+      "description": "利用等式性质2，方程两边同时除以a（a≠0），得到x=b/a。",
+      "prerequisites": [
+        "ku-010"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G5-MATH-S-ku-形如x-a-b的方程解法",
+      "textbook_id": "RENJIAO-G5-MATH-S",
+      "cluster_id": "RENJIAO-G5-MATH-S-kc-简单方程的解法",
+      "name": "形如x+a=b的方程解法",
+      "description": "利用等式性质1，方程两边同时减去a，得到x=b-a。",
+      "prerequisites": [
+        "ku-010"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G5-MATH-S-ku-循环小数",
+      "textbook_id": "RENJIAO-G5-MATH-S",
+      "cluster_id": "RENJIAO-G5-MATH-S-kc-商的近似与循环小数",
+      "name": "循环小数",
+      "description": "小数部分从某位起一个数字或几个数字依次不断重复出现的小数。",
+      "prerequisites": [
+        "小数除法"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G5-MATH-S-ku-循环节",
+      "textbook_id": "RENJIAO-G5-MATH-S",
+      "cluster_id": "RENJIAO-G5-MATH-S-kc-商的近似与循环小数",
+      "name": "循环节",
+      "description": "循环小数中依次不断重复出现的数字。",
+      "prerequisites": [
+        "循环小数"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G5-MATH-S-ku-整数乘法运算律推广到小数",
+      "textbook_id": "RENJIAO-G5-MATH-S",
+      "cluster_id": "RENJIAO-G5-MATH-S-kc-小数乘法的应用与简便计算",
+      "name": "整数乘法运算律推广到小数",
+      "description": "整数乘法的交换律、结合律和分配律对于小数乘法同样适用，应用运算律可使计算简便。",
+      "prerequisites": [
+        "整数乘法运算律",
+        "小数乘法"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G5-MATH-S-ku-方程的意义",
+      "textbook_id": "RENJIAO-G5-MATH-S",
+      "cluster_id": "RENJIAO-G5-MATH-S-kc-方程的意义与等式的性质",
+      "name": "方程的意义",
+      "description": "含有未知数的等式叫做方程。方程必须同时满足“含有未知数”和“等式”两个条件。",
+      "prerequisites": [
+        "ku-001"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G5-MATH-S-ku-方程的解和解方程",
+      "textbook_id": "RENJIAO-G5-MATH-S",
+      "cluster_id": "RENJIAO-G5-MATH-S-kc-方程的意义与等式的性质",
+      "name": "方程的解和解方程",
+      "description": "使方程左右两边相等的未知数的值叫做方程的解；求方程的解的过程叫做解方程。",
+      "prerequisites": [
+        "ku-007",
+        "ku-008",
+        "ku-009"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G5-MATH-S-ku-有限小数和无限小数",
+      "textbook_id": "RENJIAO-G5-MATH-S",
+      "cluster_id": "RENJIAO-G5-MATH-S-kc-商的近似与循环小数",
+      "name": "有限小数和无限小数",
+      "description": "小数位数有限的是有限小数，位数无限的是无限小数。",
+      "prerequisites": [
+        "循环小数"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G5-MATH-S-ku-梯形的面积公式",
+      "textbook_id": "RENJIAO-G5-MATH-S",
+      "cluster_id": "RENJIAO-G5-MATH-S-kc-梯形面积",
+      "name": "梯形的面积公式",
+      "description": "S=(a+b)h÷2，其中S表示面积，a、b分别表示上底和下底，h表示高。",
+      "prerequisites": [
+        "平行四边形的面积公式",
+        "三角形的面积公式"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G5-MATH-S-ku-梯形面积公式的推导-拼合法",
+      "textbook_id": "RENJIAO-G5-MATH-S",
+      "cluster_id": "RENJIAO-G5-MATH-S-kc-梯形面积",
+      "name": "梯形面积公式的推导（拼合法）",
+      "description": "用两个完全一样的梯形拼成一个平行四边形，梯形面积是平行四边形的一半。",
+      "prerequisites": [
+        "平行四边形的面积公式"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G5-MATH-S-ku-植树问题-一端栽一端不栽",
+      "textbook_id": "RENJIAO-G5-MATH-S",
+      "cluster_id": "RENJIAO-G5-MATH-S-kc-植树问题",
+      "name": "植树问题（一端栽一端不栽）",
+      "description": "棵数=间隔数，间隔数=总长÷间距。",
+      "prerequisites": [
+        "除法"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G5-MATH-S-ku-植树问题-两端都不栽",
+      "textbook_id": "RENJIAO-G5-MATH-S",
+      "cluster_id": "RENJIAO-G5-MATH-S-kc-植树问题",
+      "name": "植树问题（两端都不栽）",
+      "description": "棵数=间隔数-1，间隔数=总长÷间距。",
+      "prerequisites": [
+        "除法"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G5-MATH-S-ku-植树问题-两端都栽",
+      "textbook_id": "RENJIAO-G5-MATH-S",
+      "cluster_id": "RENJIAO-G5-MATH-S-kc-植树问题",
+      "name": "植树问题（两端都栽）",
+      "description": "棵数=间隔数+1，间隔数=总长÷间距。",
+      "prerequisites": [
+        "除法"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G5-MATH-S-ku-植树问题-封闭图形",
+      "textbook_id": "RENJIAO-G5-MATH-S",
+      "cluster_id": "RENJIAO-G5-MATH-S-kc-植树问题",
+      "name": "植树问题（封闭图形）",
+      "description": "棵数=间隔数，间隔数=周长÷间距。",
+      "prerequisites": [
+        "除法"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G5-MATH-S-ku-用估算解决实际问题",
+      "textbook_id": "RENJIAO-G5-MATH-S",
+      "cluster_id": "RENJIAO-G5-MATH-S-kc-小数乘法的应用与简便计算",
+      "name": "用估算解决实际问题",
+      "description": "根据实际情况，用“估大”或“估小”的方法判断钱数是否够用，解决购物问题。",
+      "prerequisites": [
+        "小数乘法",
+        "估算"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G5-MATH-S-ku-用字母表示公式",
+      "textbook_id": "RENJIAO-G5-MATH-S",
+      "cluster_id": "RENJIAO-G5-MATH-S-kc-用字母表示数及数量关系",
+      "name": "用字母表示公式",
+      "description": "用字母表示几何图形的面积、周长等公式，如长方形面积S=ab。",
+      "prerequisites": [
+        "ku-001"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G5-MATH-S-ku-用字母表示数",
+      "textbook_id": "RENJIAO-G5-MATH-S",
+      "cluster_id": "RENJIAO-G5-MATH-S-kc-用字母表示数",
+      "name": "用字母表示数",
+      "description": "用字母（如a、x）表示未知数或变量，简化表达。",
+      "prerequisites": [],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G5-MATH-S-ku-用字母表示数量关系",
+      "textbook_id": "RENJIAO-G5-MATH-S",
+      "cluster_id": "RENJIAO-G5-MATH-S-kc-用字母表示数及数量关系",
+      "name": "用字母表示数量关系",
+      "description": "用含有字母的式子表示实际问题中的数量关系，如总价=单价×数量。",
+      "prerequisites": [
+        "ku-001"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G5-MATH-S-ku-用字母表示运算律",
+      "textbook_id": "RENJIAO-G5-MATH-S",
+      "cluster_id": "RENJIAO-G5-MATH-S-kc-用字母表示数",
+      "name": "用字母表示运算律",
+      "description": "用字母简明表示加法交换律、结合律、乘法交换律、结合律、分配律。",
+      "prerequisites": [
+        "用字母表示数"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G5-MATH-S-ku-用字母表示面积和周长公式",
+      "textbook_id": "RENJIAO-G5-MATH-S",
+      "cluster_id": "RENJIAO-G5-MATH-S-kc-用字母表示数",
+      "name": "用字母表示面积和周长公式",
+      "description": "正方形面积S=a²，周长C=4a；字母表示公式。",
+      "prerequisites": [
+        "含有字母的式子"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G5-MATH-S-ku-用数对确定位置",
+      "textbook_id": "RENJIAO-G5-MATH-S",
+      "cluster_id": "RENJIAO-G5-MATH-S-kc-总复习中的代数与几何",
+      "name": "用数对确定位置",
+      "description": "用有序数对表示点的位置，如A(0,4)。",
+      "prerequisites": [],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G5-MATH-S-ku-用计算器探索规律",
+      "textbook_id": "RENJIAO-G5-MATH-S",
+      "cluster_id": "RENJIAO-G5-MATH-S-kc-小数除法的应用与规律",
+      "name": "用计算器探索规律",
+      "description": "通过计算器计算发现数字规律，并运用规律直接写出结果。",
+      "prerequisites": [
+        "小数除法"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G5-MATH-S-ku-省略乘号规则",
+      "textbook_id": "RENJIAO-G5-MATH-S",
+      "cluster_id": "RENJIAO-G5-MATH-S-kc-用字母表示数",
+      "name": "省略乘号规则",
+      "description": "字母与数字相乘时，乘号可以省略，数字写在字母前面。",
+      "prerequisites": [
+        "含有字母的式子"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G5-MATH-S-ku-积与因数的大小关系",
+      "textbook_id": "RENJIAO-G5-MATH-S",
+      "cluster_id": "RENJIAO-G5-MATH-S-kc-小数乘法的规律与验算",
+      "name": "积与因数的大小关系",
+      "description": "一个数（0除外）乘大于1的数，积比原数大；乘小于1的数，积比原数小。",
+      "prerequisites": [
+        "小数乘法的意义"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G5-MATH-S-ku-积的小数位数不够时补0",
+      "textbook_id": "RENJIAO-G5-MATH-S",
+      "cluster_id": "RENJIAO-G5-MATH-S-kc-小数乘法的基本计算方法",
+      "name": "积的小数位数不够时补0",
+      "description": "乘得的积的小数位数不够时，要在前面用0补足位数，再点小数点。",
+      "prerequisites": [
+        "小数乘小数的计算方法"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G5-MATH-S-ku-积的近似数-四舍五入法",
+      "textbook_id": "RENJIAO-G5-MATH-S",
+      "cluster_id": "RENJIAO-G5-MATH-S-kc-小数乘法的应用与简便计算",
+      "name": "积的近似数（四舍五入法）",
+      "description": "根据实际需要，按“四舍五入”法保留一定的小数位数，求出积的近似数。",
+      "prerequisites": [
+        "小数乘法的计算方法",
+        "四舍五入法"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G5-MATH-S-ku-等式的性质1",
+      "textbook_id": "RENJIAO-G5-MATH-S",
+      "cluster_id": "RENJIAO-G5-MATH-S-kc-方程的意义与等式的性质",
+      "name": "等式的性质1",
+      "description": "等式两边加上或减去同一个数，左右两边仍然相等。",
+      "prerequisites": [],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G5-MATH-S-ku-等式的性质2",
+      "textbook_id": "RENJIAO-G5-MATH-S",
+      "cluster_id": "RENJIAO-G5-MATH-S-kc-方程的意义与等式的性质",
+      "name": "等式的性质2",
+      "description": "等式两边乘同一个数，或除以同一个不为0的数，左右两边仍然相等。",
+      "prerequisites": [],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G5-MATH-S-ku-组合图形的面积-分割法",
+      "textbook_id": "RENJIAO-G5-MATH-S",
+      "cluster_id": "RENJIAO-G5-MATH-S-kc-组合图形与不规则图形面积",
+      "name": "组合图形的面积（分割法）",
+      "description": "将组合图形分割成几个简单图形，分别计算面积再相加。",
+      "prerequisites": [
+        "平行四边形的面积公式",
+        "三角形的面积公式",
+        "梯形的面积公式"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G5-MATH-S-ku-组合图形的面积-添补法",
+      "textbook_id": "RENJIAO-G5-MATH-S",
+      "cluster_id": "RENJIAO-G5-MATH-S-kc-组合图形与不规则图形面积",
+      "name": "组合图形的面积（添补法）",
+      "description": "将组合图形添补成简单图形，用大图形面积减去添补部分面积。",
+      "prerequisites": [
+        "平行四边形的面积公式",
+        "三角形的面积公式",
+        "梯形的面积公式"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G5-MATH-S-ku-被除数位数不够补0",
+      "textbook_id": "RENJIAO-G5-MATH-S",
+      "cluster_id": "RENJIAO-G5-MATH-S-kc-小数除法基础",
+      "name": "被除数位数不够补0",
+      "description": "除数小数点右移时，被除数位数不够，在末尾用0补足。",
+      "prerequisites": [
+        "一个数除以小数"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G5-MATH-S-ku-运算律的应用",
+      "textbook_id": "RENJIAO-G5-MATH-S",
+      "cluster_id": "RENJIAO-G5-MATH-S-kc-总复习中的代数与几何",
+      "name": "运算律的应用",
+      "description": "利用加法交换律、结合律，乘法交换律、结合律、分配律进行简便计算。",
+      "prerequisites": [
+        "运算律"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G5-MATH-S-ku-进一法取近似值",
+      "textbook_id": "RENJIAO-G5-MATH-S",
+      "cluster_id": "RENJIAO-G5-MATH-S-kc-小数除法的应用与规律",
+      "name": "进一法取近似值",
+      "description": "解决实际问题时，不管小数部分是多少，都向前进一取整数。",
+      "prerequisites": [
+        "商的近似数"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    }
+  ]
+}

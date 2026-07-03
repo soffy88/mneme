@@ -1,0 +1,1391 @@
+{
+  "textbook": {
+    "id": "RENJIAO-G2-MATH-X",
+    "subject": "math",
+    "grade": "G2",
+    "edition": "2022修订",
+    "book_name": "人教版·数学二年级下册"
+  },
+  "clusters": [
+    {
+      "id": "RENJIAO-G2-MATH-X-kc-时间单位与钟表认读",
+      "name": "时间单位与钟表认读",
+      "display_order": 1,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G2-MATH-X-kc-有余数除法的意义与计算",
+      "name": "有余数除法的意义与计算",
+      "display_order": 2,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G2-MATH-X-kc-有余数除法的应用",
+      "name": "有余数除法的应用",
+      "display_order": 3,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G2-MATH-X-kc-乘除法的基本数量关系与倍的概念",
+      "name": "乘除法的基本数量关系与倍的概念",
+      "display_order": 4,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G2-MATH-X-kc-乘除关系的综合应用",
+      "name": "乘除关系的综合应用",
+      "display_order": 5,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G2-MATH-X-kc-1000以内数的认识与读写",
+      "name": "1000以内数的认识与读写",
+      "display_order": 6,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G2-MATH-X-kc-10000以内数的认识与读写",
+      "name": "10000以内数的认识与读写",
+      "display_order": 7,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G2-MATH-X-kc-算盘与数位",
+      "name": "算盘与数位",
+      "display_order": 8,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G2-MATH-X-kc-万以内数的大小比较与近似",
+      "name": "万以内数的大小比较与近似",
+      "display_order": 9,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G2-MATH-X-kc-万以内数的加减法基础",
+      "name": "万以内数的加减法基础",
+      "display_order": 10,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G2-MATH-X-kc-万以内数的加减法进阶",
+      "name": "万以内数的加减法进阶",
+      "display_order": 11,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G2-MATH-X-kc-加法和减法的定义与关系",
+      "name": "加法和减法的定义与关系",
+      "display_order": 12,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G2-MATH-X-kc-加法和减法各部分间的关系",
+      "name": "加法和减法各部分间的关系",
+      "display_order": 13,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G2-MATH-X-kc-万以内加减法的计算与估算",
+      "name": "万以内加减法的计算与估算",
+      "display_order": 14,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G2-MATH-X-kc-万以内数的认识",
+      "name": "万以内数的认识",
+      "display_order": 15,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G2-MATH-X-kc-有余数的除法与数量关系",
+      "name": "有余数的除法与数量关系",
+      "display_order": 16,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G2-MATH-X-kc-时间计算与数独游戏",
+      "name": "时间计算与数独游戏",
+      "display_order": 17,
+      "description": null
+    }
+  ],
+  "units": [
+    {
+      "id": "RENJIAO-G2-MATH-X-ku-10000以内数的组成",
+      "textbook_id": "RENJIAO-G2-MATH-X",
+      "cluster_id": "RENJIAO-G2-MATH-X-kc-10000以内数的认识与读写",
+      "name": "10000以内数的组成",
+      "description": "一个数由几个千、几个百、几个十和几个一组成，如2458由2个千、4个百、5个十、8个一组成。",
+      "prerequisites": [
+        "10000以内数的认识"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G2-MATH-X-ku-10000以内数的认识",
+      "textbook_id": "RENJIAO-G2-MATH-X",
+      "cluster_id": "RENJIAO-G2-MATH-X-kc-10000以内数的认识与读写",
+      "name": "10000以内数的认识",
+      "description": "10个一千是一万，计数单位有个、十、百、千、万。",
+      "prerequisites": [
+        "1000以内数的认识"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G2-MATH-X-ku-10000以内数的读写",
+      "textbook_id": "RENJIAO-G2-MATH-X",
+      "cluster_id": "RENJIAO-G2-MATH-X-kc-10000以内数的认识与读写",
+      "name": "10000以内数的读写",
+      "description": "从高位读起，千位是几读几千，百位是几读几百……中间有0读零，末尾0不读。",
+      "prerequisites": [
+        "10000以内数的认识"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G2-MATH-X-ku-1000以内数的组成",
+      "textbook_id": "RENJIAO-G2-MATH-X",
+      "cluster_id": "RENJIAO-G2-MATH-X-kc-1000以内数的认识与读写",
+      "name": "1000以内数的组成",
+      "description": "一个数由几个百、几个十和几个一组成，如235由2个百、3个十、5个一组成。",
+      "prerequisites": [
+        "1000以内数的认识"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G2-MATH-X-ku-1000以内数的认识",
+      "textbook_id": "RENJIAO-G2-MATH-X",
+      "cluster_id": "RENJIAO-G2-MATH-X-kc-1000以内数的认识与读写",
+      "name": "1000以内数的认识",
+      "description": "10个一是1个十，10个十是1个百，10个百是1个千。",
+      "prerequisites": [
+        "百以内数的认识"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G2-MATH-X-ku-1000以内数的读写",
+      "textbook_id": "RENJIAO-G2-MATH-X",
+      "cluster_id": "RENJIAO-G2-MATH-X-kc-1000以内数的认识与读写",
+      "name": "1000以内数的读写",
+      "description": "从高位读起，千位是几读几千，百位是几读几百……中间有0读零，末尾0不读。",
+      "prerequisites": [
+        "1000以内数的认识"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G2-MATH-X-ku-1分钟和1秒的体验",
+      "textbook_id": "RENJIAO-G2-MATH-X",
+      "cluster_id": "RENJIAO-G2-MATH-X-kc-时间单位与钟表认读",
+      "name": "1分钟和1秒的体验",
+      "description": "1分钟能跳绳99次等；1秒眨一次眼；通过数秒、闭眼估计等活动感知时间长短。",
+      "prerequisites": [
+        "时、分、秒的单位及进率"
+      ],
+      "related_kus": [],
+      "difficulty": 0.2,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G2-MATH-X-ku-万以内减法的笔算-退位",
+      "textbook_id": "RENJIAO-G2-MATH-X",
+      "cluster_id": "RENJIAO-G2-MATH-X-kc-万以内加减法的计算与估算",
+      "name": "万以内减法的笔算（退位）",
+      "description": "相同数位对齐，从个位减起，哪一位不够减就从前一位退1作10。",
+      "prerequisites": [
+        "百以内减法的笔算"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G2-MATH-X-ku-万以内加减法的相同计数单位相加减",
+      "textbook_id": "RENJIAO-G2-MATH-X",
+      "cluster_id": "RENJIAO-G2-MATH-X-kc-万以内加减法的计算与估算",
+      "name": "万以内加减法的相同计数单位相加减",
+      "description": "万以内的加、减法与百以内的加、减法计算方法相同，都要将相同数位对齐，因为要把相同计数单位相加、减。",
+      "prerequisites": [
+        "万以内加法的笔算",
+        "万以内减法的笔算"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G2-MATH-X-ku-万以内加法的估算-只看百位",
+      "textbook_id": "RENJIAO-G2-MATH-X",
+      "cluster_id": "RENJIAO-G2-MATH-X-kc-万以内加减法的计算与估算",
+      "name": "万以内加法的估算（只看百位）",
+      "description": "估算两个三位数相加时，只看百位数字相加，判断和的范围。",
+      "prerequisites": [
+        "万以内数的认识"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G2-MATH-X-ku-万以内加法的笔算-进位",
+      "textbook_id": "RENJIAO-G2-MATH-X",
+      "cluster_id": "RENJIAO-G2-MATH-X-kc-万以内加减法的计算与估算",
+      "name": "万以内加法的笔算（进位）",
+      "description": "相同数位对齐，从个位加起，哪一位满十就向前一位进1。",
+      "prerequisites": [
+        "百以内加法的笔算"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G2-MATH-X-ku-万以内数的减法-不退位与退位",
+      "textbook_id": "RENJIAO-G2-MATH-X",
+      "cluster_id": "RENJIAO-G2-MATH-X-kc-万以内数的加减法基础",
+      "name": "万以内数的减法（不退位与退位）",
+      "description": "相同数位对齐，从个位减起，哪一位不够减从前一位退1当10。",
+      "prerequisites": [
+        "10000以内数的认识",
+        "百以内数的减法"
+      ],
+      "related_kus": [],
+      "difficulty": 0.6,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G2-MATH-X-ku-万以内数的减法-连续退位",
+      "textbook_id": "RENJIAO-G2-MATH-X",
+      "cluster_id": "RENJIAO-G2-MATH-X-kc-万以内数的加减法进阶",
+      "name": "万以内数的减法（连续退位）",
+      "description": "连续退位减法，中间有0时需从更高位退1，验算可用加法或减法。",
+      "prerequisites": [
+        "万以内数的减法（不退位与退位）"
+      ],
+      "related_kus": [],
+      "difficulty": 0.7,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G2-MATH-X-ku-万以内数的加法-不进位与进位",
+      "textbook_id": "RENJIAO-G2-MATH-X",
+      "cluster_id": "RENJIAO-G2-MATH-X-kc-万以内数的加减法基础",
+      "name": "万以内数的加法（不进位与进位）",
+      "description": "相同数位对齐，从个位加起，哪一位满十向前一位进1。",
+      "prerequisites": [
+        "10000以内数的认识",
+        "百以内数的加法"
+      ],
+      "related_kus": [],
+      "difficulty": 0.6,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G2-MATH-X-ku-万以内数的加法-连续进位",
+      "textbook_id": "RENJIAO-G2-MATH-X",
+      "cluster_id": "RENJIAO-G2-MATH-X-kc-万以内数的加减法进阶",
+      "name": "万以内数的加法（连续进位）",
+      "description": "连续进位加法，需逐位计算并进位，验算可交换加数位置再算。",
+      "prerequisites": [
+        "万以内数的加法（不进位与进位）"
+      ],
+      "related_kus": [],
+      "difficulty": 0.7,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G2-MATH-X-ku-万以内数的大小比较",
+      "textbook_id": "RENJIAO-G2-MATH-X",
+      "cluster_id": "RENJIAO-G2-MATH-X-kc-万以内数的大小比较与近似",
+      "name": "万以内数的大小比较",
+      "description": "位数不同时，位数多的数大；位数相同时，从最高位依次比较。",
+      "prerequisites": [
+        "10000以内数的认识"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G2-MATH-X-ku-万以内数的组成",
+      "textbook_id": "RENJIAO-G2-MATH-X",
+      "cluster_id": "RENJIAO-G2-MATH-X-kc-万以内数的认识",
+      "name": "万以内数的组成",
+      "description": "万以内的数由个、十、百、千等计数单位组成。",
+      "prerequisites": [],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G2-MATH-X-ku-万以内数的读写",
+      "textbook_id": "RENJIAO-G2-MATH-X",
+      "cluster_id": "RENJIAO-G2-MATH-X-kc-万以内数的认识",
+      "name": "万以内数的读写",
+      "description": "从高位读起，按照数位顺序表读写，中间有0要读出来，末尾的0不读。",
+      "prerequisites": [
+        "万以内数的组成"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G2-MATH-X-ku-万以内数的顺序",
+      "textbook_id": "RENJIAO-G2-MATH-X",
+      "cluster_id": "RENJIAO-G2-MATH-X-kc-万以内数的认识",
+      "name": "万以内数的顺序",
+      "description": "数是有顺序的，相邻两个数相差1。",
+      "prerequisites": [
+        "万以内数的组成"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G2-MATH-X-ku-两步乘除应用题-先求倍数再求和-差",
+      "textbook_id": "RENJIAO-G2-MATH-X",
+      "cluster_id": "RENJIAO-G2-MATH-X-kc-乘除关系的综合应用",
+      "name": "两步乘除应用题（先求倍数再求和/差）",
+      "description": "先求一个数的几倍是多少，再与已知量相加或相减；如金鱼灯笼是兔子灯笼的3倍，先求金鱼数再求总数。",
+      "prerequisites": [
+        "求一个数的几倍是多少",
+        "乘除法的基本数量关系"
+      ],
+      "related_kus": [],
+      "difficulty": 0.7,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G2-MATH-X-ku-乘除法的基本数量关系",
+      "textbook_id": "RENJIAO-G2-MATH-X",
+      "cluster_id": "RENJIAO-G2-MATH-X-kc-乘除法的基本数量关系与倍的概念",
+      "name": "乘除法的基本数量关系",
+      "description": "求几个几的和用乘法；已知和与相同加数求个数，或已知和与个数求相同加数，用除法。",
+      "prerequisites": [
+        "表内乘法",
+        "表内除法"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G2-MATH-X-ku-余数与除数的关系",
+      "textbook_id": "RENJIAO-G2-MATH-X",
+      "cluster_id": "RENJIAO-G2-MATH-X-kc-有余数除法的意义与计算",
+      "name": "余数与除数的关系",
+      "description": "余数必须小于除数；如摆小棒时余数可能为1、2，但不能等于或大于除数。",
+      "prerequisites": [
+        "有余数除法的意义"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G2-MATH-X-ku-倍的概念",
+      "textbook_id": "RENJIAO-G2-MATH-X",
+      "cluster_id": "RENJIAO-G2-MATH-X-kc-乘除法的基本数量关系与倍的概念",
+      "name": "倍的概念",
+      "description": "一个数里面有几个另一个数，就说这个数是另一个数的几倍；如鸡的只数是鹅的3倍。",
+      "prerequisites": [
+        "乘除法的基本数量关系"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G2-MATH-X-ku-减法与加法的关系-逆运算",
+      "textbook_id": "RENJIAO-G2-MATH-X",
+      "cluster_id": "RENJIAO-G2-MATH-X-kc-加法和减法的定义与关系",
+      "name": "减法与加法的关系（逆运算）",
+      "description": "减法是加法的逆运算。",
+      "prerequisites": [
+        "加法的定义",
+        "减法的定义"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G2-MATH-X-ku-减法各部分间的关系",
+      "textbook_id": "RENJIAO-G2-MATH-X",
+      "cluster_id": "RENJIAO-G2-MATH-X-kc-加法和减法各部分间的关系",
+      "name": "减法各部分间的关系",
+      "description": "差=被减数-减数；减数=被减数-差；被减数=减数+差。",
+      "prerequisites": [
+        "减法的定义"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G2-MATH-X-ku-减法的定义",
+      "textbook_id": "RENJIAO-G2-MATH-X",
+      "cluster_id": "RENJIAO-G2-MATH-X-kc-加法和减法的定义与关系",
+      "name": "减法的定义",
+      "description": "已知两个加数的和与其中一个加数，求另一个加数的运算，叫作减法。",
+      "prerequisites": [
+        "加法的定义"
+      ],
+      "related_kus": [],
+      "difficulty": 0.2,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G2-MATH-X-ku-加法各部分间的关系",
+      "textbook_id": "RENJIAO-G2-MATH-X",
+      "cluster_id": "RENJIAO-G2-MATH-X-kc-加法和减法各部分间的关系",
+      "name": "加法各部分间的关系",
+      "description": "和=加数+加数；加数=和-另一个加数。",
+      "prerequisites": [
+        "加法的定义"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G2-MATH-X-ku-加法的定义",
+      "textbook_id": "RENJIAO-G2-MATH-X",
+      "cluster_id": "RENJIAO-G2-MATH-X-kc-加法和减法的定义与关系",
+      "name": "加法的定义",
+      "description": "把两个数合并成一个数的运算，叫作加法。",
+      "prerequisites": [],
+      "related_kus": [],
+      "difficulty": 0.2,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G2-MATH-X-ku-已知一个数的几倍是多少-求这个数",
+      "textbook_id": "RENJIAO-G2-MATH-X",
+      "cluster_id": "RENJIAO-G2-MATH-X-kc-乘除法的基本数量关系与倍的概念",
+      "name": "已知一个数的几倍是多少，求这个数",
+      "description": "用除法：结果÷倍数=这个数；如袋鼠跳12米是体长的6倍，体长12÷6=2米。",
+      "prerequisites": [
+        "倍的概念"
+      ],
+      "related_kus": [],
+      "difficulty": 0.6,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G2-MATH-X-ku-数位顺序表",
+      "textbook_id": "RENJIAO-G2-MATH-X",
+      "cluster_id": "RENJIAO-G2-MATH-X-kc-10000以内数的认识与读写",
+      "name": "数位顺序表",
+      "description": "数位顺序：个位、十位、百位、千位、万位……每相邻两个计数单位之间的进率是10。",
+      "prerequisites": [
+        "10000以内数的认识"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G2-MATH-X-ku-数独游戏规则-4-4",
+      "textbook_id": "RENJIAO-G2-MATH-X",
+      "cluster_id": "RENJIAO-G2-MATH-X-kc-时间计算与数独游戏",
+      "name": "数独游戏规则（4×4）",
+      "description": "每行、每列、每个宫（2×2）填入1-4，不重复。",
+      "prerequisites": [],
+      "related_kus": [],
+      "difficulty": 0.6,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G2-MATH-X-ku-数量间的乘除关系-倍数",
+      "textbook_id": "RENJIAO-G2-MATH-X",
+      "cluster_id": "RENJIAO-G2-MATH-X-kc-有余数的除法与数量关系",
+      "name": "数量间的乘除关系（倍数）",
+      "description": "求一个数是另一个数的几倍用除法；求一个数的几倍是多少用乘法。",
+      "prerequisites": [
+        "表内乘法",
+        "表内除法"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G2-MATH-X-ku-整千整百数的加减法",
+      "textbook_id": "RENJIAO-G2-MATH-X",
+      "cluster_id": "RENJIAO-G2-MATH-X-kc-万以内数的加减法基础",
+      "name": "整千整百数的加减法",
+      "description": "整千数加减：几个千加减几个千；整百数加减：几个百加减几个百。",
+      "prerequisites": [
+        "10000以内数的认识"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G2-MATH-X-ku-时-分-秒的单位及进率",
+      "textbook_id": "RENJIAO-G2-MATH-X",
+      "cluster_id": "RENJIAO-G2-MATH-X-kc-时间单位与钟表认读",
+      "name": "时、分、秒的单位及进率",
+      "description": "1时=60分，1分=60秒；半小时=30分，半分钟=30秒。",
+      "prerequisites": [
+        "认识钟面"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G2-MATH-X-ku-时间计算-经过时间",
+      "textbook_id": "RENJIAO-G2-MATH-X",
+      "cluster_id": "RENJIAO-G2-MATH-X-kc-时间计算与数独游戏",
+      "name": "时间计算（经过时间）",
+      "description": "结束时间-开始时间=经过时间。",
+      "prerequisites": [
+        "钟表的认识"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G2-MATH-X-ku-有余数的除法",
+      "textbook_id": "RENJIAO-G2-MATH-X",
+      "cluster_id": "RENJIAO-G2-MATH-X-kc-有余数的除法与数量关系",
+      "name": "有余数的除法",
+      "description": "除法中，余数必须小于除数。",
+      "prerequisites": [
+        "表内除法"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G2-MATH-X-ku-有余数除法的意义",
+      "textbook_id": "RENJIAO-G2-MATH-X",
+      "cluster_id": "RENJIAO-G2-MATH-X-kc-有余数除法的意义与计算",
+      "name": "有余数除法的意义",
+      "description": "平均分后有剩余，用除法表示：9÷4=2……1，读作9除以4等于2余1，余数表示剩余的数量。",
+      "prerequisites": [
+        "表内除法"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G2-MATH-X-ku-有余数除法的竖式计算",
+      "textbook_id": "RENJIAO-G2-MATH-X",
+      "cluster_id": "RENJIAO-G2-MATH-X-kc-有余数除法的意义与计算",
+      "name": "有余数除法的竖式计算",
+      "description": "竖式写法：除数写在左边，被除数写在里面，商写在上面，积写在下面，余数写在最下。",
+      "prerequisites": [
+        "有余数除法的意义"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G2-MATH-X-ku-有余数除法解决周期规律问题",
+      "textbook_id": "RENJIAO-G2-MATH-X",
+      "cluster_id": "RENJIAO-G2-MATH-X-kc-有余数除法的应用",
+      "name": "有余数除法解决周期规律问题",
+      "description": "按规律排列，用除法求余数确定第几个是什么，如第16面小旗：16÷3=5组……1，余1为黄色。",
+      "prerequisites": [
+        "有余数除法的意义",
+        "用乘法口诀求有余数除法的商"
+      ],
+      "related_kus": [],
+      "difficulty": 0.7,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G2-MATH-X-ku-有余数除法解决实际问题-进一法",
+      "textbook_id": "RENJIAO-G2-MATH-X",
+      "cluster_id": "RENJIAO-G2-MATH-X-kc-有余数除法的应用",
+      "name": "有余数除法解决实际问题（进一法）",
+      "description": "求需要几个盒子时，余数需加1个盒子，如23÷4=5盒……3块，需要6个盒子。",
+      "prerequisites": [
+        "有余数除法的意义",
+        "用乘法口诀求有余数除法的商"
+      ],
+      "related_kus": [],
+      "difficulty": 0.7,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G2-MATH-X-ku-根据条件提出问题或补充条件",
+      "textbook_id": "RENJIAO-G2-MATH-X",
+      "cluster_id": "RENJIAO-G2-MATH-X-kc-乘除关系的综合应用",
+      "name": "根据条件提出问题或补充条件",
+      "description": "已知两个数量，可提出求和、差、倍数的问题；已知一个数量和关系，可补充条件求另一个量。",
+      "prerequisites": [
+        "乘除法的基本数量关系",
+        "倍的概念"
+      ],
+      "related_kus": [],
+      "difficulty": 0.6,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G2-MATH-X-ku-比多少问题-以谁为标准",
+      "textbook_id": "RENJIAO-G2-MATH-X",
+      "cluster_id": "RENJIAO-G2-MATH-X-kc-有余数的除法与数量关系",
+      "name": "比多少问题（以谁为标准）",
+      "description": "解决比多少的问题，要弄清以谁为标准。",
+      "prerequisites": [
+        "万以内数的认识"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G2-MATH-X-ku-求一个数是另一个数的几倍",
+      "textbook_id": "RENJIAO-G2-MATH-X",
+      "cluster_id": "RENJIAO-G2-MATH-X-kc-乘除法的基本数量关系与倍的概念",
+      "name": "求一个数是另一个数的几倍",
+      "description": "用除法：甲数÷乙数=倍数；如12÷4=3，多肉植物盆数是月季花的3倍。",
+      "prerequisites": [
+        "倍的概念"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G2-MATH-X-ku-求一个数的几倍是多少",
+      "textbook_id": "RENJIAO-G2-MATH-X",
+      "cluster_id": "RENJIAO-G2-MATH-X-kc-乘除法的基本数量关系与倍的概念",
+      "name": "求一个数的几倍是多少",
+      "description": "用乘法：一个数×倍数=结果；如羊的数量是牛的4倍，8×4=32只。",
+      "prerequisites": [
+        "倍的概念"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G2-MATH-X-ku-用乘法口诀求有余数除法的商",
+      "textbook_id": "RENJIAO-G2-MATH-X",
+      "cluster_id": "RENJIAO-G2-MATH-X-kc-有余数除法的意义与计算",
+      "name": "用乘法口诀求有余数除法的商",
+      "description": "想除数与几相乘的积最接近被除数且小于被除数，如43÷7，想7×6=42<43，商6。",
+      "prerequisites": [
+        "表内乘法",
+        "有余数除法的意义"
+      ],
+      "related_kus": [],
+      "difficulty": 0.6,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G2-MATH-X-ku-用加法验算减法",
+      "textbook_id": "RENJIAO-G2-MATH-X",
+      "cluster_id": "RENJIAO-G2-MATH-X-kc-加法和减法各部分间的关系",
+      "name": "用加法验算减法",
+      "description": "如果减数与差相加得被减数，减法就做对了。",
+      "prerequisites": [
+        "减法各部分间的关系"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G2-MATH-X-ku-用线段图表示倍数关系",
+      "textbook_id": "RENJIAO-G2-MATH-X",
+      "cluster_id": "RENJIAO-G2-MATH-X-kc-乘除法的基本数量关系与倍的概念",
+      "name": "用线段图表示倍数关系",
+      "description": "用线段表示数量，1份为一段，几倍画几段，帮助理解数量关系。",
+      "prerequisites": [
+        "倍的概念"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G2-MATH-X-ku-算盘的认识与使用",
+      "textbook_id": "RENJIAO-G2-MATH-X",
+      "cluster_id": "RENJIAO-G2-MATH-X-kc-算盘与数位",
+      "name": "算盘的认识与使用",
+      "description": "算盘有框、梁、档、上珠（一颗表示5）、下珠（一颗表示1），从个位向左依次是十位、百位、千位。",
+      "prerequisites": [
+        "10000以内数的认识"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G2-MATH-X-ku-被除数-除数-商和余数的关系",
+      "textbook_id": "RENJIAO-G2-MATH-X",
+      "cluster_id": "RENJIAO-G2-MATH-X-kc-有余数除法的意义与计算",
+      "name": "被除数、除数、商和余数的关系",
+      "description": "被除数=除数×商+余数，如13=4×3+1。",
+      "prerequisites": [
+        "有余数除法的竖式计算"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G2-MATH-X-ku-认识钟面",
+      "textbook_id": "RENJIAO-G2-MATH-X",
+      "cluster_id": "RENJIAO-G2-MATH-X-kc-时间单位与钟表认读",
+      "name": "认识钟面",
+      "description": "钟面有12个大格，每个大格有5个小格，共60个小格；时针、分针、秒针分别指示时、分、秒。",
+      "prerequisites": [],
+      "related_kus": [],
+      "difficulty": 0.2,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G2-MATH-X-ku-认读钟表上的时间",
+      "textbook_id": "RENJIAO-G2-MATH-X",
+      "cluster_id": "RENJIAO-G2-MATH-X-kc-时间单位与钟表认读",
+      "name": "认读钟表上的时间",
+      "description": "从整时开始，分针从12转了多少小格就是多少分；如4时5分、4时30分、4时45分。",
+      "prerequisites": [
+        "认识钟面",
+        "时、分、秒的单位及进率"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G2-MATH-X-ku-近似数",
+      "textbook_id": "RENJIAO-G2-MATH-X",
+      "cluster_id": "RENJIAO-G2-MATH-X-kc-万以内数的大小比较与近似",
+      "name": "近似数",
+      "description": "用约等号（≈）表示，如6988≈7000，近似数接近准确数。",
+      "prerequisites": [
+        "万以内数的大小比较"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G2-MATH-X-ku-近似数-整千数",
+      "textbook_id": "RENJIAO-G2-MATH-X",
+      "cluster_id": "RENJIAO-G2-MATH-X-kc-万以内数的认识",
+      "name": "近似数（整千数）",
+      "description": "一个数接近几千，就是它的近似数（整千数）。",
+      "prerequisites": [
+        "万以内数的大小比较"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    }
+  ]
+}

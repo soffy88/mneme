@@ -1,0 +1,103 @@
+{
+  "textbook": {
+    "id": "tb-lp-9c239977",
+    "subject": "math",
+    "grade": "高一",
+    "edition": "测试版",
+    "book_name": "练习教材"
+  },
+  "clusters": [
+    {
+      "id": "cl-lp-86fa80e2",
+      "name": "测试章节",
+      "display_order": 1,
+      "description": null
+    }
+  ],
+  "units": [
+    {
+      "id": "ku-lp1-f932c536",
+      "textbook_id": "tb-lp-9c239977",
+      "cluster_id": "cl-lp-86fa80e2",
+      "name": "前置知识",
+      "description": "先决条件",
+      "prerequisites": [],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "low",
+      "question_types": [
+        "选择题"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "具体例子1，带简短说明：$A=\\{1, 2, 3\\}$ 是一个包含三个整数的集合。",
+          "具体例子2（可选）：$B=\\{\text{苹果}, \text{香蕉}\\}$ 是一个包含两种水果的集合。"
+        ],
+        "intuition": "理解集合概念有助于组织和分类信息。如图书馆按类别管理书籍。",
+        "definition": "集合是无序且互不相同的元素组成的整体。记作 $A=\\{x_1, x_2, \\ldots\\}$，其中$x_i$为元素。",
+        "key_points": [
+          "⚠️ 最易误解的点1：认为集合中的元素必须是数字",
+          "⚠️ 最易误解的点2：误将相同元素重复记入集合"
+        ],
+        "application": [
+          "典型考查方式1：判断给定的描述是否构成有效集合。",
+          "典型考查方式2：根据集合定义进行元素操作（如并集、交集）"
+        ],
+        "connections": "集合是函数、概率等后续知识的基础，帮助理解更复杂的概念。",
+        "common_mistakes": [
+          "具体错误1：误将有序对当作单个元素处理",
+          "具体错误2：混淆集合与区间的表示"
+        ],
+        "counter_examples": "如 $C=\\{1, 1, 2, 3\\}$，实际上应写作 $\\{1, 2, 3\\}$。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "ku-lp2-cc9e34ca",
+      "textbook_id": "tb-lp-9c239977",
+      "cluster_id": "cl-lp-86fa80e2",
+      "name": "核心知识",
+      "description": "核心内容",
+      "prerequisites": [
+        "ku-lp1-f932c536"
+      ],
+      "related_kus": [],
+      "difficulty": 0.6,
+      "exam_frequency": "high",
+      "question_types": [
+        "解答题"
+      ],
+      "ku_type": "method",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "steps": [
+          "第1步：将方程化为标准形式 $ax^2 + bx + c = 0$。",
+          "第2步：计算判别式 $\\Delta = b^2 - 4ac$。",
+          "第3步：根据 $\\Delta$ 的值，判断根的情况并求解。",
+          "第4步（可选）: 验证所求根是否满足原方程。"
+        ],
+        "example": "解方程 $x^2 - 5x + 6 = 0$。步骤如下：\n1. 标准形式已给定。\n2. $\\Delta = (-5)^2 - 4 \\cdot 1 \\cdot 6 = 1$。\n3. 因为 $\\Delta > 0$，方程有两个不等实根 $x_1, x_2$。利用求根公式得：\n$$x_{1,2} = \frac{5 \\pm \\sqrt{1}}{2} = 3, 2$$",
+        "key_points": [
+          "⚠️ 操作中易卡壳或出错的点1：判别式计算错误。",
+          "点2：忽视二次项系数 $a$ 是否为0的情况。"
+        ],
+        "when_to_use": "适用于解决一元二次方程的问题。",
+        "common_mistakes": [
+          "⚠️ 具体错误1（说清楚错在哪）：误将 $b^2 - ac$ 作为判别式，导致计算结果错误。",
+          "错误2（可选）：直接套用求根公式而未先化简方程。"
+        ]
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    }
+  ]
+}

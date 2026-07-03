@@ -1,0 +1,4137 @@
+{
+  "textbook": {
+    "id": "RENJIAO-G7-MATH-S",
+    "subject": "math",
+    "grade": "G7",
+    "edition": "2022修订",
+    "book_name": "人教版·数学七年级上册"
+  },
+  "clusters": [
+    {
+      "id": "RENJIAO-G7-MATH-S-kc-正数和负数",
+      "name": "正数和负数",
+      "display_order": 1,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G7-MATH-S-kc-有理数的分类与表示",
+      "name": "有理数的分类与表示",
+      "display_order": 2,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G7-MATH-S-kc-相反数与绝对值",
+      "name": "相反数与绝对值",
+      "display_order": 3,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G7-MATH-S-kc-有理数的大小比较",
+      "name": "有理数的大小比较",
+      "display_order": 4,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G7-MATH-S-kc-负数的引入与表示",
+      "name": "负数的引入与表示",
+      "display_order": 5,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G7-MATH-S-kc-数轴与数的对应",
+      "name": "数轴与数的对应",
+      "display_order": 6,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G7-MATH-S-kc-有理数运算的引入",
+      "name": "有理数运算的引入",
+      "display_order": 7,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G7-MATH-S-kc-数轴及其应用",
+      "name": "数轴及其应用",
+      "display_order": 8,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G7-MATH-S-kc-有理数加法法则",
+      "name": "有理数加法法则",
+      "display_order": 9,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G7-MATH-S-kc-有理数加法运算律",
+      "name": "有理数加法运算律",
+      "display_order": 10,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G7-MATH-S-kc-有理数减法与加减混合运算",
+      "name": "有理数减法与加减混合运算",
+      "display_order": 11,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G7-MATH-S-kc-数轴上的距离与运算",
+      "name": "数轴上的距离与运算",
+      "display_order": 12,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G7-MATH-S-kc-有理数减法法则-历史拓展",
+      "name": "有理数减法法则（历史拓展）",
+      "display_order": 13,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G7-MATH-S-kc-有理数乘法法则与运算律",
+      "name": "有理数乘法法则与运算律",
+      "display_order": 14,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G7-MATH-S-kc-有理数除法与混合运算",
+      "name": "有理数除法与混合运算",
+      "display_order": 15,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G7-MATH-S-kc-有理数乘方与科学记数法",
+      "name": "有理数乘方与科学记数法",
+      "display_order": 16,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G7-MATH-S-kc-近似数与精确度",
+      "name": "近似数与精确度",
+      "display_order": 17,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G7-MATH-S-kc-有理数运算与运算律",
+      "name": "有理数运算与运算律",
+      "display_order": 18,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G7-MATH-S-kc-数形结合与转化思想",
+      "name": "数形结合与转化思想",
+      "display_order": 19,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G7-MATH-S-kc-幻方与趣味数学",
+      "name": "幻方与趣味数学",
+      "display_order": 20,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G7-MATH-S-kc-进位制基础与转换",
+      "name": "进位制基础与转换",
+      "display_order": 21,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G7-MATH-S-kc-进位制运算与文化",
+      "name": "进位制运算与文化",
+      "display_order": 22,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G7-MATH-S-kc-整式的基本概念",
+      "name": "整式的基本概念",
+      "display_order": 23,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G7-MATH-S-kc-整式的加减运算",
+      "name": "整式的加减运算",
+      "display_order": 24,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G7-MATH-S-kc-整式的基本概念与识别",
+      "name": "整式的基本概念与识别",
+      "display_order": 25,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G7-MATH-S-kc-整式加减的综合运算与应用",
+      "name": "整式加减的综合运算与应用",
+      "display_order": 26,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G7-MATH-S-kc-有理数加法",
+      "name": "有理数加法",
+      "display_order": 27,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G7-MATH-S-kc-有理数减法与混合运算",
+      "name": "有理数减法与混合运算",
+      "display_order": 28,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G7-MATH-S-kc-历史与拓展",
+      "name": "历史与拓展",
+      "display_order": 29,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G7-MATH-S-kc-有理数的乘法",
+      "name": "有理数的乘法",
+      "display_order": 30,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G7-MATH-S-kc-有理数的除法",
+      "name": "有理数的除法",
+      "display_order": 31,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G7-MATH-S-kc-有理数的混合运算",
+      "name": "有理数的混合运算",
+      "display_order": 32,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G7-MATH-S-kc-有理数的乘方",
+      "name": "有理数的乘方",
+      "display_order": 33,
+      "description": null
+    }
+  ],
+  "units": [
+    {
+      "id": "RENJIAO-G7-MATH-S-ku-乘方的定义",
+      "textbook_id": "RENJIAO-G7-MATH-S",
+      "cluster_id": "RENJIAO-G7-MATH-S-kc-有理数乘方与科学记数法",
+      "name": "乘方的定义",
+      "description": "求n个相同乘数的积的运算叫乘方，结果叫幂；a^n中a叫底数，n叫指数。",
+      "prerequisites": [
+        "有理数乘法法则"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "2^3=2×2×2=8，表示3个2相乘。",
+          "(-3)^2=(-3)×(-3)=9，底数是-3，指数是2。"
+        ],
+        "intuition": "乘方是重复乘法的简便写法，就像乘法是重复加法的简便写法一样，用来表示多个相同数相乘的运算。",
+        "definition": "求n个相同因数a的积的运算叫做乘方，记作a^n，读作a的n次方，其中a叫做底数，n叫做指数，运算结果叫做幂。关键限定：n为正整数（初中阶段）。",
+        "key_points": [
+          "⚠️ 底数和指数不能颠倒位置：a^n中a是底数、n是指数，如2^3表示3个2相乘，不是2个3相乘。",
+          "⚠️ 指数1通常省略不写，但实际存在：a^1=a，指数1表示只有一个因数a。",
+          "⚠️ 负数的乘方要加括号：(-2)^4与-2^4不同，前者底数是-2，后者底数是2。"
+        ],
+        "application": "典型考查：直接计算乘方的值，如2^5；或判断乘方结果的符号，如(-3)^4的符号为正。",
+        "connections": "乘方是后续学习幂的运算、科学记数法、整式乘除的基础，也是从算术到代数的重要过渡。",
+        "common_mistakes": [
+          "将2^3误算为2×3=6，混淆了乘方与乘法。",
+          "计算(-2)^4时得到-16，忘记负数的偶次幂为正，正确应为16。",
+          "将-3^2误算为9，实际应先算3^2=9，再取负得-9。"
+        ],
+        "counter_examples": "乘方与乘法不同：2^3是2×2×2=8，而2×3=6；乘方是相同因数的乘法，乘法可以是不同因数。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G7-MATH-S-ku-乘法交换律",
+      "textbook_id": "RENJIAO-G7-MATH-S",
+      "cluster_id": "RENJIAO-G7-MATH-S-kc-有理数乘法法则与运算律",
+      "name": "乘法交换律",
+      "description": "两个数相乘，交换乘数的位置，积不变：ab=ba。",
+      "prerequisites": [
+        "有理数乘法法则"
+      ],
+      "related_kus": [],
+      "difficulty": 0.1,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "$3 \\times 5 = 5 \\times 3 = 15$，交换后结果相同。",
+          "$(-2) \\times 7 = 7 \\times (-2) = -14$，负数也适用。"
+        ],
+        "intuition": "乘法交换律就像交换两个篮子的水果，总数不变。它揭示了乘法中顺序不影响结果，简化计算。",
+        "definition": "对于任意实数 $a$ 和 $b$，有 $a \\times b = b \\times a$。关键：仅适用于乘法，不适用于减法或除法。",
+        "key_points": [
+          "⚠️ 交换律只适用于乘法，不适用于减法或除法，如 $5-3 \\neq 3-5$。",
+          "⚠️ 多个数相乘时，交换任意两个乘数位置，积不变，如 $2\\times3\\times4=4\\times3\\times2$。",
+          "⚠️ 交换律与结合律常混淆：交换律只改变顺序，结合律改变运算顺序。"
+        ],
+        "application": "典型考查：判断算式是否应用交换律，如 $4\\times9=9\\times4$；或利用交换律简便计算，如 $25\\times17\\times4=25\\times4\\times17=1700$。",
+        "connections": "乘法交换律是运算律的基础，与加法交换律类似，后续学习乘法分配律、因式分解时需灵活运用。",
+        "common_mistakes": [
+          "错误：$6\\div3=3\\div6$，误以为除法可交换。正确：$6\\div3=2$，$3\\div6=0.5$。",
+          "错误：$5-2=2-5$，误以为减法可交换。正确：$5-2=3$，$2-5=-3$。",
+          "错误：$2\\times3\\times4=2\\times(3\\times4)$，混淆交换律与结合律。交换律仅改变顺序，不改变括号。"
+        ],
+        "counter_examples": "减法：$10-3 \\neq 3-10$；除法：$12\\div4 \\neq 4\\div12$。交换律不适用于这些运算。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G7-MATH-S-ku-乘法分配律",
+      "textbook_id": "RENJIAO-G7-MATH-S",
+      "cluster_id": "RENJIAO-G7-MATH-S-kc-有理数乘法法则与运算律",
+      "name": "乘法分配律",
+      "description": "一个数与两个数的和相乘，等于把这个数分别与这两个数相乘，再把积相加：a(b+c)=ab+ac。",
+      "prerequisites": [
+        "有理数乘法法则",
+        "有理数加法法则"
+      ],
+      "related_kus": [],
+      "difficulty": 0.2,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "计算3×(2+5)：3×2+3×5=6+15=21，与直接算3×7=21一致",
+          "计算-2×(4-3)：-2×4+(-2)×(-3)=-8+6=-2，注意负号分配"
+        ],
+        "intuition": "乘法分配律就像分糖果：你有a颗糖，要分给b个小朋友和c个小朋友，总人数是b+c，每人分a颗，总糖数等于分别分给b人和c人的糖数之和。",
+        "definition": "对于任意实数a、b、c，有a(b+c)=ab+ac。关键限定：乘法对加法的分配，运算顺序为先乘后加，且a、b、c可为正数、负数或零。",
+        "key_points": [
+          "⚠️ 分配律只对乘法对加法成立，不能随意推广到加法对乘法（如a+(b×c)≠(a+b)×(a+c)）",
+          "⚠️ 括号前是减号时，分配后括号内每一项都要变号，如a(b-c)=ab-ac，不是ab-c",
+          "⚠️ 分配律可逆用：ab+ac=a(b+c)，提取公因数时注意符号和系数"
+        ],
+        "application": "典型考查：①直接计算，如4×(3+7)用分配律简化；②解方程去括号，如2(x+3)=10，需先分配得2x+6=10；③简便计算，如99×15=(100-1)×15=1500-15=1485。",
+        "connections": "乘法分配律是整式运算的基础，后续学习因式分解（提取公因式）和一元一次方程去括号时反复使用，也是有理数混合运算的关键。",
+        "common_mistakes": [
+          "忘记分配：如3×(2+5)只乘第一个数得3×2+5=11，漏乘3×5",
+          "符号错误：如-2×(4-3)写成-2×4-2×3=-8-6=-14，忘记负号乘负得正",
+          "逆用提取公因数时漏项：如6x+9写成3(2x+3)正确，但6x+9y写成3(2x+3)漏了y"
+        ],
+        "counter_examples": "混淆分配律与结合律：如(2+3)×4，分配律是2×4+3×4=20，而结合律是(2+3)×4=5×4=20，结果相同但过程不同；但a+(b×c)不能分配为(a+b)×(a+c)。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G7-MATH-S-ku-乘法结合律",
+      "textbook_id": "RENJIAO-G7-MATH-S",
+      "cluster_id": "RENJIAO-G7-MATH-S-kc-有理数乘法法则与运算律",
+      "name": "乘法结合律",
+      "description": "三个数相乘，先把前两个数相乘或先把后两个数相乘，积不变：(ab)c=a(bc)。",
+      "prerequisites": [
+        "有理数乘法法则"
+      ],
+      "related_kus": [],
+      "difficulty": 0.1,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "例1：$(2 \\times 3) \\times 4 = 6 \\times 4 = 24$，$2 \\times (3 \\times 4) = 2 \\times 12 = 24$，结果相同。",
+          "例2：$5 \\times (2 \\times 9) = 5 \\times 18 = 90$，$(5 \\times 2) \\times 9 = 10 \\times 9 = 90$，方便计算。"
+        ],
+        "intuition": "乘法结合律告诉我们，当三个数相乘时，可以自由选择先算哪两个数，结果不变。这就像把一堆糖果分成两堆再数，或者先数两堆再合并，总数都一样。",
+        "definition": "对于任意实数 $a, b, c$，有 $(a \\times b) \\times c = a \\times (b \\times c)$。关键限定：只涉及乘法运算，不改变运算顺序但结果不变。",
+        "key_points": [
+          "⚠️ 乘法结合律只改变运算顺序（括号位置），不改变数字顺序。",
+          "⚠️ 乘法结合律与乘法交换律不同：交换律是交换数字位置，结合律是改变分组。",
+          "⚠️ 乘法结合律只适用于纯乘法，不能与加减法混用。"
+        ],
+        "application": "典型考查方式：给出三个数相乘的算式，要求用结合律重新分组并计算；或判断等式是否应用了结合律，如 $(3 \\times 5) \\times 2 = 3 \\times (5 \\times 2)$。",
+        "connections": "乘法结合律是乘法运算的基本性质之一，与交换律、分配律共同构成乘法运算律体系，为后续学习简便计算（如凑整）和代数运算奠定基础。",
+        "common_mistakes": [
+          "错误1：认为 $(a \\times b) \\times c = a \\times (b \\times c)$ 也适用于除法，如 $(8 \\div 4) \\times 2 \\neq 8 \\div (4 \\times 2)$。",
+          "错误2：混淆结合律与交换律，如将 $(2 \\times 3) \\times 4$ 写成 $2 \\times (4 \\times 3)$，这实际用了交换律。",
+          "错误3：在混合运算中错误应用，如 $2 + (3 \\times 4)$ 不能写成 $(2 + 3) \\times 4$。"
+        ],
+        "counter_examples": "容易混淆的是乘法分配律，如 $a \\times (b + c) = a \\times b + a \\times c$，这里涉及加法和乘法，而结合律只涉及乘法。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G7-MATH-S-ku-乘除混合运算顺序",
+      "textbook_id": "RENJIAO-G7-MATH-S",
+      "cluster_id": "RENJIAO-G7-MATH-S-kc-有理数的混合运算",
+      "name": "乘除混合运算顺序",
+      "description": "乘除混合运算先将除法转化为乘法，再确定积的符号，最后求结果。",
+      "prerequisites": [
+        "有理数乘法法则",
+        "有理数除法法则（转化为乘法）"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "例：$(-6) \\div 2 \\times (-3)$，先化除为乘：$(-6) \\times \\frac{1}{2} \\times (-3)$，负号个数为2（偶数），结果为正，绝对值 $6 \\times \\frac{1}{2} \\times 3 = 9$，所以结果为 $9$。",
+          "例：$12 \\div (-4) \\div (-2)$，化除为乘：$12 \\times (-\\frac{1}{4}) \\times (-\\frac{1}{2})$，负号个数为2，结果为正，绝对值 $12 \\times \\frac{1}{4} \\times \\frac{1}{2} = 1.5$，结果为 $1.5$。"
+        ],
+        "intuition": "乘除混合运算就像在一条路上既有前进（乘）又有后退（除），为了不迷路，我们先把所有后退（除法）变成前进（乘法），再统一看方向（符号）和距离（绝对值）。",
+        "definition": "乘除混合运算是指在一个算式中同时包含乘法与除法运算，运算顺序为：先将所有除法转化为乘法（除以一个数等于乘以它的倒数），然后统一确定积的符号（负号个数为奇数时结果为负，偶数时为正），最后计算绝对值的乘积。",
+        "key_points": [
+          "⚠️ 除法转化为乘法时，必须将除数变为它的倒数，不能只变符号或漏掉被除数。",
+          "⚠️ 确定符号时，只数负号的个数（包括转化后乘数中的负号），不要与加减法混淆。",
+          "⚠️ 运算顺序不能随意交换，必须先将所有除法转化为乘法后再统一计算，否则可能出错。"
+        ],
+        "application": "典型考查方式：直接计算乘除混合算式（如 $(-15)\\div(-3)\\times2$），或在实际问题中列式求解（如温度变化、路程问题中的乘除运算）。",
+        "connections": "乘除混合运算建立在有理数乘法法则和倒数概念之上，是后续学习有理数四则混合运算、代数式化简及解方程的基础。",
+        "common_mistakes": [
+          "错误：$(-8) \\div 4 \\times 2 = (-8) \\div 8 = -1$，错在未先化除为乘，直接先算 $4\\times2$，正确应为 $(-8)\\times\\frac{1}{4}\\times2 = -4$。",
+          "错误：$(-6) \\div (-2) \\times 3 = (-6) \\div (-6) = 1$，错在未化除为乘且运算顺序错误，正确应为 $(-6)\\times(-\\frac{1}{2})\\times3 = 9$。",
+          "错误：$(-3) \\times 2 \\div (-6) = (-6) \\div (-6) = 1$，错在未化除为乘，正确应为 $(-3)\\times2\\times(-\\frac{1}{6}) = 1$（此处巧合正确，但方法错误）。"
+        ],
+        "counter_examples": "与加减混合运算混淆：加减混合运算中，符号与数字一起移动（如 $3-2+1$ 可变为 $3+(-2)+1$），但乘除混合运算必须先化除为乘，不能像加减那样直接交换顺序（如 $6\\div2\\times3$ 不能先算 $2\\times3$ 再除，否则得 $1$ 而非正确结果 $9$）。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G7-MATH-S-ku-二进制与十进制转换",
+      "textbook_id": "RENJIAO-G7-MATH-S",
+      "cluster_id": "RENJIAO-G7-MATH-S-kc-进位制基础与转换",
+      "name": "二进制与十进制转换",
+      "description": "二进制数按位乘以2的幂求和得十进制；十进制除以2取余倒序得二进制。",
+      "prerequisites": [
+        "进位制基本概念",
+        "乘方"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "二进制1101转十进制：1×2^3 + 1×2^2 + 0×2^1 + 1×2^0 = 8+4+0+1=13",
+          "十进制13转二进制：13÷2=6余1，6÷2=3余0，3÷2=1余1，1÷2=0余1，倒序得1101"
+        ],
+        "intuition": "二进制就像只有两个数字（0和1）的计数系统，十进制是我们日常用的0-9系统。转换本质是不同“进制”间的翻译，比如二进制“101”相当于十进制“5”，就像用不同语言说同一个数。",
+        "definition": "二进制转十进制：将二进制数的每一位乘以2的（位权）次幂（从右向左，最低位为2^0），然后求和。十进制转二进制：将十进制数不断除以2，记录余数，直到商为0，然后将余数从最后一次到第一次倒序排列。",
+        "key_points": [
+          "⚠️ 位权从右向左从0开始，不是从1开始",
+          "⚠️ 十进制转二进制时，余数要倒序排列，不是正序",
+          "⚠️ 二进制只有0和1，不能出现其他数字"
+        ],
+        "application": "典型考查：给出二进制数要求转十进制，或给出十进制数要求转二进制，常以填空题或选择题出现。也可能结合生活场景（如计算机存储）考查转换过程。",
+        "connections": "二进制是计算机科学的基础，后续学习八进制、十六进制时转换方法类似（底数不同）。也是理解位运算、编码（如ASCII）的前置知识。",
+        "common_mistakes": [
+          "错误1：计算二进制转十进制时，将最左边一位当作2^1而不是2^(n-1)，如101误算为1×2^1+0×2^0+1×2^1=2+0+2=4（正确应为1×2^2+0×2^1+1×2^0=4+0+1=5）",
+          "错误2：十进制转二进制时，忘记将余数倒序，直接按计算顺序写出，如13误写为1011（正确应为1101）",
+          "错误3：二进制数中出现2或更大数字，如102，这是无效二进制数"
+        ],
+        "counter_examples": "容易混淆的是八进制或十六进制转换，它们分别按8和16的幂计算，而二进制始终按2的幂。例如八进制数17转十进制是1×8^1+7×8^0=15，与二进制不同。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G7-MATH-S-ku-二进制加法运算",
+      "textbook_id": "RENJIAO-G7-MATH-S",
+      "cluster_id": "RENJIAO-G7-MATH-S-kc-进位制运算与文化",
+      "name": "二进制加法运算",
+      "description": "0+0=0，0+1=1，1+0=1，1+1=10（逢二进一）。",
+      "prerequisites": [
+        "二进制与十进制转换"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "例1：101 + 011 = 1000。个位1+1=10，写0进1；十位0+1+进位1=10，写0进1；百位1+0+进位1=10，写0进1；千位进位1，得1000。",
+          "例2：1101 + 101 = 10010。从右向左逐位相加，注意进位。"
+        ],
+        "intuition": "二进制加法是计算机运算的基础，就像十进制加法一样，但只有0和1两个数字，满2就要进一位，类似于十进制满10进一。",
+        "definition": "二进制加法是基数为2的加法运算，遵循规则：0+0=0，0+1=1，1+0=1，1+1=10（即本位为0，向高位进1）。关键限定：仅使用数字0和1，逢二进一。",
+        "key_points": [
+          "⚠️ 1+1=10，不是2，因为二进制没有数字2，10表示十进制中的2。",
+          "⚠️ 进位时，高位相加也要考虑低位来的进位，如1+1+进位1=11（即3）。",
+          "⚠️ 多位加法时，从最低位开始逐位相加并处理进位，顺序不能乱。"
+        ],
+        "application": "典型考查方式：直接计算多位二进制加法，或结合十进制转换进行混合运算，如将二进制数相加后转换为十进制数验证结果。",
+        "connections": "二进制加法是二进制运算的基础，后续学习二进制减法、乘法、除法以及计算机中的补码运算都需要掌握。",
+        "common_mistakes": [
+          "错误1：1+1=2，直接写2，忽略了二进制逢二进一，正确应为10。",
+          "错误2：多位加法时忘记进位，如101+011=112，错误地将二进制数字当成十进制处理。",
+          "错误3：进位后高位相加时漏加进位，如11+01=00，正确应为100。"
+        ],
+        "counter_examples": "容易与十进制加法混淆，如1+1在十进制中等于2，但在二进制中等于10（即十进制2），不能写成2。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G7-MATH-S-ku-倒数",
+      "textbook_id": "RENJIAO-G7-MATH-S",
+      "cluster_id": "RENJIAO-G7-MATH-S-kc-有理数乘法法则与运算律",
+      "name": "倒数",
+      "description": "乘积是1的两个数互为倒数。",
+      "prerequisites": [
+        "有理数乘法法则"
+      ],
+      "related_kus": [],
+      "difficulty": 0.2,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "2的倒数是1/2，因为2×1/2=1。",
+          "-3/4的倒数是-4/3，因为(-3/4)×(-4/3)=1。"
+        ],
+        "intuition": "倒数就像数字的‘镜像’——一个数乘以它的倒数，结果总是1。比如，你有一块蛋糕，它的‘倒数’就是能恰好拼回整块蛋糕的那一块。",
+        "definition": "乘积为1的两个数互为倒数。0没有倒数，因为任何数乘以0都得0，不可能得1。",
+        "key_points": [
+          "⚠️ 0没有倒数，因为0乘任何数都得0，不等于1。",
+          "⚠️ 倒数与原数的符号相同：正数的倒数仍为正，负数的倒数仍为负。",
+          "⚠️ 倒数不是‘相反数’：相反数是和为0，倒数是积为1。"
+        ],
+        "application": "典型考查：求一个数的倒数（含整数、分数、小数、带分数）；利用倒数解方程，如ax=b时，两边乘以a的倒数。",
+        "connections": "倒数与分数除法紧密相关：除以一个数等于乘以它的倒数。也为后续学习比例、分式方程和有理数运算打下基础。",
+        "common_mistakes": [
+          "误以为0有倒数：0乘任何数都得0，不可能等于1，所以0没有倒数。",
+          "混淆倒数与相反数：如认为-2的倒数是2，实际应为-1/2。",
+          "带分数求倒数时未先化为假分数：如1又1/2的倒数，应先化为3/2，再得2/3。"
+        ],
+        "counter_examples": "相反数与倒数混淆：2的相反数是-2（和为0），而2的倒数是1/2（积为1），两者完全不同。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G7-MATH-S-ku-倒数定义",
+      "textbook_id": "RENJIAO-G7-MATH-S",
+      "cluster_id": "RENJIAO-G7-MATH-S-kc-有理数的乘法",
+      "name": "倒数定义",
+      "description": "乘积是1的两个数互为倒数。",
+      "prerequisites": [
+        "有理数乘法法则"
+      ],
+      "related_kus": [],
+      "difficulty": 0.2,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "2的倒数是1/2，因为2×1/2=1",
+          "3/4的倒数是4/3，因为3/4×4/3=1"
+        ],
+        "intuition": "倒数就像数字的“搭档”，两个数相乘恰好等于1，比如2和1/2，一个变大另一个就变小，互相抵消。",
+        "definition": "乘积为1的两个数互为倒数。0没有倒数，因为任何数与0相乘都得0，不可能为1。",
+        "key_points": [
+          "⚠️ 倒数不是“反过来写”，而是分子分母互换（如2的倒数是1/2，不是2/1）",
+          "⚠️ 0没有倒数，因为0乘任何数都得0，不等于1",
+          "⚠️ 1的倒数是它本身，因为1×1=1"
+        ],
+        "application": "考查求一个数的倒数（整数、分数、小数需先化成分数）；在分数除法计算中，将除法转化为乘法时使用倒数。",
+        "connections": "倒数与分数除法紧密相关：除以一个数等于乘以它的倒数。也是后续学习比例、方程和函数的基础。",
+        "common_mistakes": [
+          "误认为0有倒数，实际上0乘任何数都得0，不可能得1",
+          "将带分数直接取倒数，如1又1/2的倒数写成2/1又1/2，应先化为假分数3/2，再取倒数2/3",
+          "混淆倒数和相反数，如认为-2的倒数是2，实际应为-1/2"
+        ],
+        "counter_examples": "相反数与倒数不同：相反数是和为0的两个数（如2和-2），而倒数是积为1的两个数（如2和1/2），不要混淆。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G7-MATH-S-ku-八卦与二进制",
+      "textbook_id": "RENJIAO-G7-MATH-S",
+      "cluster_id": "RENJIAO-G7-MATH-S-kc-进位制运算与文化",
+      "name": "八卦与二进制",
+      "description": "阳爻对应1，阴爻对应0，八卦符号可视为二进制数。",
+      "prerequisites": [
+        "二进制与十进制转换"
+      ],
+      "related_kus": [],
+      "difficulty": 0.6,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "乾卦☰：三个阳爻，对应二进制111，十进制7。",
+          "坤卦☷：三个阴爻，对应二进制000，十进制0。",
+          "离卦☲：中间阳爻，上下阴爻，对应二进制101，十进制5。"
+        ],
+        "intuition": "八卦是古人用符号表示自然现象的系统，而二进制是现代计算机的基础。将阳爻（—）看作1、阴爻（- -）看作0，八卦符号就变成了三位二进制数，揭示了古老智慧与数学逻辑的奇妙联系。",
+        "definition": "八卦由三个爻（阳爻—或阴爻- -）组成，从上到下排列。若将阳爻对应1、阴爻对应0，则每个八卦符号对应一个三位二进制数（如乾卦☰对应111），数值范围0到7。",
+        "key_points": [
+          "⚠️ 八卦的爻位顺序是从上到下读，而二进制通常从高位到低位（从左到右），需注意对应关系。",
+          "⚠️ 阳爻对应1、阴爻对应0是人为约定，并非唯一映射，但这是最常用的类比。",
+          "⚠️ 八卦只有8种组合（2^3），而二进制三位数有8个值，一一对应，但八卦有特定名称和象征意义。"
+        ],
+        "application": "典型考查方式：给出一个八卦符号，要求写出对应的二进制数和十进制数；或反过来，根据二进制数画出八卦符号。",
+        "connections": "这是二进制与古代文化的跨学科联系，为后续学习二进制运算、计算机编码（如ASCII）以及更复杂的符号系统（如六十四卦）打下基础。",
+        "common_mistakes": [
+          "学生常将八卦的爻位顺序搞反，如把坎卦☵（010）误读为100，因为从上到下读与从左到右读不一致。",
+          "误以为八卦的二进制数值与卦名有直接数学关系，如乾卦（111）最大，但卦名含义并非基于数值大小。",
+          "混淆阴阳爻与0/1的对应，如将阴爻对应1、阳爻对应0，导致二进制数颠倒。"
+        ],
+        "counter_examples": "六十四卦是八卦两两组合（六爻），对应六位二进制数（0-63），与八卦的三位二进制不同，不能混淆。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G7-MATH-S-ku-八进制与十进制转换",
+      "textbook_id": "RENJIAO-G7-MATH-S",
+      "cluster_id": "RENJIAO-G7-MATH-S-kc-进位制基础与转换",
+      "name": "八进制与十进制转换",
+      "description": "八进制数按位乘以8的幂求和得十进制；十进制除以8取余倒序得八进制。",
+      "prerequisites": [
+        "进位制基本概念",
+        "乘方"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "八进制数(237)₈转十进制：2×8²+3×8¹+7×8⁰=2×64+3×8+7=128+24+7=159",
+          "十进制数159转八进制：159÷8=19余7，19÷8=2余3，2÷8=0余2，余数倒序得(237)₈"
+        ],
+        "intuition": "八进制与十进制转换就像不同语言间的翻译，八进制用0-7八个数字，十进制用0-9十个数字，转换是为了在不同进制间准确表达同一个数值。",
+        "definition": "八进制转十进制：将八进制数按位展开，每位数字乘以8的相应幂次（从右向左幂次从0开始），再求和。十进制转八进制：将十进制数反复除以8，取每次的余数（从最后一次余数开始倒序排列），直到商为0。",
+        "key_points": [
+          "⚠️ 八进制数字只有0-7，没有8和9，遇到8或9说明不是合法八进制数",
+          "⚠️ 转换时幂次从0开始，最右边一位是8^0，不是8^1",
+          "⚠️ 十进制转八进制时，余数要倒序排列，不能正序"
+        ],
+        "application": "典型考查：给出八进制数求十进制数，或给出十进制数求八进制数，常以填空题或计算题形式出现，需注意进位和幂次计算。",
+        "connections": "八进制是计算机科学中常用进制，与二进制、十六进制转换有规律（每位八进制对应3位二进制），为后续学习不同进制间转换打下基础。",
+        "common_mistakes": [
+          "误将八进制数字8或9当作合法数字，如(189)₈不合法，因为8和9不在0-7范围内",
+          "幂次从1开始计算，如将(23)₈误算为2×8¹+3×8⁰=16+3=19，正确应为2×8¹+3×8⁰=16+3=19（实际正确，但常见错误是忘记最右边是8⁰）",
+          "十进制转八进制时余数正序排列，如159÷8得余数7,3,2，误写为(732)₈，正确应为(237)₈"
+        ],
+        "counter_examples": "八进制与二进制混淆：八进制每位对应3位二进制，但转换时不能直接套用二进制方法；八进制与十进制转换是不同基数的直接转换，与二进制无关。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G7-MATH-S-ku-六十进制加法",
+      "textbook_id": "RENJIAO-G7-MATH-S",
+      "cluster_id": "RENJIAO-G7-MATH-S-kc-进位制运算与文化",
+      "name": "六十进制加法",
+      "description": "逢六十进一，如角度、时间单位换算。",
+      "prerequisites": [
+        "进位制基本概念"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "例：35分 + 40分 = 75分，满60进1，得1小时15分",
+          "例：45°30′ + 20°45′ = 65°75′，75′满60进1，得66°15′"
+        ],
+        "intuition": "就像时钟上60分钟进1小时，或者角度中60分进1度，当某一位的数字达到60时，就要向前一位进1，这是一种基于60的进位制。",
+        "definition": "六十进制加法是指两个或以上以60为基数的数相加时，每位数值满60则向高位进1，低位保留余数，且每位数字取值范围为0到59。",
+        "key_points": [
+          "⚠️ 进位条件是满60而非满10，容易误用十进制规则",
+          "⚠️ 每位数字最大是59，超过59才进位，不是60",
+          "⚠️ 进位后高位加1，低位要减去60，不能直接写60"
+        ],
+        "application": "典型考查方式：给出时间或角度加法算式，要求写出结果并进位；或结合生活情境（如计算两段时长之和）进行六十进制加法运算。",
+        "connections": "六十进制加法是时间、角度单位换算的基础，后续学习角度加减、时间计算、弧度制时都会用到，与十进制加法原理相通但基数不同。",
+        "common_mistakes": [
+          "错误1：35分+40分直接写75分，忘记满60进1，导致结果多出60分",
+          "错误2：45°30′+20°45′算成65°75′后，误将75′当作75分而不进位",
+          "错误3：进位时只加1到高位，但低位忘记减去60，如75′进位后低位仍写75"
+        ],
+        "counter_examples": "容易与十进制加法混淆，如35分+40分误算为75分（不处理进位），正确应为1小时15分。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G7-MATH-S-ku-列代数式表示数量关系",
+      "textbook_id": "RENJIAO-G7-MATH-S",
+      "cluster_id": "RENJIAO-G7-MATH-S-kc-整式加减的综合运算与应用",
+      "name": "列代数式表示数量关系",
+      "description": "用字母表示数，根据题意列出单项式或多项式。",
+      "prerequisites": [
+        "单项式的概念",
+        "多项式的概念"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "例1：'m的3倍与n的差' → 3m - n，注意'差'是减法。",
+          "例2：'a与b的平方和' → a² + b²，区别于(a+b)²。"
+        ],
+        "intuition": "就像用'x'代表未知数，列代数式是把文字描述翻译成数学语言，比如'比a的3倍多2'就是3a+2，让复杂关系变得简洁可算。",
+        "definition": "列代数式是用运算符号（加、减、乘、除、乘方等）把数和表示数的字母连接而成的式子，关键要准确识别数量关系中的运算顺序和关键词。",
+        "key_points": [
+          "⚠️ 混淆运算顺序：如'x与y的和的2倍'误写成x+2y，正确应为2(x+y)。",
+          "⚠️ 忽略单位一致性：如'每千克a元，买b克'，需先统一单位再列式。",
+          "⚠️ 漏掉括号：如'比a的2倍少3的数的平方'，正确为(2a-3)²，而非2a-3²。"
+        ],
+        "application": "典型考查：根据文字描述列代数式，如'某商品原价a元，打八折后降价b元，现价多少？'；或根据图形列式，如长方形长比宽多3，宽为x，求周长。",
+        "connections": "列代数式是小学算术到初中代数的桥梁，后续学习方程、函数时，都需要先正确列出代数式表示数量关系。",
+        "common_mistakes": [
+          "错误1：'x的2倍与y的和'写成2x+y，但若理解为'x的2倍与y的和'，正确是2x+y，但若原意是'x与y的和的2倍'，则错写成2x+y，正确应为2(x+y)。",
+          "错误2：'a除以b的商加c'写成a÷b+c，但若原意是'a除以(b+c)'，则错，正确应为a/(b+c)。",
+          "错误3：'比a的平方多3的数'写成a²+3，但若误写成a+3²，则错在平方只作用于a。"
+        ],
+        "counter_examples": "容易混淆：'a与b的平方和'是a²+b²，而'a与b的和的平方'是(a+b)²，两者运算顺序不同，结果也不同。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G7-MATH-S-ku-利用数轴比较有理数大小",
+      "textbook_id": "RENJIAO-G7-MATH-S",
+      "cluster_id": "RENJIAO-G7-MATH-S-kc-数轴及其应用",
+      "name": "利用数轴比较有理数大小",
+      "description": "在数轴上从左到右的顺序就是从小到大的顺序，可直观比较任意两个有理数的大小。",
+      "prerequisites": [
+        "有理数的大小比较法则",
+        "用数轴上的点表示有理数"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "比较-3和2：在数轴上，-3在2的左边，所以-3<2。",
+          "比较-4和-1：-4在-1的左边，所以-4<-1。"
+        ],
+        "intuition": "就像排队时位置越靠左的人年龄越小，数轴上越靠左的点表示的数越小，这让我们能直观比较任意两个有理数的大小。",
+        "definition": "在数轴上，对于任意两个有理数a和b，如果a对应的点在b对应的点的左边，则a<b；如果a在b的右边，则a>b；如果重合则相等。关键限定：数轴方向必须从左到右递增。",
+        "key_points": [
+          "⚠️ 数轴方向固定：从左到右表示数从小到大，不能颠倒方向。",
+          "⚠️ 负数比较：负数在原点左边，绝对值大的负数反而更小（如-5在-3左边）。",
+          "⚠️ 正数与负数：所有正数都在原点右边，所有负数都在左边，因此正数总大于负数。"
+        ],
+        "application": "典型考查：给出数轴上几个点的位置，判断对应数的大小关系；或直接比较两个有理数（含负数）的大小，要求用数轴解释。",
+        "connections": "数轴比较是有理数大小比较的基础，后续学习不等式、数轴上的距离和绝对值时，都依赖这一直观工具。",
+        "common_mistakes": [
+          "错误认为负数中绝对值大的数更大（如认为-5>-3），实际数轴上-5在左边，应更小。",
+          "忽略数轴方向，误以为右边数小（如把数轴画成从右到左递增）。",
+          "比较正负数时，忘记正数总大于负数（如认为-1>0.5）。"
+        ],
+        "counter_examples": "容易混淆的是绝对值比较：例如-5和-3，绝对值|-5|>|-3|，但数轴上-5在-3左边，所以-5<-3，说明绝对值大的负数反而小。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G7-MATH-S-ku-单项式的定义",
+      "textbook_id": "RENJIAO-G7-MATH-S",
+      "cluster_id": "RENJIAO-G7-MATH-S-kc-整式的基本概念",
+      "name": "单项式的定义",
+      "description": "数或字母的积叫作单项式，单独的一个数或一个字母也是单项式。",
+      "prerequisites": [
+        "代数式"
+      ],
+      "related_kus": [],
+      "difficulty": 0.2,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "$3x$：数字3与字母x的乘积",
+          "$-2ab^2$：系数为-2，字母部分为 $ab^2$",
+          "$7$：单独的一个数，也是单项式"
+        ],
+        "intuition": "就像用积木搭房子，每个积木（数或字母）通过乘法组合成一个整体，这个整体就是单项式。它帮我们把复杂代数式拆解成基本单元。",
+        "definition": "由数或字母的乘积组成的代数式称为单项式，单独的一个数或一个字母也是单项式。关键限定：只含乘法运算，不含加减运算。",
+        "key_points": [
+          "⚠️ 单项式中不能有加减号，如 $a+b$ 不是单项式",
+          "⚠️ 分母中不能含有字母，如 $\\frac{1}{x}$ 不是单项式",
+          "⚠️ 单独的数字或字母（如 $5$ 或 $x$）也是单项式"
+        ],
+        "application": "考查判断一个代数式是否为单项式，常与系数、次数结合出题；也用于化简求值，如识别单项式并合并同类项。",
+        "connections": "单项式是整式的基础，多个单项式相加构成多项式，后续学习合并同类项、整式乘除都依赖对单项式的理解。",
+        "common_mistakes": [
+          "误认为 $\\frac{1}{x}$ 是单项式，实际分母含字母不是单项式",
+          "误认为 $a+b$ 是单项式，实际含加法运算，是多项式",
+          "误认为 $0$ 不是单项式，实际单独的数都是单项式"
+        ],
+        "counter_examples": "$\\frac{x}{2}$ 是单项式（可看作 $\\frac{1}{2}x$），但 $\\frac{2}{x}$ 不是，因为分母含字母，属于分式。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G7-MATH-S-ku-单项式的次数",
+      "textbook_id": "RENJIAO-G7-MATH-S",
+      "cluster_id": "RENJIAO-G7-MATH-S-kc-整式的基本概念",
+      "name": "单项式的次数",
+      "description": "一个单项式中所有字母的指数的和叫作单项式的次数，非零数的次数为0。",
+      "prerequisites": [
+        "单项式的定义"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "3x²y：字母x的指数2，y的指数1，次数=2+1=3",
+          "-5ab³c：a指数1，b指数3，c指数1，次数=1+3+1=5",
+          "7：不含字母，次数为0"
+        ],
+        "intuition": "单项式的次数就像给字母的‘总工作量’计数，每个字母的指数就是它的‘贡献值’，把所有字母的贡献加起来就是次数。比如3x²y中，x贡献2，y贡献1，总次数就是3。",
+        "definition": "一个单项式中所有字母的指数的和叫作单项式的次数。特别地，非零常数（如5、-3）的次数为0，因为不含字母。注意：系数（数字因数）和字母的指数无关，只计算字母的指数。",
+        "key_points": [
+          "⚠️ 次数只计算字母的指数，不计算数字的指数（如5²x中，5²的指数2不算，次数是1）",
+          "⚠️ 常数项（如7）的次数是0，不是1，因为不含字母",
+          "⚠️ 单项式中字母的指数为1时，通常省略不写，但计算次数时要算上（如xy中x和y的指数都是1，次数为2）"
+        ],
+        "application": "典型考查方式：①直接求给定单项式的次数；②在多项式中找出次数最高的项，从而确定多项式的次数。",
+        "connections": "单项式的次数是后续学习多项式次数的基础（多项式的次数取各项中最高次数），也是整式运算（如合并同类项）中判断项是否同类的重要依据。",
+        "common_mistakes": [
+          "误把系数中的指数算入次数：如4²x³，学生可能算次数为2+3=5，正确次数是3（只算字母x的指数）",
+          "忽略指数1：如单项式xy，学生可能认为次数是0或1，正确次数是2（x和y的指数都是1）",
+          "常数项次数误为1：如单项式8，学生可能认为次数是1，正确次数是0"
+        ],
+        "counter_examples": "容易与系数混淆：单项式-2x³中，系数是-2，次数是3（字母x的指数）。次数不是系数，也不是数字的指数。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G7-MATH-S-ku-单项式的系数",
+      "textbook_id": "RENJIAO-G7-MATH-S",
+      "cluster_id": "RENJIAO-G7-MATH-S-kc-整式的基本概念",
+      "name": "单项式的系数",
+      "description": "单项式中的数字因数叫作单项式的系数，系数为1或-1时通常省略不写。",
+      "prerequisites": [
+        "单项式的定义"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "$-7a^2b$ 的系数是 $-7$，因为数字因数是 $-7$。",
+          "$\\frac{2}{3}xy$ 的系数是 $\\frac{2}{3}$，分数也是系数。",
+          "$m$ 的系数是 $1$，因为 $m=1\\cdot m$，但1省略不写。"
+        ],
+        "intuition": "就像买东西时标签上的价格数字，单项式的系数就是那个数字部分，它告诉我们这个项有多少个字母相乘的倍数。",
+        "definition": "单项式中的数字因数（包括正负号）叫作单项式的系数。注意：系数必须包含前面的符号，且当系数为1或-1时，数字1通常省略不写。",
+        "key_points": [
+          "⚠️ 系数必须包含正负号，如 $-3x$ 的系数是 $-3$ 而不是 $3$。",
+          "⚠️ 系数为1或-1时，数字1省略，但符号不能省略，如 $x$ 的系数是 $1$，$-x$ 的系数是 $-1$。",
+          "⚠️ 单独一个数字（如 $5$）的系数就是它本身，因为可以看作 $5x^0$。"
+        ],
+        "application": "常见考查：给出单项式直接写系数，或判断系数正负；在化简求值题中，先合并同类项再代入系数计算。",
+        "connections": "系数是整式运算的基础，后续学习合并同类项时，需要先识别系数才能正确加减；也是解一元一次方程时移项变号的依据。",
+        "common_mistakes": [
+          "错误：认为 $x$ 没有系数。正确：系数是1，只是省略不写。",
+          "错误：认为 $-x$ 的系数是 $x$。正确：系数是 $-1$，数字因数是 $-1$。",
+          "错误：把 $\\pi$ 当作字母，如 $\\pi r^2$ 的系数是 $\\pi$（$\\pi$ 是常数，不是字母）。"
+        ],
+        "counter_examples": "容易混淆的是单项式的次数：系数是数字部分，次数是所有字母指数的和。例如 $3x^2y$ 中，系数是 $3$，次数是 $2+1=3$。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G7-MATH-S-ku-单项式的系数和次数",
+      "textbook_id": "RENJIAO-G7-MATH-S",
+      "cluster_id": "RENJIAO-G7-MATH-S-kc-整式的基本概念与识别",
+      "name": "单项式的系数和次数",
+      "description": "单项式中的数字因数叫系数，所有字母指数的和叫次数。",
+      "prerequisites": [
+        "单项式的概念"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "例：$-2a^2b$ 的系数是 $-2$，次数是 $2+1=3$。",
+          "例：$\\frac{1}{3}xy^3$ 的系数是 $\\frac{1}{3}$，次数是 $1+3=4$。"
+        ],
+        "intuition": "系数就像买东西时的单价，次数就像买了几种不同商品的总数量，帮助我们快速了解单项式的结构和大小。",
+        "definition": "单项式中的数字因数（包括符号）称为系数；所有字母的指数之和称为次数，常数项的次数为0。",
+        "key_points": [
+          "⚠️ 系数必须包含前面的正负号，如 $-3x$ 的系数是 $-3$ 而非 $3$。",
+          "⚠️ 次数是所有字母指数之和，如 $x^2y$ 的次数是 $2+1=3$，而非 $2$。",
+          "⚠️ 单独一个数字（如 $5$）的次数是 $0$，因为可看作 $5x^0$。"
+        ],
+        "application": "常考题型：给出单项式直接写系数和次数；或根据条件（如次数为 $5$）求字母参数的值。",
+        "connections": "单项式的系数和次数是后续学习多项式、合并同类项（系数相加减）以及整式乘除的基础。",
+        "common_mistakes": [
+          "错误1：认为 $x$ 的系数是 $0$，实际是 $1$（省略了 $1$）。",
+          "错误2：计算 $2xy^2$ 的次数时只算 $y$ 的指数 $2$，漏掉 $x$ 的指数 $1$，正确应为 $1+2=3$。",
+          "错误3：把 $\\frac{2}{x}$ 当作单项式，实际分母含字母，不是整式。"
+        ],
+        "counter_examples": "多项式如 $2x+3$ 不是单项式，没有统一的系数和次数；$\\pi x$ 的系数是 $\\pi$（无理数），不是字母。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G7-MATH-S-ku-去括号法则",
+      "textbook_id": "RENJIAO-G7-MATH-S",
+      "cluster_id": "RENJIAO-G7-MATH-S-kc-整式的加减运算",
+      "name": "去括号法则",
+      "description": "用括号外的数乘括号内的每一项，再把所得的积相加；括号前是正号去括号不变号，负号去括号各项变号。",
+      "prerequisites": [
+        "分配律"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "例1：$3(2x-5)=3\\times2x+3\\times(-5)=6x-15$，系数乘每一项。",
+          "例2：$-(4a-3b+2)=-4a+3b-2$，负号使每一项变号。"
+        ],
+        "intuition": "去括号就像拆礼物：括号外的数要分给里面的每一项，而括号前的正负号决定了礼物是原样保留还是全部变号。",
+        "definition": "去括号法则：用括号外的数（或式子）乘以括号内每一项，再把积相加；若括号前是正号，去括号后各项符号不变；若括号前是负号，去括号后各项符号都改变。注意：括号前有系数时，系数与每一项相乘，符号处理同上。",
+        "key_points": [
+          "⚠️ 括号前是负号时，去括号后每一项都要变号，包括第一项。",
+          "⚠️ 括号外有系数时，系数要乘以括号内的每一项，不能漏乘。",
+          "⚠️ 括号内有多项时，注意符号与系数的结合，避免符号错误。"
+        ],
+        "application": "典型考查：化简代数式（如 $3(2x-1)-2(x+4)$）和解一元一次方程（如 $2(x-3)=5x+1$ 先去括号）。",
+        "connections": "去括号是整式运算的基础，后续学习合并同类项、解方程、因式分解时都会反复用到。",
+        "common_mistakes": [
+          "错误1：$-(x-3)=-x-3$，错在只给第一项变号，第二项没变。正确应为 $-x+3$。",
+          "错误2：$2(3x+4)=6x+4$，错在漏乘第二项。正确应为 $6x+8$。",
+          "错误3：$-(2x-1)=-2x-1$，错在符号处理错误，负号应使 $-1$ 变 $+1$。"
+        ],
+        "counter_examples": "与乘法分配律混淆：去括号本质是分配律，但符号处理是独立规则。例如 $-(x-2)$ 不能直接写成 $-x-2$，而应写成 $-x+2$。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G7-MATH-S-ku-合并同类项法则",
+      "textbook_id": "RENJIAO-G7-MATH-S",
+      "cluster_id": "RENJIAO-G7-MATH-S-kc-整式的加减运算",
+      "name": "合并同类项法则",
+      "description": "把多项式中的同类项合并成一项，系数相加，字母和指数不变。",
+      "prerequisites": [
+        "同类项的定义"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "例：$3x^2y + 5x^2y = (3+5)x^2y = 8x^2y$，说明字母 $x^2y$ 不变，系数相加。",
+          "例：$4ab - 2ab + 7 = (4-2)ab + 7 = 2ab + 7$，注意常数项单独保留。"
+        ],
+        "intuition": "合并同类项就像整理书包：把相同科目的书（字母相同、指数相同）放在一起，只数它们的数量（系数相加），书的种类不变。",
+        "definition": "在多项式中，将所含字母相同且相同字母的指数也相同的项（同类项）合并为一项，合并时系数相加，字母和字母的指数保持不变。",
+        "key_points": [
+          "⚠️ 同类项必须同时满足“字母相同”和“相同字母的指数相同”，缺一不可。",
+          "⚠️ 合并时只对系数进行加减运算，字母部分（包括指数）完全照抄，不能改变。",
+          "⚠️ 常数项（不含字母的项）都是同类项，可以合并。"
+        ],
+        "application": "典型考查：给出多项式要求合并同类项，或判断两个项是否为同类项；也常出现在化简求值题中，先合并再代入数值计算。",
+        "connections": "合并同类项是整式加减运算的基础，后续学习去括号、解方程时都需要先合并同类项简化式子。",
+        "common_mistakes": [
+          "错误：把 $2x + 3y$ 合并成 $5xy$，错在字母不同不能合并。",
+          "错误：把 $4x^2 + 2x$ 合并成 $6x^2$，错在指数不同（$x^2$ 与 $x$）不是同类项。",
+          "错误：合并 $3a + 2a$ 时写成 $5a^2$，错在指数不应相加，应保持 $a$ 的指数为1。"
+        ],
+        "counter_examples": "易混淆：$3x^2y$ 与 $3xy^2$ 不是同类项，因为 $x$ 和 $y$ 的指数不同，不能合并。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G7-MATH-S-ku-同类项的定义",
+      "textbook_id": "RENJIAO-G7-MATH-S",
+      "cluster_id": "RENJIAO-G7-MATH-S-kc-整式的加减运算",
+      "name": "同类项的定义",
+      "description": "所含字母相同，并且相同字母的指数也相同的项叫作同类项，几个常数项也是同类项。",
+      "prerequisites": [
+        "单项式的定义"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "$4x^2y$ 与 $-2x^2y$：字母都是 $x$、$y$，且 $x$ 指数为2，$y$ 指数为1，是同类项。",
+          "$5$ 与 $-3$：都是常数项，是同类项。"
+        ],
+        "intuition": "同类项就像超市里同一种商品的不同包装，只有相同种类和规格的才能合并计算，方便整理和简化。",
+        "definition": "所含字母相同，并且相同字母的指数也相同的项叫作同类项，几个常数项也是同类项。关键：字母相同、对应指数相同、常数项视为同类。",
+        "key_points": [
+          "⚠️ 字母顺序不同但字母相同仍是同类项，如 $3ab$ 与 $-2ba$。",
+          "⚠️ 系数不同不影响同类项判断，如 $5x^2$ 与 $-x^2$ 是同类项。",
+          "⚠️ 常数项都是同类项，无论数值大小，如 $3$ 与 $-7$。"
+        ],
+        "application": "典型考查：给出多项式中找出所有同类项，或判断一组项是否为同类项并说明理由。",
+        "connections": "同类项是合并同类项的基础，后续学习整式加减时，必须先识别同类项才能进行系数加减。",
+        "common_mistakes": [
+          "误认为 $2a^2b$ 与 $3ab^2$ 是同类项：错在只关注字母相同，忽略了指数必须对应相同。",
+          "认为 $4x$ 与 $4y$ 是同类项：错在字母不同，即使系数相同也不是同类项。",
+          "认为 $5$ 与 $5x$ 是同类项：错在常数项与含字母项不能混为一谈。"
+        ],
+        "counter_examples": "$3x^2y$ 与 $3xy^2$：字母相同但 $x$ 和 $y$ 的指数不同，不是同类项。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G7-MATH-S-ku-多个有理数相乘的符号法则",
+      "textbook_id": "RENJIAO-G7-MATH-S",
+      "cluster_id": "RENJIAO-G7-MATH-S-kc-有理数乘法法则与运算律",
+      "name": "多个有理数相乘的符号法则",
+      "description": "几个不为0的数相乘，负乘数个数为偶数时积为正，奇数时积为负；有乘数为0则积为0。",
+      "prerequisites": [
+        "有理数乘法法则"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "(-2)×3×(-4)=24：两个负号（偶数），积为正",
+          "(-1)×(-2)×(-3)=-6：三个负号（奇数），积为负",
+          "(-5)×0×7=0：有0因数，直接得0"
+        ],
+        "intuition": "就像开关的“负负得正”：每次乘以负数相当于翻转方向，翻转偶数次回到原方向，奇数次则相反。零乘任何数都归零，如同开关被切断。",
+        "definition": "多个有理数相乘（均不为0），积的符号由负因数的个数决定：负因数个数为偶数时积为正，奇数时积为负；若至少有一个因数为0，则积为0。",
+        "key_points": [
+          "⚠️ 只数负号的个数，不看正号或数字大小",
+          "⚠️ 零乘任何数都得零，此时符号法则不适用",
+          "⚠️ 负号个数为0（偶数）时积也为正"
+        ],
+        "application": "直接考查：给出一组有理数乘法算式，要求判断积的符号或计算结果；混合运算：在含多个乘法的算式中，先定符号再算绝对值，简化计算步骤。",
+        "connections": "是七年级有理数乘法的核心规则，为后续学习乘方（如(-2)^3的符号判断）和整式乘法（如负系数相乘）奠定基础。",
+        "common_mistakes": [
+          "误以为负号个数为偶数时积为负，如(-1)×2×(-3)算成-6（实际应为6）",
+          "忽略零因数，先算符号再乘零，如(-2)×0×(-3)先算符号为正，再乘得0（正确直接得0）",
+          "把正号也算进去，如(-1)×(+2)×(-3)数出3个符号（含正号）误判为奇数"
+        ],
+        "counter_examples": "与加法混淆：加法中负号个数决定和的正负，但乘法中负号个数决定积的符号，且乘法有零的特殊性。例如(-2)+(-3)=-5（负号个数2，和为负），而(-2)×(-3)=6（负号个数2，积为正）。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G7-MATH-S-ku-多项式的定义",
+      "textbook_id": "RENJIAO-G7-MATH-S",
+      "cluster_id": "RENJIAO-G7-MATH-S-kc-整式的基本概念",
+      "name": "多项式的定义",
+      "description": "几个单项式的和叫作多项式，每个单项式叫作多项式的项，不含字母的项叫作常数项。",
+      "prerequisites": [
+        "单项式的定义"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "$3x^2 + 2x - 1$ 是一个多项式，项为 $3x^2$、$2x$、$-1$，常数项是 $-1$。",
+          "$-5a^3 + \\frac{1}{2}ab - 7$ 是多项式，项为 $-5a^3$、$\\frac{1}{2}ab$、$-7$，常数项是 $-7$。"
+        ],
+        "intuition": "多项式就像用加号连接起来的积木块，每个积木块（单项式）有自己的系数和字母部分，方便我们描述和计算更复杂的数量关系。",
+        "definition": "由若干个单项式通过加法运算组成的代数式叫作多项式，其中每个单项式叫作多项式的项，不含字母的项叫作常数项。注意：减法可以视为加上负的单项式。",
+        "key_points": [
+          "⚠️ 多项式必须由单项式相加组成，不能包含除法或字母在分母中。",
+          "⚠️ 项包括它前面的符号，例如 $3x-2$ 的项是 $3x$ 和 $-2$，而不是 $3x$ 和 $2$。",
+          "⚠️ 常数项是数字，不含字母，如 $5$ 或 $-3$。"
+        ],
+        "application": "典型考查：判断一个代数式是否为多项式（注意分母和根号）；指出多项式的项和常数项，如 $2x^2 - 3x + 5$ 的项和常数项分别是什么。",
+        "connections": "多项式是单项式的自然延伸，后续学习整式加减、乘法、因式分解都基于多项式的概念，也是方程和函数的基础。",
+        "common_mistakes": [
+          "误把 $3x^2 + 2x - 1$ 的项数说成 2 项，错在忽略了 $-1$ 这一项（常数项）。",
+          "认为 $x^2 + \\frac{1}{x}$ 是多项式，错在 $\\frac{1}{x}$ 不是单项式（字母在分母中）。",
+          "把 $2x - 3y$ 的项说成 $2x$ 和 $3y$，错在忽略了减号，正确项应为 $2x$ 和 $-3y$。"
+        ],
+        "counter_examples": "$\\frac{1}{x} + 2$ 不是多项式，因为 $\\frac{1}{x}$ 不是单项式（分母含字母）；$\\sqrt{x} + 3$ 也不是，因为 $\\sqrt{x}$ 不是整式。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G7-MATH-S-ku-多项式的次数",
+      "textbook_id": "RENJIAO-G7-MATH-S",
+      "cluster_id": "RENJIAO-G7-MATH-S-kc-整式的基本概念",
+      "name": "多项式的次数",
+      "description": "多项式里次数最高的项的次数叫作多项式的次数。",
+      "prerequisites": [
+        "多项式的定义",
+        "单项式的次数"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "$3x^2 + 2x + 1$ 的次数是2，因为 $3x^2$ 次数最高",
+          "$5x^3y - 2xy^2 + 7$ 的次数是4，因为 $5x^3y$ 中指数和为3+1=4"
+        ],
+        "intuition": "多项式的次数就像给多项式“量身高”，最高的那项决定了它的“高度”，帮助我们快速判断多项式的复杂程度和最高次幂。",
+        "definition": "多项式中，次数最高的项的次数称为多项式的次数。注意：次数是单项式中所有字母指数之和，常数项次数为0。",
+        "key_points": [
+          "⚠️ 多项式的次数由最高次项决定，不是所有项次数的和",
+          "⚠️ 常数项的次数是0，不要忽略",
+          "⚠️ 合并同类项后，再找最高次项的次数"
+        ],
+        "application": "常见考查：给出多项式求次数，如 $2x^3 - x^2 + 5$ 的次数；或判断多项式是否为几次几项式，如 $x^2 + 2x + 1$ 是二次三项式。",
+        "connections": "多项式的次数是后续学习多项式除法、因式分解、函数图像的基础，与单项式次数概念一脉相承。",
+        "common_mistakes": [
+          "误将系数当作次数，如认为 $3x^2$ 的次数是3，实际是2",
+          "忽略字母指数，如 $x^2y$ 的次数误为2，实际是2+1=3",
+          "合并同类项前就找次数，如 $x^2 - x^2 + 3x$ 误认为次数2，实际合并后为 $3x$ 次数1"
+        ],
+        "counter_examples": "单项式 $2x^3$ 的次数是3，但多项式 $2x^3 + 0x^2$ 的次数仍是3，不是3+2=5；次数不是所有项次数之和。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G7-MATH-S-ku-多项式的项和次数",
+      "textbook_id": "RENJIAO-G7-MATH-S",
+      "cluster_id": "RENJIAO-G7-MATH-S-kc-整式的基本概念与识别",
+      "name": "多项式的项和次数",
+      "description": "多项式中的每个单项式叫项，次数最高项的次数叫多项式的次数。",
+      "prerequisites": [
+        "多项式的概念"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "多项式 3x² - 2x + 1：项为 3x²、-2x、1，最高次项是 3x²，次数为2。",
+          "多项式 4x³y² - xy + 7：项为 4x³y²、-xy、7，最高次项次数为3+2=5，所以多项式次数为5。"
+        ],
+        "intuition": "就像整理书包时，我们把每件物品看作一个单项式，而最占空间的物品决定了书包的‘大小’——多项式的次数就是由最高次项决定的。",
+        "definition": "多项式由若干个单项式通过加法连接而成，每个单项式称为多项式的项；所有项中次数最高的那个单项式的次数，就是多项式的次数。注意：常数项的次数为0。",
+        "key_points": [
+          "⚠️ 多项式的次数只看最高次项的次数，不是所有项次数的和。",
+          "⚠️ 项包括它前面的符号（正负号），例如 -3x² 是项，次数为2。",
+          "⚠️ 常数项（如5）的次数是0，不要误以为没有次数。"
+        ],
+        "application": "典型考查：给出多项式，要求指出项数、各项系数及次数；或比较两个多项式的次数大小，判断是否为同类项。",
+        "connections": "学习多项式的项和次数是后续合并同类项、整式加减以及因式分解的基础，也是理解函数图像特征（如二次函数开口方向）的前提。",
+        "common_mistakes": [
+          "错误：认为 3x² + 2x + 1 的次数是 2+1+0=3。正确：次数只取最高项的次数2。",
+          "错误：在 2x³y² 中，认为次数是3（只算x的指数）。正确：次数是3+2=5。",
+          "错误：认为 -5 没有次数。正确：-5 是常数项，次数为0。"
+        ],
+        "counter_examples": "注意区分“多项式的次数”和“单项式的次数”：单项式次数是各字母指数和，而多项式次数是其中最高单项式的次数。例如 2x² + 3x 的次数是2，不是3。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G7-MATH-S-ku-幻方",
+      "textbook_id": "RENJIAO-G7-MATH-S",
+      "cluster_id": "RENJIAO-G7-MATH-S-kc-幻方与趣味数学",
+      "name": "幻方",
+      "description": "将-4到4九个数填入3×3方格，使每行、每列、对角线之和相等。",
+      "prerequisites": [
+        "有理数加法"
+      ],
+      "related_kus": [],
+      "difficulty": 0.6,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "例：将-4,-3,-2,-1,0,1,2,3,4填入3×3方格，幻和为0，中心填0，一种填法：第一行1,-4,3；第二行2,0,-2；第三行-3,4,-1"
+        ],
+        "intuition": "幻方像是一个数字拼图，要求每行、每列、两条对角线上的数字加起来都相等，体现了对称与平衡的数学美。",
+        "definition": "将给定的9个连续整数（如-4到4）填入3×3方格，使得每行、每列、两条对角线上的三个数之和都相等，这个和称为幻和。",
+        "key_points": [
+          "⚠️ 幻和的计算：所有数之和除以3，例如-4到4和为0，幻和为0",
+          "⚠️ 中心数必须是中间值：对于连续整数，中心数等于幻和除以3，此处为0",
+          "⚠️ 对称填数：通常将最大和最小数配对放在相对位置，如4和-4对角"
+        ],
+        "application": "典型考查：给出部分数字，要求补全幻方；或给定一组连续整数，设计幻方并验证幻和。",
+        "connections": "幻方是数阵图的特例，后续学习等差数列、对称性时常用幻方作为模型，也为学习矩阵和线性方程组打下基础。",
+        "common_mistakes": [
+          "错误认为幻和等于最大数加最小数，实际幻和=所有数之和÷3",
+          "填数时忽略对角线也要相等，导致只有行和列满足",
+          "中心数填错，如填1而不是0，导致无法配平"
+        ],
+        "counter_examples": "与数独混淆：数独要求每行每列数字不重复且为1-9，而幻方要求每行每列和对角线和相等，数字可重复（但本题中数字不重复）。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G7-MATH-S-ku-数轴上两点间的距离",
+      "textbook_id": "RENJIAO-G7-MATH-S",
+      "cluster_id": "RENJIAO-G7-MATH-S-kc-有理数减法与混合运算",
+      "name": "数轴上两点间的距离",
+      "description": "数轴上点A、B分别表示数a、b，则A、B之间的距离为|a-b|。",
+      "prerequisites": [
+        "数轴",
+        "绝对值",
+        "有理数减法法则"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "点A=3，点B=7，距离为|3-7|=4。",
+          "点A=-2，点B=5，距离为|-2-5|=7。"
+        ],
+        "intuition": "数轴上两点间的距离就像用尺子量两个点之间的长度，无论方向如何，只关心它们相隔多远。",
+        "definition": "数轴上点A、B分别表示数a、b，则A、B之间的距离定义为|a-b|，即两数差的绝对值，其中a、b为任意实数。",
+        "key_points": [
+          "⚠️ 距离总是非负数，因为绝对值保证结果≥0。",
+          "⚠️ 公式|a-b|与|b-a|等价，顺序不影响距离。",
+          "⚠️ 当a=b时，距离为0，表示两点重合。"
+        ],
+        "application": "常见考查：直接计算两点距离；或已知距离和一点坐标，求另一点坐标（注意两解情况）。",
+        "connections": "此概念是学习绝对值、数轴和有理数加减的基础，后续用于理解线段长度、不等式解集及平面直角坐标系中两点距离公式。",
+        "common_mistakes": [
+          "错误地计算为a-b（不带绝对值），如A=3,B=7得-4，误认为距离为-4。",
+          "混淆顺序，认为|a-b|与|b-a|不同，实际上两者相等。",
+          "当a或b为负数时，误用减法符号，如A=-3,B=2，错误计算为-3-2=-5，正确应为|-3-2|=5。"
+        ],
+        "counter_examples": "容易与“两点间的线段长度”混淆，但数轴上距离就是绝对值差，而平面直角坐标系中两点距离需用勾股定理。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G7-MATH-S-ku-数轴上两点间距离公式",
+      "textbook_id": "RENJIAO-G7-MATH-S",
+      "cluster_id": "RENJIAO-G7-MATH-S-kc-数轴上的距离与运算",
+      "name": "数轴上两点间距离公式",
+      "description": "数轴上点A、B分别表示数a、b，则A、B之间的距离为|a-b|。",
+      "prerequisites": [
+        "绝对值",
+        "数轴"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "点A表示3，点B表示-2，距离=|3-(-2)|=|5|=5。",
+          "点A表示-5，点B表示-1，距离=|-5-(-1)|=|-4|=4。"
+        ],
+        "intuition": "就像用尺子量两点间的直线长度，数轴上两点距离就是它们对应数值差的绝对值，保证距离非负。",
+        "definition": "数轴上点A对应实数a，点B对应实数b，则A、B之间的距离定义为|a-b|，即差的绝对值。",
+        "key_points": [
+          "⚠️ 距离是绝对值，结果永远非负，不能写成a-b。",
+          "⚠️ 公式中a和b的顺序可互换，因为|a-b|=|b-a|。",
+          "⚠️ 当a=b时，距离为0，表示两点重合。"
+        ],
+        "application": "直接求数轴上两点距离；或已知距离和一点坐标，求另一点坐标（需考虑正负两种情况）。",
+        "connections": "是后续学习平面直角坐标系中两点间距离公式的基础，也是理解绝对值的几何意义的关键。",
+        "common_mistakes": [
+          "误以为距离就是大数减小数，但若写成a-b且a<b会得负数，忘记绝对值。",
+          "计算时忽略负号，如A=-3,B=2，错误写成-3-2=-5，正确应为|-3-2|=5。",
+          "混淆距离与位移，距离是标量非负，位移可正可负。"
+        ],
+        "counter_examples": "容易混淆为a-b（不加绝对值），例如a=2,b=5时a-b=-3，但实际距离应为3，所以必须用绝对值。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G7-MATH-S-ku-数轴上的点与有理数的对应",
+      "textbook_id": "RENJIAO-G7-MATH-S",
+      "cluster_id": "RENJIAO-G7-MATH-S-kc-数轴与数的对应",
+      "name": "数轴上的点与有理数的对应",
+      "description": "任何一个有理数都可以用数轴上的一个点来表示。",
+      "prerequisites": [],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "例：有理数3在数轴上表示为原点右侧3个单位长度的点。",
+          "例：有理数-2.5在数轴上表示为原点左侧2.5个单位长度的点。"
+        ],
+        "intuition": "数轴就像一把有刻度的尺子，每个有理数都能在尺子上找到一个唯一的位置，帮助我们直观地比较大小和进行加减运算。",
+        "definition": "规定了原点、正方向和单位长度的直线叫做数轴。任何一个有理数都可以用数轴上的一个点来表示，且表示有理数a的点与原点的距离等于|a|。",
+        "key_points": [
+          "⚠️ 数轴上的点并不都与有理数对应，还有无理数（如π、√2）对应的点，有理数只是数轴上的一部分点。",
+          "⚠️ 表示有理数时，必须明确正方向、原点和单位长度，三者缺一不可，否则无法唯一确定点的位置。",
+          "⚠️ 有理数0对应原点，正数在原点的右侧，负数在原点的左侧，距离由绝对值决定。"
+        ],
+        "application": "典型考查方式：①给出有理数，在数轴上标出对应点；②给出数轴上的点，写出对应的有理数；③利用数轴比较有理数的大小。",
+        "connections": "该知识是学习相反数、绝对值、有理数大小比较的基础，也为后续学习数轴上的动点问题、实数与数轴的关系做铺垫。",
+        "common_mistakes": [
+          "错误1：认为数轴上的点都表示有理数，忽略了无理数的存在。",
+          "错误2：画数轴时忘记标箭头或单位长度不均匀，导致点的位置不准确。",
+          "错误3：混淆正负方向，例如将-3画在原点的右侧。"
+        ],
+        "counter_examples": "容易混淆的概念是“数轴上的点都是有理数”。实际上，数轴上的点与实数一一对应，有理数只是实数的一部分，像π、√2这样的无理数对应的点无法用有理数表示。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G7-MATH-S-ku-数轴上相反数的位置关系",
+      "textbook_id": "RENJIAO-G7-MATH-S",
+      "cluster_id": "RENJIAO-G7-MATH-S-kc-相反数与绝对值",
+      "name": "数轴上相反数的位置关系",
+      "description": "互为相反数的两个数在数轴上位于原点两侧，且到原点的距离相等。",
+      "prerequisites": [
+        "相反数的定义"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "3和-3：3在原点右侧3个单位，-3在原点左侧3个单位，到原点距离都是3",
+          "5和-5：5在原点右侧5个单位，-5在原点左侧5个单位，距离相等"
+        ],
+        "intuition": "就像站在天平的支点两侧，离支点同样远的位置，一个在左一个在右，这种对称关系就是相反数在数轴上的位置。",
+        "definition": "如果两个数互为相反数，那么它们在数轴上对应的点分别位于原点（0）的两侧，并且到原点的距离相等，即这两个点关于原点对称。",
+        "key_points": [
+          "⚠️ 相反数必须位于原点两侧，不能在同侧",
+          "⚠️ 到原点的距离必须相等，即绝对值相同",
+          "⚠️ 0的相反数是0，它位于原点本身，没有两侧之分"
+        ],
+        "application": "常见考查：给出数轴上两点位置，判断是否互为相反数；或已知一个数的相反数在数轴上的位置，求原数。",
+        "connections": "相反数的位置关系是理解绝对值、数轴对称性以及后续有理数加减法的基础，也为学习平面直角坐标系中的对称点做铺垫。",
+        "common_mistakes": [
+          "误认为相反数就是符号不同的数，忽略距离相等条件，如认为3和-4是相反数（实际距离不同）",
+          "认为0没有相反数，实际上0的相反数是0，它位于原点本身",
+          "混淆相反数与绝对值，如认为-3的相反数是3，但误以为3的相反数也是3（实际是-3）"
+        ],
+        "counter_examples": "相反数与倒数不同：相反数关注符号相反且距离相等，如2和-2；而倒数关注乘积为1，如2和1/2，在数轴上位置关系完全不同。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G7-MATH-S-ku-数轴与有理数运算",
+      "textbook_id": "RENJIAO-G7-MATH-S",
+      "cluster_id": "RENJIAO-G7-MATH-S-kc-数形结合与转化思想",
+      "name": "数轴与有理数运算",
+      "description": "利用数轴直观理解有理数加法、减法运算。",
+      "prerequisites": [
+        "数轴",
+        "有理数加法",
+        "有理数减法"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "计算 (-3) + 5：从 -3 点向右移动 5 个单位，到达 2，结果为 2",
+          "计算 2 - (-3)：转化为 2 + 3，从 2 点向右移动 3 个单位，到达 5，结果为 5"
+        ],
+        "intuition": "数轴像一把温度计，用向右走表示增加（加法），向左走表示减少（减法），让抽象的有理数运算变得直观可见。",
+        "definition": "在数轴上，一个有理数对应一个点；加法即从该点向右移动加数的绝对值（正数向右，负数向左），减法即减去一个数等于加上它的相反数，移动方向相反。",
+        "key_points": [
+          "⚠️ 加法中，加正数向右移动，加负数向左移动，方向易混淆",
+          "⚠️ 减法运算要转化为加法：减去一个数等于加上这个数的相反数，再按加法规则移动",
+          "⚠️ 移动距离由绝对值决定，符号决定方向，两者需同时考虑"
+        ],
+        "application": "典型考查：给出数轴上的点，计算两点间距离或进行加减运算；或根据算式在数轴上标出移动过程并求结果。",
+        "connections": "数轴是理解有理数运算的几何基础，后续学习绝对值、相反数、数轴上的距离以及实数运算都依赖于此。",
+        "common_mistakes": [
+          "误认为减去负数等于减去正数，如 4 - (-3) 错误地向左移动 3 个单位，得到 1，实际应向右移动 3 个单位得 7",
+          "加法中忽略符号，如 (-2) + (-3) 错误地向右移动 3 个单位，得到 1，实际应向左移动 3 个单位得 -5",
+          "混淆移动起点，如计算 3 + (-5) 时从原点开始移动，而非从 3 点开始"
+        ],
+        "counter_examples": "减法与加法混淆：如 3 - (-2) 不等于 3 - 2，而应转化为 3 + 2，在数轴上向右移动 2 个单位，而非向左。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G7-MATH-S-ku-数轴的三要素",
+      "textbook_id": "RENJIAO-G7-MATH-S",
+      "cluster_id": "RENJIAO-G7-MATH-S-kc-有理数的分类与表示",
+      "name": "数轴的三要素",
+      "description": "规定了原点、正方向和单位长度的直线叫数轴。原点表示0，向右为正方向，向左为负方向。",
+      "prerequisites": [
+        "有理数的概念"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "画一条直线，在中间标原点0，向右每隔1厘米标1、2、3…，向左标-1、-2、-3…，这就是数轴。",
+          "数轴上点A在原点右侧3个单位长度处，则点A表示+3；点B在原点左侧2个单位长度处，则点B表示-2。"
+        ],
+        "intuition": "数轴就像一把有刻度的尺子，把抽象的数变成看得见的点，原点就是尺子的起点，正方向是向右延伸，单位长度是刻度大小。",
+        "definition": "规定了原点、正方向和单位长度的直线叫做数轴。原点对应0，正方向通常向右，单位长度是相邻整数点之间的距离，三者缺一不可。",
+        "key_points": [
+          "⚠️ 原点、正方向、单位长度三者必须同时具备，缺一不可。",
+          "⚠️ 正方向一旦确定，所有点对应的数就唯一确定，不能随意更改。",
+          "⚠️ 单位长度是人为规定的，但同一数轴上单位长度必须一致。"
+        ],
+        "application": "常见考查：给出数轴上的点写出对应的数，或根据数在数轴上标点；也常结合相反数、绝对值考查数轴上的位置关系。",
+        "connections": "数轴是学习有理数、相反数、绝对值和比较大小的基础工具，后续的实数、不等式解集表示也依赖数轴。",
+        "common_mistakes": [
+          "误以为数轴必须水平放置，实际上数轴可以任意方向，但正方向必须明确。",
+          "画数轴时单位长度不均匀，比如1到2的距离和2到3的距离不同，导致数轴失效。",
+          "把原点当作数轴上的最小点，实际上原点只是0的位置，负数可以更小。"
+        ],
+        "counter_examples": "一条直线只标了数字但没有原点，比如只标了1、2、3，无法确定0的位置，这不是数轴。数轴必须有明确的原点。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G7-MATH-S-ku-整体代入化简",
+      "textbook_id": "RENJIAO-G7-MATH-S",
+      "cluster_id": "RENJIAO-G7-MATH-S-kc-整式加减的综合运算与应用",
+      "name": "整体代入化简",
+      "description": "将含相同字母的式子看作一个整体，进行合并或去括号。",
+      "prerequisites": [
+        "合并同类项法则",
+        "去括号法则"
+      ],
+      "related_kus": [],
+      "difficulty": 0.6,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "例1：化简 $3(a+b)+2(a+b)$，将 $(a+b)$ 看作整体，得 $5(a+b)$",
+          "例2：化简 $2(x-y)-3(x-y)$，整体为 $(x-y)$，得 $-(x-y)$"
+        ],
+        "intuition": "就像把一堆苹果和一堆橙子分别打包，整体代入化简就是把含有相同字母的式子看成一个整体，先合并再处理，避免逐个拆解。",
+        "definition": "在代数式中，将含有相同字母的项或子式视为一个整体，通过合并同类项或去括号进行化简，要求整体内字母部分完全相同。",
+        "key_points": [
+          "⚠️ 整体必须字母部分完全相同，系数不同可以合并，字母不同不能合并",
+          "⚠️ 去括号时整体前有负号，整体内每一项都要变号",
+          "⚠️ 整体代入时，整体本身不能拆开，需先化简整体再代入数值"
+        ],
+        "application": "典型考查方式：给出含相同括号的式子，要求先合并再求值；或在方程中，将含未知数的项整体移项化简。",
+        "connections": "整体代入化简是合并同类项的延伸，也是后续解方程中移项、合并的基础，为因式分解中的换元法做铺垫。",
+        "common_mistakes": [
+          "错误1：将 $3(a+b)+2(a+c)$ 合并为 $5(a+b+c)$，错在整体字母部分不同（$b$ 和 $c$ 不同）",
+          "错误2：去括号时 $-(2x-3y)$ 写成 $-2x-3y$，漏了变号",
+          "错误3：整体代入时，如 $x=2$，将 $3(x+1)$ 直接写成 $3\\times2+1$，忘记整体内先算"
+        ],
+        "counter_examples": "混淆整体代入与分配律：如 $2(a+b)+3a$ 不能将 $a+b$ 和 $a$ 合并，因为 $a+b$ 和 $a$ 不是同一个整体。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G7-MATH-S-ku-整式加减在图形规律问题中的应用",
+      "textbook_id": "RENJIAO-G7-MATH-S",
+      "cluster_id": "RENJIAO-G7-MATH-S-kc-整式加减的综合运算与应用",
+      "name": "整式加减在图形规律问题中的应用",
+      "description": "用整式表示图形中涂色小正方形的个数规律。",
+      "prerequisites": [
+        "列代数式表示数量关系",
+        "整式加减运算法则"
+      ],
+      "related_kus": [],
+      "difficulty": 0.7,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "例：第1个图形有1个涂色小正方形，第2个有3个，第3个有5个，则第n个有$2n-1$个。",
+          "例：若每增加一层多4个涂色小正方形，第1层有1个，则第n层有$4n-3$个。"
+        ],
+        "intuition": "就像用代数式描述一个不断生长的图案，比如用火柴棒拼三角形，第n个图形需要多少根火柴？整式加减帮我们把图形规律翻译成数学语言。",
+        "definition": "通过观察图形中涂色小正方形的排列规律，用含序号n的整式（如$2n+1$）表示第n个图形中涂色小正方形的个数，并利用整式加减进行化简或比较。",
+        "key_points": [
+          "⚠️ 忽略图形序号n从1开始还是从0开始，导致表达式错误",
+          "⚠️ 只数涂色部分，误将空白或边框计入",
+          "⚠️ 未验证n=1,2,3时表达式是否与图形一致"
+        ],
+        "application": "典型考查：给出前几个图形，要求写出第n个图形的涂色个数表达式；或给出表达式，判断某个图形是否对应特定个数。",
+        "connections": "基于小学的数列规律（如等差数列），为后续学习函数、方程及几何图形规律（如面积变化）打下基础。",
+        "common_mistakes": [
+          "误将第1个图形当作n=0，如第1个有1个，写成$2n+1$，导致n=1时得3，错误",
+          "只观察前两个图形就下结论，如第1个1个，第2个4个，误以为$n^2$，但第3个可能是7个（实际为$3n-2$）",
+          "忘记整式加减化简，如得到$2n+1+n-1$未合并为$3n$"
+        ],
+        "counter_examples": "容易混淆的是“涂色小正方形个数”与“所有小正方形个数”，前者只计涂色部分，后者包括空白，表达式不同。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G7-MATH-S-ku-整式加减在行程问题中的应用",
+      "textbook_id": "RENJIAO-G7-MATH-S",
+      "cluster_id": "RENJIAO-G7-MATH-S-kc-整式加减的综合运算与应用",
+      "name": "整式加减在行程问题中的应用",
+      "description": "用整式表示顺水、逆水路程，再求和。",
+      "prerequisites": [
+        "列代数式表示数量关系",
+        "整式加减运算法则"
+      ],
+      "related_kus": [],
+      "difficulty": 0.6,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "一艘船静水速度$v$ km/h，水流速度$2$ km/h，顺水行$3$小时，逆水行$2$小时，总路程为$3(v+2)+2(v-2)=5v+2$ km。",
+          "飞机静风速度$x$ km/h，风速$y$ km/h，顺风飞$4$小时，逆风飞$3$小时，总路程为$4(x+y)+3(x-y)=7x+y$ km。"
+        ],
+        "intuition": "就像你坐船顺流而下比逆流而上更快一样，整式加减帮我们把不同方向的路程合起来算总路程。",
+        "definition": "在行程问题中，用整式表示顺水（或顺风）和逆水（或逆风）的路程，然后通过整式加法或减法求出总路程或路程差。关键条件是速度、时间、路程关系明确，且整式合并同类项。",
+        "key_points": [
+          "⚠️ 顺水速度=静水速度+水流速度，逆水速度=静水速度-水流速度，不能混淆加减号。",
+          "⚠️ 路程=速度×时间，时间单位必须统一，否则整式无法合并。",
+          "⚠️ 总路程是顺水路程与逆水路程之和，不是速度之和乘以时间。"
+        ],
+        "application": "典型考查：给出静水速度、水流速度和时间，列整式表示总路程并化简；或已知总路程，列方程求静水速度。",
+        "connections": "整式加减是代数运算基础，后续学习一元一次方程解行程问题时会用到类似模型，也是函数图像中路程-时间关系的前置知识。",
+        "common_mistakes": [
+          "错误1：把顺水速度写成$v-2$，逆水速度写成$v+2$，搞反了加减。",
+          "错误2：计算总路程时直接用$(v+2+v-2)\\times(3+2)$，忽略了时间不同，应分别乘时间再相加。",
+          "错误3：合并同类项时漏掉系数，如$3(v+2)+2(v-2)$误算为$5v+2$（正确应为$5v+2$，但若漏乘系数会错）。"
+        ],
+        "counter_examples": "容易混淆的是直接加速度：比如认为总路程等于$(v+2+v-2)\\times(3+2)=2v\\times5=10v$，这错误，因为时间不同不能合并速度。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G7-MATH-S-ku-整式加减的化简求值",
+      "textbook_id": "RENJIAO-G7-MATH-S",
+      "cluster_id": "RENJIAO-G7-MATH-S-kc-整式加减的综合运算与应用",
+      "name": "整式加减的化简求值",
+      "description": "先化简整式（去括号、合并同类项），再代入数值计算。",
+      "prerequisites": [
+        "整式加减运算法则"
+      ],
+      "related_kus": [],
+      "difficulty": 0.6,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "化简求值：$3x+2(x-1)-4x$，其中 $x=2$。先化简：$3x+2x-2-4x=x-2$，代入得 $2-2=0$",
+          "化简求值：$2a^2-3ab+b^2-(a^2-2ab+b^2)$，其中 $a=1,b=-1$。化简得 $a^2-ab$，代入得 $1-1\\times(-1)=2$"
+        ],
+        "intuition": "就像整理杂乱的房间：先分类归位（合并同类项），再清点物品数量（代入求值），避免直接数错。",
+        "definition": "将整式通过去括号法则（括号前是正号直接去，负号变号）和合并同类项（系数相加，字母及指数不变）化为最简形式，再代入给定字母的值计算数值结果。",
+        "key_points": [
+          "⚠️ 去括号时，括号前是负号，括号内每一项都要变号，不能只变第一项",
+          "⚠️ 合并同类项时，只合并系数，字母和指数不变，如 $3x^2$ 与 $2x$ 不是同类项",
+          "⚠️ 代入数值时，若字母取负数，需加括号，如 $x=-2$ 代入 $x^2$ 得 $(-2)^2=4$"
+        ],
+        "application": "典型考查方式：① 给出含括号的整式，要求先化简再代入具体数值求值；② 在几何图形面积或实际问题中列出整式，化简后代入数据计算结果。",
+        "connections": "是整式运算的核心，上承有理数运算与字母表示数，下启方程、不等式及函数求值，为代数推理奠基。",
+        "common_mistakes": [
+          "去括号时漏变号：如 $-(2x-3)$ 错误写成 $-2x-3$，正确应为 $-2x+3$",
+          "合并同类项时指数错误：如 $3x^2+2x^2$ 错误合并为 $5x^4$，正确应为 $5x^2$",
+          "代入负数时不加括号：如 $x=-2$ 代入 $x^2$ 得 $-2^2=-4$，正确应为 $(-2)^2=4$"
+        ],
+        "counter_examples": "混淆“化简求值”与“直接代入”：直接代入 $x=2$ 到 $3x+2(x-1)-4x$ 得 $6+2-8=0$ 虽结果相同，但过程繁琐易错，且未体现化简的通用性。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G7-MATH-S-ku-整式加减运算法则",
+      "textbook_id": "RENJIAO-G7-MATH-S",
+      "cluster_id": "RENJIAO-G7-MATH-S-kc-整式的加减运算",
+      "name": "整式加减运算法则",
+      "description": "几个整式相加减，如果有括号就先去括号，然后再合并同类项。",
+      "prerequisites": [
+        "去括号法则",
+        "合并同类项法则"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "例1：$(3x+2y)-(x-4y)=3x+2y-x+4y=2x+6y$，注意去括号后 $-(-4y)=+4y$",
+          "例2：$2a^2+3ab-5a^2+ab=(2a^2-5a^2)+(3ab+ab)=-3a^2+4ab$，合并同类项时系数相加减"
+        ],
+        "intuition": "整式加减就像整理零钱：先把不同面额的钱（同类项）分开，再分别计算总数。去括号相当于打开钱包的隔层，合并同类项就是把相同面额的钱加在一起。",
+        "definition": "整式加减运算法则：几个整式相加减，如果有括号，先去括号（注意括号前符号），然后合并同类项（系数相加减，字母和指数不变）。关键限定：同类项必须字母相同且相同字母指数相同。",
+        "key_points": [
+          "⚠️ 去括号时，括号前是负号，括号内每一项都要变号，不能只变第一项",
+          "⚠️ 合并同类项时，只合并系数，字母和指数不能变",
+          "⚠️ 不是同类项不能合并，如 $3x$ 和 $3x^2$ 不能合并"
+        ],
+        "application": "典型考查方式：1. 直接计算整式加减，如化简 $(2x^2-3x+1)-(x^2-2x+3)$；2. 先化简再求值，如先化简 $3a+2b-(a-b)$，再代入 $a=1,b=-2$ 求值。",
+        "connections": "整式加减是整式运算的基础，后续学习整式乘法（如分配律）和因式分解时，都需要先掌握去括号和合并同类项。它也是解一元一次方程的关键步骤。",
+        "common_mistakes": [
+          "去括号时漏乘：如 $-(2x-3)$ 错误写成 $-2x-3$，正确应为 $-2x+3$",
+          "合并同类项时改变字母：如 $3x+2x$ 错误写成 $5x^2$，正确应为 $5x$",
+          "误把不同类项合并：如 $2x+3y$ 错误合并为 $5xy$，正确应保留 $2x+3y$"
+        ],
+        "counter_examples": "容易混淆的是单项式乘除与整式加减：如 $3x \\cdot 2x = 6x^2$（乘法，指数相加），而 $3x+2x=5x$（加法，指数不变）。加减只合并系数，乘法才改变指数。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G7-MATH-S-ku-整式的定义",
+      "textbook_id": "RENJIAO-G7-MATH-S",
+      "cluster_id": "RENJIAO-G7-MATH-S-kc-整式的基本概念",
+      "name": "整式的定义",
+      "description": "单项式与多项式统称整式。",
+      "prerequisites": [
+        "单项式的定义",
+        "多项式的定义"
+      ],
+      "related_kus": [],
+      "difficulty": 0.1,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "$3x^2y$ 是单项式，也是整式。",
+          "$2x+3y-1$ 是多项式，也是整式。"
+        ],
+        "intuition": "整式就像数学中的‘积木块’，由数字和字母通过乘法连接而成，用来描述数量关系，比如用单项式表示一个数，用多项式表示几个数的和。",
+        "definition": "整式是单项式与多项式的统称。单项式是数字与字母的乘积（如 $3x^2$），多项式是多个单项式的和（如 $x+1$）。关键：分母中不能有字母，根号内不能有字母。",
+        "key_points": [
+          "⚠️ 整式的分母不能含有字母，如 $\\frac{1}{x}$ 不是整式，而是分式。",
+          "⚠️ 整式的根号内不能有字母，如 $\\sqrt{x}$ 不是整式，而是无理式。",
+          "⚠️ 单独一个数字或字母也是单项式，如 $5$ 和 $a$ 都是整式。"
+        ],
+        "application": "典型考查方式：判断一个代数式是否为整式（如区分 $\\frac{1}{a}$ 和 $\\frac{a}{2}$）；在化简或运算中，先识别整式再应用运算法则。",
+        "connections": "整式是代数式的基础，后续学习整式的加减乘除运算，以及因式分解、方程等知识都建立在整式概念之上。",
+        "common_mistakes": [
+          "误认为 $\\frac{x}{2}$ 不是整式：实际上分母是数字2，不是字母，所以它是单项式 $\\frac{1}{2}x$，属于整式。",
+          "误认为 $0$ 不是整式：0是单项式（数字），属于整式。",
+          "误认为 $\\pi$ 不是整式：$\\pi$ 是常数，不是字母，所以 $\\pi x$ 是单项式，属于整式。"
+        ],
+        "counter_examples": "$\\frac{2}{x}$ 不是整式，因为分母含字母；$\\sqrt{x}$ 不是整式，因为根号内含字母。它们分别属于分式和无理式。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G7-MATH-S-ku-有理数乘方运算",
+      "textbook_id": "RENJIAO-G7-MATH-S",
+      "cluster_id": "RENJIAO-G7-MATH-S-kc-有理数运算与运算律",
+      "name": "有理数乘方运算",
+      "description": "求n个相同因数的积的运算，如(-3)^3、(-5)^4等。",
+      "prerequisites": [
+        "有理数乘法"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "(-3)³ = (-3)×(-3)×(-3) = -27，注意负数的奇次幂为负",
+          "(-5)⁴ = (-5)×(-5)×(-5)×(-5) = 625，负数的偶次幂为正"
+        ],
+        "intuition": "乘方是重复乘法的简便写法，就像乘法是重复加法的简便写法一样。比如，边长为2的正方形面积是2×2，记作2²，表示两个2相乘。",
+        "definition": "求n个相同因数a的积的运算叫做乘方，记作aⁿ，其中a叫做底数，n叫做指数，aⁿ读作a的n次幂。关键限定：n是正整数，a是有理数。",
+        "key_points": [
+          "⚠️ 底数为负数时，必须加括号，如(-3)³表示三个-3相乘，而-3³表示3³的相反数",
+          "⚠️ 指数为1时，a¹=a，指数1通常省略不写",
+          "⚠️ 0的正整数次幂等于0，1的任何次幂等于1"
+        ],
+        "application": "典型考查：计算含乘方的混合运算，如-2²+(-3)³×(-1)⁴；或比较大小，如比较(-2)³与-2³的大小。",
+        "connections": "乘方是七年级有理数运算的扩展，后续学习科学记数法、整式乘除、幂的运算性质（如aᵐ·aⁿ=aᵐ⁺ⁿ）的基础。",
+        "common_mistakes": [
+          "误将(-3)²算成-9：正确应为9，因为(-3)×(-3)=9，学生常忽略负号相乘得正",
+          "混淆-2⁴与(-2)⁴：-2⁴=-(2×2×2×2)=-16，而(-2)⁴=16，学生常漏掉括号导致符号错误",
+          "认为a⁰=0：实际上a⁰=1（a≠0），学生常误以为任何数的0次幂都是0"
+        ],
+        "counter_examples": "乘方与乘法混淆：2³表示2×2×2=8，而2×3=6，两者不同。乘方是因数重复相乘，乘法是加法的重复。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G7-MATH-S-ku-有理数乘法法则",
+      "textbook_id": "RENJIAO-G7-MATH-S",
+      "cluster_id": "RENJIAO-G7-MATH-S-kc-有理数乘法法则与运算律",
+      "name": "有理数乘法法则",
+      "description": "两数相乘，同号得正，异号得负，积的绝对值等于乘数绝对值的积；任何数与0相乘都得0。",
+      "prerequisites": [
+        "有理数加法法则",
+        "绝对值"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "例1：(-3)×(-4)=12，同号得正，绝对值3×4=12。",
+          "例2：(-5)×2=-10，异号得负，绝对值5×2=10。"
+        ],
+        "intuition": "有理数乘法法则就像“方向与力度”的组合：正负号决定方向（同向得正、反向得负），绝对值决定力度大小。",
+        "definition": "两个有理数相乘，同号得正，异号得负，并把绝对值相乘；任何数与0相乘都得0。关键限定：先确定符号，再计算绝对值乘积。",
+        "key_points": [
+          "⚠️ 符号判断：同号得正（正正、负负），异号得负（正负、负正），不要混淆。",
+          "⚠️ 绝对值相乘：只取数字部分相乘，忽略符号，如(-3)×(-4)先算3×4=12。",
+          "⚠️ 0乘任何数都得0，不要误以为0乘负数得负数。"
+        ],
+        "application": "典型考查：直接计算有理数乘法（如(-7)×3）；或结合绝对值、相反数进行符号判断与计算。",
+        "connections": "基于小学正数乘法与相反数概念，为后续有理数除法、乘方及代数运算奠定基础。",
+        "common_mistakes": [
+          "错误：(-2)×(-3)=-6，错在认为负负得负，实际负负得正。",
+          "错误：(-4)×0=-4，错在认为0乘负数得负数，实际任何数乘0都得0。",
+          "错误：(-3)×2=6，错在忘记异号得负，正确应为-6。"
+        ],
+        "counter_examples": "容易与加法混淆：如(-3)+(-4)=-7（同号相加，取相同符号并加绝对值），而(-3)×(-4)=12（同号相乘得正）。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G7-MATH-S-ku-有理数乘除混合运算",
+      "textbook_id": "RENJIAO-G7-MATH-S",
+      "cluster_id": "RENJIAO-G7-MATH-S-kc-有理数除法与混合运算",
+      "name": "有理数乘除混合运算",
+      "description": "乘除混合运算先将除法转化为乘法，再确定积的符号，最后求结果。",
+      "prerequisites": [
+        "有理数乘法法则",
+        "有理数除法法则（转化为乘法）"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "例1：(-6) ÷ (-2) × 3 = (-6) × (-1/2) × 3 = 9（先化除为乘，负号个数为2，结果正，再算绝对值6×1/2×3=9）",
+          "例2：(-4) × 5 ÷ (-2) = (-4) × 5 × (-1/2) = 10（化除为乘后，负号个数为2，结果正，绝对值4×5×1/2=10）"
+        ],
+        "intuition": "有理数乘除混合运算就像在数轴上做‘方向与距离’的复合操作：乘法是重复加或减，除法是反向操作，需要统一成乘法来避免符号混乱。",
+        "definition": "有理数乘除混合运算是指在一个算式中同时包含乘法和除法，运算时先将除法转化为乘以除数的倒数，再按乘法法则确定积的符号（奇负偶正），最后计算绝对值乘积。关键限定：除数不能为0。",
+        "key_points": [
+          "⚠️ 除法变乘法时，必须将除数写成它的倒数，不能直接约分或改变被除数。",
+          "⚠️ 确定符号时，只看负因数的个数（包括转化后的倒数中的负号），与运算顺序无关。",
+          "⚠️ 运算过程中，带分数要化为假分数，小数要化为分数，避免计算错误。"
+        ],
+        "application": "典型考查方式：① 直接计算题，如 (-12) ÷ 3 × (-2) 要求写出步骤；② 应用题中列式后化简，如温度变化问题中涉及正负数的乘除混合运算。",
+        "connections": "有理数乘除混合运算是小学分数乘除的推广，引入负数后需处理符号；后续学习有理数混合运算（含加减乘除乘方）时，乘除优先级高于加减，且仍需先化除为乘。",
+        "common_mistakes": [
+          "错误1：直接约分而不化除为乘，如 6 ÷ 2 × 3 误算为 6 ÷ 6 = 1，正确应为 6 × 1/2 × 3 = 9。",
+          "错误2：符号判断错误，如 (-2) × 3 ÷ (-4) 误以为负号个数为2得正，但实际化除为乘后负号个数为2（-2和-1/4），结果正，但若漏掉倒数中的负号则出错。",
+          "错误3：带分数未化假分数，如 1 1/2 ÷ (-3) 误写成 1.5 ÷ (-3) 但未处理符号，正确应化为 3/2 × (-1/3) = -1/2。"
+        ],
+        "counter_examples": "混淆点：乘除混合运算不能像加减法那样‘从左到右依次计算符号’，例如 (-8) ÷ 4 × (-2) 若先算除法得 -2，再乘 -2 得 4，但正确做法是化除为乘：(-8)×(1/4)×(-2)=4，结果一致，但若遇到 (-8) ÷ 4 ÷ (-2) 则必须化除为乘，否则易错。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G7-MATH-S-ku-有理数减法法则",
+      "textbook_id": "RENJIAO-G7-MATH-S",
+      "cluster_id": "RENJIAO-G7-MATH-S-kc-有理数减法与加减混合运算",
+      "name": "有理数减法法则",
+      "description": "减去一个数，等于加这个数的相反数。即 a-b = a+(-b)。",
+      "prerequisites": [
+        "相反数",
+        "有理数加法法则（异号）"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "$5-3 = 5+(-3)=2$：减去正数3，等于加-3。",
+          "$-4-(-6) = -4+6=2$：减去负数-6，等于加6。",
+          "$0-7 = 0+(-7)=-7$：0减去任何数等于该数的相反数。"
+        ],
+        "intuition": "减法本质是加法的逆运算，引入相反数后可将减法统一为加法，简化运算规则。就像欠债还钱：减去5元相当于加上欠5元。",
+        "definition": "有理数减法法则：减去一个数，等于加上这个数的相反数。即 $a-b = a+(-b)$，其中 $a,b$ 为任意有理数。关键：减法转化为加法，减数变相反数。",
+        "key_points": [
+          "⚠️ 减号变加号后，减数必须变成它的相反数，被减数不变。",
+          "⚠️ 两个运算符号（减号和负号）不能同时保留，必须合并为一个加号。",
+          "⚠️ 当减数是负数时，如 $3-(-2)$，应转化为 $3+2$，而不是 $3+(-2)$。"
+        ],
+        "application": "典型考查：直接计算有理数减法，如 $(-5)-(-3)$；或结合绝对值、数轴比较大小，如已知 $a<b$，求 $a-b$ 的符号。",
+        "connections": "有理数减法法则建立在相反数概念上，是后续学习有理数混合运算、解方程的基础，也是将减法统一为加法的关键步骤。",
+        "common_mistakes": [
+          "错误1：$3-5=3+5=8$，错在只变减号为加号，没把减数5变成-5。",
+          "错误2：$-2-(-3)=-2-3=-5$，错在没把减数-3变成相反数3，而是保留了减号。",
+          "错误3：$4-(-2)=4-2=2$，错在把减号与负号抵消成减号，正确应为加号。"
+        ],
+        "counter_examples": "容易混淆的是减法与加法的符号处理，如 $5-(-3)$ 误写成 $5-3$，正确应为 $5+3$。另外，$a-b$ 不能直接看成 $a+(-b)$ 的省略，必须明确转化步骤。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G7-MATH-S-ku-有理数减法法则-九章算术解释",
+      "textbook_id": "RENJIAO-G7-MATH-S",
+      "cluster_id": "RENJIAO-G7-MATH-S-kc-有理数减法法则-历史拓展",
+      "name": "有理数减法法则（九章算术解释）",
+      "description": "异号两数相减：被减数符号为括号前符号，括号内为绝对值之和；0减正数得负数，0减负数得正数。",
+      "prerequisites": [
+        "有理数加法法则"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "例1：3 - 5 = 3 + (-5) = -2（转化为加法，异号相加取绝对值大的符号）。",
+          "例2：-2 - (-6) = -2 + 6 = 4（减负数转化为加正数，同号相加取相同符号）。"
+        ],
+        "intuition": "有理数减法可以理解为‘加上相反数’，就像在数轴上，减去一个数等于向反方向移动。九章算术中‘异名相除’的思想，本质是借助加法处理减法，让运算统一。",
+        "definition": "有理数减法法则：减去一个数，等于加上这个数的相反数，即 a - b = a + (-b)。关键限定：b 可以是正数、负数或零，结果仍为有理数。",
+        "key_points": [
+          "⚠️ 减法转化为加法时，被减数符号不变，减数变为相反数，如 5 - (-3) = 5 + 3，而非 5 - 3。",
+          "⚠️ 异号两数相减（如 -7 - 2）时，结果符号由被减数决定，绝对值相加，但需先转化为加法：-7 - 2 = -7 + (-2) = -9。",
+          "⚠️ 0 减任何数：0 - a = -a，注意结果符号与 a 相反，如 0 - (-4) = 4。"
+        ],
+        "application": "典型考查：直接计算有理数减法（如 -3 - 5 = ?），或结合数轴求两点距离（如点 A 在 -2，点 B 在 3，则 AB = 3 - (-2) = 5）。",
+        "connections": "有理数减法法则是加法运算的逆用，为后续学习有理数混合运算、解方程（移项变号）打下基础，也与数轴上两点间距离公式相关。",
+        "common_mistakes": [
+          "错误1：将 4 - (-2) 算成 4 - 2 = 2，错在忘记减负数要变加正数，正确应为 4 + 2 = 6。",
+          "错误2：计算 -5 - 3 时直接得 -2，错在误以为减法就是数值相减，正确应为 -5 + (-3) = -8。",
+          "错误3：0 - 7 算成 7，错在忽略 0 减正数得负数，正确为 -7。"
+        ],
+        "counter_examples": "混淆‘减去一个负数’与‘加上一个负数’：-3 - (-5) 是 -3 + 5 = 2，而 -3 + (-5) = -8，两者结果不同，关键在于减号改变减数的符号。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G7-MATH-S-ku-有理数加-减-乘-除混合运算顺序",
+      "textbook_id": "RENJIAO-G7-MATH-S",
+      "cluster_id": "RENJIAO-G7-MATH-S-kc-有理数的混合运算",
+      "name": "有理数加、减、乘、除混合运算顺序",
+      "description": "无括号时，先乘除，后加减；有括号先做括号内运算。",
+      "prerequisites": [
+        "有理数加法法则",
+        "有理数减法法则",
+        "有理数乘法法则",
+        "有理数除法法则（转化为乘法）"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "例1：计算 3+4×2。先算4×2=8，再算3+8=11。",
+          "例2：计算 (3+4)×2。先算括号内3+4=7，再算7×2=14。"
+        ],
+        "intuition": "就像做菜要先处理食材再调味，数学运算也有优先级：乘除是‘处理’，加减是‘调味’，括号则是‘优先处理的小包’。",
+        "definition": "有理数混合运算中，无括号时先算乘除（同级从左到右），后算加减；有括号时先算小括号、中括号、大括号内的运算，括号内也遵循先乘除后加减。",
+        "key_points": [
+          "⚠️ 乘除是同级运算，必须从左到右依次计算，不能随意交换顺序。",
+          "⚠️ 括号内运算完成后，括号自动消失，不能保留括号符号。",
+          "⚠️ 除法运算中，除数不能为0，且除以一个数等于乘以它的倒数。"
+        ],
+        "application": "典型考查方式：①直接计算含括号与乘除的算式，如 15-6÷2+3；②解决实际问题时列综合算式并计算，如‘买3支笔每支2元，付20元应找回多少？’",
+        "connections": "有理数混合运算顺序是小学四则运算的推广，为后续学习整式运算、方程求解奠定基础，也是代数运算的基石。",
+        "common_mistakes": [
+          "错误1：在 8-2×3 中先算8-2=6，再算6×3=18，错在没先算乘法2×3=6。",
+          "错误2：在 12÷3×2 中先算3×2=6，再算12÷6=2，错在没从左到右计算同级运算。",
+          "错误3：在 (2+3)×4 中先算2+3=5后，误写成(5)×4，括号多余，正确应直接写5×4=20。"
+        ],
+        "counter_examples": "混淆‘先乘除后加减’与‘从左到右’：如 6÷2×3，若先算2×3=6再算6÷6=1就错了，正确应为从左到右：6÷2=3，3×3=9。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G7-MATH-S-ku-有理数加减乘除混合运算顺序",
+      "textbook_id": "RENJIAO-G7-MATH-S",
+      "cluster_id": "RENJIAO-G7-MATH-S-kc-有理数除法与混合运算",
+      "name": "有理数加减乘除混合运算顺序",
+      "description": "无括号时，先乘除，后加减；同级运算从左到右；有括号先算括号内。",
+      "prerequisites": [
+        "有理数乘除混合运算",
+        "有理数加法法则",
+        "有理数减法法则"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "例：$3 + 4 \\times 2 = 3 + 8 = 11$，先乘后加，不能从左到右算成14。",
+          "例：$(3 + 4) \\times 2 = 7 \\times 2 = 14$，括号优先改变顺序。"
+        ],
+        "intuition": "就像做菜要按顺序放调料，先放油盐再放酱醋，数学运算也有固定顺序，否则结果会乱套。",
+        "definition": "有理数混合运算中，无括号时先计算乘除（乘方优先），后计算加减；同级运算从左到右依次进行；有括号时先算括号内，再算括号外。",
+        "key_points": [
+          "⚠️ 乘除是同一级，加减是同一级，不能把乘除和加减混为同级。",
+          "⚠️ 有括号时，括号内的运算也要遵循先乘除后加减的顺序。",
+          "⚠️ 从左到右仅适用于同级运算，不同级不能跳步。"
+        ],
+        "application": "典型考查：给一个含括号、乘除、加减的算式，要求按顺序计算；或判断运算顺序正误的选择题。",
+        "connections": "小学已学整数四则运算顺序，初中扩展到有理数（含负数），为后续乘方、整式运算打基础。",
+        "common_mistakes": [
+          "错误：$8 - 2 \\times 3 = 6 \\times 3 = 18$，错在没先算乘法，应先算 $2 \\times 3 = 6$，再算 $8 - 6 = 2$。",
+          "错误：$12 \\div 4 \\times 3 = 12 \\div 12 = 1$，错在误以为乘除同级可先乘后除，实际应从左到右得 $3 \\times 3 = 9$。",
+          "错误：$(-2)^2 - 3^2 = 4 - 9 = -5$，正确；但有人算成 $4 + 9 = 13$，错在把减法当加法。"
+        ],
+        "counter_examples": "与“从左到右”混淆：如 $6 \\div 2 \\times 3$ 必须从左到右得 $3 \\times 3 = 9$，不能先乘后除得 $6 \\div 6 = 1$。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G7-MATH-S-ku-有理数加减法的实际意义",
+      "textbook_id": "RENJIAO-G7-MATH-S",
+      "cluster_id": "RENJIAO-G7-MATH-S-kc-有理数运算的引入",
+      "name": "有理数加减法的实际意义",
+      "description": "有理数加减法可表示温度变化、收支结余等实际问题。",
+      "prerequisites": [
+        "正数和负数的实际应用"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "温度变化：某地早晨-3℃，中午上升8℃，中午温度为-3+8=5℃",
+          "收支结余：小明收入20元，支出25元，结余20-25=-5元（亏5元）"
+        ],
+        "intuition": "为什么需要有理数加减法？因为生活中温度升降、收支盈亏等变化，不能只用正数表示，需要引入负数来完整描述相反方向的量。",
+        "definition": "有理数加减法表示两个有理数在数轴上移动后的位置变化：加法对应向右（正数）或向左（负数）移动，减法对应改变方向后移动。关键限定：结果仍为有理数。",
+        "key_points": [
+          "⚠️ 减法不是简单的“减去”，而是加上相反数，如 5-(-3)=5+3=8",
+          "⚠️ 温度变化中“上升”和“下降”对应加正数和加负数，如从-5℃上升3℃是-5+3=-2℃",
+          "⚠️ 收支问题中“收入”为正，“支出”为负，结余=收入-支出，如收入10元支出15元结余10-15=-5元"
+        ],
+        "application": "典型考查：给出温度变化或收支情境，列式计算最终值；或给出数轴上的移动，用加减法表示位置变化。",
+        "connections": "有理数加减法是小学正数加减法的扩展，为后续学习有理数乘除、方程和函数中的正负号运算奠定基础。",
+        "common_mistakes": [
+          "误将“上升”直接加正数，如从-5℃上升3℃写成-5+3=-2℃正确，但有人写成-5-3=-8℃（错把上升当下降）",
+          "收支问题中把支出当正数减，如收入10元支出15元结余写成10-15=-5元正确，但有人写成10+15=25元（错把支出当收入）",
+          "温度变化中“下降”直接减正数，如从5℃下降8℃写成5-8=-3℃正确，但有人写成5+8=13℃（错把下降当上升）"
+        ],
+        "counter_examples": "容易混淆的是“减去一个负数”与“加上一个正数”的区别：如 5-(-3) 不等于 5-3，而是等于 5+3=8，因为减去负数相当于加上正数。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G7-MATH-S-ku-有理数加减混合运算",
+      "textbook_id": "RENJIAO-G7-MATH-S",
+      "cluster_id": "RENJIAO-G7-MATH-S-kc-有理数减法与混合运算",
+      "name": "有理数加减混合运算",
+      "description": "将减法转化为加法，统一为加法运算，再省略括号和加号，写成省略加号的和的形式，然后利用加法运算律简化计算。",
+      "prerequisites": [
+        "有理数加法法则",
+        "有理数减法法则",
+        "有理数加法运算律"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "例：(-5) - (+3) + (-2) - (-4) = (-5) + (-3) + (-2) + (+4) = -5 -3 -2 +4 = -6。",
+          "例：7 - (-2) + 3 - 5 = 7 + 2 + 3 - 5 = 7。"
+        ],
+        "intuition": "有理数加减混合运算就像整理零钱：把‘欠钱’和‘给钱’统一成‘加正数’或‘加负数’，再合并同类项，让计算更清晰。",
+        "definition": "有理数加减混合运算：先将所有减法转化为加法（减去一个数等于加上它的相反数），统一为加法运算，再省略加号和括号，写成省略加号的和的形式，然后利用加法交换律、结合律简化计算。关键限定：转化时符号不能出错。",
+        "key_points": [
+          "⚠️ 减法变加法时，减号变加号，减数变相反数，符号易漏或写反。",
+          "⚠️ 省略加号和括号后，每个数前的符号就是它的性质符号，不能随意改变。",
+          "⚠️ 利用运算律时，要连同符号一起移动，不能只移动数字。"
+        ],
+        "application": "典型考查：直接计算有理数加减混合算式（如-2+3-5+1）；结合绝对值、相反数进行综合计算（如已知a=-3，b=2，求a-b+(-a)的值）。",
+        "connections": "有理数加减混合运算是小学加减运算的推广，也是后续学习有理数乘除、整式加减、方程求解的基础，培养符号意识和运算能力。",
+        "common_mistakes": [
+          "错误：(-3) - (-5) = -3 -5 = -8。错因：减-5应变成加+5，正确为-3+5=2。",
+          "错误：2 - 3 + 4 = 2 - 7 = -5。错因：未按顺序计算，正确为2-3=-1，-1+4=3。",
+          "错误：省略括号后，把-3+5-2写成-3+5-2=0，但忘记-2是负号，正确为-3+5-2=0。"
+        ],
+        "counter_examples": "混淆“减去一个数”与“加上一个负数”：如 3 - (-2) 不能写成 3 - 2，而应转化为 3 + 2；减法没有交换律，必须先统一成加法才能交换。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G7-MATH-S-ku-有理数加减混合运算统一为加法",
+      "textbook_id": "RENJIAO-G7-MATH-S",
+      "cluster_id": "RENJIAO-G7-MATH-S-kc-有理数减法与加减混合运算",
+      "name": "有理数加减混合运算统一为加法",
+      "description": "加减混合运算可以统一为加法运算，即 a+b-c = a+b+(-c)。可省略括号和加号写成省略加号的和的形式。",
+      "prerequisites": [
+        "有理数减法法则",
+        "有理数加法交换律",
+        "有理数加法结合律"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "例：(-5)-(-3)+2 = (-5)+3+2 = -5+3+2，读作‘负5、正3、正2的和’，结果为0。",
+          "例：7-(-4)+(-6)-2 = 7+4+(-6)+(-2) = 7+4-6-2，读作‘正7、正4、负6、负2的和’，结果为3。"
+        ],
+        "intuition": "就像把收入和支出统一记成‘加正数’和‘加负数’，让账目更清晰。本质是减法就是加相反数，统一形式后计算更简便。",
+        "definition": "有理数加减混合运算中，将减法转化为加法（减去一个数等于加上它的相反数），得到 a+b-c = a+b+(-c)，再省略加号和括号，写成省略加号的和的形式（如 a+b-c 写成 a+b-c 但实际是 a+b+(-c)）。关键限定：减法必须转化为加法，且省略的是加号和括号，不是运算符号。",
+        "key_points": [
+          "⚠️ 省略加号时，必须先把减法统一为加法，再省略加号和括号，不能直接去掉减号。",
+          "⚠️ 省略加号后的式子中，每个数前的符号（正或负）代表该数的性质符号，不是运算符号。",
+          "⚠️ 读法要正确：如 -3+5-2 读作‘负3、正5、负2的和’，不能读作‘负3加5减2’。"
+        ],
+        "application": "典型考查：给出加减混合算式，要求先统一为加法再计算，或直接写出省略加号的和的形式。另一种：根据省略加号的和的形式还原原算式，并计算结果。",
+        "connections": "前置知识：有理数加法法则和减法法则（减去一个数等于加它的相反数）。后续知识：有理数乘除混合运算统一为乘法，以及代数式的加减运算。",
+        "common_mistakes": [
+          "错误：将 a-b 直接写成 a-b 而忘记转化，如 5-(-3) 写成 5-3（应为 5+3）。",
+          "错误：省略加号后读法错误，如 -2+3 读成‘负2加3’（正确读法‘负2、正3的和’）。",
+          "错误：符号处理混乱，如 3-(-2)+(-4) 写成 3-2-4（应为 3+2-4）。"
+        ],
+        "counter_examples": "容易混淆的是：a-b-c 统一为加法是 a+(-b)+(-c)，而不是 a-b-c 直接省略（因为原式已有减号）。区别在于：统一为加法后，所有运算都是加法，而原式是加减混合。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G7-MATH-S-ku-有理数加法交换律",
+      "textbook_id": "RENJIAO-G7-MATH-S",
+      "cluster_id": "RENJIAO-G7-MATH-S-kc-有理数加法运算律",
+      "name": "有理数加法交换律",
+      "description": "两个数相加，交换加数的位置，和不变。即 a+b = b+a。",
+      "prerequisites": [
+        "有理数加法法则（同号）",
+        "有理数加法法则（异号）"
+      ],
+      "related_kus": [],
+      "difficulty": 0.2,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "例1：$(-5) + 3 = 3 + (-5) = -2$，交换后结果相同。",
+          "例2：$\\frac{1}{2} + (-\\frac{3}{4}) = (-\\frac{3}{4}) + \\frac{1}{2} = -\\frac{1}{4}$，验证交换律。"
+        ],
+        "intuition": "交换律源于日常经验：无论先数苹果还是先数梨，总数不变。它简化计算，比如先加正数再加负数更高效。",
+        "definition": "有理数加法交换律：对于任意有理数 $a$ 和 $b$，有 $a + b = b + a$。关键限定：仅适用于加法，不适用于减法或除法。",
+        "key_points": [
+          "⚠️ 交换律只改变加数顺序，不改变运算符号（如 $+(-3)$ 不能写成 $-3+$）。",
+          "⚠️ 多个数相加时，交换律可结合使用，但需保持每个加数的正负号不变。",
+          "⚠️ 交换律不适用于减法，如 $a-b \\neq b-a$，除非转化为加法 $a+(-b)$。"
+        ],
+        "application": "典型考查：直接判断等式是否成立（如 $(-7)+5=5+(-7)$）。或利用交换律简便计算，如 $(-8)+3+8 = (-8)+8+3 = 0+3=3$。",
+        "connections": "交换律是加法运算律的基础，与结合律共同简化复杂运算。后续学习乘法交换律、代数式化简及方程求解时需反复应用。",
+        "common_mistakes": [
+          "错误：认为 $a-b = b-a$，混淆了减法与加法交换律。正确做法：先化减为加再交换。",
+          "错误：交换时忘记带符号，如 $(-2)+3$ 写成 $2+(-3)$，导致结果错误。",
+          "错误：在连加中随意交换而不考虑括号，如 $1-2+3$ 误写成 $1+3-2$，但需注意减法本质。"
+        ],
+        "counter_examples": "减法不满足交换律：$5-3=2$，但 $3-5=-2$，结果不同。只有将减法转化为加法（如 $5+(-3)$）后才适用交换律。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G7-MATH-S-ku-有理数加法法则",
+      "textbook_id": "RENJIAO-G7-MATH-S",
+      "cluster_id": "RENJIAO-G7-MATH-S-kc-有理数加法",
+      "name": "有理数加法法则",
+      "description": "同号两数相加，和取相同的符号，且和的绝对值等于加数的绝对值的和；绝对值不相等的异号两数相加，和取绝对值较大的加数的符号，且和的绝对值等于加数的绝对值中较大者与较小者的差；互为相反数的两个数相加得0；一个数与0相加，仍得这个数。",
+      "prerequisites": [
+        "正数、负数、相反数、绝对值"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "同号：(-3)+(-5) = -8，因为符号相同取负，绝对值3+5=8。",
+          "异号：(-7)+(+4) = -3，因为|-7|>|4|，取负号，绝对值7-4=3。"
+        ],
+        "intuition": "有理数加法就像在数轴上走步：同向走则距离相加、方向不变；反向走则抵消一部分，最终方向由步长大的决定。",
+        "definition": "有理数加法法则：同号两数相加，取相同符号，绝对值相加；异号两数相加，取绝对值较大数的符号，绝对值相减；互为相反数相加得0；任何数与0相加仍得本身。",
+        "key_points": [
+          "⚠️ 异号相加时，先比较绝对值大小，再用大绝对值减小绝对值，符号取绝对值大的那个。",
+          "⚠️ 互为相反数相加得0，不要误以为符号不同就一定是相反数。",
+          "⚠️ 与0相加时，结果就是原数，不要改变符号或数值。"
+        ],
+        "application": "典型考查方式：直接计算两个有理数的和，或结合数轴、绝对值概念进行综合运算。",
+        "connections": "有理数加法是小学整数加减法的推广，也是后续学习有理数减法、乘法以及代数运算的基础。",
+        "common_mistakes": [
+          "错误：(-5)+(+3) = -8，错在误以为异号相加也是绝对值相加，实际应为绝对值相减得-2。",
+          "错误：(+6)+(-9) = +3，错在取符号时误取正号，实际应取绝对值较大的负号，结果为-3。",
+          "错误：(-4)+(+4) = -8，错在认为相反数相加仍按异号处理，实际应为0。"
+        ],
+        "counter_examples": "容易与乘法混淆：如(-2)+(-3) = -5，而(-2)×(-3)=6，加法结果符号与乘法不同。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G7-MATH-S-ku-有理数加法法则-与0相加",
+      "textbook_id": "RENJIAO-G7-MATH-S",
+      "cluster_id": "RENJIAO-G7-MATH-S-kc-有理数加法法则",
+      "name": "有理数加法法则（与0相加）",
+      "description": "一个数与0相加，仍得这个数。",
+      "prerequisites": [],
+      "related_kus": [],
+      "difficulty": 0.1,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "5 + 0 = 5，正数加0仍为正数",
+          "(-3) + 0 = -3，负数加0仍为负数",
+          "0 + 0 = 0，0加0还是0"
+        ],
+        "intuition": "就像你口袋里本来有5元钱，别人没给你也没拿走，你的钱数不变。与0相加就是“什么都没发生”，所以结果还是原来的数。",
+        "definition": "对于任意有理数a，有a + 0 = a。0是加法运算中的恒等元，任何数与0相加，和等于该数本身。",
+        "key_points": [
+          "⚠️ 0既不是正数也不是负数，但任何数与0相加结果不变",
+          "⚠️ 不要误以为0加任何数都得0，那是乘法规则",
+          "⚠️ 与0相加时，符号（正负号）完全保留，不改变"
+        ],
+        "application": "常以口算或填空题出现，如“(-5)+0=？”；或在混合运算中作为干扰项，检验学生是否混淆加法与乘法规则。",
+        "connections": "这是有理数加法法则中最简单的一条，为后续学习加法交换律（a+b=b+a）和加法结合律打下基础，也是理解相反数相加为0的前提。",
+        "common_mistakes": [
+          "误以为0加负数结果为正，如(-2)+0=2（错，应为-2）",
+          "混淆加法与乘法，认为0加任何数都得0，如3+0=0（错，应为3）",
+          "忽略符号，如(-7)+0=7（错，应为-7）"
+        ],
+        "counter_examples": "容易与“任何数乘以0都得0”混淆。例如：(-4) × 0 = 0，但(-4) + 0 = -4，两者结果完全不同。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G7-MATH-S-ku-有理数加法法则-同号",
+      "textbook_id": "RENJIAO-G7-MATH-S",
+      "cluster_id": "RENJIAO-G7-MATH-S-kc-有理数加法法则",
+      "name": "有理数加法法则（同号）",
+      "description": "同号两数相加，和取相同的符号，且和的绝对值等于加数的绝对值的和。",
+      "prerequisites": [
+        "绝对值",
+        "有理数分类"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "(+3)+(+5)=+8，同为正，取正号，3+5=8",
+          "(-4)+(-7)=-11，同为负，取负号，4+7=11"
+        ],
+        "intuition": "就像两个人朝同一方向走，距离相加，方向不变。同号相加，符号一致，绝对值累加。",
+        "definition": "同号两数相加，取相同的符号，并把绝对值相加。关键：符号相同是前提，绝对值相加是操作。",
+        "key_points": [
+          "⚠️ 符号必须相同，不能一正一负",
+          "⚠️ 先确定符号（与加数相同），再计算绝对值之和",
+          "⚠️ 结果符号与加数符号一致，不要忘记写负号"
+        ],
+        "application": "直接计算题：给出两个同号有理数求和；应用题：温度下降、债务累加等场景中同号相加。",
+        "connections": "有理数加法是小学正数加法的推广，后续学习异号加法、减法、乘法的基础。",
+        "common_mistakes": [
+          "误将(-3)+(-5)算成-8却写成+8，忘记取相同负号",
+          "计算(-2)+(-6)时，误将绝对值相减得-4，正确应为绝对值相加得-8",
+          "把(-4)+(-9)写成-13却漏掉负号，写成13"
+        ],
+        "counter_examples": "异号相加如(+5)+(-3)=+2，符号取绝对值大的符号，绝对值相减，与同号法则不同。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G7-MATH-S-ku-有理数加法法则-异号",
+      "textbook_id": "RENJIAO-G7-MATH-S",
+      "cluster_id": "RENJIAO-G7-MATH-S-kc-有理数加法法则",
+      "name": "有理数加法法则（异号）",
+      "description": "绝对值不相等的异号两数相加，和取绝对值较大的加数的符号，且和的绝对值等于加数的绝对值中较大者与较小者的差。互为相反数的两个数相加得0。",
+      "prerequisites": [
+        "绝对值",
+        "相反数"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "$(-5) + 3 = -2$：$|-5| > |3|$，取负号，绝对值差 $5-3=2$。",
+          "$4 + (-7) = -3$：$|4| < |-7|$，取负号，绝对值差 $7-4=3$。",
+          "$(-2) + 2 = 0$：互为相反数，直接得0。"
+        ],
+        "intuition": "就像两个人拔河，力气大的决定方向，最终移动的距离是两人力气的差。异号有理数相加，绝对值大的数决定和的符号，绝对值相减得到和的大小。",
+        "definition": "对于两个异号有理数 $a$ 和 $b$（$|a| \\neq |b|$），和 $a+b$ 的符号与绝对值较大的加数相同，和的绝对值等于较大绝对值减去较小绝对值。若 $|a| = |b|$，则 $a+b=0$。",
+        "key_points": [
+          "⚠️ 先确定符号（取绝对值大的数的符号），再计算绝对值差（大减小），顺序不能颠倒。",
+          "⚠️ 互为相反数时和为0，不要误以为符号由第一个数决定。",
+          "⚠️ 绝对值相等但符号不同时，结果一定是0，不是其他数。"
+        ],
+        "application": "典型考查：直接计算异号两数之和（如 $(-8)+5$）；或结合数轴，判断和的正负与大小（如点A在-3，点B在+2，求A+B的位置）。",
+        "connections": "有理数加法法则是后续减法（转化为加法）、乘法（符号法则）的基础，也是解方程移项的依据。",
+        "common_mistakes": [
+          "错误：$(-5)+3=-8$（误将绝对值相加，忘记异号应相减）。",
+          "错误：$(-5)+3=2$（忘记取绝对值较大的符号，直接相减得正）。",
+          "错误：$(-2)+2=-4$（误以为互为相反数相加得负数，实际应为0）。"
+        ],
+        "counter_examples": "与同号加法混淆：同号相加符号不变，绝对值相加（如 $(-3)+(-5)=-8$）；而异号相加符号取大，绝对值相减（如 $(-3)+5=2$）。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G7-MATH-S-ku-有理数加法结合律",
+      "textbook_id": "RENJIAO-G7-MATH-S",
+      "cluster_id": "RENJIAO-G7-MATH-S-kc-有理数加法运算律",
+      "name": "有理数加法结合律",
+      "description": "三个数相加，先把前两个数相加，或者先把后两个数相加，和不变。即 (a+b)+c = a+(b+c)。",
+      "prerequisites": [
+        "有理数加法交换律"
+      ],
+      "related_kus": [],
+      "difficulty": 0.2,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "例1：计算 (-2)+3+(-5)。先算 (-2)+3=1，再算 1+(-5)=-4；或先算 3+(-5)=-2，再算 (-2)+(-2)=-4，结果相同。",
+          "例2：计算 1/2 + (-1/3) + 1/6。先算 1/2+(-1/3)=1/6，再加 1/6 得 1/3；或先算 (-1/3)+1/6=-1/6，再加 1/2 也得 1/3。"
+        ],
+        "intuition": "就像把三堆石子合并，无论先合并左边两堆还是右边两堆，总数不变。这让我们在计算时可以灵活选择顺序，简化运算。",
+        "definition": "三个有理数相加，先把前两个数相加，或者先把后两个数相加，和不变。即 (a+b)+c = a+(b+c)，其中 a、b、c 为任意有理数。",
+        "key_points": [
+          "⚠️ 结合律只改变运算顺序，不改变加数的位置（交换位置是交换律）。",
+          "⚠️ 结合律适用于三个或更多数相加，但两个数相加不涉及结合律。",
+          "⚠️ 使用结合律时，括号改变的是运算顺序，但每个加数的符号（正负）不变。"
+        ],
+        "application": "典型考查方式：① 直接运用结合律简化计算，如计算 (-7)+5+(-3) 时先凑整；② 在混合运算中结合交换律进行简便计算，如 1/2+(-2/3)+1/3+(-1/2)。",
+        "connections": "有理数加法结合律是小学加法结合律的推广，从自然数扩展到有理数（含负数）。它为后续学习乘法结合律、整式运算及解方程中的移项、合并同类项奠定基础。",
+        "common_mistakes": [
+          "错误：认为 (a+b)+c = a+(b+c) 意味着可以随意去掉括号，如 a+b+c 直接写成 a+c+b。这混淆了结合律与交换律，结合律不改变加数顺序。",
+          "错误：在减法中滥用结合律，如 (5-3)-2 误写成 5-(3-2)。减法不满足结合律，需先将减法转化为加法（加相反数）再应用结合律。",
+          "错误：忽略符号，如计算 (-2)+3+(-5) 时，先算 3+(-5) 得 -2，再算 (-2)+(-2) 得 -4，但误以为 (-2)+(-2)=0。"
+        ],
+        "counter_examples": "结合律与交换律不同：交换律是交换加数的位置，如 a+b=b+a；结合律是改变运算顺序，如 (a+b)+c=a+(b+c)。两者常结合使用，但概念不同。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G7-MATH-S-ku-有理数加法运算律",
+      "textbook_id": "RENJIAO-G7-MATH-S",
+      "cluster_id": "RENJIAO-G7-MATH-S-kc-有理数加法",
+      "name": "有理数加法运算律",
+      "description": "加法交换律：a+b=b+a；加法结合律：(a+b)+c=a+(b+c)。多个有理数相加，可以任意交换加数的位置，也可以先把其中的几个数相加。",
+      "prerequisites": [
+        "有理数加法法则"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "例1：(-2)+7+(-5) = 7+(-2)+(-5) = 7+(-7)=0（交换律简化计算）",
+          "例2：(-3)+4+(-1)+2 = [(-3)+(-1)]+[4+2] = (-4)+6=2（结合律分组）"
+        ],
+        "intuition": "就像你口袋里的零钱，先放进去和后放进去的总数不变；多个数相加时，可以自由调整顺序或分组，结果一样，让计算更灵活。",
+        "definition": "有理数加法交换律：a+b=b+a；加法结合律：(a+b)+c=a+(b+c)。关键限定：适用于所有有理数（正、负、零），且运算结果唯一。",
+        "key_points": [
+          "⚠️ 交换律只改变顺序，不改变符号（如 -3+5 交换后为 5+(-3)，结果相同）",
+          "⚠️ 结合律是改变运算顺序，不是去掉括号（如 (2+3)+(-5) 与 2+(3+(-5)) 结果相同）",
+          "⚠️ 多个数相加时，可同时使用交换律和结合律，但每一步必须保持等式成立"
+        ],
+        "application": "典型考查：1. 利用运算律简化多个有理数相加（如正负数分组、相反数先加）；2. 判断等式变形是否合理（如判断 (a+b)+c=a+(b+c) 是否成立）。",
+        "connections": "基于小学整数加法运算律，推广到有理数（含负数）；为后续学习整式加减、方程变形和实数运算奠定基础。",
+        "common_mistakes": [
+          "错误1：交换时忘记带符号，如把 -3+5 写成 3+5，正确应为 5+(-3)",
+          "错误2：结合时随意去括号，如 (2+3)+(-5) 误写成 2+3-5，正确应保持括号内运算优先",
+          "错误3：认为交换律和结合律可同时用于减法和加法，如 5-3+2 误写成 5+2-3 但未考虑减法本质是加负数"
+        ],
+        "counter_examples": "减法或除法不满足交换律和结合律，如 5-3≠3-5，8÷4≠4÷8；有理数加法中，交换律和结合律仅适用于加法运算，不能推广到混合运算。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G7-MATH-S-ku-有理数四则运算法则统一形式",
+      "textbook_id": "RENJIAO-G7-MATH-S",
+      "cluster_id": "RENJIAO-G7-MATH-S-kc-有理数运算与运算律",
+      "name": "有理数四则运算法则统一形式",
+      "description": "有理数加减乘除可统一为分数形式：m/n ± p/q = (mq±np)/(nq)等。",
+      "prerequisites": [
+        "有理数加减乘除"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "计算 $\\frac{2}{3}+\\frac{1}{4}$：通分得 $\\frac{8}{12}+\\frac{3}{12}=\\frac{11}{12}$。",
+          "计算 $\\frac{5}{6}\\div\\frac{2}{3}$：转化为乘法 $\\frac{5}{6}\\times\\frac{3}{2}=\\frac{15}{12}=\\frac{5}{4}$。"
+        ],
+        "intuition": "有理数四则运算看似规则繁多，但统一为分数形式后，加减乘除都归结为分子分母的整数运算，就像把不同面额的货币都换算成同一单位再计算，本质是化异为同。",
+        "definition": "有理数四则运算统一为分数形式：设 $a,b,c,d$ 为整数，$b\\neq0,d\\neq0$，则 $\\frac{a}{b}\\pm\\frac{c}{d}=\\frac{ad\\pm bc}{bd}$；$\\frac{a}{b}\\times\\frac{c}{d}=\\frac{ac}{bd}$；$\\frac{a}{b}\\div\\frac{c}{d}=\\frac{a}{b}\\times\\frac{d}{c}=\\frac{ad}{bc}$（$c\\neq0$）。关键限定：分母不为零，除法时除数不为零。",
+        "key_points": [
+          "⚠️ 加减法必须通分，不能直接分子相加减，如 $\\frac{1}{2}+\\frac{1}{3}\\neq\\frac{2}{5}$，正确为 $\\frac{3}{6}+\\frac{2}{6}=\\frac{5}{6}$。",
+          "⚠️ 除法转化为乘法时，必须将除数分子分母颠倒（取倒数），如 $\\frac{2}{3}\\div\\frac{4}{5}=\\frac{2}{3}\\times\\frac{5}{4}=\\frac{10}{12}=\\frac{5}{6}$，不能直接分子除分子、分母除分母。",
+          "⚠️ 运算结果必须化为最简分数，如 $\\frac{4}{6}$ 应约分为 $\\frac{2}{3}$。"
+        ],
+        "application": "典型考查方式：直接计算有理数加减乘除混合运算，要求写出通分、约分步骤；或在实际问题中列式求解，如计算两个分数的和或商，并化简结果。",
+        "connections": "有理数四则运算法则统一形式是小学分数运算的深化，为后续学习整式运算、分式运算奠定基础，体现了数学中“化归”思想——将新问题转化为已知的整数运算。",
+        "common_mistakes": [
+          "错误：$\\frac{1}{2}+\\frac{1}{3}=\\frac{2}{5}$。错因：未通分，直接分子加分子、分母加分母。",
+          "错误：$\\frac{2}{3}\\div\\frac{4}{5}=\\frac{2\\div4}{3\\div5}=\\frac{0.5}{0.6}$。错因：未将除法转化为乘法并取倒数，而是直接分子除分子、分母除分母。",
+          "错误：$\\frac{3}{4}\\times\\frac{2}{5}=\\frac{3\\times2}{4\\times5}=\\frac{6}{20}$ 未约分。错因：结果未化为最简分数 $\\frac{3}{10}$。"
+        ],
+        "counter_examples": "容易与整数四则运算混淆：整数加减直接对位，如 $23+45=68$；但分数加减必须通分，如 $\\frac{2}{3}+\\frac{1}{4}\\neq\\frac{3}{7}$。另外，分数除法与乘法不同，乘法直接分子乘分子、分母乘分母，除法需先取倒数。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G7-MATH-S-ku-有理数混合运算",
+      "textbook_id": "RENJIAO-G7-MATH-S",
+      "cluster_id": "RENJIAO-G7-MATH-S-kc-有理数运算与运算律",
+      "name": "有理数混合运算",
+      "description": "先乘方，再乘除，最后加减，有括号先算括号内。",
+      "prerequisites": [
+        "有理数乘方运算",
+        "有理数加减乘除"
+      ],
+      "related_kus": [],
+      "difficulty": 0.6,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "例：计算 $(-2)^3 + 6 \\div (-3) \\times 2$，先算乘方 $(-2)^3 = -8$，再算乘除 $6 \\div (-3) \\times 2 = -2 \\times 2 = -4$，最后加减 $-8 + (-4) = -12$",
+          "例：计算 $2 \\times (3 - 5)^2$，先算括号内 $3-5=-2$，再算乘方 $(-2)^2=4$，最后乘法 $2 \\times 4 = 8$"
+        ],
+        "intuition": "有理数混合运算就像做菜：先处理需要特殊步骤的食材（乘方），再按顺序加入主料（乘除），最后调味（加减），括号就像提前准备好的小碗，里面的东西要先处理好。",
+        "definition": "有理数混合运算是指在一个算式中包含加、减、乘、除、乘方及括号等运算，必须按照“先乘方，再乘除，最后加减，有括号先算括号内”的顺序进行，且同级运算从左到右依次计算。",
+        "key_points": [
+          "⚠️ 乘方优先级高于乘除，不能先算乘除再算乘方",
+          "⚠️ 括号内运算必须完全结束后才能处理括号外的运算",
+          "⚠️ 同级运算（如乘除）必须从左到右依次计算，不能随意交换顺序"
+        ],
+        "application": "典型考查方式：直接给出混合运算算式要求按顺序计算，或在实际问题中列式后计算，如温度变化、利润计算等场景。",
+        "connections": "有理数混合运算建立在有理数加减乘除和乘方的基础上，是后续学习整式运算、方程求解和函数计算的核心技能。",
+        "common_mistakes": [
+          "错误：$(-3)^2$ 算成 $-9$，正确是 $9$，因为负数的偶次幂为正",
+          "错误：$2 + 3 \\times 4$ 算成 $5 \\times 4 = 20$，正确是先乘后加得 $2+12=14$",
+          "错误：$6 \\div 2 \\times 3$ 算成 $6 \\div 6 = 1$，正确是从左到右得 $3 \\times 3 = 9$"
+        ],
+        "counter_examples": "容易混淆的是“先乘除后加减”被误解为“先乘后除”或“先加后减”，实际上乘和除是同级运算，必须从左到右依次计算，例如 $12 \\div 3 \\times 2$ 应等于 $4 \\times 2 = 8$，而不是 $12 \\div 6 = 2$。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G7-MATH-S-ku-有理数混合运算顺序-含乘方",
+      "textbook_id": "RENJIAO-G7-MATH-S",
+      "cluster_id": "RENJIAO-G7-MATH-S-kc-有理数乘方与科学记数法",
+      "name": "有理数混合运算顺序（含乘方）",
+      "description": "先乘方，再乘除，最后加减；同级从左到右；有括号先算括号内（小、中、大）。",
+      "prerequisites": [
+        "乘方的定义",
+        "有理数加减乘除混合运算顺序"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "例1：$(-2)^2\\times 3 - 4\\div 2$，先乘方得 $4\\times 3 - 4\\div 2$，再乘除得 $12 - 2$，最后加减得10。",
+          "例2：$2\\times [3 - (-1)^3]$，先算小括号内乘方 $(-1)^3=-1$，得 $2\\times [3 - (-1)]=2\\times 4=8$。"
+        ],
+        "intuition": "就像做菜要先处理食材（乘方）、再烹饪（乘除）、最后装盘（加减），运算顺序保证结果唯一，避免混乱。",
+        "definition": "有理数混合运算中，先计算乘方，再计算乘除，最后计算加减；同级运算从左到右；有括号时先算小括号内，再算中括号，最后算大括号。",
+        "key_points": [
+          "⚠️ 乘方优先级高于乘除，如 $2\\times 3^2$ 先算 $3^2=9$，再乘2得18，而非 $2\\times 3=6$ 再平方得36。",
+          "⚠️ 同级运算从左到右，如 $6\\div 2\\times 3$ 等于 $(6\\div 2)\\times 3=9$，而非 $6\\div (2\\times 3)=1$。",
+          "⚠️ 括号内优先，且括号可改变运算顺序，如 $(-2)^3$ 与 $-2^3$ 结果不同。"
+        ],
+        "application": "典型考查：直接计算混合运算式（如 $(-2)^3\\times 3 - 6\\div (-3)$），或判断运算顺序正误的选择题。",
+        "connections": "此规则是小学四则运算顺序的推广，引入乘方后优先级更高，为后续学习整式运算、方程求解奠定基础。",
+        "common_mistakes": [
+          "错误1：$2+3\\times 4$ 算成 $(2+3)\\times 4=20$，正确应先乘除得 $2+12=14$。",
+          "错误2：$(-3)^2$ 算成 $-9$，错因是误将负号与乘方分离，正确是 $(-3)\\times(-3)=9$。",
+          "错误3：$8\\div 2\\times 4$ 算成 $8\\div (2\\times 4)=1$，错因是忽略同级从左到右，正确是 $(8\\div 2)\\times 4=16$。"
+        ],
+        "counter_examples": "混淆 $(-2)^2$ 与 $-2^2$：前者是 $(-2)\\times(-2)=4$，后者是 $-(2\\times2)=-4$，区别在于负号是否在乘方内。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G7-MATH-S-ku-有理数的分数表示",
+      "textbook_id": "RENJIAO-G7-MATH-S",
+      "cluster_id": "RENJIAO-G7-MATH-S-kc-有理数除法与混合运算",
+      "name": "有理数的分数表示",
+      "description": "形如p/q（p,q为整数，q≠0）的数都是有理数；有理数都可以写成此形式。",
+      "prerequisites": [
+        "有理数除法法则（符号表述）"
+      ],
+      "related_kus": [],
+      "difficulty": 0.2,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "$\\frac{3}{4}$：分子3，分母4，表示3个四分之一",
+          "$-\\frac{5}{2}$：负有理数，可化为 $-2.5$",
+          "$0.\\overline{3} = \\frac{1}{3}$：循环小数是有理数"
+        ],
+        "intuition": "有理数就像分蛋糕：一个整数蛋糕可以平均分成若干份，取其中几份，结果就是分数。它连接了整数和分数，让数轴上的点更密集。",
+        "definition": "有理数是能表示为 $\\frac{p}{q}$ 的数，其中 $p,q$ 为整数，且 $q \\neq 0$。关键：分母不能为零，且 $p,q$ 互质时为最简分数。",
+        "key_points": [
+          "⚠️ 分母 $q$ 必须是非零整数，不能是小数或分数",
+          "⚠️ 整数也是有理数（分母为1），如 $3 = \\frac{3}{1}$",
+          "⚠️ 有限小数和循环小数都能化为分数，但无限不循环小数不是有理数"
+        ],
+        "application": "典型考查：将小数（有限或循环）化为分数，如 $0.\\overline{6}$ 化为 $\\frac{2}{3}$；或判断一个数是否为有理数，如 $\\frac{22}{7}$ 是有理数，但 $\\pi$ 不是。",
+        "connections": "有理数是整数和分数的统称，是实数的一部分。后续学习无理数时，对比理解更深刻；也是代数运算（如解方程）的基础。",
+        "common_mistakes": [
+          "误认为分母可为0，如 $\\frac{3}{0}$ 无意义，因为除以0未定义",
+          "误认为所有小数都是有理数，如 $0.1010010001\\ldots$ 无限不循环，不是有理数",
+          "忽略负号位置，如 $-\\frac{2}{3}$ 与 $\\frac{-2}{3}$ 等价，但 $\\frac{2}{-3}$ 写法不规范"
+        ],
+        "counter_examples": "无限不循环小数如 $\\pi$ 和 $\\sqrt{2}$ 不是有理数，因为它们不能写成 $\\frac{p}{q}$ 形式。注意：$\\sqrt{4}=2$ 是有理数，但 $\\sqrt{2}$ 不是。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G7-MATH-S-ku-有理数的分类",
+      "textbook_id": "RENJIAO-G7-MATH-S",
+      "cluster_id": "RENJIAO-G7-MATH-S-kc-负数的引入与表示",
+      "name": "有理数的分类",
+      "description": "有理数分为整数和分数，整数包括正整数、0、负整数，分数包括正分数、负分数。",
+      "prerequisites": [
+        "正数和负数的实际应用"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "3：正整数，也是整数和有理数",
+          "-2/3：负分数，属于有理数",
+          "0.5：有限小数，可化为1/2，是正分数"
+        ],
+        "intuition": "就像把物品分成整盒的和散装的，有理数就是所有能写成分数形式的数，包括整数和分数，方便我们精确表示和比较数量。",
+        "definition": "有理数是可以表示为两个整数之比 p/q（q≠0）的数，包括整数（正整数、0、负整数）和分数（正分数、负分数）。关键限定：分母不为0，且分数可化为有限小数或无限循环小数。",
+        "key_points": [
+          "⚠️ 整数也是分数的一种特殊形式（分母为1），不要将整数与分数对立",
+          "⚠️ 有限小数和无限循环小数都属于分数，不要误以为只有带分数线的才是分数",
+          "⚠️ 0既不是正数也不是负数，但它是整数，也是有理数"
+        ],
+        "application": "常见考查：给出一些数要求分类（如将-2, 0, 1/3, π分别填入整数、分数、有理数集合）；判断一个数是否为有理数，如判断0.121221222...（无限不循环）不是有理数。",
+        "connections": "有理数是小学分数、小数的延伸，也是后续学习实数、无理数（如√2）的基础，为代数运算和方程求解做准备。",
+        "common_mistakes": [
+          "误认为0不是有理数：0是整数，可写为0/1，属于有理数",
+          "将有限小数（如0.25）排除在分数之外：0.25=1/4，是正分数",
+          "混淆负整数与负分数：-3是负整数，不是负分数，但两者都是有理数"
+        ],
+        "counter_examples": "π（圆周率）不是有理数，因为它不能表示为两个整数的比，是无限不循环小数；而0.333...（循环小数）是有理数，因为可化为1/3。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G7-MATH-S-ku-有理数的大小比较",
+      "textbook_id": "RENJIAO-G7-MATH-S",
+      "cluster_id": "RENJIAO-G7-MATH-S-kc-有理数的大小比较",
+      "name": "有理数的大小比较",
+      "description": "正数大于0，0大于负数，正数大于负数；两个负数比较，绝对值大的反而小。",
+      "prerequisites": [
+        "绝对值的定义"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "比较-3和-5：|-3|=3，|-5|=5，3<5，所以-3 > -5",
+          "比较-2和1：正数大于负数，所以1 > -2"
+        ],
+        "intuition": "比较有理数大小就像看温度计：越往右（正方向）温度越高，负数比0冷，两个负数中离0越远的反而越冷（小）。",
+        "definition": "对于任意两个有理数a和b，若a在数轴上位于b的右侧，则a > b；特别地，正数 > 0 > 负数；两个负数比较，绝对值大的反而小。",
+        "key_points": [
+          "⚠️ 两个负数比较时，不要直接比数值大小，要比较绝对值，绝对值大的反而小",
+          "⚠️ 数轴方向：越往右数越大，不要混淆左右方向",
+          "⚠️ 0既不是正数也不是负数，但0大于所有负数，小于所有正数"
+        ],
+        "application": "常见考查方式：直接比较两个有理数大小（如-2/3与-3/4）；在数轴上标出有理数并排序；结合绝对值或相反数进行大小比较。",
+        "connections": "有理数大小比较是数轴概念的延伸，也是后续学习不等式、绝对值运算和实数比较的基础。",
+        "common_mistakes": [
+          "错误：认为-5 < -3是因为5>3，但正确是-5 < -3，因为绝对值大的反而小",
+          "错误：认为0是最小的数，实际上负数都小于0",
+          "错误：比较-0.5和-0.25时，误以为-0.5 > -0.25，实际|-0.5|>|-0.25|，所以-0.5 < -0.25"
+        ],
+        "counter_examples": "容易与绝对值比较混淆：例如比较-7和-2，若误以为数值大的数大，会得出-7 > -2，但实际|-7|=7，|-2|=2，7>2，所以-7 < -2。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G7-MATH-S-ku-有理数的大小比较法则",
+      "textbook_id": "RENJIAO-G7-MATH-S",
+      "cluster_id": "RENJIAO-G7-MATH-S-kc-有理数的大小比较",
+      "name": "有理数的大小比较法则",
+      "description": "正数大于0，0大于负数，正数大于负数；两个负数比较，绝对值大的反而小。数轴上左边的数小于右边的数。",
+      "prerequisites": [
+        "绝对值的性质",
+        "用数轴上的点表示有理数"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "比较-2和-7：因为|-2|=2，|-7|=7，2<7，所以-2 > -7。",
+          "比较0和-1：0大于负数，所以0 > -1。"
+        ],
+        "intuition": "生活中比较温度、海拔或债务时，需要知道哪个更大或更小，比如零下5度比零下10度暖和，因为-5 > -10。",
+        "definition": "对于任意两个有理数a和b，若a在数轴上位于b的右边，则a > b；若a在b的左边，则a < b。特别地，正数大于0，0大于负数，正数大于负数；两个负数比较，绝对值大的反而小。",
+        "key_points": [
+          "⚠️ 两个负数比较时，不要直接看数字大小，比如-3和-5，-3的绝对值3小于-5的绝对值5，所以-3 > -5。",
+          "⚠️ 数轴方向：左边小右边大，与日常“左小右大”一致，但注意负数在0左边，越左越小。",
+          "⚠️ 比较时先看符号：正数>0>负数，再考虑绝对值大小。"
+        ],
+        "application": "典型考查方式：直接比较两个有理数大小（如-3和-5），或结合数轴判断点的位置关系；也常见于选择题中判断大小关系是否正确。",
+        "connections": "有理数大小比较是数轴和绝对值的直接应用，也为后续学习不等式、数轴上的距离以及实数比较打下基础。",
+        "common_mistakes": [
+          "错误：认为-5 < -3是因为5>3，但正确是-5 < -3，因为绝对值大的负数反而小。",
+          "错误：比较-0.5和-0.2时，误以为-0.5 > -0.2，实际|-0.5|=0.5 > |-0.2|=0.2，所以-0.5 < -0.2。",
+          "错误：忽略符号直接比较，如认为-1 > 0，实际0大于所有负数。"
+        ],
+        "counter_examples": "容易混淆的是比较两个负数时误以为数字大的就大，例如-10和-3，有人会认为-10 > -3，但实际-10 < -3，因为-10在数轴上更左。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G7-MATH-S-ku-有理数的概念",
+      "textbook_id": "RENJIAO-G7-MATH-S",
+      "cluster_id": "RENJIAO-G7-MATH-S-kc-有理数的分类与表示",
+      "name": "有理数的概念",
+      "description": "可以写成分数形式的数称为有理数。正整数、0、负整数统称整数；正分数、负分数统称分数。",
+      "prerequisites": [
+        "正数和负数的定义",
+        "分数"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "$3 = \\frac{3}{1}$，是有理数。",
+          "$-0.5 = -\\frac{1}{2}$，是有理数。",
+          "$0.\\overline{3} = \\frac{1}{3}$，是有理数。"
+        ],
+        "intuition": "有理数就像能写成‘分数’的数，用来精确表示生活中的‘部分’或‘相反’的量，比如半块蛋糕或欠钱。",
+        "definition": "有理数是能表示为 $\\frac{p}{q}$ 的数，其中 $p$ 和 $q$ 是整数，且 $q \\neq 0$。整数、有限小数、无限循环小数都是有理数。",
+        "key_points": [
+          "⚠️ 分母 $q$ 不能为 0，否则无意义。",
+          "⚠️ 无限不循环小数（如 $\\pi$）不是有理数。",
+          "⚠️ 整数也是有理数，因为可写为 $\\frac{p}{1}$。"
+        ],
+        "application": "常见题型：判断一个数是否为有理数（如 $\\pi$、$\\sqrt{4}$）；将小数化为分数形式，考查对循环小数转化的掌握。",
+        "connections": "有理数是整数和分数的统称，是实数的一部分；后续学习无理数时，通过对比加深对有理数‘可写成分数’本质的理解。",
+        "common_mistakes": [
+          "误认为分数必须分子小于分母，如 $\\frac{5}{2}$ 也是分数。",
+          "误认为小数都是有理数，如 $0.1010010001\\ldots$ 无限不循环，不是有理数。",
+          "误认为负数不是有理数，如 $-3$ 是整数，也是有理数。"
+        ],
+        "counter_examples": "无限不循环小数如 $\\sqrt{2} \\approx 1.41421356\\ldots$ 和 $\\pi$ 不是有理数，因为它们不能写成两个整数的比。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G7-MATH-S-ku-有理数运算律",
+      "textbook_id": "RENJIAO-G7-MATH-S",
+      "cluster_id": "RENJIAO-G7-MATH-S-kc-有理数运算与运算律",
+      "name": "有理数运算律",
+      "description": "加法交换律、结合律，乘法交换律、结合律，分配律。",
+      "prerequisites": [
+        "有理数加法",
+        "有理数乘法"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "例1：计算(-3)+5+(-5)，利用加法交换律和结合律，先算5+(-5)=0，再加-3得-3，简化计算",
+          "例2：计算(-2)×(3-4)，用分配律得(-2)×3+(-2)×(-4)=-6+8=2，避免先算括号内"
+        ],
+        "intuition": "有理数运算律就像数学中的'交通规则'，确保我们无论先算哪部分、怎么交换位置，结果都一样，让计算更灵活高效。",
+        "definition": "加法交换律：a+b=b+a；加法结合律：(a+b)+c=a+(b+c)；乘法交换律：ab=ba；乘法结合律：(ab)c=a(bc)；分配律：a(b+c)=ab+ac。这些运算律对有理数（包括正负数、零）都成立。",
+        "key_points": [
+          "⚠️ 分配律容易漏乘：a(b+c)=ab+ac，不能只乘第一项或忘记乘括号内所有项",
+          "⚠️ 减法没有交换律：a-b≠b-a，但可转化为加法后应用交换律",
+          "⚠️ 除法没有分配律：a÷(b+c)≠a÷b+a÷c，但(a+b)÷c=a÷c+b÷c成立"
+        ],
+        "application": "典型考查方式：直接计算题，要求灵活运用运算律简化运算（如凑整、抵消）；判断题，辨析运算律是否适用（如判断a÷(b+c)=a÷b+a÷c是否正确）。",
+        "connections": "有理数运算律是小学算术运算律的推广，引入负数后仍然成立；后续学习整式运算、解方程时，这些运算律是化简和变形的基础。",
+        "common_mistakes": [
+          "错误1：计算(-3)×(2-5)时，写成(-3)×2-5=-6-5=-11，错在漏乘-5项，正确应为(-3)×2+(-3)×(-5)=-6+15=9",
+          "错误2：计算(-2)+3-(-5)时，直接交换为3-(-5)+(-2)，但忘记减法变加法，正确应先将减法转化为加法：(-2)+3+5，再交换",
+          "错误3：计算12÷(2+4)时，写成12÷2+12÷4=6+3=9，错在误用分配律，正确应先算括号内2+4=6，再算12÷6=2"
+        ],
+        "counter_examples": "容易混淆的是减法与加法、除法与乘法的关系。例如，a-b不能直接交换为b-a，但a-b=a+(-b)后可用交换律；a÷b不能交换为b÷a，但a÷b=a×(1/b)后可用乘法交换律。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G7-MATH-S-ku-有理数运算的引入",
+      "textbook_id": "RENJIAO-G7-MATH-S",
+      "cluster_id": "RENJIAO-G7-MATH-S-kc-有理数运算的引入",
+      "name": "有理数运算的引入",
+      "description": "在有理数范围内进行加减乘除等运算，解决实际问题。",
+      "prerequisites": [
+        "有理数加减法的实际意义"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "计算 $(-3) + (-5) = -8$，同号相加，取相同符号，绝对值相加。",
+          "计算 $(-6) \\times \\frac{1}{3} = -2$，异号相乘得负，绝对值相乘。"
+        ],
+        "intuition": "有理数运算就像在温度计上做加减：正数代表零上，负数代表零下，运算就是温度的变化。",
+        "definition": "有理数运算指在有理数集（包括整数、分数、正负数）内进行加、减、乘、除（除数不为0）的运算，遵循符号法则和运算律。",
+        "key_points": [
+          "⚠️ 符号法则：同号得正，异号得负，但减法要转化为加法（减去一个数等于加上它的相反数）。",
+          "⚠️ 运算顺序：先乘除后加减，有括号先算括号内，乘方优先于乘除。",
+          "⚠️ 除法转化为乘法：除以一个数等于乘以它的倒数，除数不能为0。"
+        ],
+        "application": "典型考查方式：直接计算含正负数的四则混合运算；或结合生活情境（如温度变化、海拔差、盈亏问题）列式求解。",
+        "connections": "有理数运算是小学自然数运算的扩展，为后续学习代数式运算、方程求解和实数运算奠定基础。",
+        "common_mistakes": [
+          "错误：$(-2) + (-3) = 5$，错在误以为同号相加取正号，实际应取负号。",
+          "错误：$(-4) - (-2) = -6$，错在将减法直接当加法处理，正确应为 $(-4) + 2 = -2$。",
+          "错误：$(-6) \\div (-2) = -3$，错在异号相除得负，实际同号相除得正，应为 $3$。"
+        ],
+        "counter_examples": "容易与自然数运算混淆：自然数运算中减法结果可能为负（如 $3-5$ 无意义），但有理数运算中 $3-5=-2$ 有意义，且负数参与运算需注意符号。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G7-MATH-S-ku-有理数除法法则-符号与绝对值",
+      "textbook_id": "RENJIAO-G7-MATH-S",
+      "cluster_id": "RENJIAO-G7-MATH-S-kc-有理数的除法",
+      "name": "有理数除法法则（符号与绝对值）",
+      "description": "两数相除，同号得正，异号得负，且商的绝对值等于被除数的绝对值除以除数的绝对值的商；0除以任何非0数都得0。",
+      "prerequisites": [
+        "有理数除法法则（转化为乘法）"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "例：(-12) ÷ (-3) = +4，同号得正，绝对值12÷3=4",
+          "例：(-8) ÷ (+2) = -4，异号得负，绝对值8÷2=4"
+        ],
+        "intuition": "就像两个朋友（同号）一起合作得正，两个敌人（异号）对抗得负；除法本质是均分，符号由双方关系决定。",
+        "definition": "有理数除法法则：两数相除，同号得正，异号得负，并把绝对值相除；0除以任何非0数都得0。关键限定：除数不能为0。",
+        "key_points": [
+          "⚠️ 符号判定与乘法相同，但除法中除数不能为0",
+          "⚠️ 绝对值相除时，先确定符号再计算绝对值",
+          "⚠️ 0除以非0数结果为0，但0不能做除数"
+        ],
+        "application": "典型考查：直接计算有理数除法，如(-15)÷5；或与绝对值、乘方结合，如(-2)³÷(-4)的符号与值。",
+        "connections": "基于有理数乘法法则（同号得正异号得负），除法是其逆运算；为后续学习分数除法、解方程（如移项）打下基础。",
+        "common_mistakes": [
+          "错误：(-9)÷(+3)=+3，错在忘记异号得负，正确应为-3",
+          "错误：0÷0=0，错在0不能做除数，0÷0无意义",
+          "错误：(-12)÷(-4)=-3，错在同号得正，正确应为+3"
+        ],
+        "counter_examples": "易与乘法混淆：乘法中(-2)×(-3)=+6，除法中(-6)÷(-2)=+3，符号规则相同但运算不同；另外注意(-6)÷0无意义，而0÷(-6)=0。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G7-MATH-S-ku-有理数除法法则-符号表述",
+      "textbook_id": "RENJIAO-G7-MATH-S",
+      "cluster_id": "RENJIAO-G7-MATH-S-kc-有理数除法与混合运算",
+      "name": "有理数除法法则（符号表述）",
+      "description": "两数相除，同号得正，异号得负，商的绝对值等于被除数绝对值除以除数绝对值；0除以任何非0数得0。",
+      "prerequisites": [
+        "有理数除法法则（转化为乘法）"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "例：(-12)÷(-3)=+4，同号得正，绝对值12÷3=4。",
+          "例：(-15)÷5=-3，异号得负，绝对值15÷5=3。"
+        ],
+        "intuition": "有理数除法法则就像朋友间的约定：同号相除得正数，异号相除得负数，就像同向走越走越远（正），反向走越走越近（负）。",
+        "definition": "两数相除，同号得正，异号得负，并把绝对值相除；0除以任何非0数得0。关键限定：除数不能为0。",
+        "key_points": [
+          "⚠️ 符号法则优先于绝对值计算：先确定商的符号，再计算绝对值。",
+          "⚠️ 0不能做除数，但0可以做被除数，此时商为0。",
+          "⚠️ 除法可以转化为乘法：a÷b = a×(1/b)，b≠0。"
+        ],
+        "application": "典型考查：直接计算有理数除法，如(-24)÷(-6)=？；或结合绝对值、相反数综合计算，如已知a=-3，b=2，求a÷b的值。",
+        "connections": "有理数除法是乘法的逆运算，也是分数运算的基础，后续学习分式、方程时频繁使用。",
+        "common_mistakes": [
+          "错误：(-8)÷(-2)=-4，错在忘记同号得正，正确应为+4。",
+          "错误：0÷(-5)=无意义，错在认为0不能做被除数，实际上0除以任何非0数得0。",
+          "错误：(-6)÷2=3，错在忘记异号得负，正确应为-3。"
+        ],
+        "counter_examples": "容易混淆的是乘法法则：同号得正，异号得负，但乘法中0乘任何数得0，而除法中0除以非0数得0，但0不能做除数。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G7-MATH-S-ku-有理数除法法则-转化为乘法",
+      "textbook_id": "RENJIAO-G7-MATH-S",
+      "cluster_id": "RENJIAO-G7-MATH-S-kc-有理数除法与混合运算",
+      "name": "有理数除法法则（转化为乘法）",
+      "description": "除以一个不等于0的数，等于乘这个数的倒数：a÷b=a·1/b(b≠0)。",
+      "prerequisites": [
+        "倒数",
+        "有理数乘法法则"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "例1：6 ÷ 3 = 6 × 1/3 = 2，直接验证正确；",
+          "例2：(-8) ÷ 2/3 = (-8) × 3/2 = -12，注意符号和倒数。"
+        ],
+        "intuition": "除法是乘法的逆运算，但直接除以分数或整数不方便。转化为乘法后，只需乘以倒数，计算更统一、简便，就像用“倒过来乘”代替“直接除”。",
+        "definition": "除以一个不等于0的数，等于乘这个数的倒数：a ÷ b = a × 1/b (b ≠ 0)。关键限定条件：除数b不能为0，且倒数1/b必须存在。",
+        "key_points": [
+          "⚠️ 除数b≠0是前提，否则无意义；",
+          "⚠️ 倒数必须正确：整数a的倒数是1/a，分数c/d的倒数是d/c；",
+          "⚠️ 转化后符号不变：正数÷负数→正数×负倒数，结果仍为负。"
+        ],
+        "application": "典型考查：直接计算有理数除法（如 -15 ÷ 3/5）；或解方程时，将除法转化为乘法后求解未知数。",
+        "connections": "有理数除法法则建立在乘法与倒数概念之上，后续学习分数运算、解方程（如 ax=b）时，常通过转化为乘法简化计算。",
+        "common_mistakes": [
+          "错误1：忘记除数不能为0，如 a ÷ 0 写成 a × 1/0，无意义；",
+          "错误2：倒数取错，如 3/4 的倒数写成 4/3 正确，但写成 3/4 或 -4/3 错误；",
+          "错误3：符号处理不当，如 (-6) ÷ (-2) 写成 (-6) × (-1/2) = 3，但有人误写为 (-6) × 1/2 = -3。"
+        ],
+        "counter_examples": "混淆“除以一个数”与“除以一个分数的倒数”：如 4 ÷ 1/2 应等于 4 × 2 = 8，而非 4 × 1/2 = 2。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G7-MATH-S-ku-正数和负数的定义",
+      "textbook_id": "RENJIAO-G7-MATH-S",
+      "cluster_id": "RENJIAO-G7-MATH-S-kc-正数和负数",
+      "name": "正数和负数的定义",
+      "description": "像3,50,7.8%这样大于0的数叫正数；像-3,-10,-0.7%这样在正数前加负号的数叫负数。0既不是正数也不是负数。",
+      "prerequisites": [
+        "自然数",
+        "小数",
+        "分数"
+      ],
+      "related_kus": [],
+      "difficulty": 0.2,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "3是正数，表示零上3度或收入3元",
+          "-5是负数，表示零下5度或支出5元"
+        ],
+        "intuition": "生活中需要区分相反意义的量，比如温度零上零下、收入支出，正负数让这些对立状态能用数学表达。",
+        "definition": "正数是大于0的数，如3、50、7.8%；负数是小于0的数，在正数前加负号，如-3、-10、-0.7%。0既不是正数也不是负数，是正负分界点。",
+        "key_points": [
+          "⚠️ 0是唯一既不是正数也不是负数的数，常被误认为正数",
+          "⚠️ 负数前的负号不能省略，如-3不能写成3",
+          "⚠️ 正数前的正号可省略，但负数前的负号必须写"
+        ],
+        "application": "常见考查：判断给定数（如-2、0、+5）哪些是正数、负数；或结合实际情境（如海拔、温度）写出正负数表示的量。",
+        "connections": "正负数是学习数轴、绝对值、有理数运算的基础，后续比较大小和加减法都依赖正负区分。",
+        "common_mistakes": [
+          "误认为0是正数，因为0看起来像正数，但定义规定0是分界点",
+          "把带负号的数都当负数，如-0不是负数，因为-0=0，0不是负数",
+          "认为正数必须带+号，实际上+可省略，如3就是正数"
+        ],
+        "counter_examples": "0不是正数也不是负数，但常被误认为正数；带正号的数不一定是正数，如+0仍是0，不是正数。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G7-MATH-S-ku-正数和负数的实际应用",
+      "textbook_id": "RENJIAO-G7-MATH-S",
+      "cluster_id": "RENJIAO-G7-MATH-S-kc-负数的引入与表示",
+      "name": "正数和负数的实际应用",
+      "description": "用正负数表示相反意义的量，如温度、海拔、收支等。",
+      "prerequisites": [],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "温度：零上5℃记作+5℃，零下3℃记作-3℃",
+          "海拔：珠穆朗玛峰海拔+8848.86米，死海海拔-430.5米"
+        ],
+        "intuition": "生活中很多量有相反方向，比如温度零上零下、海拔高于低于海平面、收入支出，只用正数无法区分方向，正负数让这些相反意义有了统一的数学表达。",
+        "definition": "正数和负数用于表示具有相反意义的量：规定一个方向为正（如零上、收入），则其相反方向为负（如零下、支出），0是分界点。关键限定：必须明确基准和正方向。",
+        "key_points": [
+          "⚠️ 0不是正数也不是负数，它是正负的分界点，表示没有或基准值",
+          "⚠️ 相反意义的量必须成对出现，且基准要一致（如海拔以海平面为0）",
+          "⚠️ 正负号只表示方向，不表示大小，如-5℃比-3℃更冷但数值更小"
+        ],
+        "application": "典型考查：给出生活情境（如电梯上升下降、水位升降），要求用正负数表示变化；或给出正负数，解释其实际意义（如-200元表示支出200元）。",
+        "connections": "正负数是后续学习有理数、数轴、绝对值的基础，也是理解温度变化、盈亏问题等实际应用的前提。",
+        "common_mistakes": [
+          "误认为带“+”的数一定是正数，如+0不是正数",
+          "混淆“相反意义的量”与“相反数”，如+5和-5是相反数，但+5和-3也是相反意义的量",
+          "在表示海拔时，把海平面以下深度直接写为负数，忘记加负号，如死海深度写为430.5米"
+        ],
+        "counter_examples": "相反意义的量不是任意两个不同的量，如“向东走5米”和“向北走3米”不是相反意义，因为方向不是相反；必须方向相反且基准相同，如向东和向西。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G7-MATH-S-ku-正负术-古代算法",
+      "textbook_id": "RENJIAO-G7-MATH-S",
+      "cluster_id": "RENJIAO-G7-MATH-S-kc-历史与拓展",
+      "name": "正负术（古代算法）",
+      "description": "《九章算术》中正负术：同名相除，异名相益，正无入负之，负无入正之；其异名相除，同名相益，正无入正之，负无入负之。对应现代有理数加减法则。",
+      "prerequisites": [
+        "有理数加法法则",
+        "有理数减法法则"
+      ],
+      "related_kus": [],
+      "difficulty": 0.6,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "例1：同名相除——(+7)-(+2)=+5，同号相减，绝对值7-2=5，符号为正。",
+          "例2：异名相益——(-4)-(+3)=-7，异号相减，绝对值4+3=7，符号取被减数负号。"
+        ],
+        "intuition": "正负术是古代中国处理相反方向量的加减法，就像欠债与还钱、盈利与亏损的合并计算，本质是理解符号相反的量如何抵消或叠加。",
+        "definition": "正负术是《九章算术》中关于有理数加减的法则：同名（同号）相除（绝对值相减），异名（异号）相益（绝对值相加）；正无入负之（正数减0得负数），负无入正之（负数减0得正数）；其异名相除（异号相加取绝对值大的符号），同名相益（同号相加取原符号），正无入正之（正数加0得正），负无入负之（负数加0得负）。关键限定：运算对象为有理数，符号决定运算方向。",
+        "key_points": [
+          "⚠️ “同名相除”不是直接相减，而是同号两数相减时，绝对值相减，符号不变；如(+5)-(+3)=+2。",
+          "⚠️ “异名相益”不是相加，而是异号两数相减时，绝对值相加，符号取被减数符号；如(+5)-(-3)=+8。",
+          "⚠️ 注意“正无入负之”表示正数减去0得负数，这与现代“减去0不变”不同，需区分古代语境。"
+        ],
+        "application": "典型考查方式：1. 直接翻译正负术语句为现代算式，如“同名相除”对应同号相减；2. 用正负术解释古代算题中的盈亏问题，如“卖物得钱为正，买物费钱为负，合并计算总盈亏”。",
+        "connections": "正负术是《九章算术》中方程术的基础，用于解线性方程组；现代有理数加减法则继承其核心思想，但统一为“加法与相反数”规则，是初中代数运算的起点。",
+        "common_mistakes": [
+          "错误1：将“同名相除”误解为同号相加，如(+3)+(+2)误用相除，实际应同名相益（相加）。",
+          "错误2：混淆“相除”与“相益”的适用场景，如(-5)-(+2)误用相除（同号？），实际是异名相益，结果-7。",
+          "错误3：忽略“正无入负之”的古代含义，误以为正数减0得正，实际古代规定得负。"
+        ],
+        "counter_examples": "容易混淆的是现代有理数加减法则与正负术的表述差异：现代“减去一个数等于加上它的相反数”是统一规则，而正负术分四种情况（同名相除、异名相益等），但本质等价。例如(-3)-(-5)在现代是(-3)+5=2，在正负术中是同名相除（同负），绝对值5-3=2，符号为正，结果一致。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G7-MATH-S-ku-用数轴上的点表示有理数",
+      "textbook_id": "RENJIAO-G7-MATH-S",
+      "cluster_id": "RENJIAO-G7-MATH-S-kc-有理数的分类与表示",
+      "name": "用数轴上的点表示有理数",
+      "description": "有理数可用数轴上的点表示：正数在原点右侧，负数在左侧，距离原点绝对值个单位长度。",
+      "prerequisites": [
+        "数轴的三要素"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "例：表示3，从原点向右移动3个单位长度。",
+          "例：表示-2.5，从原点向左移动2.5个单位长度，即2.5个格。"
+        ],
+        "intuition": "数轴就像一把温度计，每个有理数都能在刻度上找到唯一位置，正数在零度以上，负数在零度以下。",
+        "definition": "有理数可用数轴上的点表示：每个有理数对应数轴上唯一一点，正数在原点右侧，负数在原点左侧，到原点的距离等于该数的绝对值。关键：原点、正方向、单位长度三要素缺一不可。",
+        "key_points": [
+          "⚠️ 数轴是直线，不是线段，两端可无限延伸，但表示有理数时只取有限部分。",
+          "⚠️ 每个有理数对应唯一一个点，但数轴上的点不一定都表示有理数（如无理数）。",
+          "⚠️ 表示分数时，需精确等分单位长度，如1/3要三等分0到1的线段。"
+        ],
+        "application": "常见考查：在数轴上标出给定有理数（含分数、小数）；根据数轴上点的位置写出对应的有理数；利用数轴比较有理数大小。",
+        "connections": "为后续学习相反数、绝对值、有理数大小比较（数轴上右大左小）以及实数（无理数）的表示奠定基础。",
+        "common_mistakes": [
+          "错误：认为负数在原点左侧，但距离是负的。纠正：距离是绝对值，永远是正数，如-3到原点距离是3。",
+          "错误：把分数1/2标在0.5位置时，误以为1/2=0.5是不同点。纠正：1/2和0.5是同一个有理数，对应同一个点。",
+          "错误：画数轴时忘记标方向或原点，导致无法区分正负。纠正：必须明确标出原点、正方向和单位长度。"
+        ],
+        "counter_examples": "数轴上的点与有理数不是一一对应，因为还有无理数（如√2）占据其他点。有理数只是数轴上的部分点，但每个有理数都有唯一位置。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G7-MATH-S-ku-用数轴表示数的大小关系",
+      "textbook_id": "RENJIAO-G7-MATH-S",
+      "cluster_id": "RENJIAO-G7-MATH-S-kc-数轴与数的对应",
+      "name": "用数轴表示数的大小关系",
+      "description": "数轴上右边的数总比左边的数大。",
+      "prerequisites": [
+        "数轴上的点与有理数的对应"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "比较 -3 和 2：-3 在 2 左边，所以 -3 < 2",
+          "比较 -5 和 -2：-5 在 -2 左边，所以 -5 < -2"
+        ],
+        "intuition": "数轴就像一条温度计，越往右温度越高，越往左温度越低，所以右边的数总比左边的数大。",
+        "definition": "在数轴上，任意两个点表示的数，右边的点对应的数大于左边的点对应的数。关键限定：数轴方向固定为从左到右增大。",
+        "key_points": [
+          "⚠️ 数轴方向不能颠倒，必须默认从左到右增大",
+          "⚠️ 比较时只看左右位置，不看数字绝对值大小",
+          "⚠️ 负数在左边，正数在右边，负数总小于正数"
+        ],
+        "application": "常见考查：给出数轴上几个点，判断大小关系；或根据大小关系在数轴上标点，如比较 -3.5 和 -2 并说明理由。",
+        "connections": "为后续学习有理数大小比较、不等式、数轴上的动点问题打下基础，也是理解实数顺序的直观工具。",
+        "common_mistakes": [
+          "误认为负数越大（如 -1）比负数越小（如 -5）小，实际 -1 在 -5 右边，-1 > -5",
+          "混淆数轴左右方向，以为左边数大，如认为 -3 > 2",
+          "比较两个负数时，只比较绝对值，忽略负号，如认为 -5 < -2 错误"
+        ],
+        "counter_examples": "绝对值大小与数轴位置不同：如 -5 的绝对值大于 -2，但 -5 在左边，所以 -5 < -2，不能误认为绝对值大的数就大。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G7-MATH-S-ku-用整式表示两位数及交换后的数",
+      "textbook_id": "RENJIAO-G7-MATH-S",
+      "cluster_id": "RENJIAO-G7-MATH-S-kc-整式加减的综合运算与应用",
+      "name": "用整式表示两位数及交换后的数",
+      "description": "十位数字a、个位数字b的两位数为10a+b，交换后为10b+a。",
+      "prerequisites": [
+        "列代数式表示数量关系"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "例：原数十位a=4，个位b=7，则原数为10×4+7=47，交换后为10×7+4=74。",
+          "例：原数a=2，b=0，则原数为20，交换后为10×0+2=2（一位数）。"
+        ],
+        "intuition": "用整式表示两位数，是为了将数字的位值（十位、个位）抽象为代数表达式，便于研究数字变换规律，如交换十位和个位后新数的代数关系。",
+        "definition": "设十位数字为a（a为1到9的整数），个位数字为b（b为0到9的整数），则原两位数为10a+b；交换十位和个位后，新两位数为10b+a。",
+        "key_points": [
+          "⚠️ 十位数字a不能为0，否则不是两位数；个位数字b可以为0。",
+          "⚠️ 交换后新数10b+a中，b可能为0，此时新数是一位数（如a=3,b=0时原数30，交换后03即3）。",
+          "⚠️ 注意区分代数式10a+b与数值10a+b，前者表示位值，后者是计算结果。"
+        ],
+        "application": "典型考查：已知原数与交换后数的和或差，列方程求原数；或通过代数式比较原数与新数的大小关系（如原数比新数大9的倍数）。",
+        "connections": "此知识点是后续学习用字母表示数、列方程解数字问题（如数字谜题、数位变换）的基础，与整式加减、一元一次方程紧密相关。",
+        "common_mistakes": [
+          "错误：认为交换后新数总是两位数，忽略b=0时新数是一位数（如原数20交换后写成02，实际是2）。",
+          "错误：将十位数字a直接乘以个位数字b，如把两位数写成a×b，混淆了位值与乘积。",
+          "错误：交换后写成a+10b，混淆了十位和个位的顺序（正确应为10b+a）。"
+        ],
+        "counter_examples": "混淆点：将两位数直接写成a+b，忽略位值。例如a=3,b=5时，3+5=8，但实际两位数是35，即10×3+5=35。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G7-MATH-S-ku-用正负数表示相反意义的量",
+      "textbook_id": "RENJIAO-G7-MATH-S",
+      "cluster_id": "RENJIAO-G7-MATH-S-kc-正数和负数",
+      "name": "用正负数表示相反意义的量",
+      "description": "用正数和负数分别表示具有相反意义的量，如零上/零下温度、盈利/亏损、增长/减少。",
+      "prerequisites": [
+        "正数和负数的定义"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "例1：某天温度零上10℃记作+10℃，零下5℃记作-5℃。",
+          "例2：盈利200元记作+200元，亏损150元记作-150元。"
+        ],
+        "intuition": "生活中很多量具有相反的方向，比如温度零上零下、收入支出，只用一种数无法区分，所以需要正负数来分别表示相反意义的量。",
+        "definition": "用正数和负数表示具有相反意义的量：规定其中一个方向为正，则其相反方向为负，正数前可加“+”号（通常省略），负数前必须加“-”号，0表示分界点。",
+        "key_points": [
+          "⚠️ 相反意义的量必须成对出现，且基准（0点）要明确，如“零上5℃”和“零下5℃”以0℃为界。",
+          "⚠️ 正负号只表示方向，不表示大小，如-3和+3绝对值相等但意义相反。",
+          "⚠️ 0既不是正数也不是负数，它是正负数的分界，表示没有或基准点。"
+        ],
+        "application": "典型考查：给出生活情境（如水位升降、温度变化），要求用正负数表示；或给出正负数，解释其实际意义，如“-50米”表示低于海平面50米。",
+        "connections": "正负数表示相反意义的量是引入有理数的基础，后续学习数轴、绝对值、有理数运算时，都需要理解正负号代表方向。",
+        "common_mistakes": [
+          "错误1：认为“+5”和“5”不同，实际上正号通常省略，+5就是5。",
+          "错误2：混淆“增加”和“减少”的方向，如“减少-5元”实际是增加5元，应直接说“增加5元”。",
+          "错误3：忘记规定基准，如“向东走3米”和“向西走2米”需先规定正方向才能用正负数表示。"
+        ],
+        "counter_examples": "相反意义的量与相反数不同：相反数如+3和-3，数值互为相反数；而相反意义的量如+10℃和-5℃，数值不一定互为相反数，只要求意义相反。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G7-MATH-S-ku-相反数的几何意义",
+      "textbook_id": "RENJIAO-G7-MATH-S",
+      "cluster_id": "RENJIAO-G7-MATH-S-kc-相反数与绝对值",
+      "name": "相反数的几何意义",
+      "description": "数轴上与原点的距离相等的两个点（除原点外）表示的数互为相反数，它们分别在正负半轴上。",
+      "prerequisites": [
+        "相反数的定义",
+        "用数轴上的点表示有理数"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "3和-3：数轴上3在原点右侧3个单位，-3在左侧3个单位，互为相反数",
+          "1.5和-1.5：到原点距离都是1.5，符号相反"
+        ],
+        "intuition": "就像站在镜子前，你和镜中的你左右相反但距离镜子一样远。相反数就是数轴上关于原点对称的两个点，它们到原点的距离相同，但方向相反。",
+        "definition": "在数轴上，如果两个数对应的点位于原点两侧，且到原点的距离相等，则这两个数互为相反数。0的相反数是0。",
+        "key_points": [
+          "⚠️ 相反数必须成对出现，且到原点距离相等，不能只看符号不同",
+          "⚠️ 0的相反数是0，它本身，不要误以为0没有相反数",
+          "⚠️ 相反数在数轴上关于原点对称，不是关于y轴对称"
+        ],
+        "application": "常见题型：给出一个数求其相反数，或判断两个数是否互为相反数。也常结合数轴，要求标出互为相反数的点，或利用相反数性质解方程。",
+        "connections": "相反数是绝对值概念的直观体现，也为后续学习有理数加减法（如减去一个数等于加上它的相反数）和方程移项打下基础。",
+        "common_mistakes": [
+          "误认为相反数就是符号不同的两个数，忽略距离相等，如+3和-5不是相反数",
+          "认为0没有相反数，实际上0的相反数是0",
+          "认为相反数必须在数轴两侧，但0本身在原点，也是自己的相反数"
+        ],
+        "counter_examples": "相反数与倒数不同：相反数是符号相反、距离相等，如2和-2；倒数是乘积为1，如2和1/2。不要混淆。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G7-MATH-S-ku-相反数的定义",
+      "textbook_id": "RENJIAO-G7-MATH-S",
+      "cluster_id": "RENJIAO-G7-MATH-S-kc-相反数与绝对值",
+      "name": "相反数的定义",
+      "description": "只有符号不同的两个数互为相反数。0的相反数是0。a和-a互为相反数。",
+      "prerequisites": [
+        "数轴的三要素"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "5和-5互为相反数，因为5+(-5)=0。",
+          "-3.2和3.2互为相反数，符号不同，绝对值相同。"
+        ],
+        "intuition": "相反数就像数轴上的对称点，一个数在原点左边，它的相反数就在右边，距离原点一样远。这帮助我们理解正负数的对称性。",
+        "definition": "只有符号不同的两个数互为相反数，即若两个数之和为0，则它们互为相反数。0的相反数是0。关键：符号不同，绝对值相等。",
+        "key_points": [
+          "⚠️ 相反数只改变符号，不改变绝对值。",
+          "⚠️ 0的相反数是0，不要误以为0没有相反数。",
+          "⚠️ 相反数是成对出现的，不能说一个数是相反数。"
+        ],
+        "application": "常见题型：求一个数的相反数（如-7的相反数是7）。或判断两个数是否互为相反数（如判断-2和2是否互为相反数）。",
+        "connections": "相反数是理解有理数加减法的基础，如减去一个数等于加上它的相反数。也为后续学习数轴、绝对值、方程求解做准备。",
+        "common_mistakes": [
+          "误认为相反数就是负数，如认为3的相反数是-3正确，但-3的相反数也是3，不能只记一个方向。",
+          "混淆相反数与绝对值，如认为|5|和|-5|互为相反数，实际上它们相等。",
+          "认为0没有相反数，实际上0的相反数是0。"
+        ],
+        "counter_examples": "倒数是乘积为1的两个数，如2和1/2互为倒数；而相反数是和为0，如2和-2。两者容易混淆，但本质不同。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G7-MATH-S-ku-相反数的性质",
+      "textbook_id": "RENJIAO-G7-MATH-S",
+      "cluster_id": "RENJIAO-G7-MATH-S-kc-相反数与绝对值",
+      "name": "相反数的性质",
+      "description": "若a与b互为相反数，则a+b=0；反之亦然。",
+      "prerequisites": [
+        "相反数的定义"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "例1：3和-3互为相反数，因为3+(-3)=0。",
+          "例2：-1/2和1/2互为相反数，因为(-1/2)+1/2=0。"
+        ],
+        "intuition": "相反数就像站在数轴上原点两侧、距离相等的两个点，它们相加会互相抵消为0，就像赚了5元又花了5元，总收支为0。",
+        "definition": "若两个数a和b满足a+b=0，则称a与b互为相反数，记作b=-a。关键：0的相反数是0，且相反数只有符号不同（实数范围内）。",
+        "key_points": [
+          "⚠️ 相反数必须成对出现，不能说一个数是相反数，必须说‘a是b的相反数’或‘a与b互为相反数’。",
+          "⚠️ 0的相反数是0，不要误认为0没有相反数或相反数是‘不存在’。",
+          "⚠️ 相反数只改变符号，不改变绝对值，如-3和3互为相反数，但-3和-3不是相反数。"
+        ],
+        "application": "常见考查：给出一个数求其相反数（如-7的相反数是7）；或利用相反数性质解方程（如已知x与2x-3互为相反数，求x）。",
+        "connections": "相反数是学习有理数加减法的基础，也是后续学习绝对值、数轴、方程移项（如移项变号）的关键概念。",
+        "common_mistakes": [
+          "错误1：认为-a一定是负数，如当a=-5时，-a=5是正数，但-a与a仍互为相反数。",
+          "错误2：误以为相反数就是绝对值相等但符号不同的两个数，忽略0的特殊性（0的相反数是0）。",
+          "错误3：在解方程时，误将‘a与b互为相反数’写成a=b，正确应为a+b=0。"
+        ],
+        "counter_examples": "倒数与相反数易混淆：倒数乘积为1（如2和1/2），相反数和为0（如2和-2）。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G7-MATH-S-ku-科学记数法",
+      "textbook_id": "RENJIAO-G7-MATH-S",
+      "cluster_id": "RENJIAO-G7-MATH-S-kc-有理数乘方与科学记数法",
+      "name": "科学记数法",
+      "description": "把一个大于10的数表示成a×10^n的形式（1≤a<10，n为正整数）。",
+      "prerequisites": [
+        "乘方的定义"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "3400000 = 3.4×10⁶，因为整数部分有7位，n=7-1=6",
+          "0.00056不是科学记数法，因为a=0.56<1，应写成5.6×10⁻⁴"
+        ],
+        "intuition": "科学记数法就像用“放大镜”把很大的数压缩成简洁形式，方便读写和比较，比如把地球到太阳的距离1.5亿千米写成1.5×10⁸千米。",
+        "definition": "把一个大于10的数表示成a×10ⁿ的形式，其中1≤a<10，n为正整数，且n等于原数的整数位数减1。",
+        "key_points": [
+          "⚠️ a的范围是1≤a<10，不能等于10或小于1",
+          "⚠️ n是正整数，且等于原数整数位数减1",
+          "⚠️ 注意原数的小数点移动方向：左移n位，n为正"
+        ],
+        "application": "常见考查：将大数（如光速3×10⁸m/s）用科学记数法表示，或比较不同科学记数法数的大小（先看指数n，再看a）。",
+        "connections": "科学记数法是幂运算的应用，为后续学习负指数（表示小于1的数）和近似数（有效数字）打下基础。",
+        "common_mistakes": [
+          "误将a写成10，如1000=10×10²，正确应为1×10³",
+          "n计算错误：如1200=1.2×10³，误写成1.2×10²（少一位）",
+          "忽略a的范围：如0.5×10⁴，应改为5×10³"
+        ],
+        "counter_examples": "科学记数法只用于大于10的数，小于1的数（如0.003）用负指数，不是本概念范围。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G7-MATH-S-ku-绝对值与有理数运算转化",
+      "textbook_id": "RENJIAO-G7-MATH-S",
+      "cluster_id": "RENJIAO-G7-MATH-S-kc-数形结合与转化思想",
+      "name": "绝对值与有理数运算转化",
+      "description": "借助绝对值将负数运算转化为正数运算。",
+      "prerequisites": [
+        "绝对值",
+        "有理数运算"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "例：计算 $|-5+3|$，先算内部 $-5+3=-2$，再取绝对值 $|-2|=2$。",
+          "例：$|7-(-3)|=|7+3|=|10|=10$，将减法转化为加法再取绝对值。"
+        ],
+        "intuition": "绝对值就像距离，不考虑方向，只关心大小。负数运算中，绝对值帮我们把“欠钱”转化为“还钱”的具体数额，让计算更直观。",
+        "definition": "绝对值表示一个数到原点的距离，记作 $|a|$，非负。有理数运算中，$|a-b|$ 表示两数差的绝对值，将减法转化为正数运算，关键限定：$a,b$ 为任意有理数。",
+        "key_points": [
+          "⚠️ 绝对值运算结果总是非负数，但原数可以是负数，如 $|-3|=3$。",
+          "⚠️ 两数差的绝对值 $|a-b|$ 等于 $|b-a|$，与顺序无关，但减法运算 $a-b$ 有顺序。",
+          "⚠️ 绝对值转化时，注意符号：$|a-b|$ 不能直接写成 $a-b$，除非 $a\\ge b$。"
+        ],
+        "application": "典型考查：计算含绝对值的表达式，如 $|x-2|+|x+3|$ 的最小值；或解含绝对值的方程，如 $|x-1|=5$，需分 $x\\ge1$ 和 $x<1$ 讨论。",
+        "connections": "绝对值是数轴概念的延伸，为后续学习有理数加减法、方程 $|x|=a$ 的解以及不等式 $|x|<a$ 的解法打下基础。",
+        "common_mistakes": [
+          "错误：$|-3-5|=-3-5=-8$，错在直接去掉绝对值符号，应先算内部 $-3-5=-8$，再取绝对值 $8$。",
+          "错误：$|a-b|=a-b$ 恒成立，忽略 $a<b$ 时结果为 $b-a$。",
+          "错误：$|a|+|b|=|a+b|$，如 $a=2,b=-3$ 时左边 $5$，右边 $1$，不相等。"
+        ],
+        "counter_examples": "混淆 $|a-b|$ 与 $a-b$：$|5-8|=3$，但 $5-8=-3$，两者不相等。绝对值只关心距离，不关心谁大谁小。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G7-MATH-S-ku-绝对值的代数性质",
+      "textbook_id": "RENJIAO-G7-MATH-S",
+      "cluster_id": "RENJIAO-G7-MATH-S-kc-相反数与绝对值",
+      "name": "绝对值的代数性质",
+      "description": "正数的绝对值是它本身；负数的绝对值是它的相反数；0的绝对值是0。即|a|=a(a>0), |a|=-a(a<0), |0|=0。",
+      "prerequisites": [
+        "绝对值的定义",
+        "相反数的定义"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "|5|=5，因为5>0，绝对值是它本身",
+          "|-3|=3，因为-3<0，绝对值是它的相反数3",
+          "|0|=0，0的绝对值是0"
+        ],
+        "intuition": "绝对值就像数轴上的距离，无论方向，只关心离原点有多远。比如-3和3到0的距离都是3，所以绝对值总是非负的。",
+        "definition": "对于任意实数a，绝对值|a|定义为：若a≥0，则|a|=a；若a<0，则|a|=-a。关键限定：a为实数，且结果总是非负。",
+        "key_points": [
+          "⚠️ 绝对值的结果一定是非负数，不能是负数",
+          "⚠️ 当a<0时，|a|=-a，这里的-a是正数（因为a是负数）",
+          "⚠️ 绝对值符号不能随意去掉，必须先判断a的正负"
+        ],
+        "application": "典型考查方式：化简含绝对值的表达式，如|a-3|当a<2时；或比较大小，如比较|-5|与-(-3)的大小。",
+        "connections": "绝对值是数轴距离的代数表示，为后续学习绝对值方程、不等式（如|x|<3）以及二次根式√(a²)=|a|打下基础。",
+        "common_mistakes": [
+          "错误认为|-a|=a，实际上当a为负数时，如a=-2，|-(-2)|=|2|=2≠-2，正确做法是先算绝对值再代入",
+          "混淆绝对值和括号：如-|3|=-3，而| -3|=3，学生常误以为-|3|=3",
+          "忽略0的特殊性：认为|0|无意义或等于0的相反数，实际上|0|=0"
+        ],
+        "counter_examples": "相反数与绝对值不同：相反数改变符号，如-3的相反数是3；而绝对值只取非负值，如|-3|=3，但|3|=3，两者结果相同但概念不同。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G7-MATH-S-ku-绝对值的定义",
+      "textbook_id": "RENJIAO-G7-MATH-S",
+      "cluster_id": "RENJIAO-G7-MATH-S-kc-相反数与绝对值",
+      "name": "绝对值的定义",
+      "description": "数轴上表示数a的点与原点的距离叫做数a的绝对值，记作|a|。|0|=0。",
+      "prerequisites": [
+        "数轴的三要素"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "|3| = 3，因为3到原点的距离是3",
+          "|-5| = 5，因为-5到原点的距离是5",
+          "|0| = 0，因为0到原点的距离是0"
+        ],
+        "intuition": "绝对值就像一个人从家出发，不管往东走还是往西走，只关心他走了多远，不关心方向。它衡量的是‘距离’而非‘位置’。",
+        "definition": "数轴上表示数a的点与原点的距离叫做数a的绝对值，记作|a|。关键：距离总是非负的，所以|a|≥0；|0|=0。",
+        "key_points": [
+          "⚠️ 绝对值是距离，永远非负，不能是负数",
+          "⚠️ 绝对值只与数到原点的距离有关，与正负号无关",
+          "⚠️ 当a<0时，|a| = -a（a的相反数），而不是a本身"
+        ],
+        "application": "常见题型：求给定数的绝对值；利用绝对值比较负数大小（绝对值大的反而小）；含绝对值的方程或不等式（如|x|=3的解为x=±3）。",
+        "connections": "绝对值是后续学习有理数比较大小、实数运算、二次根式化简的基础，也是数形结合思想的体现。",
+        "common_mistakes": [
+          "误认为绝对值就是去掉符号，如认为|-3|=-3（错，应为3）",
+          "混淆绝对值和相反数，如认为|-5|=-5（错，应为5）",
+          "认为|a|一定等于a，忽略a为负数时|a|=-a"
+        ],
+        "counter_examples": "相反数：-3的相反数是3，但绝对值是3；绝对值只关心距离，相反数关心符号相反。例如|-3|=3，而-3的相反数是3，两者数值相同但概念不同。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G7-MATH-S-ku-绝对值的性质",
+      "textbook_id": "RENJIAO-G7-MATH-S",
+      "cluster_id": "RENJIAO-G7-MATH-S-kc-相反数与绝对值",
+      "name": "绝对值的性质",
+      "description": "正数的绝对值是它本身；负数的绝对值是它的相反数；0的绝对值是0。即|a|=a(a>0), |a|=0(a=0), |a|=-a(a<0)。",
+      "prerequisites": [
+        "绝对值的定义",
+        "相反数的定义"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "|5|=5，正数的绝对值是它本身",
+          "|-3|=3，负数的绝对值是它的相反数",
+          "|0|=0，0的绝对值是0"
+        ],
+        "intuition": "绝对值就像一个人离家的距离，只关心走了多远，不关心方向。比如向东走3米和向西走3米，距离都是3米。",
+        "definition": "实数a的绝对值|a|定义为：若a≥0，则|a|=a；若a<0，则|a|=-a。关键限定：a为实数，且结果非负。",
+        "key_points": [
+          "⚠️ 绝对值的结果一定是非负数，不能是负数",
+          "⚠️ 当a<0时，|a|=-a，这里的-a是正数，不要误以为负数的绝对值是负数",
+          "⚠️ 绝对值符号内的数可以是任意实数，包括字母表达式"
+        ],
+        "application": "典型考查：求具体数的绝对值，如| -7 |；或含字母的绝对值化简，如已知a<0，化简|a|。",
+        "connections": "绝对值是数轴上的距离概念，为后续学习有理数运算、二次根式、不等式和函数图像打下基础。",
+        "common_mistakes": [
+          "误认为|a|=-a时a是负数，其实-a是正数，如|-5|=-(-5)=5",
+          "混淆绝对值与括号，如|-3|≠-3，而|-3|=3",
+          "认为绝对值内字母必为正，如|a|不一定等于a，当a为负时|a|=-a"
+        ],
+        "counter_examples": "相反数与绝对值不同：相反数改变符号，如-3的相反数是3；而绝对值只取非负值，如|-3|=3，但|3|=3，两者结果相同但概念不同。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G7-MATH-S-ku-绝对值的非负性",
+      "textbook_id": "RENJIAO-G7-MATH-S",
+      "cluster_id": "RENJIAO-G7-MATH-S-kc-相反数与绝对值",
+      "name": "绝对值的非负性",
+      "description": "任何有理数的绝对值都是非负数，即|a|≥0。",
+      "prerequisites": [
+        "绝对值的定义"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "|3|=3，因为3≥0，直接取本身。",
+          "|-5|=5，因为-5<0，取相反数得5。",
+          "|0|=0，0的绝对值是0。"
+        ],
+        "intuition": "绝对值的非负性就像距离：无论你向东走3米还是向西走3米，你离起点的距离都是3米，永远不会是负数。",
+        "definition": "对于任意有理数a，其绝对值|a|定义为：若a≥0，则|a|=a；若a<0，则|a|=-a。因此|a|≥0恒成立。",
+        "key_points": [
+          "⚠️ 绝对值的结果一定是非负数，但绝对值符号内的数可以是负数，如|-5|=5。",
+          "⚠️ 不要混淆绝对值和相反数：绝对值是非负的，相反数可以是负数。",
+          "⚠️ 0的绝对值是0，0既不是正数也不是负数，但满足非负性。"
+        ],
+        "application": "常见题型：已知|x-3|+|y+2|=0，求x+y的值，利用非负性得x=3，y=-2。另一类：比较大小，如|a|与a的关系，需分a的正负讨论。",
+        "connections": "绝对值的非负性是后续学习平方根（√a≥0）、二次函数最小值、不等式解集的基础，也是数形结合中距离概念的代数表达。",
+        "common_mistakes": [
+          "误认为绝对值一定是正数，忽略0的绝对值是0，如认为|0|>0。",
+          "计算|a|时直接去掉负号，忘记考虑a本身的正负，如认为|-a|=a（当a为负数时错误）。",
+          "在方程|x|=a中，只考虑x=a，忽略x=-a的情况（当a>0时）。"
+        ],
+        "counter_examples": "相反数：-3的相反数是3，但|-3|=3，两者数值相同但概念不同；绝对值强调非负距离，相反数强调符号相反。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G7-MATH-S-ku-负数的幂的符号法则",
+      "textbook_id": "RENJIAO-G7-MATH-S",
+      "cluster_id": "RENJIAO-G7-MATH-S-kc-有理数的乘方",
+      "name": "负数的幂的符号法则",
+      "description": "负数的奇次幂是负数，负数的偶次幂是正数；正数的任何正整数次幂都是正数；0的任何正整数次幂都是0。",
+      "prerequisites": [
+        "乘方的定义",
+        "有理数乘法法则"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "(-3)^2=9：指数2为偶数，负号抵消，结果为正",
+          "(-5)^3=-125：指数3为奇数，保留一个负号，结果为负",
+          "(-1)^100=1：指数100为偶数，结果为正"
+        ],
+        "intuition": "就像温度计上零下温度的变化：零下3度再降2度（奇数次操作）会更冷（负数），而零下3度降两次（偶数次操作）会回到零上（正数）。本质是乘法中负号配对：每两个负号抵消为正，多一个负号则结果为负。",
+        "definition": "对于任意非零实数a，若a<0，则a的n次幂（n为正整数）符号由n的奇偶性决定：n为奇数时结果为负，n为偶数时结果为正。正数的任何正整数次幂均为正，0的任何正整数次幂均为0。",
+        "key_points": [
+          "⚠️ 底数为负时，指数只看奇偶性，不看大小：(-2)^3=-8，(-2)^4=16，与指数数值无关",
+          "⚠️ 区分(-a)^n与-a^n：前者底数是-a，后者底数是a，负号在幂外",
+          "⚠️ 0的0次幂无定义，不在本法则讨论范围内"
+        ],
+        "application": "常见考查：直接计算负数的幂（如(-2)^5），或结合运算顺序判断符号（如-(-3)^2）；也出现在比较大小题中，如比较(-2)^3与-2^3的大小。",
+        "connections": "本法则建立在有理数乘方定义之上，是后续学习幂的运算（如幂的乘方、积的乘方）和科学记数法的基础，也为理解负数开奇次方根（如立方根）做铺垫。",
+        "common_mistakes": [
+          "误认为(-2)^3=8：错在以为负数的幂总是正数，忽略了奇次幂保留负号",
+          "混淆(-a)^n与-a^n：如将-3^2写成(-3)^2=9，实际-3^2=-9，因为指数只作用于3",
+          "认为0的负次幂有意义：0没有负整数次幂，如0^{-2}无定义"
+        ],
+        "counter_examples": "注意(-2)^4与-2^4的区别：(-2)^4=16（底数-2，指数4偶），而-2^4=-16（底数2，指数4，负号在幂外），两者符号相反。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G7-MATH-S-ku-负数的幂的符号规律",
+      "textbook_id": "RENJIAO-G7-MATH-S",
+      "cluster_id": "RENJIAO-G7-MATH-S-kc-有理数乘方与科学记数法",
+      "name": "负数的幂的符号规律",
+      "description": "负数的奇次幂是负数，偶次幂是正数；正数的任何正整数次幂都是正数；0的任何正整数次幂都是0。",
+      "prerequisites": [
+        "乘方的定义"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "$(-3)^2 = 9$，因为指数2是偶数，负号抵消",
+          "$(-2)^3 = -8$，因为指数3是奇数，保留负号",
+          "$(-1)^{100} = 1$，100是偶数"
+        ],
+        "intuition": "就像温度计上零下温度乘以零下温度会变暖一样，负号成对出现时互相抵消，奇数个负号则保留一个负号。",
+        "definition": "对于任意非零实数 $a$ 和正整数 $n$，$(-a)^n$ 的符号由 $n$ 的奇偶性决定：若 $n$ 为奇数，结果为负；若 $n$ 为偶数，结果为正。$0$ 的任何正整数次幂为 $0$。",
+        "key_points": [
+          "⚠️ 底数为负数时，必须将负号连同括号一起进行幂运算，如 $(-2)^3$ 与 $-2^3$ 不同",
+          "⚠️ 指数为0时，$0^0$ 无定义，但非零数的0次幂为1",
+          "⚠️ 负数的分数指数幂需先转化为根式，再考虑符号"
+        ],
+        "application": "直接考查：计算 $(-5)^3$ 或 $(-1)^{2023}$ 的值；间接考查：在解方程或化简代数式时，需先判断幂的符号再运算。",
+        "connections": "此规律是幂运算的基础，后续学习科学记数法、整式乘除及二次根式时，符号判断都依赖于此。",
+        "common_mistakes": [
+          "误认为 $(-3)^2 = -9$，错在忘记偶数次幂负号抵消",
+          "将 $(-2)^3$ 与 $-2^3$ 混淆，前者底数为 $-2$，后者底数为 $2$，结果分别为 $-8$ 和 $-8$ 但意义不同",
+          "认为 $0^0 = 0$，实际上 $0^0$ 在数学中未定义"
+        ],
+        "counter_examples": "注意区分 $(-2)^4 = 16$ 与 $-2^4 = -16$：前者底数是 $-2$，指数4为偶数得正；后者底数是 $2$，负号在幂运算外，结果为负。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G7-MATH-S-ku-近似数与精确度",
+      "textbook_id": "RENJIAO-G7-MATH-S",
+      "cluster_id": "RENJIAO-G7-MATH-S-kc-近似数与精确度",
+      "name": "近似数与精确度",
+      "description": "近似数是接近准确数的数；精确度用四舍五入到某一位表示。",
+      "prerequisites": [],
+      "related_kus": [],
+      "difficulty": 0.2,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "例：圆周率π≈3.14，这是四舍五入到百分位（精确到0.01），精确度是0.01。",
+          "例：身高1.75米，表示精确到0.01米（厘米），实际身高在1.745~1.755米之间。"
+        ],
+        "intuition": "生活中我们常说‘大约’、‘差不多’，比如身高1.75米，其实真实身高可能略高或略低，近似数就是用一个‘好记’的数代替精确值，而精确度告诉我们这个近似数有多‘靠谱’。",
+        "definition": "近似数是接近准确数但与之有微小差异的数；精确度指近似数四舍五入到哪一位，该位数字的精确程度由最后一位数字所在数位决定。",
+        "key_points": [
+          "⚠️ 精确度由‘最后一位’所在数位决定，而非有效数字个数。",
+          "⚠️ 四舍五入时，若被舍去部分恰好为5，需看前一位：奇进偶不进（或按教材规定）。",
+          "⚠️ 近似数末尾的0不能随意去掉，如1.50与1.5精确度不同。"
+        ],
+        "application": "典型考查：给一个数要求四舍五入到指定数位；或给近似数判断其精确度（如0.020精确到千分位）。",
+        "connections": "近似数是实数运算中处理无限小数（如π、√2）的基础，也是后续学习科学记数法、有效数字和误差分析的前提。",
+        "common_mistakes": [
+          "错误：认为3.0和3精确度相同。错在3.0精确到十分位（0.1），3精确到个位（1），误差范围不同。",
+          "错误：四舍五入时，如2.345精确到百分位得2.35，但学生常误得2.34，错在没看千分位5需进位。",
+          "错误：将近似数末尾的0随意去掉，如把1.50写成1.5，改变了精确度（从百分位降为十分位）。"
+        ],
+        "counter_examples": "近似数与准确数不同：准确数如‘全班有45人’是精确的；近似数如‘约45人’表示可能44或46人。另外，精确度与有效数字不同：0.050精确到千分位，有效数字是2个（5和0）。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G7-MATH-S-ku-进位制基本概念",
+      "textbook_id": "RENJIAO-G7-MATH-S",
+      "cluster_id": "RENJIAO-G7-MATH-S-kc-进位制基础与转换",
+      "name": "进位制基本概念",
+      "description": "逢几进一就是几进制，基数为几。十进制用0-9，二进制用0和1。",
+      "prerequisites": [
+        "整数"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "十进制：数字235表示2×10²+3×10¹+5×10⁰，逢十进一。",
+          "二进制：数字101表示1×2²+0×2¹+1×2⁰=5，逢二进一。"
+        ],
+        "intuition": "进位制就像用不同大小的盒子数数：十进制是满10个装一大盒，二进制是满2个装一大盒，本质是用有限的符号表示任意大的数。",
+        "definition": "进位制是一种记数方法，用固定数量的数字符号（基数）表示数，规则是“逢基数进一”，即每位上的数字达到基数时向高位进1。",
+        "key_points": [
+          "⚠️ 基数就是“逢几进一”的“几”，不是数字本身；如二进制基数为2，但数字只有0和1。",
+          "⚠️ 不同进位制中相同数字符号代表不同值，如二进制“10”是2，十进制“10”是十。",
+          "⚠️ 基数必须大于1，且每位数字必须小于基数（如二进制每位只能是0或1）。"
+        ],
+        "application": "典型考查方式：给出一个数在不同进制下的表示，要求写出其十进制值；或根据“逢几进一”规则判断一个数属于哪种进制。",
+        "connections": "进位制是理解不同进制转换（如二进制转十进制）的基础，也是后续学习计算机科学、数论中模运算的预备知识。",
+        "common_mistakes": [
+          "误认为二进制只有数字“2”，实际二进制只用0和1，没有数字2。",
+          "混淆“基数”与“数字个数”：如八进制基数为8，但数字是0~7共8个，不是8本身。",
+          "写二进制数时出现大于等于2的数字，如“102”不是合法二进制数。"
+        ],
+        "counter_examples": "与“位值制”混淆：位值制是进位制的核心（每位有不同权重），但进位制强调“逢基进一”的规则，而位值制更侧重位置权重。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    }
+  ]
+}

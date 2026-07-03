@@ -1,0 +1,4391 @@
+{
+  "textbook": {
+    "id": "renjiao-math-g10-a",
+    "subject": "math",
+    "grade": "高一",
+    "edition": "2017修订",
+    "book_name": "人教版·高中数学必修一（A版）"
+  },
+  "clusters": [
+    {
+      "id": "renjiao-math-g10-a-c01",
+      "name": "集合与常用逻辑用语",
+      "display_order": 1,
+      "description": "集合的基本概念与运算，逻辑联结词与充要条件"
+    },
+    {
+      "id": "renjiao-math-g10-a-kc-集合的基本概念与表示",
+      "name": "集合的基本概念与表示",
+      "display_order": 1,
+      "description": null
+    },
+    {
+      "id": "renjiao-math-g10-a-c02",
+      "name": "函数与基本初等函数",
+      "display_order": 2,
+      "description": "函数概念、性质及幂函数/指数函数/对数函数"
+    },
+    {
+      "id": "renjiao-math-g10-a-kc-集合间的基本关系",
+      "name": "集合间的基本关系",
+      "display_order": 2,
+      "description": null
+    },
+    {
+      "id": "renjiao-math-g10-a-kc-集合的基本运算",
+      "name": "集合的基本运算",
+      "display_order": 3,
+      "description": null
+    },
+    {
+      "id": "renjiao-math-g10-a-kc-集合的元素个数",
+      "name": "集合的元素个数",
+      "display_order": 4,
+      "description": null
+    },
+    {
+      "id": "renjiao-math-g10-a-kc-集合的基数与容斥原理",
+      "name": "集合的基数与容斥原理",
+      "display_order": 5,
+      "description": null
+    },
+    {
+      "id": "renjiao-math-g10-a-kc-命题与条件关系基础",
+      "name": "命题与条件关系基础",
+      "display_order": 6,
+      "description": null
+    },
+    {
+      "id": "renjiao-math-g10-a-kc-全称量词与存在量词",
+      "name": "全称量词与存在量词",
+      "display_order": 7,
+      "description": null
+    },
+    {
+      "id": "renjiao-math-g10-a-kc-含量词命题的否定",
+      "name": "含量词命题的否定",
+      "display_order": 8,
+      "description": null
+    },
+    {
+      "id": "renjiao-math-g10-a-kc-含有一个量词的命题的否定",
+      "name": "含有一个量词的命题的否定",
+      "display_order": 9,
+      "description": null
+    },
+    {
+      "id": "renjiao-math-g10-a-kc-不等关系与实数大小比较",
+      "name": "不等关系与实数大小比较",
+      "display_order": 10,
+      "description": null
+    },
+    {
+      "id": "renjiao-math-g10-a-kc-重要不等式与基本不等式",
+      "name": "重要不等式与基本不等式",
+      "display_order": 11,
+      "description": null
+    },
+    {
+      "id": "renjiao-math-g10-a-kc-不等式的基本性质",
+      "name": "不等式的基本性质",
+      "display_order": 12,
+      "description": null
+    },
+    {
+      "id": "renjiao-math-g10-a-kc-基本不等式的应用-最值问题",
+      "name": "基本不等式的应用（最值问题）",
+      "display_order": 13,
+      "description": null
+    },
+    {
+      "id": "renjiao-math-g10-a-kc-一元二次不等式及其解法",
+      "name": "一元二次不等式及其解法",
+      "display_order": 14,
+      "description": null
+    },
+    {
+      "id": "renjiao-math-g10-a-kc-一元二次不等式的解法",
+      "name": "一元二次不等式的解法",
+      "display_order": 15,
+      "description": null
+    },
+    {
+      "id": "renjiao-math-g10-a-kc-一元二次不等式的实际应用",
+      "name": "一元二次不等式的实际应用",
+      "display_order": 16,
+      "description": null
+    },
+    {
+      "id": "renjiao-math-g10-a-kc-一元二次不等式与函数-方程的联系及恒成立",
+      "name": "一元二次不等式与函数、方程的联系及恒成立",
+      "display_order": 17,
+      "description": null
+    },
+    {
+      "id": "renjiao-math-g10-a-kc-有限集合的计数",
+      "name": "有限集合的计数",
+      "display_order": 18,
+      "description": null
+    },
+    {
+      "id": "renjiao-math-g10-a-kc-集合元素个数的计算",
+      "name": "集合元素个数的计算",
+      "display_order": 19,
+      "description": null
+    },
+    {
+      "id": "renjiao-math-g10-a-kc-充分条件与必要条件",
+      "name": "充分条件与必要条件",
+      "display_order": 20,
+      "description": null
+    },
+    {
+      "id": "renjiao-math-g10-a-kc-充要条件及其应用",
+      "name": "充要条件及其应用",
+      "display_order": 21,
+      "description": null
+    },
+    {
+      "id": "renjiao-math-g10-a-kc-基本不等式及其应用",
+      "name": "基本不等式及其应用",
+      "display_order": 22,
+      "description": null
+    },
+    {
+      "id": "renjiao-math-g10-a-kc-任意角与弧度制",
+      "name": "任意角与弧度制",
+      "display_order": 23,
+      "description": null
+    },
+    {
+      "id": "renjiao-math-g10-a-kc-三角函数的定义与基本性质",
+      "name": "三角函数的定义与基本性质",
+      "display_order": 24,
+      "description": null
+    },
+    {
+      "id": "renjiao-math-g10-a-kc-同角三角函数的基本关系及其应用",
+      "name": "同角三角函数的基本关系及其应用",
+      "display_order": 25,
+      "description": null
+    },
+    {
+      "id": "renjiao-math-g10-a-kc-诱导公式及其应用",
+      "name": "诱导公式及其应用",
+      "display_order": 26,
+      "description": null
+    },
+    {
+      "id": "renjiao-math-g10-a-kc-正弦函数和余弦函数的图象",
+      "name": "正弦函数和余弦函数的图象",
+      "display_order": 27,
+      "description": null
+    },
+    {
+      "id": "renjiao-math-g10-a-kc-三角函数的周期性",
+      "name": "三角函数的周期性",
+      "display_order": 28,
+      "description": null
+    },
+    {
+      "id": "renjiao-math-g10-a-kc-三角函数的奇偶性",
+      "name": "三角函数的奇偶性",
+      "display_order": 29,
+      "description": null
+    },
+    {
+      "id": "renjiao-math-g10-a-kc-正弦-余弦函数的单调性与最值",
+      "name": "正弦、余弦函数的单调性与最值",
+      "display_order": 30,
+      "description": null
+    },
+    {
+      "id": "renjiao-math-g10-a-kc-正切函数的性质与图象",
+      "name": "正切函数的性质与图象",
+      "display_order": 31,
+      "description": null
+    },
+    {
+      "id": "renjiao-math-g10-a-kc-两角差的余弦公式",
+      "name": "两角差的余弦公式",
+      "display_order": 32,
+      "description": null
+    },
+    {
+      "id": "renjiao-math-g10-a-kc-两角和与差公式",
+      "name": "两角和与差公式",
+      "display_order": 33,
+      "description": null
+    },
+    {
+      "id": "renjiao-math-g10-a-kc-倍角与半角公式",
+      "name": "倍角与半角公式",
+      "display_order": 34,
+      "description": null
+    },
+    {
+      "id": "renjiao-math-g10-a-kc-积化和差与和差化积",
+      "name": "积化和差与和差化积",
+      "display_order": 35,
+      "description": null
+    },
+    {
+      "id": "renjiao-math-g10-a-kc-辅助角公式及其应用",
+      "name": "辅助角公式及其应用",
+      "display_order": 36,
+      "description": null
+    },
+    {
+      "id": "renjiao-math-g10-a-kc-函数-y-asin-ωx-φ--的建模与参数影响",
+      "name": "函数 y=Asin(ωx+φ) 的建模与参数影响",
+      "display_order": 37,
+      "description": null
+    }
+  ],
+  "units": [
+    {
+      "id": "renjiao-math-g10-a-ku-venn图",
+      "textbook_id": "renjiao-math-g10-a",
+      "cluster_id": "renjiao-math-g10-a-kc-集合间的基本关系",
+      "name": "Venn图",
+      "description": "用平面上封闭曲线的内部代表集合的图示方法。",
+      "prerequisites": [],
+      "related_kus": [],
+      "difficulty": 0.1,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "例1：两个集合A和B，用两个圆表示，重叠部分为$A \\cap B$。",
+          "例2：三个集合A、B和C，使用三个曲线表示，两两交集分别表示$A \\cap B, A \\cap C, B \\cap C$，三者共同区域表示$A \\cap B \\cap C$。"
+        ],
+        "intuition": "Venn图帮助直观理解集合及其关系，如并集、交集和补集等概念。",
+        "definition": "用平面上封闭曲线的内部代表集合，不同集合间的交集、并集或补集通过曲线重叠部分表示。",
+        "key_points": [
+          "⚠️ 最易误解的点1：认为所有集合必须使用圆形",
+          "⚠️ 最易误解的点2：误将Venn图中的空集视为无任何元素"
+        ],
+        "application": [
+          "典型考查方式1：根据给定的Venn图确定集合间的交集、并集等关系。",
+          "典型考查方式2：通过已知集合间的关系绘制相应的Venn图。"
+        ],
+        "connections": "Venn图是集合论的基础工具，后续学习概率论和逻辑推理时会频繁用到。",
+        "common_mistakes": [
+          "具体错误1：混淆交集与补集的概念",
+          "具体错误2：在绘制多个集合时，未正确表示重叠区域"
+        ],
+        "counter_examples": "误用Venn图表示集合间的关系，如将并集错误地画为完全分离的两部分。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "renjiao-math-g10-a-ku-venn图法求集合元素个数",
+      "textbook_id": "renjiao-math-g10-a",
+      "cluster_id": "renjiao-math-g10-a-kc-集合的基数与容斥原理",
+      "name": "Venn图法求集合元素个数",
+      "description": "用Venn图表示集合，在相应区域填入元素个数，再求和得到并集的元素个数。",
+      "prerequisites": [
+        "有限集合的基数与容斥原理（两个集合）"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "例1：集合A={1,2,3}，B={2,3,4}，Venn图中填入各区域元素个数后求并集|A∪B|=5。",
+          "例2：集合C={a,b,c,d}, D={c,d,e,f}，计算|C∪D|=6。"
+        ],
+        "intuition": "通过Venn图直观展示集合间的关系和元素分布，帮助理解并集、交集等概念。",
+        "definition": "使用Venn图表示两个或多个集合的交集与并集关系，并在相应区域填入各部分元素个数以求解总元素个数。",
+        "key_points": [
+          "⚠️ 最易误解的点1：区分重复元素，避免重复计数",
+          "⚠️ 最易误解的点2：注意空集情况下的处理"
+        ],
+        "application": [
+          "常见于选择题和填空题中直接给出Venn图求解元素个数。",
+          "常用于证明集合关系或计算复杂集合的元素个数。"
+        ],
+        "connections": "Venn图法是集合运算的基础，后续学习概率论时也会用到。",
+        "common_mistakes": [
+          "学生常犯的具体错误1：忽略交集部分的元素个数只加一次",
+          "具体错误2：混淆并集与交集的概念"
+        ],
+        "counter_examples": "如将交集中元素重复计数，或在空集情况下未正确处理导致错误。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "renjiao-math-g10-a-ku-y-asin-ωx-φ-与y-acos-ωx-φ-的周期公式",
+      "textbook_id": "renjiao-math-g10-a",
+      "cluster_id": "renjiao-math-g10-a-kc-三角函数的周期性",
+      "name": "y=Asin(ωx+φ)与y=Acos(ωx+φ)的周期公式",
+      "description": "函数y=Asin(ωx+φ)和y=Acos(ωx+φ)（A≠0，ω>0）的周期T=2π/ω。",
+      "prerequisites": [
+        "正弦函数周期性",
+        "余弦函数周期性"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "例1: $y = 3\\sin(4x + \\varphi)$的周期为$\frac{\\pi}{2}$。",
+          "例2: $y = 5\\cos(\frac{1}{2}x - \theta)$的周期为$4\\pi$。"
+        ],
+        "intuition": "理解周期性有助于分析和预测自然界中的波动现象，如声波、光波等。",
+        "definition": "函数$y = A\\sin(\\omega x + \\varphi)$与$y = A\\cos(\\omega x + \\varphi)$（A≠0，ω>0）的周期T=2π/ω。",
+        "key_points": [
+          "⚠️ 最易误解的点1：周期T仅由角频率ω决定，振幅A和相位φ不影响周期。",
+          "⚠️ 最易误解的点2：周期与频率互为倒数关系，即$T = \frac{1}{f}$，其中$f=\frac{\\omega}{2\\pi}$是频率。"
+        ],
+        "application": [
+          "典型考查方式1: 给定一个三角函数表达式，求其周期。",
+          "典型考查方式2: 利用周期性解决实际问题，如声波的周期计算。"
+        ],
+        "connections": "此概念与三角函数图像、性质及物理现象中的波动分析相关联。",
+        "common_mistakes": [
+          "具体错误1：混淆频率与角频率的关系，误认为周期是$\frac{\\omega}{2\\pi}$。",
+          "具体错误2：误将振幅A或相位φ作为周期的决定因素。"
+        ],
+        "counter_examples": "误认为振幅A或相位φ会影响周期，如$y = A\\sin(\\omega x + \\varphi) + B$的周期仍为$\frac{2\\pi}{\\omega}$。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "renjiao-math-g10-a-ku-一元二次不等式与二次函数-一元二次方程的联系",
+      "textbook_id": "renjiao-math-g10-a",
+      "cluster_id": "renjiao-math-g10-a-kc-一元二次不等式与函数-方程的联系及恒成立",
+      "name": "一元二次不等式与二次函数、一元二次方程的联系",
+      "description": "一元二次不等式、一元二次方程、二次函数三者通过图象和零点相互联系，可互相转化求解。",
+      "prerequisites": [
+        "二次函数图象",
+        "一元二次方程求根公式"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "renjiao-math-g10-a-ku-一元二次不等式在实际问题中的应用",
+      "textbook_id": "renjiao-math-g10-a",
+      "cluster_id": "renjiao-math-g10-a-kc-一元二次不等式及其解法",
+      "name": "一元二次不等式在实际问题中的应用",
+      "description": "将实际问题转化为一元二次不等式，求解后结合实际意义得到答案。",
+      "prerequisites": [
+        "ku-008"
+      ],
+      "related_kus": [],
+      "difficulty": 0.6,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "renjiao-math-g10-a-ku-一元二次不等式实际应用-例4",
+      "textbook_id": "renjiao-math-g10-a",
+      "cluster_id": "renjiao-math-g10-a-kc-一元二次不等式的实际应用",
+      "name": "一元二次不等式实际应用（例4）",
+      "description": "将实际问题转化为一元二次不等式，求解后根据实际意义取整数值。",
+      "prerequisites": [
+        "一元二次不等式求解步骤（二次项系数化为正数）",
+        "一元二次不等式解集的图象法"
+      ],
+      "related_kus": [],
+      "difficulty": 0.6,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "renjiao-math-g10-a-ku-一元二次不等式实际应用-例5",
+      "textbook_id": "renjiao-math-g10-a",
+      "cluster_id": "renjiao-math-g10-a-kc-一元二次不等式的实际应用",
+      "name": "一元二次不等式实际应用（例5）",
+      "description": "将实际问题转化为一元二次不等式，求解后根据实际意义取近似值。",
+      "prerequisites": [
+        "一元二次不等式求解步骤（二次项系数化为正数）",
+        "一元二次不等式解集的图象法"
+      ],
+      "related_kus": [],
+      "difficulty": 0.6,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "renjiao-math-g10-a-ku-一元二次不等式恒成立问题",
+      "textbook_id": "renjiao-math-g10-a",
+      "cluster_id": "renjiao-math-g10-a-kc-一元二次不等式与函数-方程的联系及恒成立",
+      "name": "一元二次不等式恒成立问题",
+      "description": "对于一元二次不等式恒成立，需考虑二次项系数符号和判别式Δ<0等条件。",
+      "prerequisites": [
+        "一元二次不等式求解步骤（二次项系数化为正数）",
+        "一元二次不等式解集的图象法"
+      ],
+      "related_kus": [],
+      "difficulty": 0.7,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "renjiao-math-g10-a-ku-一元二次不等式概念",
+      "textbook_id": "renjiao-math-g10-a",
+      "cluster_id": "renjiao-math-g10-a-kc-一元二次不等式及其解法",
+      "name": "一元二次不等式概念",
+      "description": "只含一个未知数且最高次数为2的不等式，一般形式ax²+bx+c>0或<0（a≠0）。",
+      "prerequisites": [],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "renjiao-math-g10-a-ku-一元二次不等式求解框图-a-0",
+      "textbook_id": "renjiao-math-g10-a",
+      "cluster_id": "renjiao-math-g10-a-kc-一元二次不等式的解法",
+      "name": "一元二次不等式求解框图（a>0）",
+      "description": "对于ax²+bx+c>0（a>0），根据判别式Δ的符号，分三种情况给出解集。",
+      "prerequisites": [
+        "一元二次不等式求解步骤（二次项系数化为正数）",
+        "一元二次不等式解集的图象法"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "renjiao-math-g10-a-ku-一元二次不等式求解步骤-二次项系数化为正数",
+      "textbook_id": "renjiao-math-g10-a",
+      "cluster_id": "renjiao-math-g10-a-kc-一元二次不等式的解法",
+      "name": "一元二次不等式求解步骤（二次项系数化为正数）",
+      "description": "求解一元二次不等式时，先将二次项系数化为正数，再根据判别式与根的关系求解。",
+      "prerequisites": [
+        "一元二次方程求根公式"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "renjiao-math-g10-a-ku-一元二次不等式的定义",
+      "textbook_id": "renjiao-math-g10-a",
+      "cluster_id": "renjiao-math-g10-a-kc-一元二次不等式及其解法",
+      "name": "一元二次不等式的定义",
+      "description": "只含一个未知数，未知数最高次数为2的不等式，一般形式为ax²+bx+c>0或<0（a≠0）。",
+      "prerequisites": [],
+      "related_kus": [],
+      "difficulty": 0.2,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "renjiao-math-g10-a-ku-一元二次不等式的求解步骤-化正-求根-画图-写解集",
+      "textbook_id": "renjiao-math-g10-a",
+      "cluster_id": "renjiao-math-g10-a-kc-一元二次不等式及其解法",
+      "name": "一元二次不等式的求解步骤（化正、求根、画图、写解集）",
+      "description": "将二次项系数化为正，求对应方程的根，画二次函数草图，根据图象写出解集。",
+      "prerequisites": [
+        "ku-007"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "renjiao-math-g10-a-ku-一元二次不等式解集-δ-0",
+      "textbook_id": "renjiao-math-g10-a",
+      "cluster_id": "renjiao-math-g10-a-kc-一元二次不等式及其解法",
+      "name": "一元二次不等式解集（Δ>0）",
+      "description": "a>0时，ax²+bx+c>0的解集为{x|x<x1或x>x2}；<0的解集为{x|x1<x<x2}。",
+      "prerequisites": [
+        "ku-018"
+      ],
+      "related_kus": [],
+      "difficulty": 0.6,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "renjiao-math-g10-a-ku-一元二次不等式解集的三种情况-δ-0--δ-0--δ-0",
+      "textbook_id": "renjiao-math-g10-a",
+      "cluster_id": "renjiao-math-g10-a-kc-一元二次不等式及其解法",
+      "name": "一元二次不等式解集的三种情况（Δ>0, Δ=0, Δ<0）",
+      "description": "Δ>0时解集为两根之外或之间；Δ=0时解集为x≠-b/(2a)或空集；Δ<0时解集为R或空集。",
+      "prerequisites": [
+        "ku-006"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "renjiao-math-g10-a-ku-一元二次不等式解集的图象法",
+      "textbook_id": "renjiao-math-g10-a",
+      "cluster_id": "renjiao-math-g10-a-kc-一元二次不等式的解法",
+      "name": "一元二次不等式解集的图象法",
+      "description": "通过二次函数图象与x轴的位置关系，确定一元二次不等式的解集。",
+      "prerequisites": [
+        "二次函数图象",
+        "一元二次方程求根公式"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "renjiao-math-g10-a-ku-三角函数值的符号",
+      "textbook_id": "renjiao-math-g10-a",
+      "cluster_id": "renjiao-math-g10-a-kc-三角函数的定义与基本性质",
+      "name": "三角函数值的符号",
+      "description": "sinα：一、二象限正，三、四象限负；cosα：一、四象限正，二、三象限负；tanα：一、三象限正，二、四象限负。",
+      "prerequisites": [
+        "三角函数的定义（单位圆）"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "renjiao-math-g10-a-ku-三角函数定义-终边上任意点",
+      "textbook_id": "renjiao-math-g10-a",
+      "cluster_id": "renjiao-math-g10-a-kc-三角函数的定义与基本性质",
+      "name": "三角函数定义（终边上任意点）",
+      "description": "设P(x,y)为α终边上一点，r=√(x²+y²)，则sinα=y/r，cosα=x/r，tanα=y/x。",
+      "prerequisites": [
+        "三角函数的定义（单位圆）"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "renjiao-math-g10-a-ku-三角函数的定义-单位圆",
+      "textbook_id": "renjiao-math-g10-a",
+      "cluster_id": "renjiao-math-g10-a-kc-三角函数的定义与基本性质",
+      "name": "三角函数的定义（单位圆）",
+      "description": "设α终边与单位圆交于P(x,y)，则sinα=y，cosα=x，tanα=y/x (x≠0)。",
+      "prerequisites": [
+        "弧度制的定义",
+        "象限角"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "renjiao-math-g10-a-ku-不等关系与不等式表示",
+      "textbook_id": "renjiao-math-g10-a",
+      "cluster_id": "renjiao-math-g10-a-kc-不等关系与实数大小比较",
+      "name": "不等关系与不等式表示",
+      "description": "用不等式（组）表示实际问题中的不等关系，如限速、含量、几何关系等。",
+      "prerequisites": [],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "renjiao-math-g10-a-ku-不等式性质1-对称性",
+      "textbook_id": "renjiao-math-g10-a",
+      "cluster_id": "renjiao-math-g10-a-kc-不等式的基本性质",
+      "name": "不等式性质1（对称性）",
+      "description": "a>b ⇔ b<a。",
+      "prerequisites": [
+        "ku-002"
+      ],
+      "related_kus": [],
+      "difficulty": 0.2,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "renjiao-math-g10-a-ku-不等式性质2-传递性",
+      "textbook_id": "renjiao-math-g10-a",
+      "cluster_id": "renjiao-math-g10-a-kc-不等式的基本性质",
+      "name": "不等式性质2（传递性）",
+      "description": "a>b且b>c ⇒ a>c。",
+      "prerequisites": [
+        "ku-002"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "renjiao-math-g10-a-ku-不等式性质3-加法保序性",
+      "textbook_id": "renjiao-math-g10-a",
+      "cluster_id": "renjiao-math-g10-a-kc-不等式的基本性质",
+      "name": "不等式性质3（加法保序性）",
+      "description": "a>b ⇒ a+c>b+c。",
+      "prerequisites": [
+        "ku-002"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "renjiao-math-g10-a-ku-不等式性质4-乘法保序性",
+      "textbook_id": "renjiao-math-g10-a",
+      "cluster_id": "renjiao-math-g10-a-kc-不等式的基本性质",
+      "name": "不等式性质4（乘法保序性）",
+      "description": "a>b且c>0 ⇒ ac>bc；a>b且c<0 ⇒ ac<bc。",
+      "prerequisites": [
+        "ku-002"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "renjiao-math-g10-a-ku-不等式性质5-同向可加性",
+      "textbook_id": "renjiao-math-g10-a",
+      "cluster_id": "renjiao-math-g10-a-kc-不等式的基本性质",
+      "name": "不等式性质5（同向可加性）",
+      "description": "a>b且c>d ⇒ a+c>b+d。",
+      "prerequisites": [
+        "ku-006",
+        "ku-007"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "renjiao-math-g10-a-ku-不等式性质6-同向正数可乘性",
+      "textbook_id": "renjiao-math-g10-a",
+      "cluster_id": "renjiao-math-g10-a-kc-不等式的基本性质",
+      "name": "不等式性质6（同向正数可乘性）",
+      "description": "a>b>0且c>d>0 ⇒ ac>bd。",
+      "prerequisites": [
+        "ku-006",
+        "ku-008"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "renjiao-math-g10-a-ku-不等式性质7-乘方性",
+      "textbook_id": "renjiao-math-g10-a",
+      "cluster_id": "renjiao-math-g10-a-kc-不等式的基本性质",
+      "name": "不等式性质7（乘方性）",
+      "description": "a>b>0 ⇒ aⁿ>bⁿ（n∈N, n≥2）。由性质6推广。",
+      "prerequisites": [
+        "ku-010"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "renjiao-math-g10-a-ku-不等式性质7-正数乘方性",
+      "textbook_id": "renjiao-math-g10-a",
+      "cluster_id": "renjiao-math-g10-a-kc-不等式的基本性质",
+      "name": "不等式性质7（正数乘方性）",
+      "description": "a>b>0 ⇒ aⁿ>bⁿ（n∈N，n≥2）。",
+      "prerequisites": [
+        "ku-006",
+        "ku-008"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "renjiao-math-g10-a-ku-两角和的余弦公式-c-α-β",
+      "textbook_id": "renjiao-math-g10-a",
+      "cluster_id": "renjiao-math-g10-a-kc-两角和与差公式",
+      "name": "两角和的余弦公式 C(α+β)",
+      "description": "cos(α+β)=cosα cosβ - sinα sinβ",
+      "prerequisites": [
+        "两角差的余弦公式"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "renjiao-math-g10-a-ku-两角和的正切公式-t-α-β",
+      "textbook_id": "renjiao-math-g10-a",
+      "cluster_id": "renjiao-math-g10-a-kc-两角和与差公式",
+      "name": "两角和的正切公式 T(α+β)",
+      "description": "tan(α+β)=(tanα+tanβ)/(1-tanα tanβ)",
+      "prerequisites": [
+        "两角和的正弦公式",
+        "两角和的余弦公式"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "renjiao-math-g10-a-ku-两角和的正弦公式-s-α-β",
+      "textbook_id": "renjiao-math-g10-a",
+      "cluster_id": "renjiao-math-g10-a-kc-两角和与差公式",
+      "name": "两角和的正弦公式 S(α+β)",
+      "description": "sin(α+β)=sinα cosβ + cosα sinβ",
+      "prerequisites": [
+        "两角和的余弦公式",
+        "诱导公式"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "renjiao-math-g10-a-ku-两角差的余弦公式",
+      "textbook_id": "renjiao-math-g10-a",
+      "cluster_id": "renjiao-math-g10-a-kc-两角差的余弦公式",
+      "name": "两角差的余弦公式",
+      "description": "cos(α-β)=cosαcosβ+sinαsinβ。",
+      "prerequisites": [
+        "任意角三角函数",
+        "两点间距离公式"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "renjiao-math-g10-a-ku-两角差的余弦公式-c-α-β",
+      "textbook_id": "renjiao-math-g10-a",
+      "cluster_id": "renjiao-math-g10-a-kc-两角和与差公式",
+      "name": "两角差的余弦公式 C(α-β)",
+      "description": "cos(α-β)=cosα cosβ+sinα sinβ",
+      "prerequisites": [
+        "任意角三角函数定义",
+        "诱导公式"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "renjiao-math-g10-a-ku-两角差的正切公式-t-α-β",
+      "textbook_id": "renjiao-math-g10-a",
+      "cluster_id": "renjiao-math-g10-a-kc-两角和与差公式",
+      "name": "两角差的正切公式 T(α-β)",
+      "description": "tan(α-β)=(tanα-tanβ)/(1+tanα tanβ)",
+      "prerequisites": [
+        "两角和的正切公式"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "renjiao-math-g10-a-ku-两角差的正弦公式-s-α-β",
+      "textbook_id": "renjiao-math-g10-a",
+      "cluster_id": "renjiao-math-g10-a-kc-两角和与差公式",
+      "name": "两角差的正弦公式 S(α-β)",
+      "description": "sin(α-β)=sinα cosβ - cosα sinβ",
+      "prerequisites": [
+        "两角和的正弦公式"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "renjiao-math-g10-a-ku-二倍角的余弦公式-c2α",
+      "textbook_id": "renjiao-math-g10-a",
+      "cluster_id": "renjiao-math-g10-a-kc-倍角与半角公式",
+      "name": "二倍角的余弦公式 C2α",
+      "description": "cos2α=cos²α - sin²α = 1-2sin²α = 2cos²α-1",
+      "prerequisites": [
+        "两角和的余弦公式"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "renjiao-math-g10-a-ku-二倍角的正切公式-t2α",
+      "textbook_id": "renjiao-math-g10-a",
+      "cluster_id": "renjiao-math-g10-a-kc-倍角与半角公式",
+      "name": "二倍角的正切公式 T2α",
+      "description": "tan2α=2tanα/(1-tan²α)",
+      "prerequisites": [
+        "两角和的正切公式"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "renjiao-math-g10-a-ku-二倍角的正弦公式-s2α",
+      "textbook_id": "renjiao-math-g10-a",
+      "cluster_id": "renjiao-math-g10-a-kc-倍角与半角公式",
+      "name": "二倍角的正弦公式 S2α",
+      "description": "sin2α=2sinα cosα",
+      "prerequisites": [
+        "两角和的正弦公式"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "renjiao-math-g10-a-ku-二次函数-一元二次方程-一元二次不等式的关系",
+      "textbook_id": "renjiao-math-g10-a",
+      "cluster_id": "renjiao-math-g10-a-kc-一元二次不等式及其解法",
+      "name": "二次函数、一元二次方程、一元二次不等式的关系",
+      "description": "一元二次方程的根是二次函数的零点，二次函数图象与x轴的位置关系决定一元二次不等式的解集。",
+      "prerequisites": [
+        "ku-005"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "renjiao-math-g10-a-ku-二次函数与一元二次不等式的关系-图象法",
+      "textbook_id": "renjiao-math-g10-a",
+      "cluster_id": "renjiao-math-g10-a-kc-一元二次不等式及其解法",
+      "name": "二次函数与一元二次不等式的关系（图象法）",
+      "description": "利用二次函数图象与x轴的位置关系，确定一元二次不等式的解集。",
+      "prerequisites": [
+        "ku-017"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "renjiao-math-g10-a-ku-二次函数的零点",
+      "textbook_id": "renjiao-math-g10-a",
+      "cluster_id": "renjiao-math-g10-a-kc-一元二次不等式及其解法",
+      "name": "二次函数的零点",
+      "description": "使ax²+bx+c=0的实数x称为二次函数y=ax²+bx+c的零点。",
+      "prerequisites": [
+        "一元二次方程"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "renjiao-math-g10-a-ku-二次项系数为负的一元二次不等式解法",
+      "textbook_id": "renjiao-math-g10-a",
+      "cluster_id": "renjiao-math-g10-a-kc-一元二次不等式及其解法",
+      "name": "二次项系数为负的一元二次不等式解法",
+      "description": "将不等式两边同乘-1（不等号反向），化为a>0的标准形式再求解。",
+      "prerequisites": [
+        "ku-008",
+        "ku-019",
+        "ku-020",
+        "ku-021"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "renjiao-math-g10-a-ku-五点法画余弦函数简图",
+      "textbook_id": "renjiao-math-g10-a",
+      "cluster_id": "renjiao-math-g10-a-kc-正弦函数和余弦函数的图象",
+      "name": "五点法画余弦函数简图",
+      "description": "取五个关键点(0,1),(π/2,0),(π,-1),(3π/2,0),(2π,1)描点连线。",
+      "prerequisites": [
+        "余弦函数的图象（平移法）"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "renjiao-math-g10-a-ku-五点法画正弦函数简图",
+      "textbook_id": "renjiao-math-g10-a",
+      "cluster_id": "renjiao-math-g10-a-kc-正弦函数和余弦函数的图象",
+      "name": "五点法画正弦函数简图",
+      "description": "取五个关键点(0,0),(π/2,1),(π,0),(3π/2,-1),(2π,0)描点连线。",
+      "prerequisites": [
+        "正弦函数的图象（几何法）"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "renjiao-math-g10-a-ku-交集的定义",
+      "textbook_id": "renjiao-math-g10-a",
+      "cluster_id": "renjiao-math-g10-a-kc-集合的基本运算",
+      "name": "交集的定义",
+      "description": "由所有属于集合A且属于集合B的元素组成的集合，称为集合A与B的交集，记作A∩B，即A∩B={x|x∈A，且x∈B}。",
+      "prerequisites": [
+        "ku-001"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "renjiao-math-g10-a-ku-交集的概念",
+      "textbook_id": "renjiao-math-g10-a",
+      "cluster_id": "renjiao-math-g10-a-kc-集合的基本运算",
+      "name": "交集的概念",
+      "description": "由所有属于集合A且属于集合B的元素组成的集合，记作A∩B={x|x∈A且x∈B}。",
+      "prerequisites": [
+        "集合的概念"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "renjiao-math-g10-a-ku-任意角的概念",
+      "textbook_id": "renjiao-math-g10-a",
+      "cluster_id": "renjiao-math-g10-a-kc-任意角与弧度制",
+      "name": "任意角的概念",
+      "description": "一条射线绕端点旋转，逆时针为正角，顺时针为负角，无旋转为零角。",
+      "prerequisites": [
+        "角的概念（初中）"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "renjiao-math-g10-a-ku-余弦函数单调性",
+      "textbook_id": "renjiao-math-g10-a",
+      "cluster_id": "renjiao-math-g10-a-kc-正弦-余弦函数的单调性与最值",
+      "name": "余弦函数单调性",
+      "description": "余弦函数在[2kπ, π+2kπ]上递减，在[π+2kπ, 2π+2kπ]上递增。",
+      "prerequisites": [
+        "余弦函数周期性"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "renjiao-math-g10-a-ku-余弦函数周期性",
+      "textbook_id": "renjiao-math-g10-a",
+      "cluster_id": "renjiao-math-g10-a-kc-三角函数的周期性",
+      "name": "余弦函数周期性",
+      "description": "余弦函数是周期函数，2kπ(k∈Z且k≠0)都是周期，最小正周期为2π。",
+      "prerequisites": [
+        "最小正周期"
+      ],
+      "related_kus": [],
+      "difficulty": 0.2,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "renjiao-math-g10-a-ku-余弦函数奇偶性",
+      "textbook_id": "renjiao-math-g10-a",
+      "cluster_id": "renjiao-math-g10-a-kc-三角函数的奇偶性",
+      "name": "余弦函数奇偶性",
+      "description": "余弦函数是偶函数，因为cos(-x)=cosx，图象关于y轴对称。",
+      "prerequisites": [
+        "诱导公式"
+      ],
+      "related_kus": [],
+      "difficulty": 0.2,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "renjiao-math-g10-a-ku-余弦函数最值",
+      "textbook_id": "renjiao-math-g10-a",
+      "cluster_id": "renjiao-math-g10-a-kc-正弦-余弦函数的单调性与最值",
+      "name": "余弦函数最值",
+      "description": "余弦函数当x=2kπ时取最大值1，当x=π+2kπ时取最小值-1。",
+      "prerequisites": [
+        "余弦函数单调性"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "renjiao-math-g10-a-ku-余弦函数的图象-平移法",
+      "textbook_id": "renjiao-math-g10-a",
+      "cluster_id": "renjiao-math-g10-a-kc-正弦函数和余弦函数的图象",
+      "name": "余弦函数的图象（平移法）",
+      "description": "由cosx=sin(x+π/2)，将正弦曲线向左平移π/2个单位得到余弦曲线。",
+      "prerequisites": [
+        "正弦函数的图象（几何法）",
+        "诱导公式五（π/2-α）"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "renjiao-math-g10-a-ku-作差法比较大小",
+      "textbook_id": "renjiao-math-g10-a",
+      "cluster_id": "renjiao-math-g10-a-kc-不等关系与实数大小比较",
+      "name": "作差法比较大小",
+      "description": "通过计算两个代数式的差并与0比较，判断大小关系。",
+      "prerequisites": [
+        "ku-002"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "renjiao-math-g10-a-ku-元素与集合的关系",
+      "textbook_id": "renjiao-math-g10-a",
+      "cluster_id": "renjiao-math-g10-a-kc-集合的基本概念与表示",
+      "name": "元素与集合的关系",
+      "description": "若a是集合A的元素，记作a∈A；若a不是集合A的元素，记作a∉A。",
+      "prerequisites": [
+        "集合的概念"
+      ],
+      "related_kus": [],
+      "difficulty": 0.2,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "renjiao-math-g10-a-ku-元素与集合的关系-属于-不属于",
+      "textbook_id": "renjiao-math-g10-a",
+      "cluster_id": "renjiao-math-g10-a-kc-集合的基本概念与表示",
+      "name": "元素与集合的关系（属于、不属于）",
+      "description": "如果a是集合A的元素，就说a属于A，记作a∈A；否则a不属于A，记作a∉A。",
+      "prerequisites": [
+        "ku-001"
+      ],
+      "related_kus": [],
+      "difficulty": 0.2,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "renjiao-math-g10-a-ku-充分条件与必要条件",
+      "textbook_id": "renjiao-math-g10-a",
+      "cluster_id": "renjiao-math-g10-a-kc-命题与条件关系基础",
+      "name": "充分条件与必要条件",
+      "description": "若p⇒q，则p是q的充分条件，q是p的必要条件。若p⇒/q，则p不是q的充分条件，q不是p的必要条件。",
+      "prerequisites": [
+        "命题的概念"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "renjiao-math-g10-a-ku-充分条件与必要条件定义",
+      "textbook_id": "renjiao-math-g10-a",
+      "cluster_id": "renjiao-math-g10-a-kc-充分条件与必要条件",
+      "name": "充分条件与必要条件定义",
+      "description": "若p⇒q，则p是q的充分条件，q是p的必要条件。若p⇒/q，则p不是q的充分条件，q不是p的必要条件。",
+      "prerequisites": [
+        "命题的定义",
+        "命题的条件与结论"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "renjiao-math-g10-a-ku-充分条件与必要条件的不唯一性",
+      "textbook_id": "renjiao-math-g10-a",
+      "cluster_id": "renjiao-math-g10-a-kc-充分条件与必要条件",
+      "name": "充分条件与必要条件的不唯一性",
+      "description": "给定结论q，使q成立的条件p不唯一；给定条件p，由p推出的结论q不唯一。",
+      "prerequisites": [
+        "充分条件与必要条件定义"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "renjiao-math-g10-a-ku-充分条件的判定",
+      "textbook_id": "renjiao-math-g10-a",
+      "cluster_id": "renjiao-math-g10-a-kc-充分条件与必要条件",
+      "name": "充分条件的判定",
+      "description": "判断p是否为q的充分条件，即判断“若p则q”是否为真命题。",
+      "prerequisites": [
+        "充分条件与必要条件定义"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "renjiao-math-g10-a-ku-充分条件的判定与举例",
+      "textbook_id": "renjiao-math-g10-a",
+      "cluster_id": "renjiao-math-g10-a-kc-命题与条件关系基础",
+      "name": "充分条件的判定与举例",
+      "description": "判定定理给出相应结论的充分条件；充分条件不唯一，可通过多个真命题得到。",
+      "prerequisites": [
+        "充分条件与必要条件"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "renjiao-math-g10-a-ku-充要条件",
+      "textbook_id": "renjiao-math-g10-a",
+      "cluster_id": "renjiao-math-g10-a-kc-命题与条件关系基础",
+      "name": "充要条件",
+      "description": "若p⇒q且q⇒p，即p⇔q，则p是q的充要条件，p与q互为充要条件。",
+      "prerequisites": [
+        "充分条件与必要条件"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "renjiao-math-g10-a-ku-充要条件与等价定义",
+      "textbook_id": "renjiao-math-g10-a",
+      "cluster_id": "renjiao-math-g10-a-kc-充要条件及其应用",
+      "name": "充要条件与等价定义",
+      "description": "利用充要条件可以给出数学概念的等价定义，这些定义相互等价。",
+      "prerequisites": [
+        "充要条件的定义"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "renjiao-math-g10-a-ku-充要条件的判定",
+      "textbook_id": "renjiao-math-g10-a",
+      "cluster_id": "renjiao-math-g10-a-kc-充要条件及其应用",
+      "name": "充要条件的判定",
+      "description": "判断p是否为q的充要条件，需分别证明充分性(p⇒q)和必要性(q⇒p)。",
+      "prerequisites": [
+        "充要条件的定义"
+      ],
+      "related_kus": [],
+      "difficulty": 0.6,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "renjiao-math-g10-a-ku-充要条件的定义",
+      "textbook_id": "renjiao-math-g10-a",
+      "cluster_id": "renjiao-math-g10-a-kc-充要条件及其应用",
+      "name": "充要条件的定义",
+      "description": "若p⇒q且q⇒p，则p是q的充分必要条件，简称充要条件，记作p⇔q。此时p与q互为充要条件。",
+      "prerequisites": [
+        "充分条件与必要条件定义",
+        "逆命题"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "renjiao-math-g10-a-ku-充要条件的证明-充分性与必要性",
+      "textbook_id": "renjiao-math-g10-a",
+      "cluster_id": "renjiao-math-g10-a-kc-命题与条件关系基础",
+      "name": "充要条件的证明（充分性与必要性）",
+      "description": "证明p是q的充要条件需分别证明充分性(p⇒q)和必要性(q⇒p)。",
+      "prerequisites": [
+        "充要条件"
+      ],
+      "related_kus": [],
+      "difficulty": 0.6,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "renjiao-math-g10-a-ku-全称量词与全称量词命题",
+      "textbook_id": "renjiao-math-g10-a",
+      "cluster_id": "renjiao-math-g10-a-kc-全称量词与存在量词",
+      "name": "全称量词与全称量词命题",
+      "description": "短语“所有的”“任意一个”叫做全称量词，符号∀。含有全称量词的命题叫全称量词命题，形式为∀x∈M, p(x)。",
+      "prerequisites": [
+        "命题的概念"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "renjiao-math-g10-a-ku-全称量词命题的否定",
+      "textbook_id": "renjiao-math-g10-a",
+      "cluster_id": "renjiao-math-g10-a-kc-含量词命题的否定",
+      "name": "全称量词命题的否定",
+      "description": "全称量词命题∀x∈M, p(x)的否定是∃x∈M, ¬p(x)。",
+      "prerequisites": [
+        "全称量词与全称量词命题",
+        "存在量词与存在量词命题"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "renjiao-math-g10-a-ku-全称量词命题真假的判定",
+      "textbook_id": "renjiao-math-g10-a",
+      "cluster_id": "renjiao-math-g10-a-kc-全称量词与存在量词",
+      "name": "全称量词命题真假的判定",
+      "description": "要判定∀x∈M，p(x)为真，需对M中每个x证明p(x)成立；为假只需找到一个反例x₀使p(x₀)不成立。",
+      "prerequisites": [
+        "全称量词与全称量词命题"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "renjiao-math-g10-a-ku-全称量词命题真假的判断",
+      "textbook_id": "renjiao-math-g10-a",
+      "cluster_id": "renjiao-math-g10-a-kc-全称量词与存在量词",
+      "name": "全称量词命题真假的判断",
+      "description": "要证全称量词命题为真需对M中每个x证明p(x)成立；要证为假只需举一个反例。",
+      "prerequisites": [
+        "全称量词与全称量词命题"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "renjiao-math-g10-a-ku-全集",
+      "textbook_id": "renjiao-math-g10-a",
+      "cluster_id": "renjiao-math-g10-a-kc-集合的基本运算",
+      "name": "全集",
+      "description": "如果一个集合含有所研究问题中涉及的所有元素，那么就称这个集合为全集，通常记作U。",
+      "prerequisites": [
+        "ku-001"
+      ],
+      "related_kus": [],
+      "difficulty": 0.2,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "renjiao-math-g10-a-ku-全集与补集",
+      "textbook_id": "renjiao-math-g10-a",
+      "cluster_id": "renjiao-math-g10-a-kc-集合的基本运算",
+      "name": "全集与补集",
+      "description": "全集U是研究问题中涉及的所有元素；补集∁UA={x|x∈U且x∉A}。",
+      "prerequisites": [
+        "集合的概念"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "renjiao-math-g10-a-ku-公式一-诱导公式一",
+      "textbook_id": "renjiao-math-g10-a",
+      "cluster_id": "renjiao-math-g10-a-kc-三角函数的定义与基本性质",
+      "name": "公式一（诱导公式一）",
+      "description": "sin(α+k·2π)=sinα，cos(α+k·2π)=cosα，tan(α+k·2π)=tanα，k∈Z。",
+      "prerequisites": [
+        "三角函数的定义（单位圆）",
+        "终边相同的角"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "renjiao-math-g10-a-ku-函数-y-asin-ωx-φ--的物理模型",
+      "textbook_id": "renjiao-math-g10-a",
+      "cluster_id": "renjiao-math-g10-a-kc-函数-y-asin-ωx-φ--的建模与参数影响",
+      "name": "函数 y=Asin(ωx+φ) 的物理模型",
+      "description": "盛水筒高度 H = r sin(ωt+φ) + h，其中 r 为半径，ω 为角速度，φ 为初相，h 为转轮中心到水面距离",
+      "prerequisites": [
+        "任意角三角函数定义"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "renjiao-math-g10-a-ku-函数图象的平移与对称变换-正弦余弦",
+      "textbook_id": "renjiao-math-g10-a",
+      "cluster_id": "renjiao-math-g10-a-kc-正弦函数和余弦函数的图象",
+      "name": "函数图象的平移与对称变换（正弦余弦）",
+      "description": "y=1+sinx由y=sinx向上平移1个单位；y=-cosx由y=cosx关于x轴对称。",
+      "prerequisites": [
+        "正弦函数的图象（几何法）",
+        "余弦函数的图象（平移法）"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "renjiao-math-g10-a-ku-列举法",
+      "textbook_id": "renjiao-math-g10-a",
+      "cluster_id": "renjiao-math-g10-a-kc-集合的基本概念与表示",
+      "name": "列举法",
+      "description": "把集合的所有元素一一列举出来，并用花括号{}括起来表示集合的方法。",
+      "prerequisites": [
+        "集合的概念"
+      ],
+      "related_kus": [],
+      "difficulty": 0.2,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "renjiao-math-g10-a-ku-判定定理与充分条件的关系",
+      "textbook_id": "renjiao-math-g10-a",
+      "cluster_id": "renjiao-math-g10-a-kc-充分条件与必要条件",
+      "name": "判定定理与充分条件的关系",
+      "description": "数学中的每一条判定定理都给出了相应数学结论成立的一个充分条件。",
+      "prerequisites": [
+        "充分条件的判定"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "renjiao-math-g10-a-ku-利用同角关系求三角函数值-已知余弦求正弦正切",
+      "textbook_id": "renjiao-math-g10-a",
+      "cluster_id": "renjiao-math-g10-a-kc-同角三角函数的基本关系及其应用",
+      "name": "利用同角关系求三角函数值（已知余弦求正弦正切）",
+      "description": "由sin²α+cos²α=1及象限符号求sinα，再求tanα。",
+      "prerequisites": [
+        "同角三角函数的基本关系（平方关系）",
+        "同角三角函数的基本关系（商数关系）",
+        "三角函数值的符号"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "renjiao-math-g10-a-ku-利用同角关系求三角函数值-已知正切求正弦余弦",
+      "textbook_id": "renjiao-math-g10-a",
+      "cluster_id": "renjiao-math-g10-a-kc-同角三角函数的基本关系及其应用",
+      "name": "利用同角关系求三角函数值（已知正切求正弦余弦）",
+      "description": "由tanα=sinα/cosα和sin²α+cos²α=1联立，结合象限符号求解。",
+      "prerequisites": [
+        "同角三角函数的基本关系（平方关系）",
+        "同角三角函数的基本关系（商数关系）",
+        "三角函数值的符号"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "renjiao-math-g10-a-ku-利用同角关系求三角函数值-已知正弦求余弦正切",
+      "textbook_id": "renjiao-math-g10-a",
+      "cluster_id": "renjiao-math-g10-a-kc-同角三角函数的基本关系及其应用",
+      "name": "利用同角关系求三角函数值（已知正弦求余弦正切）",
+      "description": "由sin²α+cos²α=1及象限符号求cosα，再求tanα。",
+      "prerequisites": [
+        "同角三角函数的基本关系（平方关系）",
+        "同角三角函数的基本关系（商数关系）",
+        "三角函数值的符号"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "renjiao-math-g10-a-ku-利用基本不等式求最值-和定积最大-积定和最小",
+      "textbook_id": "renjiao-math-g10-a",
+      "cluster_id": "renjiao-math-g10-a-kc-基本不等式及其应用",
+      "name": "利用基本不等式求最值（和定积最大，积定和最小）",
+      "description": "若两个正数的和为定值，则当它们相等时积最大；若积为定值，则当它们相等时和最小。",
+      "prerequisites": [
+        "ku-001"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "renjiao-math-g10-a-ku-利用诱导公式化简三角函数式",
+      "textbook_id": "renjiao-math-g10-a",
+      "cluster_id": "renjiao-math-g10-a-kc-诱导公式及其应用",
+      "name": "利用诱导公式化简三角函数式",
+      "description": "运用诱导公式将复杂表达式化为最简形式，注意符号和函数名变化。",
+      "prerequisites": [
+        "诱导公式二（π+α）",
+        "诱导公式三（-α）",
+        "诱导公式四（π-α）",
+        "诱导公式五（π/2-α）",
+        "诱导公式六（π/2+α）"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "renjiao-math-g10-a-ku-利用诱导公式求任意角的三角函数值",
+      "textbook_id": "renjiao-math-g10-a",
+      "cluster_id": "renjiao-math-g10-a-kc-诱导公式及其应用",
+      "name": "利用诱导公式求任意角的三角函数值",
+      "description": "将任意角转化为0~2π内的角，再用诱导公式化为锐角三角函数求值。",
+      "prerequisites": [
+        "诱导公式二（π+α）",
+        "诱导公式三（-α）",
+        "诱导公式四（π-α）",
+        "诱导公式五（π/2-α）",
+        "诱导公式六（π/2+α）",
+        "公式一（终边相同角的三角函数值）"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "renjiao-math-g10-a-ku-半角公式-平方形式",
+      "textbook_id": "renjiao-math-g10-a",
+      "cluster_id": "renjiao-math-g10-a-kc-倍角与半角公式",
+      "name": "半角公式（平方形式）",
+      "description": "sin²(α/2)=(1-cosα)/2, cos²(α/2)=(1+cosα)/2, tan²(α/2)=(1-cosα)/(1+cosα)",
+      "prerequisites": [
+        "二倍角的余弦公式"
+      ],
+      "related_kus": [],
+      "difficulty": 0.6,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "renjiao-math-g10-a-ku-参数-φ-对-y-sin-x-φ--图象的影响",
+      "textbook_id": "renjiao-math-g10-a",
+      "cluster_id": "renjiao-math-g10-a-kc-函数-y-asin-ωx-φ--的建模与参数影响",
+      "name": "参数 φ 对 y=sin(x+φ) 图象的影响",
+      "description": "φ 决定图象的左右平移，左加右减",
+      "prerequisites": [
+        "正弦函数图象"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "renjiao-math-g10-a-ku-同角三角函数关系式的变形与证明",
+      "textbook_id": "renjiao-math-g10-a",
+      "cluster_id": "renjiao-math-g10-a-kc-同角三角函数的基本关系及其应用",
+      "name": "同角三角函数关系式的变形与证明",
+      "description": "利用平方关系、商数关系进行恒等变形，如将分母有理化、构造平方差等。",
+      "prerequisites": [
+        "同角三角函数的基本关系（平方关系）",
+        "同角三角函数的基本关系（商数关系）"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "renjiao-math-g10-a-ku-同角三角函数的基本关系-商数关系",
+      "textbook_id": "renjiao-math-g10-a",
+      "cluster_id": "renjiao-math-g10-a-kc-同角三角函数的基本关系及其应用",
+      "name": "同角三角函数的基本关系（商数关系）",
+      "description": "tanα=sinα/cosα，其中α≠kπ+π/2(k∈Z)。",
+      "prerequisites": [
+        "三角函数定义"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "renjiao-math-g10-a-ku-同角三角函数的基本关系-平方关系",
+      "textbook_id": "renjiao-math-g10-a",
+      "cluster_id": "renjiao-math-g10-a-kc-同角三角函数的基本关系及其应用",
+      "name": "同角三角函数的基本关系（平方关系）",
+      "description": "sin²α+cos²α=1，对任意角α成立。",
+      "prerequisites": [
+        "三角函数定义"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "renjiao-math-g10-a-ku-含有一个量词的命题的否定方法",
+      "textbook_id": "renjiao-math-g10-a",
+      "cluster_id": "renjiao-math-g10-a-kc-含有一个量词的命题的否定",
+      "name": "含有一个量词的命题的否定方法",
+      "description": "否定全称量词命题时，将全称量词改为存在量词并否定结论；否定存在量词命题时，将存在量词改为全称量词并否定结论。",
+      "prerequisites": [
+        "全称量词命题的否定",
+        "存在量词命题的否定"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "renjiao-math-g10-a-ku-周期函数定义",
+      "textbook_id": "renjiao-math-g10-a",
+      "cluster_id": "renjiao-math-g10-a-kc-三角函数的周期性",
+      "name": "周期函数定义",
+      "description": "设函数f(x)定义域为D，存在非零常数T，对任意x∈D有x+T∈D且f(x+T)=f(x)，则f(x)为周期函数，T为周期。",
+      "prerequisites": [
+        "函数概念"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "renjiao-math-g10-a-ku-命题否定后的真假判断",
+      "textbook_id": "renjiao-math-g10-a",
+      "cluster_id": "renjiao-math-g10-a-kc-含有一个量词的命题的否定",
+      "name": "命题否定后的真假判断",
+      "description": "原命题与其否定一真一假，不能同真或同假；可通过判断原命题真假或直接判断否定命题真假来验证。",
+      "prerequisites": [
+        "命题的否定",
+        "全称量词命题的真假",
+        "存在量词命题的真假"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "renjiao-math-g10-a-ku-命题的定义",
+      "textbook_id": "renjiao-math-g10-a",
+      "cluster_id": "renjiao-math-g10-a-kc-充分条件与必要条件",
+      "name": "命题的定义",
+      "description": "用语言、符号或式子表达的，可以判断真假的陈述句叫做命题。真命题：判断为真的语句；假命题：判断为假的语句。",
+      "prerequisites": [],
+      "related_kus": [],
+      "difficulty": 0.2,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "renjiao-math-g10-a-ku-命题的概念",
+      "textbook_id": "renjiao-math-g10-a",
+      "cluster_id": "renjiao-math-g10-a-kc-命题与条件关系基础",
+      "name": "命题的概念",
+      "description": "用语言、符号或式子表达的，可以判断真假的陈述句叫做命题。真命题判断为真，假命题判断为假。",
+      "prerequisites": [],
+      "related_kus": [],
+      "difficulty": 0.2,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "renjiao-math-g10-a-ku-和差化积公式",
+      "textbook_id": "renjiao-math-g10-a",
+      "cluster_id": "renjiao-math-g10-a-kc-积化和差与和差化积",
+      "name": "和差化积公式",
+      "description": "sinθ+sinφ=2sin((θ+φ)/2)cos((θ-φ)/2), sinθ-sinφ=2cos((θ+φ)/2)sin((θ-φ)/2), cosθ+cosφ=2cos((θ+φ)/2)cos((θ-φ)/2), cosθ-cosφ=-2sin((θ+φ)/2)sin((θ-φ)/2)",
+      "prerequisites": [
+        "积化和差公式"
+      ],
+      "related_kus": [],
+      "difficulty": 0.7,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "renjiao-math-g10-a-ku-基本不等式-算术-几何平均不等式",
+      "textbook_id": "renjiao-math-g10-a",
+      "cluster_id": "renjiao-math-g10-a-kc-重要不等式与基本不等式",
+      "name": "基本不等式（算术-几何平均不等式）",
+      "description": "若a>0,b>0，则√(ab) ≤ (a+b)/2，当且仅当a=b时等号成立。",
+      "prerequisites": [
+        "ku-004"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "renjiao-math-g10-a-ku-基本不等式及其几何意义",
+      "textbook_id": "renjiao-math-g10-a",
+      "cluster_id": "renjiao-math-g10-a-kc-基本不等式及其应用",
+      "name": "基本不等式及其几何意义",
+      "description": "对于任意正数a,b，有(a+b)/2 ≥ √(ab)，当且仅当a=b时等号成立。",
+      "prerequisites": [],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "renjiao-math-g10-a-ku-基本不等式在几何最值中的应用",
+      "textbook_id": "renjiao-math-g10-a",
+      "cluster_id": "renjiao-math-g10-a-kc-重要不等式与基本不等式",
+      "name": "基本不等式在几何最值中的应用",
+      "description": "利用基本不等式解决实际几何问题中的最大（小）值，如矩形周长、面积最优化。",
+      "prerequisites": [
+        "ku-014",
+        "ku-015"
+      ],
+      "related_kus": [],
+      "difficulty": 0.7,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "renjiao-math-g10-a-ku-基本不等式在实际问题中的应用",
+      "textbook_id": "renjiao-math-g10-a",
+      "cluster_id": "renjiao-math-g10-a-kc-基本不等式及其应用",
+      "name": "基本不等式在实际问题中的应用",
+      "description": "通过建立数学模型，利用基本不等式解决实际最值问题。",
+      "prerequisites": [
+        "ku-002"
+      ],
+      "related_kus": [],
+      "difficulty": 0.6,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "renjiao-math-g10-a-ku-基本不等式求最值-和定积最大",
+      "textbook_id": "renjiao-math-g10-a",
+      "cluster_id": "renjiao-math-g10-a-kc-基本不等式的应用-最值问题",
+      "name": "基本不等式求最值（和定积最大）",
+      "description": "若x>0,y>0且x+y=S（定值），则xy≤S²/4，当x=y时取最大值。",
+      "prerequisites": [
+        "ku-012"
+      ],
+      "related_kus": [],
+      "difficulty": 0.6,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "renjiao-math-g10-a-ku-基本不等式求最值-积定和最小",
+      "textbook_id": "renjiao-math-g10-a",
+      "cluster_id": "renjiao-math-g10-a-kc-基本不等式的应用-最值问题",
+      "name": "基本不等式求最值（积定和最小）",
+      "description": "若x>0,y>0且xy=P（定值），则x+y≥2√P，当x=y时取最小值。",
+      "prerequisites": [
+        "ku-012"
+      ],
+      "related_kus": [],
+      "difficulty": 0.6,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "renjiao-math-g10-a-ku-基本不等式的几何解释",
+      "textbook_id": "renjiao-math-g10-a",
+      "cluster_id": "renjiao-math-g10-a-kc-重要不等式与基本不等式",
+      "name": "基本不等式的几何解释",
+      "description": "在圆中，半弦长√(ab)不大于半径(a+b)/2，当a=b时取等。",
+      "prerequisites": [
+        "ku-012"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "renjiao-math-g10-a-ku-子集的定义",
+      "textbook_id": "renjiao-math-g10-a",
+      "cluster_id": "renjiao-math-g10-a-kc-集合间的基本关系",
+      "name": "子集的定义",
+      "description": "对于两个集合A，B，如果集合A中任意一个元素都是集合B中的元素，就称集合A为集合B的子集，记作A⊆B（或B⊇A）。",
+      "prerequisites": [
+        "ku-001"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "renjiao-math-g10-a-ku-子集的性质",
+      "textbook_id": "renjiao-math-g10-a",
+      "cluster_id": "renjiao-math-g10-a-kc-集合间的基本关系",
+      "name": "子集的性质",
+      "description": "任何集合是它本身的子集；若A⊆B且B⊆C，则A⊆C。",
+      "prerequisites": [
+        "子集的概念"
+      ],
+      "related_kus": [],
+      "difficulty": 0.2,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "renjiao-math-g10-a-ku-子集的概念",
+      "textbook_id": "renjiao-math-g10-a",
+      "cluster_id": "renjiao-math-g10-a-kc-集合间的基本关系",
+      "name": "子集的概念",
+      "description": "如果集合A的任意一个元素都是集合B的元素，则称A是B的子集，记作A⊆B。",
+      "prerequisites": [
+        "集合的概念"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "renjiao-math-g10-a-ku-存在量词与存在量词命题",
+      "textbook_id": "renjiao-math-g10-a",
+      "cluster_id": "renjiao-math-g10-a-kc-全称量词与存在量词",
+      "name": "存在量词与存在量词命题",
+      "description": "短语“存在一个”“至少有一个”叫做存在量词，符号∃。含有存在量词的命题叫存在量词命题，形式为∃x∈M, p(x)。",
+      "prerequisites": [
+        "命题的概念"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "renjiao-math-g10-a-ku-存在量词命题的否定",
+      "textbook_id": "renjiao-math-g10-a",
+      "cluster_id": "renjiao-math-g10-a-kc-含量词命题的否定",
+      "name": "存在量词命题的否定",
+      "description": "存在量词命题∃x∈M, p(x)的否定是∀x∈M, ¬p(x)。",
+      "prerequisites": [
+        "全称量词与全称量词命题",
+        "存在量词与存在量词命题"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "renjiao-math-g10-a-ku-存在量词命题真假的判定",
+      "textbook_id": "renjiao-math-g10-a",
+      "cluster_id": "renjiao-math-g10-a-kc-全称量词与存在量词",
+      "name": "存在量词命题真假的判定",
+      "description": "要判定∃x∈M，p(x)为真，只需在M中找到一个x使p(x)成立；为假则需证明M中所有x都不满足p(x)。",
+      "prerequisites": [
+        "存在量词与存在量词命题"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "renjiao-math-g10-a-ku-存在量词命题真假的判断",
+      "textbook_id": "renjiao-math-g10-a",
+      "cluster_id": "renjiao-math-g10-a-kc-全称量词与存在量词",
+      "name": "存在量词命题真假的判断",
+      "description": "要证存在量词命题为真只需在M中找到一个x使p(x)成立；要证为假需证明对M中所有x，p(x)都不成立。",
+      "prerequisites": [
+        "存在量词与存在量词命题"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "renjiao-math-g10-a-ku-实数大小比较的基本事实",
+      "textbook_id": "renjiao-math-g10-a",
+      "cluster_id": "renjiao-math-g10-a-kc-不等关系与实数大小比较",
+      "name": "实数大小比较的基本事实",
+      "description": "a>b ⇔ a-b>0；a=b ⇔ a-b=0；a<b ⇔ a-b<0。",
+      "prerequisites": [],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "renjiao-math-g10-a-ku-容斥原理-两个集合",
+      "textbook_id": "renjiao-math-g10-a",
+      "cluster_id": "renjiao-math-g10-a-kc-有限集合的计数",
+      "name": "容斥原理（两个集合）",
+      "description": "对任意两个有限集合A，B，有card(A∪B)=card(A)+card(B)-card(A∩B)。",
+      "prerequisites": [
+        "ku-015",
+        "ku-016",
+        "ku-019"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "renjiao-math-g10-a-ku-常用数集及其记法",
+      "textbook_id": "renjiao-math-g10-a",
+      "cluster_id": "renjiao-math-g10-a-kc-集合的基本概念与表示",
+      "name": "常用数集及其记法",
+      "description": "N（自然数集）、N*或N+（正整数集）、Z（整数集）、Q（有理数集）、R（实数集）。",
+      "prerequisites": [],
+      "related_kus": [],
+      "difficulty": 0.1,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "renjiao-math-g10-a-ku-并集的定义",
+      "textbook_id": "renjiao-math-g10-a",
+      "cluster_id": "renjiao-math-g10-a-kc-集合的基本运算",
+      "name": "并集的定义",
+      "description": "由所有属于集合A或属于集合B的元素组成的集合，称为集合A与B的并集，记作A∪B，即A∪B={x|x∈A，或x∈B}。",
+      "prerequisites": [
+        "ku-001"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "renjiao-math-g10-a-ku-并集的概念",
+      "textbook_id": "renjiao-math-g10-a",
+      "cluster_id": "renjiao-math-g10-a-kc-集合的基本运算",
+      "name": "并集的概念",
+      "description": "由所有属于集合A或属于集合B的元素组成的集合，记作A∪B={x|x∈A或x∈B}。",
+      "prerequisites": [
+        "集合的概念"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "renjiao-math-g10-a-ku-弧度与角度的换算",
+      "textbook_id": "renjiao-math-g10-a",
+      "cluster_id": "renjiao-math-g10-a-kc-任意角与弧度制",
+      "name": "弧度与角度的换算",
+      "description": "180°=π rad，1°=π/180 rad，1 rad=(180/π)°≈57.30°。",
+      "prerequisites": [
+        "弧度制的定义"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "renjiao-math-g10-a-ku-弧度制下角的集合与实数集的一一对应",
+      "textbook_id": "renjiao-math-g10-a",
+      "cluster_id": "renjiao-math-g10-a-kc-任意角与弧度制",
+      "name": "弧度制下角的集合与实数集的一一对应",
+      "description": "每个角有唯一实数（弧度数）对应，每个实数有唯一角对应。",
+      "prerequisites": [
+        "弧度制的定义"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "renjiao-math-g10-a-ku-弧度制的定义",
+      "textbook_id": "renjiao-math-g10-a",
+      "cluster_id": "renjiao-math-g10-a-kc-任意角与弧度制",
+      "name": "弧度制的定义",
+      "description": "长度等于半径长的圆弧所对的圆心角为1弧度，单位rad。",
+      "prerequisites": [
+        "角的概念（初中）"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "renjiao-math-g10-a-ku-必要条件的判定",
+      "textbook_id": "renjiao-math-g10-a",
+      "cluster_id": "renjiao-math-g10-a-kc-充分条件与必要条件",
+      "name": "必要条件的判定",
+      "description": "判断q是否为p的必要条件，即判断“若p则q”是否为真命题。",
+      "prerequisites": [
+        "充分条件与必要条件定义"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "renjiao-math-g10-a-ku-必要条件的判定与举例",
+      "textbook_id": "renjiao-math-g10-a",
+      "cluster_id": "renjiao-math-g10-a-kc-命题与条件关系基础",
+      "name": "必要条件的判定与举例",
+      "description": "性质定理给出相应结论的必要条件；必要条件不唯一，可通过多个真命题得到。",
+      "prerequisites": [
+        "充分条件与必要条件"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "renjiao-math-g10-a-ku-性质定理与必要条件的关系",
+      "textbook_id": "renjiao-math-g10-a",
+      "cluster_id": "renjiao-math-g10-a-kc-充分条件与必要条件",
+      "name": "性质定理与必要条件的关系",
+      "description": "数学中的每一条性质定理都给出了相应数学结论成立的一个必要条件。",
+      "prerequisites": [
+        "必要条件的判定"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "renjiao-math-g10-a-ku-扇形弧长与面积公式-弧度制",
+      "textbook_id": "renjiao-math-g10-a",
+      "cluster_id": "renjiao-math-g10-a-kc-任意角与弧度制",
+      "name": "扇形弧长与面积公式（弧度制）",
+      "description": "l=αR，S=½αR²=½lR，其中α为圆心角（弧度），R为半径。",
+      "prerequisites": [
+        "弧度与角度的换算"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "renjiao-math-g10-a-ku-描述法",
+      "textbook_id": "renjiao-math-g10-a",
+      "cluster_id": "renjiao-math-g10-a-kc-集合的基本概念与表示",
+      "name": "描述法",
+      "description": "用集合中元素的共同特征表示集合的方法，形式为{x∈A|P(x)}。",
+      "prerequisites": [
+        "集合的概念"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "renjiao-math-g10-a-ku-无限集合元素个数比较方法",
+      "textbook_id": "renjiao-math-g10-a",
+      "cluster_id": "renjiao-math-g10-a-kc-集合元素个数的计算",
+      "name": "无限集合元素个数比较方法",
+      "description": "通过建立一一对应关系比较无限集合元素个数多少。",
+      "prerequisites": [
+        "集合的概念"
+      ],
+      "related_kus": [],
+      "difficulty": 0.6,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "renjiao-math-g10-a-ku-最小正周期",
+      "textbook_id": "renjiao-math-g10-a",
+      "cluster_id": "renjiao-math-g10-a-kc-三角函数的周期性",
+      "name": "最小正周期",
+      "description": "周期函数所有周期中存在最小正数，称为最小正周期。正弦、余弦函数最小正周期为2π。",
+      "prerequisites": [
+        "周期函数定义"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "renjiao-math-g10-a-ku-有限集合中元素的个数-card",
+      "textbook_id": "renjiao-math-g10-a",
+      "cluster_id": "renjiao-math-g10-a-kc-有限集合的计数",
+      "name": "有限集合中元素的个数（card）",
+      "description": "含有限个元素的集合A叫做有限集，用card(A)表示有限集合A中元素的个数。",
+      "prerequisites": [
+        "ku-001"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "renjiao-math-g10-a-ku-有限集合的元素个数",
+      "textbook_id": "renjiao-math-g10-a",
+      "cluster_id": "renjiao-math-g10-a-kc-集合的元素个数",
+      "name": "有限集合的元素个数",
+      "description": "用card(A)表示有限集合A中元素的个数。",
+      "prerequisites": [
+        "集合的概念"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "renjiao-math-g10-a-ku-有限集合的基数与容斥原理-两个集合",
+      "textbook_id": "renjiao-math-g10-a",
+      "cluster_id": "renjiao-math-g10-a-kc-集合的基数与容斥原理",
+      "name": "有限集合的基数与容斥原理（两个集合）",
+      "description": "对任意两个有限集合A,B，有card(A∪B)=card(A)+card(B)-card(A∩B)。",
+      "prerequisites": [
+        "集合的基本概念",
+        "集合的并集与交集"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "renjiao-math-g10-a-ku-有限集合的并集元素个数公式",
+      "textbook_id": "renjiao-math-g10-a",
+      "cluster_id": "renjiao-math-g10-a-kc-集合元素个数的计算",
+      "name": "有限集合的并集元素个数公式",
+      "description": "card(A∪B)=card(A)+card(B)-card(A∩B)，可用Venn图求解。",
+      "prerequisites": [
+        "集合的并集",
+        "集合的交集",
+        "card(集合)"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "renjiao-math-g10-a-ku-有限集合的并集元素个数公式推广到三个集合",
+      "textbook_id": "renjiao-math-g10-a",
+      "cluster_id": "renjiao-math-g10-a-kc-集合元素个数的计算",
+      "name": "有限集合的并集元素个数公式推广到三个集合",
+      "description": "card(A∪B∪C)=card(A)+card(B)+card(C)-card(A∩B)-card(B∩C)-card(A∩C)+card(A∩B∩C)。",
+      "prerequisites": [
+        "有限集合的并集元素个数公式"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "renjiao-math-g10-a-ku-正切函数值域",
+      "textbook_id": "renjiao-math-g10-a",
+      "cluster_id": "renjiao-math-g10-a-kc-正切函数的性质与图象",
+      "name": "正切函数值域",
+      "description": "正切函数的值域是实数集R。",
+      "prerequisites": [
+        "正切函数单调性"
+      ],
+      "related_kus": [],
+      "difficulty": 0.2,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "renjiao-math-g10-a-ku-正切函数单调性",
+      "textbook_id": "renjiao-math-g10-a",
+      "cluster_id": "renjiao-math-g10-a-kc-正切函数的性质与图象",
+      "name": "正切函数单调性",
+      "description": "正切函数在每一个开区间(-π/2+kπ, π/2+kπ)上单调递增。",
+      "prerequisites": [
+        "正切函数周期性"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "renjiao-math-g10-a-ku-正切函数周期性",
+      "textbook_id": "renjiao-math-g10-a",
+      "cluster_id": "renjiao-math-g10-a-kc-正切函数的性质与图象",
+      "name": "正切函数周期性",
+      "description": "正切函数是周期函数，周期为π。",
+      "prerequisites": [
+        "诱导公式"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "renjiao-math-g10-a-ku-正切函数图象-正切曲线",
+      "textbook_id": "renjiao-math-g10-a",
+      "cluster_id": "renjiao-math-g10-a-kc-正切函数的性质与图象",
+      "name": "正切函数图象（正切曲线）",
+      "description": "正切曲线由被直线x=π/2+kπ隔开的无穷多支形状相同的曲线组成。",
+      "prerequisites": [
+        "正切函数周期性",
+        "正切函数奇偶性"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "renjiao-math-g10-a-ku-正切函数奇偶性",
+      "textbook_id": "renjiao-math-g10-a",
+      "cluster_id": "renjiao-math-g10-a-kc-正切函数的性质与图象",
+      "name": "正切函数奇偶性",
+      "description": "正切函数是奇函数，因为tan(-x)=-tanx。",
+      "prerequisites": [
+        "诱导公式"
+      ],
+      "related_kus": [],
+      "difficulty": 0.2,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "renjiao-math-g10-a-ku-正弦函数单调性",
+      "textbook_id": "renjiao-math-g10-a",
+      "cluster_id": "renjiao-math-g10-a-kc-正弦-余弦函数的单调性与最值",
+      "name": "正弦函数单调性",
+      "description": "正弦函数在[-π/2+2kπ, π/2+2kπ]上递增，在[π/2+2kπ, 3π/2+2kπ]上递减。",
+      "prerequisites": [
+        "正弦函数周期性"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "renjiao-math-g10-a-ku-正弦函数周期性",
+      "textbook_id": "renjiao-math-g10-a",
+      "cluster_id": "renjiao-math-g10-a-kc-三角函数的周期性",
+      "name": "正弦函数周期性",
+      "description": "正弦函数是周期函数，2kπ(k∈Z且k≠0)都是周期，最小正周期为2π。",
+      "prerequisites": [
+        "最小正周期"
+      ],
+      "related_kus": [],
+      "difficulty": 0.2,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "renjiao-math-g10-a-ku-正弦函数奇偶性",
+      "textbook_id": "renjiao-math-g10-a",
+      "cluster_id": "renjiao-math-g10-a-kc-三角函数的奇偶性",
+      "name": "正弦函数奇偶性",
+      "description": "正弦函数是奇函数，因为sin(-x)=-sinx，图象关于原点对称。",
+      "prerequisites": [
+        "诱导公式"
+      ],
+      "related_kus": [],
+      "difficulty": 0.2,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "renjiao-math-g10-a-ku-正弦函数最值",
+      "textbook_id": "renjiao-math-g10-a",
+      "cluster_id": "renjiao-math-g10-a-kc-正弦-余弦函数的单调性与最值",
+      "name": "正弦函数最值",
+      "description": "正弦函数当x=π/2+2kπ时取最大值1，当x=-π/2+2kπ时取最小值-1。",
+      "prerequisites": [
+        "正弦函数单调性"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "renjiao-math-g10-a-ku-正弦函数的图象-几何法",
+      "textbook_id": "renjiao-math-g10-a",
+      "cluster_id": "renjiao-math-g10-a-kc-正弦函数和余弦函数的图象",
+      "name": "正弦函数的图象（几何法）",
+      "description": "利用单位圆上点的纵坐标描点，得到y=sinx在[0,2π]上的图象，再平移得正弦曲线。",
+      "prerequisites": [
+        "正弦函数的定义",
+        "单位圆"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "renjiao-math-g10-a-ku-省略量词的全称量词命题的否定",
+      "textbook_id": "renjiao-math-g10-a",
+      "cluster_id": "renjiao-math-g10-a-kc-含有一个量词的命题的否定",
+      "name": "省略量词的全称量词命题的否定",
+      "description": "形如“若p，则q”的省略量词的全称量词命题，其否定应为“存在满足p的个体，使得q不成立”，而非“若p，则¬q”。",
+      "prerequisites": [
+        "全称量词命题的否定",
+        "命题的否定"
+      ],
+      "related_kus": [],
+      "difficulty": 0.6,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "renjiao-math-g10-a-ku-真子集的定义",
+      "textbook_id": "renjiao-math-g10-a",
+      "cluster_id": "renjiao-math-g10-a-kc-集合间的基本关系",
+      "name": "真子集的定义",
+      "description": "如果集合A⊆B，但存在元素x∈B且x∉A，就称集合A是集合B的真子集，记作A⫋B（或B⫌A）。",
+      "prerequisites": [
+        "ku-009"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "renjiao-math-g10-a-ku-真子集的概念",
+      "textbook_id": "renjiao-math-g10-a",
+      "cluster_id": "renjiao-math-g10-a-kc-集合间的基本关系",
+      "name": "真子集的概念",
+      "description": "如果A⊆B且存在x∈B但x∉A，则称A是B的真子集，记作A⊂B。",
+      "prerequisites": [
+        "子集的概念"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "renjiao-math-g10-a-ku-积化和差公式",
+      "textbook_id": "renjiao-math-g10-a",
+      "cluster_id": "renjiao-math-g10-a-kc-积化和差与和差化积",
+      "name": "积化和差公式",
+      "description": "sinα cosβ=½[sin(α+β)+sin(α-β)], cosα sinβ=½[sin(α+β)-sin(α-β)], cosα cosβ=½[cos(α+β)+cos(α-β)], sinα sinβ=-½[cos(α+β)-cos(α-β)]",
+      "prerequisites": [
+        "两角和与差的正弦、余弦公式"
+      ],
+      "related_kus": [],
+      "difficulty": 0.7,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "renjiao-math-g10-a-ku-空集",
+      "textbook_id": "renjiao-math-g10-a",
+      "cluster_id": "renjiao-math-g10-a-kc-集合间的基本关系",
+      "name": "空集",
+      "description": "不含任何元素的集合叫做空集，记作∅，规定空集是任何集合的子集。",
+      "prerequisites": [
+        "集合的概念"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "renjiao-math-g10-a-ku-终边相同的角",
+      "textbook_id": "renjiao-math-g10-a",
+      "cluster_id": "renjiao-math-g10-a-kc-任意角与弧度制",
+      "name": "终边相同的角",
+      "description": "所有与角α终边相同的角构成集合S={β|β=α+k·360°, k∈Z}。",
+      "prerequisites": [
+        "任意角的概念",
+        "象限角"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "renjiao-math-g10-a-ku-补集的定义",
+      "textbook_id": "renjiao-math-g10-a",
+      "cluster_id": "renjiao-math-g10-a-kc-集合的基本运算",
+      "name": "补集的定义",
+      "description": "对于一个集合A，由全集U中不属于集合A的所有元素组成的集合称为集合A相对于全集U的补集，记作∁UA，即∁UA={x|x∈U，且x∉A}。",
+      "prerequisites": [
+        "ku-001",
+        "ku-017"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "renjiao-math-g10-a-ku-角的加减与相反角",
+      "textbook_id": "renjiao-math-g10-a",
+      "cluster_id": "renjiao-math-g10-a-kc-任意角与弧度制",
+      "name": "角的加减与相反角",
+      "description": "α+β：将α终边旋转β；α-β=α+(-β)，-α为α的相反角。",
+      "prerequisites": [
+        "任意角的概念"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "renjiao-math-g10-a-ku-诱导公式三--α",
+      "textbook_id": "renjiao-math-g10-a",
+      "cluster_id": "renjiao-math-g10-a-kc-诱导公式及其应用",
+      "name": "诱导公式三（-α）",
+      "description": "sin(-α)=-sinα，cos(-α)=cosα，tan(-α)=-tanα。",
+      "prerequisites": [
+        "三角函数定义",
+        "单位圆与对称性"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "renjiao-math-g10-a-ku-诱导公式二-π-α",
+      "textbook_id": "renjiao-math-g10-a",
+      "cluster_id": "renjiao-math-g10-a-kc-诱导公式及其应用",
+      "name": "诱导公式二（π+α）",
+      "description": "sin(π+α)=-sinα，cos(π+α)=-cosα，tan(π+α)=tanα。",
+      "prerequisites": [
+        "三角函数定义",
+        "单位圆与对称性"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "renjiao-math-g10-a-ku-诱导公式五-π-2-α",
+      "textbook_id": "renjiao-math-g10-a",
+      "cluster_id": "renjiao-math-g10-a-kc-诱导公式及其应用",
+      "name": "诱导公式五（π/2-α）",
+      "description": "sin(π/2-α)=cosα，cos(π/2-α)=sinα。",
+      "prerequisites": [
+        "三角函数定义",
+        "单位圆与对称性"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "renjiao-math-g10-a-ku-诱导公式六-π-2-α",
+      "textbook_id": "renjiao-math-g10-a",
+      "cluster_id": "renjiao-math-g10-a-kc-诱导公式及其应用",
+      "name": "诱导公式六（π/2+α）",
+      "description": "sin(π/2+α)=cosα，cos(π/2+α)=-sinα。",
+      "prerequisites": [
+        "三角函数定义",
+        "单位圆与对称性"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "renjiao-math-g10-a-ku-诱导公式四-π-α",
+      "textbook_id": "renjiao-math-g10-a",
+      "cluster_id": "renjiao-math-g10-a-kc-诱导公式及其应用",
+      "name": "诱导公式四（π-α）",
+      "description": "sin(π-α)=sinα，cos(π-α)=-cosα，tan(π-α)=-tanα。",
+      "prerequisites": [
+        "三角函数定义",
+        "单位圆与对称性"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "renjiao-math-g10-a-ku-象限角",
+      "textbook_id": "renjiao-math-g10-a",
+      "cluster_id": "renjiao-math-g10-a-kc-任意角与弧度制",
+      "name": "象限角",
+      "description": "角的顶点与原点重合，始边与x轴非负半轴重合，终边在第几象限就是第几象限角。",
+      "prerequisites": [
+        "任意角的概念"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "renjiao-math-g10-a-ku-辅助角公式-合一变形",
+      "textbook_id": "renjiao-math-g10-a",
+      "cluster_id": "renjiao-math-g10-a-kc-辅助角公式及其应用",
+      "name": "辅助角公式（合一变形）",
+      "description": "a sinx + b cosx = √(a²+b²) sin(x+φ), 其中 cosφ=a/√(a²+b²), sinφ=b/√(a²+b²)",
+      "prerequisites": [
+        "两角和的正弦公式"
+      ],
+      "related_kus": [],
+      "difficulty": 0.6,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "renjiao-math-g10-a-ku-重要不等式-a²-b²-2ab",
+      "textbook_id": "renjiao-math-g10-a",
+      "cluster_id": "renjiao-math-g10-a-kc-重要不等式与基本不等式",
+      "name": "重要不等式 a²+b²≥2ab",
+      "description": "∀a,b∈R，a²+b²≥2ab，当且仅当a=b时等号成立。",
+      "prerequisites": [
+        "ku-002"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "renjiao-math-g10-a-ku-集合元素的互异性",
+      "textbook_id": "renjiao-math-g10-a",
+      "cluster_id": "renjiao-math-g10-a-kc-集合的基本概念与表示",
+      "name": "集合元素的互异性",
+      "description": "一个给定集合中的元素是互不相同的，即不重复出现。",
+      "prerequisites": [
+        "ku-001"
+      ],
+      "related_kus": [],
+      "difficulty": 0.2,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "renjiao-math-g10-a-ku-集合元素的确定性",
+      "textbook_id": "renjiao-math-g10-a",
+      "cluster_id": "renjiao-math-g10-a-kc-集合的基本概念与表示",
+      "name": "集合元素的确定性",
+      "description": "给定一个集合，一个元素在或不在这个集合中是确定的。",
+      "prerequisites": [
+        "ku-001"
+      ],
+      "related_kus": [],
+      "difficulty": 0.2,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "renjiao-math-g10-a-ku-集合的含义",
+      "textbook_id": "renjiao-math-g10-a",
+      "cluster_id": "renjiao-math-g10-a-kc-集合的基本概念与表示",
+      "name": "集合的含义",
+      "description": "把研究对象统称为元素，把一些元素组成的总体叫做集合（简称为集）。",
+      "prerequisites": [],
+      "related_kus": [],
+      "difficulty": 0.2,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "renjiao-math-g10-a-ku-集合的概念",
+      "textbook_id": "renjiao-math-g10-a",
+      "cluster_id": "renjiao-math-g10-a-kc-集合的基本概念与表示",
+      "name": "集合的概念",
+      "description": "把一些元素组成的总体叫做集合，研究对象统称为元素。集合元素具有确定性和互异性。",
+      "prerequisites": [],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "renjiao-math-g10-a-ku-集合的相等",
+      "textbook_id": "renjiao-math-g10-a",
+      "cluster_id": "renjiao-math-g10-a-kc-集合的基本概念与表示",
+      "name": "集合的相等",
+      "description": "只要构成两个集合的元素是一样的，就称这两个集合是相等的。",
+      "prerequisites": [
+        "ku-001"
+      ],
+      "related_kus": [],
+      "difficulty": 0.2,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "renjiao-math-g10-a-ku-集合相等",
+      "textbook_id": "renjiao-math-g10-a",
+      "cluster_id": "renjiao-math-g10-a-kc-集合间的基本关系",
+      "name": "集合相等",
+      "description": "如果A⊆B且B⊆A，则A=B。",
+      "prerequisites": [
+        "子集的概念"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "renjiao-math-g10-a-ku-集合相等-子集角度",
+      "textbook_id": "renjiao-math-g10-a",
+      "cluster_id": "renjiao-math-g10-a-kc-集合间的基本关系",
+      "name": "集合相等（子集角度）",
+      "description": "若A⊆B且B⊆A，则A＝B。",
+      "prerequisites": [
+        "ku-009"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "renjiao-math-g10-a-ku001",
+      "textbook_id": "renjiao-math-g10-a",
+      "cluster_id": "renjiao-math-g10-a-c01",
+      "name": "集合的概念与表示",
+      "description": "理解集合的含义，掌握集合的表示方法（列举法、描述法、Venn图）",
+      "prerequisites": [],
+      "related_kus": [
+        "renjiao-math-g10-a-ku002"
+      ],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "选择题",
+        "填空题"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": "B4.1 了解集合的概念，能用自然语言、集合语言描述具体问题",
+      "mastery_levels": [
+        {
+          "desc": "能识别集合的基本概念",
+          "label": "认识",
+          "level": 1
+        },
+        {
+          "desc": "能用列举法和描述法表示集合",
+          "label": "理解",
+          "level": 2
+        },
+        {
+          "desc": "能用Venn图解决集合问题",
+          "label": "应用",
+          "level": 3
+        }
+      ],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "renjiao-math-g10-a-ku002",
+      "textbook_id": "renjiao-math-g10-a",
+      "cluster_id": "renjiao-math-g10-a-c01",
+      "name": "集合的基本运算",
+      "description": "掌握交集、并集、补集的定义与运算规律",
+      "prerequisites": [
+        "renjiao-math-g10-a-ku001"
+      ],
+      "related_kus": [],
+      "difficulty": 0.45,
+      "exam_frequency": "high",
+      "question_types": [
+        "选择题",
+        "填空题",
+        "解答题"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": "B4.2 能进行集合的基本运算（交、并、补），并能用Venn图表示",
+      "mastery_levels": [
+        {
+          "desc": "能判断两集合的交并补关系",
+          "label": "识别",
+          "level": 1
+        },
+        {
+          "desc": "能正确完成集合运算",
+          "label": "计算",
+          "level": 2
+        },
+        {
+          "desc": "能用集合运算解实际问题",
+          "label": "综合",
+          "level": 3
+        }
+      ],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "renjiao-math-g10-a-ku003",
+      "textbook_id": "renjiao-math-g10-a",
+      "cluster_id": "renjiao-math-g10-a-c01",
+      "name": "充分条件与必要条件",
+      "description": "理解充分条件、必要条件、充要条件的概念并能判断",
+      "prerequisites": [
+        "renjiao-math-g10-a-ku001"
+      ],
+      "related_kus": [],
+      "difficulty": 0.55,
+      "exam_frequency": "high",
+      "question_types": [
+        "选择题",
+        "填空题"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": "B4.3 了解充分条件、必要条件和充要条件的意义",
+      "mastery_levels": [
+        {
+          "desc": "能判断充分/必要条件",
+          "label": "辨别",
+          "level": 1
+        },
+        {
+          "desc": "能用充要条件证明命题",
+          "label": "应用",
+          "level": 2
+        }
+      ],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "renjiao-math-g10-a-ku004",
+      "textbook_id": "renjiao-math-g10-a",
+      "cluster_id": "renjiao-math-g10-a-c02",
+      "name": "函数的概念与表示",
+      "description": "理解函数的定义（映射视角），掌握定义域、值域、对应法则",
+      "prerequisites": [],
+      "related_kus": [
+        "renjiao-math-g10-a-ku005"
+      ],
+      "difficulty": 0.4,
+      "exam_frequency": "high",
+      "question_types": [
+        "选择题",
+        "填空题",
+        "解答题"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": "B5.1 理解函数的概念，会求函数的定义域和值域",
+      "mastery_levels": [
+        {
+          "desc": "能识别函数与非函数",
+          "label": "认识",
+          "level": 1
+        },
+        {
+          "desc": "能求函数的定义域/值域",
+          "label": "求解",
+          "level": 2
+        },
+        {
+          "desc": "能建立实际问题的函数模型",
+          "label": "建模",
+          "level": 3
+        }
+      ],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "renjiao-math-g10-a-ku005",
+      "textbook_id": "renjiao-math-g10-a",
+      "cluster_id": "renjiao-math-g10-a-c02",
+      "name": "指数函数与对数函数",
+      "description": "理解指数函数 y=aˣ 与对数函数 y=logₐx 的图像、性质及互为反函数关系",
+      "prerequisites": [
+        "renjiao-math-g10-a-ku004"
+      ],
+      "related_kus": [],
+      "difficulty": 0.6,
+      "exam_frequency": "high",
+      "question_types": [
+        "选择题",
+        "填空题",
+        "解答题"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": "B5.4 理解指数函数、对数函数的概念、图像和性质",
+      "mastery_levels": [
+        {
+          "desc": "记住图像形态与单调性",
+          "label": "记忆",
+          "level": 1
+        },
+        {
+          "desc": "能解指数/对数方程不等式",
+          "label": "计算",
+          "level": 2
+        },
+        {
+          "desc": "能解含指数对数的综合题",
+          "label": "综合",
+          "level": 3
+        }
+      ],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    }
+  ]
+}

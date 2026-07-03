@@ -1,0 +1,1662 @@
+{
+  "textbook": {
+    "id": "RENJIAO-G5-MATH-X",
+    "subject": "math",
+    "grade": "G5",
+    "edition": "2011",
+    "book_name": "人教版·数学五年级下册"
+  },
+  "clusters": [
+    {
+      "id": "RENJIAO-G5-MATH-X-kc-因数和倍数的概念与性质",
+      "name": "因数和倍数的概念与性质",
+      "display_order": 1,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G5-MATH-X-kc-2-5-3的倍数特征与奇偶性",
+      "name": "2、5、3的倍数特征与奇偶性",
+      "display_order": 2,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G5-MATH-X-kc-质数-合数与奇偶性应用",
+      "name": "质数、合数与奇偶性应用",
+      "display_order": 3,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G5-MATH-X-kc-长方体与正方体的表面积",
+      "name": "长方体与正方体的表面积",
+      "display_order": 4,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G5-MATH-X-kc-体积与体积单位",
+      "name": "体积与体积单位",
+      "display_order": 5,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G5-MATH-X-kc-长方体与正方体的体积计算",
+      "name": "长方体与正方体的体积计算",
+      "display_order": 6,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G5-MATH-X-kc-容积与不规则物体体积",
+      "name": "容积与不规则物体体积",
+      "display_order": 7,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G5-MATH-X-kc-分数的意义与分数单位",
+      "name": "分数的意义与分数单位",
+      "display_order": 8,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G5-MATH-X-kc-分数与除法的关系及应用",
+      "name": "分数与除法的关系及应用",
+      "display_order": 9,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G5-MATH-X-kc-分数的基本概念",
+      "name": "分数的基本概念",
+      "display_order": 10,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G5-MATH-X-kc-假分数与带分数的互化",
+      "name": "假分数与带分数的互化",
+      "display_order": 11,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G5-MATH-X-kc-分数的基本性质与约分",
+      "name": "分数的基本性质与约分",
+      "display_order": 12,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G5-MATH-X-kc-公倍数与通分",
+      "name": "公倍数与通分",
+      "display_order": 13,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G5-MATH-X-kc-通分与分数比较",
+      "name": "通分与分数比较",
+      "display_order": 14,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G5-MATH-X-kc-分数与小数的互化",
+      "name": "分数与小数的互化",
+      "display_order": 15,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G5-MATH-X-kc-旋转的概念与作图",
+      "name": "旋转的概念与作图",
+      "display_order": 16,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G5-MATH-X-kc-同分母分数加减法",
+      "name": "同分母分数加减法",
+      "display_order": 17,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G5-MATH-X-kc-异分母分数加减法",
+      "name": "异分母分数加减法",
+      "display_order": 18,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G5-MATH-X-kc-分数加减混合运算与运算律",
+      "name": "分数加减混合运算与运算律",
+      "display_order": 19,
+      "description": null
+    }
+  ],
+  "units": [
+    {
+      "id": "RENJIAO-G5-MATH-X-ku-100以内的质数表",
+      "textbook_id": "RENJIAO-G5-MATH-X",
+      "cluster_id": "RENJIAO-G5-MATH-X-kc-质数-合数与奇偶性应用",
+      "name": "100以内的质数表",
+      "description": "通过划去2、3、5、7等质数的倍数（排除1），找出100以内的质数。",
+      "prerequisites": [
+        "质数和合数的定义",
+        "2的倍数的特征",
+        "3的倍数的特征",
+        "5的倍数的特征"
+      ],
+      "related_kus": [],
+      "difficulty": 0.6,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G5-MATH-X-ku-2的倍数的特征",
+      "textbook_id": "RENJIAO-G5-MATH-X",
+      "cluster_id": "RENJIAO-G5-MATH-X-kc-2-5-3的倍数特征与奇偶性",
+      "name": "2的倍数的特征",
+      "description": "个位上是0、2、4、6或8的数都是2的倍数。",
+      "prerequisites": [
+        "倍数的概念"
+      ],
+      "related_kus": [],
+      "difficulty": 0.2,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G5-MATH-X-ku-3的倍数的特征",
+      "textbook_id": "RENJIAO-G5-MATH-X",
+      "cluster_id": "RENJIAO-G5-MATH-X-kc-2-5-3的倍数特征与奇偶性",
+      "name": "3的倍数的特征",
+      "description": "一个数各位上的数的和是3的倍数，这个数就是3的倍数。",
+      "prerequisites": [
+        "倍数的概念"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G5-MATH-X-ku-5的倍数的特征",
+      "textbook_id": "RENJIAO-G5-MATH-X",
+      "cluster_id": "RENJIAO-G5-MATH-X-kc-2-5-3的倍数特征与奇偶性",
+      "name": "5的倍数的特征",
+      "description": "个位上是0或5的数都是5的倍数。",
+      "prerequisites": [
+        "倍数的概念"
+      ],
+      "related_kus": [],
+      "difficulty": 0.2,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G5-MATH-X-ku-体积单位",
+      "textbook_id": "RENJIAO-G5-MATH-X",
+      "cluster_id": "RENJIAO-G5-MATH-X-kc-体积与体积单位",
+      "name": "体积单位",
+      "description": "常用体积单位：立方厘米(cm³)、立方分米(dm³)、立方米(m³)",
+      "prerequisites": [
+        "体积概念"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G5-MATH-X-ku-体积单位换算",
+      "textbook_id": "RENJIAO-G5-MATH-X",
+      "cluster_id": "RENJIAO-G5-MATH-X-kc-体积与体积单位",
+      "name": "体积单位换算",
+      "description": "高级单位换算低级单位乘进率，低级单位换算高级单位除以进率",
+      "prerequisites": [
+        "体积单位进率"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G5-MATH-X-ku-体积单位进率",
+      "textbook_id": "RENJIAO-G5-MATH-X",
+      "cluster_id": "RENJIAO-G5-MATH-X-kc-体积与体积单位",
+      "name": "体积单位进率",
+      "description": "1 dm³=1000 cm³，1 m³=1000 dm³",
+      "prerequisites": [
+        "体积单位"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G5-MATH-X-ku-体积概念",
+      "textbook_id": "RENJIAO-G5-MATH-X",
+      "cluster_id": "RENJIAO-G5-MATH-X-kc-体积与体积单位",
+      "name": "体积概念",
+      "description": "物体所占空间的大小叫作物体的体积",
+      "prerequisites": [],
+      "related_kus": [],
+      "difficulty": 0.2,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G5-MATH-X-ku-体积通用公式",
+      "textbook_id": "RENJIAO-G5-MATH-X",
+      "cluster_id": "RENJIAO-G5-MATH-X-kc-长方体与正方体的体积计算",
+      "name": "体积通用公式",
+      "description": "长方体(或正方体)的体积=底面积×高，V=Sh",
+      "prerequisites": [
+        "底面积概念"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G5-MATH-X-ku-假分数",
+      "textbook_id": "RENJIAO-G5-MATH-X",
+      "cluster_id": "RENJIAO-G5-MATH-X-kc-分数的基本概念",
+      "name": "假分数",
+      "description": "分子大于或等于分母的分数叫假分数，假分数大于或等于1。",
+      "prerequisites": [
+        "ku-001"
+      ],
+      "related_kus": [],
+      "difficulty": 0.2,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G5-MATH-X-ku-假分数化整数或带分数",
+      "textbook_id": "RENJIAO-G5-MATH-X",
+      "cluster_id": "RENJIAO-G5-MATH-X-kc-假分数与带分数的互化",
+      "name": "假分数化整数或带分数",
+      "description": "用分子除以分母，能整除的化成整数，不能整除的商作整数部分，余数作分子。",
+      "prerequisites": [
+        "ku-004",
+        "ku-005"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G5-MATH-X-ku-偶数和奇数的定义",
+      "textbook_id": "RENJIAO-G5-MATH-X",
+      "cluster_id": "RENJIAO-G5-MATH-X-kc-2-5-3的倍数特征与奇偶性",
+      "name": "偶数和奇数的定义",
+      "description": "整数中，是2的倍数的数叫作偶数（0也是偶数），不是2的倍数的数叫作奇数。",
+      "prerequisites": [
+        "2的倍数的特征"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G5-MATH-X-ku-公倍数",
+      "textbook_id": "RENJIAO-G5-MATH-X",
+      "cluster_id": "RENJIAO-G5-MATH-X-kc-公倍数与通分",
+      "name": "公倍数",
+      "description": "几个数公有的倍数叫它们的公倍数。",
+      "prerequisites": [
+        "倍数"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G5-MATH-X-ku-公因数",
+      "textbook_id": "RENJIAO-G5-MATH-X",
+      "cluster_id": "RENJIAO-G5-MATH-X-kc-分数的基本性质与约分",
+      "name": "公因数",
+      "description": "几个数公有的因数叫它们的公因数。",
+      "prerequisites": [
+        "因数"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G5-MATH-X-ku-分数与除法的关系",
+      "textbook_id": "RENJIAO-G5-MATH-X",
+      "cluster_id": "RENJIAO-G5-MATH-X-kc-分数与除法的关系及应用",
+      "name": "分数与除法的关系",
+      "description": "被除数÷除数=被除数/除数（除数不为0），a÷b=a/b(b≠0)",
+      "prerequisites": [
+        "分数的意义",
+        "除法运算"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G5-MATH-X-ku-分数加减混合运算的顺序",
+      "textbook_id": "RENJIAO-G5-MATH-X",
+      "cluster_id": "RENJIAO-G5-MATH-X-kc-分数加减混合运算与运算律",
+      "name": "分数加减混合运算的顺序",
+      "description": "分数加减混合运算的顺序与整数相同，从左到右依次计算，有括号先算括号内。",
+      "prerequisites": [
+        "异分母分数加减法",
+        "整数混合运算顺序"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G5-MATH-X-ku-分数化成小数的方法",
+      "textbook_id": "RENJIAO-G5-MATH-X",
+      "cluster_id": "RENJIAO-G5-MATH-X-kc-分数与小数的互化",
+      "name": "分数化成小数的方法",
+      "description": "分数化成小数，用分子除以分母，除不尽时按四舍五入法取近似数。",
+      "prerequisites": [
+        "分数与除法的关系"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G5-MATH-X-ku-分数单位",
+      "textbook_id": "RENJIAO-G5-MATH-X",
+      "cluster_id": "RENJIAO-G5-MATH-X-kc-分数的意义与分数单位",
+      "name": "分数单位",
+      "description": "表示其中一份的数叫作分数单位",
+      "prerequisites": [
+        "分数的意义"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G5-MATH-X-ku-分数的基本性质",
+      "textbook_id": "RENJIAO-G5-MATH-X",
+      "cluster_id": "RENJIAO-G5-MATH-X-kc-分数的基本性质与约分",
+      "name": "分数的基本性质",
+      "description": "分数的分子和分母同时乘或除以相同的数（0除外），分数的大小不变。",
+      "prerequisites": [
+        "ku-001"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G5-MATH-X-ku-分数的意义",
+      "textbook_id": "RENJIAO-G5-MATH-X",
+      "cluster_id": "RENJIAO-G5-MATH-X-kc-分数的意义与分数单位",
+      "name": "分数的意义",
+      "description": "把单位\"1\"平均分成若干份，这样的一份或几份都可以用分数来表示",
+      "prerequisites": [
+        "单位\"1\"概念"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G5-MATH-X-ku-单位-1-概念",
+      "textbook_id": "RENJIAO-G5-MATH-X",
+      "cluster_id": "RENJIAO-G5-MATH-X-kc-分数的意义与分数单位",
+      "name": "单位\"1\"概念",
+      "description": "一个物体、一个计量单位或一些物体等都可以看作一个整体，用自然数1表示，叫作单位\"1\"",
+      "prerequisites": [],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G5-MATH-X-ku-同分子分数比较大小",
+      "textbook_id": "RENJIAO-G5-MATH-X",
+      "cluster_id": "RENJIAO-G5-MATH-X-kc-公倍数与通分",
+      "name": "同分子分数比较大小",
+      "description": "分子相同的分数，分母小的分数大。",
+      "prerequisites": [
+        "ku-001"
+      ],
+      "related_kus": [],
+      "difficulty": 0.2,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G5-MATH-X-ku-同分母分数减法的法则",
+      "textbook_id": "RENJIAO-G5-MATH-X",
+      "cluster_id": "RENJIAO-G5-MATH-X-kc-同分母分数加减法",
+      "name": "同分母分数减法的法则",
+      "description": "同分母分数相减，分母不变，分子相减。结果能约分的要约成最简分数。",
+      "prerequisites": [
+        "分数的意义",
+        "约分"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G5-MATH-X-ku-同分母分数加法的法则",
+      "textbook_id": "RENJIAO-G5-MATH-X",
+      "cluster_id": "RENJIAO-G5-MATH-X-kc-同分母分数加减法",
+      "name": "同分母分数加法的法则",
+      "description": "同分母分数相加，分母不变，分子相加。结果能约分的要约成最简分数。",
+      "prerequisites": [
+        "分数的意义",
+        "约分"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G5-MATH-X-ku-同分母分数比较大小",
+      "textbook_id": "RENJIAO-G5-MATH-X",
+      "cluster_id": "RENJIAO-G5-MATH-X-kc-公倍数与通分",
+      "name": "同分母分数比较大小",
+      "description": "分母相同的分数，分子大的分数大。",
+      "prerequisites": [
+        "ku-001"
+      ],
+      "related_kus": [],
+      "difficulty": 0.2,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G5-MATH-X-ku-因数和倍数的定义",
+      "textbook_id": "RENJIAO-G5-MATH-X",
+      "cluster_id": "RENJIAO-G5-MATH-X-kc-因数和倍数的概念与性质",
+      "name": "因数和倍数的定义",
+      "description": "在整数除法中，如果商是整数且没有余数，除数是被除数的因数，被除数是除数的倍数。因数和倍数是相互依存的。",
+      "prerequisites": [
+        "整数除法"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G5-MATH-X-ku-因数和倍数的性质",
+      "textbook_id": "RENJIAO-G5-MATH-X",
+      "cluster_id": "RENJIAO-G5-MATH-X-kc-因数和倍数的概念与性质",
+      "name": "因数和倍数的性质",
+      "description": "一个数的最小因数是1，最大因数是它本身；最小倍数是它本身，没有最大倍数；因数的个数有限，倍数的个数无限。",
+      "prerequisites": [
+        "找一个数的因数的方法",
+        "找一个数的倍数的方法"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G5-MATH-X-ku-在方格纸上画旋转后的图形",
+      "textbook_id": "RENJIAO-G5-MATH-X",
+      "cluster_id": "RENJIAO-G5-MATH-X-kc-旋转的概念与作图",
+      "name": "在方格纸上画旋转后的图形",
+      "description": "先确定旋转中心，再找出关键点，按方向旋转相同角度，画出对应点，连线。",
+      "prerequisites": [
+        "旋转的性质",
+        "方格纸上的位置"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G5-MATH-X-ku-奇数与偶数的和的奇偶性",
+      "textbook_id": "RENJIAO-G5-MATH-X",
+      "cluster_id": "RENJIAO-G5-MATH-X-kc-质数-合数与奇偶性应用",
+      "name": "奇数与偶数的和的奇偶性",
+      "description": "奇数+偶数=奇数；奇数+奇数=偶数；偶数+偶数=偶数。",
+      "prerequisites": [
+        "偶数和奇数的定义"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G5-MATH-X-ku-容积单位",
+      "textbook_id": "RENJIAO-G5-MATH-X",
+      "cluster_id": "RENJIAO-G5-MATH-X-kc-容积与不规则物体体积",
+      "name": "容积单位",
+      "description": "常用容积单位：升(L)和毫升(mL)，1 L=1 dm³，1 mL=1 cm³",
+      "prerequisites": [
+        "容积概念",
+        "体积单位"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G5-MATH-X-ku-容积概念",
+      "textbook_id": "RENJIAO-G5-MATH-X",
+      "cluster_id": "RENJIAO-G5-MATH-X-kc-容积与不规则物体体积",
+      "name": "容积概念",
+      "description": "容器所能容纳物体的体积叫作容积",
+      "prerequisites": [
+        "体积概念"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G5-MATH-X-ku-容积计算",
+      "textbook_id": "RENJIAO-G5-MATH-X",
+      "cluster_id": "RENJIAO-G5-MATH-X-kc-容积与不规则物体体积",
+      "name": "容积计算",
+      "description": "长方体或正方体容器容积的计算方法跟体积的计算方法相同，但要从容器里面量长、宽、高",
+      "prerequisites": [
+        "容积概念",
+        "长方体体积公式"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G5-MATH-X-ku-小数化成分数的方法",
+      "textbook_id": "RENJIAO-G5-MATH-X",
+      "cluster_id": "RENJIAO-G5-MATH-X-kc-分数与小数的互化",
+      "name": "小数化成分数的方法",
+      "description": "小数表示十分之几、百分之几……，直接写成分母是10、100、1000…的分数，再化简。",
+      "prerequisites": [
+        "小数的意义",
+        "约分"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G5-MATH-X-ku-带分数",
+      "textbook_id": "RENJIAO-G5-MATH-X",
+      "cluster_id": "RENJIAO-G5-MATH-X-kc-分数的基本概念",
+      "name": "带分数",
+      "description": "由整数和真分数合成的数叫带分数。",
+      "prerequisites": [
+        "ku-004"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G5-MATH-X-ku-底面积概念",
+      "textbook_id": "RENJIAO-G5-MATH-X",
+      "cluster_id": "RENJIAO-G5-MATH-X-kc-长方体与正方体的体积计算",
+      "name": "底面积概念",
+      "description": "长方体或正方体底面的面积叫作底面积",
+      "prerequisites": [
+        "长方体体积公式",
+        "正方体体积公式"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G5-MATH-X-ku-异分母分数减法的法则",
+      "textbook_id": "RENJIAO-G5-MATH-X",
+      "cluster_id": "RENJIAO-G5-MATH-X-kc-异分母分数加减法",
+      "name": "异分母分数减法的法则",
+      "description": "异分母分数相减，先通分，再按同分母分数减法计算。",
+      "prerequisites": [
+        "通分的方法",
+        "同分母分数减法的法则"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G5-MATH-X-ku-异分母分数加法的法则",
+      "textbook_id": "RENJIAO-G5-MATH-X",
+      "cluster_id": "RENJIAO-G5-MATH-X-kc-异分母分数加减法",
+      "name": "异分母分数加法的法则",
+      "description": "异分母分数相加，先通分，再按同分母分数加法计算。",
+      "prerequisites": [
+        "通分的方法",
+        "同分母分数加法的法则"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G5-MATH-X-ku-异分母分数比较大小",
+      "textbook_id": "RENJIAO-G5-MATH-X",
+      "cluster_id": "RENJIAO-G5-MATH-X-kc-公倍数与通分",
+      "name": "异分母分数比较大小",
+      "description": "先通分再比较大小。",
+      "prerequisites": [
+        "ku-018",
+        "ku-016"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G5-MATH-X-ku-找一个数的倍数的方法",
+      "textbook_id": "RENJIAO-G5-MATH-X",
+      "cluster_id": "RENJIAO-G5-MATH-X-kc-因数和倍数的概念与性质",
+      "name": "找一个数的倍数的方法",
+      "description": "用乘法（该数×自然数）找出一个数的倍数，倍数的个数是无限的。",
+      "prerequisites": [
+        "因数和倍数的定义"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G5-MATH-X-ku-找一个数的因数的方法",
+      "textbook_id": "RENJIAO-G5-MATH-X",
+      "cluster_id": "RENJIAO-G5-MATH-X-kc-因数和倍数的概念与性质",
+      "name": "找一个数的因数的方法",
+      "description": "用除法或乘法成对地找出一个数的所有因数，因数的个数是有限的。",
+      "prerequisites": [
+        "因数和倍数的定义"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G5-MATH-X-ku-排水法求不规则物体体积",
+      "textbook_id": "RENJIAO-G5-MATH-X",
+      "cluster_id": "RENJIAO-G5-MATH-X-kc-容积与不规则物体体积",
+      "name": "排水法求不规则物体体积",
+      "description": "不规则物体的体积=放入物体后水和物体的总体积-原来水的体积",
+      "prerequisites": [
+        "体积概念",
+        "容积计算"
+      ],
+      "related_kus": [],
+      "difficulty": 0.6,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G5-MATH-X-ku-整数加法运算律推广到分数",
+      "textbook_id": "RENJIAO-G5-MATH-X",
+      "cluster_id": "RENJIAO-G5-MATH-X-kc-分数加减混合运算与运算律",
+      "name": "整数加法运算律推广到分数",
+      "description": "整数加法的交换律、结合律对分数加法同样适用，可使计算简便。",
+      "prerequisites": [
+        "分数加减混合运算",
+        "整数加法运算律"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G5-MATH-X-ku-旋转的定义与三要素",
+      "textbook_id": "RENJIAO-G5-MATH-X",
+      "cluster_id": "RENJIAO-G5-MATH-X-kc-旋转的概念与作图",
+      "name": "旋转的定义与三要素",
+      "description": "旋转：图形绕某点按一定方向转动一定角度。三要素：旋转中心、旋转方向、旋转角度。",
+      "prerequisites": [],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G5-MATH-X-ku-旋转的性质",
+      "textbook_id": "RENJIAO-G5-MATH-X",
+      "cluster_id": "RENJIAO-G5-MATH-X-kc-旋转的概念与作图",
+      "name": "旋转的性质",
+      "description": "旋转时，旋转中心位置不变，图形上每一点都绕中心按相同方向旋转相同角度。",
+      "prerequisites": [
+        "旋转的定义与三要素"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G5-MATH-X-ku-无盖容器表面积计算",
+      "textbook_id": "RENJIAO-G5-MATH-X",
+      "cluster_id": "RENJIAO-G5-MATH-X-kc-长方体与正方体的表面积",
+      "name": "无盖容器表面积计算",
+      "description": "无盖长方体表面积=ab+2ah+2bh",
+      "prerequisites": [
+        "长方体表面积计算"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G5-MATH-X-ku-最大公因数",
+      "textbook_id": "RENJIAO-G5-MATH-X",
+      "cluster_id": "RENJIAO-G5-MATH-X-kc-分数的基本性质与约分",
+      "name": "最大公因数",
+      "description": "几个数公因数中最大的一个叫它们的最大公因数。",
+      "prerequisites": [
+        "ku-008"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G5-MATH-X-ku-最小公倍数",
+      "textbook_id": "RENJIAO-G5-MATH-X",
+      "cluster_id": "RENJIAO-G5-MATH-X-kc-公倍数与通分",
+      "name": "最小公倍数",
+      "description": "几个数公倍数中最小的一个叫它们的最小公倍数。",
+      "prerequisites": [
+        "ku-013"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G5-MATH-X-ku-最简分数",
+      "textbook_id": "RENJIAO-G5-MATH-X",
+      "cluster_id": "RENJIAO-G5-MATH-X-kc-分数的基本性质与约分",
+      "name": "最简分数",
+      "description": "分子和分母只有公因数1的分数叫最简分数。",
+      "prerequisites": [
+        "ku-007",
+        "ku-009"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G5-MATH-X-ku-最简分数化成有限小数的规律",
+      "textbook_id": "RENJIAO-G5-MATH-X",
+      "cluster_id": "RENJIAO-G5-MATH-X-kc-分数与小数的互化",
+      "name": "最简分数化成有限小数的规律",
+      "description": "分母分解质因数后，如果只含质因数2和5，则能化成有限小数；否则不能。",
+      "prerequisites": [
+        "分数化成小数的方法",
+        "分解质因数"
+      ],
+      "related_kus": [],
+      "difficulty": 0.6,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G5-MATH-X-ku-正方体体积公式",
+      "textbook_id": "RENJIAO-G5-MATH-X",
+      "cluster_id": "RENJIAO-G5-MATH-X-kc-长方体与正方体的体积计算",
+      "name": "正方体体积公式",
+      "description": "正方体体积=棱长³，V=a³",
+      "prerequisites": [
+        "体积概念",
+        "乘方运算"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G5-MATH-X-ku-正方体表面积计算",
+      "textbook_id": "RENJIAO-G5-MATH-X",
+      "cluster_id": "RENJIAO-G5-MATH-X-kc-长方体与正方体的表面积",
+      "name": "正方体表面积计算",
+      "description": "正方体表面积=6a²",
+      "prerequisites": [
+        "正方形面积"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G5-MATH-X-ku-求一个数是另一个数的几分之几",
+      "textbook_id": "RENJIAO-G5-MATH-X",
+      "cluster_id": "RENJIAO-G5-MATH-X-kc-分数与除法的关系及应用",
+      "name": "求一个数是另一个数的几分之几",
+      "description": "一个数÷另一个数=几分之几，结果用分数表示",
+      "prerequisites": [
+        "分数与除法的关系"
+      ],
+      "related_kus": [],
+      "difficulty": 0.6,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G5-MATH-X-ku-求最大公因数的方法",
+      "textbook_id": "RENJIAO-G5-MATH-X",
+      "cluster_id": "RENJIAO-G5-MATH-X-kc-分数的基本性质与约分",
+      "name": "求最大公因数的方法",
+      "description": "列举法、分解质因数法、短除法。",
+      "prerequisites": [
+        "ku-009",
+        "分解质因数"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G5-MATH-X-ku-求最小公倍数的方法",
+      "textbook_id": "RENJIAO-G5-MATH-X",
+      "cluster_id": "RENJIAO-G5-MATH-X-kc-公倍数与通分",
+      "name": "求最小公倍数的方法",
+      "description": "列举法、分解质因数法、短除法。",
+      "prerequisites": [
+        "ku-014",
+        "分解质因数"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G5-MATH-X-ku-用分数表示商",
+      "textbook_id": "RENJIAO-G5-MATH-X",
+      "cluster_id": "RENJIAO-G5-MATH-X-kc-分数与除法的关系及应用",
+      "name": "用分数表示商",
+      "description": "两个数相除，商可以用分数表示，分子是被除数，分母是除数",
+      "prerequisites": [
+        "分数与除法的关系"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G5-MATH-X-ku-真分数",
+      "textbook_id": "RENJIAO-G5-MATH-X",
+      "cluster_id": "RENJIAO-G5-MATH-X-kc-分数的基本概念",
+      "name": "真分数",
+      "description": "分子比分母小的分数叫真分数，真分数小于1。",
+      "prerequisites": [
+        "ku-001"
+      ],
+      "related_kus": [],
+      "difficulty": 0.2,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G5-MATH-X-ku-约分",
+      "textbook_id": "RENJIAO-G5-MATH-X",
+      "cluster_id": "RENJIAO-G5-MATH-X-kc-分数的基本性质与约分",
+      "name": "约分",
+      "description": "把一个分数化成和它相等但分子分母都比较小的分数叫约分，通常约成最简分数。",
+      "prerequisites": [
+        "ku-007",
+        "ku-011"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G5-MATH-X-ku-质数和合数的定义",
+      "textbook_id": "RENJIAO-G5-MATH-X",
+      "cluster_id": "RENJIAO-G5-MATH-X-kc-质数-合数与奇偶性应用",
+      "name": "质数和合数的定义",
+      "description": "只有1和它本身两个因数的数叫作质数（素数）；除了1和它本身还有别的因数的数叫作合数；1既不是质数也不是合数。",
+      "prerequisites": [
+        "找一个数的因数的方法"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G5-MATH-X-ku-通分",
+      "textbook_id": "RENJIAO-G5-MATH-X",
+      "cluster_id": "RENJIAO-G5-MATH-X-kc-公倍数与通分",
+      "name": "通分",
+      "description": "把异分母分数分别化成和原来相等的同分母分数叫通分。",
+      "prerequisites": [
+        "ku-007",
+        "ku-015"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G5-MATH-X-ku-通分的定义",
+      "textbook_id": "RENJIAO-G5-MATH-X",
+      "cluster_id": "RENJIAO-G5-MATH-X-kc-通分与分数比较",
+      "name": "通分的定义",
+      "description": "把异分母分数分别化成和原来分数相等的同分母分数，叫作通分。",
+      "prerequisites": [
+        "分数的基本性质",
+        "公倍数"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G5-MATH-X-ku-通分的方法",
+      "textbook_id": "RENJIAO-G5-MATH-X",
+      "cluster_id": "RENJIAO-G5-MATH-X-kc-通分与分数比较",
+      "name": "通分的方法",
+      "description": "用两个分母的公倍数作公分母，将分数化为同分母分数。",
+      "prerequisites": [
+        "通分的定义",
+        "最小公倍数"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G5-MATH-X-ku-长方体体积公式",
+      "textbook_id": "RENJIAO-G5-MATH-X",
+      "cluster_id": "RENJIAO-G5-MATH-X-kc-长方体与正方体的体积计算",
+      "name": "长方体体积公式",
+      "description": "长方体体积=长×宽×高，V=abh",
+      "prerequisites": [
+        "体积概念",
+        "乘法运算"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G5-MATH-X-ku-长方体表面积计算",
+      "textbook_id": "RENJIAO-G5-MATH-X",
+      "cluster_id": "RENJIAO-G5-MATH-X-kc-长方体与正方体的表面积",
+      "name": "长方体表面积计算",
+      "description": "长方体表面积=2(ab+ah+bh)",
+      "prerequisites": [
+        "长方形面积"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    }
+  ]
+}

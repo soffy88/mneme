@@ -1,0 +1,3752 @@
+{
+  "textbook": {
+    "id": "RENJIAO-G9-MATH-X",
+    "subject": "math",
+    "grade": "G9",
+    "edition": "2011",
+    "book_name": "人教版·数学九年级下册"
+  },
+  "clusters": [
+    {
+      "id": "RENJIAO-G9-MATH-X-kc-反比例函数的基本概念与解析式",
+      "name": "反比例函数的基本概念与解析式",
+      "display_order": 1,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G9-MATH-X-kc-反比例函数的图象与性质",
+      "name": "反比例函数的图象与性质",
+      "display_order": 2,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G9-MATH-X-kc-反比例函数的应用与综合",
+      "name": "反比例函数的应用与综合",
+      "display_order": 3,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G9-MATH-X-kc-反比例函数的概念与解析式",
+      "name": "反比例函数的概念与解析式",
+      "display_order": 4,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G9-MATH-X-kc-反比例函数的实际应用",
+      "name": "反比例函数的实际应用",
+      "display_order": 5,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G9-MATH-X-kc-反比例函数与正比例函数的综合",
+      "name": "反比例函数与正比例函数的综合",
+      "display_order": 6,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G9-MATH-X-kc-相似图形与相似多边形",
+      "name": "相似图形与相似多边形",
+      "display_order": 7,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G9-MATH-X-kc-相似三角形的判定",
+      "name": "相似三角形的判定",
+      "display_order": 8,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G9-MATH-X-kc-相似三角形的性质",
+      "name": "相似三角形的性质",
+      "display_order": 9,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G9-MATH-X-kc-相似三角形的应用",
+      "name": "相似三角形的应用",
+      "display_order": 10,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G9-MATH-X-kc-位似图形的基本概念与性质",
+      "name": "位似图形的基本概念与性质",
+      "display_order": 11,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G9-MATH-X-kc-位似与坐标的关系",
+      "name": "位似与坐标的关系",
+      "display_order": 12,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G9-MATH-X-kc-分形与自相似性",
+      "name": "分形与自相似性",
+      "display_order": 13,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G9-MATH-X-kc-用计算器处理锐角三角函数",
+      "name": "用计算器处理锐角三角函数",
+      "display_order": 14,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G9-MATH-X-kc-解直角三角形的基本理论",
+      "name": "解直角三角形的基本理论",
+      "display_order": 15,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G9-MATH-X-kc-解直角三角形的实际应用",
+      "name": "解直角三角形的实际应用",
+      "display_order": 16,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G9-MATH-X-kc-投影的基本概念与分类",
+      "name": "投影的基本概念与分类",
+      "display_order": 17,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G9-MATH-X-kc-正投影及其性质",
+      "name": "正投影及其性质",
+      "display_order": 18,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G9-MATH-X-kc-三视图的概念与画法规则",
+      "name": "三视图的概念与画法规则",
+      "display_order": 19,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G9-MATH-X-kc-三视图的画图与读图",
+      "name": "三视图的画图与读图",
+      "display_order": 20,
+      "description": null
+    }
+  ],
+  "units": [
+    {
+      "id": "RENJIAO-G9-MATH-X-ku-三视图与展开图结合计算面积",
+      "textbook_id": "RENJIAO-G9-MATH-X",
+      "cluster_id": "RENJIAO-G9-MATH-X-kc-三视图的画图与读图",
+      "name": "三视图与展开图结合计算面积",
+      "description": "先由三视图想象出立体图形的形状，再画出展开图，然后计算面积。",
+      "prerequisites": [
+        "ku-014",
+        "展开图"
+      ],
+      "related_kus": [],
+      "difficulty": 0.7,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "例1：三视图为三个相同的正方形（主、左、俯视图均为正方形），还原为正方体，展开图为6个相同正方形，面积=6×边长²。",
+          "例2：三视图为两个长方形和一个正方形（主视图长方形，左视图长方形，俯视图正方形），还原为长方体，展开图含3对相对面，面积=2×(长×宽+长×高+宽×高)。"
+        ],
+        "intuition": "就像拆开一个快递盒，先通过三视图想象盒子的立体形状，再展开成平面图，计算包装纸的面积。本质是将三维立体图形的表面积转化为二维平面图形的面积计算。",
+        "definition": "根据三视图（主视图、左视图、俯视图）还原立体图形，画出其展开图（所有表面平铺后的平面图形），再计算展开图的总面积，即立体图形的表面积。关键限定：三视图必须完整且对应，展开图需包含所有表面且无重叠。",
+        "key_points": [
+          "⚠️ 三视图与展开图的对应关系：每个视图对应立体图形的某个方向，展开图需确保所有面都包含且位置正确。",
+          "⚠️ 面积计算时易漏面：展开图可能包含多个相同形状的面（如长方体有3对相对面），需逐一核对。",
+          "⚠️ 组合体分割：若立体图形由多个基本几何体组合，需先分解再分别计算面积，最后求和。"
+        ],
+        "application": "典型考查方式1：给出三视图，要求画出展开图并计算表面积，常结合实际情境（如包装盒用料）。典型考查方式2：给出部分三视图和展开图，补全缺失部分并计算面积，考查空间想象与逆向推理能力。",
+        "connections": "前置知识：三视图的识别与绘制、常见立体图形的表面积公式（如长方体、圆柱、圆锥）。后续知识：立体图形的体积计算、空间几何中的投影与截面问题。",
+        "common_mistakes": [
+          "错误1：将三视图直接当作展开图，忽略立体图形的厚度，导致面积计算错误（如把主视图的长方形当作一个面，实际是多个面的投影）。",
+          "错误2：计算组合体面积时，忘记减去重叠部分（如两个长方体拼接，接触面不应计入总面积）。",
+          "错误3：展开图绘制时遗漏面或重复面，例如三棱柱展开图应有5个面（2个三角形+3个矩形），学生常漏掉一个矩形。"
+        ],
+        "counter_examples": "容易与“三视图求体积”混淆：三视图求体积是计算立体图形内部空间大小，而三视图与展开图结合计算面积是求表面总面积，两者公式和思路不同。例如，圆柱的三视图（两个圆和一个矩形）求体积用πr²h，求表面积则需展开为两个圆和一个矩形，面积=2πr²+2πrh。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G9-MATH-X-ku-三视图中的实线与虚线",
+      "textbook_id": "RENJIAO-G9-MATH-X",
+      "cluster_id": "RENJIAO-G9-MATH-X-kc-三视图的概念与画法规则",
+      "name": "三视图中的实线与虚线",
+      "description": "画三视图时，看得见部分的轮廓线画成实线，因被其他部分遮挡而看不见部分的轮廓线画成虚线。",
+      "prerequisites": [
+        "ku-009"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "一个长方体前面挖去一个小长方体：主视图中，挖去部分的底部轮廓线被前面挡住，画虚线。",
+          "圆柱体中间有一个通孔：俯视图中，通孔的上边缘可见画实线，下边缘被挡住画虚线。"
+        ],
+        "intuition": "就像你从窗外看房间，能直接看到的家具画实线，被柜子挡住的桌子腿虽然看不见但知道它存在，就用虚线表示。",
+        "definition": "在三视图中，实线表示物体上可见轮廓线的投影，虚线表示不可见轮廓线的投影，且虚线通常画成等间距的短线段。",
+        "key_points": [
+          "⚠️ 实线只画看得见的轮廓，虚线只画看不见的轮廓，两者不能混淆。",
+          "⚠️ 虚线不是可有可无，它反映被遮挡部分的形状和位置。",
+          "⚠️ 对称或重复结构中的隐藏部分也要用虚线标出。"
+        ],
+        "application": "典型考查：给出立体图补全三视图中的虚线；或判断三视图正误，指出漏画或多画的虚线。",
+        "connections": "三视图是立体几何与工程制图的基础，实虚线规则直接关联到后续的剖视图（用剖面线代替虚线）和轴测图（可见性判断）。",
+        "common_mistakes": [
+          "把物体内部结构的轮廓线全画成实线，误以为“内部就是实线”，实际看不见的必须画虚线。",
+          "忘记画虚线，导致视图缺少被遮挡部分的形状信息，如台阶的背面棱线。",
+          "虚线画得太短或间距不均，不符合规范，影响读图。"
+        ],
+        "counter_examples": "与“辅助线”不同：辅助线是作图时临时添加的细实线或点划线，不是视图本身的轮廓线；虚线专指不可见的轮廓线。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G9-MATH-X-ku-三视图的位置与大小关系",
+      "textbook_id": "RENJIAO-G9-MATH-X",
+      "cluster_id": "RENJIAO-G9-MATH-X-kc-三视图的概念与画法规则",
+      "name": "三视图的位置与大小关系",
+      "description": "主视图在左上边，俯视图在主视图正下方，左视图在主视图右边。主视图与俯视图长对正，主视图与左视图高平齐，左视图与俯视图宽相等。",
+      "prerequisites": [
+        "ku-009"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "长方体：主视图为矩形（长×高），俯视图为矩形（长×宽），左视图为矩形（宽×高），三者长、高、宽分别对应。",
+          "圆柱：主视图和左视图均为矩形（高×直径），俯视图为圆（直径），注意俯视图的直径对应主视图和左视图的宽度。"
+        ],
+        "intuition": "就像用三个不同角度的照片拼出一个物体的完整形状，主视图、俯视图和左视图分别从正面、上面和左面看物体，通过位置和大小关系确保三个视图能唯一确定立体图形。",
+        "definition": "三视图指主视图（正面投影）、俯视图（水平投影）和左视图（侧面投影），它们按“长对正、高平齐、宽相等”规则排列：主视图与俯视图长度相等且竖直对齐，主视图与左视图高度相等且水平对齐，左视图与俯视图宽度相等。",
+        "key_points": [
+          "⚠️ 主视图与俯视图的“长对正”是指长度相等且上下对齐，不是左右对齐。",
+          "⚠️ 左视图与俯视图的“宽相等”是指宽度数值相同，但左视图的宽度方向是水平方向，俯视图的宽度方向是竖直方向。",
+          "⚠️ 三视图的位置固定：主视图左上，俯视图正下，左视图正右，不能随意调换。"
+        ],
+        "application": "典型考查：给出立体图形画三视图，或给出三视图还原立体图形并计算表面积/体积；常结合组合体，要求判断视图中的虚线（表示不可见轮廓）。",
+        "connections": "三视图是立体几何的基础，后续学习表面积、体积计算时需从三视图还原立体图形，也是工程制图和计算机三维建模的入门概念。",
+        "common_mistakes": [
+          "误将俯视图放在主视图上方：正确位置是主视图正下方，否则破坏“长对正”对齐。",
+          "认为左视图的宽度与主视图的宽度相等：实际左视图的宽度等于俯视图的宽度，与主视图无关。",
+          "画圆柱左视图时画成圆：圆柱从左看是矩形（高×直径），只有俯视图是圆。"
+        ],
+        "counter_examples": "三视图与轴测图（如正等测图）不同：轴测图在一个图中显示立体感，但无法精确反映各面真实形状和尺寸；三视图通过三个正交投影精确表达物体，但需要空间想象能力。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G9-MATH-X-ku-三视图的概念",
+      "textbook_id": "RENJIAO-G9-MATH-X",
+      "cluster_id": "RENJIAO-G9-MATH-X-kc-三视图的概念与画法规则",
+      "name": "三视图的概念",
+      "description": "用三个互相垂直的平面作为投影面，在正面内得到的由前向后观察物体的视图叫做主视图；在水平面内得到的由上向下观察物体的视图叫做俯视图；在侧面内得到的由左向右观察物体的视图叫做左视图。",
+      "prerequisites": [
+        "ku-008"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "长方体：主视图是长方形（长和高），俯视图是长方形（长和宽），左视图是长方形（宽和高）。",
+          "圆柱：主视图和左视图都是长方形，俯视图是圆。"
+        ],
+        "intuition": "三视图就像给物体拍三张不同角度的照片：正面、上面和侧面，帮助我们全面了解物体的形状和尺寸。",
+        "definition": "用三个互相垂直的投影面（正面、水平面、侧面）分别从正前、正上、正左方向观察物体，得到的三个平面图形称为主视图、俯视图和左视图。关键限定：观察方向必须垂直于对应投影面。",
+        "key_points": [
+          "⚠️ 主视图反映物体的长和高，俯视图反映长和宽，左视图反映宽和高，三者长对正、高平齐、宽相等。",
+          "⚠️ 俯视图画在主视图的正下方，左视图画在主视图的正右方，位置不能随意摆放。",
+          "⚠️ 看不见的轮廓线用虚线表示，看得见的用实线。"
+        ],
+        "application": "典型考查方式：给出实物或立体图形，要求画出三视图；或给出三视图，还原立体图形并计算表面积、体积。",
+        "connections": "三视图是后续学习立体几何、空间向量和工程制图的基础，与投影、截面等概念紧密相关。",
+        "common_mistakes": [
+          "误将俯视图画在主视图上方：标准规定俯视图必须在主视图正下方。",
+          "忽略虚线：如圆柱内部有孔时，俯视图中孔的轮廓线应为虚线，学生常画成实线。",
+          "混淆长宽高对应关系：认为左视图反映长和高，实际左视图反映宽和高。"
+        ],
+        "counter_examples": "三视图与轴测图（如斜二测）不同：轴测图是立体图形，能同时看到多个面；三视图是平面图形，每个视图只反映一个方向的正投影。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G9-MATH-X-ku-三边成比例判定三角形相似",
+      "textbook_id": "RENJIAO-G9-MATH-X",
+      "cluster_id": "RENJIAO-G9-MATH-X-kc-相似三角形的判定",
+      "name": "三边成比例判定三角形相似",
+      "description": "三边成比例的两个三角形相似。",
+      "prerequisites": [
+        "平行线判定三角形相似定理"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "例：△ABC中AB=3, BC=4, CA=5；△DEF中DE=6, EF=8, FD=10，则AB/DE=BC/EF=CA/FD=1/2，两三角形相似",
+          "例：△ABC三边为2,3,4；△DEF三边为4,6,8，比例均为1/2，故相似"
+        ],
+        "intuition": "就像用同一把尺子放大或缩小图形，三边成比例意味着两个三角形的形状完全一样，只是大小不同。",
+        "definition": "如果两个三角形的三组对应边的长度之比相等，则这两个三角形相似。关键限定：必须是对应边成比例，且比例值相同。",
+        "key_points": [
+          "⚠️ 必须三组对应边都成比例，不能只检查两组边",
+          "⚠️ 对应边要按顺序匹配，不能随意配对",
+          "⚠️ 比例值可以不是整数，但必须相等"
+        ],
+        "application": "典型考查：给出两个三角形的边长，判断是否相似；或已知相似求未知边长。",
+        "connections": "这是判定三角形相似的三种方法之一（SSS相似），与SAS相似、AA相似并列，也为后续学习相似三角形的性质（如对应高、面积比）奠定基础。",
+        "common_mistakes": [
+          "错误：只检查两组边成比例就判定相似。纠正：必须三组对应边都成比例",
+          "错误：边对应顺序搞错，如把AB与EF比、BC与FD比。纠正：按顶点对应顺序匹配边",
+          "错误：认为比例值必须为整数。纠正：比例可以是分数或小数，只要相等即可"
+        ],
+        "counter_examples": "容易与全等混淆：全等要求三边相等（比例1:1），而相似只要求比例相等，边长可以不同。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G9-MATH-X-ku-两角分别相等判定三角形相似",
+      "textbook_id": "RENJIAO-G9-MATH-X",
+      "cluster_id": "RENJIAO-G9-MATH-X-kc-相似三角形的判定",
+      "name": "两角分别相等判定三角形相似",
+      "description": "两角分别相等的两个三角形相似。",
+      "prerequisites": [
+        "平行线判定三角形相似定理"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "例：△ABC中∠A=50°，∠B=60°；△DEF中∠D=50°，∠E=60°，则△ABC∽△DEF（AA相似）。",
+          "例：直角三角形中，一个锐角相等，则两个直角三角形相似，因为直角相等，锐角对应相等。"
+        ],
+        "intuition": "就像用两个角就能确定一个三角形的形状，比如两个角都是30°和60°，第三个角必然90°，形状就固定了，大小可以缩放。",
+        "definition": "如果两个三角形的两个角分别相等，那么这两个三角形相似。关键限定：两个角对应相等，第三个角自动相等，无需验证。",
+        "key_points": [
+          "⚠️ 必须是对应角相等，不是任意两个角相等，比如∠A=∠D且∠B=∠E，不能∠A=∠E且∠B=∠D。",
+          "⚠️ 两个角相等后，第三个角自动相等，但需注意对应关系，不能混淆顺序。",
+          "⚠️ 此定理只适用于三角形，不适用于其他多边形。"
+        ],
+        "application": "典型考查：在几何证明中，通过已知平行或垂直关系得到角相等，再用AA判定相似，进而求边长或角度。另一种：在复杂图形中找隐含的公共角或对顶角，结合已知角相等证相似。",
+        "connections": "这是三角形相似判定中最常用的方法，与全等三角形的ASA、AAS判定类似，但相似只要求角相等，边成比例。后续学习比例线段、三角函数时常用。",
+        "common_mistakes": [
+          "错误：认为只要两个角相等就行，忽略对应关系。比如△ABC中∠A=30°，∠B=70°；△DEF中∠D=30°，∠F=70°，但∠B和∠F不是对应角，实际不相似。",
+          "错误：在直角三角形中，只看到一个锐角相等就判定相似，但忘记直角对应相等，其实直角相等是隐含条件。",
+          "错误：混淆相似与全等，认为两角相等且一边相等就全等，实际两角相等只能判定相似，还需边对应成比例。"
+        ],
+        "counter_examples": "两个等腰三角形，顶角都是40°，但底角不同（一个70°和70°，另一个80°和80°），则它们不相似，因为两个角不分别相等（顶角相等但底角不等）。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G9-MATH-X-ku-两边成比例且夹角相等判定三角形相似",
+      "textbook_id": "RENJIAO-G9-MATH-X",
+      "cluster_id": "RENJIAO-G9-MATH-X-kc-相似三角形的判定",
+      "name": "两边成比例且夹角相等判定三角形相似",
+      "description": "两边成比例且夹角相等的两个三角形相似。",
+      "prerequisites": [
+        "平行线判定三角形相似定理"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "例：△ABC中AB=3, AC=4, ∠A=60°；△DEF中DE=6, DF=8, ∠D=60°。因为3/6=4/8=1/2且∠A=∠D，所以△ABC∽△DEF。",
+          "例：△PQR中PQ=5, PR=7, ∠P=30°；△XYZ中XY=10, XZ=14, ∠X=30°。两边比例相等且夹角相等，故相似。"
+        ],
+        "intuition": "就像用两把尺子量一个角的两边，如果两边长度比例相同，那这两个三角形形状就一样，只是大小不同。",
+        "definition": "两边成比例且夹角相等的两个三角形相似。即若在△ABC和△DEF中，AB/DE = AC/DF，且∠A = ∠D，则△ABC∽△DEF。",
+        "key_points": [
+          "⚠️ 必须是夹角，即比例两边所夹的角相等，不是任意角。",
+          "⚠️ 两边比例必须对应，即较长边与较长边比，较短边与较短边比。",
+          "⚠️ 夹角必须相等，不能是补角或其它角。"
+        ],
+        "application": "典型考查：在复杂图形中找出两边成比例且夹角相等的条件，证明三角形相似，进而求未知边长或角度。",
+        "connections": "此判定是三角形相似判定定理之一，与“三边成比例”和“两角相等”判定并列，常用于证明几何图形中的比例关系或计算边长。",
+        "common_mistakes": [
+          "错误：认为任意两边成比例且任意一角相等即可。正确：必须是夹角，不是对角或邻角。",
+          "错误：比例对应错误，如将AB与DF比，AC与DE比。正确：对应边要按顺序比。",
+          "错误：忽略夹角相等，只检查两边比例。正确：必须同时满足两边比例和夹角相等。"
+        ],
+        "counter_examples": "两边成比例但夹角不相等（如∠A=60°而∠D=120°），则三角形不一定相似，可能形状不同。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G9-MATH-X-ku-中心投影",
+      "textbook_id": "RENJIAO-G9-MATH-X",
+      "cluster_id": "RENJIAO-G9-MATH-X-kc-投影的基本概念与分类",
+      "name": "中心投影",
+      "description": "由同一点（点光源）发出的光线形成的投影叫做中心投影。例如，物体在灯泡发出的光照射下形成的影子就是中心投影。",
+      "prerequisites": [
+        "ku-001"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "灯泡照射桌子：灯泡是投影中心，桌子在地面上的影子是中心投影。",
+          "手电筒照射墙壁上的手影：手离手电筒越近，墙上的影子越大。"
+        ],
+        "intuition": "中心投影模拟了点光源（如灯泡、手电筒）照射物体形成影子的过程，帮助我们理解光线从一点出发时投影的大小和形状变化规律。",
+        "definition": "由同一点（投影中心）发出的光线照射物体，在投影面上形成的投影称为中心投影。关键限定：所有光线都从同一固定点出发，且投影面为平面。",
+        "key_points": [
+          "⚠️ 投影中心必须在物体和投影面之间，否则影子可能无限大或不存在。",
+          "⚠️ 物体离投影中心越近，影子越大；离投影面越近，影子越小。",
+          "⚠️ 中心投影中，平行线不再保持平行，而是汇聚于一点（消失点）。"
+        ],
+        "application": "常见考查：给定投影中心和物体位置，计算影子长度或面积；或判断中心投影与平行投影的区别，如选择题中区分光源类型。",
+        "connections": "中心投影是透视投影的基础，与相似三角形、比例线段紧密相关，后续学习立体几何和视图时常用到。",
+        "common_mistakes": [
+          "误认为中心投影中物体离投影面越远影子越小——实际是离投影中心越近影子越大，离投影面越远影子越大。",
+          "混淆中心投影与平行投影：认为所有投影都是中心投影，忽略太阳光等平行光源。",
+          "错误认为中心投影中物体形状不变——实际上，物体倾斜时投影形状会扭曲。"
+        ],
+        "counter_examples": "平行投影（如太阳光）中，光线是平行的，投影大小与物体到投影面的距离无关；而中心投影中，光线发散，投影大小随距离变化。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G9-MATH-X-ku-位似图形对应点坐标关系-原点为位似中心",
+      "textbook_id": "RENJIAO-G9-MATH-X",
+      "cluster_id": "RENJIAO-G9-MATH-X-kc-位似与坐标的关系",
+      "name": "位似图形对应点坐标关系（原点为位似中心）",
+      "description": "以原点为位似中心，相似比为k，原图形点(x,y)的对应点坐标为(kx,ky)或(-kx,-ky)。",
+      "prerequisites": [
+        "利用位似放大或缩小图形",
+        "平面直角坐标系"
+      ],
+      "related_kus": [],
+      "difficulty": 0.6,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "例1：点A(2,3)，相似比k=2，则对应点A'为(4,6)（同向）或(-4,-6)（反向）。",
+          "例2：点B(-1,4)，相似比k=-3，则对应点B'为(3,-12)（因为(-1)×(-3)=3，4×(-3)=-12）。"
+        ],
+        "intuition": "为什么需要这个概念？就像用复印机放大或缩小图片时，以中心点为基准，每个点都沿着与中心连线方向移动相同倍数，位似图形就是这种缩放变换的数学表达。",
+        "definition": "以原点为位似中心，相似比为k（k≠0），原图形上任意点P(x,y)的对应点P'坐标为(kx,ky)或(-kx,-ky)，其中k>0时同向，k<0时反向。",
+        "key_points": [
+          "⚠️ 相似比k可正可负：k>0时对应点与原点同侧，k<0时对应点与原点异侧（即反向延长线）。",
+          "⚠️ 坐标缩放时，x和y必须同时乘以相同的k，不能只乘一个坐标。",
+          "⚠️ 位似中心是原点时，对应点坐标才直接是(kx,ky)或(-kx,-ky)；若中心不是原点，公式不同。"
+        ],
+        "application": "典型考查：给出原图形和位似图形对应点坐标，求相似比k（注意正负）；或已知k和原图形，求位似图形顶点坐标，常结合网格作图题。",
+        "connections": "与相似三角形、比例线段紧密相关，是坐标几何中图形放缩的代数表示；后续学习位似变换与函数图像伸缩变换时，此公式是基础。",
+        "common_mistakes": [
+          "错误1：认为k只能取正数，忽略负k对应反向位似，导致漏解。",
+          "错误2：计算时只乘x或只乘y，例如点(2,3)对应(4,3)或(2,6)，这是错误的。",
+          "错误3：混淆位似中心，以为非原点时也直接用(kx,ky)，实际需先平移再缩放。"
+        ],
+        "counter_examples": "容易混淆的是平移变换：平移是整体移动，坐标加减常数；而位似是缩放，坐标乘以常数。例如点(2,3)平移(1,2)得(3,5)，但位似k=2得(4,6)，本质不同。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G9-MATH-X-ku-位似图形对应边平行",
+      "textbook_id": "RENJIAO-G9-MATH-X",
+      "cluster_id": "RENJIAO-G9-MATH-X-kc-位似图形的基本概念与性质",
+      "name": "位似图形对应边平行",
+      "description": "位似图形中对应边互相平行（或共线）。",
+      "prerequisites": [
+        "位似图形的定义"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "正方形ABCD与正方形A'B'C'D'位似，边AB∥A'B'，BC∥B'C'，对应边方向一致",
+          "三角形ABC与三角形A'B'C'位似，若位似中心在顶点A，则边BC∥B'C'，但AB与A'B'共线"
+        ],
+        "intuition": "位似图形就像用同一个中心点放大或缩小照片，对应边保持平行，确保形状不变。",
+        "definition": "如果两个图形是位似图形，那么它们的对应边互相平行（或共线），即位似中心与对应点连线共点，且对应边方向相同或相反。",
+        "key_points": [
+          "⚠️ 对应边平行是位似图形的性质，不是定义条件",
+          "⚠️ 对应边可能共线（当位似中心在边上时）",
+          "⚠️ 位似比不为1时，对应边长度成比例，但平行关系不变"
+        ],
+        "application": "常考判断两个图形是否位似，利用对应边平行性质求位似中心或位似比；或在网格中画位似图形，需确保对应边平行且过位似中心。",
+        "connections": "位似是相似的特殊情况，对应边平行性质是判断位似的重要依据，也为后续学习坐标变换中的位似变换打下基础。",
+        "common_mistakes": [
+          "误以为所有相似图形对应边都平行，忽略旋转或翻转情况",
+          "认为位似图形对应边一定平行而不考虑共线情形，导致漏解",
+          "混淆位似中心与对应点连线平行，实际是连线交于一点"
+        ],
+        "counter_examples": "相似图形不一定位似，例如两个相似三角形旋转后对应边不平行，但位似图形必须对应边平行（或共线）。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G9-MATH-X-ku-位似图形的定义",
+      "textbook_id": "RENJIAO-G9-MATH-X",
+      "cluster_id": "RENJIAO-G9-MATH-X-kc-位似图形的基本概念与性质",
+      "name": "位似图形的定义",
+      "description": "两个图形对应点连线交于一点且对应点到该点的距离成比例，则这两个图形是位似图形，该点为位似中心。",
+      "prerequisites": [
+        "相似图形"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "例1：△ABC与△A'B'C'，若AA'、BB'、CC'交于O，且OA'/OA=OB'/OB=OC'/OC=2，则它们是位似图形，位似中心O，位似比2。",
+          "例2：正方形网格中，以原点为位似中心将图形放大2倍，得到的新图形与原图形位似。"
+        ],
+        "intuition": "位似图形就像用同一个投影仪把一张图片放大或缩小到不同屏幕上，所有对应点都从同一个光源（位似中心）出发，且缩放比例一致。",
+        "definition": "两个图形中，每组对应点所在直线都经过同一点O，且O到各对应点的距离之比为常数k（k≠0），则这两个图形是位似图形，点O为位似中心，k为位似比。",
+        "key_points": [
+          "⚠️ 对应点连线必须交于同一点，不能只是部分连线相交。",
+          "⚠️ 位似比k可以是负数（表示反向位似），此时对应点在位似中心两侧。",
+          "⚠️ 位似图形一定是相似图形，但相似图形不一定是位似图形（除非对应点连线共点）。"
+        ],
+        "application": "典型考查：给出两个图形判断是否位似并求位似比；或已知位似中心和位似比，画出位似图形。常结合坐标系，求对应点坐标（位似变换坐标公式）。",
+        "connections": "位似是相似的特殊情况，是学习相似三角形、中心对称（位似比为-1）和图形变换（缩放）的基础，后续用于解决实际测量和图形设计问题。",
+        "common_mistakes": [
+          "错误：认为只要对应边平行就是位似图形。纠正：对应边平行不一定对应点连线共点，例如平行四边形平移后对应边平行但非位似。",
+          "错误：忽略位似中心可能在图形内部或外部，误以为位似中心只能在图形外部。纠正：位似中心可在图形内、边上或外部。",
+          "错误：混淆位似比与相似比，认为位似比必须为正。纠正：位似比可为负，此时图形反向（旋转180°）且对应点在位似中心两侧。"
+        ],
+        "counter_examples": "两个相似三角形，若对应顶点连线不交于同一点（如平移得到的相似三角形），则不是位似图形。位似要求所有对应点连线共点，而相似只要求形状相同、大小成比例。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G9-MATH-X-ku-位似多边形的判定",
+      "textbook_id": "RENJIAO-G9-MATH-X",
+      "cluster_id": "RENJIAO-G9-MATH-X-kc-位似图形的基本概念与性质",
+      "name": "位似多边形的判定",
+      "description": "两个多边形对应顶点连线交于一点且对应顶点到该点的线段成比例，则这两个多边形是位似多边形。",
+      "prerequisites": [
+        "位似图形的定义"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "正方形ABCD和正方形A'B'C'D'，若AA'、BB'、CC'、DD'交于点O，且OA':OA = OB':OB = 2:1，则它们是位似多边形。",
+          "三角形ABC和三角形A'B'C'，若AA'、BB'、CC'交于一点，且对应边平行，则它们位似（位似中心在对应顶点连线交点）。"
+        ],
+        "intuition": "位似多边形就像用投影仪放大或缩小图形：所有对应顶点都从同一个点（位似中心）出发，沿射线方向按相同比例缩放，从而保持形状不变。",
+        "definition": "两个多边形对应顶点连线交于同一点（位似中心），且从该点到各对应顶点的线段长度之比相等（位似比），则这两个多边形是位似多边形。关键限定：对应顶点连线必须共点，且比例常数相同。",
+        "key_points": [
+          "⚠️ 对应顶点连线必须交于同一点，不能只是部分连线相交。",
+          "⚠️ 位似比必须对所有对应顶点一致，不能有不同比例。",
+          "⚠️ 位似中心可能在多边形内部、外部或边上，但必须唯一确定。"
+        ],
+        "application": "典型考查方式：①给出两个多边形，判断是否位似并说明理由；②已知位似多边形，求位似中心或位似比，常结合坐标图考查。",
+        "connections": "位似多边形是相似多边形的一种特殊情形，它通过中心投影实现缩放，为后续学习位似变换、相似三角形判定及坐标几何中的位似作图奠定基础。",
+        "common_mistakes": [
+          "误以为只要对应边平行就是位似：实际上还需对应顶点连线共点，如平移得到的相似图形对应边平行但连线不共点。",
+          "忽略位似比必须一致：例如认为两个四边形中三组对应顶点连线交于一点且比例相同即可，但第四组比例不同则整体不是位似。",
+          "混淆位似中心与重心：位似中心是连线交点，不一定在图形内部，而重心是三角形中线交点，两者不同。"
+        ],
+        "counter_examples": "两个相似多边形不一定位似，例如两个相似三角形对应顶点连线不交于一点（如平移得到的相似图形），则不是位似多边形。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G9-MATH-X-ku-分形图形的自相似性",
+      "textbook_id": "RENJIAO-G9-MATH-X",
+      "cluster_id": "RENJIAO-G9-MATH-X-kc-分形与自相似性",
+      "name": "分形图形的自相似性",
+      "description": "图形的局部与整体具有相似关系，这样的图形称为分形图形。",
+      "prerequisites": [
+        "相似图形"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "科赫雪花：将等边三角形每边中间凸起一个小三角形，重复此过程，局部与整体形状相似。",
+          "谢尔宾斯基地毯：正方形分成9个小正方形，去掉中心一个，再对剩余小正方形重复，局部图案与整体相同。"
+        ],
+        "intuition": "为什么需要这个概念？就像一棵树，树枝的形状和整棵树的形状相似，放大局部能看到整体的影子。分形自相似性帮助我们理解复杂自然形态的简单生成规则。",
+        "definition": "一个图形的局部（如某一部分）经过放大后，与整体图形在结构上完全相同或统计相似，这种性质称为自相似性。关键限定：局部与整体在形状、细节上具有相同或近似的模式。",
+        "key_points": [
+          "⚠️ 自相似性不是完全相等，而是结构或模式相似，局部放大后可能略有差异。",
+          "⚠️ 分形图形通常具有无限细节，即无论放大多少倍，都能看到更精细的结构。",
+          "⚠️ 自相似性可以是精确的（如科赫雪花）或统计的（如海岸线）。"
+        ],
+        "application": "典型考查方式：1. 给出一组图形，判断是否具有自相似性并说明理由。2. 通过简单迭代步骤（如科赫雪花）画出下一级图形，考察对自相似过程的理解。",
+        "connections": "与前后知识的联系：自相似性是分形几何的核心概念，后续学习分形维数（如豪斯多夫维数）时需基于此理解；也与递归思想、迭代函数系统紧密相关。",
+        "common_mistakes": [
+          "学生误以为自相似性要求局部与整体完全一样，忽略放大后细节可能不同（如统计自相似）。",
+          "学生认为所有不规则图形都是分形，实际上只有局部与整体有相似模式才算分形。",
+          "学生混淆自相似性与对称性：对称性是整体左右相同，自相似性是局部与整体相似。"
+        ],
+        "counter_examples": "容易混淆的概念或反例：普通几何图形如圆或正方形，放大后局部（如圆弧或边角）与整体形状不同，不具有自相似性。分形图形强调局部复制整体的模式。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G9-MATH-X-ku-利用位似放大或缩小图形",
+      "textbook_id": "RENJIAO-G9-MATH-X",
+      "cluster_id": "RENJIAO-G9-MATH-X-kc-位似图形的基本概念与性质",
+      "name": "利用位似放大或缩小图形",
+      "description": "在位似中心与各顶点连线上取点使对应线段成比例，可放大或缩小图形。",
+      "prerequisites": [
+        "位似图形的定义"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "例：三角形ABC，位似中心O在外部，取k=2，在OA、OB、OC延长线上取A'、B'、C'使OA'=2OA，则△A'B'C'是△ABC放大2倍的位似图形",
+          "例：正方形边长为1，以中心为位似中心，k=0.5，取各边中点连线得缩小一半的正方形"
+        ],
+        "intuition": "就像用投影仪放大照片，位似变换通过一个中心点将图形按比例放大或缩小，保持形状不变。",
+        "definition": "在平面内，取一定点O（位似中心），对图形上任意一点P，在射线OP上取点P'，使OP'/OP = k（k>0且k≠1），则图形上所有对应点构成的图形与原图形位似。关键限定：k为位似比，k>1放大，0<k<1缩小；位似中心唯一。",
+        "key_points": [
+          "⚠️ 位似中心必须在对应点连线上，且对应线段平行或共线",
+          "⚠️ 位似比是相似比，但相似图形不一定是位似图形（需对应点连线交于一点）",
+          "⚠️ 位似中心可在图形内、外或边上，不同位置影响对应点位置"
+        ],
+        "application": "常考利用位似作图（给定位似中心和比例尺画放大/缩小图形），或结合坐标系求位似变换后的坐标（如已知原点和位似中心，求对应点坐标）。",
+        "connections": "位似是相似的特殊情况，是学习相似三角形和图形变换（平移、旋转、轴对称）的延伸，为后续学习坐标变换和投影几何打基础。",
+        "common_mistakes": [
+          "错误认为位似比等于面积比（实际面积比是位似比的平方）",
+          "混淆位似中心与对称中心：位似中心在对应点连线上，对称中心在对应点连线的中点",
+          "忽略位似中心位置：当中心在图形内部时，对应点方向相反（如中心在三角形内，放大后图形反向）"
+        ],
+        "counter_examples": "相似图形不一定是位似图形。例如，两个全等但旋转了90°的三角形，对应边成比例但对应点连线不交于一点，故不是位似图形。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G9-MATH-X-ku-利用反比例函数解决几何问题-圆柱体积",
+      "textbook_id": "RENJIAO-G9-MATH-X",
+      "cluster_id": "RENJIAO-G9-MATH-X-kc-反比例函数的实际应用",
+      "name": "利用反比例函数解决几何问题（圆柱体积）",
+      "description": "圆柱体积V=Sh，当V一定时，底面积S与深度h成反比例关系。",
+      "prerequisites": [
+        "实际问题中反比例函数模型的建立"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "一个圆柱形水桶体积为100π cm³，底面积为20π cm²，则深度h=100π/(20π)=5 cm。",
+          "若深度变为10 cm，则底面积S=100π/10=10π cm²，验证反比例关系。"
+        ],
+        "intuition": "就像用固定容量的水杯倒水，杯子越粗（底面积大），水的高度就越浅；杯子越细（底面积小），水的高度就越深。",
+        "definition": "在圆柱体积V固定时，底面积S与深度h满足S = V/h，即S与h成反比例关系，其中V为常数且S>0，h>0。",
+        "key_points": [
+          "⚠️ 反比例关系成立的前提是体积V一定，不能忽略这个条件。",
+          "⚠️ 底面积S和深度h的单位必须一致，否则计算会出错。",
+          "⚠️ 注意区分反比例与一次函数：S随h增大而减小，但乘积不变。"
+        ],
+        "application": "典型考查方式：给出体积和底面积或深度中的一个，求另一个；或通过图像判断反比例关系，结合实际问题列方程求解。",
+        "connections": "反比例函数是八年级函数学习的延伸，与正比例函数对比理解；同时为高中学习幂函数和圆锥体积问题打下基础。",
+        "common_mistakes": [
+          "错误认为底面积和深度成反比时，乘积等于体积，但忘记体积是常数，导致计算时用错数值。",
+          "混淆反比例函数图像：认为S-h图像是直线，实际是双曲线的一支（第一象限）。",
+          "忽略单位换算：如深度用cm，底面积用m²，未统一单位直接计算。"
+        ],
+        "counter_examples": "容易混淆的是正比例关系：当底面积固定时，体积与深度成正比，但这里是体积固定，底面积与深度成反比。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G9-MATH-X-ku-利用反比例函数解决工程问题-装卸货",
+      "textbook_id": "RENJIAO-G9-MATH-X",
+      "cluster_id": "RENJIAO-G9-MATH-X-kc-反比例函数的实际应用",
+      "name": "利用反比例函数解决工程问题（装卸货）",
+      "description": "货物总量一定时，平均卸货速度与卸货天数成反比例关系。",
+      "prerequisites": [
+        "实际问题中反比例函数模型的建立"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "例：一批货物共120吨，计划10天卸完，则每天卸12吨。若想8天卸完，每天需卸120/8=15吨，速度与天数成反比。",
+          "例：某码头有600吨矿石，若每天卸50吨需12天；若每天卸75吨则只需8天，验证v×t=600恒定。"
+        ],
+        "intuition": "装卸货时，货物总量固定，若想提前完工，每天就得加快速度；反之，时间宽裕则可放慢速度。这就像分蛋糕——蛋糕大小不变，人越多每人分得越少。",
+        "definition": "在货物总量（常数k）一定时，平均卸货速度v与卸货天数t满足v = k/t（t>0），即v与t成反比例关系。关键限定：总量不变，且t和v均为正数。",
+        "key_points": [
+          "⚠️ 易误将速度与天数直接相乘等于总量，但需注意速度是平均速率，单位要一致（如吨/天）。",
+          "⚠️ 易忽略反比例函数图像只在第一象限（t>0, v>0），且实际问题中t和v通常取整数或有限小数。",
+          "⚠️ 易混淆“速度”与“效率”——速度是单位时间工作量，效率常指完成比例，两者不同。"
+        ],
+        "application": "典型考查：给出总量和一种速度/时间，求另一种速度/时间，或结合图像判断变化趋势；也常与一次函数结合，如先匀速后变速的混合问题。",
+        "connections": "与八年级正比例函数对比学习，理解“积一定”与“商一定”的区别；为后续学习反比例函数图像、性质及实际应用（如行程、工程问题）打下基础。",
+        "common_mistakes": [
+          "错误：认为速度增加一倍，天数也减少一倍。实际应为：速度翻倍，天数减半（如从10吨/天到20吨/天，天数从12天变6天）。",
+          "错误：设未知数时忘记单位统一，如速度用吨/小时，天数用天，导致计算错误。",
+          "错误：在列方程时误将速度与天数相加等于总量，如v+t=总量，正确应为v×t=总量。"
+        ],
+        "counter_examples": "容易与正比例混淆：若每天卸货速度固定，则卸货天数与货物总量成正比例（如每天10吨，货物越多天数越多），而非反比例。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G9-MATH-X-ku-压强与受力面积的反比例关系",
+      "textbook_id": "RENJIAO-G9-MATH-X",
+      "cluster_id": "RENJIAO-G9-MATH-X-kc-反比例函数的实际应用",
+      "name": "压强与受力面积的反比例关系",
+      "description": "压力一定时，压强p与受力面积S成反比例关系：p=F/S。",
+      "prerequisites": [
+        "实际问题中反比例函数模型的建立"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "例1：用同样大小的力（F=10N）分别压图钉尖（S=0.1mm²）和图钉帽（S=1cm²），尖压强远大于帽，说明S越小p越大",
+          "例2：滑雪板面积大（S=0.5m²），体重600N的人对雪地压强仅1200Pa；若穿普通鞋（S=0.02m²），压强达30000Pa，会陷入雪中"
+        ],
+        "intuition": "为什么需要这个概念？生活类比或本质是什么（1-2句）",
+        "definition": "压力一定时，压强p与受力面积S成反比例关系：p=F/S。其中F为压力（单位N），S为受力面积（单位m²），p为压强（单位Pa）。关键限定：F必须恒定不变，且S为有效接触面积。",
+        "key_points": [
+          "⚠️ 反比例关系仅当压力F固定时才成立，若F变化则需重新分析",
+          "⚠️ 受力面积S是指实际接触面积，不是物体总表面积",
+          "⚠️ 单位必须统一：S用m²，F用N，p用Pa，否则计算错误"
+        ],
+        "application": "典型考查方式：①给出压力F和面积S，计算压强p，注意单位换算；②通过改变受力面积解释生活现象（如刀刃锋利、书包带加宽）；③结合图像判断p与S的反比例关系，求特定点的压强值。",
+        "connections": "与前后知识的联系：压强是力的作用效果的量度，为后续学习液体压强、大气压强、浮力等奠定基础；反比例函数图像（双曲线）在数学中已学，可直观理解p-S关系。",
+        "common_mistakes": [
+          "错误1：认为压强与面积总是成反比——忽略前提“压力一定”，若压力也变，关系不成立",
+          "错误2：计算时面积单位未换算成m²，直接用cm²导致结果差10⁴倍",
+          "错误3：将受力面积误认为物体底面积，如人站立时只算一只脚面积，实际应算两只脚总面积"
+        ],
+        "counter_examples": "容易混淆的概念或反例：压强与压力成正比（当S固定时）与压强与S成反比（当F固定时）是两种不同关系，不能混为一谈。例如，增大压力同时增大面积，压强可能不变，这不违反反比例关系，因为F变了。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G9-MATH-X-ku-反比例函数与一次函数的综合",
+      "textbook_id": "RENJIAO-G9-MATH-X",
+      "cluster_id": "RENJIAO-G9-MATH-X-kc-反比例函数的应用与综合",
+      "name": "反比例函数与一次函数的综合",
+      "description": "利用反比例函数与一次函数的图象和性质，解决交点、面积、不等式等问题。",
+      "prerequisites": [
+        "反比例函数的性质",
+        "一次函数的性质"
+      ],
+      "related_kus": [],
+      "difficulty": 0.6,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "例1：已知 $y = \\frac{6}{x}$ 与 $y = x + 1$，联立得 $x^2 + x - 6 = 0$，解得交点 $(2,3)$ 和 $(-3,-2)$。",
+          "例2：求两函数图象与 $x$ 轴围成的三角形面积，先求一次函数与 $x$ 轴交点，再结合反比例函数交点坐标计算。"
+        ],
+        "intuition": "就像两个不同速度的物体在赛跑，反比例函数与一次函数的交点就是它们相遇的时刻，而面积问题则像计算它们围成的区域大小。",
+        "definition": "反比例函数 $y = \\frac{k}{x}$（$k \\neq 0$）与一次函数 $y = mx + b$（$m \\neq 0$）的图象在坐标系中可能相交，联立方程求解交点坐标，并利用图象性质解决面积、不等式等问题。",
+        "key_points": [
+          "⚠️ 联立方程时，需注意 $x \\neq 0$（反比例函数定义域），否则可能产生增根。",
+          "⚠️ 求面积时，常需将坐标轴上的点作为底或高，注意三角形顶点顺序。",
+          "⚠️ 解不等式时，要结合图象位置，明确哪个函数在上方或下方，并考虑交点横坐标。"
+        ],
+        "application": "典型考查方式：① 求交点坐标并计算三角形面积；② 利用图象解不等式，判断函数值大小关系。",
+        "connections": "本知识建立在一次函数和反比例函数图象性质基础上，后续与二次函数综合、动态几何问题紧密相关。",
+        "common_mistakes": [
+          "错误1：联立方程后直接约去 $x$，忽略 $x=0$ 的可能性，导致漏解或增根。",
+          "错误2：求面积时，误将两函数交点与坐标轴围成的图形当作直角三角形，未验证直角。",
+          "错误3：解不等式 $\\frac{k}{x} > mx + b$ 时，直接去分母，未考虑 $x$ 的正负导致不等号方向变化。"
+        ],
+        "counter_examples": "反比例函数与一次函数可能无交点（如 $y = \\frac{1}{x}$ 与 $y = 0$ 无交点），但学生常误以为总有交点。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G9-MATH-X-ku-反比例函数与正比例函数图象交点",
+      "textbook_id": "RENJIAO-G9-MATH-X",
+      "cluster_id": "RENJIAO-G9-MATH-X-kc-反比例函数与正比例函数的综合",
+      "name": "反比例函数与正比例函数图象交点",
+      "description": "正比例函数y=k1x与反比例函数y=k2/x的图象交点个数由k1*k2的符号决定：同号有两个交点，异号无交点。",
+      "prerequisites": [
+        "ku-003",
+        "正比例函数图象"
+      ],
+      "related_kus": [],
+      "difficulty": 0.6,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "例1：$y=2x$ 与 $y=\\frac{3}{x}$，$k_1\\cdot k_2=6>0$，有两个交点 $(\\sqrt{1.5}, 2\\sqrt{1.5})$ 和 $(-\\sqrt{1.5}, -2\\sqrt{1.5})$。",
+          "例2：$y=-x$ 与 $y=\\frac{2}{x}$，$k_1\\cdot k_2=-2<0$，无交点，因为直线经过二、四象限，而反比例函数在一、三象限。"
+        ],
+        "intuition": "想象两个函数图像在坐标系中相遇，就像两条直线与曲线的交汇，交点个数取决于它们是否‘同向’运动——同号时方向一致，能相遇两次；异号时方向相反，永远错过。",
+        "definition": "正比例函数 $y=k_1x$（$k_1\\neq0$）与反比例函数 $y=\\frac{k_2}{x}$（$k_2\\neq0$）的图像交点个数由 $k_1\\cdot k_2$ 的符号决定：若 $k_1\\cdot k_2>0$，则有两个交点，分别位于第一、三象限；若 $k_1\\cdot k_2<0$，则无交点。",
+        "key_points": [
+          "⚠️ 交点个数只取决于 $k_1\\cdot k_2$ 的符号，与 $k_1$ 或 $k_2$ 的具体大小无关。",
+          "⚠️ 两个交点一定关于原点对称，且分别位于同一象限（同正时在一、三，同负时在二、四）。",
+          "⚠️ 当 $k_1\\cdot k_2>0$ 时，交点坐标可通过联立方程 $k_1x=\\frac{k_2}{x}$ 解得 $x=\\pm\\sqrt{\\frac{k_2}{k_1}}$，注意 $k_2/k_1>0$ 才有效。"
+        ],
+        "application": "典型考查方式：①给出两个函数解析式，判断交点个数或求交点坐标；②结合图像，根据交点情况反求参数 $k_1$ 或 $k_2$ 的取值范围（如已知无交点，求 $k_1k_2<0$ 的条件）。",
+        "connections": "此知识点建立在一次函数与反比例函数图像性质基础上，后续学习二次函数与反比例函数交点时，可类比符号判断法，但二次函数情况更复杂（最多4个交点）。",
+        "common_mistakes": [
+          "错误1：认为 $k_1$ 和 $k_2$ 同号时只有一个交点。错因：联立方程 $k_1x=\\frac{k_2}{x}$ 得 $x^2=\\frac{k_2}{k_1}$，开平方应得两个解（正负），忽略负根。",
+          "错误2：认为 $k_1\\cdot k_2>0$ 时交点一定在第一象限。错因：忽略了 $k_1$ 和 $k_2$ 同时为负的情况，此时交点位于第二、四象限。",
+          "错误3：计算交点坐标时忘记考虑 $x$ 不能为0，直接代入 $x=0$ 导致无意义。"
+        ],
+        "counter_examples": "容易混淆的是 $y=kx$ 与 $y=\\frac{k}{x}$（$k$ 相同）的情况：此时 $k_1\\cdot k_2=k^2>0$，一定有两个交点，但学生常误以为 $k$ 为负时无交点，实际上 $k$ 为负时两个函数图像都在二、四象限，仍有交点。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G9-MATH-X-ku-反比例函数与正比例函数图象的交点",
+      "textbook_id": "RENJIAO-G9-MATH-X",
+      "cluster_id": "RENJIAO-G9-MATH-X-kc-反比例函数的图象与性质",
+      "name": "反比例函数与正比例函数图象的交点",
+      "description": "正比例函数y=x与反比例函数y=k/x的图象交点坐标满足x=y，代入可求交点。",
+      "prerequisites": [
+        "反比例函数的图象",
+        "正比例函数的图象"
+      ],
+      "related_kus": [],
+      "difficulty": 0.6,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "例：$y=2x$ 与 $y=\\frac{6}{x}$ 的交点：联立得 $2x=\\frac{6}{x}$，解得 $x^2=3$，$x=\\pm\\sqrt{3}$，对应 $y=\\pm2\\sqrt{3}$，交点为 $(\\sqrt{3},2\\sqrt{3})$ 和 $(-\\sqrt{3},-2\\sqrt{3})$。",
+          "例：$y=x$ 与 $y=\\frac{-4}{x}$ 无交点，因为 $x=\\frac{-4}{x}$ 得 $x^2=-4$，无实数解。"
+        ],
+        "intuition": "想象两个函数图像在坐标系中相遇，交点就是它们同时满足两个方程的点，就像两个人约定在同一个地点见面。",
+        "definition": "正比例函数 $y=k_1x$（$k_1\\neq0$）与反比例函数 $y=\\frac{k_2}{x}$（$k_2\\neq0$）图象的交点坐标满足方程组 $\\begin{cases} y=k_1x \\\\ y=\\frac{k_2}{x} \\end{cases}$，解出 $x$ 和 $y$ 的值即为交点坐标。",
+        "key_points": [
+          "⚠️ 交点个数由 $k_1$ 和 $k_2$ 的符号决定：同号时有两个交点，异号时无交点。",
+          "⚠️ 解方程时需注意 $x\\neq0$，因为反比例函数定义域排除0。",
+          "⚠️ 交点坐标关于原点对称：若 $(x_0,y_0)$ 是交点，则 $(-x_0,-y_0)$ 也是交点。"
+        ],
+        "application": "典型考查：给出正比例和反比例函数解析式，求交点坐标；或已知一个交点坐标，反求 $k_1$ 或 $k_2$ 的值。",
+        "connections": "与一元二次方程 $k_1x^2=k_2$ 的求解紧密相关，交点横坐标即该方程的解；也为后续学习二次函数与反比例函数交点打下基础。",
+        "common_mistakes": [
+          "错误：直接认为 $x=y$ 代入，忽略正比例系数 $k_1$ 不一定为1。正确做法是设 $y=k_1x$ 代入反比例函数。",
+          "错误：解方程时忘记 $x\\neq0$，导致误将 $x=0$ 当作解。例如 $y=x$ 与 $y=\\frac{1}{x}$ 联立得 $x^2=1$，$x=\\pm1$，$x=0$ 不是解。",
+          "错误：认为交点一定在第一、三象限。实际上当 $k_1$ 和 $k_2$ 同号时交点在二、四象限（若 $k_1<0$ 且 $k_2<0$）。"
+        ],
+        "counter_examples": "容易混淆的是正比例函数与一次函数（如 $y=2x+1$）的交点：一次函数与反比例函数交点个数可能为0、1或2，且不一定关于原点对称，因为一次函数不经过原点。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G9-MATH-X-ku-反比例函数中k的几何意义",
+      "textbook_id": "RENJIAO-G9-MATH-X",
+      "cluster_id": "RENJIAO-G9-MATH-X-kc-反比例函数的图象与性质",
+      "name": "反比例函数中k的几何意义",
+      "description": "在反比例函数 y = k/x 图象上任取一点，向两坐标轴作垂线，矩形面积等于|k|。",
+      "prerequisites": [
+        "反比例函数的图象",
+        "坐标与图形"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "例1：反比例函数 y = 6/x 图象上一点 (2,3)，向坐标轴作垂线，矩形面积 = |6| = 6。",
+          "例2：反比例函数 y = -4/x 图象上一点 (-2,2)，矩形面积 = |-4| = 4。"
+        ],
+        "intuition": "为什么需要这个概念？就像用一块固定面积的布去裁剪不同形状的矩形，无论矩形长宽如何变化，面积始终不变。这揭示了反比例函数中变量乘积恒定的本质。",
+        "definition": "在反比例函数 y = k/x 的图象上任取一点 P(x, y)，过 P 分别作 x 轴、y 轴的垂线，垂足为 A、B，则矩形 OAPB 的面积等于 |k|。关键限定：点 P 必须在双曲线上，且垂线必须垂直于坐标轴。",
+        "key_points": [
+          "⚠️ 面积等于 |k| 而不是 k，因为 k 可能为负，面积恒为正。",
+          "⚠️ 矩形面积与点 P 的位置无关，任意点面积都等于 |k|。",
+          "⚠️ 若点 P 在双曲线不同分支上，矩形面积仍为 |k|，但矩形位置不同。"
+        ],
+        "application": "典型考查方式：给出反比例函数图象上一点与坐标轴围成的矩形面积，求 k 值；或利用面积不变性比较不同点对应的矩形面积大小。",
+        "connections": "与八年级的矩形面积公式、坐标系中点的坐标意义紧密相关，也为后续学习反比例函数与一次函数综合题、面积问题打下基础。",
+        "common_mistakes": [
+          "错误认为面积等于 k 本身，忽略绝对值，如 y = -3/x 时误认为面积是 -3。",
+          "错误认为只有第一象限的点才适用，忽略其他象限的点同样满足。",
+          "错误认为矩形面积随点位置变化，实际面积恒为 |k|。"
+        ],
+        "counter_examples": "容易混淆的是正比例函数 y = kx 中，k 表示斜率，与面积无关；而反比例函数中 k 的几何意义是矩形面积，两者完全不同。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G9-MATH-X-ku-反比例函数中k的几何意义-拓展",
+      "textbook_id": "RENJIAO-G9-MATH-X",
+      "cluster_id": "RENJIAO-G9-MATH-X-kc-反比例函数的图象与性质",
+      "name": "反比例函数中k的几何意义（拓展）",
+      "description": "反比例函数y=k/x图象上任意一点向x轴、y轴作垂线，与坐标轴围成的矩形面积为|k|。",
+      "prerequisites": [
+        "反比例函数的图象"
+      ],
+      "related_kus": [],
+      "difficulty": 0.7,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "例：y=6/x上一点(2,3)，作垂线得矩形面积=2×3=6=|6|。",
+          "例：y=-4/x上一点(-1,4)，矩形面积=|-1|×|4|=4=|-4|。"
+        ],
+        "intuition": "反比例函数中k的几何意义，就像用矩形面积来“看见”k的大小，把抽象的代数常数转化为直观的几何量，便于理解函数性质。",
+        "definition": "在反比例函数y=k/x（k≠0）的图象上任取一点P(x,y)，过P分别作x轴、y轴的垂线，垂足为A、B，则矩形PAOB的面积为|k|，即|xy|=|k|。",
+        "key_points": [
+          "⚠️ 面积是|k|，不是k，因为k可正可负，面积恒为正。",
+          "⚠️ 矩形由点向两坐标轴作垂线围成，不是任意矩形。",
+          "⚠️ 点必须在函数图象上，否则面积与k无关。"
+        ],
+        "application": "典型考查方式：给出图象上一点坐标，求k值或矩形面积；或已知矩形面积，求反比例函数解析式，常结合坐标系中的三角形面积问题。",
+        "connections": "此概念是反比例函数性质的核心，与一次函数中k的几何意义（斜率）形成对比，也为后续学习二次函数中系数的几何意义奠定基础。",
+        "common_mistakes": [
+          "错误1：直接写矩形面积=k，忽略绝对值，导致负k时面积出现负数。",
+          "错误2：认为矩形面积等于|k|，但误将点取在坐标轴上，此时垂线重合，矩形退化为线段。",
+          "错误3：计算面积时忘记取绝对值，例如k=-3时，点(1,-3)围成矩形面积=1×3=3，误写成-3。"
+        ],
+        "counter_examples": "容易混淆的是：认为矩形面积等于k（忽略绝对值），或认为点不在图象上时面积仍等于|k|。实际上，只有图象上的点才满足此关系。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G9-MATH-X-ku-反比例函数中k的取值范围",
+      "textbook_id": "RENJIAO-G9-MATH-X",
+      "cluster_id": "RENJIAO-G9-MATH-X-kc-反比例函数的图象与性质",
+      "name": "反比例函数中k的取值范围",
+      "description": "根据反比例函数图象所在象限或增减性确定k的取值范围。",
+      "prerequisites": [
+        "ku-004",
+        "ku-005"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "若反比例函数 $y = \\frac{k}{x}$ 的图象经过点 $(2, -3)$，代入得 $k = -6 < 0$，故图象在第二、四象限。",
+          "若函数 $y = \\frac{k}{x}$ 在第二象限内y随x增大而增大，则 $k < 0$（因为第二象限内x<0，y>0，且增减性符合k<0）。"
+        ],
+        "intuition": "反比例函数中k的符号决定了图象所在的象限，就像温度计上的正负号告诉你零上还是零下，k的绝对值大小则决定了图象离坐标轴的远近。",
+        "definition": "对于反比例函数 $y = \\frac{k}{x}$（$k \\neq 0$），k的取值范围是全体非零实数。当 $k > 0$ 时，图象位于第一、三象限；当 $k < 0$ 时，图象位于第二、四象限。",
+        "key_points": [
+          "⚠️ k不能为0，否则函数退化为 $y=0$，不再是反比例函数。",
+          "⚠️ 图象所在象限完全由k的符号决定，与x、y的正负无关。",
+          "⚠️ 增减性需分象限讨论：$k>0$时，在每个象限内y随x增大而减小；$k<0$时，在每个象限内y随x增大而增大。"
+        ],
+        "application": "常见题型：给出图象所在象限或增减性，求k的取值范围；或给出图象上一点坐标，求k值并判断象限。",
+        "connections": "反比例函数k的取值范围与一次函数k的几何意义形成对比，也为后续学习二次函数中a、b、c的符号判断奠定基础。",
+        "common_mistakes": [
+          "误以为k>0时图象过一、二象限：实际上k>0时图象只在一、三象限，不经过二、四。",
+          "忽略“在每个象限内”的前提，直接说“y随x增大而减小”导致错误：例如k>0时，从第一象限到第三象限x增大但y也增大，必须分象限讨论。",
+          "将点坐标代入时符号错误：如点(-1,2)代入得 $k = -2$，学生常误算为 $k=2$。"
+        ],
+        "counter_examples": "一次函数 $y = kx + b$ 中k决定直线倾斜方向，而反比例函数k决定双曲线象限，两者k的意义不同，不能混淆。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G9-MATH-X-ku-反比例函数图象-双曲线",
+      "textbook_id": "RENJIAO-G9-MATH-X",
+      "cluster_id": "RENJIAO-G9-MATH-X-kc-反比例函数的图象与性质",
+      "name": "反比例函数图象（双曲线）",
+      "description": "反比例函数y=k/x的图象是双曲线，由两支组成，分别位于第一、三象限或第二、四象限。",
+      "prerequisites": [
+        "ku-001"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "$y = \\frac{2}{x}$：$k=2>0$，图象两支分别在第一、三象限，过点(1,2)和(-1,-2)",
+          "$y = -\\frac{3}{x}$：$k=-3<0$，图象两支分别在第二、四象限，过点(1,-3)和(-1,3)"
+        ],
+        "intuition": "反比例函数图象像跷跷板的两端，一个量增大时另一个量减小，形成两支对称的曲线，反映生活中成反比的关系。",
+        "definition": "形如 $y = \\frac{k}{x}$（$k \\neq 0$）的函数，其图象为双曲线，由两支分离的曲线组成，分别位于第一、三象限（$k>0$）或第二、四象限（$k<0$），且两支关于原点中心对称。",
+        "key_points": [
+          "⚠️ 双曲线两支永不相交于坐标轴，但无限接近（渐近线为x轴和y轴）",
+          "⚠️ $k$ 的正负决定象限位置，$|k|$ 大小决定曲线离原点的远近",
+          "⚠️ 图象是平滑曲线，不是折线或直线，且每个象限内y随x增大而减小（$k>0$）或增大（$k<0$）"
+        ],
+        "application": "常见考查：根据 $k$ 值判断图象所在象限或增减性；给定图象上一点坐标求 $k$ 值，或比较不同点函数值大小。",
+        "connections": "反比例函数图象是学习函数性质（增减性、对称性）的典型模型，后续与一次函数、二次函数图象对比，加深对函数图象特征的理解。",
+        "common_mistakes": [
+          "误认为双曲线两支会相交：实际上两支关于原点对称，永不相交",
+          "混淆 $k>0$ 和 $k<0$ 的象限位置：$k>0$ 在一、三象限，$k<0$ 在二、四象限，常记反",
+          "画图时连成一条曲线：双曲线两支是分离的，不能穿过坐标轴连接"
+        ],
+        "counter_examples": "反比例函数图象不是一次函数直线（如 $y=2x$），也不是二次函数抛物线（如 $y=x^2$），双曲线有渐近线且两支分离，而抛物线是连续单支曲线。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G9-MATH-X-ku-反比例函数图象的对称性",
+      "textbook_id": "RENJIAO-G9-MATH-X",
+      "cluster_id": "RENJIAO-G9-MATH-X-kc-反比例函数的图象与性质",
+      "name": "反比例函数图象的对称性",
+      "description": "反比例函数y=k/x的图象既关于直线y=x对称，又关于直线y=-x对称。",
+      "prerequisites": [
+        "反比例函数的图象"
+      ],
+      "related_kus": [],
+      "difficulty": 0.6,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "例：y=6/x图象上有点(2,3)，则关于y=x对称得(3,2)也在图象上；关于y=-x对称得(-3,-2)也在图象上。",
+          "例：y=-4/x图象上有点(1,-4)，则关于y=x对称得(-4,1)也在图象上；关于y=-x对称得(4,-1)也在图象上。"
+        ],
+        "intuition": "反比例函数图象的对称性就像镜子反射：将图象沿直线y=x或y=-x翻转，图象与自身完全重合，这帮助我们快速判断点的对应关系。",
+        "definition": "反比例函数y=k/x（k≠0）的图象是双曲线，它关于直线y=x和直线y=-x对称，即若点(a,b)在图象上，则点(b,a)和(-b,-a)也在图象上。",
+        "key_points": [
+          "⚠️ 对称轴是直线y=x和y=-x，不是坐标轴（x轴或y轴）。",
+          "⚠️ 对称性适用于所有k≠0的反比例函数，与k的正负无关。",
+          "⚠️ 图象还关于原点中心对称，但这里特指轴对称。"
+        ],
+        "application": "典型考查：给出图象上一点坐标，利用对称性求对称点坐标；或判断图象是否关于某直线对称，常结合选择题或填空题出现。",
+        "connections": "与一次函数y=x和y=-x的图象性质相关，也为后续学习双曲线的标准方程和圆锥曲线对称性打下基础。",
+        "common_mistakes": [
+          "错误认为对称轴是x轴或y轴：实际上反比例函数图象不关于x轴或y轴对称，因为若点(a,b)在图象上，点(a,-b)一般不在。",
+          "错误认为对称性只适用于k>0：实际上k<0时图象同样关于y=x和y=-x对称，只是分支在二、四象限。",
+          "混淆轴对称与中心对称：学生常把关于y=x对称误记为关于原点对称，导致点的对应关系错误。"
+        ],
+        "counter_examples": "容易混淆的是反比例函数图象关于原点中心对称（点(a,b)对应(-a,-b)），而轴对称是关于直线y=x或y=-x的反射，两者不同。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G9-MATH-X-ku-反比例函数图象的识别",
+      "textbook_id": "RENJIAO-G9-MATH-X",
+      "cluster_id": "RENJIAO-G9-MATH-X-kc-反比例函数的图象与性质",
+      "name": "反比例函数图象的识别",
+      "description": "根据解析式或图象特征判断是否为反比例函数图象，注意双曲线两支的象限分布。",
+      "prerequisites": [
+        "ku-003"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "例1：$y = \\frac{3}{x}$，$k=3>0$，图象两支分别在第一、三象限。",
+          "例2：$y = -\\frac{2}{x}$，$k=-2<0$，图象两支分别在第二、四象限。"
+        ],
+        "intuition": "反比例函数描述两个量成反比的关系，比如速度越快时间越短，其图象是两支永不碰坐标轴的双曲线。",
+        "definition": "形如 $y = \\frac{k}{x}$（$k \\neq 0$）的函数称为反比例函数，图象为双曲线，两支分别位于第一、三象限（$k>0$）或第二、四象限（$k<0$），且无限接近坐标轴但不相交。",
+        "key_points": [
+          "⚠️ 图象是两支分离的曲线，不是一条连续曲线，且每支都向坐标轴无限延伸。",
+          "⚠️ 象限分布由 $k$ 的符号决定：$k>0$ 时在一、三象限，$k<0$ 时在二、四象限。",
+          "⚠️ 图象不会经过原点，也不会与 $x$ 轴或 $y$ 轴相交。"
+        ],
+        "application": "常见考查方式：给出图象判断 $k$ 的符号，或根据 $k$ 值画出大致图象；也常与一次函数图象结合，判断交点所在象限。",
+        "connections": "反比例函数图象是后续学习二次函数、幂函数图象的基础，也是理解函数单调性与对称性的重要实例。",
+        "common_mistakes": [
+          "误认为 $y = \\frac{1}{x+1}$ 是反比例函数，实际上分母含 $x$ 的线性项，不是 $\\frac{k}{x}$ 形式。",
+          "认为 $k>0$ 时图象在二、四象限，混淆了 $k$ 的符号与象限对应关系。",
+          "误以为双曲线两支会穿过原点，实际上 $x \\neq 0$，图象永不经过原点。"
+        ],
+        "counter_examples": "一次函数 $y = kx + b$（$k \\neq 0$）的图象是直线，与反比例函数双曲线完全不同；$y = \\frac{k}{x} + c$ 不是标准反比例函数，其图象是平移后的双曲线，但识别时需先化为 $y = \\frac{k}{x}$ 形式。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G9-MATH-X-ku-反比例函数定义",
+      "textbook_id": "RENJIAO-G9-MATH-X",
+      "cluster_id": "RENJIAO-G9-MATH-X-kc-反比例函数的概念与解析式",
+      "name": "反比例函数定义",
+      "description": "形如y=k/x（k≠0）的函数称为反比例函数，其中x是自变量，y是函数，k是比例系数。",
+      "prerequisites": [],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "例1：$y = \\frac{6}{x}$，$k=6>0$，图像在一三象限，$x$ 增大时 $y$ 减小；",
+          "例2：$y = -\\frac{2}{x}$，$k=-2<0$，图像在二四象限，$x$ 增大时 $y$ 增大。"
+        ],
+        "intuition": "反比例函数描述两个量成反比关系：一个量增大时另一个量按相同倍数减小，比如速度固定时路程与时间成正比，而路程固定时速度与时间成反比。",
+        "definition": "形如 $y = \\frac{k}{x}$（$k \\neq 0$）的函数称为反比例函数，其中 $x$ 是自变量，$y$ 是函数，$k$ 是比例系数。关键限定：$x$ 不能为 0，$k$ 必须为非零常数。",
+        "key_points": [
+          "⚠️ 反比例函数中 $x$ 不能为 0，因为分母为零无意义；",
+          "⚠️ 比例系数 $k$ 必须是非零常数，$k=0$ 时函数退化为 $y=0$（常函数），不是反比例；",
+          "⚠️ 反比例函数图像是双曲线，两支分别位于一三象限或二四象限，取决于 $k$ 的正负。"
+        ],
+        "application": "典型考查：已知一对对应值求 $k$ 值，或根据图像判断 $k$ 的符号；也常与一次函数结合，求交点坐标或比较函数值大小。",
+        "connections": "反比例函数是初中函数学习的深化，与正比例函数 $y=kx$ 对比理解；高中将学习幂函数 $y=x^{-1}$，反比例函数是其特例。",
+        "common_mistakes": [
+          "错误认为 $y = \\frac{1}{x+1}$ 是反比例函数，实际上分母不是 $x$ 本身，而是 $x+1$，不符合定义；",
+          "错误认为 $k$ 可以为 0，若 $k=0$ 则 $y=0$，是常函数，图像是 $x$ 轴，不是双曲线；",
+          "错误认为反比例函数图像经过原点，实际上 $x$ 不能为 0，图像与坐标轴无交点。"
+        ],
+        "counter_examples": "容易混淆的是 $y = \\frac{k}{x} + b$（$b \\neq 0$）或 $y = \\frac{k}{x^2}$，这些不是反比例函数，因为反比例函数必须严格形如 $y = \\frac{k}{x}$，不能有常数项或指数变化。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G9-MATH-X-ku-反比例函数性质-k-0",
+      "textbook_id": "RENJIAO-G9-MATH-X",
+      "cluster_id": "RENJIAO-G9-MATH-X-kc-反比例函数的图象与性质",
+      "name": "反比例函数性质（k>0）",
+      "description": "当k>0时，双曲线的两支分别位于第一、三象限，在每个象限内y随x的增大而减小。",
+      "prerequisites": [
+        "ku-003"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "$y = \\frac{2}{x}$，当x=1时y=2，x=2时y=1，在第一象限内y随x增大而减小",
+          "$y = \\frac{5}{x}$，当x=-1时y=-5，x=-2时y=-2.5，在第三象限内y随x增大而减小"
+        ],
+        "intuition": "反比例函数描述两个量成反比的关系，比如速度越快时间越短。k>0时，x和y同号，所以图像在一三象限，且随着x增大y减小。",
+        "definition": "形如 $y = \\frac{k}{x}$（$k \\neq 0$）的函数，当 $k > 0$ 时，双曲线的两支分别位于第一、三象限，在每个象限内，$y$ 随 $x$ 的增大而减小。",
+        "key_points": [
+          "⚠️ 必须强调“在每个象限内”这个前提，跨象限比较增减性无意义",
+          "⚠️ 双曲线两支无限接近坐标轴但永不相交，x和y均不能为0",
+          "⚠️ k>0时，图像关于原点中心对称，且关于直线y=x对称"
+        ],
+        "application": "常见考查：给定k>0的反比例函数，判断点所在象限或比较不同x对应的y值大小；结合实际问题（如行程、工程）列函数式并分析增减性。",
+        "connections": "反比例函数是八年级正比例函数 $y=kx$ 的逆关系，也是九年级二次函数和高中幂函数的基础，体现变量间的非线性关系。",
+        "common_mistakes": [
+          "错误认为整个函数y随x增大而减小，忽略“在每个象限内”的限制，导致跨象限比较（如x=1和x=-1）得出错误结论",
+          "误以为双曲线会与坐标轴相交，实际上x和y均不能为0，图像无限接近但永不相交",
+          "混淆反比例函数与一次函数，认为k>0时y总随x增大而减小，忘记反比例函数的分支特性"
+        ],
+        "counter_examples": "反比例函数 $y = \\frac{k}{x}$ 当 $k < 0$ 时，图像在二、四象限，每个象限内 $y$ 随 $x$ 增大而增大，与k>0情况相反。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G9-MATH-X-ku-反比例函数的图象",
+      "textbook_id": "RENJIAO-G9-MATH-X",
+      "cluster_id": "RENJIAO-G9-MATH-X-kc-反比例函数的图象与性质",
+      "name": "反比例函数的图象",
+      "description": "反比例函数 y = k/x (k≠0) 的图象是双曲线，由两支曲线组成，关于原点对称。",
+      "prerequisites": [
+        "反比例函数的概念",
+        "函数图象的画法"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "$y = \\frac{2}{x}$（$k=2>0$），图象在第一、三象限，过点 $(1,2)$ 和 $(-1,-2)$。",
+          "$y = -\\frac{3}{x}$（$k=-3<0$），图象在第二、四象限，过点 $(1,-3)$ 和 $(-1,3)$。"
+        ],
+        "intuition": "反比例函数的图象描述了两个变量成反比时的变化关系，比如速度与时间、压强与体积，生活中常见于“此消彼长”的场景。",
+        "definition": "形如 $y = \\frac{k}{x}$（$k \\neq 0$）的函数，其图象是两支关于原点中心对称的双曲线，分别位于第一、三象限（$k>0$）或第二、四象限（$k<0$）。",
+        "key_points": [
+          "⚠️ 双曲线两支无限接近坐标轴但永不相交，因为 $x \\neq 0$ 且 $y \\neq 0$。",
+          "⚠️ 图象的对称中心是原点，而不是坐标轴；关于原点对称意味着点 $(x,y)$ 和 $(-x,-y)$ 都在图象上。",
+          "⚠️ $k$ 的正负决定双曲线所在象限，$|k|$ 越大，图象离原点越远。"
+        ],
+        "application": "典型考查方式：给出图象判断 $k$ 的符号或比较 $|k|$ 大小；或已知点坐标求 $k$ 值，再画出草图并说明性质。",
+        "connections": "反比例函数图象是学习二次函数、幂函数以及解析几何中双曲线的基础，同时与物理中的欧姆定律、气体定律等实际应用紧密相关。",
+        "common_mistakes": [
+          "误以为双曲线会与坐标轴相交：实际上 $x=0$ 时函数无定义，图象无限接近但永不相交。",
+          "混淆 $k>0$ 和 $k<0$ 的象限位置：$k>0$ 时在一、三象限，$k<0$ 时在二、四象限，常记反。",
+          "认为两支曲线关于 $x$ 轴或 $y$ 轴对称：实际是关于原点对称，即旋转180°后重合。"
+        ],
+        "counter_examples": "一次函数 $y = kx$ 的图象是直线，而反比例函数图象是双曲线；二者本质不同：一次函数中 $y$ 随 $x$ 线性变化，反比例函数中 $y$ 随 $x$ 非线性变化且 $x$ 不能为0。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G9-MATH-X-ku-反比例函数的图象-双曲线",
+      "textbook_id": "RENJIAO-G9-MATH-X",
+      "cluster_id": "RENJIAO-G9-MATH-X-kc-反比例函数的图象与性质",
+      "name": "反比例函数的图象（双曲线）",
+      "description": "反比例函数y=k/x的图象是双曲线，由两支曲线组成，分别位于第一、第三象限或第二、第四象限。",
+      "prerequisites": [
+        "反比例函数的定义",
+        "描点法画函数图象"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "$y = \\frac{2}{x}$（$k=2>0$），图象在第一、三象限，过点 $(1,2)$ 和 $(-1,-2)$。",
+          "$y = -\\frac{3}{x}$（$k=-3<0$），图象在第二、四象限，过点 $(1,-3)$ 和 $(-1,3)$。"
+        ],
+        "intuition": "反比例函数描述两个量成反比的关系，比如速度与时间；其图象双曲线直观展示了一个量增大时另一个量减小的趋势。",
+        "definition": "形如 $y = \\frac{k}{x}$（$k \\neq 0$）的函数称为反比例函数，其图象是两支分离的曲线（双曲线），分别位于第一、三象限（$k>0$）或第二、四象限（$k<0$），且无限接近坐标轴但永不相交。",
+        "key_points": [
+          "⚠️ 双曲线两支永不与坐标轴相交，因为 $x \\neq 0$ 且 $y \\neq 0$。",
+          "⚠️ $k$ 的正负决定双曲线所在象限：$k>0$ 在一、三象限，$k<0$ 在二、四象限。",
+          "⚠️ 图象关于原点对称，且关于直线 $y=x$ 和 $y=-x$ 对称。"
+        ],
+        "application": "常考根据 $k$ 值判断图象所在象限，或通过图象上一点坐标求 $k$ 值；也用于解决实际反比例问题（如速度-时间图象）。",
+        "connections": "反比例函数图象是二次函数和幂函数的基础，也为高中学习双曲线的标准方程（如 $\\frac{x^2}{a^2} - \\frac{y^2}{b^2} = 1$）做铺垫。",
+        "common_mistakes": [
+          "误认为双曲线经过原点：实际上 $x=0$ 时函数无定义，图象无限接近但不过原点。",
+          "混淆 $k>0$ 和 $k<0$ 的象限：$k>0$ 时图象在一、三象限，$k<0$ 时在二、四象限，学生常记反。",
+          "认为两支曲线会相交：双曲线两支关于原点对称，但永不相交。"
+        ],
+        "counter_examples": "一次函数 $y = kx + b$ 的图象是直线，与双曲线不同；反比例函数图象是曲线，且 $x$ 不能为 0。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G9-MATH-X-ku-反比例函数的定义",
+      "textbook_id": "RENJIAO-G9-MATH-X",
+      "cluster_id": "RENJIAO-G9-MATH-X-kc-反比例函数的概念与解析式",
+      "name": "反比例函数的定义",
+      "description": "形如y=k/x（k为常数，k≠0）的函数叫做反比例函数，其中x是自变量，y是函数，x的取值范围是不等于0的一切实数。",
+      "prerequisites": [
+        "函数的概念",
+        "分式的意义"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "例：$y = \\frac{3}{x}$，其中 $k=3$，当 $x=2$ 时 $y=1.5$，$x$ 增大到 4 时 $y$ 减小到 0.75。",
+          "例：$y = -\\frac{5}{x}$，$k=-5$，当 $x$ 为正时 $y$ 为负，图像在第二、四象限。"
+        ],
+        "intuition": "反比例函数描述两个量成反比的关系：一个量增大时，另一个量按相同倍数减小，比如速度一定时，路程与时间成正比；而路程一定时，速度与时间成反比。",
+        "definition": "形如 $y = \\frac{k}{x}$（$k$ 为常数，$k \\neq 0$）的函数叫做反比例函数，其中 $x$ 是自变量，$y$ 是函数，$x$ 的取值范围是不等于 0 的一切实数。",
+        "key_points": [
+          "⚠️ $k \\neq 0$ 是定义的关键，若 $k=0$ 则函数退化为 $y=0$（常函数），不再是反比例函数。",
+          "⚠️ 自变量 $x$ 不能为 0，否则分母无意义；同时 $y$ 也不可能为 0（因为 $k \\neq 0$）。",
+          "⚠️ 反比例函数也可写成 $xy = k$ 或 $y = k \\cdot x^{-1}$，但必须保证 $k$ 为常数且不为 0。"
+        ],
+        "application": "典型考查：给出 $x$、$y$ 的几组对应值，判断是否为反比例函数并求 $k$；或结合图像，根据一个变量求另一个变量，如已知 $y$ 与 $x$ 成反比，且 $x=2$ 时 $y=3$，求 $x=6$ 时的 $y$ 值。",
+        "connections": "反比例函数是初中函数学习的重要类型，与正比例函数（$y=kx$）对比理解；后续学习二次函数和幂函数时，$y=x^{-1}$ 是幂函数的特例。",
+        "common_mistakes": [
+          "误认为 $y = \\frac{1}{2x}$ 不是反比例函数，实际上可化为 $y = \\frac{1/2}{x}$，$k=1/2$，是反比例函数。",
+          "认为 $y = \\frac{k}{x}$ 中 $x$ 可以取 0，忽略分母不能为 0 导致定义域错误。",
+          "混淆反比例函数与一次函数，如认为 $y = \\frac{2}{x}$ 是 $y$ 随 $x$ 增大而减小，实际上在 $x>0$ 和 $x<0$ 区间内单调性不同。"
+        ],
+        "counter_examples": "$y = \\frac{2}{x+1}$ 不是反比例函数，因为分母是 $x+1$ 而非 $x$，它属于分式函数但不符合 $y=k/x$ 的标准形式。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G9-MATH-X-ku-反比例函数的性质-k-0",
+      "textbook_id": "RENJIAO-G9-MATH-X",
+      "cluster_id": "RENJIAO-G9-MATH-X-kc-反比例函数的图象与性质",
+      "name": "反比例函数的性质（k>0）",
+      "description": "当 k>0 时，双曲线的两支分别位于第一、第三象限，在每个象限内y随x的增大而减小。",
+      "prerequisites": [
+        "反比例函数的图象"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "例：$y=\\frac{2}{x}$，当x=1时y=2，x=2时y=1，在第一象限内y随x增大而减小",
+          "例：$y=\\frac{5}{x}$，当x=-1时y=-5，x=-2时y=-2.5，在第三象限内y随x增大而减小"
+        ],
+        "intuition": "反比例函数描述两个量成反比的关系，比如速度越快时间越短。k>0时，x和y同号，所以图像在一、三象限，且每个象限内y随x增大而减小。",
+        "definition": "形如 $y=\\frac{k}{x}$（$k>0$）的函数称为反比例函数，其图像是双曲线，两支分别位于第一、第三象限，在每个象限内，y随x的增大而减小。",
+        "key_points": [
+          "⚠️ 必须强调“在每个象限内”，不能跨象限比较增减性",
+          "⚠️ 图像不与坐标轴相交，因为x和y均不为0",
+          "⚠️ k>0时，两支曲线分别在一、三象限，且关于原点对称"
+        ],
+        "application": "典型考查方式：给出反比例函数解析式，判断图像所在象限和增减性；或结合实际问题（如路程一定时速度与时间的关系）求函数解析式并分析性质。",
+        "connections": "反比例函数是初中函数学习的重要部分，与正比例函数、一次函数对比学习，为高中学习双曲线和反比例关系打下基础。",
+        "common_mistakes": [
+          "错误认为整个函数y随x增大而减小，忽略了“在每个象限内”的限制，导致跨象限比较（如x=1和x=-1）得出错误结论",
+          "错误认为图像经过原点，实际上x和y均不能为0，图像无限接近坐标轴但永不相交",
+          "混淆k>0和k<0的性质，k<0时图像在二、四象限，y随x增大而增大"
+        ],
+        "counter_examples": "容易与正比例函数混淆：正比例函数$y=kx$（k>0）图像过一、三象限，但y随x增大而增大；而反比例函数$y=\\frac{k}{x}$（k>0）虽然也在第一、三象限，但y随x增大而减小。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G9-MATH-X-ku-反比例函数的概念",
+      "textbook_id": "RENJIAO-G9-MATH-X",
+      "cluster_id": "RENJIAO-G9-MATH-X-kc-反比例函数的基本概念与解析式",
+      "name": "反比例函数的概念",
+      "description": "形如 y = k/x (k为常数，k≠0) 的函数称为反比例函数，其中x是自变量，y是函数，x≠0。",
+      "prerequisites": [
+        "函数的概念",
+        "正比例函数"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "当 $k=2$ 时，$y = \\frac{2}{x}$，$x$ 增大时 $y$ 减小；",
+          "当 $k=-3$ 时，$y = -\\frac{3}{x}$，图像在第二、四象限。"
+        ],
+        "intuition": "反比例函数描述的是两个量之间“此消彼长”的关系，比如速度一定时，路程与时间成正比；而路程一定时，速度与时间成反比。",
+        "definition": "形如 $y = \\frac{k}{x}$（$k$ 为常数，$k \\neq 0$）的函数称为反比例函数，其中 $x$ 是自变量，$y$ 是函数，且 $x \\neq 0$。",
+        "key_points": [
+          "⚠️ 反比例函数中 $x$ 不能为 0，因为分母不能为零；",
+          "⚠️ 常数 $k$ 必须是非零常数，$k=0$ 时函数退化为 $y=0$（常函数），不是反比例函数；",
+          "⚠️ 反比例函数也可以写成 $y = k \\cdot x^{-1}$ 或 $xy = k$ 的形式，但 $x$ 的指数必须是 -1。"
+        ],
+        "application": "典型考查方式：① 根据已知点求 $k$ 值，如已知 $x=2$ 时 $y=3$，求 $k$；② 判断一个函数是否为反比例函数，并指出 $k$ 的值。",
+        "connections": "反比例函数是初中函数学习的第二个重要类型，与正比例函数 $y = kx$ 对比学习，为高中学习幂函数和双曲线打下基础。",
+        "common_mistakes": [
+          "错误认为 $y = \\frac{2}{x+1}$ 是反比例函数，实际上分母不是 $x$ 本身，而是 $x+1$，不符合 $y = \\frac{k}{x}$ 的标准形式；",
+          "错误认为 $y = \\frac{1}{x^2}$ 是反比例函数，实际上 $x$ 的指数是 -2 而不是 -1，这是幂函数而非反比例函数；",
+          "忽略 $x \\neq 0$ 的条件，在求自变量取值范围时漏掉 $x \\neq 0$。"
+        ],
+        "counter_examples": "容易混淆的是 $y = \\frac{k}{x} + b$（$b \\neq 0$），这不是反比例函数，因为不符合 $xy = k$ 的形式，图像是反比例函数图像平移后的结果。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G9-MATH-X-ku-反比例函数的解析式",
+      "textbook_id": "RENJIAO-G9-MATH-X",
+      "cluster_id": "RENJIAO-G9-MATH-X-kc-反比例函数的基本概念与解析式",
+      "name": "反比例函数的解析式",
+      "description": "反比例函数解析式为 y = k/x (k≠0)，也可写作 xy = k 或 y = k·x^{-1}。",
+      "prerequisites": [
+        "反比例函数的概念"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "已知 $y$ 与 $x$ 成反比，且 $x=2$ 时 $y=3$，求解析式：代入得 $k=6$，所以 $y = \\frac{6}{x}$。",
+          "矩形面积固定为 12，长 $x$ 与宽 $y$ 的关系：$xy=12$，即 $y = \\frac{12}{x}$。"
+        ],
+        "intuition": "反比例函数描述两个量成反比的关系：一个量增大时，另一个量按相同倍数减小，比如速度与时间在固定路程下成反比。",
+        "definition": "形如 $y = \\frac{k}{x}$（$k \\neq 0$）的函数称为反比例函数，其中 $k$ 是比例常数，$x$ 是自变量，$y$ 是因变量，$x$ 的取值范围是 $x \\neq 0$。",
+        "key_points": [
+          "⚠️ 比例常数 $k \\neq 0$，否则函数退化为 $y=0$，不是反比例函数。",
+          "⚠️ 自变量 $x$ 不能为 0，否则分母无意义。",
+          "⚠️ 解析式 $y = k/x$ 与 $xy = k$ 等价，但后者更直观体现乘积为定值。"
+        ],
+        "application": "典型考查：已知一对对应值求 $k$ 并写出解析式；或根据实际问题（如速度与时间）建立反比例函数模型求解。",
+        "connections": "反比例函数是初中函数学习的重要部分，为后续学习二次函数和高中幂函数、双曲线打下基础，与正比例函数对比理解比例关系。",
+        "common_mistakes": [
+          "错误认为 $y = \\frac{k}{x}$ 中 $k$ 可以是 0，实际上 $k=0$ 时函数恒为 0，不是反比例。",
+          "忽略 $x \\neq 0$ 的定义域，在求函数值时代入 $x=0$ 导致无意义。",
+          "将 $y = \\frac{1}{x} + 1$ 误认为反比例函数，因为形式不是 $y = k/x$。"
+        ],
+        "counter_examples": "反比例函数与正比例函数 $y=kx$ 混淆：正比例是比值固定，反比例是乘积固定。例如 $y=2x$ 是正比例，$y=2/x$ 是反比例。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G9-MATH-X-ku-反比例函数解决实际问题-体积与底面积",
+      "textbook_id": "RENJIAO-G9-MATH-X",
+      "cluster_id": "RENJIAO-G9-MATH-X-kc-反比例函数的实际应用",
+      "name": "反比例函数解决实际问题（体积与底面积）",
+      "description": "体积一定时，高与底面积成反比例关系。",
+      "prerequisites": [
+        "ku-001"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "例：一个圆柱形水箱体积为 $100\\,\\text{m}^3$，底面积 $20\\,\\text{m}^2$ 时高 $5\\,\\text{m}$；若底面积减为 $10\\,\\text{m}^2$，则高变为 $10\\,\\text{m}$（$h = \\frac{100}{10}=10$）。",
+          "例：圆锥体积公式 $V=\\frac13\\pi r^2 h$，若 $V$ 固定，则底面积 $S=\\pi r^2$ 与高 $h$ 也成反比：$S \\cdot h = 3V$（常数）。"
+        ],
+        "intuition": "就像用相同体积的水倒入不同粗细的杯子，杯子越细（底面积越小），水的高度就越高。体积固定时，底面积与高度成反比。",
+        "definition": "在体积 $V$ 为定值的条件下，底面积 $S$ 与高 $h$ 满足 $S \\cdot h = V$（常数），即 $h = \\frac{V}{S}$，$S$ 与 $h$ 成反比例关系。限定条件：$V$ 恒定，$S>0$，$h>0$。",
+        "key_points": [
+          "⚠️ 反比例函数 $h = \\frac{V}{S}$ 中，$V$ 是常数，不是变量，不能写成 $S = \\frac{h}{V}$。",
+          "⚠️ 自变量 $S$ 是底面积，因变量 $h$ 是高，两者乘积恒等于体积，不能混淆角色。",
+          "⚠️ 实际问题中 $S$ 和 $h$ 都必须是正数，图像只在第一象限，不能取负值。"
+        ],
+        "application": "典型考查：给出体积和一组底面积，求对应高并列表描点；或已知高和底面积的变化关系，求体积常数。常结合圆柱、圆锥、长方体等立体图形出题。",
+        "connections": "前接反比例函数 $y=k/x$ 的图像与性质，后续可联系物理中的压强公式 $p=F/S$（压力一定时压强与受力面积成反比），以及几何中相似图形的面积比。",
+        "common_mistakes": [
+          "错误1：认为 $S$ 增大时 $h$ 也增大，忽略了乘积为常数，实际 $S$ 增大 $h$ 应减小。",
+          "错误2：直接套用 $y=k/x$ 形式时，忘记 $k$ 是体积 $V$，误将 $S$ 或 $h$ 当作常数。",
+          "错误3：在单位换算中出错，如体积用 $\\text{m}^3$，底面积用 $\\text{cm}^2$，导致计算错误。"
+        ],
+        "counter_examples": "容易混淆的是正比例关系：例如当底面积固定时，体积与高成正比（$V = S \\cdot h$，$S$ 常数），而不是反比例。反比例强调乘积为定值，正比例强调比值为定值。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G9-MATH-X-ku-反比例函数解决实际问题-功率与速度",
+      "textbook_id": "RENJIAO-G9-MATH-X",
+      "cluster_id": "RENJIAO-G9-MATH-X-kc-反比例函数的实际应用",
+      "name": "反比例函数解决实际问题（功率与速度）",
+      "description": "当功率P一定时，牵引力F与速度v成反比例关系：F=P/v。",
+      "prerequisites": [
+        "ku-001"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "汽车发动机功率60kW，速度20m/s时，牵引力F=60000/20=3000N。",
+          "起重机功率10kW，吊起货物速度0.5m/s，牵引力F=10000/0.5=20000N。"
+        ],
+        "intuition": "就像骑自行车时，功率一定，上坡（速度慢）需要更用力蹬（牵引力大），下坡（速度快）则省力。这揭示了物理量之间的反比关系。",
+        "definition": "当功率P为定值时，牵引力F与速度v成反比例函数关系，即F = P/v（v > 0）。关键限定：P恒定，v不为零。",
+        "key_points": [
+          "⚠️ 反比例函数中，自变量v不能为0，否则无意义。",
+          "⚠️ 注意单位统一：P（瓦特）、F（牛顿）、v（米/秒），否则计算错误。",
+          "⚠️ 图像是双曲线的一支（第一象限），不是整个双曲线。"
+        ],
+        "application": "典型考查：已知功率和速度求牵引力，或已知功率和牵引力求速度；结合图像分析F-v关系，判断函数类型。",
+        "connections": "与正比例函数对比（如F=ma中a与F成正比），为高中学习功率与速度的瞬时关系（P=Fv）打下基础。",
+        "common_mistakes": [
+          "误认为F与v成正比，实际是反比，如速度增大时牵引力减小。",
+          "忘记单位换算：如功率用kW，速度用km/h，直接代入公式导致错误。",
+          "忽略v>0的条件，认为v可以取负值（速度方向相反时，公式仍成立，但实际中v通常取正值）。"
+        ],
+        "counter_examples": "混淆正比例：若F与v成正比（如F=kv），则P=Fv=kv²，功率随速度平方变化，而非恒定。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G9-MATH-X-ku-反比例函数解决实际问题-压强与面积",
+      "textbook_id": "RENJIAO-G9-MATH-X",
+      "cluster_id": "RENJIAO-G9-MATH-X-kc-反比例函数的实际应用",
+      "name": "反比例函数解决实际问题（压强与面积）",
+      "description": "压力一定时，压强与受力面积成反比例关系。",
+      "prerequisites": [
+        "ku-001"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "例1：一个重500N的人站在地面上，双脚面积0.05m²，求压强。解：p=500/0.05=10000Pa。",
+          "例2：若人改为单脚站立，面积减半，压强变为原来的2倍，即20000Pa。"
+        ],
+        "intuition": "为什么需要这个概念？生活类比或本质是什么（1-2句）",
+        "definition": "在压力F一定时，压强p与受力面积S成反比例关系，即p = F/S（S>0）。其中F为常量，S为自变量，p为因变量。",
+        "key_points": [
+          "⚠️ 反比例函数中，自变量S必须大于0，因为面积不能为负或零。",
+          "⚠️ 压强p随S增大而减小，但乘积p×S恒等于压力F，这是反比例关系的核心。",
+          "⚠️ 实际问题中，单位必须统一（如压力用N，面积用m²，压强用Pa）。"
+        ],
+        "application": "典型考查方式，1-2种，各一句",
+        "connections": "与前后知识的联系，1-2句",
+        "common_mistakes": [
+          "错误1：认为压强与面积成正比。实际上，压力一定时，面积越大压强越小，成反比。",
+          "错误2：忽略面积单位换算，如将cm²直接代入公式，导致结果错误。应先将cm²换算为m²。",
+          "错误3：混淆压力和压强，认为压力随面积变化。实际上压力是常量，压强才随面积变化。"
+        ],
+        "counter_examples": "容易混淆的概念或反例，说清楚区别"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G9-MATH-X-ku-反比例函数解决实际问题-工作总量与时间",
+      "textbook_id": "RENJIAO-G9-MATH-X",
+      "cluster_id": "RENJIAO-G9-MATH-X-kc-反比例函数的实际应用",
+      "name": "反比例函数解决实际问题（工作总量与时间）",
+      "description": "工作总量一定时，工作效率与工作时间成反比例关系。",
+      "prerequisites": [
+        "ku-001"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "例：一项工程总量为120件，甲队每天完成10件，需12天；乙队每天完成15件，需8天。验证 $10 \\times 12 = 15 \\times 8 = 120$，符合反比例。",
+          "例：打印一份100页文件，打印机速度20页/分钟需5分钟；速度25页/分钟需4分钟。乘积均为100，反比例成立。"
+        ],
+        "intuition": "就像你和小伙伴一起搬砖，砖的总数固定，人越多每人搬得越少，人越少每人搬得越多。反比例函数就是描述这种‘此消彼长’关系的数学工具。",
+        "definition": "在反比例函数 $y = \\frac{k}{x}$（$k \\neq 0$）中，当工作总量 $W$ 固定时，工作效率 $v$ 与工作时间 $t$ 满足 $v = \\frac{W}{t}$，即 $v$ 与 $t$ 成反比例关系，其中 $k = W$ 为常数。",
+        "key_points": [
+          "⚠️ 必须明确工作总量是常数，否则不是反比例关系",
+          "⚠️ 自变量 $t$ 不能为0，否则无意义",
+          "⚠️ 注意单位统一，如时间单位不一致需换算"
+        ],
+        "application": "典型考查：给出工作总量和部分效率/时间数据，求另一变量；或结合图像，判断效率随时间变化的趋势，如求某时间点的效率值。",
+        "connections": "反比例函数是八年级函数学习的延伸，与正比例函数对比理解；后续在物理中（如压强与受力面积、电阻与电流）广泛应用，是建模实际问题的基础。",
+        "common_mistakes": [
+          "错误认为工作效率与时间直接相乘等于某个数，但未确认总量是否恒定（如题目中总量变化时仍套用反比例公式）",
+          "忽略自变量取值范围，将时间设为0或负数代入计算",
+          "混淆反比例与一次函数，如认为 $v = \\frac{W}{t} + 1$ 也是反比例（实际不是标准形式）"
+        ],
+        "counter_examples": "容易混淆的是正比例关系：当工作效率固定时，工作总量与时间成正比（如每小时做10个，时间越长总量越大），而反比例是总量固定，效率与时间成反比。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G9-MATH-X-ku-反比例函数解决实际问题-杠杆平衡",
+      "textbook_id": "RENJIAO-G9-MATH-X",
+      "cluster_id": "RENJIAO-G9-MATH-X-kc-反比例函数的实际应用",
+      "name": "反比例函数解决实际问题（杠杆平衡）",
+      "description": "杠杆平衡时，动力F与动力臂L成反比例关系：F*L=阻力*阻力臂（常数）。",
+      "prerequisites": [
+        "ku-001"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "具体例子1，带简短说明",
+          "具体例子2（可选）"
+        ],
+        "intuition": "为什么需要这个概念？生活类比或本质是什么（1-2句）",
+        "definition": "精确数学定义，标注关键限定条件",
+        "key_points": [
+          "⚠️ 最易误解的点1",
+          "⚠️ 最易误解的点2",
+          "⚠️ 第3点（可选）"
+        ],
+        "application": "典型考查方式，1-2种，各一句",
+        "connections": "与前后知识的联系，1-2句",
+        "common_mistakes": [
+          "学生常犯的具体错误1（说清楚错在哪）",
+          "具体错误2",
+          "具体错误3（可选）"
+        ],
+        "counter_examples": "容易混淆的概念或反例，说清楚区别"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G9-MATH-X-ku-反比例函数解决实际问题-矩形面积与边长",
+      "textbook_id": "RENJIAO-G9-MATH-X",
+      "cluster_id": "RENJIAO-G9-MATH-X-kc-反比例函数的实际应用",
+      "name": "反比例函数解决实际问题（矩形面积与边长）",
+      "description": "矩形面积一定时，长与宽成反比例关系。",
+      "prerequisites": [
+        "ku-001"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "矩形面积 $S=24$，长 $x=6$，则宽 $y=4$；若长变为 $8$，宽变为 $3$，乘积仍为 $24$",
+          "矩形面积 $S=12$，长 $x=3$，宽 $y=4$；长 $x=2$，宽 $y=6$，验证反比例关系"
+        ],
+        "intuition": "为什么需要这个概念？生活类比或本质是什么（1-2句）",
+        "definition": "矩形面积固定时，长与宽满足 $y = \\frac{S}{x}$（$S$ 为常数，$x>0$），即长与宽成反比例关系。",
+        "key_points": [
+          "⚠️ 面积固定是前提，若面积变化则不成反比例",
+          "⚠️ 长和宽必须为正数，忽略定义域会导致错误",
+          "⚠️ 反比例函数图像是双曲线的一支，不是直线"
+        ],
+        "application": "典型考查方式，1-2种，各一句",
+        "connections": "与前后知识的联系，1-2句",
+        "common_mistakes": [
+          "学生常犯的具体错误1（说清楚错在哪）",
+          "具体错误2",
+          "具体错误3（可选）"
+        ],
+        "counter_examples": "容易混淆的概念或反例，说清楚区别"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G9-MATH-X-ku-反比例函数解析式",
+      "textbook_id": "RENJIAO-G9-MATH-X",
+      "cluster_id": "RENJIAO-G9-MATH-X-kc-反比例函数的概念与解析式",
+      "name": "反比例函数解析式",
+      "description": "反比例函数解析式为y=k/x（k≠0），也可写作xy=k。",
+      "prerequisites": [
+        "ku-001"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "y = 6/x，当 x=2 时 y=3，xy=6 恒成立，图像在一三象限",
+          "y = -4/x，当 x=1 时 y=-4，xy=-4 恒成立，图像在二四象限"
+        ],
+        "intuition": "反比例函数描述两个量成反比的关系，比如速度与时间：路程固定时，速度越快，时间越短，乘积为常数。",
+        "definition": "形如 y = k/x（k ≠ 0）的函数称为反比例函数，其中 x 是自变量，y 是因变量，k 是比例系数，也可写作 xy = k。",
+        "key_points": [
+          "⚠️ k ≠ 0 是定义的关键，否则函数退化为 y = 0，不是反比例函数",
+          "⚠️ x 不能为 0，否则分母无意义，图像在 x=0 处有间断",
+          "⚠️ 反比例函数图像是双曲线，两支分别位于一三或二四象限，取决于 k 的正负"
+        ],
+        "application": "常考根据已知点求 k 值，或判断点是否在图像上；也用于实际问题建模，如工程效率、物理中的压强与面积关系。",
+        "connections": "反比例函数是八年级正比例函数的对比延伸，后续学习二次函数时，三者共同构成初中函数体系。",
+        "common_mistakes": [
+          "误认为 k 可以等于 0，导致函数变成 y=0，失去反比例特性",
+          "忽略 x ≠ 0，在代入 x=0 时错误计算 y 值",
+          "混淆反比例与正比例，如认为 y = 2x 是反比例，实际是正比例"
+        ],
+        "counter_examples": "y = 2/x + 1 不是反比例函数，因为形式不是 y = k/x，而是反比例函数平移后的结果，本质不同。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G9-MATH-X-ku-反比例函数解析式的确定-待定系数法",
+      "textbook_id": "RENJIAO-G9-MATH-X",
+      "cluster_id": "RENJIAO-G9-MATH-X-kc-反比例函数的概念与解析式",
+      "name": "反比例函数解析式的确定（待定系数法）",
+      "description": "已知反比例函数图象上一点坐标，代入y=k/x求出k，从而确定解析式。",
+      "prerequisites": [
+        "反比例函数的定义"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "例：已知点 $(2,3)$ 在反比例函数图象上，代入 $y=\\frac{k}{x}$ 得 $3=\\frac{k}{2}$，解得 $k=6$，解析式为 $y=\\frac{6}{x}$。",
+          "例：已知点 $(-1,4)$，代入得 $4=\\frac{k}{-1}$，$k=-4$，解析式为 $y=-\\frac{4}{x}$。"
+        ],
+        "intuition": "就像用一把钥匙开一把锁，已知反比例函数图象上的一个点，就能确定唯一的解析式，因为每个点都对应一个特定的k值。",
+        "definition": "设反比例函数解析式为 $y=\\frac{k}{x}$（$k\\neq0$），将已知点坐标 $(x_0,y_0)$ 代入，得 $k=x_0y_0$，从而确定解析式。关键：$x_0\\neq0$，且 $k\\neq0$。",
+        "key_points": [
+          "⚠️ 代入时注意 $x$ 不能为0，否则函数无意义。",
+          "⚠️ 求出的 $k$ 必须满足 $k\\neq0$，否则不是反比例函数。",
+          "⚠️ 若已知两个点，需先判断是否在同一反比例函数图象上（即 $x_1y_1=x_2y_2$）。"
+        ],
+        "application": "典型考查：给出一个点坐标，直接求反比例函数解析式；或结合图象给出点坐标（如交点），先求k再求其他量。",
+        "connections": "待定系数法是确定函数解析式的通用方法，之前用于一次函数（$y=kx+b$），之后用于二次函数（$y=ax^2+bx+c$），本质都是通过已知点列方程求系数。",
+        "common_mistakes": [
+          "错误：将点 $(2,3)$ 代入 $y=\\frac{k}{x}$ 时写成 $2=\\frac{k}{3}$，混淆了x和y的位置。正确应为 $3=\\frac{k}{2}$。",
+          "错误：代入后直接写 $k=2\\times3=6$ 但忘记写 $x\\neq0$ 的条件，导致后续解题忽略定义域。",
+          "错误：认为只要有一个点就能确定反比例函数，但若该点横坐标为0，则无法确定（因为 $x=0$ 不在定义域内）。"
+        ],
+        "counter_examples": "易与正比例函数混淆：正比例函数 $y=kx$ 代入点得 $k=\\frac{y}{x}$，而反比例函数 $y=\\frac{k}{x}$ 代入得 $k=xy$，两者求k的运算不同。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G9-MATH-X-ku-基本几何体的三视图画法",
+      "textbook_id": "RENJIAO-G9-MATH-X",
+      "cluster_id": "RENJIAO-G9-MATH-X-kc-三视图的画图与读图",
+      "name": "基本几何体的三视图画法",
+      "description": "画基本几何体三视图的方法：确定主视图位置并画出；在主视图正下方画俯视图，注意长对正；在主视图正右方画左视图，注意高平齐、宽相等；对称轴加画点划线。",
+      "prerequisites": [
+        "ku-010",
+        "ku-011"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "圆柱体：主视图为矩形，俯视图为圆，左视图为矩形，注意圆在俯视图中居中",
+          "正方体：三个视图均为正方形，且大小完全相同"
+        ],
+        "intuition": "三视图就像给一个物体拍三张不同角度的照片：正面、上面和侧面，帮助我们全面理解它的形状。",
+        "definition": "三视图是将物体向三个互相垂直的投影面（正面、水平面、侧面）分别作正投影得到的三个视图：主视图、俯视图和左视图，要求长对正、高平齐、宽相等。",
+        "key_points": [
+          "⚠️ 长对正：主视图和俯视图的左右长度必须对齐，不能错位",
+          "⚠️ 高平齐：主视图和左视图的上下高度必须平齐，不能一高一低",
+          "⚠️ 宽相等：俯视图和左视图的前后宽度必须相等，且方向对应"
+        ],
+        "application": "典型考查方式：给出立体图形画三视图，或给出三视图还原立体图形；常结合对称轴、虚线表示不可见轮廓线进行考查。",
+        "connections": "三视图是后续学习立体几何、空间想象和工程制图的基础，与投影、坐标系等知识紧密相关。",
+        "common_mistakes": [
+          "画俯视图时忘记与主视图长对正，导致左右长度不一致",
+          "画左视图时忘记高平齐，高度与主视图不匹配",
+          "画左视图时宽相等方向搞反，把靠近主视图的边当成宽的前端"
+        ],
+        "counter_examples": "三视图与轴测图不同：轴测图是立体图，能同时看到多个面；三视图是平面图，每个视图只显示一个方向的正投影，不显示立体感。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G9-MATH-X-ku-实际问题中反比例函数模型的建立",
+      "textbook_id": "RENJIAO-G9-MATH-X",
+      "cluster_id": "RENJIAO-G9-MATH-X-kc-反比例函数的实际应用",
+      "name": "实际问题中反比例函数模型的建立",
+      "description": "根据实际问题中的等量关系（如体积、面积、速度、压强等），列出形如y=k/x的函数解析式。",
+      "prerequisites": [
+        "反比例函数的定义"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "例1：矩形面积固定为24，长y与宽x的关系为y=24/x",
+          "例2：匀速行驶100km，速度v与时间t的关系为v=100/t"
+        ],
+        "intuition": "生活中很多量成反比关系，比如路程一定时速度越快时间越短，面积一定时长与宽此消彼长。反比例函数模型就是用来描述这种“一个量增大，另一个量按比例减小”的规律。",
+        "definition": "实际问题中，若两个变量x、y满足xy=k（k为常数，k≠0），则称y是x的反比例函数，记作y=k/x。关键限定：k为非零常数，x、y均不为零。",
+        "key_points": [
+          "⚠️ 必须确认两个变量的乘积为定值，而不是和或差为定值",
+          "⚠️ 自变量x不能为零，否则函数无意义",
+          "⚠️ 实际问题中x、y通常取正数，但数学上可拓展到负数"
+        ],
+        "application": "典型考查：给出实际情境（如压强、密度、工作量），让学生列出反比例函数解析式并求特定值；或结合图像判断函数类型，求k值。",
+        "connections": "反比例函数是八年级一次函数的延伸，也是九年级二次函数和高中幂函数的基础，体现了变量间非线性关系。",
+        "common_mistakes": [
+          "错误认为y=k/x中k是变量，实际上k是常量，由实际问题确定",
+          "忽略实际问题中自变量的取值范围，如时间、长度不能为负",
+          "混淆反比例与正比例：如误将y=2x当作反比例，其实它是正比例函数"
+        ],
+        "counter_examples": "反比例函数与一次函数混淆：如y=2x+3中，x增大y也增大，乘积不是定值；而y=6/x中，x增大y减小，乘积恒为6。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G9-MATH-X-ku-实际问题中的反比例关系",
+      "textbook_id": "RENJIAO-G9-MATH-X",
+      "cluster_id": "RENJIAO-G9-MATH-X-kc-反比例函数的应用与综合",
+      "name": "实际问题中的反比例关系",
+      "description": "当两个变量的乘积为定值时，它们成反比例关系，可用反比例函数模型解决实际问题。",
+      "prerequisites": [
+        "反比例函数的概念",
+        "列方程解应用题"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "例：一辆汽车以 60 km/h 的速度行驶 2 小时，路程为 120 km。若速度变为 80 km/h，则时间变为 $120 \\div 80 = 1.5$ 小时，速度与时间成反比。",
+          "例：用 10 块砖铺路，每块砖面积 0.2 m²，总面积 2 m²。若改用 20 块砖，每块砖面积 $2 \\div 20 = 0.1$ m²，砖块数与每块面积成反比。"
+        ],
+        "intuition": "生活中，当总工作量固定时，人数越多，每人分到的任务越少；或者路程固定时，速度越快，用时越短。这些场景都体现了“此消彼长”的反比例关系。",
+        "definition": "两个变量 $x$ 和 $y$ 满足 $xy = k$（$k$ 为常数且 $k \\neq 0$），则称 $y$ 与 $x$ 成反比例关系。关键限定：$k$ 为非零常数，且 $x \\neq 0$。",
+        "key_points": [
+          "⚠️ 反比例关系要求乘积为定值，而不是一个增大另一个就减小（如 $y = -x$ 也一个增大另一个减小，但乘积不是定值）。",
+          "⚠️ 实际问题中，自变量 $x$ 通常有实际意义限制（如人数、时间不能为负），需注意取值范围。",
+          "⚠️ 反比例函数图像是双曲线，但实际问题中往往只取第一象限的一支。"
+        ],
+        "application": "典型考查方式：① 给出实际问题情境，要求写出反比例函数解析式并求特定值；② 结合图像，分析变量变化趋势，如速度与时间图像上的点对应关系。",
+        "connections": "反比例关系是函数学习的重要模型，与正比例关系（$y = kx$）对比理解，为后续学习二次函数、幂函数等更复杂函数关系奠定基础。",
+        "common_mistakes": [
+          "错误：认为 $y = \\frac{k}{x}$ 中 $k$ 必须为正数。实际上 $k$ 可正可负，但实际问题中 $k$ 通常为正。",
+          "错误：在列方程时，误将“成反比”理解为“一个量等于另一个量的倒数”，如认为 $y = \\frac{1}{x}$ 才叫反比，忽略了常数 $k$。",
+          "错误：忽略自变量取值范围，例如人数不能为小数或负数，导致解出的 $x$ 不符合实际。"
+        ],
+        "counter_examples": "容易混淆的是“反比例”与“反相关”：反相关仅指一个增大另一个减小，但乘积不一定为定值。例如 $y = -x + 10$ 中，$x$ 增大时 $y$ 减小，但 $xy$ 不是常数，因此不是反比例关系。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G9-MATH-X-ku-平行投影",
+      "textbook_id": "RENJIAO-G9-MATH-X",
+      "cluster_id": "RENJIAO-G9-MATH-X-kc-投影的基本概念与分类",
+      "name": "平行投影",
+      "description": "由平行光线形成的投影叫做平行投影。例如，物体在太阳光的照射下形成的影子就是平行投影。",
+      "prerequisites": [
+        "ku-001"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "太阳光下，一根竖直木棍的影子长度随太阳高度角变化，但影子始终是直线。",
+          "教室窗户在阳光下的矩形投影，若光线斜射，投影可能是平行四边形。"
+        ],
+        "intuition": "平行投影就像太阳光下物体的影子，光线是平行的，所以影子的形状和大小与物体本身有确定的几何关系，帮助我们理解空间图形在平面上的表示。",
+        "definition": "在平行光线的照射下，物体在地面或平面上形成的投影称为平行投影。关键限定：所有投影光线互相平行，且投影方向固定。",
+        "key_points": [
+          "⚠️ 平行投影中，线段长度可能改变，但平行线段的投影仍平行。",
+          "⚠️ 投影方向不同，同一物体的投影形状可能不同，但保持比例关系。",
+          "⚠️ 平行投影不一定是正投影，只有当光线垂直于投影面时才是正投影。"
+        ],
+        "application": "典型考查：给出物体和投影方向，画出其平行投影图形；或根据投影长度反推物体实际长度（利用相似三角形）。",
+        "connections": "平行投影是学习三视图的基础，三视图本质是物体在三个互相垂直方向上的正投影；同时为后续学习相似三角形和空间几何提供直观工具。",
+        "common_mistakes": [
+          "误认为平行投影中所有线段长度不变，实际上只有平行于投影面的线段长度不变。",
+          "混淆平行投影与正投影，认为平行投影一定垂直投影面，其实正投影是平行投影的特例。",
+          "认为平行投影中平行线段的投影仍平行，但若线段与投影方向平行，投影会缩为一点。"
+        ],
+        "counter_examples": "中心投影（如灯光下）的光线不平行，投影大小会随物体到光源距离变化，而平行投影中物体与投影面距离不影响投影形状（仅影响大小比例）。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G9-MATH-X-ku-平行线分线段成比例在三角形中的推论",
+      "textbook_id": "RENJIAO-G9-MATH-X",
+      "cluster_id": "RENJIAO-G9-MATH-X-kc-相似三角形的判定",
+      "name": "平行线分线段成比例在三角形中的推论",
+      "description": "平行于三角形一边的直线截其他两边（或两边的延长线），所得的对应线段成比例。",
+      "prerequisites": [
+        "平行线分线段成比例基本事实"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "例：三角形ABC中，DE∥BC，AD=2，DB=3，AE=4，则EC=6（因为2/3=4/EC）。",
+          "例：延长线上，AD=5，DB=2，AE=3，则EC=1.2（因为5/2=3/EC）。"
+        ],
+        "intuition": "当三角形内有一条平行于底边的线时，它会把两边按相同比例切割，就像用一把尺子把两条边分成同样比例的小段，帮助我们计算未知线段长度。",
+        "definition": "在三角形ABC中，若DE平行于BC，且D在AB上、E在AC上（或延长线上），则AD/DB = AE/EC = DE/BC。关键限定：DE必须平行于BC，且D、E分别在AB、AC或其延长线上。",
+        "key_points": [
+          "⚠️ 对应线段必须按顺序对应，如AD对应DB，AE对应EC，不能随意配对。",
+          "⚠️ 当截线在延长线上时，比例仍成立，但需注意线段方向（如AD可能为负值）。",
+          "⚠️ 推论只适用于平行于一边的直线，不适用于任意直线。"
+        ],
+        "application": "典型考查方式：在三角形中给出平行线条件，求未知线段长度；或结合方程思想，利用比例关系列方程求解。",
+        "connections": "此推论是相似三角形判定定理（平行于一边的直线截三角形两边所得三角形与原三角形相似）的基础，也是后续学习比例线段和黄金分割的预备知识。",
+        "common_mistakes": [
+          "错误1：误认为AD/AB = AE/AC，实际上应为AD/DB = AE/EC，学生常混淆比例对应关系。",
+          "错误2：在延长线情形中，忽略线段方向，错误地使用正数比例，导致EC计算为负值。",
+          "错误3：认为DE/BC = AD/AB，但实际是DE/BC = AD/AB = AE/AC，学生常漏掉中间比例。"
+        ],
+        "counter_examples": "与相似三角形判定混淆：平行线分线段成比例推论是相似三角形的一个特例，但相似三角形要求所有对应角相等，而此推论只要求平行条件，更具体。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G9-MATH-X-ku-平行线分线段成比例基本事实",
+      "textbook_id": "RENJIAO-G9-MATH-X",
+      "cluster_id": "RENJIAO-G9-MATH-X-kc-相似三角形的判定",
+      "name": "平行线分线段成比例基本事实",
+      "description": "两条直线被一组平行线所截，所得的对应线段成比例。",
+      "prerequisites": [
+        "平行线"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "例1：三条平行线l1∥l2∥l3，截线m交于A、B、C，截线n交于D、E、F，则AB/BC = DE/EF。",
+          "例2：若AB=2，BC=3，DE=4，则EF=6，因为2/3=4/6。"
+        ],
+        "intuition": "想象一组平行线像等距的栅栏，当两条直线穿过它们时，被截出的线段就像被均匀分割，长度成比例。这源于平行线间的距离处处相等，是相似三角形的基础。",
+        "definition": "两条直线被一组平行线所截，所得的对应线段成比例。关键限定：平行线组必须至少三条，且截线可以是任意两条直线（不一定平行）。",
+        "key_points": [
+          "⚠️ 对应线段必须按截线的顺序找，不能随意配对，比如左截线上两段与右截线上两段对应。",
+          "⚠️ 比例关系只适用于被平行线截出的线段，不适用于平行线本身。",
+          "⚠️ 平行线组必须至少三条，两条平行线无法产生比例关系。"
+        ],
+        "application": "典型考查：①直接计算线段长度，给出部分线段求未知；②证明线段比例关系，结合三角形或梯形图形。",
+        "connections": "该事实是相似三角形判定定理（平行于三角形一边的直线截其他两边）的基础，后续用于证明线段比例、解梯形和三角形中的平行线问题。",
+        "common_mistakes": [
+          "错误1：认为AB/DE = BC/EF，混淆了对应关系，正确是AB/BC = DE/EF。",
+          "错误2：忽略截线顺序，把不同截线上的线段混在一起比，如AB/EF = BC/DE。",
+          "错误3：认为只有平行线间的线段才成比例，实际上截线被截出的所有线段都参与比例。"
+        ],
+        "counter_examples": "容易混淆的是“平行线等分线段定理”：当平行线组间距相等时，对应线段相等，这是比例的特殊情况（比例为1）。但一般平行线组间距不等时，只成比例，不一定相等。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G9-MATH-X-ku-平行线判定三角形相似定理",
+      "textbook_id": "RENJIAO-G9-MATH-X",
+      "cluster_id": "RENJIAO-G9-MATH-X-kc-相似三角形的判定",
+      "name": "平行线判定三角形相似定理",
+      "description": "平行于三角形一边的直线和其他两边相交，所构成的三角形与原三角形相似。",
+      "prerequisites": [
+        "平行线分线段成比例在三角形中的推论"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "在 $\\triangle ABC$ 中，$DE \\parallel BC$，$AD=2$，$DB=3$，则 $\\frac{AD}{AB}=\\frac{2}{5}$，$\\triangle ADE$ 与 $\\triangle ABC$ 相似比为 $2:5$",
+          "在 $\\triangle ABC$ 中，$DE \\parallel BC$ 交 $AB$ 于 $D$，$AC$ 于 $E$，已知 $AD=4$，$DB=2$，$AE=3$，求 $EC$：由相似得 $\\frac{AD}{AB}=\\frac{AE}{AC}$，即 $\\frac{4}{6}=\\frac{3}{3+EC}$，解得 $EC=1.5$"
+        ],
+        "intuition": "想象一个三角形被一条平行于底边的线切割，小三角形和大三角形形状完全相同，只是大小不同——就像用缩放工具复制了一个缩小版。",
+        "definition": "在三角形 $\\triangle ABC$ 中，若 $DE \\parallel BC$ 且 $D$、$E$ 分别在 $AB$、$AC$ 上（或延长线上），则 $\\triangle ADE \\sim \\triangle ABC$。关键限定：直线必须平行于三角形的一边，且与另外两边（或延长线）相交。",
+        "key_points": [
+          "⚠️ 平行线必须与三角形的两边相交，不能只交于一边或顶点",
+          "⚠️ 相似比对应边要找准：小三角形的边对应大三角形的平行边",
+          "⚠️ 若直线与延长线相交，定理仍然成立，但图形可能在外侧"
+        ],
+        "application": "典型考查：已知平行线求线段长度（如利用比例式列方程）；证明两个三角形相似，进而推导角相等或线段比例关系。",
+        "connections": "该定理是相似三角形判定定理（AA、SAS、SSS）的推论，也是平行线分线段成比例定理的特例，为后续学习三角形中位线、重心等性质奠定基础。",
+        "common_mistakes": [
+          "误认为平行线截得的两个三角形全等：实际上只是相似，对应边成比例而非相等",
+          "混淆对应边：如认为 $\\frac{AD}{DB}=\\frac{AE}{EC}$ 是相似比，正确应为 $\\frac{AD}{AB}=\\frac{AE}{AC}=\\frac{DE}{BC}$",
+          "忽略延长线情形：当直线与两边延长线相交时，仍可用定理，但学生常误以为只适用于内部"
+        ],
+        "counter_examples": "若直线 $DE$ 不平行于 $BC$，则 $\\triangle ADE$ 与 $\\triangle ABC$ 不一定相似，因为对应角不相等（如 $\\angle ADE \\neq \\angle ABC$）。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G9-MATH-X-ku-平面图形的正投影性质",
+      "textbook_id": "RENJIAO-G9-MATH-X",
+      "cluster_id": "RENJIAO-G9-MATH-X-kc-正投影及其性质",
+      "name": "平面图形的正投影性质",
+      "description": "平面图形平行于投影面时，正投影与图形形状、大小一样；倾斜时，形状、大小不完全一样；垂直于投影面时，正投影成为一条线段。",
+      "prerequisites": [
+        "ku-004"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "矩形平行于投影面时，正投影仍是全等的矩形",
+          "三角形倾斜于投影面时，正投影可能变为更小的三角形或梯形"
+        ],
+        "intuition": "就像用手电筒垂直照射桌面上的书本：书平放时影子形状大小不变，倾斜时影子变形，竖起来时影子缩成一条线。正投影就是模拟这种光线垂直照射下的影子规律。",
+        "definition": "平面图形的正投影是指过图形上各点向投影面作垂线，垂足所构成的图形。关键限定：投影光线必须垂直于投影面，且图形与投影面的相对位置决定投影形状。",
+        "key_points": [
+          "⚠️ 正投影要求投影线垂直于投影面，不是任意角度",
+          "⚠️ 图形平行于投影面时投影全等，倾斜时形状大小改变，垂直时缩为线段",
+          "⚠️ 正投影只反映图形在投影方向上的轮廓，不保留深度信息"
+        ],
+        "application": "考查正投影性质判断：给出图形与投影面的位置关系，判断投影形状。或结合三视图，要求根据正投影还原立体图形形状。",
+        "connections": "正投影是学习三视图的基础，三视图本质是物体在三个互相垂直的投影面上的正投影。后续立体几何中计算面积、体积时常用正投影性质。",
+        "common_mistakes": [
+          "误认为倾斜时投影形状不变，实际边长会按比例缩短",
+          "混淆正投影与斜投影，以为任意角度投影都是正投影",
+          "认为垂直于投影面时投影消失，实际是缩为一条线段"
+        ],
+        "counter_examples": "中心投影（如点光源照射）与正投影不同：中心投影的投影线不平行，图形大小随距离变化，而正投影的投影线平行且垂直，图形大小只与倾斜角度有关。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G9-MATH-X-ku-成比例线段",
+      "textbook_id": "RENJIAO-G9-MATH-X",
+      "cluster_id": "RENJIAO-G9-MATH-X-kc-相似图形与相似多边形",
+      "name": "成比例线段",
+      "description": "对于四条线段a,b,c,d，如果a/b=c/d（即ad=bc），则这四条线段成比例。",
+      "prerequisites": [
+        "比例"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "例：线段a=2cm，b=3cm，c=4cm，d=6cm，因为2/3=4/6，所以a、b、c、d成比例。",
+          "例：已知a:b=3:5，且a=6cm，则b=10cm（由3/5=6/b解得）。"
+        ],
+        "intuition": "成比例线段描述的是形状相似但大小不同的图形中，对应边之间的固定倍数关系，就像照片放大缩小后，长和宽按相同比例变化。",
+        "definition": "对于四条线段a、b、c、d（长度均不为0），如果a/b = c/d（即ad = bc），则称这四条线段成比例，其中a、d为外项，b、c为内项。",
+        "key_points": [
+          "⚠️ 四条线段必须按顺序书写，a:b = c:d 不能随意调换位置，否则比例关系可能不成立。",
+          "⚠️ 比例式成立等价于交叉相乘相等（ad=bc），这是判断和计算的核心依据。",
+          "⚠️ 线段长度必须为正数，不能为零或负数，否则比例无意义。"
+        ],
+        "application": "典型考查方式：①判断四条线段是否成比例（计算比值或交叉相乘）；②利用比例性质求未知线段长度（解比例方程）；③在相似图形中利用对应边成比例求边长或周长。",
+        "connections": "成比例线段是相似三角形和相似多边形的基础，后续学习黄金分割、三角函数和向量共线时也会反复用到比例性质。",
+        "common_mistakes": [
+          "错误：认为a/b=c/d与a/c=b/d等价。实际上，前者交叉相乘得ad=bc，后者得ab=cd，两者不同，不能随意交换内项或外项。",
+          "错误：在解比例方程时，忘记交叉相乘，例如由a/b=c/d直接写a=c，忽略了分母b和d。",
+          "错误：认为四条线段只要满足ad=bc就一定成比例，但若a、b、c、d中有零，则比例式无意义。"
+        ],
+        "counter_examples": "容易混淆的是“比例线段”与“相似图形中的对应边成比例”：前者是四条线段之间的固定比值关系，后者强调在相似多边形中，对应边的比值相等，但顺序必须对应。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G9-MATH-X-ku-投影的定义",
+      "textbook_id": "RENJIAO-G9-MATH-X",
+      "cluster_id": "RENJIAO-G9-MATH-X-kc-投影的基本概念与分类",
+      "name": "投影的定义",
+      "description": "用光线照射物体，在某个平面（地面、墙壁等）上得到的影子叫做物体的投影。照射光线叫做投影线，投影所在的平面叫做投影面。",
+      "prerequisites": [],
+      "related_kus": [],
+      "difficulty": 0.2,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "太阳光下人的影子：太阳光近似平行，影子长度随太阳高度变化；",
+          "手影游戏：手在灯光下形成各种形状的影子，灯光是点光源，投影线交于一点。"
+        ],
+        "intuition": "投影就是物体在光线下形成的影子，帮助我们理解三维物体在二维平面上的表示，是连接立体与平面的桥梁。",
+        "definition": "投影是指用一组光线（投影线）照射物体，在某个平面（投影面）上得到的影子。关键限定：投影线可以是平行或交于一点，投影面是平面。",
+        "key_points": [
+          "⚠️ 投影线必须是直线，不能是曲线；",
+          "⚠️ 投影面必须是平面，不能是曲面；",
+          "⚠️ 影子形状取决于光线方向、物体形状和投影面位置。"
+        ],
+        "application": "典型考查方式：给出物体和光线方向，画出投影形状；或根据投影判断物体形状和光线方向。",
+        "connections": "投影是学习三视图和立体几何的基础，后续将学习正投影（投影线垂直于投影面）和斜投影，以及如何用投影绘制物体的视图。",
+        "common_mistakes": [
+          "误以为投影线必须平行：实际上投影线可以平行（平行投影）或交于一点（中心投影）；",
+          "混淆投影面和物体表面：投影面是影子所在的平面，不是物体本身的面；",
+          "认为影子形状总与物体相同：当光线斜射时，影子可能变形，如正方形在斜光下变菱形。"
+        ],
+        "counter_examples": "投影不是镜像或倒影。镜像由反射形成，光线方向改变；投影是光线直接照射形成的影子，不涉及反射。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G9-MATH-X-ku-杠杆原理与反比例函数",
+      "textbook_id": "RENJIAO-G9-MATH-X",
+      "cluster_id": "RENJIAO-G9-MATH-X-kc-反比例函数的实际应用",
+      "name": "杠杆原理与反比例函数",
+      "description": "杠杆平衡时，阻力×阻力臂=动力×动力臂，当阻力与阻力臂一定时，动力与动力臂成反比例关系。",
+      "prerequisites": [
+        "实际问题中反比例函数模型的建立"
+      ],
+      "related_kus": [],
+      "difficulty": 0.6,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "例1：用撬棍撬石头，阻力为500N，阻力臂0.2m，则阻力矩=100N·m。若动力臂为1m，则动力=100N；若动力臂为0.5m，则动力=200N，动力与动力臂成反比。",
+          "例2：用扳手拧螺母，若螺母阻力矩为20N·m，手离扳手中心0.1m时需用力200N；若手离0.2m，则只需100N。"
+        ],
+        "intuition": "为什么需要这个概念？就像跷跷板，你坐得离支点越远，就越容易把对方翘起来。当一边的力和距离固定时，另一边的力和距离就会此消彼长，这就是反比例关系。",
+        "definition": "杠杆平衡时，阻力×阻力臂 = 动力×动力臂。当阻力与阻力臂的乘积（即阻力矩）为定值时，动力与动力臂成反比例关系，即动力 = 定值 / 动力臂。",
+        "key_points": [
+          "⚠️ 反比例关系成立的前提是“阻力×阻力臂”为定值，不能随意推广到所有杠杆问题。",
+          "⚠️ 动力臂和阻力臂都是从支点到力的作用线的垂直距离，不是杠杆的实际长度。",
+          "⚠️ 反比例函数图像是双曲线的一支，动力臂不能为0，且动力随动力臂增大而减小。"
+        ],
+        "application": "典型考查方式：①给出杠杆平衡条件，求动力与动力臂的函数关系式并画图；②结合实际问题（如撬石头、剪子），判断动力随动力臂变化趋势。",
+        "connections": "与八年级物理的“简单机械”衔接，是反比例函数在物理中的典型应用。后续学习“滑轮组”时，也会用到类似的“力与距离成反比”思想。",
+        "common_mistakes": [
+          "错误1：误认为动力臂越长动力越大。实际上动力臂越长，动力越小（反比例），但学生常凭直觉认为“力臂长就费力”。",
+          "错误2：混淆力臂与杠杆长度。例如把杠杆全长当成动力臂，导致计算错误。力臂是支点到力的作用线的垂直距离，不是杠杆上的线段长度。",
+          "错误3：忽略单位统一。计算时阻力臂用cm、动力臂用m，导致乘积单位混乱，反比例关系不成立。"
+        ],
+        "counter_examples": "容易混淆的是“正比例关系”：当动力臂固定时，动力与阻力成正比（如用同一扳手拧不同松紧的螺母），这与反比例不同。反比例强调乘积为定值，正比例强调比值为定值。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G9-MATH-X-ku-正投影的定义",
+      "textbook_id": "RENJIAO-G9-MATH-X",
+      "cluster_id": "RENJIAO-G9-MATH-X-kc-正投影及其性质",
+      "name": "正投影的定义",
+      "description": "投影线垂直于投影面产生的投影叫做正投影。在实际制图中，经常应用正投影。",
+      "prerequisites": [
+        "ku-002"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "正方体正面平行于投影面时，正投影为正方形，边长不变",
+          "圆柱体轴线垂直于投影面时，正投影为圆，反映底面真实形状"
+        ],
+        "intuition": "正投影就像阳光垂直照射物体时在地面留下的影子，没有倾斜变形，能真实反映物体的形状和大小，是工程制图的基础。",
+        "definition": "投影线垂直于投影面时，物体在投影面上得到的投影称为正投影。关键限定：投影线与投影面垂直，且投影线相互平行。",
+        "key_points": [
+          "⚠️ 投影线必须垂直于投影面，否则是斜投影",
+          "⚠️ 正投影中，平行于投影面的线段长度不变",
+          "⚠️ 垂直于投影面的线段投影为一个点"
+        ],
+        "application": "典型考查：给出物体和投影面，判断正投影形状；或根据正投影图还原物体形状，如三视图补图题。",
+        "connections": "正投影是学习三视图的基础，三视图就是物体在三个互相垂直的投影面上的正投影；后续立体几何中求距离、角度也常用正投影。",
+        "common_mistakes": [
+          "误以为所有投影都是正投影，忽略垂直条件",
+          "认为正投影中所有线段长度都不变，实际只有平行于投影面的线段不变",
+          "混淆正投影与中心投影，中心投影投影线不平行"
+        ],
+        "counter_examples": "斜投影（如斜二测画法）中投影线不垂直于投影面，导致图形变形，不能直接反映真实尺寸，与正投影不同。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G9-MATH-X-ku-正方体的正投影",
+      "textbook_id": "RENJIAO-G9-MATH-X",
+      "cluster_id": "RENJIAO-G9-MATH-X-kc-正投影及其性质",
+      "name": "正方体的正投影",
+      "description": "正方体的正投影形状取决于其与投影面的相对位置：面平行于投影面时投影为正方形；面倾斜时投影为矩形。",
+      "prerequisites": [
+        "ku-005",
+        "ku-006"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "正方体一个面平行于投影面时，正投影为正方形，边长等于正方体棱长。",
+          "正方体绕竖直轴旋转45°后，正投影为矩形，长边为棱长，短边为棱长乘以√2/2。"
+        ],
+        "intuition": "就像用手电筒从不同角度照一个骰子，影子形状会变化——正投影就是平行光线垂直照射时留下的影子，帮助我们理解立体图形在平面上的真实轮廓。",
+        "definition": "正方体的正投影是指用一组平行光线垂直于投影面照射正方体，在投影面上得到的图形。关键限定：光线方向必须垂直于投影面，且正方体各棱与投影面的夹角决定投影形状。",
+        "key_points": [
+          "⚠️ 投影形状不仅取决于正方体面是否平行于投影面，还取决于棱与投影面的夹角，例如面倾斜时投影可能是矩形而非正方形。",
+          "⚠️ 正方体所有棱在正投影中长度可能缩短，但平行于投影面的棱长度不变，垂直的棱投影为点。",
+          "⚠️ 投影是二维图形，不能直接反映正方体的深度信息，需结合多个投影面才能还原立体形状。"
+        ],
+        "application": "典型考查方式：给出正方体不同摆放角度，判断正投影形状（如选择题）；或计算投影面积（如已知棱长和旋转角，求矩形投影的长宽）。",
+        "connections": "正投影是学习三视图的基础，三视图本质是物体在三个互相垂直投影面上的正投影组合；同时为后续学习立体几何中的截面、空间向量投影做铺垫。",
+        "common_mistakes": [
+          "错误认为正方体任何位置的正投影都是正方形——实际上只有面平行于投影面时才是正方形，其他情况多为矩形或六边形。",
+          "混淆投影面积与正方体表面积——投影面积是二维图形面积，远小于正方体表面积，例如面平行时投影面积仅为棱长平方。",
+          "误以为正方体棱在投影中长度不变——只有平行于投影面的棱长度不变，其他棱因倾斜而缩短，例如对角线投影长度可能小于实际。"
+        ],
+        "counter_examples": "斜投影（如太阳斜射）与正投影不同：斜投影中平行光线不垂直于投影面，投影形状可能变形（如正方形变平行四边形），而正投影保持平行线段的平行关系且无透视变形。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G9-MATH-X-ku-气体压强与体积的反比例关系",
+      "textbook_id": "RENJIAO-G9-MATH-X",
+      "cluster_id": "RENJIAO-G9-MATH-X-kc-反比例函数的实际应用",
+      "name": "气体压强与体积的反比例关系",
+      "description": "温度恒定时，气体的压强p与体积V成反比例关系。",
+      "prerequisites": [
+        "实际问题中反比例函数模型的建立"
+      ],
+      "related_kus": [],
+      "difficulty": 0.6,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "例1：一定质量气体，体积从 $2\\,\\text{L}$ 压缩到 $1\\,\\text{L}$，压强从 $1\\,\\text{atm}$ 变为 $2\\,\\text{atm}$，因为 $p_1V_1 = p_2V_2$。",
+          "例2：打气筒打气时，活塞下压使筒内气体体积减小，压强增大，气体被压入轮胎。"
+        ],
+        "intuition": "想象一个注射器，堵住出口后推活塞，体积变小，手会感到更费力，说明压强增大；反之拉活塞，体积变大，压强减小。这直观体现了温度恒定时，气体压强与体积成反比。",
+        "definition": "温度恒定时，一定质量的气体，其压强 $p$ 与体积 $V$ 的乘积为常数，即 $pV = k$（$k$ 为常量），或写作 $p \\propto \\frac{1}{V}$。关键限定条件：气体质量不变、温度保持不变。",
+        "key_points": [
+          "⚠️ 反比例关系成立的前提是温度不变，若温度变化，$p$ 与 $V$ 不再简单成反比。",
+          "⚠️ 公式 $pV = k$ 中的 $k$ 只与气体质量和温度有关，不同条件下 $k$ 值不同。",
+          "⚠️ 图像是双曲线的一支，且只取 $p>0, V>0$ 的部分，不能延伸到负半轴。"
+        ],
+        "application": "典型考查：给出 $p-V$ 图像判断反比例关系，或利用 $p_1V_1 = p_2V_2$ 计算变化后的压强或体积。常结合生活场景如呼吸、打气筒、潜水等出题。",
+        "connections": "这是玻意耳定律的核心，后续学习查理定律（体积恒定）、盖-吕萨克定律（压强恒定）时，需对比控制变量的不同。也是理想气体状态方程 $pV = nRT$ 的基础。",
+        "common_mistakes": [
+          "错误1：认为压强和体积成反比时，忽略温度不变的条件，例如认为夏天轮胎爆胎是因为体积变小压强变大，实际是温度升高导致压强增大。",
+          "错误2：计算时混淆单位，如体积用 $\\text{mL}$ 而压强用 $\\text{atm}$，未统一单位导致乘积 $k$ 出错。",
+          "错误3：误以为 $pV$ 图像是直线，实际是双曲线，学生常画成过原点的直线。"
+        ],
+        "counter_examples": "查理定律：体积不变时，压强与热力学温度成正比（$p \\propto T$），而非与体积成反比。区别在于控制变量不同，前者温度恒定，后者体积恒定。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G9-MATH-X-ku-汽车功率-速度与阻力的反比例关系",
+      "textbook_id": "RENJIAO-G9-MATH-X",
+      "cluster_id": "RENJIAO-G9-MATH-X-kc-反比例函数的实际应用",
+      "name": "汽车功率、速度与阻力的反比例关系",
+      "description": "汽车功率一定时，行驶速度v与所受阻力F成反比例关系：v=P/F。",
+      "prerequisites": [
+        "实际问题中反比例函数模型的建立"
+      ],
+      "related_kus": [],
+      "difficulty": 0.6,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "例1：汽车功率 $P=60000\\,\\text{W}$，阻力 $F=2000\\,\\text{N}$，则速度 $v=60000/2000=30\\,\\text{m/s}$。",
+          "例2：若阻力增大到 $3000\\,\\text{N}$，功率不变，则速度降为 $20\\,\\text{m/s}$，验证反比例。"
+        ],
+        "intuition": "就像你骑变速自行车，用同样的力气踩踏板（功率一定），上坡时阻力大，速度自然就慢；下坡时阻力小，速度就快。这就是功率、速度与阻力的反比例关系。",
+        "definition": "当汽车发动机的输出功率 $P$ 保持恒定时，汽车行驶速度 $v$ 与所受总阻力 $F$ 成反比例关系，即 $v = \\frac{P}{F}$（$F>0$，$P>0$）。",
+        "key_points": [
+          "⚠️ 反比例关系成立的前提是功率 $P$ 必须恒定，不能随意变化。",
+          "⚠️ 阻力 $F$ 包括空气阻力、滚动摩擦力等所有阻碍运动的力，不是单一力。",
+          "⚠️ 速度 $v$ 是瞬时速度，不是平均速度，且单位要统一（如 m/s、N、W）。"
+        ],
+        "application": "典型考查方式：① 给出功率和阻力变化，求速度变化（如阻力加倍，速度减半）；② 结合图像，判断 $v-F$ 反比例曲线，或根据点坐标求功率常数。",
+        "connections": "该关系是物理中功率公式 $P=Fv$ 的变形，与数学中的反比例函数 $y=k/x$ 对应，为后续学习机车启动问题、能量守恒打下基础。",
+        "common_mistakes": [
+          "错误1：认为速度与阻力成反比时，忘记功率必须恒定，直接写 $v \\propto 1/F$ 而不注明条件。",
+          "错误2：混淆阻力与牵引力，误将牵引力代入公式，导致计算错误。",
+          "错误3：单位不统一，比如功率用 kW、速度用 km/h，直接代入公式忘记换算。"
+        ],
+        "counter_examples": "容易混淆的是“功率与速度成正比”的说法。实际上，当阻力不变时，功率与速度才成正比；而这里强调功率不变，速度与阻力成反比，两者条件不同。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G9-MATH-X-ku-用计算器求锐角三角函数值",
+      "textbook_id": "RENJIAO-G9-MATH-X",
+      "cluster_id": "RENJIAO-G9-MATH-X-kc-用计算器处理锐角三角函数",
+      "name": "用计算器求锐角三角函数值",
+      "description": "利用计算器的sin、cos、tan键，输入角度值（度或度分秒）即可得到锐角三角函数值。",
+      "prerequisites": [
+        "锐角三角函数定义"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "求 sin30°：确保计算器在DEG模式，按 sin → 30 → =，显示0.5。",
+          "求 tan45°30′：按 tan → 45 → °′″ → 30 → °′″ → =，显示约1.0176。"
+        ],
+        "intuition": "就像用尺子量长度一样，计算器能直接“量”出锐角对应的三角函数值，省去手动查表或复杂计算的麻烦。",
+        "definition": "利用计算器上的 sin、cos、tan 键，输入锐角的度数（可以是度、度分秒或小数度），即可直接得到该锐角的正弦、余弦或正切值，结果通常为小数。",
+        "key_points": [
+          "⚠️ 计算器必须处于“度”模式（DEG），否则结果错误。",
+          "⚠️ 输入度分秒时，需用特定按键（如°′″）分隔，不能直接输入数字。",
+          "⚠️ 锐角范围是0°到90°，超出此范围的结果可能不是锐角三角函数值。"
+        ],
+        "application": "典型考查方式：①直接给出角度（含度分秒），要求用计算器求三角函数值并保留小数；②结合实际问题，如已知仰角求高度，需先用计算器算出三角函数值再计算。",
+        "connections": "之前学习了用定义（对边/斜边等）求特殊角的三角函数值，现在用计算器可求任意锐角的值，为后续解直角三角形和实际应用（如测量高度）打下基础。",
+        "common_mistakes": [
+          "错误1：忘记切换模式，在RAD模式下输入角度，导致结果错误（如sin30°得-0.988而非0.5）。",
+          "错误2：输入度分秒时未使用分隔键，直接输入4530，计算器误读为4530度，结果无意义。",
+          "错误3：误将计算器显示的小数当作精确值，忽略近似误差（如tan89°≈57.29，实际无限大）。"
+        ],
+        "counter_examples": "混淆“度”模式与“弧度”模式：若计算器在RAD模式，输入30°会误算为30弧度，结果完全不同（如sin30弧度≈-0.988）。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G9-MATH-X-ku-用计算器由三角函数值求锐角",
+      "textbook_id": "RENJIAO-G9-MATH-X",
+      "cluster_id": "RENJIAO-G9-MATH-X-kc-用计算器处理锐角三角函数",
+      "name": "用计算器由三角函数值求锐角",
+      "description": "利用计算器的2ndF sin/cos/tan键，输入函数值，可求出相应锐角的度数（可精确到度、分、秒）。",
+      "prerequisites": [
+        "用计算器求锐角三角函数值"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "已知 sin A = 0.5，求锐角 A。操作：按 2ndF sin 0.5 =，显示 30，即 A=30°。",
+          "已知 tan B = 1.732，求锐角 B（精确到秒）。操作：按 2ndF tan 1.732 =，显示约 59.999°，再按 ° ' '' 键得 59°59'59''，即 B≈60°。"
+        ],
+        "intuition": "就像已知一个数的平方根，用计算器求原数一样；已知三角函数值，用计算器反求对应的锐角，是解直角三角形中“知值求角”的逆运算。",
+        "definition": "已知一个锐角的三角函数值（如 sin A = 0.5），利用计算器的第二功能键（2ndF 或 SHIFT）配合 sin/cos/tan 键，输入该数值，即可求出对应锐角的度数，结果可精确到度、分、秒。限定条件：角必须为锐角（0°<A<90°）。",
+        "key_points": [
+          "⚠️ 必须先按第二功能键（2ndF 或 SHIFT），再按三角函数键，否则会计算该角度的三角函数值，而非反求角度。",
+          "⚠️ 输入数值后，注意计算器显示的是度数（如 30°），若需度分秒，要使用 ° ' '' 键转换，不同计算器操作可能不同。",
+          "⚠️ 当函数值超出该三角函数在锐角范围内的值域（如 sin 值 >1 或 <0）时，计算器会报错，说明无解。"
+        ],
+        "application": "典型考查：给出直角三角形两边长，求锐角度数（如已知对边和斜边，用 sin⁻¹ 求角）；或给出三角函数值表，要求用计算器验证并求角，常结合度分秒换算出题。",
+        "connections": "此技能是解直角三角形（如已知两边求角）的关键步骤，也为后续学习反三角函数（如 arcsin）和高中三角方程打下基础。",
+        "common_mistakes": [
+          "忘记按第二功能键，直接按 sin 0.5 =，得到 sin(0.5°) 的值（约 0.0087），而非角度。",
+          "输入数值时误将分数或小数形式弄错，如将 0.5 输成 5，导致计算器报错或得到错误角度。",
+          "得到度数后，误以为显示的小数部分就是分秒，未使用 ° ' '' 键转换，如将 30.5° 直接当作 30°5'，实际应为 30°30'。"
+        ],
+        "counter_examples": "混淆“已知三角函数值求角”与“已知角求三角函数值”。前者用 2ndF sin 值，后者直接按 sin 角。例如：求 sin 30° 直接按 sin 30 = 得 0.5；而求 sin⁻¹(0.5) 需按 2ndF sin 0.5 = 得 30°。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G9-MATH-X-ku-由三视图想象立体图形",
+      "textbook_id": "RENJIAO-G9-MATH-X",
+      "cluster_id": "RENJIAO-G9-MATH-X-kc-三视图的画图与读图",
+      "name": "由三视图想象立体图形",
+      "description": "由三视图想象立体图形时，分别根据主视图、俯视图和左视图想象立体图形的前面、上面和左侧面，然后综合起来考虑整体图形。",
+      "prerequisites": [
+        "ku-009"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "例：主视图为矩形，俯视图为圆形，左视图为矩形，则立体图形为圆柱。",
+          "例：主视图为三角形，俯视图为圆形，左视图为三角形，则立体图形为圆锥。"
+        ],
+        "intuition": "就像给一个物体拍三张不同角度的照片（正面、俯视、左侧），然后根据这三张照片在脑中还原出物体的真实形状。",
+        "definition": "由三视图（主视图、俯视图、左视图）想象立体图形，是指根据三个不同方向的正投影图，综合确定唯一对应的立体几何形状，要求视图之间长对正、高平齐、宽相等。",
+        "key_points": [
+          "⚠️ 主视图反映物体的高和长，俯视图反映长和宽，左视图反映高和宽，三者必须严格对应。",
+          "⚠️ 想象时不能只依赖一个视图，必须三个视图同时考虑，否则可能得到多个不同立体。",
+          "⚠️ 注意视图中的虚线表示被遮挡的轮廓，实线表示可见轮廓，虚实线位置决定立体结构。"
+        ],
+        "application": "典型考查方式：给出三视图，要求画出立体图形或计算其体积/表面积；或给出立体图形，补全其三视图中的缺失线条。",
+        "connections": "由三视图想象立体图形是空间与平面相互转化的核心能力，前承点线面投影，后接立体图形的表面积和体积计算。",
+        "common_mistakes": [
+          "错误1：认为主视图和左视图高度相同即可，忽略宽度对应，导致想象出的立体左右不对称。",
+          "错误2：看到俯视图中有圆，就认为立体是球，但若主视图是三角形，实际应为圆锥。",
+          "错误3：忽略虚线，把被遮挡的棱当作可见棱，导致立体内部结构错误。"
+        ],
+        "counter_examples": "容易混淆的是三视图与轴测图：三视图是正投影，不反映立体感；而轴测图（如斜二测）能直观显示立体，但长度可能变形。由三视图想象立体时，必须忽略轴测图中的透视效果。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G9-MATH-X-ku-电学中的反比例关系-功率与电阻",
+      "textbook_id": "RENJIAO-G9-MATH-X",
+      "cluster_id": "RENJIAO-G9-MATH-X-kc-反比例函数的实际应用",
+      "name": "电学中的反比例关系（功率与电阻）",
+      "description": "电压一定时，用电器的功率P与电阻R成反比例关系：P=U²/R。",
+      "prerequisites": [
+        "实际问题中反比例函数模型的建立"
+      ],
+      "related_kus": [],
+      "difficulty": 0.6,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "例：家庭电路电压220V，一个100W灯泡电阻约484Ω，若换用50W灯泡，电阻约968Ω，功率减半。",
+          "例：两个电阻R1=10Ω、R2=20Ω并联在12V电源上，P1=14.4W，P2=7.2W，电阻大的功率小。"
+        ],
+        "intuition": "电压固定时，电阻越大，电流越小，功率自然越小，就像水管水压固定，管子越细水流越弱，做功能力越差。",
+        "definition": "在电压U恒定的电路中，用电器消耗的功率P与电阻R成反比，关系式为 $P = \\frac{U^2}{R}$，前提是U为定值且电路为纯电阻电路。",
+        "key_points": [
+          "⚠️ 反比例关系成立的前提是电压U不变，若U变化则P与R的关系不固定。",
+          "⚠️ 公式 $P = I^2R$ 中P与R成正比，这与 $P = U^2/R$ 看似矛盾，实际因为I随R变化（U固定时I与R成反比）。",
+          "⚠️ 反比例图像是双曲线一支，R趋近0时P趋近无穷大，但实际电路有内阻限制。"
+        ],
+        "application": "典型考查：给定电压和功率求电阻，或比较不同电阻的功率大小；常结合图像判断反比例关系，或与串联电路对比出题。",
+        "connections": "由欧姆定律 $I = U/R$ 和功率公式 $P = UI$ 推导得出，是电功率计算的基础，后续学习焦耳定律时需区分纯电阻与非纯电阻电路。",
+        "common_mistakes": [
+          "错误：认为P与R总是成反比，忽略U不变的前提，例如串联电路中U变化时仍套用此式。",
+          "错误：混淆 $P = U^2/R$ 与 $P = I^2R$，误以为两者矛盾，实际前者U固定、后者I固定。",
+          "错误：计算时忘记平方，如将U²写成U，导致结果错误。"
+        ],
+        "counter_examples": "串联电路中电流I相同，此时 $P = I^2R$，P与R成正比，电阻大的功率大，与并联时反比例关系相反。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G9-MATH-X-ku-直角三角形中五个元素的关系",
+      "textbook_id": "RENJIAO-G9-MATH-X",
+      "cluster_id": "RENJIAO-G9-MATH-X-kc-解直角三角形的基本理论",
+      "name": "直角三角形中五个元素的关系",
+      "description": "在Rt△ABC中，∠C=90°，三边关系：a²+b²=c²；两锐角关系：∠A+∠B=90°；边角关系：sinA=a/c，cosA=b/c，tanA=a/b。",
+      "prerequisites": [
+        "勾股定理",
+        "锐角三角函数定义"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "例1：Rt△ABC中，∠C=90°，a=3，b=4，求c和∠A。解：c=√(3²+4²)=5；tanA=3/4，∠A≈36.87°。",
+          "例2：Rt△ABC中，∠C=90°，c=10，∠A=30°，求a。解：sin30°=a/10，a=5。"
+        ],
+        "intuition": "直角三角形五个元素（三边两角）的关系就像一把钥匙，只要知道其中两个（至少一边），就能算出其他所有元素，这在测量、建筑等场景中非常实用。",
+        "definition": "在Rt△ABC中，∠C=90°，五个元素（三边a,b,c和两锐角A,B）满足：三边关系a²+b²=c²（勾股定理）；两锐角互余∠A+∠B=90°；边角关系sinA=a/c，cosA=b/c，tanA=a/b。关键限定：必须有一个直角。",
+        "key_points": [
+          "⚠️ 边角关系中的对边、邻边、斜边必须相对于同一个锐角，不能混淆。",
+          "⚠️ 勾股定理只适用于直角三角形，不能用于非直角三角形。",
+          "⚠️ 锐角三角函数值只与角度大小有关，与三角形大小无关。"
+        ],
+        "application": "典型考查方式：①已知两边求第三边及锐角（解直角三角形）；②利用三角函数解决实际测量问题（如测高、测距）。",
+        "connections": "勾股定理是平面几何的基础，锐角三角函数是后续学习解直角三角形、三角函数图像与性质、以及物理中力的分解等内容的基石。",
+        "common_mistakes": [
+          "错误1：误将sinA当作对边比邻边（正确应为对边比斜边）。",
+          "错误2：在非直角三角形中直接使用勾股定理，如三角形三边为3,4,6，误以为3²+4²=6²。",
+          "错误3：混淆锐角A的邻边和斜边，如cosA误写为a/c（正确应为b/c）。"
+        ],
+        "counter_examples": "容易与一般三角形混淆：在一般三角形中，三边关系不满足a²+b²=c²，两锐角和不等于90°，边角关系不能用正弦、余弦、正切直接表示（需用正弦定理或余弦定理）。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G9-MATH-X-ku-直角三角形相似的hl判定",
+      "textbook_id": "RENJIAO-G9-MATH-X",
+      "cluster_id": "RENJIAO-G9-MATH-X-kc-相似三角形的判定",
+      "name": "直角三角形相似的HL判定",
+      "description": "斜边和一条直角边成比例的两个直角三角形相似。",
+      "prerequisites": [
+        "两角分别相等判定三角形相似",
+        "勾股定理"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "例1：Rt△ABC中∠C=90°，AB=5，BC=3；Rt△DEF中∠F=90°，DE=10，EF=6。因为AB/DE=BC/EF=1/2，所以△ABC∽△DEF。",
+          "例2：Rt△ABC中∠C=90°，AB=13，AC=5；Rt△DEF中∠F=90°，DE=26，DF=10。斜边比=1/2，直角边比=1/2，故相似。"
+        ],
+        "intuition": "直角三角形中，已知斜边和一条直角边，就能唯一确定三角形形状，无需再证两角或两边。就像知道梯子长度和底边离墙距离，就能确定梯子倾斜角度。",
+        "definition": "在两个直角三角形中，若斜边与一条直角边对应成比例，则这两个直角三角形相似。关键限定：必须为直角三角形，且对应的是斜边和一条直角边。",
+        "key_points": [
+          "⚠️ 仅适用于直角三角形，不能用于一般三角形。",
+          "⚠️ 必须是斜边和一条直角边对应成比例，而非任意两边。",
+          "⚠️ 注意对应关系：第一个三角形的斜边对应第二个的斜边，直角边对应直角边。"
+        ],
+        "application": "典型考查：给出两个直角三角形边长，判断是否相似，常与勾股定理结合求未知边。另一考查：在几何证明中，利用HL判定证明线段比例或角相等。",
+        "connections": "HL判定是直角三角形相似的特殊判定，与一般三角形相似判定（AA、SAS、SSS）并列，同时为后续学习直角三角形全等（HL全等）和三角函数奠定基础。",
+        "common_mistakes": [
+          "错误：认为任意两边成比例即可，如用两条直角边成比例判定，忽略了斜边条件。",
+          "错误：未确认三角形是直角三角形，直接套用HL判定到一般三角形。",
+          "错误：混淆对应关系，如将第一个三角形的斜边对应第二个的直角边。"
+        ],
+        "counter_examples": "HL判定与一般三角形SSS或SAS不同：SSS需三边成比例，SAS需两边夹角。HL只适用于直角三角形，且只需斜边和一条直角边，不能混用于非直角三角形。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G9-MATH-X-ku-相似三角形对应线段的比等于相似比",
+      "textbook_id": "RENJIAO-G9-MATH-X",
+      "cluster_id": "RENJIAO-G9-MATH-X-kc-相似三角形的性质",
+      "name": "相似三角形对应线段的比等于相似比",
+      "description": "相似三角形对应高的比、对应中线的比、对应角平分线的比都等于相似比。",
+      "prerequisites": [
+        "相似三角形的定义"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "△ABC∽△DEF，相似比k=2，若△ABC的高为3，则△DEF的对应高为6。",
+          "△ABC∽△DEF，相似比k=1/2，若△ABC的中线为8，则△DEF的对应中线为4。"
+        ],
+        "intuition": "就像放大照片时，照片上所有线段的长度都按相同比例放大，相似三角形中对应的高、中线、角平分线也按相同比例缩放。",
+        "definition": "如果两个三角形相似，相似比为k，那么它们的对应高、对应中线、对应角平分线的长度比都等于k。前提是三角形相似，且线段对应。",
+        "key_points": [
+          "⚠️ 必须是对应线段，不是任意线段",
+          "⚠️ 相似比是边长比，不是面积比",
+          "⚠️ 高、中线、角平分线必须对应同一对相似三角形"
+        ],
+        "application": "常考题型：已知相似比和一条对应线段长度，求另一条；或利用对应线段比相等证明三角形相似。",
+        "connections": "该性质是相似三角形性质的核心，用于证明线段比例关系，也为后续学习相似多边形、位似图形奠定基础。",
+        "common_mistakes": [
+          "误认为所有高、中线、角平分线都相等，忽略相似比k的作用",
+          "混淆对应关系，比如把△ABC的高与△DEF的中线相比",
+          "忘记相似比是边长比，错误地认为面积比也等于k"
+        ],
+        "counter_examples": "全等三角形是相似比为1的特例，此时对应线段相等；但若只说“对应线段相等”，则忽略了相似比不为1的情况。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G9-MATH-X-ku-相似三角形应用举例--测量宽度",
+      "textbook_id": "RENJIAO-G9-MATH-X",
+      "cluster_id": "RENJIAO-G9-MATH-X-kc-相似三角形的应用",
+      "name": "相似三角形应用举例——测量宽度",
+      "description": "利用相似三角形对应边成比例，通过构造相似三角形间接求河宽等距离。",
+      "prerequisites": [
+        "两角分别相等判定三角形相似"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "例：在河岸选点A、B，对岸选点C，测AB=30m，∠A=60°，∠B=45°，构造△ABC与△A'B'C'相似，利用比例求河宽。",
+          "例：利用标杆和视线，构造两个直角三角形相似，通过标杆高度和距离差求河宽。"
+        ],
+        "intuition": "当无法直接测量河宽时，利用相似三角形对应边成比例，通过测量岸边可及的距离来间接求出河宽，就像用影子测树高一样。",
+        "definition": "在两个三角形中，若对应角相等，则对应边成比例。通过构造两个相似三角形，利用已知边长和比例关系，求解不可直接测量的宽度（如河宽）。关键限定：必须确保三角形相似（如AA或SAS条件），且测量边对应准确。",
+        "key_points": [
+          "⚠️ 对应边必须按顶点顺序正确配对，不能随意选取边。",
+          "⚠️ 构造相似三角形时，确保测量角度或边长时无误差，否则比例失真。",
+          "⚠️ 注意单位统一，所有边长单位需一致，否则比例计算错误。"
+        ],
+        "application": "典型考查：给出河岸测量数据（如角度、距离），要求列比例式求河宽；或结合影子、标杆等实际场景，构造相似三角形求解未知距离。",
+        "connections": "与比例线段、平行线分线段成比例定理紧密相关，后续学习三角函数时，相似三角形是解直角三角形的基础。",
+        "common_mistakes": [
+          "错误1：对应边配对错误，如将△ABC的边AB对应△DEF的边DE，但实际应AB对应EF，导致比例式错误。",
+          "错误2：忽略角度相等条件，直接假设三角形相似，实际可能不相似。",
+          "错误3：测量时未考虑视线水平，导致构造的三角形不是直角三角形，影响比例计算。"
+        ],
+        "counter_examples": "容易混淆的是全等三角形：全等要求对应边相等，而相似只要求成比例。在测量宽度时，若误用全等条件（如SSS），会导致错误，因为实际边长不等。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G9-MATH-X-ku-相似三角形应用举例--测量高度",
+      "textbook_id": "RENJIAO-G9-MATH-X",
+      "cluster_id": "RENJIAO-G9-MATH-X-kc-相似三角形的应用",
+      "name": "相似三角形应用举例——测量高度",
+      "description": "利用相似三角形对应边成比例，通过测量影长等间接求物体高度。",
+      "prerequisites": [
+        "两角分别相等判定三角形相似"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "例：树高未知，其影长6米；同时测得1.5米高的标杆影长2米。设树高h，则h/1.5=6/2，解得h=4.5米。",
+          "例：利用镜子反射测楼高：人眼、镜子、楼顶共线，通过相似三角形求楼高。"
+        ],
+        "intuition": "为什么需要这个概念？因为直接测量高大物体（如树、楼）的高度很困难，但通过测量它们的影长和人的影长，利用相似三角形对应边成比例，就能间接算出高度，就像用影子当“尺子”。",
+        "definition": "在阳光下，物体和其影子构成直角三角形，当两个物体同时测量时，它们与影子形成的三角形相似（太阳光线平行），对应边成比例，从而通过已知高度和影长求未知高度。关键限定：光线平行、地面水平、物体垂直地面。",
+        "key_points": [
+          "⚠️ 必须保证测量时太阳光线平行，即同一时间测量影长，否则三角形不相似。",
+          "⚠️ 物体必须垂直于地面，影子在地面上，否则直角三角形不成立。",
+          "⚠️ 对应边要找准：物体高度对应物体高度，影长对应影长，不能交叉对应。"
+        ],
+        "application": "典型考查方式：给出测量数据（影长、标杆高），列比例方程求高度；或结合镜子反射、目测等情境，构造相似三角形求解。",
+        "connections": "与“相似三角形的判定与性质”直接相关，是实际应用；后续学习三角函数时，也可用正切函数解决类似问题，但相似三角形更直观。",
+        "common_mistakes": [
+          "错误1：误以为影长与高度成正比，但忘记同时测量，导致比例不成立。",
+          "错误2：对应边找错，比如把树高对应标杆影长，导致方程错误。",
+          "错误3：忽略单位统一，如影长用米、标杆高用厘米，未换算直接计算。"
+        ],
+        "counter_examples": "容易混淆的是“影子不在水平地面”或“物体不垂直”的情况，此时三角形不相似，不能直接用比例。例如斜坡上的影子，需分解为水平投影。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G9-MATH-X-ku-相似三角形应用举例--视线遮挡问题",
+      "textbook_id": "RENJIAO-G9-MATH-X",
+      "cluster_id": "RENJIAO-G9-MATH-X-kc-相似三角形的应用",
+      "name": "相似三角形应用举例——视线遮挡问题",
+      "description": "利用相似三角形对应边成比例，求解观察者与遮挡物之间的临界距离。",
+      "prerequisites": [
+        "两角分别相等判定三角形相似"
+      ],
+      "related_kus": [],
+      "difficulty": 0.6,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "例1：身高1.6m的人眼距地面1.5m，前方2m处有高2m的墙，求人离墙多远时刚好看不到墙后高3m的树？利用相似三角形列比例求解。",
+          "例2：路灯高8m，人高1.7m，人离路灯5m时影子长2m，求人后退多少米影子变长？通过相似三角形对应边比例计算。"
+        ],
+        "intuition": "生活中，当观察者移动时，遮挡物会挡住视线，利用相似三角形可算出刚好被挡住的临界位置，本质是比例关系在几何中的实际应用。",
+        "definition": "视线遮挡问题：观察者、遮挡物、目标物共线时，通过相似三角形对应边成比例，求解观察者与遮挡物之间的临界距离，限定条件为观察者眼睛、遮挡物顶端、目标物顶端三点共线。",
+        "key_points": [
+          "⚠️ 必须明确相似三角形的对应顶点，通常以眼睛、遮挡物顶端、目标物顶端为对应点。",
+          "⚠️ 临界条件指视线刚好被遮挡物顶端挡住，即三点共线。",
+          "⚠️ 距离计算时注意单位统一，避免比例混淆。"
+        ],
+        "application": "典型考查方式：给出观察者、遮挡物、目标物的高度和部分距离，求临界距离；或结合动态移动，求观察者移动多少距离后刚好看到目标物。",
+        "connections": "与相似三角形的判定和性质直接相关，是比例线段在实际问题中的延伸，也为后续学习三角函数中的仰角、俯角问题打下基础。",
+        "common_mistakes": [
+          "错误1：误将观察者身高当作眼睛高度，实际应使用眼睛到地面的距离。",
+          "错误2：列比例时对应边找错，如将观察者到遮挡物的距离与遮挡物到目标物的距离混淆。",
+          "错误3：忽略临界条件中三点共线，错误假设视线与遮挡物平行。"
+        ],
+        "counter_examples": "与影子长度问题混淆：影子问题中光源（如路灯）是点光源，视线遮挡问题中观察者眼睛是点，两者虽都用相似三角形，但对应顶点和比例关系不同，影子问题中光源、人顶、影端共线。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G9-MATH-X-ku-相似三角形的定义",
+      "textbook_id": "RENJIAO-G9-MATH-X",
+      "cluster_id": "RENJIAO-G9-MATH-X-kc-相似三角形的判定",
+      "name": "相似三角形的定义",
+      "description": "三个角分别相等，三条边成比例的两个三角形叫做相似三角形。相似用符号“∽”表示。",
+      "prerequisites": [
+        "相似多边形"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "例1：△ABC中∠A=30°，∠B=60°，∠C=90°；△DEF中∠D=30°，∠E=60°，∠F=90°，且AB/DE=BC/EF=CA/FD=2，则两三角形相似。",
+          "例2：一个边长为3、4、5的直角三角形与边长为6、8、10的直角三角形相似，因为对应角相等且边长比例均为1:2。"
+        ],
+        "intuition": "相似三角形就像照片的放大或缩小——形状完全一样，只是大小不同。它帮助我们通过已知三角形的尺寸推算未知三角形的对应边长。",
+        "definition": "三个角分别相等，三条边对应成比例的两个三角形叫做相似三角形。相似用符号“∽”表示，如△ABC∽△DEF。关键限定：对应角相等且对应边比例相同。",
+        "key_points": [
+          "⚠️ 对应角相等是必要条件，但仅角相等不能保证边成比例（如全等三角形也满足角相等）",
+          "⚠️ 边成比例必须是对应边，不能随意选取边比较",
+          "⚠️ 相似符号“∽”书写时顶点顺序必须对应，如△ABC∽△DEF表示A对应D，B对应E，C对应F"
+        ],
+        "application": "典型考查方式：①给出两个三角形的边长或角度，判断是否相似并说明理由；②利用相似三角形对应边成比例求未知边长，如测量旗杆高度时利用影子形成的相似三角形。",
+        "connections": "相似三角形是比例线段和三角形全等的延伸，后续用于学习相似三角形的判定定理（如AA、SAS、SSS），以及解直角三角形和圆中的比例问题。",
+        "common_mistakes": [
+          "错误1：认为只要两个三角形有两边成比例就相似，忽略了夹角必须相等（如SAS相似条件需夹角相等）。",
+          "错误2：混淆相似与全等，认为所有相似三角形都全等，实际上相似比不为1时不全等。",
+          "错误3：写相似符号时顶点顺序乱写，导致对应关系错误，如△ABC∽△EFD可能表示A对应E，B对应F，C对应D，与题意不符。"
+        ],
+        "counter_examples": "全等三角形是相似比为1的特殊相似三角形，但相似三角形不一定全等。另外，两个等腰三角形若顶角不同，即使腰长成比例也不一定相似，因为底角可能不相等。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G9-MATH-X-ku-相似三角形面积的比等于相似比的平方",
+      "textbook_id": "RENJIAO-G9-MATH-X",
+      "cluster_id": "RENJIAO-G9-MATH-X-kc-相似三角形的性质",
+      "name": "相似三角形面积的比等于相似比的平方",
+      "description": "相似三角形面积的比等于相似比的平方。",
+      "prerequisites": [
+        "相似三角形对应线段的比等于相似比"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "例1：△ABC∽△DEF，相似比 $k=2$，则 $S_{ABC}:S_{DEF}=4:1$。",
+          "例2：若 $S_{ABC}=9$，$S_{DEF}=4$，则相似比 $k=\\sqrt{9/4}=3/2$。"
+        ],
+        "intuition": "想象两个相似三角形，一个像另一个的放大版。面积放大多少？不是边长放大倍数，而是它的平方，就像正方形面积随边长平方增长。",
+        "definition": "若两个三角形相似，相似比为 $k$，则面积比 $\\frac{S_1}{S_2} = k^2$。关键条件：两三角形必须相似（对应角相等，对应边成比例）。",
+        "key_points": [
+          "⚠️ 面积比是相似比的平方，不是相等，也不是一次方。",
+          "⚠️ 相似比必须是对应边的比值，顺序不能颠倒。",
+          "⚠️ 仅适用于相似三角形，不适用于任意三角形。"
+        ],
+        "application": "常见题型：已知相似比求面积比，或已知面积比求相似比；也用于解决实际问题（如地图比例尺与区域面积）。",
+        "connections": "该性质源于相似三角形对应高、中线等也成比例，面积公式 $S=\\frac{1}{2}ah$ 中底和高均放大 $k$ 倍，故面积放大 $k^2$ 倍。后续学习相似多边形面积比也类似。",
+        "common_mistakes": [
+          "错误1：认为面积比等于相似比（如相似比2，面积比写成2:1），忘记平方。",
+          "错误2：混淆相似比与面积比，求相似比时直接开方面积比，但忘记面积比是平方关系。",
+          "错误3：计算时忽略单位统一，如边长单位不同直接代入比例。"
+        ],
+        "counter_examples": "全等三角形是相似比为1的特殊情况，面积相等。但若两个三角形底和高成比例但不相似（如底边比2:1，高比3:1），面积比不是相似比的平方，因为不满足对应角相等。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G9-MATH-X-ku-相似图形",
+      "textbook_id": "RENJIAO-G9-MATH-X",
+      "cluster_id": "RENJIAO-G9-MATH-X-kc-相似图形与相似多边形",
+      "name": "相似图形",
+      "description": "形状相同的图形叫做相似图形。两个图形相似，其中一个可以看作由另一个放大或缩小得到。",
+      "prerequisites": [],
+      "related_kus": [],
+      "difficulty": 0.2,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "两个正方形，边长分别为2和4，对应角都是90°，对应边比例1:2，它们相似。",
+          "两个等边三角形，边长分别为3和6，对应角都是60°，对应边比例1:2，它们相似。"
+        ],
+        "intuition": "相似图形就像照片的放大或缩小，形状不变但大小变了，帮助我们理解现实中的缩放现象，比如地图、模型与实物的关系。",
+        "definition": "两个图形形状相同，对应角相等，对应边成比例，则称它们相似。关键限定：形状相同，大小可以不同，且对应边比例必须一致。",
+        "key_points": [
+          "⚠️ 相似图形必须形状相同，但大小可以不同，不能误认为大小相同才是相似。",
+          "⚠️ 对应角相等是必要条件，不能只凭边成比例判断，例如菱形边成比例但角可能不同。",
+          "⚠️ 相似比是常数，所有对应边比例必须相等，不能部分边比例不同。"
+        ],
+        "application": "典型考查：给出两个多边形，判断是否相似并说明理由；利用相似比求未知边长或角度，常见于几何证明题和实际应用题（如地图比例尺）。",
+        "connections": "相似图形是后续学习相似三角形判定（如AA、SAS相似）的基础，也与比例线段、位似图形紧密相关，为几何证明和实际测量（如测高）提供工具。",
+        "common_mistakes": [
+          "误认为所有矩形都相似：矩形对应角相等，但长宽比不同时对应边比例不一致，如2×3矩形与3×4矩形不相似。",
+          "误认为所有菱形都相似：菱形对应边成比例，但内角可能不同，如60°菱形与120°菱形不相似。",
+          "混淆相似与全等：认为大小不同就不相似，实际上相似允许大小不同，只要形状相同。"
+        ],
+        "counter_examples": "全等图形是相似的特殊情况（相似比为1），但相似图形不一定全等。例如，边长为2和3的正方形相似但不全等。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G9-MATH-X-ku-相似多边形",
+      "textbook_id": "RENJIAO-G9-MATH-X",
+      "cluster_id": "RENJIAO-G9-MATH-X-kc-相似图形与相似多边形",
+      "name": "相似多边形",
+      "description": "两个边数相同的多边形，如果角分别相等，边成比例，则叫做相似多边形。相似多边形对应边的比叫做相似比。",
+      "prerequisites": [
+        "成比例线段"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "两个正方形，边长分别为2和4，对应角均为90°，对应边比为1:2，所以相似。",
+          "两个等边三角形，边长分别为3和6，对应角均为60°，对应边比为1:2，所以相似。"
+        ],
+        "intuition": "就像照片放大或缩小，形状不变但大小变了。相似多边形就是形状相同、大小可能不同的多边形，对应角相等、对应边成比例。",
+        "definition": "两个边数相同的多边形，如果对应角分别相等，且对应边成比例，则称这两个多边形相似。对应边的比称为相似比。关键限定：边数相同、角相等、边成比例，三者缺一不可。",
+        "key_points": [
+          "⚠️ 对应角相等是必要条件，但仅角相等不一定相似（如正方形和矩形角都相等，但边不成比例）",
+          "⚠️ 对应边成比例是必要条件，但仅边成比例不一定相似（如菱形和正方形边成比例，但角不等）",
+          "⚠️ 相似比是常数，对应边的比值必须全部相等，不能只部分相等"
+        ],
+        "application": "典型考查：给出两个多边形边长和角度，判断是否相似并求相似比；或利用相似性质求未知边长（如地图比例尺问题）。",
+        "connections": "相似多边形是相似三角形（八年级）的推广，也是后续学习相似图形面积比（等于相似比的平方）和立体几何中相似体的基础。",
+        "common_mistakes": [
+          "错误认为只要角相等就相似，忽略边成比例（如认为所有矩形都相似）",
+          "错误认为只要边成比例就相似，忽略角相等（如认为所有菱形都相似）",
+          "错误认为对应边比值必须为整数或简单分数，实际上可以是任意正实数"
+        ],
+        "counter_examples": "容易混淆的是全等多边形：全等是相似的特殊情况（相似比为1），但相似不一定全等。另外，矩形与正方形：矩形角相等但边不成比例（长宽比不同），所以不相似。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G9-MATH-X-ku-相似多边形的性质",
+      "textbook_id": "RENJIAO-G9-MATH-X",
+      "cluster_id": "RENJIAO-G9-MATH-X-kc-相似图形与相似多边形",
+      "name": "相似多边形的性质",
+      "description": "相似多边形的对应角相等，对应边成比例。",
+      "prerequisites": [
+        "相似多边形"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "两个正方形，边长分别为2和4，对应角都是90°，对应边比例均为2，所以相似。",
+          "两个等边三角形，边长分别为3和6，对应角都是60°，对应边比例均为2，相似。"
+        ],
+        "intuition": "相似多边形就像同一张照片的不同缩放版本——形状完全一样，只是大小不同。它帮助我们通过已知图形的比例关系，推算未知图形的边长或面积。",
+        "definition": "如果两个多边形的对应角相等，且对应边的长度成同一比例（即相似比），则这两个多边形相似。关键限定：对应角必须严格相等，对应边必须成固定比例。",
+        "key_points": [
+          "⚠️ 对应角相等是必要条件，但仅角相等不能保证相似（如矩形与正方形角相等但边不成比例）",
+          "⚠️ 对应边成比例必须所有边都按同一比例，不能部分边比例不同",
+          "⚠️ 相似比是常数，通常记为k，且面积比等于k²，周长比等于k"
+        ],
+        "application": "典型考查方式：给出两个相似多边形的边长或面积，求未知边长或面积比；或判断给定多边形是否相似，需验证角相等和边成比例。",
+        "connections": "相似多边形是相似三角形概念的推广，也是后续学习相似图形面积比、位似图形的基础。",
+        "common_mistakes": [
+          "误以为只要对应角相等就相似（如矩形与正方形角相等但边不成比例，不相似）",
+          "误以为对应边成比例但忽略角相等（如菱形与正方形边成比例但角不同，不相似）",
+          "计算面积比时直接使用相似比k而不是k²（如相似比2时面积比应为4）"
+        ],
+        "counter_examples": "容易混淆的是全等多边形：全等是相似的特殊情况（相似比k=1），但相似不一定全等。例如边长为2和3的正方形相似但不全等。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G9-MATH-X-ku-线段的正投影性质",
+      "textbook_id": "RENJIAO-G9-MATH-X",
+      "cluster_id": "RENJIAO-G9-MATH-X-kc-正投影及其性质",
+      "name": "线段的正投影性质",
+      "description": "线段平行于投影面时，正投影是等长线段；倾斜于投影面时，正投影是缩短的线段；垂直于投影面时，正投影是一个点。",
+      "prerequisites": [
+        "ku-004"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "一根长10cm的铅笔平行于桌面放置，正投影到桌面上，影子也是10cm长的线段。",
+          "同一根铅笔与桌面成30°角倾斜放置，正投影到桌面上，影子长度为10×cos30°≈8.66cm。"
+        ],
+        "intuition": "想象手电筒垂直照射一根筷子：筷子平放时影子与筷子等长，斜放时影子变短，竖直时影子缩成一个点。这帮助我们理解光线投影下物体形状的变化规律。",
+        "definition": "线段的正投影是指过线段两端点分别向投影面作垂线，所得垂足之间的线段。关键限定：投影方向垂直于投影面，且投影面为平面。",
+        "key_points": [
+          "⚠️ 线段平行于投影面时，投影长度等于原线段长度，但方向可能不同（取决于投影方向）。",
+          "⚠️ 线段倾斜于投影面时，投影长度等于原长乘以夹角余弦，夹角是线段与投影面所成的角。",
+          "⚠️ 线段垂直于投影面时，投影是一个点，但该点不是线段的中点，而是线段两端点垂足重合的点。"
+        ],
+        "application": "常见考查方式：给出线段长度和与投影面的夹角，求正投影长度；或根据投影长度反推原线段长度或夹角。",
+        "connections": "正投影性质是学习三视图的基础，通过分析线段在不同方向上的投影，可理解立体图形在三个视图中的长度变化。",
+        "common_mistakes": [
+          "错误认为线段倾斜时投影长度等于原长乘以sinθ（误用正弦），正确应为乘以cosθ（夹角余弦）。",
+          "混淆“线段平行于投影面”与“线段平行于投影方向”：前者投影等长，后者投影缩为点。",
+          "误以为垂直于投影面的线段投影是一个点，但认为该点位于线段中点，实际上两端点垂足重合于同一点。"
+        ],
+        "counter_examples": "正投影与斜投影不同：正投影的投影线垂直于投影面，而斜投影的投影线不垂直。例如，平行光斜照时，平行于投影面的线段投影可能变长或变短，而正投影下则保持等长。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G9-MATH-X-ku-组合体的三视图画法",
+      "textbook_id": "RENJIAO-G9-MATH-X",
+      "cluster_id": "RENJIAO-G9-MATH-X-kc-三视图的画图与读图",
+      "name": "组合体的三视图画法",
+      "description": "画组合体三视图时，构成组合体的各部分的视图也要遵守“长对正，高平齐，宽相等”的规律，并注意各部分的位置关系。",
+      "prerequisites": [
+        "ku-012"
+      ],
+      "related_kus": [],
+      "difficulty": 0.6,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "例：一个长方体上方叠加一个圆柱，主视图为矩形上方加矩形（圆柱投影），俯视图为矩形中一个圆，左视图为矩形上方加矩形，注意圆柱与长方体前后对齐。",
+          "例：一个L形组合体（两个长方体垂直叠加），主视图为L形，俯视图为两个矩形（一个长一个短），左视图为倒L形，需保证各视图对应部分长宽高一致。"
+        ],
+        "intuition": "组合体三视图就像从不同方向给物体拍照，确保每个部分在三个视图中的位置和大小都严格对应，才能准确还原立体形状。",
+        "definition": "组合体三视图是指将组合体向三个互相垂直的投影面（正面、水平面、侧面）分别作正投影，得到主视图、俯视图和左视图，且各视图之间必须满足“长对正、高平齐、宽相等”的投影规律。",
+        "key_points": [
+          "⚠️ 各视图的“长”指主视图和俯视图的左右长度，“高”指主视图和左视图的上下高度，“宽”指俯视图和左视图的前后宽度，方向不能混淆。",
+          "⚠️ 组合体中每个基本体的投影必须独立遵守投影规律，不能因为整体对齐而忽略局部相对位置。",
+          "⚠️ 当组合体有叠加或切割时，要特别注意交线、相切处是否可见，以及轮廓线的虚实变化。"
+        ],
+        "application": "典型考查方式：给出组合体的立体图或轴测图，要求画出其三视图；或给出三视图，要求判断组合体的形状、计算体积或表面积。",
+        "connections": "三视图画法是立体几何和工程制图的基础，后续学习“由三视图还原几何体”时，需要逆向运用投影规律；同时与“空间几何体的表面积和体积”计算紧密相关。",
+        "common_mistakes": [
+          "错误1：画俯视图时，误将主视图中的高度当作宽度，导致俯视图前后尺寸错误。",
+          "错误2：忽略组合体中前后位置不同的部分在左视图中的左右顺序，例如前方物体在左视图中应靠左，后方靠右。",
+          "错误3：当两个基本体表面平齐时，误画分界线（如台阶状），实际上应画成一条连续的轮廓线。"
+        ],
+        "counter_examples": "容易与“组合体三视图”混淆的是“基本几何体的三视图”，后者只涉及单一形状，无需考虑各部分之间的相对位置和遮挡关系；而组合体必须分析每个基本体的投影叠加或切割后的整体效果。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G9-MATH-X-ku-视图的定义",
+      "textbook_id": "RENJIAO-G9-MATH-X",
+      "cluster_id": "RENJIAO-G9-MATH-X-kc-三视图的概念与画法规则",
+      "name": "视图的定义",
+      "description": "当我们从某一方向观察一个物体时，所看到的平面图形叫做物体的一个视图。视图可以看作物体在某一方向光线下的正投影。",
+      "prerequisites": [
+        "ku-004"
+      ],
+      "related_kus": [],
+      "difficulty": 0.2,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "从正面看一个长方体，得到矩形视图（主视图）",
+          "从上面看一个圆柱，得到圆形视图（俯视图）"
+        ],
+        "intuition": "视图就像从不同角度给物体拍照片，每张照片只显示那个方向看到的平面形状，帮助我们全面理解物体的立体结构。",
+        "definition": "从某一方向观察物体时，所看到的平面图形称为该物体的一个视图。视图本质是物体在某一方向平行光线下的正投影，要求投影线与投影面垂直。",
+        "key_points": [
+          "⚠️ 视图是平面图形，不是立体图形，不能包含深度信息",
+          "⚠️ 视图方向必须明确，不同方向得到不同视图",
+          "⚠️ 视图是正投影，光线平行且垂直于投影面，不是中心投影"
+        ],
+        "application": "典型考查方式：给出实物或立体图形，要求画出指定方向的视图；或给出三视图，还原立体图形形状。",
+        "connections": "视图是后续学习三视图（主、俯、左视图）的基础，也是立体几何中空间想象能力的重要训练，与投影、相似三角形等知识关联。",
+        "common_mistakes": [
+          "误以为视图就是物体本身，忽略方向性，如认为从不同方向看同一物体视图相同",
+          "混淆视图与影子：影子是光线被遮挡形成的暗区，视图是光线直接投射的轮廓",
+          "画视图时忽略看不见的轮廓线，如从正面看一个空心圆柱，应画出内孔的虚线"
+        ],
+        "counter_examples": "视图不同于透视图：透视图模拟人眼效果（近大远小），而视图是正投影（大小不变）。例如，从正面看一个正方体，视图是正方形，而透视图可能呈现梯形。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G9-MATH-X-ku-解直角三角形的基本类型",
+      "textbook_id": "RENJIAO-G9-MATH-X",
+      "cluster_id": "RENJIAO-G9-MATH-X-kc-解直角三角形的基本理论",
+      "name": "解直角三角形的基本类型",
+      "description": "已知两个元素（至少有一个是边），利用三边关系、两锐角关系、边角关系可求出其余三个未知元素。",
+      "prerequisites": [
+        "直角三角形中五个元素的关系"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "例1：在Rt△ABC中，∠C=90°，a=3，b=4，求c和∠A。解：c=√(3²+4²)=5，tanA=3/4≈0.75，∠A≈36.87°。",
+          "例2：在Rt△ABC中，∠C=90°，c=10，∠A=30°，求a和b。解：a=c·sin30°=5，b=c·cos30°=5√3。"
+        ],
+        "intuition": "解直角三角形就像已知一个直角三角形的部分信息，通过勾股定理和三角函数这把钥匙，打开未知边角的大门，常用于测量高度、距离等实际问题。",
+        "definition": "在直角三角形中，已知两个元素（至少有一条边），利用勾股定理（$a^2+b^2=c^2$）、两锐角互余（$A+B=90°$）及锐角三角函数（如$\\sin A=\\frac{a}{c}$），求出其余三个未知元素的过程。关键限定：必须已知一条边。",
+        "key_points": [
+          "⚠️ 已知两边时，用勾股定理求第三边，再用三角函数求角；已知一边一角时，用三角函数求边，再用互余求另一角。",
+          "⚠️ 注意已知角是否为锐角，且必须明确该角与已知边的位置关系（对边、邻边、斜边）。",
+          "⚠️ 结果需根据题目要求保留精确值或近似值，避免计算中过早四舍五入。"
+        ],
+        "application": "典型考查方式：给出直角三角形两边或一边一角，求未知边角；或结合实际问题（如测楼高、河宽），构造直角三角形求解，需注意结果精确度要求。",
+        "connections": "解直角三角形是勾股定理和锐角三角函数的综合应用，为后续学习解一般三角形（正弦定理、余弦定理）及实际测量问题（如仰角、俯角）奠定基础。",
+        "common_mistakes": [
+          "错误1：已知两边时，误用三角函数求角，如已知a=3，b=4，直接用sinA=3/4，但未确认斜边c，正确应先求c=5，再用sinA=3/5。",
+          "错误2：已知一边一角时，混淆对边、邻边与斜边关系，如已知∠A=30°，邻边b=5，误用sin30°=a/5，正确应用tan30°=a/5或cos30°=5/c。",
+          "错误3：忽略角度单位，计算器设为弧度导致结果错误，或未按要求保留小数位数。"
+        ],
+        "counter_examples": "解直角三角形与解一般三角形不同：一般三角形需用正弦定理或余弦定理，而直角三角形有更简单的勾股定理和锐角三角函数，且已知条件必须包含一条边，否则无法唯一确定三角形。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G9-MATH-X-ku-解直角三角形的定义",
+      "textbook_id": "RENJIAO-G9-MATH-X",
+      "cluster_id": "RENJIAO-G9-MATH-X-kc-解直角三角形的基本理论",
+      "name": "解直角三角形的定义",
+      "description": "由直角三角形中的已知元素（除直角外），求出其余未知元素的过程，叫做解直角三角形。",
+      "prerequisites": [
+        "直角三角形边角关系"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "在Rt△ABC中，∠C=90°，a=3，b=4，求c和∠A。解：c=√(3²+4²)=5，tanA=3/4，∠A≈36.87°。",
+          "在Rt△ABC中，∠C=90°，c=10，∠A=30°，求a和b。解：a=c·sin30°=5，b=c·cos30°=5√3。"
+        ],
+        "intuition": "就像已知三角形部分边长和角度，通过工具算出其余未知量，解直角三角形就是利用直角三角形的特殊性质，从已知元素推导出所有未知元素。",
+        "definition": "在直角三角形中，除直角外，已知两个元素（至少一个是边），利用勾股定理、锐角三角函数等关系，求出其余所有未知元素（边或角）的过程。关键限定：必须已知至少一条边。",
+        "key_points": [
+          "⚠️ 解直角三角形必须已知至少一条边，仅知两个角无法解出边长。",
+          "⚠️ 已知两边时，先用勾股定理求第三边，再用三角函数求角；已知一边一角时，需根据角的位置选择正确的三角函数。",
+          "⚠️ 结果中角度通常保留到度或分，边长根据题目要求保留根号或小数，注意单位统一。"
+        ],
+        "application": "典型考查方式：给出直角三角形中两个已知元素（如一边一角或两边），要求计算其他元素；或结合实际问题（如测高、测距），先构造直角三角形再求解。",
+        "connections": "解直角三角形是勾股定理和锐角三角函数的综合应用，为后续学习解一般三角形（正弦定理、余弦定理）以及实际测量问题（如仰角、俯角）奠定基础。",
+        "common_mistakes": [
+          "错误：已知两边时，直接用三角函数求角，忘记先判断哪边是斜边。例如在Rt△ABC中，∠C=90°，a=3，b=4，误用sinA=3/4，实际应先用勾股定理求c=5，再用sinA=3/5。",
+          "错误：已知一边一角时，混淆对边、邻边与斜边的关系。例如已知斜边c和锐角A，求对边a时误用cosA，正确应为sinA=a/c。",
+          "错误：忽略题目中角度单位（度或弧度），计算器设置错误导致结果偏差。"
+        ],
+        "counter_examples": "解直角三角形与解一般三角形不同：一般三角形需用正弦定理或余弦定理，而直角三角形有更简单的勾股定理和锐角三角函数关系，不能混用。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G9-MATH-X-ku-解直角三角形的实际应用一般过程",
+      "textbook_id": "RENJIAO-G9-MATH-X",
+      "cluster_id": "RENJIAO-G9-MATH-X-kc-解直角三角形的实际应用",
+      "name": "解直角三角形的实际应用一般过程",
+      "description": "将实际问题抽象为数学问题（画图），选用锐角三角函数解直角三角形，得到数学答案，再转化为实际答案。",
+      "prerequisites": [
+        "解直角三角形的基本类型"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "例：测得旗杆仰角为30°，测角仪距旗杆底部10米，求旗杆高度。设旗杆高h，则tan30°=h/10，解得h=10×√3/3≈5.77米。",
+          "例：一艘船向正北航行，测得灯塔在东北方向，航行10海里后测得灯塔在正东方向，求船与灯塔的最近距离。画图后利用等腰直角三角形性质求解。"
+        ],
+        "intuition": "为什么需要这个概念？就像测量旗杆高度时，我们无法直接爬上去量，但通过地面上的影子或角度，利用直角三角形就能算出高度，这就是把现实问题转化为数学问题再求解的过程。",
+        "definition": "将实际情境中的距离、高度、角度等量抽象为直角三角形的边角关系，选用合适的锐角三角函数（正弦、余弦、正切）建立方程，解出数学答案后，再根据实际意义（如取整、单位换算）得到最终结果。关键限定：实际问题必须能抽象为直角三角形，且已知至少两个元素（其中一个是边）。",
+        "key_points": [
+          "⚠️ 画图时务必标注已知量和未知量，并明确哪个角是直角，否则容易用错三角函数。",
+          "⚠️ 选用三角函数时，要分清对边、邻边和斜边，不能混淆正弦和余弦。",
+          "⚠️ 解出的数学答案（如根号、小数）必须根据实际情境进行取舍或单位转换，不能直接作为最终答案。"
+        ],
+        "application": "典型考查方式：给出实际场景（如测量高度、航海方向、坡度问题），要求先画图建模，再列方程求解，最后回答实际问题（如“旗杆高约多少米”）。",
+        "connections": "本知识是锐角三角函数（正弦、余弦、正切）的直接应用，也是后续学习解一般三角形（正弦定理、余弦定理）的基础，同时与物理中的力的分解、坡度问题紧密相关。",
+        "common_mistakes": [
+          "错误1：画图时未标出直角符号，导致误用三角函数（如把对边当邻边）。",
+          "错误2：混淆仰角与俯角，把仰角当作俯角计算，导致高度差算反。",
+          "错误3：解出方程后忘记将数学答案（如小数）四舍五入或换算单位，直接写根号形式作为实际答案。"
+        ],
+        "counter_examples": "容易混淆的是“解直角三角形”与“解一般三角形”的区别。解直角三角形必须有一个直角，而实际问题中若没有直角，需先通过作高构造直角三角形，否则不能直接使用锐角三角函数。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G9-MATH-X-ku-解直角三角形的应用-仰角与俯角",
+      "textbook_id": "RENJIAO-G9-MATH-X",
+      "cluster_id": "RENJIAO-G9-MATH-X-kc-解直角三角形的实际应用",
+      "name": "解直角三角形的应用：仰角与俯角",
+      "description": "视线在水平线上方时，视线与水平线的夹角叫仰角；视线在水平线下方时，叫俯角。利用解直角三角形可求高度或距离。",
+      "prerequisites": [
+        "解直角三角形的基本类型"
+      ],
+      "related_kus": [],
+      "difficulty": 0.6,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "例1：从地面某点看楼顶，仰角30°，楼高30米，求该点到楼底的水平距离。解：tan30°=30/距离，得距离≈51.96米。",
+          "例2：从山顶看山脚，俯角45°，山高200米，求山顶到山脚的水平距离。解：tan45°=200/距离，得距离=200米。"
+        ],
+        "intuition": "仰角和俯角源于我们观察物体时的视线方向，比如看山顶时抬头（仰角），看谷底时低头（俯角）。它们将现实中的“高低”转化为可计算的角，从而用解直角三角形求高度或距离。",
+        "definition": "仰角：视线在水平线上方时，视线与水平线的夹角（0°<仰角<90°）。俯角：视线在水平线下方时，视线与水平线的夹角（0°<俯角<90°）。关键：水平线是基准，视线与水平线在同一竖直平面内。",
+        "key_points": [
+          "⚠️ 仰角和俯角都是以水平线为基准，不是以地面或视线方向为基准。",
+          "⚠️ 仰角和俯角都是锐角，且视线与水平线在同一竖直平面内。",
+          "⚠️ 实际问题中，水平线通常指观察点的水平视线，不是地面线。"
+        ],
+        "application": "典型考查方式：给出仰角/俯角及一个边长（如高度或距离），求另一未知边长；或结合两个不同位置的仰角/俯角，通过列方程求高度（如测楼高、山高）。",
+        "connections": "仰角和俯角是解直角三角形在测量中的典型应用，与锐角三角函数（正弦、余弦、正切）紧密相关，后续会延伸到方位角、坡度等实际角度问题，以及非直角三角形中的解三角形。",
+        "common_mistakes": [
+          "错误1：把仰角当成视线与竖直线的夹角。例如，看楼顶时误将视线与墙面的夹角当作仰角，导致计算错误。",
+          "错误2：在俯角问题中，把俯角当作视线与地面的夹角。实际上俯角是视线与水平线的夹角，水平线是过观察点的水平线。",
+          "错误3：忽略观察点的高度。例如，从楼顶看地面物体时，直接用楼高作为对边，但实际对边是楼高减去观察点高度（若观察点不在楼顶）。"
+        ],
+        "counter_examples": "容易混淆的是“坡度”或“倾斜角”。坡度是竖直高度与水平距离的比值（如1:2），不是角度；倾斜角是直线与水平线的夹角，但通常用于描述斜坡本身，而仰角/俯角专指观察视线。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G9-MATH-X-ku-解直角三角形的应用-圆与切线",
+      "textbook_id": "RENJIAO-G9-MATH-X",
+      "cluster_id": "RENJIAO-G9-MATH-X-kc-解直角三角形的实际应用",
+      "name": "解直角三角形的应用：圆与切线",
+      "description": "从圆外一点引圆的切线，切点与圆心、该点构成直角三角形，利用解直角三角形可求弧长等。",
+      "prerequisites": [
+        "圆的切线性质",
+        "解直角三角形的基本类型"
+      ],
+      "related_kus": [],
+      "difficulty": 0.7,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "已知圆O半径3cm，圆外一点P到圆心距离5cm，求切线长PA。解：在Rt△OAP中，OA=3，OP=5，由勾股定理得PA=√(5²-3²)=4cm。",
+          "已知圆O半径4cm，切线长PA=3cm，求点P到圆心距离。解：在Rt△OAP中，OA=4，PA=3，OP=√(4²+3²)=5cm。"
+        ],
+        "intuition": "就像从圆外一点拉一根绳子到圆上，绳子与圆相切时，切点、圆心和该点构成一个直角三角形，利用这个三角形可以计算切线的长度或弧长。",
+        "definition": "从圆外一点P引圆的两条切线，切点分别为A和B，连接圆心O与切点A、B，以及OP，则OA⊥PA，OB⊥PB，形成直角三角形OAP和OBP，其中OP为斜边，OA为半径，PA为切线长。",
+        "key_points": [
+          "⚠️ 切线与半径垂直是核心条件，必须明确切点位置",
+          "⚠️ 圆外一点到圆心的连线是直角三角形的斜边，不是直角边",
+          "⚠️ 利用勾股定理时，注意区分半径、切线长和点到圆心距离"
+        ],
+        "application": "典型考查方式：给出圆外一点到圆心的距离和半径，求切线长或切点间的弧长；或结合角度，利用三角函数求切线长或圆心角，再计算弧长。",
+        "connections": "解直角三角形的应用是三角函数和勾股定理的延伸，圆与切线结合了圆的几何性质，为后续学习切线长定理和圆幂定理打下基础。",
+        "common_mistakes": [
+          "错误认为圆外一点到圆心的连线是直角边，实际是斜边",
+          "忽略切点位置，误将非切点当作直角顶点",
+          "在计算弧长时，忘记先通过解直角三角形求出圆心角，再代入弧长公式"
+        ],
+        "counter_examples": "容易与“圆上一点作切线”混淆：圆上一点作切线，切线与半径垂直，但该点与圆心连线就是半径，不构成直角三角形；只有圆外一点作切线才形成直角三角形。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G9-MATH-X-ku-解直角三角形的应用-坡度与坡角",
+      "textbook_id": "RENJIAO-G9-MATH-X",
+      "cluster_id": "RENJIAO-G9-MATH-X-kc-解直角三角形的实际应用",
+      "name": "解直角三角形的应用：坡度与坡角",
+      "description": "坡度i=铅直高度/水平宽度，坡角α满足tanα=i。利用解直角三角形可求坡长、高度等。",
+      "prerequisites": [
+        "解直角三角形的基本类型"
+      ],
+      "related_kus": [],
+      "difficulty": 0.6,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "例1：斜坡铅直高度 $3\\,\\text{m}$，水平宽度 $4\\,\\text{m}$，则坡度 $i = \\frac{3}{4} = 0.75$，坡角 $\\alpha = \\arctan(0.75) \\approx 36.87^\\circ$。",
+          "例2：已知坡度 $i=1:2$，水平宽度 $10\\,\\text{m}$，则铅直高度 $h = \\frac{1}{2} \\times 10 = 5\\,\\text{m}$，坡长 $= \\sqrt{5^2+10^2} = 5\\sqrt{5}\\,\\text{m}$。"
+        ],
+        "intuition": "坡度就像楼梯的陡峭程度：每走一步，上升的高度与前进的水平距离之比。坡角则是这个斜坡与水平面的夹角，坡度越大，坡角越大。",
+        "definition": "坡度 $i$ 是坡面的铅直高度 $h$ 与水平宽度 $l$ 的比值，即 $i = \\frac{h}{l}$；坡角 $\\alpha$ 是坡面与水平面的夹角，满足 $\\tan \\alpha = i$。限定条件：$h$ 和 $l$ 均为正数，$\\alpha$ 为锐角。",
+        "key_points": [
+          "⚠️ 坡度 $i$ 是比值，不是角度，通常写成 $1:m$ 的形式（如 $1:2$ 表示 $h:l=1:2$）。",
+          "⚠️ 坡角 $\\alpha$ 与坡度 $i$ 的关系是 $\\tan \\alpha = i$，不是 $\\sin \\alpha$ 或 $\\cos \\alpha$。",
+          "⚠️ 计算坡长时，坡长是斜边，需用勾股定理：$\\text{坡长} = \\sqrt{h^2 + l^2}$。"
+        ],
+        "application": "典型考查方式：① 已知坡度或坡角，求坡长、高度或水平距离；② 结合实际问题（如修路、筑坝），通过解直角三角形计算相关量。",
+        "connections": "坡度与坡角是解直角三角形在现实生活中的典型应用，与三角函数（正切）、勾股定理紧密相关，后续可延伸至测量、工程中的仰角俯角问题。",
+        "common_mistakes": [
+          "错误：将坡度 $i$ 直接当作角度，如说“坡度 $30^\\circ$”。正确：坡度是比值，坡角才是角度。",
+          "错误：混淆铅直高度与坡长，如用坡长代替水平宽度计算坡度。正确：坡度 $i = \\frac{\\text{铅直高度}}{\\text{水平宽度}}$，坡长是斜边。",
+          "错误：在已知坡度和铅直高度求水平宽度时，误用 $l = h \\cdot i$。正确：由 $i = h/l$ 得 $l = h/i$。"
+        ],
+        "counter_examples": "坡度 $i$ 不是坡角的正弦值。例如，坡角 $30^\\circ$ 时，$\\sin 30^\\circ = 0.5$，但坡度 $i = \\tan 30^\\circ \\approx 0.577$，两者不同。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G9-MATH-X-ku-解直角三角形的应用-方向角",
+      "textbook_id": "RENJIAO-G9-MATH-X",
+      "cluster_id": "RENJIAO-G9-MATH-X-kc-解直角三角形的实际应用",
+      "name": "解直角三角形的应用：方向角",
+      "description": "方向角指从正北或正南方向到目标方向所成的锐角，如北偏东65°。利用解直角三角形可求距离。",
+      "prerequisites": [
+        "解直角三角形的基本类型"
+      ],
+      "related_kus": [],
+      "difficulty": 0.6,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "例1：一艘船从港口出发，沿北偏东60°方向航行20海里，求船在港口东方向的距离。解：构造直角三角形，用cos60°=邻边/斜边，得东向距离=20×cos60°=10海里。",
+          "例2：从A点看B点在南偏西30°方向，从B点看A点则在北偏东30°方向，两者互为反向方向角。"
+        ],
+        "intuition": "方向角就像用指南针描述一个目标相对于你的方位，比如‘北偏东30°’就是先面向正北，再向东转30°看目标。解直角三角形则把这种方位描述转化为可计算的边长问题。",
+        "definition": "方向角是从正北或正南方向线起，到目标方向线所夹的锐角（0°<θ<90°），通常表示为‘北偏东/西α°’或‘南偏东/西α°’，其中α为锐角度数。",
+        "key_points": [
+          "⚠️ 方向角必须从正北或正南开始，不能从正东或正西开始，如‘东偏北’是错误表述。",
+          "⚠️ 方向角是锐角（小于90°），若角度大于90°需用两个方向角组合描述。",
+          "⚠️ 画图时先确定正北方向（通常向上），再根据描述旋转角度，避免方向混淆。"
+        ],
+        "application": "典型考查方式：①给出两个观测点的方向角和距离，求目标点间的距离（需构造两个直角三角形）；②结合速度和时间，求航行或飞行中的实际位移（如台风中心移动问题）。",
+        "connections": "方向角是锐角三角函数在现实导航中的直接应用，与之前学习的方位角、比例尺、勾股定理紧密相连，后续在物理中的力合成、航海问题中也会反复使用。",
+        "common_mistakes": [
+          "错误1：把‘北偏东30°’画成从正东向北转30°，正确应是从正北向东转30°。",
+          "错误2：混淆‘北偏东30°’和‘东偏北60°’，前者以正北为基准，后者以正东为基准，但方向角标准表述只用正北或正南。",
+          "错误3：计算时误用三角函数，如求北向距离时用sin而不是cos，需根据直角三角形中已知边和所求边的关系选择。"
+        ],
+        "counter_examples": "方位角（如‘东北方向’）是45°的整数倍，不要求精确角度；而方向角必须给出具体锐角度数，如‘北偏东65°’更精确。两者易混淆，但方向角常用于解直角三角形计算距离。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    }
+  ]
+}

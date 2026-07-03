@@ -1,0 +1,955 @@
+{
+  "textbook": {
+    "id": "RENJIAO-G1-MATH-S",
+    "subject": "math",
+    "grade": "G1",
+    "edition": "2022修订",
+    "book_name": "人教版·数学一年级上册"
+  },
+  "clusters": [
+    {
+      "id": "RENJIAO-G1-MATH-S-kc-5以内数的认识与运算",
+      "name": "5以内数的认识与运算",
+      "display_order": 1,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G1-MATH-S-kc-6-10的认识与运算",
+      "name": "6～10的认识与运算",
+      "display_order": 2,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G1-MATH-S-kc-立体图形的认识与拼搭",
+      "name": "立体图形的认识与拼搭",
+      "display_order": 3,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G1-MATH-S-kc-11-20的认识",
+      "name": "11～20的认识",
+      "display_order": 4,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G1-MATH-S-kc-11-20各数的认识与组成",
+      "name": "11～20各数的认识与组成",
+      "display_order": 5,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G1-MATH-S-kc-20以内进位加法",
+      "name": "20以内进位加法",
+      "display_order": 6,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G1-MATH-S-kc-用加法解决实际问题",
+      "name": "用加法解决实际问题",
+      "display_order": 7,
+      "description": null
+    }
+  ],
+  "units": [
+    {
+      "id": "RENJIAO-G1-MATH-S-ku-0的认识和加-减法",
+      "textbook_id": "RENJIAO-G1-MATH-S",
+      "cluster_id": "RENJIAO-G1-MATH-S-kc-5以内数的认识与运算",
+      "name": "0的认识和加、减法",
+      "description": "认识0，掌握0的加、减法计算（如0+5=5，5-5=0）。",
+      "prerequisites": [
+        "ku-001",
+        "ku-005",
+        "ku-006"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G1-MATH-S-ku-1-5的认识",
+      "textbook_id": "RENJIAO-G1-MATH-S",
+      "cluster_id": "RENJIAO-G1-MATH-S-kc-5以内数的认识与运算",
+      "name": "1～5的认识",
+      "description": "认识数字1、2、3、4、5，能用它们表示事物的数量，会读写。",
+      "prerequisites": [],
+      "related_kus": [],
+      "difficulty": 0.2,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G1-MATH-S-ku-10加几和相应的减法",
+      "textbook_id": "RENJIAO-G1-MATH-S",
+      "cluster_id": "RENJIAO-G1-MATH-S-kc-11-20各数的认识与组成",
+      "name": "10加几和相应的减法",
+      "description": "10+3=13，13-3=10，13-10=3。",
+      "prerequisites": [
+        "11～20的组成"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "$10 + 7 = 17, 17 - 7 = 10, 17 - 10 = 7$。这里展示了加法和减法的相互关系。",
+          "$10 + 4 = 14, 14 - 4 = 10, 14 - 10 = 4$。进一步说明了基本运算规律"
+        ],
+        "intuition": "理解10加几和相应的减法有助于学生建立数感，掌握基本运算规律，为后续学习打下基础。",
+        "definition": "在十进制系统中，$10 + n = 10 + n$（其中$n \\in [0,9]$），而$10 + n - n = 10$。",
+        "key_points": [
+          "⚠️ 最易误解的点1：混淆加法和减法的操作顺序",
+          "⚠️ 最易误解的点2：误认为$13-3=10$，忽略借位规则"
+        ],
+        "application": [
+          "典型考查方式之一是通过填空题或选择题检验学生对基本运算规则的理解",
+          "另一种常见形式是在实际问题中应用这些概念，如购物找零等情境"
+        ],
+        "connections": "此知识点与后续的进位制运算、多位数加减法密切相关。",
+        "common_mistakes": [
+          "学生常犯的具体错误1：在进行加法和减法时混淆操作顺序，比如先做减法再做加法",
+          "具体错误2：在处理借位问题时出现错误，如$13-4=9$而非正确的$9$"
+        ],
+        "counter_examples": "如将$13-3=12$误认为正确，忽略了减法中被减数必须大于或等于减数的基本规则。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G1-MATH-S-ku-10的再认识",
+      "textbook_id": "RENJIAO-G1-MATH-S",
+      "cluster_id": "RENJIAO-G1-MATH-S-kc-11-20的认识",
+      "name": "10的再认识",
+      "description": "理解10个一是1个十，认识数位（个位、十位），知道10的写法。",
+      "prerequisites": [
+        "ku-014"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G1-MATH-S-ku-10的加-减法",
+      "textbook_id": "RENJIAO-G1-MATH-S",
+      "cluster_id": "RENJIAO-G1-MATH-S-kc-6-10的认识与运算",
+      "name": "10的加、减法",
+      "description": "计算10的加、减法。",
+      "prerequisites": [
+        "ku-005",
+        "ku-006",
+        "ku-014"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G1-MATH-S-ku-10的认识",
+      "textbook_id": "RENJIAO-G1-MATH-S",
+      "cluster_id": "RENJIAO-G1-MATH-S-kc-6-10的认识与运算",
+      "name": "10的认识",
+      "description": "认识10，理解10的组成（如10可以分成1和9等）。",
+      "prerequisites": [
+        "ku-008"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G1-MATH-S-ku-11-20各数的认识",
+      "textbook_id": "RENJIAO-G1-MATH-S",
+      "cluster_id": "RENJIAO-G1-MATH-S-kc-11-20各数的认识与组成",
+      "name": "11～20各数的认识",
+      "description": "认识11～20各数，会读、会写，知道顺序和大小。",
+      "prerequisites": [
+        "10以内数的认识"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G1-MATH-S-ku-11-20的组成",
+      "textbook_id": "RENJIAO-G1-MATH-S",
+      "cluster_id": "RENJIAO-G1-MATH-S-kc-11-20各数的认识与组成",
+      "name": "11～20的组成",
+      "description": "如14由1个十和4个一组成，即10+4=14。",
+      "prerequisites": [
+        "数位（个位和十位）"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G1-MATH-S-ku-11-20的认识",
+      "textbook_id": "RENJIAO-G1-MATH-S",
+      "cluster_id": "RENJIAO-G1-MATH-S-kc-11-20的认识",
+      "name": "11～20的认识",
+      "description": "认识11～20各数，理解其组成（1个十和几个一）。",
+      "prerequisites": [
+        "ku-020"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G1-MATH-S-ku-11-20的读写",
+      "textbook_id": "RENJIAO-G1-MATH-S",
+      "cluster_id": "RENJIAO-G1-MATH-S-kc-11-20的认识",
+      "name": "11～20的读写",
+      "description": "掌握11～20的读法和写法，认识数位顺序。",
+      "prerequisites": [
+        "ku-021"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G1-MATH-S-ku-11-20的顺序和大小",
+      "textbook_id": "RENJIAO-G1-MATH-S",
+      "cluster_id": "RENJIAO-G1-MATH-S-kc-11-20的认识",
+      "name": "11～20的顺序和大小",
+      "description": "掌握11～20的顺序，会比较大小，理解“更接近”。",
+      "prerequisites": [
+        "ku-021"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G1-MATH-S-ku-20以内进位加法表的整理",
+      "textbook_id": "RENJIAO-G1-MATH-S",
+      "cluster_id": "RENJIAO-G1-MATH-S-kc-20以内进位加法",
+      "name": "20以内进位加法表的整理",
+      "description": "整理所有20以内进位加法算式，发现规律，如第一列加数相同，第一行和相同等。",
+      "prerequisites": [
+        "9加几（凑十法）",
+        "8、7、6加几（凑十法）",
+        "5、4、3、2加几（利用交换律）"
+      ],
+      "related_kus": [],
+      "difficulty": 0.6,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G1-MATH-S-ku-5-4-3-2加几-利用交换律",
+      "textbook_id": "RENJIAO-G1-MATH-S",
+      "cluster_id": "RENJIAO-G1-MATH-S-kc-20以内进位加法",
+      "name": "5、4、3、2加几（利用交换律）",
+      "description": "利用加法交换律，将小数加大数转化为大数加小数，如5+8=8+5=13。",
+      "prerequisites": [
+        "8、7、6加几（凑十法）"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G1-MATH-S-ku-6-9的认识",
+      "textbook_id": "RENJIAO-G1-MATH-S",
+      "cluster_id": "RENJIAO-G1-MATH-S-kc-6-10的认识与运算",
+      "name": "6～9的认识",
+      "description": "认识数字6、7、8、9，能用它们表示数量，会读写。",
+      "prerequisites": [
+        "ku-001"
+      ],
+      "related_kus": [],
+      "difficulty": 0.2,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G1-MATH-S-ku-6和7的加-减法",
+      "textbook_id": "RENJIAO-G1-MATH-S",
+      "cluster_id": "RENJIAO-G1-MATH-S-kc-6-10的认识与运算",
+      "name": "6和7的加、减法",
+      "description": "计算6和7的加、减法，理解加减法关系。",
+      "prerequisites": [
+        "ku-005",
+        "ku-006",
+        "ku-008"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G1-MATH-S-ku-8-7-6加几-凑十法",
+      "textbook_id": "RENJIAO-G1-MATH-S",
+      "cluster_id": "RENJIAO-G1-MATH-S-kc-20以内进位加法",
+      "name": "8、7、6加几（凑十法）",
+      "description": "8加几时，把几分成2和另一个数，8+2=10，10加另一个数；7、6类似。",
+      "prerequisites": [
+        "9加几（凑十法）"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G1-MATH-S-ku-8和9的加-减法",
+      "textbook_id": "RENJIAO-G1-MATH-S",
+      "cluster_id": "RENJIAO-G1-MATH-S-kc-6-10的认识与运算",
+      "name": "8和9的加、减法",
+      "description": "计算8和9的加、减法。",
+      "prerequisites": [
+        "ku-005",
+        "ku-006",
+        "ku-008"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G1-MATH-S-ku-9加几-凑十法",
+      "textbook_id": "RENJIAO-G1-MATH-S",
+      "cluster_id": "RENJIAO-G1-MATH-S-kc-20以内进位加法",
+      "name": "9加几（凑十法）",
+      "description": "9加几时，把几分成1和另一个数，9+1=10，10加另一个数得结果。",
+      "prerequisites": [
+        "10以内数的认识",
+        "10以内加法"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G1-MATH-S-ku-减法-5以内",
+      "textbook_id": "RENJIAO-G1-MATH-S",
+      "cluster_id": "RENJIAO-G1-MATH-S-kc-5以内数的认识与运算",
+      "name": "减法（5以内）",
+      "description": "理解减法的含义，能计算5以内数的减法，认识减号。",
+      "prerequisites": [
+        "ku-001"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G1-MATH-S-ku-分与合-5以内",
+      "textbook_id": "RENJIAO-G1-MATH-S",
+      "cluster_id": "RENJIAO-G1-MATH-S-kc-5以内数的认识与运算",
+      "name": "分与合（5以内）",
+      "description": "掌握5以内数的分解与组成，如5可以分成1和4等。",
+      "prerequisites": [
+        "ku-001"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G1-MATH-S-ku-分与合-6-9",
+      "textbook_id": "RENJIAO-G1-MATH-S",
+      "cluster_id": "RENJIAO-G1-MATH-S-kc-6-10的认识与运算",
+      "name": "分与合（6～9）",
+      "description": "掌握6～9各数的分解与组成。",
+      "prerequisites": [
+        "ku-004",
+        "ku-008"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G1-MATH-S-ku-加减混合",
+      "textbook_id": "RENJIAO-G1-MATH-S",
+      "cluster_id": "RENJIAO-G1-MATH-S-kc-6-10的认识与运算",
+      "name": "加减混合",
+      "description": "掌握加减混合运算的运算顺序和计算方法。",
+      "prerequisites": [
+        "ku-012",
+        "ku-013",
+        "ku-015"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G1-MATH-S-ku-加法-5以内",
+      "textbook_id": "RENJIAO-G1-MATH-S",
+      "cluster_id": "RENJIAO-G1-MATH-S-kc-5以内数的认识与运算",
+      "name": "加法（5以内）",
+      "description": "理解加法的含义，能计算5以内数的加法，认识加号。",
+      "prerequisites": [
+        "ku-001"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G1-MATH-S-ku-十几加几-不进位-和相应的减法",
+      "textbook_id": "RENJIAO-G1-MATH-S",
+      "cluster_id": "RENJIAO-G1-MATH-S-kc-11-20各数的认识与组成",
+      "name": "十几加几（不进位）和相应的减法",
+      "description": "如11+2=13，13-2=11，加数、和、被减数、减数、差的概念。",
+      "prerequisites": [
+        "10加几和相应的减法"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G1-MATH-S-ku-单数和双数的认识",
+      "textbook_id": "RENJIAO-G1-MATH-S",
+      "cluster_id": "RENJIAO-G1-MATH-S-kc-11-20各数的认识与组成",
+      "name": "单数和双数的认识",
+      "description": "像2、4、6……这样的数叫双数，像1、3、5……这样的数叫单数。",
+      "prerequisites": [
+        "11～20各数的认识"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G1-MATH-S-ku-数位-个位和十位",
+      "textbook_id": "RENJIAO-G1-MATH-S",
+      "cluster_id": "RENJIAO-G1-MATH-S-kc-11-20各数的认识与组成",
+      "name": "数位（个位和十位）",
+      "description": "一个两位数由十位和个位组成，十位上的数表示几个十，个位上的数表示几个一。",
+      "prerequisites": [
+        "11～20各数的认识"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G1-MATH-S-ku-比大小-5以内",
+      "textbook_id": "RENJIAO-G1-MATH-S",
+      "cluster_id": "RENJIAO-G1-MATH-S-kc-5以内数的认识与运算",
+      "name": "比大小（5以内）",
+      "description": "用“>”“<”“=”比较5以内数的大小，理解“同样多”“多”“少”。",
+      "prerequisites": [
+        "ku-001"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G1-MATH-S-ku-比大小-6-9",
+      "textbook_id": "RENJIAO-G1-MATH-S",
+      "cluster_id": "RENJIAO-G1-MATH-S-kc-6-10的认识与运算",
+      "name": "比大小（6～9）",
+      "description": "用“>”“<”“=”比较6～9以内数的大小。",
+      "prerequisites": [
+        "ku-002",
+        "ku-008"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G1-MATH-S-ku-求两个数之间有几个数",
+      "textbook_id": "RENJIAO-G1-MATH-S",
+      "cluster_id": "RENJIAO-G1-MATH-S-kc-11-20各数的认识与组成",
+      "name": "求两个数之间有几个数",
+      "description": "通过画图或数数解决“之间”问题，如第10和第15之间有4人。",
+      "prerequisites": [
+        "11～20各数的认识"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G1-MATH-S-ku-用加法解决实际问题-求原来有多少",
+      "textbook_id": "RENJIAO-G1-MATH-S",
+      "cluster_id": "RENJIAO-G1-MATH-S-kc-用加法解决实际问题",
+      "name": "用加法解决实际问题（求原来有多少）",
+      "description": "已知领走一部分和剩下部分，求原来总数用加法，如领走6个剩5个，原来有6+5=11个。",
+      "prerequisites": [
+        "用加法解决实际问题（求总数）"
+      ],
+      "related_kus": [],
+      "difficulty": 0.6,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G1-MATH-S-ku-用加法解决实际问题-求总数",
+      "textbook_id": "RENJIAO-G1-MATH-S",
+      "cluster_id": "RENJIAO-G1-MATH-S-kc-用加法解决实际问题",
+      "name": "用加法解决实际问题（求总数）",
+      "description": "把两部分合起来用加法，如男生和女生人数相加。",
+      "prerequisites": [
+        "9加几（凑十法）",
+        "8、7、6加几（凑十法）"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G1-MATH-S-ku-立体图形的拼搭",
+      "textbook_id": "RENJIAO-G1-MATH-S",
+      "cluster_id": "RENJIAO-G1-MATH-S-kc-立体图形的认识与拼搭",
+      "name": "立体图形的拼搭",
+      "description": "利用立体图形的特征进行拼搭，做到又稳又高。",
+      "prerequisites": [
+        "ku-018"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G1-MATH-S-ku-第几-5以内",
+      "textbook_id": "RENJIAO-G1-MATH-S",
+      "cluster_id": "RENJIAO-G1-MATH-S-kc-5以内数的认识与运算",
+      "name": "第几（5以内）",
+      "description": "理解序数含义，能用“第几”表示物体排列顺序。",
+      "prerequisites": [
+        "ku-001"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G1-MATH-S-ku-第几-6-9",
+      "textbook_id": "RENJIAO-G1-MATH-S",
+      "cluster_id": "RENJIAO-G1-MATH-S-kc-6-10的认识与运算",
+      "name": "第几（6～9）",
+      "description": "用“第几”表示6～9以内物体的顺序。",
+      "prerequisites": [
+        "ku-003",
+        "ku-008"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G1-MATH-S-ku-认识立体图形",
+      "textbook_id": "RENJIAO-G1-MATH-S",
+      "cluster_id": "RENJIAO-G1-MATH-S-kc-立体图形的认识与拼搭",
+      "name": "认识立体图形",
+      "description": "认识长方体、正方体、圆柱、球，了解其基本特征。",
+      "prerequisites": [],
+      "related_kus": [],
+      "difficulty": 0.2,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G1-MATH-S-ku-连加-连减",
+      "textbook_id": "RENJIAO-G1-MATH-S",
+      "cluster_id": "RENJIAO-G1-MATH-S-kc-6-10的认识与运算",
+      "name": "连加、连减",
+      "description": "掌握连加、连减的运算顺序和计算方法。",
+      "prerequisites": [
+        "ku-012",
+        "ku-013",
+        "ku-015"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    }
+  ]
+}

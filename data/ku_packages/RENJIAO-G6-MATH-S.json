@@ -1,0 +1,1382 @@
+{
+  "textbook": {
+    "id": "RENJIAO-G6-MATH-S",
+    "subject": "math",
+    "grade": "G6",
+    "edition": "2011",
+    "book_name": "人教版·数学六年级上册"
+  },
+  "clusters": [
+    {
+      "id": "RENJIAO-G6-MATH-S-kc-分数乘法的意义与计算",
+      "name": "分数乘法的意义与计算",
+      "display_order": 1,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G6-MATH-S-kc-分数乘法的运算律与混合运算",
+      "name": "分数乘法的运算律与混合运算",
+      "display_order": 2,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G6-MATH-S-kc-分数乘法的应用",
+      "name": "分数乘法的应用",
+      "display_order": 3,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G6-MATH-S-kc-倒数的认识与求法",
+      "name": "倒数的认识与求法",
+      "display_order": 4,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G6-MATH-S-kc-分数除法的计算法则",
+      "name": "分数除法的计算法则",
+      "display_order": 5,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G6-MATH-S-kc-分数除法解决实际问题",
+      "name": "分数除法解决实际问题",
+      "display_order": 6,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G6-MATH-S-kc-比的意义与基本性质",
+      "name": "比的意义与基本性质",
+      "display_order": 7,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G6-MATH-S-kc-比的基础与应用",
+      "name": "比的基础与应用",
+      "display_order": 8,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G6-MATH-S-kc-圆的基本概念与度量",
+      "name": "圆的基本概念与度量",
+      "display_order": 9,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G6-MATH-S-kc-百分数的认识与计算",
+      "name": "百分数的认识与计算",
+      "display_order": 10,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G6-MATH-S-kc-百分数的意义与互化",
+      "name": "百分数的意义与互化",
+      "display_order": 11,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G6-MATH-S-kc-百分数的简单应用",
+      "name": "百分数的简单应用",
+      "display_order": 12,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G6-MATH-S-kc-扇形统计图",
+      "name": "扇形统计图",
+      "display_order": 13,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G6-MATH-S-kc-数与形",
+      "name": "数与形",
+      "display_order": 14,
+      "description": null
+    }
+  ],
+  "units": [
+    {
+      "id": "RENJIAO-G6-MATH-S-ku-1和0的倒数",
+      "textbook_id": "RENJIAO-G6-MATH-S",
+      "cluster_id": "RENJIAO-G6-MATH-S-kc-倒数的认识与求法",
+      "name": "1和0的倒数",
+      "description": "1的倒数是1，0没有倒数。",
+      "prerequisites": [
+        "倒数的定义"
+      ],
+      "related_kus": [],
+      "difficulty": 0.2,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G6-MATH-S-ku-一个数乘分数的意义",
+      "textbook_id": "RENJIAO-G6-MATH-S",
+      "cluster_id": "RENJIAO-G6-MATH-S-kc-分数乘法的意义与计算",
+      "name": "一个数乘分数的意义",
+      "description": "一个数乘几分之几表示求这个数的几分之几是多少。",
+      "prerequisites": [
+        "分数乘整数的意义"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G6-MATH-S-ku-一个数除以分数",
+      "textbook_id": "RENJIAO-G6-MATH-S",
+      "cluster_id": "RENJIAO-G6-MATH-S-kc-分数除法的计算法则",
+      "name": "一个数除以分数",
+      "description": "一个数除以一个分数，等于乘上这个分数的倒数。",
+      "prerequisites": [
+        "倒数的定义"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G6-MATH-S-ku-倒数的定义",
+      "textbook_id": "RENJIAO-G6-MATH-S",
+      "cluster_id": "RENJIAO-G6-MATH-S-kc-倒数的认识与求法",
+      "name": "倒数的定义",
+      "description": "乘积是1的两个数互为倒数。",
+      "prerequisites": [],
+      "related_kus": [],
+      "difficulty": 0.2,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G6-MATH-S-ku-分数乘分数的计算方法",
+      "textbook_id": "RENJIAO-G6-MATH-S",
+      "cluster_id": "RENJIAO-G6-MATH-S-kc-分数乘法的意义与计算",
+      "name": "分数乘分数的计算方法",
+      "description": "分数乘分数，用分子相乘的积作分子，分母相乘的积作分母。能约分的先约分。",
+      "prerequisites": [
+        "分数乘整数的计算方法",
+        "一个数乘分数的意义"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G6-MATH-S-ku-分数乘小数",
+      "textbook_id": "RENJIAO-G6-MATH-S",
+      "cluster_id": "RENJIAO-G6-MATH-S-kc-分数乘法的意义与计算",
+      "name": "分数乘小数",
+      "description": "分数乘小数时，可将小数化成分数或分数化成小数再计算，也可直接约分。",
+      "prerequisites": [
+        "分数乘分数的计算方法",
+        "小数与分数互化"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G6-MATH-S-ku-分数乘整数的意义",
+      "textbook_id": "RENJIAO-G6-MATH-S",
+      "cluster_id": "RENJIAO-G6-MATH-S-kc-分数乘法的意义与计算",
+      "name": "分数乘整数的意义",
+      "description": "分数乘整数表示求几个相同分数的和，与整数乘法意义相同。",
+      "prerequisites": [
+        "分数加法"
+      ],
+      "related_kus": [],
+      "difficulty": 0.2,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G6-MATH-S-ku-分数乘整数的计算方法",
+      "textbook_id": "RENJIAO-G6-MATH-S",
+      "cluster_id": "RENJIAO-G6-MATH-S-kc-分数乘法的意义与计算",
+      "name": "分数乘整数的计算方法",
+      "description": "分数乘整数，用分子乘整数的积作分子，分母不变。能约分的先约分。",
+      "prerequisites": [
+        "分数乘整数的意义",
+        "约分"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G6-MATH-S-ku-分数乘法运算律",
+      "textbook_id": "RENJIAO-G6-MATH-S",
+      "cluster_id": "RENJIAO-G6-MATH-S-kc-分数乘法的运算律与混合运算",
+      "name": "分数乘法运算律",
+      "description": "整数乘法的交换律、结合律和分配律对于分数乘法同样适用。",
+      "prerequisites": [
+        "分数乘法的计算方法",
+        "整数乘法运算律"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G6-MATH-S-ku-分数化成百分数",
+      "textbook_id": "RENJIAO-G6-MATH-S",
+      "cluster_id": "RENJIAO-G6-MATH-S-kc-百分数的意义与互化",
+      "name": "分数化成百分数",
+      "description": "把分数化成百分数，通常先把分数化成小数（除不尽时通常保留三位小数），再把小数化成百分数。",
+      "prerequisites": [
+        "分数化成小数"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G6-MATH-S-ku-分数混合运算顺序",
+      "textbook_id": "RENJIAO-G6-MATH-S",
+      "cluster_id": "RENJIAO-G6-MATH-S-kc-分数乘法的运算律与混合运算",
+      "name": "分数混合运算顺序",
+      "description": "分数混合运算的顺序与整数混合运算相同：先乘除后加减，有括号先算括号里的。",
+      "prerequisites": [
+        "分数乘法的计算方法"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G6-MATH-S-ku-分数除以整数",
+      "textbook_id": "RENJIAO-G6-MATH-S",
+      "cluster_id": "RENJIAO-G6-MATH-S-kc-分数除法的计算法则",
+      "name": "分数除以整数",
+      "description": "分数除以整数（0除外）等于分数乘这个整数的倒数。",
+      "prerequisites": [
+        "倒数的定义"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G6-MATH-S-ku-分数除法的混合运算",
+      "textbook_id": "RENJIAO-G6-MATH-S",
+      "cluster_id": "RENJIAO-G6-MATH-S-kc-分数除法的计算法则",
+      "name": "分数除法的混合运算",
+      "description": "分数除法转化为乘法后，按分数乘法法则计算，注意运算顺序。",
+      "prerequisites": [
+        "一个数除以分数"
+      ],
+      "related_kus": [],
+      "difficulty": 0.6,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G6-MATH-S-ku-化简比",
+      "textbook_id": "RENJIAO-G6-MATH-S",
+      "cluster_id": "RENJIAO-G6-MATH-S-kc-比的意义与基本性质",
+      "name": "化简比",
+      "description": "利用比的基本性质，将比化成前项和后项互质的整数比。",
+      "prerequisites": [
+        "比的基本性质"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G6-MATH-S-ku-和倍问题-两个量的和与倍数关系",
+      "textbook_id": "RENJIAO-G6-MATH-S",
+      "cluster_id": "RENJIAO-G6-MATH-S-kc-分数除法解决实际问题",
+      "name": "和倍问题（两个量的和与倍数关系）",
+      "description": "设较小量为x，根据和倍关系列方程：x + 倍数×x = 和。",
+      "prerequisites": [
+        "已知比一个数多（少）几分之几是多少求这个数"
+      ],
+      "related_kus": [],
+      "difficulty": 0.7,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G6-MATH-S-ku-圆环的面积",
+      "textbook_id": "RENJIAO-G6-MATH-S",
+      "cluster_id": "RENJIAO-G6-MATH-S-kc-圆的基本概念与度量",
+      "name": "圆环的面积",
+      "description": "S=π(R²-r²)，其中R为外圆半径，r为内圆半径。",
+      "prerequisites": [
+        "圆的面积"
+      ],
+      "related_kus": [],
+      "difficulty": 0.6,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G6-MATH-S-ku-圆的周长",
+      "textbook_id": "RENJIAO-G6-MATH-S",
+      "cluster_id": "RENJIAO-G6-MATH-S-kc-圆的基本概念与度量",
+      "name": "圆的周长",
+      "description": "C=πd 或 C=2πr，π≈3.14，圆周率是周长与直径的比值。",
+      "prerequisites": [
+        "圆的认识",
+        "小数乘法"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G6-MATH-S-ku-圆的认识",
+      "textbook_id": "RENJIAO-G6-MATH-S",
+      "cluster_id": "RENJIAO-G6-MATH-S-kc-圆的基本概念与度量",
+      "name": "圆的认识",
+      "description": "圆心O决定位置，半径r决定大小；同圆中所有半径相等，直径d=2r。",
+      "prerequisites": [],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G6-MATH-S-ku-圆的面积",
+      "textbook_id": "RENJIAO-G6-MATH-S",
+      "cluster_id": "RENJIAO-G6-MATH-S-kc-圆的基本概念与度量",
+      "name": "圆的面积",
+      "description": "S=πr²，推导：将圆等分拼成长方形，长≈πr，宽≈r。",
+      "prerequisites": [
+        "圆的周长",
+        "长方形面积"
+      ],
+      "related_kus": [],
+      "difficulty": 0.6,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G6-MATH-S-ku-外方内圆与外圆内方",
+      "textbook_id": "RENJIAO-G6-MATH-S",
+      "cluster_id": "RENJIAO-G6-MATH-S-kc-圆的基本概念与度量",
+      "name": "外方内圆与外圆内方",
+      "description": "外方内圆：正方形面积-圆面积=0.86r²；外圆内方：圆面积-正方形面积=1.14r²。",
+      "prerequisites": [
+        "圆的面积",
+        "正方形面积",
+        "三角形面积"
+      ],
+      "related_kus": [],
+      "difficulty": 0.7,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G6-MATH-S-ku-小数化成百分数",
+      "textbook_id": "RENJIAO-G6-MATH-S",
+      "cluster_id": "RENJIAO-G6-MATH-S-kc-百分数的意义与互化",
+      "name": "小数化成百分数",
+      "description": "把小数化成百分数，只要把小数点向右移动两位，同时在后面添上百分号。",
+      "prerequisites": [
+        "小数的意义"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G6-MATH-S-ku-工程问题-合作完成工作",
+      "textbook_id": "RENJIAO-G6-MATH-S",
+      "cluster_id": "RENJIAO-G6-MATH-S-kc-分数除法解决实际问题",
+      "name": "工程问题（合作完成工作）",
+      "description": "把工作总量看作1，工作效率=1÷工作时间，合作时间=1÷(效率和)。",
+      "prerequisites": [
+        "分数除法的混合运算"
+      ],
+      "related_kus": [],
+      "difficulty": 0.7,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G6-MATH-S-ku-已知一个数的几分之几是多少求这个数",
+      "textbook_id": "RENJIAO-G6-MATH-S",
+      "cluster_id": "RENJIAO-G6-MATH-S-kc-分数除法解决实际问题",
+      "name": "已知一个数的几分之几是多少求这个数",
+      "description": "设未知数，根据等量关系列方程求解；或直接用已知量除以对应分率。",
+      "prerequisites": [
+        "分数除法的混合运算"
+      ],
+      "related_kus": [],
+      "difficulty": 0.6,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G6-MATH-S-ku-已知一个数的百分之几是多少-求这个数",
+      "textbook_id": "RENJIAO-G6-MATH-S",
+      "cluster_id": "RENJIAO-G6-MATH-S-kc-百分数的简单应用",
+      "name": "已知一个数的百分之几是多少，求这个数",
+      "description": "已知一个数的百分之几是多少，求这个数，用除法计算：这个数=已知量÷百分数。",
+      "prerequisites": [
+        "已知一个数的几分之几是多少，求这个数"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G6-MATH-S-ku-已知比一个数多-少-几分之几是多少求这个数",
+      "textbook_id": "RENJIAO-G6-MATH-S",
+      "cluster_id": "RENJIAO-G6-MATH-S-kc-分数除法解决实际问题",
+      "name": "已知比一个数多（少）几分之几是多少求这个数",
+      "description": "设单位1为x，根据“单位1×(1±几分之几)=已知量”列方程求解。",
+      "prerequisites": [
+        "已知一个数的几分之几是多少求这个数"
+      ],
+      "related_kus": [],
+      "difficulty": 0.7,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G6-MATH-S-ku-扇形",
+      "textbook_id": "RENJIAO-G6-MATH-S",
+      "cluster_id": "RENJIAO-G6-MATH-S-kc-圆的基本概念与度量",
+      "name": "扇形",
+      "description": "由弧和两条半径围成，圆心角顶点在圆心，扇形大小与圆心角有关。",
+      "prerequisites": [
+        "圆的认识",
+        "角的认识"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G6-MATH-S-ku-扇形统计图的认识",
+      "textbook_id": "RENJIAO-G6-MATH-S",
+      "cluster_id": "RENJIAO-G6-MATH-S-kc-扇形统计图",
+      "name": "扇形统计图的认识",
+      "description": "扇形统计图用整个圆表示总数，用圆内各个扇形的大小表示各部分数量占总数的百分比。",
+      "prerequisites": [
+        "百分数的意义"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G6-MATH-S-ku-扇形统计图的读图与计算",
+      "textbook_id": "RENJIAO-G6-MATH-S",
+      "cluster_id": "RENJIAO-G6-MATH-S-kc-扇形统计图",
+      "name": "扇形统计图的读图与计算",
+      "description": "从扇形统计图中读取各部分百分比，结合总量求部分量，或已知部分量求总量。",
+      "prerequisites": [
+        "扇形统计图的认识",
+        "求一个数的百分之几是多少"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G6-MATH-S-ku-按比分配",
+      "textbook_id": "RENJIAO-G6-MATH-S",
+      "cluster_id": "RENJIAO-G6-MATH-S-kc-比的基础与应用",
+      "name": "按比分配",
+      "description": "已知总量和各部分比，求各部分量：先求总份数，再求每份量，最后乘各份数。",
+      "prerequisites": [
+        "比的意义",
+        "分数乘法"
+      ],
+      "related_kus": [],
+      "difficulty": 0.6,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G6-MATH-S-ku-数与形-从1开始的连续奇数之和",
+      "textbook_id": "RENJIAO-G6-MATH-S",
+      "cluster_id": "RENJIAO-G6-MATH-S-kc-数与形",
+      "name": "数与形：从1开始的连续奇数之和",
+      "description": "从1开始的n个连续奇数之和等于n的平方，即1+3+5+…+(2n-1)=n²。",
+      "prerequisites": [
+        "正方形面积"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G6-MATH-S-ku-数与形-图形规律与数列",
+      "textbook_id": "RENJIAO-G6-MATH-S",
+      "cluster_id": "RENJIAO-G6-MATH-S-kc-数与形",
+      "name": "数与形：图形规律与数列",
+      "description": "通过观察图形中正方形个数、三角形个数等规律，发现数列关系并预测后续项。",
+      "prerequisites": [
+        "数与形：从1开始的连续奇数之和"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G6-MATH-S-ku-数与形-无穷等比数列求和-数形结合",
+      "textbook_id": "RENJIAO-G6-MATH-S",
+      "cluster_id": "RENJIAO-G6-MATH-S-kc-数与形",
+      "name": "数与形：无穷等比数列求和（数形结合）",
+      "description": "形如1/2+1/4+1/8+…的无穷等比数列之和为1，可通过画图直观理解。",
+      "prerequisites": [
+        "分数的意义",
+        "无限思想"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G6-MATH-S-ku-比与除法-分数的关系",
+      "textbook_id": "RENJIAO-G6-MATH-S",
+      "cluster_id": "RENJIAO-G6-MATH-S-kc-比的意义与基本性质",
+      "name": "比与除法、分数的关系",
+      "description": "比的前项相当于被除数或分子，后项相当于除数或分母，比值相当于商或分数值。",
+      "prerequisites": [
+        "比的意义"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G6-MATH-S-ku-比的基本性质",
+      "textbook_id": "RENJIAO-G6-MATH-S",
+      "cluster_id": "RENJIAO-G6-MATH-S-kc-比的意义与基本性质",
+      "name": "比的基本性质",
+      "description": "比的前项和后项同时乘或除以相同的数（0除外），比值不变。",
+      "prerequisites": [
+        "比与除法、分数的关系"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G6-MATH-S-ku-比的意义",
+      "textbook_id": "RENJIAO-G6-MATH-S",
+      "cluster_id": "RENJIAO-G6-MATH-S-kc-比的意义与基本性质",
+      "name": "比的意义",
+      "description": "两个数的比表示两个数相除。比的前项除以后项所得的商叫比值。",
+      "prerequisites": [],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G6-MATH-S-ku-求一个数比另一个数多-或少-百分之几",
+      "textbook_id": "RENJIAO-G6-MATH-S",
+      "cluster_id": "RENJIAO-G6-MATH-S-kc-百分数的简单应用",
+      "name": "求一个数比另一个数多（或少）百分之几",
+      "description": "求一个数比另一个数多（或少）百分之几，用差量除以单位“1”的量。",
+      "prerequisites": [
+        "求一个数比另一个数多几分之几"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G6-MATH-S-ku-求一个数的倒数的方法",
+      "textbook_id": "RENJIAO-G6-MATH-S",
+      "cluster_id": "RENJIAO-G6-MATH-S-kc-倒数的认识与求法",
+      "name": "求一个数的倒数的方法",
+      "description": "将分子分母交换位置；整数可看作分母为1的分数。",
+      "prerequisites": [
+        "倒数的定义"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G6-MATH-S-ku-求一个数的百分之几是多少",
+      "textbook_id": "RENJIAO-G6-MATH-S",
+      "cluster_id": "RENJIAO-G6-MATH-S-kc-百分数的简单应用",
+      "name": "求一个数的百分之几是多少",
+      "description": "求一个数的百分之几是多少，用乘法计算，即这个数×百分数。",
+      "prerequisites": [
+        "求一个数的几分之几是多少"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G6-MATH-S-ku-求比一个数多-或少-百分之几的数是多少",
+      "textbook_id": "RENJIAO-G6-MATH-S",
+      "cluster_id": "RENJIAO-G6-MATH-S-kc-百分数的简单应用",
+      "name": "求比一个数多（或少）百分之几的数是多少",
+      "description": "求比一个数多（或少）百分之几的数，用这个数×（1±百分数）。",
+      "prerequisites": [
+        "求比一个数多几分之几的数是多少"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G6-MATH-S-ku-求比一个数多几分之几的数",
+      "textbook_id": "RENJIAO-G6-MATH-S",
+      "cluster_id": "RENJIAO-G6-MATH-S-kc-分数乘法的应用",
+      "name": "求比一个数多几分之几的数",
+      "description": "求比一个数多几分之几的数，用这个数乘（1+几分之几）或加上多的部分。",
+      "prerequisites": [
+        "一个数乘分数的意义",
+        "分数乘法的计算方法"
+      ],
+      "related_kus": [],
+      "difficulty": 0.6,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G6-MATH-S-ku-求比一个数少几分之几的数",
+      "textbook_id": "RENJIAO-G6-MATH-S",
+      "cluster_id": "RENJIAO-G6-MATH-S-kc-分数乘法的应用",
+      "name": "求比一个数少几分之几的数",
+      "description": "求比一个数少几分之几的数，用这个数乘（1-几分之几）或减去少的部分。",
+      "prerequisites": [
+        "一个数乘分数的意义",
+        "分数乘法的计算方法"
+      ],
+      "related_kus": [],
+      "difficulty": 0.6,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G6-MATH-S-ku-百分数与分数小数的互化",
+      "textbook_id": "RENJIAO-G6-MATH-S",
+      "cluster_id": "RENJIAO-G6-MATH-S-kc-百分数的认识与计算",
+      "name": "百分数与分数小数的互化",
+      "description": "百分数化小数：去掉%，小数点左移两位；小数化百分数：小数点右移两位加%；分数化百分数：先化小数再化百分数。",
+      "prerequisites": [
+        "百分数的意义",
+        "小数分数互化"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G6-MATH-S-ku-百分数化成分数",
+      "textbook_id": "RENJIAO-G6-MATH-S",
+      "cluster_id": "RENJIAO-G6-MATH-S-kc-百分数的意义与互化",
+      "name": "百分数化成分数",
+      "description": "把百分数化成分数，先把百分数改写成分母是100的分数，能约分的要约成最简分数。",
+      "prerequisites": [
+        "分数的基本性质"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G6-MATH-S-ku-百分数化成小数",
+      "textbook_id": "RENJIAO-G6-MATH-S",
+      "cluster_id": "RENJIAO-G6-MATH-S-kc-百分数的意义与互化",
+      "name": "百分数化成小数",
+      "description": "把百分数化成小数，只要把百分号去掉，同时把小数点向左移动两位。",
+      "prerequisites": [
+        "小数的意义"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G6-MATH-S-ku-百分数的意义",
+      "textbook_id": "RENJIAO-G6-MATH-S",
+      "cluster_id": "RENJIAO-G6-MATH-S-kc-百分数的认识与计算",
+      "name": "百分数的意义",
+      "description": "百分数表示一个数是另一个数的百分之几，也叫百分率或百分比，用%表示。",
+      "prerequisites": [
+        "分数意义"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G6-MATH-S-ku-百分数的意义和读写法",
+      "textbook_id": "RENJIAO-G6-MATH-S",
+      "cluster_id": "RENJIAO-G6-MATH-S-kc-百分数的意义与互化",
+      "name": "百分数的意义和读写法",
+      "description": "表示一个数是另一个数的百分之几的数叫做百分数，通常不写成分数形式，而在分子后面加上百分号%来表示。",
+      "prerequisites": [
+        "分数的意义"
+      ],
+      "related_kus": [],
+      "difficulty": 0.2,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G6-MATH-S-ku-百分数的读写",
+      "textbook_id": "RENJIAO-G6-MATH-S",
+      "cluster_id": "RENJIAO-G6-MATH-S-kc-百分数的认识与计算",
+      "name": "百分数的读写",
+      "description": "读作“百分之……”，写作在分子后加%，如14%读作百分之十四。",
+      "prerequisites": [
+        "百分数的意义"
+      ],
+      "related_kus": [],
+      "difficulty": 0.2,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G6-MATH-S-ku-百分率-命中率等",
+      "textbook_id": "RENJIAO-G6-MATH-S",
+      "cluster_id": "RENJIAO-G6-MATH-S-kc-百分数的认识与计算",
+      "name": "百分率（命中率等）",
+      "description": "命中率=命中次数÷总次数×100%，类似有出勤率、发芽率等。",
+      "prerequisites": [
+        "百分数的意义",
+        "除法"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G6-MATH-S-ku-百分率-如达标率-发芽率-出油率等",
+      "textbook_id": "RENJIAO-G6-MATH-S",
+      "cluster_id": "RENJIAO-G6-MATH-S-kc-百分数的简单应用",
+      "name": "百分率（如达标率、发芽率、出油率等）",
+      "description": "百分率是指部分量占总量的百分之几，计算公式：百分率=部分量÷总量×100%。",
+      "prerequisites": [
+        "百分数的意义"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G6-MATH-S-ku-连续增减幅度问题",
+      "textbook_id": "RENJIAO-G6-MATH-S",
+      "cluster_id": "RENJIAO-G6-MATH-S-kc-百分数的简单应用",
+      "name": "连续增减幅度问题",
+      "description": "连续两次增减，最终变化幅度需用单位“1”连续乘（1±增减率），再与1比较。",
+      "prerequisites": [
+        "求比一个数多（或少）百分之几的数是多少"
+      ],
+      "related_kus": [],
+      "difficulty": 0.6,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G6-MATH-S-ku-连续求一个数的几分之几",
+      "textbook_id": "RENJIAO-G6-MATH-S",
+      "cluster_id": "RENJIAO-G6-MATH-S-kc-分数乘法的应用",
+      "name": "连续求一个数的几分之几",
+      "description": "连续求一个数的几分之几，用这个数依次乘对应的分数。",
+      "prerequisites": [
+        "一个数乘分数的意义",
+        "分数乘分数的计算方法"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G6-MATH-S-ku-选择合适的统计图",
+      "textbook_id": "RENJIAO-G6-MATH-S",
+      "cluster_id": "RENJIAO-G6-MATH-S-kc-扇形统计图",
+      "name": "选择合适的统计图",
+      "description": "条形统计图表示数量多少，折线统计图表示变化趋势，扇形统计图表示各部分与整体的关系。",
+      "prerequisites": [
+        "条形统计图",
+        "折线统计图",
+        "扇形统计图的认识"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G6-MATH-S-ku-黄金比",
+      "textbook_id": "RENJIAO-G6-MATH-S",
+      "cluster_id": "RENJIAO-G6-MATH-S-kc-比的意义与基本性质",
+      "name": "黄金比",
+      "description": "较短部分与较长部分之比等于较长部分与整体之比，约为0.618:1。",
+      "prerequisites": [
+        "比的意义"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    }
+  ]
+}

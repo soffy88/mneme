@@ -1,0 +1,102 @@
+{
+  "textbook": {
+    "id": "tb-lp-751d6f57",
+    "subject": "math",
+    "grade": "高一",
+    "edition": "测试版",
+    "book_name": "练习教材"
+  },
+  "clusters": [
+    {
+      "id": "cl-lp-f91fa1fc",
+      "name": "测试章节",
+      "display_order": 1,
+      "description": null
+    }
+  ],
+  "units": [
+    {
+      "id": "ku-lp1-1e20f647",
+      "textbook_id": "tb-lp-751d6f57",
+      "cluster_id": "cl-lp-f91fa1fc",
+      "name": "前置知识",
+      "description": "先决条件",
+      "prerequisites": [],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "low",
+      "question_types": [
+        "选择题"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "具体例子1：$A = \\{1, 2, 3\\}$ 是一个集合，表示由数字1、2、3组成的集合。",
+          "具体例子2（可选）：$B = \\{\text{苹果, 橙子, 香蕉}\\}$ 表示水果的集合。"
+        ],
+        "intuition": "理解集合是构建数学语言的基础，如同建筑中的砖块。",
+        "definition": "集合是一组确定且互不相同的对象的无序组合。关键限定条件：元素唯一性、确定性。",
+        "key_points": [
+          "⚠️ 最易误解的点1：空集不是没有元素，而是包含0个元素。",
+          "⚠️ 最易误解的点2：集合中的元素必须是确定的，不能模糊不清。"
+        ],
+        "application": [
+          "典型考查方式1：判断给定对象是否构成集合，并解释原因。",
+          "典型考查方式2：根据描述写出具体集合的元素表示。"
+        ],
+        "connections": "集合是函数、关系等概念的基础，后续学习中不可或缺。",
+        "common_mistakes": [
+          "具体错误1：误认为空集没有元素，实际上它包含0个元素。",
+          "具体错误2：将模糊不清的对象作为集合元素，如 $D = \\{\text{美好的事物}\\}$。"
+        ],
+        "counter_examples": "如 $C = \\{x | x > 0\\}$，虽然描述了大于零的数集，但不满足确定性条件，因此不是严格意义上的集合。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "ku-lp2-0f4c40df",
+      "textbook_id": "tb-lp-751d6f57",
+      "cluster_id": "cl-lp-f91fa1fc",
+      "name": "核心知识",
+      "description": "核心内容",
+      "prerequisites": [
+        "ku-lp1-1e20f647"
+      ],
+      "related_kus": [],
+      "difficulty": 0.6,
+      "exam_frequency": "high",
+      "question_types": [
+        "解答题"
+      ],
+      "ku_type": "method",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "steps": [
+          "第1步：将方程化为标准形式 $ax^2 + bx + c = 0$。",
+          "第2步：计算判别式 $\\Delta = b^2 - 4ac$。",
+          "第3步：根据 $\\Delta$ 的值判断根的情况并求解。",
+          "第4步（可选）: 验证解是否满足原方程。"
+        ],
+        "example": "解方程 $x^2 - 5x + 6 = 0$。步骤如下：1. 标准形式已给定；2. $\\Delta = (-5)^2 - 4 \\cdot 1 \\cdot 6 = 1$；3. 因为 $\\Delta > 0$，有两个实根 $x_1, x_2$，由二次公式得 $x_1 = 2, x_2 = 3$。",
+        "key_points": [
+          "⚠️ 操作中易卡壳或出错的点1：计算判别式时容易算错符号。",
+          "点2：忽略对系数 $a$ 的讨论，导致在 $a=0$ 时不适用二次公式。"
+        ],
+        "when_to_use": "适用于解决一元二次方程的题目。",
+        "common_mistakes": [
+          "⚠️ 具体错误1：计算判别式时符号出错，如将 $\\Delta = b^2 - 4ac$ 写成 $\\Delta = b^2 + 4ac$。"
+        ]
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    }
+  ]
+}
