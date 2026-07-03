@@ -529,6 +529,8 @@ class Streak(Base):
     longest_streak: Mapped[Optional[int]] = mapped_column(Integer, server_default="0")
     last_completed_date: Mapped[Optional[date]] = mapped_column(Date)
     escape_count: Mapped[Optional[int]] = mapped_column(Integer, server_default="0")
+    # 连胜护盾：缺一天且有护盾则自动消耗 1 张保住连胜（Duolingo 式，绑学习过程赚取）
+    freezes_available: Mapped[int] = mapped_column(Integer, server_default="2")
     updated_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True), server_default=text("now()")
     )
