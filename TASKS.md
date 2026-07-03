@@ -942,8 +942,10 @@ Phase 3：K（合规）+ L（部署）
   ✅ OCR 契约加 `student_steps`(prompt+归一，Mock VLM 可注罐头)；oskill `verify_steps_chain`(并进 paper_grading，纯 verify_step 判步：算术等式 ok/wrong、变量赋值代回前序同变量方程 ok/wrong、一般变形 unknown 不误伤) → first_wrong_step(0-based) 随 step_analysis 落 wrong_questions(migration e2d7c40a91b3)；分类信号走后验平局判定(oprim 新 `bkt_error_weights` 单源导出权重，步骤证据只在两假设权重 min/max≥0.8 近平局时改判，红线公式不动)；苏格拉底首问附"第 N 步出错"位置提示(不泄内容)；13 个新测试(红线"错步被定位+无 LLM 判步"/证据映射/平局改判与悬殊不可推翻/无步骤基线/OCR 契约/全链落库)。pytest 267 passed / 5 skipped，check.sh 与 MOAT=1 均全绿。
 
 ### 第 3 步：留存与场景
-- [ ] **T.7 [P1] 考期感知调度**
-  DoD：users.exam_date(migration)+设置端点；daily_plan/复习按临考压缩(目标可提取性上调+间隔不超过剩余天数)；前端设置入口+倒计时展示；测试；check.sh 绿。
+- [x] **T.7 [P1] 考期感知调度** ✅ 2026-07-03（补勾，此前漏记）
+  ✅ 已随 `pedagogy/06` 完成：`users.exam_date`(migration) + `daily_plan_service` 读 exam_date 算
+  `exam_countdown_days`，临考(`_NEAR_EXAM_DAYS`=14天内)向巩固倾斜、停推新知；`GET /v1/daily-plan` 返回
+  exam_countdown_days；`POST /v1/users/{student_id}/exam-date` 设置端点。详见下方 U 章 U.6。
 - [ ] **T.8 [P1] 周期限时小测（检索检查点）**
   DoD：每 N 天生成限时 quiz mission(5题,到期/薄弱KC,交错)；提交计时判分回写 BKT/FSRS；失败 KC 自动生成复习任务；前端小测页；测试；check.sh 绿。
 - [ ] **T.9 [P2] 错题本打印/导出**
@@ -954,3 +956,76 @@ Phase 3：K（合规）+ L（部署）
 ### 阻塞在人（🚨 Needs Human）
 - 阿里云短信报备（完成前勿开公网注册）
 - 真实学生数据（0.77 AUC 验证、FSRS 权重拟合启用、FIRe 上线 A/B 均以此为前提）
+
+---
+
+## U · 教育架构重排（对照《善学记·教育架构完整设计 v1.0》专家评审，2026-07-03）
+
+> 评审文档提出 L0–L9 十层架构。2026-07-03 当天已通过 `pedagogy/01-08`（PR#2）+ `arch/p0-*`/`arch/p1-*`/
+> `arch/l3-l7-*`（PR#3-12）共 12 个 PR 落地大半，但当时未同步补录 TASKS.md（T.7 曾因此被误标为未完成，
+> 已在上方勾选修正）。本节补记已完成状态 + 对照评审文档列出尚未落地的缺口。权威见
+> `MNEME_MASTER_DESIGN.md` 附录·教育架构重排 P0 / 附录·L4语文双轨+L6家长端。
+
+### 已完成（补记，pedagogy/tier1-2，PR#2）
+- [x] **U.1 pedagogy/01** 掌握门控 + 知识空间选题（KST fringe）—— `services/learner_model.py::fringe`
+- [x] **U.2 pedagogy/02** SDT 留存-归属：匿名同年级联赛，无 PII/无真实排名 —— `GET /v1/league/{student_id}`
+- [x] **U.3 pedagogy/03** 开放学习者模型 OLM（掌握状态透明摊给学生看）
+- [x] **U.4 pedagogy/04** 自我解释采集（Chi 1989 效应）
+- [x] **U.5 pedagogy/05** 成长型思维反馈框架（Dweck）—— `growth_message` 纯函数嵌入 process_interaction
+  返回体，**未做成独立说教模块**（评审建议的做法）；6 测试含"从不夸聪明"守卫
+- [x] **U.6 pedagogy/06** 考期感知调度 —— 即 T.7，见上方
+- [x] **U.7 pedagogy/07** 刻意练习细颗粒反馈（确定性定位首错步）
+- [x] **U.8 pedagogy/08** 情感感知（行为信号启发式，非生物特征）—— `get_affect`
+
+### 已完成（补记，arch/p0-p1，PR#3-9）
+- [x] **U.9 arch/p0-L0/L1/L2** L0 学习层北极星四指标（`GET /v1/moat/learning-metrics`）；L1 统一学习者模型
+  单一真相源（`get_mastery/mastery_color/fringe/get_stage/get_zpd_band`，阈值 GATE=0.6/MASTERED=0.7/
+  GREEN=0.75/YELLOW=0.40 单源收口）；L2 教学引擎答案分级政策（苏格拉底红线松绑）+ 渐退状态机
+  （worked_example→completion→retrieval→consolidation）+ `TEACHING_ENGINE_ENABLED` feature-flag
+- [x] **U.10 arch/p1-L3/L3b/L3c** 自适应定位（Rasch θ + Fisher SE，`POST /v1/placement/estimate` +
+  `/v1/placement/next` 全量 CAT 会话）+ 误解诊断骨架（干扰项→误解ID）
+- [x] **U.11 arch/p1-rct** 首个内部 RCT 骨架（样例渐退 vs 纯苏格拉底，E3，`experiment_service.assign_arm`
+  sha256 确定性分臂，安全默认全 control 现网零变化）
+- [x] **U.12 arch/p1-dropout** 挫败流失率会话埋点（RCT 第二主终点）
+- [x] **U.13 arch/p1-L4/L6a/L6b/me** 语文双轨分类（`oprim.chinese_track` 记诵轨/素养轨）+ 家长端监控→支持
+  （`_ALERT_SUPPORT` 每类预警配支持动作+话术）+ 青少年隐私分层（`share_process_with_parent`/
+  `parent_sees_process`）+ 进步优先 overview + `/v1/auth/me` 补 `share_process_with_parent`
+
+### 已完成（补记，arch/l3-l7，PR#10-12）
+- [x] **U.14 arch/l3-l7-teaching-content** 误解库 27 条（FCI/FMCE/DIRECT/CSMS/APOS 依据）+ 课标对齐骨架
+  （2022 义教/2017 高中数学）
+- [x] **U.15 arch/l7-kc-std-alignment** 29 个 GDMATH 高中数学 KC 全量挂课标主编码+素养+目标水平
+- [x] **U.16 arch/l3-wire-misconception** practice/submit 答错回挂误解诊断（seed 触达学生）
+
+### 待办（对照评审文档核实后新记，尚未落地）
+- [ ] **U.17 [P1] L3 掌握裁决题池物理隔离** —— 现掌握判定与练习池未隔离，存在"背答案"污染掌握裁决的风险
+- [ ] **U.18 [P1] L3 远迁移探针题池** —— 现仅有留存探针（T.2），无迁移探针，L0 迁移率指标无数据源
+- [ ] **U.19 [P2] L4 物理概念优先范式**（FCI式诊断→认知冲突→计算迁移）/**英语习得型范式**（词汇FSRS+
+  分级泛读 i+1）—— 现物理/英语仍走通用引导入口，未独立范式化
+- [ ] **U.20 [P1] L5 会话时间设计** —— 20-30分钟/日预算感知调度 + 25分钟柔性中断 + 22:30后不排新任务
+  （睡眠巩固证据优先于临考压缩），现无实现
+- [ ] **U.21 [P1] L7 KU↔课标双向映射表规模化** —— 现仅 29/11646 KU 挂课标，教材版本适配层、中高考区域
+  变体标签、题库诊断化改造（按曝光量滚动）均未开始
+- [x] **U.22 [P0] L8 红队 CI 越狱门禁** ✅ 2026-07-03
+  ✅ **essay_guide 从零拦截补到有拦截**（最大缺口）：新增 `_looks_like_handoff` 检测——代写交接措辞
+  （"帮你改写/直接给你写"等）+ 超长(>80字符)且不含引导问句特征的整段文本，命中即替换为引导语并标记
+  `answer_leaked`（此前 `EssayGuideResult` 连该字段都没有）。
+  ✅ **socratic_loop 补格式绕过**：原样字符串比对之外加空白归一化比对（"x = 2" 曾能绕过 "x=2" 的原样
+  匹配），仅在答案去空白后 ≥2 字符时启用，避免单字符答案对无关文本产生假阳性。
+  ✅ **reading_comprehension_guide / physics_force_analysis_guide 扩充 leak 短语表**：补总结/结论式收尾
+  措辞（"综上所述/in conclusion"等），覆盖角色扮演诱导下换个说法给答案的形态；reading_guide 中英文双
+  语种均补，防单语种防线被翻译绕过。
+  ✅ 改动在共享平台包 `/home/soffy/projects/platform/3O/oskill`（`essay_guide.py`/`socratic_loop.py`/
+  `_reading_comprehension_guide.py`/`_physics_force_analysis_guide.py`，该目录无 git、hicode 项目共享，
+  已核实两处均不引用这 4 个函数、改动范围安全）；同步更新 mneme `vendor/oskill/` 镜像副本；
+  `services/main.py` essay 端点补 `answer_leaked` 字段透传。
+  ✅ 新增 `tests/test_redteam_answer_leak.py`：8 测试覆盖 4 类诱导（角色扮演/"帮我检查答案"/翻译绕过/
+  格式绕过）× 4 个引导端点，用"模拟已被越狱的 LLM 输出泄露形态内容"的方式测代码层拦截，而非测具体
+  诱导话术能否骗过真实模型；已并入默认 pytest 套件（无需额外 REDTEAM=1 开关，均为确定性 mock 测试）。
+  pytest 387 passed（+8）/ 3 skipped，check.sh 全绿。
+  ⚠️ **已知未修复缺口（如实记录，非静默遗漏）**：多轮拆解（答案拆成多轮，每轮单看不含完整答案）—
+  评估过"跨轮累积比对"方案，但本仓答案多为极短数字（"2""42"等），累积比对会在正常教学对话中大量
+  误伤合法引导语；且涉及文件是无 git 版本控制的共享平台包，一次误伤影响面过大，故本批次不做。
+- [ ] **U.23 [P2] L8 UDL 无障碍** —— 字体/行距/配色可调、公式朗读、低带宽模式，未开始
+- [ ] **U.24 [P2] L9 教学机制全量 feature-flag 化** —— 现仅 `TEACHING_ENGINE_ENABLED`/
+  `EXPERIMENT_TEACHING_ENGINE` 两处，pedagogy/01-08 新机制大多未挂 flag；Learner Model 未服务化独立部署

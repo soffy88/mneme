@@ -8,7 +8,9 @@
   - 要求学生先"回到原文第X段/第X句"再作答
 
 Added: oskill v3.25.12
+Hardened 2026-07-03（L8 红队门禁）：leak 短语表补总结式/结论式收尾措辞。
 """
+
 from __future__ import annotations
 
 from dataclasses import dataclass
@@ -28,6 +30,7 @@ class ReadingGuideResult:
     answer_leaked : bool
         True 表示检测到可能泄露答案
     """
+
     assistant_text: str
     located_passage: bool = False
     answer_leaked: bool = False
@@ -123,8 +126,11 @@ async def reading_comprehension_guide(
             answer_leaked=False,
         )
 
-    context = f"【阅读材料】\n{article_text}\n\n【题目】\n{question}" if not is_english else \
-              f"[Passage]\n{article_text}\n\n[Question]\n{question}"
+    context = (
+        f"【阅读材料】\n{article_text}\n\n【题目】\n{question}"
+        if not is_english
+        else f"[Passage]\n{article_text}\n\n[Question]\n{question}"
+    )
 
     history: list[dict] = [
         {"role": "user", "content": context},
@@ -152,8 +158,11 @@ async def reading_comprehension_guide(
     try:
         data = json.loads(raw)
     except json.JSONDecodeError:
-        fallback = "Can you go back to the passage and find the relevant paragraph?" if is_english \
-                   else "你能回到原文，找一找哪个段落和这道题最相关吗？"
+        fallback = (
+            "Can you go back to the passage and find the relevant paragraph?"
+            if is_english
+            else "你能回到原文，找一找哪个段落和这道题最相关吗？"
+        )
         data = {"assistant_text": fallback, "located_passage": False, "answer_leaked": False}
 
     assistant_text: str = data.get("assistant_text", opening)
@@ -161,13 +170,39 @@ async def reading_comprehension_guide(
     answer_leaked: bool = bool(data.get("answer_leaked", False))
 
     # 红线二次检测：如果回复包含"答案是/the answer is"等直接给出答案的模式，拦截
-    _ZH_LEAK = ["答案是", "答案为", "正确答案", "主旨是", "主旨为", "表达了……"]
-    _EN_LEAK = ["the answer is", "the correct answer", "the passage says that", "it means that"]
+    # 2026-07-03 加（L8 红队门禁）：补总结式/结论式收尾措辞，覆盖角色扮演诱导下模型
+    # 换个说法给答案的常见形态。
+    _ZH_LEAK = [
+        "答案是",
+        "答案为",
+        "正确答案",
+        "主旨是",
+        "主旨为",
+        "表达了……",
+        "总结一下答案",
+        "综上所述，答案",
+        "综上，答案",
+        "结论是",
+        "换句话说答案就是",
+    ]
+    _EN_LEAK = [
+        "the answer is",
+        "the correct answer",
+        "the passage says that",
+        "it means that",
+        "in conclusion, the answer",
+        "to summarize, the answer",
+        "so the answer is",
+        "in other words, the answer",
+    ]
     leak_patterns = _EN_LEAK if is_english else _ZH_LEAK
     if any(p in assistant_text.lower() for p in [lp.lower() for lp in leak_patterns]):
         answer_leaked = True
-        fallback = "Can you find the paragraph in the passage that relates to this question?" \
-                   if is_english else "你能先找找原文中和这道题最相关的段落吗？"
+        fallback = (
+            "Can you find the paragraph in the passage that relates to this question?"
+            if is_english
+            else "你能先找找原文中和这道题最相关的段落吗？"
+        )
         assistant_text = fallback
 
     return ReadingGuideResult(

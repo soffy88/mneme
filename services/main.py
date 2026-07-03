@@ -2603,6 +2603,7 @@ async def post_essay_guide(
         "rubric_scores": res.feedback,
         "guidance_questions": res.suggested_questions,
         "is_completed": res.is_completed,
+        "answer_leaked": res.answer_leaked,
     }
 
 

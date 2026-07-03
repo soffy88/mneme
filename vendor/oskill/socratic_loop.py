@@ -2,6 +2,8 @@
 
 Composes oprim.socratic_turn and oprim.verify_step.
 Red line: If LLM reveals correct_answer, filter and retry with generic prompt.
+Hardened 2026-07-03 (L8 红队门禁): whitespace-normalized comparison to catch
+spacing-obfuscated leaks (e.g. "x = 2" vs stored "x=2").
 
 Version: oskill v3.21.0
 """
@@ -113,7 +115,13 @@ async def process_socratic_turn(
     # substring of every string in Python, which would cause a false positive
     # on every turn when there is no known answer (e.g. KU explanation sessions).
     _answer = (state.correct_answer or "").strip()
-    answer_leaked = bool(_answer) and (_answer in text)
+    _answer_norm = "".join(_answer.split())
+    # 红队门禁：空格/换行混淆绕过（如 "x = 2" 绕过 "x=2" 的原样匹配）。
+    # 仅当答案去空白后 >=2 字符才做归一化比对，避免单字符答案在归一化后
+    # 因过短而对无关文本产生大量假阳性。
+    answer_leaked = bool(_answer) and (
+        _answer in text or (len(_answer_norm) >= 2 and _answer_norm in "".join(text.split()))
+    )
     if answer_leaked:
         state.violation_count += 1
         logger.warning(
