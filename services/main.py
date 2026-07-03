@@ -1206,8 +1206,12 @@ async def get_teaching_policy(
 
     enabled = teaching_engine_on_for(student_id)  # 全局 flag 或 RCT 臂=worked_example
     pol = answer_policy(context, stage, enabled=enabled)
-    return {"stage": stage, "engine_enabled": enabled,
-            "experiment_arm": student_arm(student_id), **pol}
+    return {
+        "stage": stage,
+        "engine_enabled": enabled,
+        "experiment_arm": student_arm(student_id),
+        **pol,
+    }
 
 
 class PlacementResponse(BaseModel):
@@ -1288,7 +1292,9 @@ async def get_misconception(
     if row is None:
         return {"misconception": None, "note": "KU 不存在"}
     name, subject = row
-    m = diagnose_misconception(subject or "", name or "", ku_id=ku_id, distractor=distractor)
+    m = diagnose_misconception(
+        subject or "", name or "", ku_id=ku_id, distractor=distractor
+    )
     return {"ku_id": ku_id, "misconception": m}
 
 
@@ -1406,7 +1412,11 @@ async def get_parent_overview(
     cur = streak.get("current_streak", 0) if isinstance(streak, dict) else 0
     # 进步优先(L6 第1律)：先讲掌握了什么/坚持了什么，问题项其后
     if mastered or cur:
-        headline = f"已掌握 {len(mastered)} 个知识点" + (f"、连续坚持 {cur} 天" if cur else "") + "，稳步在进步"
+        headline = (
+            f"已掌握 {len(mastered)} 个知识点"
+            + (f"、连续坚持 {cur} 天" if cur else "")
+            + "，稳步在进步"
+        )
     else:
         headline = "刚开始建立学习档案，做几道题就能看到进步"
     return {
@@ -1913,9 +1923,9 @@ async def set_privacy(
     if student_id != current_user.id:
         raise HTTPException(status_code=403, detail="只能设置本人隐私")
     await db.execute(
-        update(User).where(User.id == student_id).values(
-            share_process_with_parent=body.share_process_with_parent
-        )
+        update(User)
+        .where(User.id == student_id)
+        .values(share_process_with_parent=body.share_process_with_parent)
     )
     await db.commit()
     return {"share_process_with_parent": body.share_process_with_parent}
@@ -2020,6 +2030,7 @@ async def post_practice_submit(
     correct_ans = (
         bank_q.correct_answer or ""
     )  # 先取出，避免 commit 后对象过期触发懒加载(MissingGreenlet)
+    bank_subject = bank_q.subject or ""  # 同上，误解诊断要用，先取
 
     # 2. 自动判分（选择题/短答确定性判对错；自由作答判 unsure → 交学生对照答案自评）
     from oprim.answer_judge import judge_answer
@@ -2084,6 +2095,23 @@ async def post_practice_submit(
             "step_verdicts": chain.get("step_verdicts"),
         }
 
+    # L3 误解诊断（教育理念：答错→挂误解ID+重建方向，导向概念重建而非同类题再刷）
+    misconception = None
+    if not is_correct:
+        from oprim.misconception import diagnose_misconception
+
+        ku_name = (
+            await db.execute(
+                select(KnowledgeUnit.name).where(KnowledgeUnit.id == body.ku_id)
+            )
+        ).scalar_one_or_none()
+        misconception = diagnose_misconception(
+            bank_subject,
+            ku_name or "",
+            ku_id=body.ku_id,
+            distractor=body.student_answer,
+        )
+
     return {
         "is_correct": is_correct,
         "auto_judged": auto_judged,
@@ -2095,6 +2123,7 @@ async def post_practice_submit(
         "feedback": result.get("feedback"),
         "growth_message": result.get("growth_message"),  # 成长型措辞(05)
         "step_analysis": step_analysis,  # 首错步定位(07)
+        "misconception": misconception,  # L3 误解诊断(答错才有)
     }
 
 
@@ -2471,7 +2500,9 @@ async def get_error_journal(
     from services.privacy import parent_sees_process
 
     if not await parent_sees_process(db, current_user, student_id):
-        raise HTTPException(status_code=403, detail="过程数据（错题详情）默认仅学生本人可见")
+        raise HTTPException(
+            status_code=403, detail="过程数据（错题详情）默认仅学生本人可见"
+        )
 
     # 1. Get distribution
     pool = await get_pg_pool()
