@@ -392,6 +392,8 @@ async def get_me(user: User = Depends(get_current_user)):
         "grade": getattr(user, "grade", None),
         # 学生的邀请码：前端展示给学生，家长凭此注册/绑定（家长账号为 None）
         "invite_code": user.invite_code,
+        # L6 隐私分层：是否已向家长开放过程数据（供设置开关回显）
+        "share_process_with_parent": getattr(user, "share_process_with_parent", False),
     }
 
 
