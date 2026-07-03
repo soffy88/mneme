@@ -69,18 +69,24 @@ def get_stage(
     return "worked_example" if prereqs_ok else "locked"
 
 
-def get_zpd_band(p_mastery: Optional[float]) -> dict:
-    """最近发展区难度带：维持 70–85% 成功率（启发式 v1，真 ZPD 待 IRT θ）。
+def get_zpd_band(p_mastery: Optional[float], theta: Optional[float] = None) -> dict:
+    """最近发展区难度带：维持 70–85% 成功率。
 
-    返回目标题目难度区间（difficulty∈[0,1]）。当前按掌握度就近取带；θ 标定后升级。
+    优先用 IRT 能力 θ（L3 estimate_ability 估出）为中心（θ 是能力的直接度量）；
+    无 θ 时退回按掌握度就近取带（启发式）。返回目标题目难度区间 difficulty∈[0,1]。
+    目标略高于能力以维持理想难度：中心上移 +0.05（70–85% 成功带的下沿）。
     """
-    center = p_mastery if p_mastery is not None else 0.5
+    center = (
+        theta if theta is not None else (p_mastery if p_mastery is not None else 0.5)
+    )
+    center = min(max(center + 0.05, 0.0), 1.0)  # 略高于当前能力=理想难度
     lo = max(0.0, center - 0.10)
     hi = min(1.0, center + 0.15)
     return {
         "difficulty_min": round(lo, 3),
         "difficulty_max": round(hi, 3),
         "target_success": [0.70, 0.85],
+        "source": "theta" if theta is not None else "mastery",
     }
 
 

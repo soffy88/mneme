@@ -1202,6 +1202,34 @@ async def get_teaching_policy(
     return {"stage": stage, "engine_enabled": enabled, **pol}
 
 
+class PlacementResponse(BaseModel):
+    difficulty: float = Field(ge=0.0, le=1.0)
+    is_correct: bool
+
+
+class PlacementReq(BaseModel):
+    responses: list[PlacementResponse]
+
+
+@app.post("/v1/placement/estimate")
+async def post_placement_estimate(
+    body: PlacementReq,
+    _auth: User = Depends(get_current_user),
+):
+    """L3 自适应定位：从一批 (难度, 对错) 响应估学生能力 θ(Rasch)+ SE + ZPD 难度带 +
+    建议下一题难度。冷启动/入学定位用；θ 也可喂 learner_model.get_zpd_band。纯计算不落库。"""
+    from oprim.ability import estimate_ability, next_item_difficulty
+    from services.learner_model import get_zpd_band
+
+    est = estimate_ability([(r.difficulty, r.is_correct) for r in body.responses])
+    theta = est["theta"]
+    return {
+        **est,
+        "zpd_band": get_zpd_band(None, theta=theta),
+        "next_difficulty": next_item_difficulty(theta),
+    }
+
+
 # ===== §F.1 苏格拉底会话 =====
 
 
