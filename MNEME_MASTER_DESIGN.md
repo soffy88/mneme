@@ -710,6 +710,9 @@ POST /v1/parent/delete-request/{student_id} → 触发删除（合规）
 - **04 自我解释（Chi 效应）**：`interaction_events.self_explanation`(migration f5c2d3e4a6b7)；
   `process_interaction(self_explanation=)` 事件写入后 annotate（occurred_at 定位）；practice/submit
   透传。**纯采集**，不参与判分/掌握度（只增不改红线不破——INSERT 后一次性标注非改历史）。提示语在前端。
+- **05 成长型思维反馈框架（Dweck）**：`oprim.growth_feedback.growth_message`(纯函数)按
+  (对错×错因×是否吃力)选成长型措辞——过程表扬(努力/策略)非"聪明"、"还没(not yet)"、错误正常化；
+  `process_interaction` 返回 `growth_message` 字段供前端各反馈位统一语气。
 
 ---
 

@@ -294,12 +294,21 @@ async def process_interaction(
             )
         )
 
+    # 成长型思维措辞（教育理念 05）：过程表扬/错误正常化/"还没"文化
+    from oprim.growth_feedback import growth_message
+
+    growth = growth_message(
+        is_correct=is_correct,
+        error_type=findings.error_type,
+        struggled=struggled,
+    )
+
     feedback = None
     if student_answer is not None:
         fb = compute_feedback(student_answer, expected_answer=correct_answer)
         feedback = {"category": fb.category, "message": fb.message, "hint": fb.hint}
 
-    return {**findings.model_dump(), "feedback": feedback}
+    return {**findings.model_dump(), "feedback": feedback, "growth_message": growth}
 
 
 async def mastery_overview(
