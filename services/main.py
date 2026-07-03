@@ -1163,6 +1163,21 @@ async def get_retention_metrics(
     return await retention_metrics(db)
 
 
+@app.get("/v1/moat/learning-metrics")
+async def get_learning_metrics(
+    _auth: User = Depends(get_current_user),
+    db: AsyncSession = Depends(get_db),
+):
+    """GET /v1/moat/learning-metrics — L0 学习层北极星四指标（架构重排）。
+
+    掌握速度 / 延迟保持率(探针升格) / 迁移率 / 校准度。**一级指标**——模型层(AUC)与
+    产品层(留存)降为从属。登录可读，全体聚合无 PII。红线：留存涨而学习平 = 回滚。
+    """
+    from services.learning_metrics_service import compute_learning_metrics
+
+    return await compute_learning_metrics(db)
+
+
 # ===== §F.1 苏格拉底会话 =====
 
 
