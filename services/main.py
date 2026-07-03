@@ -33,7 +33,7 @@ from services.logging_config import configure_logging, logger
 from obase.prior_provider import PriorProvider
 from obase.auth import decode_access_token
 from omodul.cognitive import InteractionInput
-from oprim.prereq_graph import topo_sort_by_prereq
+from oprim.prereq_graph import topo_sort_by_prereq, fringe_status
 from oprim.calibration import brier_calibration
 from omodul.auth import SendCodeInput, RegisterStudentInput, LoginInput
 import services.auth_service as auth_service
@@ -308,12 +308,25 @@ async def post_send_code(payload: SendCodeInput):
     return result
 
 
+def _require_registration_open() -> None:
+    """公网注册闸门（默认关）。SMS 仍是 mock（万能码 123456）时公网放开注册 = 任何人
+    可注册（含 <14 岁绕过）。阿里云短信报备 + 关 mock 码前，用 REGISTRATION_OPEN=1 才开。"""
+    import os as _os
+
+    if _os.environ.get("REGISTRATION_OPEN", "0").lower() not in ("1", "true", "yes"):
+        raise HTTPException(
+            status_code=403,
+            detail="注册暂未开放（公网注册需短信实名，报备后开启）",
+        )
+
+
 @app.post("/v1/auth/register/student", status_code=201)
 async def post_register_student(
     payload: RegisterStudentInput,
     db: AsyncSession = Depends(get_db),
 ):
     """注册学生：Redis验证码校验 + 合规校验 + 写库 + 返回JWT。"""
+    _require_registration_open()
     result = await auth_service.register_student(
         db=db,
         phone=payload.phone,
@@ -343,6 +356,7 @@ async def post_register_parent(
     db: AsyncSession = Depends(get_db),
 ):
     """注册家长：验证码校验 + 手机唯一 + 凭 invite_code 绑定孩子 + 返回JWT。"""
+    _require_registration_open()
     result = await auth_service.register_parent(
         db=db,
         phone=payload.phone,
@@ -646,6 +660,12 @@ async def list_knowledge_points(
             "verified": ku.verified,
             "p_mastery": mastery_map.get(ku.id),
             "mastery_color": _mastery_color(mastery_map.get(ku.id)),
+            # KST fringe（掌握门控）：mastered/learning/learnable/locked；仅在有 student 时有意义
+            "fringe": (
+                fringe_status(mastery_map.get(ku.id), ku.prerequisites, mastery_map)
+                if student_id
+                else None
+            ),
         }
         for ku, kc, tb in rows
     ]
@@ -1569,6 +1589,214 @@ async def get_achievements(
     return {"achievements": out}
 
 
+def _league_tier(pct: float) -> str:
+    """百分位 → 匿名段位（SDT 归属，无 PII）。"""
+    if pct >= 90:
+        return "钻石"
+    if pct >= 70:
+        return "黄金"
+    if pct >= 40:
+        return "白银"
+    return "青铜"
+
+
+@app.get("/v1/league/{student_id}")
+async def get_league(
+    student_id: UUID,
+    _auth: User = Depends(require_student_access),
+    db: AsyncSession = Depends(get_db),
+):
+    """匿名同年级联赛（SDT 归属）：仅返回本人在同年级中的百分位/段位/队列人数，
+    不含任何他人身份或分数（合规：未成年不暴露真实排名/PII）。"""
+    from oprim import compute_peer_percentile
+
+    grade = (
+        await db.execute(select(User.grade).where(User.id == student_id))
+    ).scalar_one_or_none()
+
+    # 同年级学生的"已掌握 KU 数"作为联赛指标（努力/掌握代理，非绝对分数）
+    counts_stmt = (
+        select(KCMastery.student_id, func.count().label("n"))
+        .join(User, User.id == KCMastery.student_id)
+        .where(
+            User.role == UserRole.student,
+            User.deleted_at.is_(None),
+            KCMastery.p_mastery >= 0.7,
+        )
+    )
+    if grade:
+        counts_stmt = counts_stmt.where(User.grade == grade)
+    counts_stmt = counts_stmt.group_by(KCMastery.student_id)
+    rows = (await db.execute(counts_stmt)).all()
+
+    peer_values = [float(n) for _, n in rows]
+    my_value = float(next((n for sid, n in rows if sid == student_id), 0))
+    # 队列里没有别人（或本人无掌握）时给中位，避免误导
+    if len(peer_values) < 2:
+        return {
+            "grade": grade,
+            "cohort_size": len(peer_values),
+            "my_mastered": int(my_value),
+            "percentile": None,
+            "tier": None,
+            "note": "同年级样本不足，暂无排名",
+        }
+    res = compute_peer_percentile(my_value, peer_values)
+    pct = round(float(res.percentile), 1)
+    return {
+        "grade": grade,
+        "cohort_size": len(peer_values),
+        "my_mastered": int(my_value),
+        "percentile": pct,
+        "tier": _league_tier(pct),
+    }
+
+
+@app.get("/v1/learner-model/{student_id}/{kc_id}")
+async def get_learner_model(
+    student_id: UUID,
+    kc_id: str,
+    _auth: User = Depends(require_student_access),
+    db: AsyncSession = Depends(get_db),
+):
+    """开放学习者模型(OLM，教育理念 03)：把 KT 模型**透明摊给学生自己看**以促元认知。
+    返回长期掌握 P(L)、此刻可提取性 R、有效掌握、错因画像(粗心 vs 没学会)、下次复习。
+    "协商挑战"（我觉得我会了→做一题验证）复用现有 practice/submit，本端点只做透明读。"""
+    from oprim import KCState
+    from oprim._cognitive import bkt_error_weights
+    from oprim.fsrs_engine import fsrs_retrievability
+
+    row = (
+        await db.execute(
+            select(KCMastery).where(
+                KCMastery.student_id == student_id,
+                KCMastery.knowledge_point == kc_id,
+            )
+        )
+    ).scalar_one_or_none()
+    if row is None:
+        return {"kc_id": kc_id, "started": False}
+
+    pm = row.p_mastery or 0.0
+    card = row.fsrs_card_json
+    r_val = fsrs_retrievability(card_dict=card) if card else None
+    effective = round(pm * r_val, 4) if r_val is not None else round(pm, 4)
+
+    state = KCState(
+        kc_id=kc_id,
+        p_init=row.p_init,
+        p_transit=row.p_transit,
+        p_guess=row.p_guess,
+        p_slip=row.p_slip,
+        p_mastery=pm,
+        p_recognition=row.p_recognition,
+        p_recognition_init=row.p_recognition_init,
+        long_term_mastery=row.long_term_mastery,
+        last_interaction_ts=row.last_interaction_at,
+        n_attempts=row.n_attempts or 0,
+    )
+    careless_w, dontknow_w = bkt_error_weights(state=state)
+    tot = (careless_w + dontknow_w) or 1.0
+
+    return {
+        "kc_id": kc_id,
+        "started": True,
+        "p_mastery": round(pm, 4),  # 长期 P(L)
+        "retrievability": round(r_val, 4)
+        if r_val is not None
+        else None,  # 此刻可提取性
+        "effective_mastery": effective,  # P(L)×R
+        "recognition": round(row.p_recognition, 4) if row.p_recognition else None,
+        # 错因画像：粗心(会但错) vs 没学会
+        "error_profile": {
+            "careless": round(careless_w / tot, 3),
+            "dontknow": round(dontknow_w / tot, 3),
+        },
+        "attempts": row.n_attempts or 0,
+        "next_review": card.get("due") if card else None,
+        "last_interaction": row.last_interaction_at.isoformat()
+        if row.last_interaction_at
+        else None,
+    }
+
+
+class ExamDateReq(BaseModel):
+    exam_date: Optional[date] = None  # None 清除
+
+
+@app.post("/v1/users/{student_id}/exam-date")
+async def set_exam_date(
+    student_id: UUID,
+    body: ExamDateReq,
+    current_user: User = Depends(get_current_user),
+    db: AsyncSession = Depends(get_db),
+):
+    """设置本人考试日期（教育理念 06 考期感知）。临考(≤14天)日计划停推新知、向巩固倾斜。"""
+    if student_id != current_user.id:
+        raise HTTPException(status_code=403, detail="只能设置本人考试日期")
+    await db.execute(
+        update(User).where(User.id == student_id).values(exam_date=body.exam_date)
+    )
+    await db.commit()
+    countdown = (body.exam_date - date.today()).days if body.exam_date else None
+    return {
+        "exam_date": body.exam_date.isoformat() if body.exam_date else None,
+        "exam_countdown_days": countdown,
+    }
+
+
+@app.get("/v1/affect/{student_id}")
+async def get_affect(
+    student_id: UUID,
+    _auth: User = Depends(require_student_access),
+    db: AsyncSession = Depends(get_db),
+):
+    """情感感知（教育理念 08）：从近 12 次作答的**行为信号**估计情感态(挫败/脱离/心流/中性)
+    + 自适应建议。启发式，无生物特征采集。"""
+    from oprim.affect import affect_estimate
+
+    rows = (
+        await db.execute(
+            select(
+                InteractionEvent.is_correct,
+                InteractionEvent.time_spent_seconds,
+            )
+            .where(InteractionEvent.student_id == student_id)
+            .order_by(InteractionEvent.occurred_at.desc())
+            .limit(12)
+        )
+    ).all()
+    if not rows:
+        return {"state": "neutral", "adaptation": "keep", "n": 0}
+
+    # 最近在前：算尾部连错/连对、快速做对（用可得的 is_correct/time_spent 行为信号）
+    consecutive_wrong = 0
+    for is_c, _t in rows:
+        if is_c is False:
+            consecutive_wrong += 1
+        else:
+            break
+    correct_streak = 0
+    for is_c, _t in rows:
+        if is_c is True:
+            correct_streak += 1
+        else:
+            break
+    # 快速放弃代理：做错且用时极短（<8s）视为 give-up
+    give_ups = [1 for c, t in rows if c is False and t is not None and t < 8]
+    give_up_rate = len(give_ups) / len(rows)
+    fast_times = [t for c, t in rows if c is True and t is not None]
+    fast_correct = bool(fast_times) and (sum(fast_times) / len(fast_times)) < 30.0
+
+    est = affect_estimate(
+        consecutive_wrong=consecutive_wrong,
+        give_up_rate=give_up_rate,
+        recent_correct_streak=correct_streak,
+        fast_correct=fast_correct,
+    )
+    return {**est, "n": len(rows)}
+
+
 class PracticeSubmitReq(BaseModel):
     question_id: UUID  # 公共题库行（student_id IS NULL）
     student_id: UUID
@@ -1581,6 +1809,12 @@ class PracticeSubmitReq(BaseModel):
     predicted_confidence: Optional[float] = Field(
         default=None, ge=0.0, le=1.0
     )  # JOL：作答前自评把握，供校准(努力错觉)分析
+    self_explanation: Optional[str] = Field(
+        default=None, max_length=2000
+    )  # 自我解释(Chi 效应,教育理念 04)：学生"为什么这么做"，纯采集
+    student_steps: Optional[list[str]] = Field(
+        default=None
+    )  # 解题步骤(教育理念 07·刻意练习)：答错时确定性定位首个错步
 
 
 @app.post("/v1/practice/submit")
@@ -1659,8 +1893,20 @@ async def post_practice_submit(
         source="review",
         is_interleaved=body.interleaved,
         predicted_confidence=body.predicted_confidence,
+        self_explanation=body.self_explanation,
     )
     await db.commit()
+
+    # 刻意练习细颗粒反馈（教育理念 07）：答错且带步骤时，确定性定位首个错步（非整题重来）
+    step_analysis = None
+    if not is_correct and body.student_steps:
+        from oskill import verify_steps_chain
+
+        chain = verify_steps_chain(body.student_steps)
+        step_analysis = {
+            "first_wrong_step": chain.get("first_wrong_step"),  # 0-based；None=未定位
+            "step_verdicts": chain.get("step_verdicts"),
+        }
 
     return {
         "is_correct": is_correct,
@@ -1671,6 +1917,8 @@ async def post_practice_submit(
         "p_mastery": result.get("p_mastery"),
         "mastery_color": _mastery_color(result.get("p_mastery")),
         "feedback": result.get("feedback"),
+        "growth_message": result.get("growth_message"),  # 成长型措辞(05)
+        "step_analysis": step_analysis,  # 首错步定位(07)
     }
 
 

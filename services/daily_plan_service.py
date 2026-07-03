@@ -29,6 +29,7 @@ from services.models import KCMastery, KnowledgeUnit, Textbook, WrongQuestion
 # ── 常量 ────────────────────────────────────────────────────────────────────
 
 MASTERY_THRESHOLD = 0.6  # p_mastery 低于此值视为薄弱
+_NEAR_EXAM_DAYS = 14  # 距考 ≤ 此天数进入临考窗口：停推新知，向复习/巩固倾斜
 MINUTES_PER_REVIEW_KU = 5
 MINUTES_PER_WQ = 5
 MINUTES_PER_WEAK_KU = 15
@@ -66,6 +67,19 @@ async def build_daily_plan(
     """
     if now is None:
         now = datetime.now(timezone.utc)
+
+    # ── 0. 考期感知（教育理念 06）：算距考天数；临考(≤14天)停推新知、向巩固倾斜 ──
+    from services.models import User
+
+    exam_date = (
+        await db.execute(select(User.exam_date).where(User.id == student_id))
+    ).scalar_one_or_none()
+    exam_countdown_days: Optional[int] = None
+    near_exam = False
+    if exam_date is not None:
+        exam_countdown_days = (exam_date - now.date()).days
+        # 临考窗口内（还剩 0–14 天）：停推新知，把精力压到复习/薄弱巩固
+        near_exam = 0 <= exam_countdown_days <= _NEAR_EXAM_DAYS
 
     # ── 1. 拉取该学生所有 kc_mastery ──────────────────────────────────────
     masteries: list[KCMastery] = list(
@@ -188,8 +202,11 @@ async def build_daily_plan(
         )
 
     # ── P4: 新知识点（按科目过滤，遵守 prerequisites）────────────────────
+    # 考期感知（06）：临考窗口内停推新知，把时间压到复习/薄弱巩固（分布式练习向巩固倾斜）。
     new_by_subject: dict[str, list[KnowledgeUnit]] = {}
     for ku in ku_rows:
+        if near_exam:
+            break  # 临考不学新
         if ku.id in known_kp_set:
             continue  # 已接触过
         tb = tb_map.get(ku.textbook_id)
@@ -256,7 +273,8 @@ async def build_daily_plan(
 
     return {
         "date": now.date().isoformat(),
-        "exam_countdown_days": None,  # TODO: 待 users 表添加 exam_date 字段
+        "exam_countdown_days": exam_countdown_days,  # 06 考期感知
+        "near_exam": near_exam,
         "subjects_summary": subjects_summary,
         "tasks": tasks,
         "interleaved_queue": interleaved_queue,

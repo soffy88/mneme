@@ -11,6 +11,11 @@ student_id 解析顺序：路径参数 → query 参数 → JSON body →
 
 from __future__ import annotations
 
+import os as _os
+
+# 测试环境放开注册闸门（生产/部署默认关，见 main._require_registration_open）
+_os.environ.setdefault("REGISTRATION_OPEN", "1")
+
 import uuid
 
 import pytest

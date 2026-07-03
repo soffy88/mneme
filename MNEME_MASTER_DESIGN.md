@@ -690,4 +690,43 @@ POST /v1/parent/delete-request/{student_id} → 触发删除（合规）
 
 ---
 
+## 附录 · 先进教育理念增强契约（2026-07-03 起，逐条落地）
+
+对标 ALEKS/Khanmigo/Duolingo 与国外 AIED，补齐"深度/透明/动机/社群"短板。守住已领先的
+间隔/检索/交错三大记忆科学地基与苏格拉底确定性引导。各条为新增契约，红线不变。
+
+- **01 掌握门控 + 知识空间选题（KST/ALEKS）**：`oprim.prereq_graph.fringe_status` 确定性分类
+  KU 为 mastered/learning/**learnable(outer fringe：前置全掌握、自身未开始)**/**locked(前置未齐)**；
+  门控阈值 0.6（对齐 daily_plan P4）。`/v1/knowledge-points` 附 `fringe` 字段供前端锁态展示。
+  红线：确定性、纯函数、不改 BKT/FSRS 契约。
+- **02 SDT 留存层**：胜任=`/v1/achievements`（已有，多档徽章）；**归属**=`/v1/league/{sid}`
+  匿名同年级联赛（`oprim.compute_peer_percentile` 复用掌握 KU 数，返回百分位/段位/队列人数，
+  **无任何他人身份/分数**，合规红线：未成年不暴露真实排名/PII，样本<2 不排名）；
+  自主=每日目标自选强度（待 migration + 前端）。激励绑检索/努力行为，防裸积分挤出内在动机。
+- **03 开放学习者模型（OLM）**：`/v1/learner-model/{sid}/{kc_id}` 透明返回长期 P(L)、此刻
+  可提取性 R、有效掌握(P(L)×R)、错因画像(粗心 vs 没学会，`bkt_error_weights` 归一)、识别维度、
+  下次复习。促元认知（"镜子"叙事）。"协商挑战"（我觉得会了→做题验证）复用 practice/submit。
+  红线：读现有 KCState/内核，不改契约。
+- **04 自我解释（Chi 效应）**：`interaction_events.self_explanation`(migration f5c2d3e4a6b7)；
+  `process_interaction(self_explanation=)` 事件写入后 annotate（occurred_at 定位）；practice/submit
+  透传。**纯采集**，不参与判分/掌握度（只增不改红线不破——INSERT 后一次性标注非改历史）。提示语在前端。
+- **05 成长型思维反馈框架（Dweck）**：`oprim.growth_feedback.growth_message`(纯函数)按
+  (对错×错因×是否吃力)选成长型措辞——过程表扬(努力/策略)非"聪明"、"还没(not yet)"、错误正常化；
+  `process_interaction` 返回 `growth_message` 字段供前端各反馈位统一语气。
+- **06 考期感知调度**：`users.exam_date`(migration f6d3e4a5b8c9)+`POST /v1/users/{sid}/exam-date`；
+  `build_daily_plan` 算 `exam_countdown_days`，临考窗口(≤14天)`near_exam=True` 停推新知 P4、
+  向复习/薄弱巩固倾斜(分布式练习压缩)。FSRS 目标 R 上调/间隔封顶待后续。
+- **07 刻意练习细颗粒反馈**：practice/submit 收 `student_steps`，答错时复用 `oskill.verify_steps_chain`
+  (确定性，同拍卷 T.6) 定位首个错步返回 `step_analysis{first_wrong_step, step_verdicts}`——
+  针对错步而非整题重来。红线：确定性判步不靠 LLM。分步作答 UI 待前端。
+- **08 情感感知（行为信号，非生物特征）**：`oprim.affect.affect_estimate`(纯函数启发式 v1)
+  由连错/连对/快速做对/快速放弃代理估 frustrated/disengaged/flow/neutral + 自适应建议；
+  `GET /v1/affect/{sid}` 读近 12 次作答信号。合规：不采集生物特征。阈值待真实数据校准，
+  自适应教学分支(降难/换题/加挑战)接入待后续。
+- **09–13（Needs Human，前置门槛）**：09 DKT 影子模型(需真实作答日志)、10 生产性失败(需教研
+  设计"好的失败题")、11 同伴教学/众包(需用户规模+审核)、12 RL/bandit 教学策略(需 A/B 框架+
+  真实数据)、13 高阶思维/迁移(需教研题型)。均为价值高但有数据/教研/生态前置，先记契约后排期。
+
+---
+
 **Mneme 主设计文档结束。本文档为唯一权威，其余历史文档仅作演进参考。**
