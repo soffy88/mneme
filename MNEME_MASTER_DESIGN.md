@@ -716,6 +716,9 @@ POST /v1/parent/delete-request/{student_id} → 触发删除（合规）
 - **06 考期感知调度**：`users.exam_date`(migration f6d3e4a5b8c9)+`POST /v1/users/{sid}/exam-date`；
   `build_daily_plan` 算 `exam_countdown_days`，临考窗口(≤14天)`near_exam=True` 停推新知 P4、
   向复习/薄弱巩固倾斜(分布式练习压缩)。FSRS 目标 R 上调/间隔封顶待后续。
+- **07 刻意练习细颗粒反馈**：practice/submit 收 `student_steps`，答错时复用 `oskill.verify_steps_chain`
+  (确定性，同拍卷 T.6) 定位首个错步返回 `step_analysis{first_wrong_step, step_verdicts}`——
+  针对错步而非整题重来。红线：确定性判步不靠 LLM。分步作答 UI 待前端。
 
 ---
 

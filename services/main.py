@@ -1760,6 +1760,9 @@ class PracticeSubmitReq(BaseModel):
     self_explanation: Optional[str] = Field(
         default=None, max_length=2000
     )  # 自我解释(Chi 效应,教育理念 04)：学生"为什么这么做"，纯采集
+    student_steps: Optional[list[str]] = Field(
+        default=None
+    )  # 解题步骤(教育理念 07·刻意练习)：答错时确定性定位首个错步
 
 
 @app.post("/v1/practice/submit")
@@ -1842,6 +1845,17 @@ async def post_practice_submit(
     )
     await db.commit()
 
+    # 刻意练习细颗粒反馈（教育理念 07）：答错且带步骤时，确定性定位首个错步（非整题重来）
+    step_analysis = None
+    if not is_correct and body.student_steps:
+        from oskill import verify_steps_chain
+
+        chain = verify_steps_chain(body.student_steps)
+        step_analysis = {
+            "first_wrong_step": chain.get("first_wrong_step"),  # 0-based；None=未定位
+            "step_verdicts": chain.get("step_verdicts"),
+        }
+
     return {
         "is_correct": is_correct,
         "auto_judged": auto_judged,
@@ -1851,6 +1865,8 @@ async def post_practice_submit(
         "p_mastery": result.get("p_mastery"),
         "mastery_color": _mastery_color(result.get("p_mastery")),
         "feedback": result.get("feedback"),
+        "growth_message": result.get("growth_message"),  # 成长型措辞(05)
+        "step_analysis": step_analysis,  # 首错步定位(07)
     }
 
 
