@@ -11,7 +11,7 @@ from typing import Optional
 from uuid import UUID
 
 from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy import func, select
+from sqlalchemy import func, select, update
 from sqlalchemy.dialects.postgresql import insert as pg_insert
 
 from obase.cognitive_store import PgStore
@@ -180,6 +180,7 @@ async def process_interaction(
     predicted_r: Optional[float] = None,
     student_answer: Optional[str] = None,
     correct_answer: Optional[str] = None,
+    self_explanation: Optional[str] = None,
     now: Optional[datetime] = None,
 ) -> dict:
     """处理一次答题交互，落 kc_mastery + interaction_events + mastery_snapshots。"""
@@ -233,6 +234,19 @@ async def process_interaction(
     )
     result = await process_interaction_workflow(config, input_data, store)
     findings = result["findings"]
+
+    # 自我解释（Chi 效应，教育理念 04）：附到本次刚写入的事件（occurred_at==now 唯一定位），
+    # 纯采集不参与判分/掌握度（只增不改红线不破——是 INSERT 后一次性 annotate，非改历史）
+    if self_explanation:
+        await db.execute(
+            update(InteractionEvent)
+            .where(
+                InteractionEvent.student_id == student_id,
+                InteractionEvent.knowledge_point == kc_id,
+                InteractionEvent.occurred_at == now,
+            )
+            .values(self_explanation=self_explanation)
+        )
 
     # upsert 月度快照（只更新本月，不覆盖历史）
     snapshot_month = now.date().replace(day=1)

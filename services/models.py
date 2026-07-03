@@ -365,6 +365,9 @@ class InteractionEvent(Base):
     fire_meta: Mapped[Optional[dict]] = mapped_column(
         JSONB
     )  # FIRe（source=fire_credit 时填）：{trigger_kc_id, trigger_event_id, kappa, due_before, due_after}
+    self_explanation: Mapped[Optional[str]] = mapped_column(
+        Text
+    )  # 自我解释（Chi 效应，教育理念 04）：学生"为什么这么做"，纯采集不参与判分
     occurred_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True), server_default=text("now()")
     )

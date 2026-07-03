@@ -707,6 +707,9 @@ POST /v1/parent/delete-request/{student_id} → 触发删除（合规）
   可提取性 R、有效掌握(P(L)×R)、错因画像(粗心 vs 没学会，`bkt_error_weights` 归一)、识别维度、
   下次复习。促元认知（"镜子"叙事）。"协商挑战"（我觉得会了→做题验证）复用 practice/submit。
   红线：读现有 KCState/内核，不改契约。
+- **04 自我解释（Chi 效应）**：`interaction_events.self_explanation`(migration f5c2d3e4a6b7)；
+  `process_interaction(self_explanation=)` 事件写入后 annotate（occurred_at 定位）；practice/submit
+  透传。**纯采集**，不参与判分/掌握度（只增不改红线不破——INSERT 后一次性标注非改历史）。提示语在前端。
 
 ---
 

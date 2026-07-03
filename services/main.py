@@ -1732,6 +1732,9 @@ class PracticeSubmitReq(BaseModel):
     predicted_confidence: Optional[float] = Field(
         default=None, ge=0.0, le=1.0
     )  # JOL：作答前自评把握，供校准(努力错觉)分析
+    self_explanation: Optional[str] = Field(
+        default=None, max_length=2000
+    )  # 自我解释(Chi 效应,教育理念 04)：学生"为什么这么做"，纯采集
 
 
 @app.post("/v1/practice/submit")
@@ -1810,6 +1813,7 @@ async def post_practice_submit(
         source="review",
         is_interleaved=body.interleaved,
         predicted_confidence=body.predicted_confidence,
+        self_explanation=body.self_explanation,
     )
     await db.commit()
 
