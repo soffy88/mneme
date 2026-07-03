@@ -120,6 +120,31 @@ services:
       - default
       - helios-net
 
+  # Celery beat：定时调度器（此前缺失 → 数据飞轮/FSRS 优化/AUC 评估/家长预警全休眠）。
+  # 4 个 schedule 见 tasks/celery_app.py：每日3:30 BKT 校准 / 周一4:00 FSRS 优化 /
+  # 周一5:00 护城河 AUC 评估 / 每日20:00 家长预警。
+  beat:
+    image: mneme-worker          # 复用 worker 镜像（同代码，经 .:/app 挂载），免单独构建
+    restart: always
+    command: celery -A tasks.celery_app beat --loglevel=info --schedule=/tmp/celerybeat-schedule
+    environment:
+      PYTHONPATH: /app
+      DATABASE_URL: postgresql+asyncpg://postgres:postgres@db:5432/mneme
+      REDIS_URL: redis://redis:6379/0
+      MINIO_ENDPOINT: minio:9000
+      MINIO_ACCESS_KEY: minioadmin
+      MINIO_SECRET_KEY: minioadmin
+      MINIO_BUCKET: mneme
+      SMS_PROVIDER: mock
+    depends_on:
+      redis:
+        condition: service_healthy
+    volumes:
+      - .:/app
+    networks:
+      - default
+      - helios-net
+
 networks:
   default:
   helios-net:
