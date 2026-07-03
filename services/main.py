@@ -1398,10 +1398,23 @@ async def get_parent_overview(
         .scalars()
         .all()
     )
+    from services.learner_model import MASTERED
+
+    mastered = [r for r in rows if (r.p_mastery or 0) >= MASTERED]
+    cur = streak.get("current_streak", 0) if isinstance(streak, dict) else 0
+    # 进步优先(L6 第1律)：先讲掌握了什么/坚持了什么，问题项其后
+    if mastered or cur:
+        headline = f"已掌握 {len(mastered)} 个知识点" + (f"、连续坚持 {cur} 天" if cur else "") + "，稳步在进步"
+    else:
+        headline = "刚开始建立学习档案，做几道题就能看到进步"
     return {
-        "weak_kc_count": len(weak_kc),
-        "total_kc_practiced": len(rows),
+        # 进步优先：headline + 掌握/坚持在前
+        "headline": headline,
+        "mastered_kc_count": len(mastered),
         "streak": streak,
+        "total_kc_practiced": len(rows),
+        # 需关注项在后（不是首屏主角）
+        "weak_kc_count": len(weak_kc),
         "recent_sessions": len(recent_sessions),
     }
 
@@ -1881,6 +1894,29 @@ async def set_exam_date(
         "exam_date": body.exam_date.isoformat() if body.exam_date else None,
         "exam_countdown_days": countdown,
     }
+
+
+class PrivacyReq(BaseModel):
+    share_process_with_parent: bool
+
+
+@app.post("/v1/users/{student_id}/privacy")
+async def set_privacy(
+    student_id: UUID,
+    body: PrivacyReq,
+    current_user: User = Depends(get_current_user),
+    db: AsyncSession = Depends(get_db),
+):
+    """L6 隐私分层：学生本人协商是否向家长开放过程数据(错题详情/情绪/求助)。结果数据不受此限。"""
+    if student_id != current_user.id:
+        raise HTTPException(status_code=403, detail="只能设置本人隐私")
+    await db.execute(
+        update(User).where(User.id == student_id).values(
+            share_process_with_parent=body.share_process_with_parent
+        )
+    )
+    await db.commit()
+    return {"share_process_with_parent": body.share_process_with_parent}
 
 
 @app.get("/v1/affect/{student_id}")
@@ -2427,8 +2463,13 @@ async def get_error_journal(
     """
     GET /v1/error-journal/{student_id}
     错题本主动入口。鉴权：学生本人或绑定家长（原先任意家长可读）。
+    L6 隐私分层：错题(过程数据)——家长需该生<12岁或已协商开放才可见。
     """
     await _ensure_student_access(db, current_user, student_id)
+    from services.privacy import parent_sees_process
+
+    if not await parent_sees_process(db, current_user, student_id):
+        raise HTTPException(status_code=403, detail="过程数据（错题详情）默认仅学生本人可见")
 
     # 1. Get distribution
     pool = await get_pg_pool()

@@ -777,7 +777,7 @@ FIRe=前置隐式重复信用（只写调度折扣）。**KU≠记忆单元。**
   `/v1/knowledge-points` 语文 KU 附 `track`,前端据此路由(记诵→背诵FSRS、素养→阅读/作文引导)。
 - **L6 家长端 监控→支持**：`alert_service._ALERT_SUPPORT` 每类预警配**支持动作+对话话术**("对话时机",
   非缺陷通报;依 Hill&Tyson 2009 学业社会化>作业监控)。进步优先overview+青少年隐私分层(结果数据默认可见/
-  过程数据学生所有)属前端/后续。
+  过程数据学生所有):`users.share_process_with_parent`(migration f7e4a5b6c9d0)+`services.privacy.parent_sees_process`(本人可见;家长需该生<12岁监护或已协商开放才见过程数据 error-journal 等)+`POST /v1/users/{sid}/privacy` 学生协商;结果数据(进度/掌握)家长默认可见。进步优先:`/v1/parent/overview` 加 headline+mastered_kc_count 进步在前、问题项其后。
 
 ---
 
