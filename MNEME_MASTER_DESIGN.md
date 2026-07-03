@@ -765,7 +765,7 @@ FIRe=前置隐式重复信用（只写调度折扣）。**KU≠记忆单元。**
 ### L3 · 自适应定位/能力估计（P1 起步）
 `oprim.ability.estimate_ability`(Rasch/1PL,纯函数):从 [(难度,对错)] 网格 MLE 估学生能力
 θ∈[0,1] + SE(Fisher 信息)。`POST /v1/placement/estimate` 入学定位/冷启动。**L1 `get_zpd_band`
-升级为 θ 驱动**(有 θ 用 θ 中心,无则退回掌握度启发式)。误解诊断(干扰项映射)/全量 CAT 会话待后续。
+升级为 θ 驱动**(有 θ 用 θ 中心,无则退回掌握度启发式)。`POST /v1/placement/next` 全量 CAT 会话(无状态,累积响应→θ→SE<0.10或25题停→选就近θ下一题)。误解诊断骨架:`oprim.misconception`(干扰项→误解ID精确映射,教研逐题填;退回KU名关键词)+`GET /v1/misconception/{ku}`。
 
 ---
 

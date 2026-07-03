@@ -1259,6 +1259,31 @@ async def post_placement_next(
     )
 
 
+@app.get("/v1/misconception/{ku_id}")
+async def get_misconception(
+    ku_id: str,
+    distractor: Optional[str] = Query(None),
+    _auth: User = Depends(get_current_user),
+    db: AsyncSession = Depends(get_db),
+):
+    """L3 误解诊断（骨架）：答错时挂误解 ID + 重建方向，用于概念重建微课而非同类题再刷。
+    优先精确干扰项映射(教研逐题填)，否则按 KU 名关键词退回候选(heuristic)。"""
+    from oprim.misconception import diagnose_misconception
+
+    row = (
+        await db.execute(
+            select(KnowledgeUnit.name, Textbook.subject)
+            .join(Textbook, KnowledgeUnit.textbook_id == Textbook.id)
+            .where(KnowledgeUnit.id == ku_id)
+        )
+    ).first()
+    if row is None:
+        return {"misconception": None, "note": "KU 不存在"}
+    name, subject = row
+    m = diagnose_misconception(subject or "", name or "", ku_id=ku_id, distractor=distractor)
+    return {"ku_id": ku_id, "misconception": m}
+
+
 # ===== §F.1 苏格拉底会话 =====
 
 
