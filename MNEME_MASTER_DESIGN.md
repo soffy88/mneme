@@ -703,6 +703,10 @@ POST /v1/parent/delete-request/{student_id} → 触发删除（合规）
   匿名同年级联赛（`oprim.compute_peer_percentile` 复用掌握 KU 数，返回百分位/段位/队列人数，
   **无任何他人身份/分数**，合规红线：未成年不暴露真实排名/PII，样本<2 不排名）；
   自主=每日目标自选强度（待 migration + 前端）。激励绑检索/努力行为，防裸积分挤出内在动机。
+- **03 开放学习者模型（OLM）**：`/v1/learner-model/{sid}/{kc_id}` 透明返回长期 P(L)、此刻
+  可提取性 R、有效掌握(P(L)×R)、错因画像(粗心 vs 没学会，`bkt_error_weights` 归一)、识别维度、
+  下次复习。促元认知（"镜子"叙事）。"协商挑战"（我觉得会了→做题验证）复用 practice/submit。
+  红线：读现有 KCState/内核，不改契约。
 
 ---
 

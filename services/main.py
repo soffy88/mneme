@@ -1652,6 +1652,74 @@ async def get_league(
     }
 
 
+@app.get("/v1/learner-model/{student_id}/{kc_id}")
+async def get_learner_model(
+    student_id: UUID,
+    kc_id: str,
+    _auth: User = Depends(require_student_access),
+    db: AsyncSession = Depends(get_db),
+):
+    """开放学习者模型(OLM，教育理念 03)：把 KT 模型**透明摊给学生自己看**以促元认知。
+    返回长期掌握 P(L)、此刻可提取性 R、有效掌握、错因画像(粗心 vs 没学会)、下次复习。
+    "协商挑战"（我觉得我会了→做一题验证）复用现有 practice/submit，本端点只做透明读。"""
+    from oprim import KCState
+    from oprim._cognitive import bkt_error_weights
+    from oprim.fsrs_engine import fsrs_retrievability
+
+    row = (
+        await db.execute(
+            select(KCMastery).where(
+                KCMastery.student_id == student_id,
+                KCMastery.knowledge_point == kc_id,
+            )
+        )
+    ).scalar_one_or_none()
+    if row is None:
+        return {"kc_id": kc_id, "started": False}
+
+    pm = row.p_mastery or 0.0
+    card = row.fsrs_card_json
+    r_val = fsrs_retrievability(card_dict=card) if card else None
+    effective = round(pm * r_val, 4) if r_val is not None else round(pm, 4)
+
+    state = KCState(
+        kc_id=kc_id,
+        p_init=row.p_init,
+        p_transit=row.p_transit,
+        p_guess=row.p_guess,
+        p_slip=row.p_slip,
+        p_mastery=pm,
+        p_recognition=row.p_recognition,
+        p_recognition_init=row.p_recognition_init,
+        long_term_mastery=row.long_term_mastery,
+        last_interaction_ts=row.last_interaction_at,
+        n_attempts=row.n_attempts or 0,
+    )
+    careless_w, dontknow_w = bkt_error_weights(state=state)
+    tot = (careless_w + dontknow_w) or 1.0
+
+    return {
+        "kc_id": kc_id,
+        "started": True,
+        "p_mastery": round(pm, 4),  # 长期 P(L)
+        "retrievability": round(r_val, 4)
+        if r_val is not None
+        else None,  # 此刻可提取性
+        "effective_mastery": effective,  # P(L)×R
+        "recognition": round(row.p_recognition, 4) if row.p_recognition else None,
+        # 错因画像：粗心(会但错) vs 没学会
+        "error_profile": {
+            "careless": round(careless_w / tot, 3),
+            "dontknow": round(dontknow_w / tot, 3),
+        },
+        "attempts": row.n_attempts or 0,
+        "next_review": card.get("due") if card else None,
+        "last_interaction": row.last_interaction_at.isoformat()
+        if row.last_interaction_at
+        else None,
+    }
+
+
 class PracticeSubmitReq(BaseModel):
     question_id: UUID  # 公共题库行（student_id IS NULL）
     student_id: UUID
