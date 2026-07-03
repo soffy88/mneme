@@ -361,6 +361,10 @@ FastAPI 路由、鉴权/多租户/未成年人合规校验、SSE 流式（苏格
 
 ## 7. 完整数据模型（DDL）
 
+> **以代码为准（审计 2026-07-03 收口）**：本节 DDL 为设计基线；随功能迭代，实际库已达
+> **31 张表**（含 textbooks/knowledge_clusters/knowledge_units/evaluation_runs/streaks 等
+> 后续新增）。权威表结构以 `services/models.py` + `alembic/versions/` 迁移链为准，本节仅示意。
+
 ```sql
 -- ===== 用户与合规 =====
 CREATE TYPE user_role AS ENUM ('student','parent');
