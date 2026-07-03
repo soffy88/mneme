@@ -761,6 +761,7 @@ FIRe=前置隐式重复信用（只写调度折扣）。**KU≠记忆单元。**
 - **全程 feature-flag**（`TEACHING_ENGINE_ENABLED`），默认保守；首个内部 RCT（样例渐退 vs 纯苏格拉底，
   主终点：延迟保持率 + 挫败流失率）裁决默认值。
 - verify_step 确定性拦错、"自带原题/写作不泄露"测试**保留不变**。
+- **首个内部 RCT（E3，教学引擎默认值裁决）**：`oprim.experiment.assign_arm`(sha256 确定性分臂)+`experiment_service`(EXPERIMENTS 登记表);臂=worked_example(样例渐退)/control(纯苏格拉底旧行为),50/50;`teaching/policy` 的 engine_enabled 由学生臂驱动;主终点 `GET /v1/moat/experiment/{name}` 按臂延迟保持率(探针)+挫败流失率(待会话埋点)。**安全默认**:`EXPERIMENT_TEACHING_ENGINE` 关时全 control(现网零变化)。
 
 ### L3 · 自适应定位/能力估计（P1 起步）
 `oprim.ability.estimate_ability`(Rasch/1PL,纯函数):从 [(难度,对错)] 网格 MLE 估学生能力

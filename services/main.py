@@ -1197,9 +1197,12 @@ async def get_teaching_policy(
 
     m = await get_mastery(db, student_id, kc_id)
     stage = get_stage(m["p"])
-    enabled = _os.environ.get("TEACHING_ENGINE_ENABLED", "0").lower() in ("1", "true", "yes")
+    from services.experiment_service import student_arm, teaching_engine_on_for
+
+    enabled = teaching_engine_on_for(student_id)  # 全局 flag 或 RCT 臂=worked_example
     pol = answer_policy(context, stage, enabled=enabled)
-    return {"stage": stage, "engine_enabled": enabled, **pol}
+    return {"stage": stage, "engine_enabled": enabled,
+            "experiment_arm": student_arm(student_id), **pol}
 
 
 class PlacementResponse(BaseModel):
@@ -1282,6 +1285,19 @@ async def get_misconception(
     name, subject = row
     m = diagnose_misconception(subject or "", name or "", ku_id=ku_id, distractor=distractor)
     return {"ku_id": ku_id, "misconception": m}
+
+
+@app.get("/v1/moat/experiment/{name}")
+async def get_experiment_metrics(
+    name: str,
+    _auth: User = Depends(get_current_user),
+    db: AsyncSession = Depends(get_db),
+):
+    """RCT 按臂主终点(延迟保持率/挫败流失率)。首个实验 teaching_engine_v1：样例渐退 vs 纯苏格拉底。
+    登录可读,聚合无 PII。实验 env 关时所有人 control(现网零变化)。"""
+    from services.experiment_service import experiment_metrics
+
+    return await experiment_metrics(db, name)
 
 
 # ===== §F.1 苏格拉底会话 =====
