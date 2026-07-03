@@ -1745,6 +1745,58 @@ async def set_exam_date(
     }
 
 
+@app.get("/v1/affect/{student_id}")
+async def get_affect(
+    student_id: UUID,
+    _auth: User = Depends(require_student_access),
+    db: AsyncSession = Depends(get_db),
+):
+    """情感感知（教育理念 08）：从近 12 次作答的**行为信号**估计情感态(挫败/脱离/心流/中性)
+    + 自适应建议。启发式，无生物特征采集。"""
+    from oprim.affect import affect_estimate
+
+    rows = (
+        await db.execute(
+            select(
+                InteractionEvent.is_correct,
+                InteractionEvent.time_spent_seconds,
+            )
+            .where(InteractionEvent.student_id == student_id)
+            .order_by(InteractionEvent.occurred_at.desc())
+            .limit(12)
+        )
+    ).all()
+    if not rows:
+        return {"state": "neutral", "adaptation": "keep", "n": 0}
+
+    # 最近在前：算尾部连错/连对、快速做对（用可得的 is_correct/time_spent 行为信号）
+    consecutive_wrong = 0
+    for is_c, _t in rows:
+        if is_c is False:
+            consecutive_wrong += 1
+        else:
+            break
+    correct_streak = 0
+    for is_c, _t in rows:
+        if is_c is True:
+            correct_streak += 1
+        else:
+            break
+    # 快速放弃代理：做错且用时极短（<8s）视为 give-up
+    give_ups = [1 for c, t in rows if c is False and t is not None and t < 8]
+    give_up_rate = len(give_ups) / len(rows)
+    fast_times = [t for c, t in rows if c is True and t is not None]
+    fast_correct = bool(fast_times) and (sum(fast_times) / len(fast_times)) < 30.0
+
+    est = affect_estimate(
+        consecutive_wrong=consecutive_wrong,
+        give_up_rate=give_up_rate,
+        recent_correct_streak=correct_streak,
+        fast_correct=fast_correct,
+    )
+    return {**est, "n": len(rows)}
+
+
 class PracticeSubmitReq(BaseModel):
     question_id: UUID  # 公共题库行（student_id IS NULL）
     student_id: UUID

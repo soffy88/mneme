@@ -719,6 +719,13 @@ POST /v1/parent/delete-request/{student_id} → 触发删除（合规）
 - **07 刻意练习细颗粒反馈**：practice/submit 收 `student_steps`，答错时复用 `oskill.verify_steps_chain`
   (确定性，同拍卷 T.6) 定位首个错步返回 `step_analysis{first_wrong_step, step_verdicts}`——
   针对错步而非整题重来。红线：确定性判步不靠 LLM。分步作答 UI 待前端。
+- **08 情感感知（行为信号，非生物特征）**：`oprim.affect.affect_estimate`(纯函数启发式 v1)
+  由连错/连对/快速做对/快速放弃代理估 frustrated/disengaged/flow/neutral + 自适应建议；
+  `GET /v1/affect/{sid}` 读近 12 次作答信号。合规：不采集生物特征。阈值待真实数据校准，
+  自适应教学分支(降难/换题/加挑战)接入待后续。
+- **09–13（Needs Human，前置门槛）**：09 DKT 影子模型(需真实作答日志)、10 生产性失败(需教研
+  设计"好的失败题")、11 同伴教学/众包(需用户规模+审核)、12 RL/bandit 教学策略(需 A/B 框架+
+  真实数据)、13 高阶思维/迁移(需教研题型)。均为价值高但有数据/教研/生态前置，先记契约后排期。
 
 ---
 
