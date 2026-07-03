@@ -16,6 +16,7 @@ celery_app = Celery(
         "tasks.fsrs_optimize_tasks",
         "tasks.evaluation_tasks",
         "tasks.alert_tasks",
+        "tasks.purge_tasks",
     ],
 )
 celery_app.conf.update(
@@ -45,6 +46,11 @@ celery_app.conf.update(
         "daily-parent-alerts": {
             "task": "tasks.run_parent_alert_checks",
             "schedule": crontab(hour=20, minute=0),
+        },
+        # 每日 04:30 合规硬删：物理清除软删超宽限期(RETENTION_HARD_DELETE_DAYS)的用户及全部 PII。
+        "daily-purge-deleted-users": {
+            "task": "tasks.purge_deleted_users",
+            "schedule": crontab(hour=4, minute=30),
         },
     },
 )
