@@ -134,6 +134,47 @@ async def get_pg_pool() -> PgPool:
     return await PgPool.get_or_create(dsn=dsn)
 
 
+# ── 变式答案一致性（P0-5 红线）────────────────────────────────────────────────
+# 红线：有 solve_* 覆盖的题型，数值结论必来自内核；变式的判分答案必须与**展示的题面**
+# 一致。submit/reveal 是无状态的（只按 kc_id 反查原题答案），因此若展示了数值不同的
+# LLM 变式，却仍用原题答案判分 = 误判（诱导错误）。修法：
+#   · 只有当变式**内核已验证**（kernel_verified 且带 answer）才展示变式题面，
+#     并把该内核答案随 (student, kc) 缓存进 Redis；submit/reveal 优先用它。
+#   · 未验证的变式一律降级为**同题复现**（展示原题面），原答案天然一致。
+_REVIEW_ANSWER_TTL = 3600  # 展示后 1h 内提交/揭示都用同一内核答案
+
+
+def _review_answer_key(student_id: uuid.UUID, kc_id: str) -> str:
+    return f"review_variant_answer:{student_id}:{kc_id}"
+
+
+async def _cache_variant_answer(student_id: uuid.UUID, kc_id: str, answer: str) -> None:
+    import redis.asyncio as aioredis
+
+    r = aioredis.from_url(settings.REDIS_URL, decode_responses=True)
+    try:
+        await r.setex(_review_answer_key(student_id, kc_id), _REVIEW_ANSWER_TTL, answer)
+    finally:
+        await r.aclose()
+
+
+async def _answer_for_review(
+    db: AsyncSession, student_id: uuid.UUID, kc_id: str
+) -> str:
+    """判分/揭示用的答案：优先取"本次展示的内核已验证变式答案"（Redis），
+    否则回退原错题答案（同题复现路径，题面=原题，答案天然一致）。"""
+    import redis.asyncio as aioredis
+
+    r = aioredis.from_url(settings.REDIS_URL, decode_responses=True)
+    try:
+        cached = await r.get(_review_answer_key(student_id, kc_id))
+    finally:
+        await r.aclose()
+    if cached:
+        return str(cached)
+    return await _original_answer_for_kc(db, student_id, kc_id)
+
+
 async def get_due_variants(
     db: AsyncSession, student_id: uuid.UUID, *, generate_variants: bool = False
 ) -> List[dict]:
@@ -173,9 +214,12 @@ async def get_due_variants(
             orig_q = wq.question_text if wq else "已知知识点为 " + m.knowledge_point
             orig_a = wq.correct_answer if wq else "无"
 
-            # 默认走原题面（无 LLM、无 N+1 延迟）；仅在显式开启变式时调 LLM，
-            # 失败也回退原题面（不丢到期项=不让"学了就忘"）。
+            # 默认走原题面（无 LLM、无 N+1 延迟）；仅在显式开启变式时调 LLM。
+            # 红线（P0-5）：只有**内核已验证**的变式（kernel_verified 且带 answer）才展示，
+            # 并缓存其内核答案供 submit/reveal 判分；否则一律降级同题复现（原题面），
+            # 绝不展示"数值改了但仍用原答案判分"的变式。
             question_text = orig_q
+            answer_source = "original"
             if generate_variants:
                 try:
                     variant = await variant_for_review(
@@ -187,8 +231,18 @@ async def get_due_variants(
                         ),
                         caller=caller,
                     )
-                    if variant and variant.question:
+                    if (
+                        variant
+                        and variant.question
+                        and variant.kernel_verified
+                        and variant.answer
+                    ):
                         question_text = variant.question
+                        answer_source = "kernel"
+                        await _cache_variant_answer(
+                            student_id, m.knowledge_point, variant.answer
+                        )
+                    # 未内核验证 → 保持原题面（同题复现），不误判
                 except Exception:
                     pass  # 用原题面兜底，不丢到期项
 
@@ -199,6 +253,7 @@ async def get_due_variants(
                 {
                     "kc_id": m.knowledge_point,
                     "variant_question": question_text,
+                    "answer_source": answer_source,  # kernel(内核验证变式) | original(同题复现)
                     "requires_retrieval": True,
                     # 原错题 id（供复习页"问问AI"接苏格拉底；无原题则 None）
                     "question_id": str(wq.id) if wq else None,
@@ -284,7 +339,7 @@ async def reveal_review_answer(
     """
     from services.cognitive_service import process_interaction
 
-    answer = await _original_answer_for_kc(db, student_id, kc_id)
+    answer = await _answer_for_review(db, student_id, kc_id)
     source, predicted_r = await _probe_context(db, student_id, kc_id)
     await process_interaction(
         db,
@@ -306,7 +361,7 @@ async def submit_review_answer(
     from oprim.answer_judge import judge_answer
     from services.cognitive_service import process_interaction
 
-    answer = await _original_answer_for_kc(db, student_id, kc_id)
+    answer = await _answer_for_review(db, student_id, kc_id)
     verdict = judge_answer(student_answer, answer).get("verdict", "unsure")
     # unsure（自由作答）按"未确定"不武断判错：交学生自评，这里仅在可判定时入算法
     if verdict in ("correct", "wrong"):
