@@ -33,7 +33,7 @@ from services.logging_config import configure_logging, logger
 from obase.prior_provider import PriorProvider
 from obase.auth import decode_access_token
 from omodul.cognitive import InteractionInput
-from oprim.prereq_graph import topo_sort_by_prereq
+from oprim.prereq_graph import topo_sort_by_prereq, fringe_status
 from oprim.calibration import brier_calibration
 from omodul.auth import SendCodeInput, RegisterStudentInput, LoginInput
 import services.auth_service as auth_service
@@ -660,6 +660,12 @@ async def list_knowledge_points(
             "verified": ku.verified,
             "p_mastery": mastery_map.get(ku.id),
             "mastery_color": _mastery_color(mastery_map.get(ku.id)),
+            # KST fringe（掌握门控）：mastered/learning/learnable/locked；仅在有 student 时有意义
+            "fringe": (
+                fringe_status(mastery_map.get(ku.id), ku.prerequisites, mastery_map)
+                if student_id
+                else None
+            ),
         }
         for ku, kc, tb in rows
     ]

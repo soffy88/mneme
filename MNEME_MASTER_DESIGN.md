@@ -690,4 +690,16 @@ POST /v1/parent/delete-request/{student_id} → 触发删除（合规）
 
 ---
 
+## 附录 · 先进教育理念增强契约（2026-07-03 起，逐条落地）
+
+对标 ALEKS/Khanmigo/Duolingo 与国外 AIED，补齐"深度/透明/动机/社群"短板。守住已领先的
+间隔/检索/交错三大记忆科学地基与苏格拉底确定性引导。各条为新增契约，红线不变。
+
+- **01 掌握门控 + 知识空间选题（KST/ALEKS）**：`oprim.prereq_graph.fringe_status` 确定性分类
+  KU 为 mastered/learning/**learnable(outer fringe：前置全掌握、自身未开始)**/**locked(前置未齐)**；
+  门控阈值 0.6（对齐 daily_plan P4）。`/v1/knowledge-points` 附 `fringe` 字段供前端锁态展示。
+  红线：确定性、纯函数、不改 BKT/FSRS 契约。
+
+---
+
 **Mneme 主设计文档结束。本文档为唯一权威，其余历史文档仅作演进参考。**
