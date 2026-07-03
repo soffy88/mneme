@@ -16,6 +16,7 @@ celery_app = Celery(
         "tasks.fsrs_optimize_tasks",
         "tasks.evaluation_tasks",
         "tasks.alert_tasks",
+        "tasks.purge_tasks",
     ],
 )
 celery_app.conf.update(
@@ -46,13 +47,22 @@ celery_app.conf.update(
             "task": "tasks.run_parent_alert_checks",
             "schedule": crontab(hour=20, minute=0),
         },
+        # 每日 04:30 合规硬删：物理清除软删超宽限期(RETENTION_HARD_DELETE_DAYS)的用户及全部 PII。
+        "daily-purge-deleted-users": {
+            "task": "tasks.purge_deleted_users",
+            "schedule": crontab(hour=4, minute=30),
+        },
     },
 )
 
 
 @worker_process_init.connect
 def _register_providers(**_kwargs):
-    """worker 进程不跑 FastAPI lifespan，需自行注册 LLM/VLM provider，否则 OCR 无 VLM。"""
-    from obase.llm import register_default_providers
+    """worker 进程不跑 FastAPI lifespan，需自行注册 LLM/VLM provider，否则 OCR 无 VLM。
 
-    register_default_providers()
+    审计 P0-4：与 API lifespan 共用同一装配函数，确保 MNEME_LLM=ollama 覆盖也在 worker 生效
+    （此前 worker 只调 register_default_providers → 用死 DeepSeek key，异步链跑不通）。
+    """
+    from services.providers.setup import configure_llm_providers
+
+    configure_llm_providers()

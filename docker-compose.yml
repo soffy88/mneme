@@ -13,10 +13,14 @@ services:
       interval: 5s
       timeout: 5s
       retries: 5
+    volumes:
+      - mneme_pg_data:/var/lib/postgresql/data
 
   redis:
     image: redis:7-alpine
     restart: always
+    # 开启 AOF 持久化，重启不丢队列/验证码/缓存
+    command: redis-server --appendonly yes
     ports:
       - "6380:6379"
     healthcheck:
@@ -24,6 +28,8 @@ services:
       interval: 5s
       timeout: 5s
       retries: 5
+    volumes:
+      - mneme_redis_data:/data
 
   minio:
     image: minio/minio
@@ -35,6 +41,8 @@ services:
       MINIO_ROOT_USER: minioadmin
       MINIO_ROOT_PASSWORD: minioadmin
     command: server /data --console-address ":9001"
+    volumes:
+      - mneme_minio_data:/data
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:9000/minio/health/live"]
       interval: 5s
@@ -112,7 +120,50 @@ services:
       - default
       - helios-net
 
+  # Celery beat：定时调度器（此前缺失 → 数据飞轮/FSRS 优化/AUC 评估/家长预警全休眠）。
+  # 4 个 schedule 见 tasks/celery_app.py：每日3:30 BKT 校准 / 周一4:00 FSRS 优化 /
+  # 周一5:00 护城河 AUC 评估 / 每日20:00 家长预警。
+  beat:
+    image: mneme-worker          # 复用 worker 镜像（同代码，经 .:/app 挂载），免单独构建
+    restart: always
+    command: celery -A tasks.celery_app beat --loglevel=info --schedule=/tmp/celerybeat-schedule
+    environment:
+      PYTHONPATH: /app
+      DATABASE_URL: postgresql+asyncpg://postgres:postgres@db:5432/mneme
+      REDIS_URL: redis://redis:6379/0
+      MINIO_ENDPOINT: minio:9000
+      MINIO_ACCESS_KEY: minioadmin
+      MINIO_SECRET_KEY: minioadmin
+      MINIO_BUCKET: mneme
+      SMS_PROVIDER: mock
+    depends_on:
+      redis:
+        condition: service_healthy
+    volumes:
+      - .:/app
+    networks:
+      - default
+      - helios-net
+
 networks:
   default:
   helios-net:
     external: true
+
+# 外部命名卷：数据显式持久化，且 **`docker compose down -v` 也删不掉**（外部卷不受 compose 管理）。
+# 审计 2026-07-03：此前 db 用匿名卷、minio/redis 无卷，一次 down -v 清零了 11646 个 KU
+# （后从 D 盘 6-28 备份恢复）。外部化 = 结构性防呆，杜绝重演。
+# 注：全新机器首次部署前需先建卷：
+#   docker volume create mneme_mneme_pg_data
+#   docker volume create mneme_mneme_minio_data
+#   docker volume create mneme_mneme_redis_data
+volumes:
+  mneme_pg_data:
+    external: true
+    name: mneme_mneme_pg_data
+  mneme_minio_data:
+    external: true
+    name: mneme_mneme_minio_data
+  mneme_redis_data:
+    external: true
+    name: mneme_mneme_redis_data

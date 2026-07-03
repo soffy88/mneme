@@ -16,6 +16,7 @@ JSON 格式 (AII 接口契约):
                 "curriculum_standard", "mastery_levels"}]
 }
 """
+
 from __future__ import annotations
 
 import argparse
@@ -39,6 +40,7 @@ def get_conn():
 
 # ── 校验 ──────────────────────────────────────────────────────
 
+
 def validate(pkg: dict) -> list[str]:
     errors: list[str] = []
     tb = pkg.get("textbook")
@@ -50,13 +52,18 @@ def validate(pkg: dict) -> list[str]:
 
     for u in pkg.get("units", []):
         if u.get("cluster_id") not in cluster_ids:
-            errors.append(f"unit {u.get('id')}: cluster_id={u.get('cluster_id')} 不在 clusters 中")
+            errors.append(
+                f"unit {u.get('id')}: cluster_id={u.get('cluster_id')} 不在 clusters 中"
+            )
         if u.get("textbook_id") != textbook_id:
-            errors.append(f"unit {u.get('id')}: textbook_id={u.get('textbook_id')} 与 textbook.id 不匹配")
+            errors.append(
+                f"unit {u.get('id')}: textbook_id={u.get('textbook_id')} 与 textbook.id 不匹配"
+            )
     return errors
 
 
 # ── 幂等 upsert helpers ────────────────────────────────────────
+
 
 def upsert_textbook(cur, tb: dict) -> str:
     cur.execute(
@@ -85,11 +92,11 @@ def upsert_cluster(cur, textbook_id: str, c: dict) -> None:
           description   = EXCLUDED.description
         """,
         {
-            "id":            c["id"],
-            "textbook_id":   textbook_id,
-            "name":          c["name"],
+            "id": c["id"],
+            "textbook_id": textbook_id,
+            "name": c["name"],
             "display_order": c.get("display_order", 0),
-            "description":   c.get("description"),
+            "description": c.get("description"),
         },
     )
 
@@ -100,11 +107,14 @@ def upsert_unit(cur, u: dict) -> None:
         INSERT INTO knowledge_units (
           id, textbook_id, cluster_id, name, description,
           prerequisites, related_kus, difficulty, exam_frequency,
-          question_types, ku_type, curriculum_standard, mastery_levels
+          question_types, ku_type, curriculum_standard, mastery_levels,
+          rich_content, provenance, source_excerpt, ai_generated, verified
         ) VALUES (
           %(id)s, %(textbook_id)s, %(cluster_id)s, %(name)s, %(description)s,
           %(prerequisites)s, %(related_kus)s, %(difficulty)s, %(exam_frequency)s,
-          %(question_types)s, %(ku_type)s, %(curriculum_standard)s, %(mastery_levels)s
+          %(question_types)s, %(ku_type)s, %(curriculum_standard)s, %(mastery_levels)s,
+          %(rich_content)s, %(provenance)s, %(source_excerpt)s,
+          COALESCE(%(ai_generated)s, TRUE), COALESCE(%(verified)s, FALSE)
         )
         ON CONFLICT (id) DO UPDATE SET
           textbook_id         = EXCLUDED.textbook_id,
@@ -118,27 +128,47 @@ def upsert_unit(cur, u: dict) -> None:
           question_types      = EXCLUDED.question_types,
           ku_type             = EXCLUDED.ku_type,
           curriculum_standard = EXCLUDED.curriculum_standard,
-          mastery_levels      = EXCLUDED.mastery_levels
+          mastery_levels      = EXCLUDED.mastery_levels,
+          rich_content        = EXCLUDED.rich_content,
+          provenance          = EXCLUDED.provenance,
+          source_excerpt      = EXCLUDED.source_excerpt,
+          ai_generated        = EXCLUDED.ai_generated,
+          verified            = EXCLUDED.verified
         """,
         {
-            "id":                 u["id"],
-            "textbook_id":        u["textbook_id"],
-            "cluster_id":         u["cluster_id"],
-            "name":               u["name"],
-            "description":        u.get("description"),
-            "prerequisites":      json.dumps(u.get("prerequisites", []), ensure_ascii=False),
-            "related_kus":        json.dumps(u.get("related_kus", []), ensure_ascii=False),
-            "difficulty":         u.get("difficulty", 0.5),
-            "exam_frequency":     u.get("exam_frequency", "mid"),
-            "question_types":     json.dumps(u.get("question_types", []), ensure_ascii=False),
-            "ku_type":            u.get("ku_type", "concept"),
+            "id": u["id"],
+            "textbook_id": u["textbook_id"],
+            "cluster_id": u["cluster_id"],
+            "name": u["name"],
+            "description": u.get("description"),
+            "prerequisites": json.dumps(u.get("prerequisites", []), ensure_ascii=False),
+            "related_kus": json.dumps(u.get("related_kus", []), ensure_ascii=False),
+            "difficulty": u.get("difficulty", 0.5),
+            "exam_frequency": u.get("exam_frequency", "mid"),
+            "question_types": json.dumps(
+                u.get("question_types", []), ensure_ascii=False
+            ),
+            "ku_type": u.get("ku_type", "concept"),
             "curriculum_standard": u.get("curriculum_standard"),
-            "mastery_levels":     json.dumps(u.get("mastery_levels", []), ensure_ascii=False),
+            "mastery_levels": json.dumps(
+                u.get("mastery_levels", []), ensure_ascii=False
+            ),
+            # 内容字段（往复 export/import；缺省则 NULL/默认，向后兼容旧包）
+            "rich_content": json.dumps(u["rich_content"], ensure_ascii=False)
+            if u.get("rich_content") is not None
+            else None,
+            "provenance": json.dumps(u["provenance"], ensure_ascii=False)
+            if u.get("provenance") is not None
+            else None,
+            "source_excerpt": u.get("source_excerpt"),
+            "ai_generated": u.get("ai_generated"),
+            "verified": u.get("verified"),
         },
     )
 
 
 # ── main ─────────────────────────────────────────────────────
+
 
 def main() -> None:
     parser = argparse.ArgumentParser(description="AII 知识单元包导入")
@@ -156,11 +186,13 @@ def main() -> None:
             print(f"[ERROR] {e}", file=sys.stderr)
         sys.exit(1)
 
-    tb       = pkg["textbook"]
+    tb = pkg["textbook"]
     clusters = pkg["clusters"]
-    units    = pkg["units"]
+    units = pkg["units"]
 
-    print(f"[INFO] 教材: {tb['book_name']}  ({tb['subject']} {tb['grade']} {tb['edition']})")
+    print(
+        f"[INFO] 教材: {tb['book_name']}  ({tb['subject']} {tb['grade']} {tb['edition']})"
+    )
     print(f"[INFO] clusters: {len(clusters)}, units: {len(units)}")
 
     if args.dry_run:

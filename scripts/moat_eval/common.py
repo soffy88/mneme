@@ -31,6 +31,7 @@ from data.guangdong_math_kc import KC_LIST  # noqa: E402
 
 SEED = 42
 N_STUDENTS = 200
+N_STUDY_DAYS = 25  # 每人学习日数（×每日 2-4 题 = 交互量）
 KCS_PER_STUDENT = 6
 MIN_EVENTS_PER_STUDENT = 50
 HORIZON_DAYS = 120
@@ -72,8 +73,14 @@ def _item_adjust_true(guess: float, slip: float, b: float) -> tuple[float, float
     return (_sigmoid(_logit(guess) - 1.0 * delta), _sigmoid(_logit(slip) + 1.0 * delta))
 
 
-def generate_population(seed: int = SEED) -> list[list[Event]]:
+def generate_population(
+    seed: int = SEED,
+    n_students: int = N_STUDENTS,
+    n_study_days: int = N_STUDY_DAYS,
+) -> list[list[Event]]:
     """生成合成学生群体，返回 events_by_student（每个学生按时间排序）。
+
+    n_students / n_study_days 可缩小做快速档（CI 守卫用），默认为全量档。
 
     真值参数与种子先验系统性偏离（模拟"冷启动手设先验不准"的现实）：
     - 真 slip 均值 ~0.20（种子 ~0.08-0.14）→ 校准应能发现
@@ -83,7 +90,7 @@ def generate_population(seed: int = SEED) -> list[list[Event]]:
     rng = np.random.default_rng(seed)
     population: list[list[Event]] = []
 
-    for s in range(N_STUDENTS):
+    for s in range(n_students):
         ability = float(rng.normal(0.0, 1.0))
         speed = math.exp(0.4 * ability)  # 能力→学习速度
         slip_s = float(np.clip(rng.beta(2.5, 10.0) + 0.05, 0.02, 0.35))
@@ -115,10 +122,11 @@ def generate_population(seed: int = SEED) -> list[list[Event]]:
                 "last_touch": None,  # 天（浮点），None=尚未接触
             }
 
-        # 学习日程：25 个随机学习日 × 每日 2-4 题 → 每人 50~100 次交互（≥50 有保证）
+        # 学习日程：n_study_days 个随机学习日 × 每日 2-4 题
+        # （默认 25 天 → 每人 50~100 次交互，≥50 有保证）
         events: list[Event] = []
         day_pool = [int(d) for d in rng.permutation(HORIZON_DAYS)]
-        study_days = sorted(day_pool[:25])
+        study_days = sorted(day_pool[:n_study_days])
 
         for day in study_days:
             n_q = int(rng.integers(2, 5))

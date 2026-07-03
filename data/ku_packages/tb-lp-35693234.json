@@ -1,0 +1,103 @@
+{
+  "textbook": {
+    "id": "tb-lp-35693234",
+    "subject": "math",
+    "grade": "高一",
+    "edition": "测试版",
+    "book_name": "练习教材"
+  },
+  "clusters": [
+    {
+      "id": "cl-lp-8c709d3d",
+      "name": "测试章节",
+      "display_order": 1,
+      "description": null
+    }
+  ],
+  "units": [
+    {
+      "id": "ku-lp1-91ae6f83",
+      "textbook_id": "tb-lp-35693234",
+      "cluster_id": "cl-lp-8c709d3d",
+      "name": "前置知识",
+      "description": "先决条件",
+      "prerequisites": [],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "low",
+      "question_types": [
+        "选择题"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "例1: 集合 $\\{1, 2, 3\\}$ 和 $\\{3, 2, 1\\}$ 是同一个集合。",
+          "例2: 集合 $\\{1, 2, 2\\}$ 实际上是 $\\{1, 2\\}$"
+        ],
+        "intuition": "理解集合概念有助于组织和分类信息。如图书馆按类别管理书籍。",
+        "definition": "集合是无序且互不相同的元素组成的整体。记作 $A = \\{a_1, a_2, ..., a_n\\}$，其中 $a_i$ 是集合的元素。",
+        "key_points": [
+          "⚠️ 最易误解的点1：认为有序性很重要",
+          "⚠️ 最易误解的点2：重复元素被视为不同"
+        ],
+        "application": [
+          "考查方式1: 判断给定的描述是否构成集合",
+          "考查方式2: 根据集合运算求解问题"
+        ],
+        "connections": "集合是后续函数、概率等章节的基础。如函数定义域和值域都是集合。",
+        "common_mistakes": [
+          "具体错误1：误认为有序性影响集合",
+          "具体错误2：重复元素被当作不同元素处理"
+        ],
+        "counter_examples": "如 $A = \\{x | x > 0\\}$ 和 $B = (0, +\\infty)$，两者表示相同集合但形式不同。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "ku-lp2-700a2b0c",
+      "textbook_id": "tb-lp-35693234",
+      "cluster_id": "cl-lp-8c709d3d",
+      "name": "核心知识",
+      "description": "核心内容",
+      "prerequisites": [
+        "ku-lp1-91ae6f83"
+      ],
+      "related_kus": [],
+      "difficulty": 0.6,
+      "exam_frequency": "high",
+      "question_types": [
+        "解答题"
+      ],
+      "ku_type": "method",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "steps": [
+          "第1步：将方程化为标准形式 $ax^2 + bx + c = 0$。",
+          "第2步：计算判别式 $\\Delta = b^2 - 4ac$。",
+          "第3步：根据 $\\Delta$ 的值判断根的情况并求解。$\\Delta > 0$ 有两个实数根，$\\Delta = 0$ 有一个实数根，$\\Delta < 0$ 无实数根。",
+          "第4步（可选）: 求出具体根的值。"
+        ],
+        "example": "解方程 $x^2 - 4x + 3 = 0$。首先化为标准形式，$\\Delta = (-4)^2 - 4 \\cdot 1 \\cdot 3 = 4 > 0$，有两个实数根。根据求根公式得：$x_1 = 1, x_2 = 3$。",
+        "key_points": [
+          "⚠️ 操作中易卡壳或出错的点1：判别式的计算容易出错，需仔细核对公式。",
+          "点2：注意方程化简时符号错误和常数项漏乘。"
+        ],
+        "when_to_use": "适用于解决一元二次方程的问题。",
+        "common_mistakes": [
+          "⚠️ 具体错误1（说清楚错在哪）：计算判别式时符号出错，如 $b^2 - 4ac$ 中的负号漏掉。",
+          "错误2：求根公式使用不当，如将 $\frac{-b \\pm \\sqrt{\\Delta}}{2a}$ 写成 $\frac{b \\pm \\sqrt{\\Delta}}{2a}$。"
+        ]
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    }
+  ]
+}

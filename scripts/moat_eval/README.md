@@ -25,6 +25,9 @@ docker compose exec -T -e MOAT_TRUTH=exp  api python scripts/moat_eval/exp3_sche
 docker compose exec -T -e MOAT_TRUTH=fsrs api python scripts/moat_eval/exp3_scheduling.py
 # 灵敏度：MOAT_BUDGET=5|8  MOAT_S0=1.5|3.0（仅 exp 真值）
 
+# 实验 4：FIRe-lite 接线决策（纯模拟，不碰任何库；~4min）
+docker compose exec -T -w /app/scripts/moat_eval api python exp4_fire.py
+
 # 收尾：丢弃隔离库
 docker compose exec -T db psql -U postgres -c "DROP DATABASE mneme_moat_eval;"
 ```
@@ -41,6 +44,32 @@ docker compose exec -T db psql -U postgres -c "DROP DATABASE mneme_moat_eval;"
   默认 vs 校准后先验/权重的 AUC / log-loss（4 arm 归因）。
 - **exp3_scheduling.py**：30 天记忆模拟，同预算下对比 FSRS 调度 / 固定 3 天 /
   不复习的第 30 天保留率；两种真值遗忘模型（对抗形 exp、同族形 fsrs）。
+- **exp4_fire.py**：FIRe-lite（M-H §4.8）接线决策。三层前置链
+  kc0←kc1←kc2，真值沿用 exp3 的 exp 形 + "综合题成功以 ρ 折扣隐式刷新直接前置"
+  （FIRe 世界 ρ=0.3/0.5；对抗世界 ρ=0），对比 no_fire vs fire（真实
+  `oskill.fire_propagate`，κ0=0.5, τ=0.3）的第 30 天保留率与总复习量。
+  **2026-07 结果（seed 42, 1500 triples）**：复习量压缩仅 4.7~6.0%（<10% 门槛），
+  对抗世界保留率损失 4.8pp（>2pp）→ **未达 Master §4.8 接线门槛，FIRe 默认关**
+  （env `FIRE_ENABLED=1` 才开）。κ 上限 κ0·0.97≈0.49 决定了单次顺延 ≤ 半个自然
+  间隔，机制本身保守，负结果诚实保留。
+
+## CI 守卫（T.4）
+
+exp1 有快速档（100 学生 × 20 学习日，`run_exp1(seed, n_students, n_study_days)`，
+单 seed ~1s，纯计算不碰任何库），已接进质量门做内核判别力回归守卫：
+
+```bash
+MOAT=1 bash scripts/check.sh                       # 常规三步 + 守卫步
+docker compose exec -T -e MOAT=1 api \
+  python -m pytest tests/test_moat_guard.py -q --no-cov   # 只跑守卫
+```
+
+- **阈值**：合成 AUC ≥ 0.65（overall 与 warm_only 双门），seed=42/7/2026 三档全过。
+  快速档稳定性：30 seed 扫描 min 0.654 / mean 0.677，与全量档（200×25，0.677）一致。
+- **何时跑**：任何触碰调度/先验/内核（`oprim/bkt`、`oprim/fsrs_engine`、
+  `oskill/cognitive_state`、种子先验、`predict_correct` 路径）的改动，
+  **提交前先跑守卫**；常规 `bash scripts/check.sh` 不设 MOAT 时自动跳过（不变慢）。
+- 守卫红 = 判别力被打回 0.65 以下，视为回归，task 未完成（红线同级）。
 
 ## 已知局限（读结果前必看）
 

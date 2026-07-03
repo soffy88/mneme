@@ -1,0 +1,2569 @@
+{
+  "textbook": {
+    "id": "RENJIAO-G6-MATH-X",
+    "subject": "math",
+    "grade": "G6",
+    "edition": "2011",
+    "book_name": "人教版·数学六年级下册"
+  },
+  "clusters": [
+    {
+      "id": "RENJIAO-G6-MATH-X-kc-负数的概念与表示",
+      "name": "负数的概念与表示",
+      "display_order": 1,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G6-MATH-X-kc-圆柱的体积与容积",
+      "name": "圆柱的体积与容积",
+      "display_order": 2,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G6-MATH-X-kc-圆锥的认识与体积",
+      "name": "圆锥的认识与体积",
+      "display_order": 3,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G6-MATH-X-kc-比例的基本概念与性质",
+      "name": "比例的基本概念与性质",
+      "display_order": 4,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G6-MATH-X-kc-正比例与反比例",
+      "name": "正比例与反比例",
+      "display_order": 5,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G6-MATH-X-kc-比例尺及其应用",
+      "name": "比例尺及其应用",
+      "display_order": 6,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G6-MATH-X-kc-图形的放大与缩小",
+      "name": "图形的放大与缩小",
+      "display_order": 7,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G6-MATH-X-kc-用比例解决问题",
+      "name": "用比例解决问题",
+      "display_order": 8,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G6-MATH-X-kc-鸽巢原理-抽屉原理",
+      "name": "鸽巢原理（抽屉原理）",
+      "display_order": 9,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G6-MATH-X-kc-数的认识与分类",
+      "name": "数的认识与分类",
+      "display_order": 10,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G6-MATH-X-kc-自行车里的数学",
+      "name": "自行车里的数学",
+      "display_order": 11,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G6-MATH-X-kc-数的运算与关系",
+      "name": "数的运算与关系",
+      "display_order": 12,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G6-MATH-X-kc-数的应用与问题解决",
+      "name": "数的应用与问题解决",
+      "display_order": 13,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G6-MATH-X-kc-综合知识",
+      "name": "综合知识",
+      "display_order": 14,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G6-MATH-X-kc-式与方程",
+      "name": "式与方程",
+      "display_order": 15,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G6-MATH-X-kc-比和比例",
+      "name": "比和比例",
+      "display_order": 16,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G6-MATH-X-kc-平面图形的认识与测量",
+      "name": "平面图形的认识与测量",
+      "display_order": 17,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G6-MATH-X-kc-立体图形的认识与测量",
+      "name": "立体图形的认识与测量",
+      "display_order": 18,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G6-MATH-X-kc-图形的运动与位置",
+      "name": "图形的运动与位置",
+      "display_order": 19,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G6-MATH-X-kc-统计与概率",
+      "name": "统计与概率",
+      "display_order": 20,
+      "description": null
+    }
+  ],
+  "units": [
+    {
+      "id": "RENJIAO-G6-MATH-X-ku-0和1在运算中的特性",
+      "textbook_id": "RENJIAO-G6-MATH-X",
+      "cluster_id": "RENJIAO-G6-MATH-X-kc-数的运算与关系",
+      "name": "0和1在运算中的特性",
+      "description": "0加任何数得原数，0乘任何数得0，1乘任何数得原数，0不能作除数。",
+      "prerequisites": [
+        "ku-017"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G6-MATH-X-ku-2-3-5的倍数特征",
+      "textbook_id": "RENJIAO-G6-MATH-X",
+      "cluster_id": "RENJIAO-G6-MATH-X-kc-数的认识与分类",
+      "name": "2、3、5的倍数特征",
+      "description": "2的倍数末尾是偶数；3的倍数各位数字和是3的倍数；5的倍数末尾是0或5。",
+      "prerequisites": [],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G6-MATH-X-ku-三角形的分类与性质",
+      "textbook_id": "RENJIAO-G6-MATH-X",
+      "cluster_id": "RENJIAO-G6-MATH-X-kc-平面图形的认识与测量",
+      "name": "三角形的分类与性质",
+      "description": "按角分锐角、直角、钝角三角形；内角和180°；两边之和大于第三边。",
+      "prerequisites": [
+        "ku-038"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G6-MATH-X-ku-估算策略",
+      "textbook_id": "RENJIAO-G6-MATH-X",
+      "cluster_id": "RENJIAO-G6-MATH-X-kc-数的运算与关系",
+      "name": "估算策略",
+      "description": "用四舍五入、取整等方法估算结果，判断大小或范围。",
+      "prerequisites": [
+        "ku-017"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G6-MATH-X-ku-体积的测量",
+      "textbook_id": "RENJIAO-G6-MATH-X",
+      "cluster_id": "RENJIAO-G6-MATH-X-kc-立体图形的认识与测量",
+      "name": "体积的测量",
+      "description": "用排水法测量不规则物体体积。",
+      "prerequisites": [
+        "ku-045"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G6-MATH-X-ku-倒数",
+      "textbook_id": "RENJIAO-G6-MATH-X",
+      "cluster_id": "RENJIAO-G6-MATH-X-kc-数的运算与关系",
+      "name": "倒数",
+      "description": "乘积为1的两个数互为倒数，假分数的倒数可能是真分数。",
+      "prerequisites": [
+        "ku-010"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G6-MATH-X-ku-假分数与真分数",
+      "textbook_id": "RENJIAO-G6-MATH-X",
+      "cluster_id": "RENJIAO-G6-MATH-X-kc-数的认识与分类",
+      "name": "假分数与真分数",
+      "description": "分子大于或等于分母的分数是假分数，分子小于分母的是真分数。",
+      "prerequisites": [],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G6-MATH-X-ku-公倍数与最小公倍数",
+      "textbook_id": "RENJIAO-G6-MATH-X",
+      "cluster_id": "RENJIAO-G6-MATH-X-kc-数的应用与问题解决",
+      "name": "公倍数与最小公倍数",
+      "description": "几个数公有的倍数叫公倍数，最小的叫最小公倍数。",
+      "prerequisites": [
+        "ku-006"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G6-MATH-X-ku-分数-小数-百分数互化",
+      "textbook_id": "RENJIAO-G6-MATH-X",
+      "cluster_id": "RENJIAO-G6-MATH-X-kc-数的运算与关系",
+      "name": "分数、小数、百分数互化",
+      "description": "分数化小数用分子除以分母，小数化百分数乘100%，反之亦然。",
+      "prerequisites": [
+        "ku-001",
+        "ku-010"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G6-MATH-X-ku-分数乘除法",
+      "textbook_id": "RENJIAO-G6-MATH-X",
+      "cluster_id": "RENJIAO-G6-MATH-X-kc-数的运算与关系",
+      "name": "分数乘除法",
+      "description": "分数乘分数用分子乘分子分母乘分母，除以一个数等于乘它的倒数。",
+      "prerequisites": [
+        "ku-010",
+        "ku-011"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G6-MATH-X-ku-分数加减法",
+      "textbook_id": "RENJIAO-G6-MATH-X",
+      "cluster_id": "RENJIAO-G6-MATH-X-kc-数的运算与关系",
+      "name": "分数加减法",
+      "description": "同分母分数相加减分母不变分子相加减，异分母先通分。",
+      "prerequisites": [
+        "ku-010"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G6-MATH-X-ku-十进制计数法",
+      "textbook_id": "RENJIAO-G6-MATH-X",
+      "cluster_id": "RENJIAO-G6-MATH-X-kc-数的认识与分类",
+      "name": "十进制计数法",
+      "description": "每相邻两个计数单位之间的进率都是十的计数方法。",
+      "prerequisites": [],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G6-MATH-X-ku-反比例关系式",
+      "textbook_id": "RENJIAO-G6-MATH-X",
+      "cluster_id": "RENJIAO-G6-MATH-X-kc-正比例与反比例",
+      "name": "反比例关系式",
+      "description": "如果用字母x和y表示两种相关联的量，用k表示它们的乘积（一定），反比例关系可以用式子xy=k（一定）表示。",
+      "prerequisites": [
+        "反比例关系的定义"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G6-MATH-X-ku-反比例关系的判断",
+      "textbook_id": "RENJIAO-G6-MATH-X",
+      "cluster_id": "RENJIAO-G6-MATH-X-kc-正比例与反比例",
+      "name": "反比例关系的判断",
+      "description": "判断两个量是否成反比例，关键看它们的乘积是否一定。",
+      "prerequisites": [
+        "反比例关系的定义"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G6-MATH-X-ku-反比例关系的定义",
+      "textbook_id": "RENJIAO-G6-MATH-X",
+      "cluster_id": "RENJIAO-G6-MATH-X-kc-正比例与反比例",
+      "name": "反比例关系的定义",
+      "description": "两种相关联的量，一种量变化，另一种量也随着变化，如果这两种量中相对应的两个数的乘积一定，这两种量就叫作成反比例的量，它们的关系叫作反比例关系。",
+      "prerequisites": [
+        "比的意义"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G6-MATH-X-ku-反比例图象",
+      "textbook_id": "RENJIAO-G6-MATH-X",
+      "cluster_id": "RENJIAO-G6-MATH-X-kc-正比例与反比例",
+      "name": "反比例图象",
+      "description": "反比例图象是一条光滑曲线，可直观判断反比例关系。",
+      "prerequisites": [
+        "反比例的意义"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G6-MATH-X-ku-反比例的意义",
+      "textbook_id": "RENJIAO-G6-MATH-X",
+      "cluster_id": "RENJIAO-G6-MATH-X-kc-正比例与反比例",
+      "name": "反比例的意义",
+      "description": "两种相关联的量，乘积一定，则成反比例，关系式xy=k（一定）。",
+      "prerequisites": [
+        "比例的意义"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G6-MATH-X-ku-可能性大小",
+      "textbook_id": "RENJIAO-G6-MATH-X",
+      "cluster_id": "RENJIAO-G6-MATH-X-kc-统计与概率",
+      "name": "可能性大小",
+      "description": "事件发生的可能性大小用概率描述，如随机抽取。",
+      "prerequisites": [],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G6-MATH-X-ku-合数与偶数的关系",
+      "textbook_id": "RENJIAO-G6-MATH-X",
+      "cluster_id": "RENJIAO-G6-MATH-X-kc-数的认识与分类",
+      "name": "合数与偶数的关系",
+      "description": "偶数不一定是合数（如2是质数），合数不一定是偶数。",
+      "prerequisites": [
+        "ku-004",
+        "ku-005"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G6-MATH-X-ku-周长与面积公式",
+      "textbook_id": "RENJIAO-G6-MATH-X",
+      "cluster_id": "RENJIAO-G6-MATH-X-kc-平面图形的认识与测量",
+      "name": "周长与面积公式",
+      "description": "长方形C=2(a+b),S=ab；正方形C=4a,S=a²；三角形S=ah/2；平行四边形S=ah；梯形S=(a+b)h/2；圆C=2πr,S=πr²。",
+      "prerequisites": [
+        "ku-040",
+        "ku-041",
+        "ku-042"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G6-MATH-X-ku-四则混合运算顺序",
+      "textbook_id": "RENJIAO-G6-MATH-X",
+      "cluster_id": "RENJIAO-G6-MATH-X-kc-数的运算与关系",
+      "name": "四则混合运算顺序",
+      "description": "先乘除后加减，有括号先算括号内，同级运算从左到右。",
+      "prerequisites": [
+        "ku-017"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G6-MATH-X-ku-四则运算各部分关系",
+      "textbook_id": "RENJIAO-G6-MATH-X",
+      "cluster_id": "RENJIAO-G6-MATH-X-kc-数的运算与关系",
+      "name": "四则运算各部分关系",
+      "description": "加数+加数=和，被减数-减数=差，乘数×乘数=积，被除数÷除数=商。",
+      "prerequisites": [
+        "ku-017"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G6-MATH-X-ku-四则运算的意义",
+      "textbook_id": "RENJIAO-G6-MATH-X",
+      "cluster_id": "RENJIAO-G6-MATH-X-kc-数的运算与关系",
+      "name": "四则运算的意义",
+      "description": "加法是合并，减法是求剩余，乘法是相同加数和的简便运算，除法是平均分。",
+      "prerequisites": [],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G6-MATH-X-ku-因数与倍数的含义",
+      "textbook_id": "RENJIAO-G6-MATH-X",
+      "cluster_id": "RENJIAO-G6-MATH-X-kc-数的认识与分类",
+      "name": "因数与倍数的含义",
+      "description": "如果a÷b=c（a、b、c均为整数，且b≠0），那么b和c是a的因数，a是b和c的倍数。",
+      "prerequisites": [],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G6-MATH-X-ku-因数的概念",
+      "textbook_id": "RENJIAO-G6-MATH-X",
+      "cluster_id": "RENJIAO-G6-MATH-X-kc-数的认识与分类",
+      "name": "因数的概念",
+      "description": "整数a除以整数b（b≠0）商是整数且无余数，则b是a的因数。",
+      "prerequisites": [],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G6-MATH-X-ku-图形的分类",
+      "textbook_id": "RENJIAO-G6-MATH-X",
+      "cluster_id": "RENJIAO-G6-MATH-X-kc-平面图形的认识与测量",
+      "name": "图形的分类",
+      "description": "图形分为平面图形（三角形、四边形、圆等）和立体图形（长方体、正方体、圆柱、圆锥等）。",
+      "prerequisites": [],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G6-MATH-X-ku-图形的放大与缩小",
+      "textbook_id": "RENJIAO-G6-MATH-X",
+      "cluster_id": "RENJIAO-G6-MATH-X-kc-图形的运动与位置",
+      "name": "图形的放大与缩小",
+      "description": "按比例放大或缩小图形，形状不变，大小改变。",
+      "prerequisites": [
+        "ku-047"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G6-MATH-X-ku-图形的放大与缩小-比例",
+      "textbook_id": "RENJIAO-G6-MATH-X",
+      "cluster_id": "RENJIAO-G6-MATH-X-kc-图形的放大与缩小",
+      "name": "图形的放大与缩小（比例）",
+      "description": "按一定比放大或缩小图形，各边长度按相同比变化，内角不变。",
+      "prerequisites": [
+        "比的意义"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G6-MATH-X-ku-图形的运动",
+      "textbook_id": "RENJIAO-G6-MATH-X",
+      "cluster_id": "RENJIAO-G6-MATH-X-kc-图形的运动与位置",
+      "name": "图形的运动",
+      "description": "平移、旋转、轴对称不改变形状大小；放大缩小只改变大小。",
+      "prerequisites": [],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G6-MATH-X-ku-圆",
+      "textbook_id": "RENJIAO-G6-MATH-X",
+      "cluster_id": "RENJIAO-G6-MATH-X-kc-平面图形的认识与测量",
+      "name": "圆",
+      "description": "圆是曲线图形，有圆心、半径、直径，直径是半径的2倍。",
+      "prerequisites": [
+        "ku-037"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G6-MATH-X-ku-圆柱与圆锥体积关系",
+      "textbook_id": "RENJIAO-G6-MATH-X",
+      "cluster_id": "RENJIAO-G6-MATH-X-kc-圆锥的认识与体积",
+      "name": "圆柱与圆锥体积关系",
+      "description": "等底等高时，V锥=1/3V柱；体积和底面积相等时，h锥=3h柱；体积和高相等时，S锥=3S柱。",
+      "prerequisites": [
+        "圆柱体积公式",
+        "圆锥体积公式"
+      ],
+      "related_kus": [],
+      "difficulty": 0.6,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G6-MATH-X-ku-圆柱体积公式",
+      "textbook_id": "RENJIAO-G6-MATH-X",
+      "cluster_id": "RENJIAO-G6-MATH-X-kc-圆柱的体积与容积",
+      "name": "圆柱体积公式",
+      "description": "V=Sh，其中V表示圆柱体积，S表示底面积，h表示高。",
+      "prerequisites": [
+        "圆的面积",
+        "长方体体积"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G6-MATH-X-ku-圆柱体积的实际应用",
+      "textbook_id": "RENJIAO-G6-MATH-X",
+      "cluster_id": "RENJIAO-G6-MATH-X-kc-圆柱的体积与容积",
+      "name": "圆柱体积的实际应用",
+      "description": "利用圆柱体积公式解决粮囤、油桶、水池等实际问题，注意单位换算。",
+      "prerequisites": [
+        "圆柱体积公式"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G6-MATH-X-ku-圆柱体积的逆用",
+      "textbook_id": "RENJIAO-G6-MATH-X",
+      "cluster_id": "RENJIAO-G6-MATH-X-kc-圆柱的体积与容积",
+      "name": "圆柱体积的逆用",
+      "description": "已知体积和底面积（或高），可求高（或底面积）：h=V÷S，S=V÷h。",
+      "prerequisites": [
+        "圆柱体积公式"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G6-MATH-X-ku-圆柱容积计算",
+      "textbook_id": "RENJIAO-G6-MATH-X",
+      "cluster_id": "RENJIAO-G6-MATH-X-kc-圆柱的体积与容积",
+      "name": "圆柱容积计算",
+      "description": "容积即内部体积，计算方法与体积相同，需从内部测量数据。",
+      "prerequisites": [
+        "圆柱体积公式"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G6-MATH-X-ku-圆锥体积公式",
+      "textbook_id": "RENJIAO-G6-MATH-X",
+      "cluster_id": "RENJIAO-G6-MATH-X-kc-圆锥的认识与体积",
+      "name": "圆锥体积公式",
+      "description": "V=1/3Sh，等底等高的圆锥体积是圆柱体积的三分之一。",
+      "prerequisites": [
+        "圆柱体积公式",
+        "圆锥的认识"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G6-MATH-X-ku-圆锥体积的实际应用",
+      "textbook_id": "RENJIAO-G6-MATH-X",
+      "cluster_id": "RENJIAO-G6-MATH-X-kc-圆锥的认识与体积",
+      "name": "圆锥体积的实际应用",
+      "description": "利用圆锥体积公式计算沙堆、铅锤等物体体积，注意与质量换算。",
+      "prerequisites": [
+        "圆锥体积公式"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G6-MATH-X-ku-圆锥的认识",
+      "textbook_id": "RENJIAO-G6-MATH-X",
+      "cluster_id": "RENJIAO-G6-MATH-X-kc-圆锥的认识与体积",
+      "name": "圆锥的认识",
+      "description": "圆锥由一个圆形底面和侧面组成，从顶点到底面圆心的距离是高。",
+      "prerequisites": [],
+      "related_kus": [],
+      "difficulty": 0.2,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G6-MATH-X-ku-大数的读写与改写",
+      "textbook_id": "RENJIAO-G6-MATH-X",
+      "cluster_id": "RENJIAO-G6-MATH-X-kc-数的认识与分类",
+      "name": "大数的读写与改写",
+      "description": "将大数改写成以“万”或“亿”为单位的数，并读写。",
+      "prerequisites": [],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G6-MATH-X-ku-奇数与偶数",
+      "textbook_id": "RENJIAO-G6-MATH-X",
+      "cluster_id": "RENJIAO-G6-MATH-X-kc-数的认识与分类",
+      "name": "奇数与偶数",
+      "description": "能被2整除的数是偶数，不能被2整除的数是奇数。",
+      "prerequisites": [],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G6-MATH-X-ku-小数点的移动引起小数大小的变化",
+      "textbook_id": "RENJIAO-G6-MATH-X",
+      "cluster_id": "RENJIAO-G6-MATH-X-kc-数的认识与分类",
+      "name": "小数点的移动引起小数大小的变化",
+      "description": "小数点向右移动一位、两位……小数扩大到原来的10倍、100倍……；向左移动一位、两位……小数缩小到原来的1/10、1/100……。",
+      "prerequisites": [],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G6-MATH-X-ku-小数的意义与读写",
+      "textbook_id": "RENJIAO-G6-MATH-X",
+      "cluster_id": "RENJIAO-G6-MATH-X-kc-数的认识与分类",
+      "name": "小数的意义与读写",
+      "description": "小数表示十分之几、百分之几等，由整数部分、小数点和小数部分组成。",
+      "prerequisites": [],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G6-MATH-X-ku-小数的扩大与缩小",
+      "textbook_id": "RENJIAO-G6-MATH-X",
+      "cluster_id": "RENJIAO-G6-MATH-X-kc-数的运算与关系",
+      "name": "小数的扩大与缩小",
+      "description": "小数点向右移动扩大，向左移动缩小，移动一位扩大/缩小10倍。",
+      "prerequisites": [
+        "ku-001"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G6-MATH-X-ku-小数的近似数",
+      "textbook_id": "RENJIAO-G6-MATH-X",
+      "cluster_id": "RENJIAO-G6-MATH-X-kc-数的运算与关系",
+      "name": "小数的近似数",
+      "description": "用四舍五入法保留小数位数，如保留两位小数。",
+      "prerequisites": [
+        "ku-001"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G6-MATH-X-ku-已知比例尺和图上距离求实际距离",
+      "textbook_id": "RENJIAO-G6-MATH-X",
+      "cluster_id": "RENJIAO-G6-MATH-X-kc-比例尺及其应用",
+      "name": "已知比例尺和图上距离求实际距离",
+      "description": "实际距离=图上距离÷比例尺，或设未知数用比例方程求解。",
+      "prerequisites": [
+        "比例尺的定义",
+        "解比例"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G6-MATH-X-ku-已知比例尺和实际距离求图上距离",
+      "textbook_id": "RENJIAO-G6-MATH-X",
+      "cluster_id": "RENJIAO-G6-MATH-X-kc-比例尺及其应用",
+      "name": "已知比例尺和实际距离求图上距离",
+      "description": "图上距离=实际距离×比例尺。",
+      "prerequisites": [
+        "比例尺的定义"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G6-MATH-X-ku-平均数",
+      "textbook_id": "RENJIAO-G6-MATH-X",
+      "cluster_id": "RENJIAO-G6-MATH-X-kc-统计与概率",
+      "name": "平均数",
+      "description": "一组数据的总和除以个数得到平均数。",
+      "prerequisites": [],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G6-MATH-X-ku-平行四边形",
+      "textbook_id": "RENJIAO-G6-MATH-X",
+      "cluster_id": "RENJIAO-G6-MATH-X-kc-平面图形的认识与测量",
+      "name": "平行四边形",
+      "description": "两组对边分别平行的四边形，对边相等，对角相等。",
+      "prerequisites": [
+        "ku-037"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G6-MATH-X-ku-折扣的含义",
+      "textbook_id": "RENJIAO-G6-MATH-X",
+      "cluster_id": "RENJIAO-G6-MATH-X-kc-数的认识与分类",
+      "name": "折扣的含义",
+      "description": "几折表示现价是原价的十分之几或百分之几十。",
+      "prerequisites": [
+        "百分数的含义"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G6-MATH-X-ku-数值比例尺",
+      "textbook_id": "RENJIAO-G6-MATH-X",
+      "cluster_id": "RENJIAO-G6-MATH-X-kc-比例尺及其应用",
+      "name": "数值比例尺",
+      "description": "用数字比的形式表示的比例尺，如1:5000000。",
+      "prerequisites": [
+        "比例尺的定义"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G6-MATH-X-ku-数列规律",
+      "textbook_id": "RENJIAO-G6-MATH-X",
+      "cluster_id": "RENJIAO-G6-MATH-X-kc-综合知识",
+      "name": "数列规律",
+      "description": "观察数列变化趋势，找出规律并填空。",
+      "prerequisites": [],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G6-MATH-X-ku-数的分类与整理",
+      "textbook_id": "RENJIAO-G6-MATH-X",
+      "cluster_id": "RENJIAO-G6-MATH-X-kc-数的认识与分类",
+      "name": "数的分类与整理",
+      "description": "整数（正整数、0、负整数）、分数（有限小数、无限循环小数）、无限不循环小数。",
+      "prerequisites": [],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G6-MATH-X-ku-方程与等式",
+      "textbook_id": "RENJIAO-G6-MATH-X",
+      "cluster_id": "RENJIAO-G6-MATH-X-kc-式与方程",
+      "name": "方程与等式",
+      "description": "含有未知数的等式叫方程，方程是等式的一种。",
+      "prerequisites": [
+        "ku-027"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G6-MATH-X-ku-最小公倍数的应用",
+      "textbook_id": "RENJIAO-G6-MATH-X",
+      "cluster_id": "RENJIAO-G6-MATH-X-kc-数的应用与问题解决",
+      "name": "最小公倍数的应用",
+      "description": "用最小公倍数解决“至少”问题，如物品剩余相同。",
+      "prerequisites": [
+        "ku-007"
+      ],
+      "related_kus": [],
+      "difficulty": 0.6,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G6-MATH-X-ku-正数与负数",
+      "textbook_id": "RENJIAO-G6-MATH-X",
+      "cluster_id": "RENJIAO-G6-MATH-X-kc-数的认识与分类",
+      "name": "正数与负数",
+      "description": "大于0的数是正数，小于0的数是负数，0既不是正数也不是负数。",
+      "prerequisites": [],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G6-MATH-X-ku-正数和负数的定义",
+      "textbook_id": "RENJIAO-G6-MATH-X",
+      "cluster_id": "RENJIAO-G6-MATH-X-kc-负数的概念与表示",
+      "name": "正数和负数的定义",
+      "description": "正数是以前学过的数（如6、500、4.7），负数是在这些数前加负号的数（如-6、-500）。0既不是正数也不是负数。",
+      "prerequisites": [
+        "自然数",
+        "分数",
+        "小数"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G6-MATH-X-ku-正数的表示与读法",
+      "textbook_id": "RENJIAO-G6-MATH-X",
+      "cluster_id": "RENJIAO-G6-MATH-X-kc-负数的概念与表示",
+      "name": "正数的表示与读法",
+      "description": "比0℃高的温度用正数表示，正号可省略，如+6℃或6℃读作六摄氏度。",
+      "prerequisites": [
+        "自然数",
+        "分数",
+        "小数"
+      ],
+      "related_kus": [],
+      "difficulty": 0.2,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G6-MATH-X-ku-正比例与反比例",
+      "textbook_id": "RENJIAO-G6-MATH-X",
+      "cluster_id": "RENJIAO-G6-MATH-X-kc-比和比例",
+      "name": "正比例与反比例",
+      "description": "两种相关联的量，比值一定成正比例，乘积一定成反比例。",
+      "prerequisites": [
+        "ku-033"
+      ],
+      "related_kus": [],
+      "difficulty": 0.6,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G6-MATH-X-ku-正比例关系式",
+      "textbook_id": "RENJIAO-G6-MATH-X",
+      "cluster_id": "RENJIAO-G6-MATH-X-kc-正比例与反比例",
+      "name": "正比例关系式",
+      "description": "如果用字母x和y表示两种相关联的量，用k表示它们的比值（一定），正比例关系可以用式子y/x=k（一定）表示。",
+      "prerequisites": [
+        "正比例关系的定义"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G6-MATH-X-ku-正比例关系的判断",
+      "textbook_id": "RENJIAO-G6-MATH-X",
+      "cluster_id": "RENJIAO-G6-MATH-X-kc-正比例与反比例",
+      "name": "正比例关系的判断",
+      "description": "判断两个量是否成正比例，关键看它们的比值是否一定。",
+      "prerequisites": [
+        "正比例关系的定义"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G6-MATH-X-ku-正比例关系的定义",
+      "textbook_id": "RENJIAO-G6-MATH-X",
+      "cluster_id": "RENJIAO-G6-MATH-X-kc-正比例与反比例",
+      "name": "正比例关系的定义",
+      "description": "两种相关联的量，一种量变化，另一种量也随着变化，如果这两种量中相对应的两个数的比值一定，这两种量就叫作成正比例的量，它们的关系叫作正比例关系。",
+      "prerequisites": [
+        "比的意义"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G6-MATH-X-ku-正比例图象",
+      "textbook_id": "RENJIAO-G6-MATH-X",
+      "cluster_id": "RENJIAO-G6-MATH-X-kc-正比例与反比例",
+      "name": "正比例图象",
+      "description": "正比例图象是一条从原点出发的直线，可直观判断比例关系。",
+      "prerequisites": [
+        "正比例的意义"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G6-MATH-X-ku-正比例的意义",
+      "textbook_id": "RENJIAO-G6-MATH-X",
+      "cluster_id": "RENJIAO-G6-MATH-X-kc-正比例与反比例",
+      "name": "正比例的意义",
+      "description": "两种相关联的量，比值一定，则成正比例，关系式y/x=k（一定）。",
+      "prerequisites": [
+        "比例的意义"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G6-MATH-X-ku-比例尺",
+      "textbook_id": "RENJIAO-G6-MATH-X",
+      "cluster_id": "RENJIAO-G6-MATH-X-kc-比和比例",
+      "name": "比例尺",
+      "description": "图上距离与实际距离的比，如1:20000。",
+      "prerequisites": [
+        "ku-033"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G6-MATH-X-ku-比例尺的定义",
+      "textbook_id": "RENJIAO-G6-MATH-X",
+      "cluster_id": "RENJIAO-G6-MATH-X-kc-比例尺及其应用",
+      "name": "比例尺的定义",
+      "description": "一幅图的图上距离和实际距离的比，叫作这幅图的比例尺。图上距离:实际距离=比例尺。",
+      "prerequisites": [
+        "比的意义"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G6-MATH-X-ku-比例尺的转化",
+      "textbook_id": "RENJIAO-G6-MATH-X",
+      "cluster_id": "RENJIAO-G6-MATH-X-kc-比例尺及其应用",
+      "name": "比例尺的转化",
+      "description": "线段比例尺和数值比例尺可以互相转化，转化时单位要统一。",
+      "prerequisites": [
+        "数值比例尺",
+        "线段比例尺"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G6-MATH-X-ku-比例的基本性质",
+      "textbook_id": "RENJIAO-G6-MATH-X",
+      "cluster_id": "RENJIAO-G6-MATH-X-kc-比例的基本概念与性质",
+      "name": "比例的基本性质",
+      "description": "在比例中，两个外项的积等于两个内项的积，即a:b=c:d则ad=bc。",
+      "prerequisites": [
+        "比例的意义"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G6-MATH-X-ku-比例的意义",
+      "textbook_id": "RENJIAO-G6-MATH-X",
+      "cluster_id": "RENJIAO-G6-MATH-X-kc-比例的基本概念与性质",
+      "name": "比例的意义",
+      "description": "表示两个比相等的式子叫作比例。",
+      "prerequisites": [
+        "比的意义"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G6-MATH-X-ku-比例的意义与性质",
+      "textbook_id": "RENJIAO-G6-MATH-X",
+      "cluster_id": "RENJIAO-G6-MATH-X-kc-比和比例",
+      "name": "比例的意义与性质",
+      "description": "表示两个比相等的式子叫比例，内项积等于外项积。",
+      "prerequisites": [
+        "ku-032"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G6-MATH-X-ku-比的应用",
+      "textbook_id": "RENJIAO-G6-MATH-X",
+      "cluster_id": "RENJIAO-G6-MATH-X-kc-比和比例",
+      "name": "比的应用",
+      "description": "按比例分配问题，如面粉和水按7:2分配。",
+      "prerequisites": [
+        "ku-032"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G6-MATH-X-ku-比的意义与性质",
+      "textbook_id": "RENJIAO-G6-MATH-X",
+      "cluster_id": "RENJIAO-G6-MATH-X-kc-比和比例",
+      "name": "比的意义与性质",
+      "description": "两个数相除叫比，比的前项和后项同时乘或除以同一个数（0除外）比值不变。",
+      "prerequisites": [],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G6-MATH-X-ku-求比例尺",
+      "textbook_id": "RENJIAO-G6-MATH-X",
+      "cluster_id": "RENJIAO-G6-MATH-X-kc-比例尺及其应用",
+      "name": "求比例尺",
+      "description": "图上距离:实际距离=比例尺，计算时单位要统一，通常写成前项或后项是1的形式。",
+      "prerequisites": [
+        "比例尺的定义"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G6-MATH-X-ku-瓶子容积的转化",
+      "textbook_id": "RENJIAO-G6-MATH-X",
+      "cluster_id": "RENJIAO-G6-MATH-X-kc-圆柱的体积与容积",
+      "name": "瓶子容积的转化",
+      "description": "将不规则瓶子转化为两个规则圆柱体积之和，利用体积不变特性。",
+      "prerequisites": [
+        "圆柱体积公式"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G6-MATH-X-ku-用反比例解决问题",
+      "textbook_id": "RENJIAO-G6-MATH-X",
+      "cluster_id": "RENJIAO-G6-MATH-X-kc-用比例解决问题",
+      "name": "用反比例解决问题",
+      "description": "当两个量的乘积一定时，可以设未知数，根据乘积相等列方程求解。",
+      "prerequisites": [
+        "反比例关系的定义",
+        "解方程"
+      ],
+      "related_kus": [],
+      "difficulty": 0.6,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G6-MATH-X-ku-用字母表示数",
+      "textbook_id": "RENJIAO-G6-MATH-X",
+      "cluster_id": "RENJIAO-G6-MATH-X-kc-式与方程",
+      "name": "用字母表示数",
+      "description": "用字母表示未知数或数量关系，如a+b表示和。",
+      "prerequisites": [],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G6-MATH-X-ku-用数对确定位置",
+      "textbook_id": "RENJIAO-G6-MATH-X",
+      "cluster_id": "RENJIAO-G6-MATH-X-kc-图形的运动与位置",
+      "name": "用数对确定位置",
+      "description": "用有序数对（列，行）表示平面内点的位置。",
+      "prerequisites": [],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G6-MATH-X-ku-用方向和距离确定位置",
+      "textbook_id": "RENJIAO-G6-MATH-X",
+      "cluster_id": "RENJIAO-G6-MATH-X-kc-图形的运动与位置",
+      "name": "用方向和距离确定位置",
+      "description": "以参照点为中心，用方向和距离描述位置。",
+      "prerequisites": [],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G6-MATH-X-ku-用方程解决实际问题",
+      "textbook_id": "RENJIAO-G6-MATH-X",
+      "cluster_id": "RENJIAO-G6-MATH-X-kc-式与方程",
+      "name": "用方程解决实际问题",
+      "description": "设未知数，根据等量关系列方程求解。",
+      "prerequisites": [
+        "ku-030"
+      ],
+      "related_kus": [],
+      "difficulty": 0.6,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G6-MATH-X-ku-用正比例解决问题",
+      "textbook_id": "RENJIAO-G6-MATH-X",
+      "cluster_id": "RENJIAO-G6-MATH-X-kc-用比例解决问题",
+      "name": "用正比例解决问题",
+      "description": "当两个量的比值一定时，可以设未知数，根据比值相等列比例方程求解。",
+      "prerequisites": [
+        "正比例关系的定义",
+        "解比例"
+      ],
+      "related_kus": [],
+      "difficulty": 0.6,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G6-MATH-X-ku-用正负数表示相反意义的量",
+      "textbook_id": "RENJIAO-G6-MATH-X",
+      "cluster_id": "RENJIAO-G6-MATH-X-kc-负数的概念与表示",
+      "name": "用正负数表示相反意义的量",
+      "description": "正负数表示相反意义的量，如收入与支出、零上与零下温度。",
+      "prerequisites": [
+        "负数的初步认识",
+        "正数的表示与读法"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G6-MATH-X-ku-用直线上的点表示正负数",
+      "textbook_id": "RENJIAO-G6-MATH-X",
+      "cluster_id": "RENJIAO-G6-MATH-X-kc-负数的概念与表示",
+      "name": "用直线上的点表示正负数",
+      "description": "用带箭头的直线表示数，0为分界点，0右边是正数，0左边是负数。",
+      "prerequisites": [
+        "正数和负数的定义",
+        "数轴初步"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G6-MATH-X-ku-百分数的含义",
+      "textbook_id": "RENJIAO-G6-MATH-X",
+      "cluster_id": "RENJIAO-G6-MATH-X-kc-数的认识与分类",
+      "name": "百分数的含义",
+      "description": "表示一个数是另一个数的百分之几的数，也叫百分率或百分比。",
+      "prerequisites": [],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G6-MATH-X-ku-百分数的应用",
+      "textbook_id": "RENJIAO-G6-MATH-X",
+      "cluster_id": "RENJIAO-G6-MATH-X-kc-数的应用与问题解决",
+      "name": "百分数的应用",
+      "description": "求一个数是另一个数的百分之几，或求增长/减少百分比。",
+      "prerequisites": [
+        "ku-015"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G6-MATH-X-ku-直线-射线-线段",
+      "textbook_id": "RENJIAO-G6-MATH-X",
+      "cluster_id": "RENJIAO-G6-MATH-X-kc-平面图形的认识与测量",
+      "name": "直线、射线、线段",
+      "description": "直线无端点，射线一个端点，线段两个端点；同一平面内两条直线平行或相交。",
+      "prerequisites": [],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G6-MATH-X-ku-立体图形的特征",
+      "textbook_id": "RENJIAO-G6-MATH-X",
+      "cluster_id": "RENJIAO-G6-MATH-X-kc-立体图形的认识与测量",
+      "name": "立体图形的特征",
+      "description": "长方体6个面，正方体6个面全等，圆柱上下底面圆，圆锥底面圆。",
+      "prerequisites": [
+        "ku-037"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G6-MATH-X-ku-立体图形的表面积与体积",
+      "textbook_id": "RENJIAO-G6-MATH-X",
+      "cluster_id": "RENJIAO-G6-MATH-X-kc-立体图形的认识与测量",
+      "name": "立体图形的表面积与体积",
+      "description": "长方体S=2(ab+ah+bh),V=abh；正方体S=6a²,V=a³；圆柱S=2πrh+2πr²,V=πr²h；圆锥V=πr²h/3。",
+      "prerequisites": [
+        "ku-044"
+      ],
+      "related_kus": [],
+      "difficulty": 0.6,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G6-MATH-X-ku-等式的性质",
+      "textbook_id": "RENJIAO-G6-MATH-X",
+      "cluster_id": "RENJIAO-G6-MATH-X-kc-式与方程",
+      "name": "等式的性质",
+      "description": "等式两边同时加、减、乘、除以同一个数（除数不为0），等式仍成立。",
+      "prerequisites": [
+        "ku-028"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G6-MATH-X-ku-线段比例尺",
+      "textbook_id": "RENJIAO-G6-MATH-X",
+      "cluster_id": "RENJIAO-G6-MATH-X-kc-比例尺及其应用",
+      "name": "线段比例尺",
+      "description": "用线段表示图上距离与实际距离对应关系的比例尺，如0 50km。",
+      "prerequisites": [
+        "比例尺的定义"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G6-MATH-X-ku-统计图的选择",
+      "textbook_id": "RENJIAO-G6-MATH-X",
+      "cluster_id": "RENJIAO-G6-MATH-X-kc-统计与概率",
+      "name": "统计图的选择",
+      "description": "条形图看数据大小，折线图看变化趋势，扇形图看占比。",
+      "prerequisites": [],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G6-MATH-X-ku-自行车蹬一圈的路程计算",
+      "textbook_id": "RENJIAO-G6-MATH-X",
+      "cluster_id": "RENJIAO-G6-MATH-X-kc-自行车里的数学",
+      "name": "自行车蹬一圈的路程计算",
+      "description": "蹬一圈路程=车轮周长×（前齿轮齿数÷后齿轮齿数）。",
+      "prerequisites": [
+        "自行车里的数学：齿轮传动比"
+      ],
+      "related_kus": [],
+      "difficulty": 0.6,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G6-MATH-X-ku-自行车里的数学-齿轮传动比",
+      "textbook_id": "RENJIAO-G6-MATH-X",
+      "cluster_id": "RENJIAO-G6-MATH-X-kc-自行车里的数学",
+      "name": "自行车里的数学：齿轮传动比",
+      "description": "前齿轮齿数×前齿轮转动圈数=后齿轮齿数×后齿轮转动圈数。",
+      "prerequisites": [
+        "比的意义"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G6-MATH-X-ku-角的分类",
+      "textbook_id": "RENJIAO-G6-MATH-X",
+      "cluster_id": "RENJIAO-G6-MATH-X-kc-平面图形的认识与测量",
+      "name": "角的分类",
+      "description": "锐角<90°，直角=90°，钝角>90°且<180°，平角=180°，周角=360°。",
+      "prerequisites": [],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G6-MATH-X-ku-解决实际问题的步骤",
+      "textbook_id": "RENJIAO-G6-MATH-X",
+      "cluster_id": "RENJIAO-G6-MATH-X-kc-数的应用与问题解决",
+      "name": "解决实际问题的步骤",
+      "description": "理解题意、分析数量关系、列式计算、检验反思。",
+      "prerequisites": [
+        "ku-017"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G6-MATH-X-ku-解方程",
+      "textbook_id": "RENJIAO-G6-MATH-X",
+      "cluster_id": "RENJIAO-G6-MATH-X-kc-式与方程",
+      "name": "解方程",
+      "description": "利用等式性质求方程的解，如x-0.25=1/3。",
+      "prerequisites": [
+        "ku-029"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G6-MATH-X-ku-解比例",
+      "textbook_id": "RENJIAO-G6-MATH-X",
+      "cluster_id": "RENJIAO-G6-MATH-X-kc-比例的基本概念与性质",
+      "name": "解比例",
+      "description": "利用比例的基本性质，已知三项求未知项。",
+      "prerequisites": [
+        "比例的基本性质"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G6-MATH-X-ku-负数的初步认识",
+      "textbook_id": "RENJIAO-G6-MATH-X",
+      "cluster_id": "RENJIAO-G6-MATH-X-kc-负数的概念与表示",
+      "name": "负数的初步认识",
+      "description": "比0℃低的温度用负数表示，如-6℃表示零下6摄氏度，读作负六摄氏度。",
+      "prerequisites": [
+        "自然数",
+        "分数",
+        "小数"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G6-MATH-X-ku-负数的读法",
+      "textbook_id": "RENJIAO-G6-MATH-X",
+      "cluster_id": "RENJIAO-G6-MATH-X-kc-负数的概念与表示",
+      "name": "负数的读法",
+      "description": "负数读法：先读“负”再读数，如-3读作负三。",
+      "prerequisites": [
+        "负数的初步认识"
+      ],
+      "related_kus": [],
+      "difficulty": 0.2,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G6-MATH-X-ku-质数与合数",
+      "textbook_id": "RENJIAO-G6-MATH-X",
+      "cluster_id": "RENJIAO-G6-MATH-X-kc-数的认识与分类",
+      "name": "质数与合数",
+      "description": "只有1和它本身两个因数的数是质数，有多个因数的数是合数。",
+      "prerequisites": [],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G6-MATH-X-ku-轴对称图形",
+      "textbook_id": "RENJIAO-G6-MATH-X",
+      "cluster_id": "RENJIAO-G6-MATH-X-kc-图形的运动与位置",
+      "name": "轴对称图形",
+      "description": "沿一条直线对折两边完全重合的图形，这条直线是对称轴。",
+      "prerequisites": [
+        "ku-047"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G6-MATH-X-ku-运算律",
+      "textbook_id": "RENJIAO-G6-MATH-X",
+      "cluster_id": "RENJIAO-G6-MATH-X-kc-数的运算与关系",
+      "name": "运算律",
+      "description": "加法交换律a+b=b+a，结合律(a+b)+c=a+(b+c)；乘法交换律ab=ba，结合律(ab)c=a(bc)，分配律a(b+c)=ab+ac。",
+      "prerequisites": [
+        "ku-017"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G6-MATH-X-ku-鸽巢原理-抽屉原理",
+      "textbook_id": "RENJIAO-G6-MATH-X",
+      "cluster_id": "RENJIAO-G6-MATH-X-kc-鸽巢原理-抽屉原理",
+      "name": "鸽巢原理（抽屉原理）",
+      "description": "把多于kn个物体放入n个抽屉，总有一个抽屉至少放入(k+1)个物体。",
+      "prerequisites": [],
+      "related_kus": [],
+      "difficulty": 0.6,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G6-MATH-X-ku-鸽巢原理的简单应用",
+      "textbook_id": "RENJIAO-G6-MATH-X",
+      "cluster_id": "RENJIAO-G6-MATH-X-kc-鸽巢原理-抽屉原理",
+      "name": "鸽巢原理的简单应用",
+      "description": "利用鸽巢原理解决“至少”问题，关键是确定抽屉数和物体数。",
+      "prerequisites": [
+        "鸽巢原理（抽屉原理）"
+      ],
+      "related_kus": [],
+      "difficulty": 0.7,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G6-MATH-X-ku-鸽巢原理的逆向应用-最不利原则",
+      "textbook_id": "RENJIAO-G6-MATH-X",
+      "cluster_id": "RENJIAO-G6-MATH-X-kc-鸽巢原理-抽屉原理",
+      "name": "鸽巢原理的逆向应用（最不利原则）",
+      "description": "要保证有某种情况发生，考虑最坏情况，再增加1个即可。",
+      "prerequisites": [
+        "鸽巢原理（抽屉原理）"
+      ],
+      "related_kus": [],
+      "difficulty": 0.7,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    }
+  ]
+}

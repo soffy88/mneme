@@ -23,6 +23,7 @@ from __future__ import annotations
 from oprim._cognitive import (  # noqa: F401  (re-export 别名层)
     bkt_update as bkt_update,
     bkt_classify_error as classify_error,
+    bkt_error_weights as error_weights,
     bkt_predict_correct as predict_correct,
     bkt_new_state as new_state_from_prior,
     exp_forgetting as exp_forgetting,
@@ -38,10 +39,35 @@ __manifest__ = {
     "updated_at": "2026-06-28",
     "single_source": "oprim._cognitive",
     "elements": [
-        {"name": "bkt_update", "layer": "oprim", "summary": "forgetting-aware BKT 更新（难度感知，别名→_cognitive）"},
-        {"name": "classify_error", "layer": "oprim", "summary": "答错时判定错误根因（别名→bkt_classify_error）"},
-        {"name": "predict_correct", "layer": "oprim", "summary": "预测下一题答对概率（别名→bkt_predict_correct）"},
-        {"name": "exp_forgetting", "layer": "oprim", "summary": "指数遗忘近似（别名→_cognitive）"},
-        {"name": "new_state_from_prior", "layer": "oprim", "summary": "从 BKT 先验字典创建 KCState（别名→bkt_new_state）"},
+        {
+            "name": "bkt_update",
+            "layer": "oprim",
+            "summary": "forgetting-aware BKT 更新（难度感知，别名→_cognitive）",
+        },
+        {
+            "name": "classify_error",
+            "layer": "oprim",
+            "summary": "答错时判定错误根因（别名→bkt_classify_error）",
+        },
+        {
+            "name": "error_weights",
+            "layer": "oprim",
+            "summary": "答错根因两假设权重（别名→bkt_error_weights，红线公式单源）",
+        },
+        {
+            "name": "predict_correct",
+            "layer": "oprim",
+            "summary": "预测下一题答对概率（别名→bkt_predict_correct）",
+        },
+        {
+            "name": "exp_forgetting",
+            "layer": "oprim",
+            "summary": "指数遗忘近似（别名→_cognitive）",
+        },
+        {
+            "name": "new_state_from_prior",
+            "layer": "oprim",
+            "summary": "从 BKT 先验字典创建 KCState（别名→bkt_new_state）",
+        },
     ],
 }

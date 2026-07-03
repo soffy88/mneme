@@ -1,0 +1,2376 @@
+{
+  "textbook": {
+    "id": "RENJIAO-G4-MATH-S",
+    "subject": "math",
+    "grade": "G4",
+    "edition": "2011",
+    "book_name": "人教版·数学四年级上册"
+  },
+  "clusters": [
+    {
+      "id": "RENJIAO-G4-MATH-S-kc-计数单位与数位",
+      "name": "计数单位与数位",
+      "display_order": 1,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G4-MATH-S-kc-亿以内数的读写与比较",
+      "name": "亿以内数的读写与比较",
+      "display_order": 2,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G4-MATH-S-kc-亿以内数的改写与近似",
+      "name": "亿以内数的改写与近似",
+      "display_order": 3,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G4-MATH-S-kc-亿以上数的读写与改写",
+      "name": "亿以上数的读写与改写",
+      "display_order": 4,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G4-MATH-S-kc-计算工具的认识与使用",
+      "name": "计算工具的认识与使用",
+      "display_order": 5,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G4-MATH-S-kc-多位数的读写与近似",
+      "name": "多位数的读写与近似",
+      "display_order": 6,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G4-MATH-S-kc-乘法规律与计算器",
+      "name": "乘法规律与计算器",
+      "display_order": 7,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G4-MATH-S-kc-1亿的感知与面积单位",
+      "name": "1亿的感知与面积单位",
+      "display_order": 8,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G4-MATH-S-kc-线与角的基础概念",
+      "name": "线与角的基础概念",
+      "display_order": 9,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G4-MATH-S-kc-三位数乘两位数",
+      "name": "三位数乘两位数",
+      "display_order": 10,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G4-MATH-S-kc-积的变化规律与数量关系",
+      "name": "积的变化规律与数量关系",
+      "display_order": 11,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G4-MATH-S-kc-平行与垂直",
+      "name": "平行与垂直",
+      "display_order": 12,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G4-MATH-S-kc-平行四边形的认识",
+      "name": "平行四边形的认识",
+      "display_order": 13,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G4-MATH-S-kc-梯形的认识",
+      "name": "梯形的认识",
+      "display_order": 14,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G4-MATH-S-kc-四边形的分类与性质",
+      "name": "四边形的分类与性质",
+      "display_order": 15,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G4-MATH-S-kc-除数是整十数的除法",
+      "name": "除数是整十数的除法",
+      "display_order": 16,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G4-MATH-S-kc-试商方法",
+      "name": "试商方法",
+      "display_order": 17,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G4-MATH-S-kc-除数是两位数的除法计算法则",
+      "name": "除数是两位数的除法计算法则",
+      "display_order": 18,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G4-MATH-S-kc-商的变化规律及应用",
+      "name": "商的变化规律及应用",
+      "display_order": 19,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G4-MATH-S-kc-除法的计算与规律",
+      "name": "除法的计算与规律",
+      "display_order": 20,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G4-MATH-S-kc-条形统计图",
+      "name": "条形统计图",
+      "display_order": 21,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G4-MATH-S-kc-优化问题",
+      "name": "优化问题",
+      "display_order": 22,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G4-MATH-S-kc-大数的认识与读写",
+      "name": "大数的认识与读写",
+      "display_order": 23,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G4-MATH-S-kc-乘除法的笔算与规律",
+      "name": "乘除法的笔算与规律",
+      "display_order": 24,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G4-MATH-S-kc-几何图形与测量",
+      "name": "几何图形与测量",
+      "display_order": 25,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G4-MATH-S-kc-数量关系与平均数",
+      "name": "数量关系与平均数",
+      "display_order": 26,
+      "description": null
+    }
+  ],
+  "units": [
+    {
+      "id": "RENJIAO-G4-MATH-S-ku-1-8-1等规律",
+      "textbook_id": "RENJIAO-G4-MATH-S",
+      "cluster_id": "RENJIAO-G4-MATH-S-kc-乘法规律与计算器",
+      "name": "1×8+1等规律",
+      "description": "1×8+1=9，12×8+2=98，123×8+3=987等，结果依次为9,98,987,...。",
+      "prerequisites": [
+        "乘法运算",
+        "加法运算"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G4-MATH-S-ku-1亿有多大",
+      "textbook_id": "RENJIAO-G4-MATH-S",
+      "cluster_id": "RENJIAO-G4-MATH-S-kc-1亿的感知与面积单位",
+      "name": "1亿有多大",
+      "description": "通过测量100张纸厚度等推算，1亿张纸摞起来约1万米高。",
+      "prerequisites": [
+        "多位数的读法"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G4-MATH-S-ku-9-9及类似规律",
+      "textbook_id": "RENJIAO-G4-MATH-S",
+      "cluster_id": "RENJIAO-G4-MATH-S-kc-乘法规律与计算器",
+      "name": "9×9及类似规律",
+      "description": "9×9=81，98×9=882，987×9=8883等，积的各位数字有规律。",
+      "prerequisites": [
+        "乘法运算"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G4-MATH-S-ku-999乘法规律",
+      "textbook_id": "RENJIAO-G4-MATH-S",
+      "cluster_id": "RENJIAO-G4-MATH-S-kc-乘法规律与计算器",
+      "name": "999乘法规律",
+      "description": "999×n=1000×n-n，如999×2=1998。",
+      "prerequisites": [
+        "乘法运算"
+      ],
+      "related_kus": [],
+      "difficulty": 0.2,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G4-MATH-S-ku-三位数乘两位数的笔算",
+      "textbook_id": "RENJIAO-G4-MATH-S",
+      "cluster_id": "RENJIAO-G4-MATH-S-kc-三位数乘两位数",
+      "name": "三位数乘两位数的笔算",
+      "description": "先用两位数个位乘三位数，再用十位乘，最后相加，注意数位对齐。",
+      "prerequisites": [
+        "乘法运算"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G4-MATH-S-ku-乘数是两位数的笔算乘法",
+      "textbook_id": "RENJIAO-G4-MATH-S",
+      "cluster_id": "RENJIAO-G4-MATH-S-kc-乘除法的笔算与规律",
+      "name": "乘数是两位数的笔算乘法",
+      "description": "先用乘数个位上的数去乘，再用十位上的数去乘，最后把两次的积相加。",
+      "prerequisites": [
+        "乘数是一位数的乘法"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G4-MATH-S-ku-亿以上数的写法",
+      "textbook_id": "RENJIAO-G4-MATH-S",
+      "cluster_id": "RENJIAO-G4-MATH-S-kc-亿以上数的读写与改写",
+      "name": "亿以上数的写法",
+      "description": "先看有几级，从最高级写起；哪个数位上一个单位也没有，就在那个数位上写0。",
+      "prerequisites": [
+        "ku-004",
+        "ku-009"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G4-MATH-S-ku-亿以上数的读法",
+      "textbook_id": "RENJIAO-G4-MATH-S",
+      "cluster_id": "RENJIAO-G4-MATH-S-kc-亿以上数的读写与改写",
+      "name": "亿以上数的读法",
+      "description": "从最高级读起，读完亿级加“亿”，万级加“万”；每级末尾0不读，其他位连续几个0只读一个0。",
+      "prerequisites": [
+        "ku-003",
+        "ku-009"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G4-MATH-S-ku-亿以内数的写法",
+      "textbook_id": "RENJIAO-G4-MATH-S",
+      "cluster_id": "RENJIAO-G4-MATH-S-kc-亿以内数的读写与比较",
+      "name": "亿以内数的写法",
+      "description": "先写万级再写个级；哪个数位上一个单位也没有，就在那个数位上写0。",
+      "prerequisites": [
+        "ku-002"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G4-MATH-S-ku-亿以内数的读法",
+      "textbook_id": "RENJIAO-G4-MATH-S",
+      "cluster_id": "RENJIAO-G4-MATH-S-kc-亿以内数的读写与比较",
+      "name": "亿以内数的读法",
+      "description": "先读万级再读个级；万级按个级读法加“万”；每级末尾0不读，其他位一个或连续几个0只读一个0。",
+      "prerequisites": [
+        "ku-002"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G4-MATH-S-ku-优化问题-排队等候时间",
+      "textbook_id": "RENJIAO-G4-MATH-S",
+      "cluster_id": "RENJIAO-G4-MATH-S-kc-优化问题",
+      "name": "优化问题：排队等候时间",
+      "description": "合理安排顺序，使总等候时间最短。",
+      "prerequisites": [
+        "优化问题：沏茶问题"
+      ],
+      "related_kus": [],
+      "difficulty": 0.6,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G4-MATH-S-ku-优化问题-沏茶问题",
+      "textbook_id": "RENJIAO-G4-MATH-S",
+      "cluster_id": "RENJIAO-G4-MATH-S-kc-优化问题",
+      "name": "优化问题：沏茶问题",
+      "description": "合理安排顺序，同时进行多项活动，以节省时间。",
+      "prerequisites": [],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G4-MATH-S-ku-优化问题-烙饼问题",
+      "textbook_id": "RENJIAO-G4-MATH-S",
+      "cluster_id": "RENJIAO-G4-MATH-S-kc-优化问题",
+      "name": "优化问题：烙饼问题",
+      "description": "每次烙2张饼，两面都烙，每面3分钟，总时间=饼数×3分钟（饼数>1）。",
+      "prerequisites": [
+        "优化问题：沏茶问题"
+      ],
+      "related_kus": [],
+      "difficulty": 0.6,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G4-MATH-S-ku-优化问题-田忌赛马策略",
+      "textbook_id": "RENJIAO-G4-MATH-S",
+      "cluster_id": "RENJIAO-G4-MATH-S-kc-优化问题",
+      "name": "优化问题：田忌赛马策略",
+      "description": "通过调整出场顺序，以弱胜强，是博弈策略。",
+      "prerequisites": [],
+      "related_kus": [],
+      "difficulty": 0.7,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G4-MATH-S-ku-公顷和平方千米",
+      "textbook_id": "RENJIAO-G4-MATH-S",
+      "cluster_id": "RENJIAO-G4-MATH-S-kc-几何图形与测量",
+      "name": "公顷和平方千米",
+      "description": "1公顷=10000平方米，1平方千米=100公顷。",
+      "prerequisites": [
+        "面积单位"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G4-MATH-S-ku-公顷的定义",
+      "textbook_id": "RENJIAO-G4-MATH-S",
+      "cluster_id": "RENJIAO-G4-MATH-S-kc-1亿的感知与面积单位",
+      "name": "公顷的定义",
+      "description": "边长100米的正方形面积是1公顷，1公顷=10000平方米。",
+      "prerequisites": [
+        "面积单位"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G4-MATH-S-ku-分级读写的优势",
+      "textbook_id": "RENJIAO-G4-MATH-S",
+      "cluster_id": "RENJIAO-G4-MATH-S-kc-多位数的读写与近似",
+      "name": "分级读写的优势",
+      "description": "分级（个级、万级、亿级）使读写多位数更清晰、不易出错。",
+      "prerequisites": [
+        "多位数的读法",
+        "多位数的写法"
+      ],
+      "related_kus": [],
+      "difficulty": 0.2,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G4-MATH-S-ku-利用商不变规律进行简便计算",
+      "textbook_id": "RENJIAO-G4-MATH-S",
+      "cluster_id": "RENJIAO-G4-MATH-S-kc-商的变化规律及应用",
+      "name": "利用商不变规律进行简便计算",
+      "description": "利用商不变规律，将被除数和除数同时乘或除以一个数，使计算简便。",
+      "prerequisites": [
+        "商不变的规律"
+      ],
+      "related_kus": [],
+      "difficulty": 0.6,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G4-MATH-S-ku-十进制计数法",
+      "textbook_id": "RENJIAO-G4-MATH-S",
+      "cluster_id": "RENJIAO-G4-MATH-S-kc-计数单位与数位",
+      "name": "十进制计数法",
+      "description": "每相邻两个计数单位之间的进率都是十的计数方法。",
+      "prerequisites": [
+        "ku-001"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G4-MATH-S-ku-单价-数量与总价的关系",
+      "textbook_id": "RENJIAO-G4-MATH-S",
+      "cluster_id": "RENJIAO-G4-MATH-S-kc-积的变化规律与数量关系",
+      "name": "单价、数量与总价的关系",
+      "description": "单价×数量=总价。",
+      "prerequisites": [
+        "乘法运算"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G4-MATH-S-ku-商不变的规律",
+      "textbook_id": "RENJIAO-G4-MATH-S",
+      "cluster_id": "RENJIAO-G4-MATH-S-kc-商的变化规律及应用",
+      "name": "商不变的规律",
+      "description": "被除数和除数同时乘或除以一个相同的数（0除外），商不变。",
+      "prerequisites": [
+        "商的变化规律"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G4-MATH-S-ku-商是几位数的判断",
+      "textbook_id": "RENJIAO-G4-MATH-S",
+      "cluster_id": "RENJIAO-G4-MATH-S-kc-除法的计算与规律",
+      "name": "商是几位数的判断",
+      "description": "被除数前几位与除数比较，若大于或等于除数则商是两位数，否则是一位数。",
+      "prerequisites": [
+        "试商方法（除数接近整十数）"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G4-MATH-S-ku-商的变化规律-被除数不变",
+      "textbook_id": "RENJIAO-G4-MATH-S",
+      "cluster_id": "RENJIAO-G4-MATH-S-kc-商的变化规律及应用",
+      "name": "商的变化规律（被除数不变）",
+      "description": "被除数不变，除数乘几，商反而除以几；除数除以几，商反而乘几。",
+      "prerequisites": [
+        "除数是两位数的除法"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G4-MATH-S-ku-商的变化规律-除数不变",
+      "textbook_id": "RENJIAO-G4-MATH-S",
+      "cluster_id": "RENJIAO-G4-MATH-S-kc-商的变化规律及应用",
+      "name": "商的变化规律（除数不变）",
+      "description": "除数不变，被除数乘几，商也乘几；被除数除以几，商也除以几。",
+      "prerequisites": [
+        "除数是两位数的除法"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G4-MATH-S-ku-四舍五入法求近似数-省略万位后面尾数",
+      "textbook_id": "RENJIAO-G4-MATH-S",
+      "cluster_id": "RENJIAO-G4-MATH-S-kc-亿以内数的改写与近似",
+      "name": "四舍五入法求近似数（省略万位后面尾数）",
+      "description": "看省略尾数最高位，小于5舍去改0，等于或大于5向前一位进1再舍去改0。",
+      "prerequisites": [
+        "ku-005"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G4-MATH-S-ku-四舍五入法求近似数-省略亿位后面尾数",
+      "textbook_id": "RENJIAO-G4-MATH-S",
+      "cluster_id": "RENJIAO-G4-MATH-S-kc-亿以上数的读写与改写",
+      "name": "四舍五入法求近似数（省略亿位后面尾数）",
+      "description": "看千万位上的数，小于5舍去亿位后面尾数，等于或大于5向前一位进1再舍去。",
+      "prerequisites": [
+        "ku-007",
+        "ku-009"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G4-MATH-S-ku-四边形之间的关系",
+      "textbook_id": "RENJIAO-G4-MATH-S",
+      "cluster_id": "RENJIAO-G4-MATH-S-kc-四边形的分类与性质",
+      "name": "四边形之间的关系",
+      "description": "长方形和正方形是特殊的平行四边形；平行四边形和梯形都是四边形。",
+      "prerequisites": [
+        "平行四边形的定义",
+        "梯形的定义",
+        "长方形和正方形的认识"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G4-MATH-S-ku-四边形内角和",
+      "textbook_id": "RENJIAO-G4-MATH-S",
+      "cluster_id": "RENJIAO-G4-MATH-S-kc-四边形的分类与性质",
+      "name": "四边形内角和",
+      "description": "任意四边形的内角和都是360°。",
+      "prerequisites": [
+        "三角形的内角和"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G4-MATH-S-ku-四边形的分类与特征",
+      "textbook_id": "RENJIAO-G4-MATH-S",
+      "cluster_id": "RENJIAO-G4-MATH-S-kc-几何图形与测量",
+      "name": "四边形的分类与特征",
+      "description": "正方形、长方形、平行四边形、梯形各有不同边和角特征。",
+      "prerequisites": [
+        "四边形初步认识"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G4-MATH-S-ku-因数末尾有0的乘法",
+      "textbook_id": "RENJIAO-G4-MATH-S",
+      "cluster_id": "RENJIAO-G4-MATH-S-kc-三位数乘两位数",
+      "name": "因数末尾有0的乘法",
+      "description": "先算0前面的数，再在积末尾添上因数末尾0的个数。",
+      "prerequisites": [
+        "三位数乘两位数的笔算"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G4-MATH-S-ku-垂直的概念",
+      "textbook_id": "RENJIAO-G4-MATH-S",
+      "cluster_id": "RENJIAO-G4-MATH-S-kc-平行与垂直",
+      "name": "垂直的概念",
+      "description": "两条直线相交成直角时互相垂直，记作a⊥b，交点叫垂足。",
+      "prerequisites": [
+        "线段、直线、射线的概念"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G4-MATH-S-ku-多位数的写法",
+      "textbook_id": "RENJIAO-G4-MATH-S",
+      "cluster_id": "RENJIAO-G4-MATH-S-kc-多位数的读写与近似",
+      "name": "多位数的写法",
+      "description": "从高位写起，先写亿级、万级，再写个级；哪一位上一个单位也没有就写0占位。",
+      "prerequisites": [
+        "多位数的读法"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G4-MATH-S-ku-多位数的组成",
+      "textbook_id": "RENJIAO-G4-MATH-S",
+      "cluster_id": "RENJIAO-G4-MATH-S-kc-多位数的读写与近似",
+      "name": "多位数的组成",
+      "description": "一个多位数由若干个亿、万和个组成，如38204000000有382个亿和400个万。",
+      "prerequisites": [
+        "多位数的读法"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G4-MATH-S-ku-多位数的读法",
+      "textbook_id": "RENJIAO-G4-MATH-S",
+      "cluster_id": "RENJIAO-G4-MATH-S-kc-多位数的读写与近似",
+      "name": "多位数的读法",
+      "description": "从高位读起，先读亿级、万级，再读个级；每级末尾的0不读，中间连续几个0只读一个。",
+      "prerequisites": [],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G4-MATH-S-ku-大数的写法",
+      "textbook_id": "RENJIAO-G4-MATH-S",
+      "cluster_id": "RENJIAO-G4-MATH-S-kc-大数的认识与读写",
+      "name": "大数的写法",
+      "description": "从高位写起，哪一位上一个单位也没有就写0占位。",
+      "prerequisites": [
+        "万以内数的写法"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G4-MATH-S-ku-大数的改写-以万或亿为单位",
+      "textbook_id": "RENJIAO-G4-MATH-S",
+      "cluster_id": "RENJIAO-G4-MATH-S-kc-大数的认识与读写",
+      "name": "大数的改写（以万或亿为单位）",
+      "description": "去掉末尾的4个0（万）或8个0（亿），加上“万”或“亿”字。",
+      "prerequisites": [
+        "大数的读法"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G4-MATH-S-ku-大数的读法",
+      "textbook_id": "RENJIAO-G4-MATH-S",
+      "cluster_id": "RENJIAO-G4-MATH-S-kc-大数的认识与读写",
+      "name": "大数的读法",
+      "description": "从高位读起，亿级、万级按个级读法读，加“亿”或“万”，每级末尾0不读。",
+      "prerequisites": [
+        "万以内数的读法"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G4-MATH-S-ku-大数的近似数-四舍五入",
+      "textbook_id": "RENJIAO-G4-MATH-S",
+      "cluster_id": "RENJIAO-G4-MATH-S-kc-大数的认识与读写",
+      "name": "大数的近似数（四舍五入）",
+      "description": "用四舍五入法省略万位或亿位后面的尾数，求近似数。",
+      "prerequisites": [
+        "大数的改写（以万或亿为单位）"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G4-MATH-S-ku-平均数的计算",
+      "textbook_id": "RENJIAO-G4-MATH-S",
+      "cluster_id": "RENJIAO-G4-MATH-S-kc-数量关系与平均数",
+      "name": "平均数的计算",
+      "description": "总数÷份数=平均数。",
+      "prerequisites": [
+        "除法运算"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G4-MATH-S-ku-平方千米的定义",
+      "textbook_id": "RENJIAO-G4-MATH-S",
+      "cluster_id": "RENJIAO-G4-MATH-S-kc-1亿的感知与面积单位",
+      "name": "平方千米的定义",
+      "description": "边长1千米的正方形面积是1平方千米，1平方千米=1000000平方米=100公顷。",
+      "prerequisites": [
+        "公顷的定义"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G4-MATH-S-ku-平行与垂直",
+      "textbook_id": "RENJIAO-G4-MATH-S",
+      "cluster_id": "RENJIAO-G4-MATH-S-kc-几何图形与测量",
+      "name": "平行与垂直",
+      "description": "同一平面内，不相交的两条直线叫平行线；相交成直角的两条直线互相垂直。",
+      "prerequisites": [
+        "直线、射线、线段"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G4-MATH-S-ku-平行四边形的不稳定性",
+      "textbook_id": "RENJIAO-G4-MATH-S",
+      "cluster_id": "RENJIAO-G4-MATH-S-kc-平行四边形的认识",
+      "name": "平行四边形的不稳定性",
+      "description": "平行四边形容易变形，具有不稳定性。",
+      "prerequisites": [
+        "平行四边形的定义"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G4-MATH-S-ku-平行四边形的定义",
+      "textbook_id": "RENJIAO-G4-MATH-S",
+      "cluster_id": "RENJIAO-G4-MATH-S-kc-平行四边形的认识",
+      "name": "平行四边形的定义",
+      "description": "两组对边分别平行的四边形叫作平行四边形。",
+      "prerequisites": [
+        "平行与垂直"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G4-MATH-S-ku-平行四边形的高和底",
+      "textbook_id": "RENJIAO-G4-MATH-S",
+      "cluster_id": "RENJIAO-G4-MATH-S-kc-平行四边形的认识",
+      "name": "平行四边形的高和底",
+      "description": "从平行四边形一条边上的一点向对边引一条垂线，这个点和垂足之间的线段是高，垂足所在的边是底。",
+      "prerequisites": [
+        "平行四边形的定义",
+        "垂线"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G4-MATH-S-ku-平行线的概念",
+      "textbook_id": "RENJIAO-G4-MATH-S",
+      "cluster_id": "RENJIAO-G4-MATH-S-kc-平行与垂直",
+      "name": "平行线的概念",
+      "description": "同一平面内不相交的两条直线叫平行线，记作a∥b。",
+      "prerequisites": [
+        "线段、直线、射线的概念"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G4-MATH-S-ku-平行线间的距离",
+      "textbook_id": "RENJIAO-G4-MATH-S",
+      "cluster_id": "RENJIAO-G4-MATH-S-kc-平行与垂直",
+      "name": "平行线间的距离",
+      "description": "端点分别在两条平行线上且与平行线垂直的线段长度都相等。",
+      "prerequisites": [
+        "平行线的概念",
+        "点到直线的距离"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G4-MATH-S-ku-平角和周角",
+      "textbook_id": "RENJIAO-G4-MATH-S",
+      "cluster_id": "RENJIAO-G4-MATH-S-kc-线与角的基础概念",
+      "name": "平角和周角",
+      "description": "一条射线绕端点旋转半周得平角（180°），旋转一周得周角（360°）。",
+      "prerequisites": [
+        "角的概念"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G4-MATH-S-ku-总价-单价-数量关系",
+      "textbook_id": "RENJIAO-G4-MATH-S",
+      "cluster_id": "RENJIAO-G4-MATH-S-kc-数量关系与平均数",
+      "name": "总价、单价、数量关系",
+      "description": "总价=单价×数量，单价=总价÷数量，数量=总价÷单价。",
+      "prerequisites": [
+        "乘法运算",
+        "除法运算"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G4-MATH-S-ku-数位顺序表",
+      "textbook_id": "RENJIAO-G4-MATH-S",
+      "cluster_id": "RENJIAO-G4-MATH-S-kc-大数的认识与读写",
+      "name": "数位顺序表",
+      "description": "从右起每四位一级，分为个级、万级、亿级，每级有四个数位。",
+      "prerequisites": [],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G4-MATH-S-ku-数位顺序表-个级-万级-亿级",
+      "textbook_id": "RENJIAO-G4-MATH-S",
+      "cluster_id": "RENJIAO-G4-MATH-S-kc-计数单位与数位",
+      "name": "数位顺序表（个级、万级、亿级）",
+      "description": "从右边起每四个数位是一级，依次为个级、万级、亿级，每个数位对应一个计数单位。",
+      "prerequisites": [
+        "ku-001"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G4-MATH-S-ku-整万数改写为以-万-作单位的数",
+      "textbook_id": "RENJIAO-G4-MATH-S",
+      "cluster_id": "RENJIAO-G4-MATH-S-kc-亿以内数的改写与近似",
+      "name": "整万数改写为以“万”作单位的数",
+      "description": "去掉末尾4个0，写上“万”字。",
+      "prerequisites": [
+        "ku-002"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G4-MATH-S-ku-整亿数改写为以-亿-作单位的数",
+      "textbook_id": "RENJIAO-G4-MATH-S",
+      "cluster_id": "RENJIAO-G4-MATH-S-kc-亿以上数的读写与改写",
+      "name": "整亿数改写为以“亿”作单位的数",
+      "description": "去掉末尾8个0，写上“亿”字。",
+      "prerequisites": [
+        "ku-009"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G4-MATH-S-ku-整十数除三位数的笔算",
+      "textbook_id": "RENJIAO-G4-MATH-S",
+      "cluster_id": "RENJIAO-G4-MATH-S-kc-除数是整十数的除法",
+      "name": "整十数除三位数的笔算",
+      "description": "被除数前两位不够除时，看前三位，商写在个位上。",
+      "prerequisites": [
+        "整十数除两位数的笔算"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G4-MATH-S-ku-整十数除两位数的笔算",
+      "textbook_id": "RENJIAO-G4-MATH-S",
+      "cluster_id": "RENJIAO-G4-MATH-S-kc-除数是整十数的除法",
+      "name": "整十数除两位数的笔算",
+      "description": "用整十数除两位数，商写在个位上，余数要小于除数。",
+      "prerequisites": [
+        "整十数除整十数的口算",
+        "余数的概念"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G4-MATH-S-ku-整十数除整十数-几百几十数的口算",
+      "textbook_id": "RENJIAO-G4-MATH-S",
+      "cluster_id": "RENJIAO-G4-MATH-S-kc-除数是整十数的除法",
+      "name": "整十数除整十数、几百几十数的口算",
+      "description": "利用表内除法或想乘法算除法计算，如80÷20=4。",
+      "prerequisites": [
+        "表内除法",
+        "乘法口诀"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G4-MATH-S-ku-条形统计图中每格代表数量的选择",
+      "textbook_id": "RENJIAO-G4-MATH-S",
+      "cluster_id": "RENJIAO-G4-MATH-S-kc-条形统计图",
+      "name": "条形统计图中每格代表数量的选择",
+      "description": "根据数据大小和范围，选择合适的每格代表数量（如1、2、5等），使图清晰。",
+      "prerequisites": [
+        "条形统计图的绘制与读取"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G4-MATH-S-ku-条形统计图的绘制与读取",
+      "textbook_id": "RENJIAO-G4-MATH-S",
+      "cluster_id": "RENJIAO-G4-MATH-S-kc-条形统计图",
+      "name": "条形统计图的绘制与读取",
+      "description": "用直条长度表示数据多少，每格代表一定数量，能直观比较数据。",
+      "prerequisites": [
+        "统计表"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G4-MATH-S-ku-梯形的各部分名称",
+      "textbook_id": "RENJIAO-G4-MATH-S",
+      "cluster_id": "RENJIAO-G4-MATH-S-kc-梯形的认识",
+      "name": "梯形的各部分名称",
+      "description": "梯形中互相平行的一组对边分别叫上底和下底，不平行的一组对边叫腰，从上底一点到下底的垂直线段是高。",
+      "prerequisites": [
+        "梯形的定义",
+        "垂线"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G4-MATH-S-ku-梯形的定义",
+      "textbook_id": "RENJIAO-G4-MATH-S",
+      "cluster_id": "RENJIAO-G4-MATH-S-kc-梯形的认识",
+      "name": "梯形的定义",
+      "description": "只有一组对边平行的四边形叫作梯形。",
+      "prerequisites": [
+        "平行四边形的定义",
+        "平行与垂直"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G4-MATH-S-ku-梯形的高和画法",
+      "textbook_id": "RENJIAO-G4-MATH-S",
+      "cluster_id": "RENJIAO-G4-MATH-S-kc-几何图形与测量",
+      "name": "梯形的高和画法",
+      "description": "从梯形上底一点向下底作垂线，垂线段长度就是高。",
+      "prerequisites": [
+        "四边形的分类与特征"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G4-MATH-S-ku-比较亿以内数的大小",
+      "textbook_id": "RENJIAO-G4-MATH-S",
+      "cluster_id": "RENJIAO-G4-MATH-S-kc-亿以内数的读写与比较",
+      "name": "比较亿以内数的大小",
+      "description": "位数多的数大；位数相同从最高位依次比较，高位数字大的数大。",
+      "prerequisites": [
+        "ku-002"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G4-MATH-S-ku-比较多位数的大小",
+      "textbook_id": "RENJIAO-G4-MATH-S",
+      "cluster_id": "RENJIAO-G4-MATH-S-kc-多位数的读写与近似",
+      "name": "比较多位数的大小",
+      "description": "先看位数，位数多的数大；位数相同则从高位逐位比较。",
+      "prerequisites": [
+        "多位数的读法"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G4-MATH-S-ku-点到直线的距离",
+      "textbook_id": "RENJIAO-G4-MATH-S",
+      "cluster_id": "RENJIAO-G4-MATH-S-kc-平行与垂直",
+      "name": "点到直线的距离",
+      "description": "从直线外一点到这条直线所画的垂直线段最短，其长度叫点到直线的距离。",
+      "prerequisites": [
+        "垂直的概念"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G4-MATH-S-ku-用-四舍五入-法试商",
+      "textbook_id": "RENJIAO-G4-MATH-S",
+      "cluster_id": "RENJIAO-G4-MATH-S-kc-试商方法",
+      "name": "用“四舍五入”法试商",
+      "description": "把除数看作与它接近的整十数来试商，商大了调小，商小了调大。",
+      "prerequisites": [
+        "整十数除三位数的笔算",
+        "四舍五入"
+      ],
+      "related_kus": [],
+      "difficulty": 0.6,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G4-MATH-S-ku-用-靠五-法试商",
+      "textbook_id": "RENJIAO-G4-MATH-S",
+      "cluster_id": "RENJIAO-G4-MATH-S-kc-试商方法",
+      "name": "用“靠五”法试商",
+      "description": "当除数接近25、15等数时，可看作25、15来试商，提高试商速度。",
+      "prerequisites": [
+        "用“四舍五入”法试商"
+      ],
+      "related_kus": [],
+      "difficulty": 0.6,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G4-MATH-S-ku-用万或亿作单位的近似数",
+      "textbook_id": "RENJIAO-G4-MATH-S",
+      "cluster_id": "RENJIAO-G4-MATH-S-kc-多位数的读写与近似",
+      "name": "用万或亿作单位的近似数",
+      "description": "省略万位或亿位后面的尾数，用四舍五入法求近似数，如260800≈27万。",
+      "prerequisites": [
+        "多位数的读法"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G4-MATH-S-ku-用半格表示数据",
+      "textbook_id": "RENJIAO-G4-MATH-S",
+      "cluster_id": "RENJIAO-G4-MATH-S-kc-条形统计图",
+      "name": "用半格表示数据",
+      "description": "当数据不是整格时，可用半格表示，如半格代表1人。",
+      "prerequisites": [
+        "条形统计图中每格代表数量的选择"
+      ],
+      "related_kus": [],
+      "difficulty": 0.6,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G4-MATH-S-ku-用商的变化规律简便计算",
+      "textbook_id": "RENJIAO-G4-MATH-S",
+      "cluster_id": "RENJIAO-G4-MATH-S-kc-除法的计算与规律",
+      "name": "用商的变化规律简便计算",
+      "description": "利用商不变的规律，将除数转化为整十数，使计算简便。",
+      "prerequisites": [
+        "商不变的规律"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G4-MATH-S-ku-用计算器计算",
+      "textbook_id": "RENJIAO-G4-MATH-S",
+      "cluster_id": "RENJIAO-G4-MATH-S-kc-乘法规律与计算器",
+      "name": "用计算器计算",
+      "description": "使用计算器进行复杂运算，如222222222÷9=24691358。",
+      "prerequisites": [],
+      "related_kus": [],
+      "difficulty": 0.2,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G4-MATH-S-ku-用量角器量角",
+      "textbook_id": "RENJIAO-G4-MATH-S",
+      "cluster_id": "RENJIAO-G4-MATH-S-kc-线与角的基础概念",
+      "name": "用量角器量角",
+      "description": "量角器中心与角顶点重合，0°刻度线与一边重合，另一边所指刻度即为角度。",
+      "prerequisites": [
+        "角的度量单位——度"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G4-MATH-S-ku-画垂线的方法",
+      "textbook_id": "RENJIAO-G4-MATH-S",
+      "cluster_id": "RENJIAO-G4-MATH-S-kc-平行与垂直",
+      "name": "画垂线的方法",
+      "description": "用三角尺或量角器，使一条边与已知直线重合，另一条边过点画线。",
+      "prerequisites": [
+        "垂直的概念"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G4-MATH-S-ku-画角的方法",
+      "textbook_id": "RENJIAO-G4-MATH-S",
+      "cluster_id": "RENJIAO-G4-MATH-S-kc-线与角的基础概念",
+      "name": "画角的方法",
+      "description": "画射线，量角器中心与端点重合，0°刻度线与射线重合，在指定度数处点一点，再画射线。",
+      "prerequisites": [
+        "用量角器量角"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G4-MATH-S-ku-画长方形和正方形",
+      "textbook_id": "RENJIAO-G4-MATH-S",
+      "cluster_id": "RENJIAO-G4-MATH-S-kc-平行与垂直",
+      "name": "画长方形和正方形",
+      "description": "利用相邻边互相垂直，用画垂线的方法画长方形和正方形。",
+      "prerequisites": [
+        "画垂线的方法"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G4-MATH-S-ku-积的变化规律",
+      "textbook_id": "RENJIAO-G4-MATH-S",
+      "cluster_id": "RENJIAO-G4-MATH-S-kc-积的变化规律与数量关系",
+      "name": "积的变化规律",
+      "description": "一个因数不变，另一个因数乘或除以几（0除外），积也乘或除以几。",
+      "prerequisites": [
+        "乘法运算"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G4-MATH-S-ku-等腰梯形和直角梯形",
+      "textbook_id": "RENJIAO-G4-MATH-S",
+      "cluster_id": "RENJIAO-G4-MATH-S-kc-梯形的认识",
+      "name": "等腰梯形和直角梯形",
+      "description": "两腰相等的梯形是等腰梯形；有一个角是直角的梯形是直角梯形。",
+      "prerequisites": [
+        "梯形的定义"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G4-MATH-S-ku-算盘的认识与使用",
+      "textbook_id": "RENJIAO-G4-MATH-S",
+      "cluster_id": "RENJIAO-G4-MATH-S-kc-计算工具的认识与使用",
+      "name": "算盘的认识与使用",
+      "description": "算盘上1颗上珠表示5，1颗下珠表示1；通过拨珠表示数。",
+      "prerequisites": [],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G4-MATH-S-ku-线段-直线-射线的概念",
+      "textbook_id": "RENJIAO-G4-MATH-S",
+      "cluster_id": "RENJIAO-G4-MATH-S-kc-线与角的基础概念",
+      "name": "线段、直线、射线的概念",
+      "description": "线段有两个端点，直线无端点无限长，射线有一个端点。",
+      "prerequisites": [],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G4-MATH-S-ku-统计表与条形统计图的比较",
+      "textbook_id": "RENJIAO-G4-MATH-S",
+      "cluster_id": "RENJIAO-G4-MATH-S-kc-条形统计图",
+      "name": "统计表与条形统计图的比较",
+      "description": "统计表数据精确，条形统计图直观，便于比较和发现趋势。",
+      "prerequisites": [
+        "统计表",
+        "条形统计图的绘制与读取"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G4-MATH-S-ku-自然数的概念",
+      "textbook_id": "RENJIAO-G4-MATH-S",
+      "cluster_id": "RENJIAO-G4-MATH-S-kc-计数单位与数位",
+      "name": "自然数的概念",
+      "description": "表示物体个数的1,2,3,…都是自然数，0也是自然数，最小的自然数是0，没有最大的自然数。",
+      "prerequisites": [],
+      "related_kus": [],
+      "difficulty": 0.2,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G4-MATH-S-ku-角的分类",
+      "textbook_id": "RENJIAO-G4-MATH-S",
+      "cluster_id": "RENJIAO-G4-MATH-S-kc-线与角的基础概念",
+      "name": "角的分类",
+      "description": "锐角<90°，直角=90°，钝角>90°且<180°，平角=180°，周角=360°。",
+      "prerequisites": [
+        "角的概念"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G4-MATH-S-ku-角的分类与画法",
+      "textbook_id": "RENJIAO-G4-MATH-S",
+      "cluster_id": "RENJIAO-G4-MATH-S-kc-几何图形与测量",
+      "name": "角的分类与画法",
+      "description": "锐角<90°，直角=90°，钝角>90°且<180°，平角=180°，周角=360°。用量角器画角。",
+      "prerequisites": [
+        "角的初步认识"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G4-MATH-S-ku-角的度量单位--度",
+      "textbook_id": "RENJIAO-G4-MATH-S",
+      "cluster_id": "RENJIAO-G4-MATH-S-kc-线与角的基础概念",
+      "name": "角的度量单位——度",
+      "description": "将圆平均分成360份，1份所对的角是1度，记作1°。",
+      "prerequisites": [
+        "角的概念"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G4-MATH-S-ku-角的概念",
+      "textbook_id": "RENJIAO-G4-MATH-S",
+      "cluster_id": "RENJIAO-G4-MATH-S-kc-线与角的基础概念",
+      "name": "角的概念",
+      "description": "从一点引出两条射线所组成的图形叫角，角用符号∠表示。",
+      "prerequisites": [
+        "线段、直线、射线的概念"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G4-MATH-S-ku-计数单位-万-十万-百万-千万-亿",
+      "textbook_id": "RENJIAO-G4-MATH-S",
+      "cluster_id": "RENJIAO-G4-MATH-S-kc-计数单位与数位",
+      "name": "计数单位：万、十万、百万、千万、亿",
+      "description": "10个一万是十万，10个十万是一百万，10个百万是一千万，10个千万是一亿。",
+      "prerequisites": [],
+      "related_kus": [],
+      "difficulty": 0.2,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G4-MATH-S-ku-计算器的基本操作",
+      "textbook_id": "RENJIAO-G4-MATH-S",
+      "cluster_id": "RENJIAO-G4-MATH-S-kc-计算工具的认识与使用",
+      "name": "计算器的基本操作",
+      "description": "认识开机键、显示屏等；按顺序输入数字和运算符号，按等号得结果。",
+      "prerequisites": [],
+      "related_kus": [],
+      "difficulty": 0.2,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G4-MATH-S-ku-计算器的存储功能-m--mr-mc",
+      "textbook_id": "RENJIAO-G4-MATH-S",
+      "cluster_id": "RENJIAO-G4-MATH-S-kc-计算工具的认识与使用",
+      "name": "计算器的存储功能（M+、MR、MC）",
+      "description": "M+储存当前数，MR提取储存的数，MC清除储存的数。",
+      "prerequisites": [
+        "ku-015"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G4-MATH-S-ku-试商方法-除数接近整十数",
+      "textbook_id": "RENJIAO-G4-MATH-S",
+      "cluster_id": "RENJIAO-G4-MATH-S-kc-除法的计算与规律",
+      "name": "试商方法（除数接近整十数）",
+      "description": "试商时，可以把除数看成整十数来试商，如45看成50。",
+      "prerequisites": [
+        "除数是一位数的除法"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G4-MATH-S-ku-过一点画直线",
+      "textbook_id": "RENJIAO-G4-MATH-S",
+      "cluster_id": "RENJIAO-G4-MATH-S-kc-线与角的基础概念",
+      "name": "过一点画直线",
+      "description": "过一点可以画无数条直线，过两点只能画一条直线。",
+      "prerequisites": [
+        "线段、直线、射线的概念"
+      ],
+      "related_kus": [],
+      "difficulty": 0.2,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G4-MATH-S-ku-速度-时间与路程的关系",
+      "textbook_id": "RENJIAO-G4-MATH-S",
+      "cluster_id": "RENJIAO-G4-MATH-S-kc-积的变化规律与数量关系",
+      "name": "速度、时间与路程的关系",
+      "description": "速度×时间=路程，速度单位如千米/时。",
+      "prerequisites": [
+        "乘法运算"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G4-MATH-S-ku-除数是两位数的笔算除法",
+      "textbook_id": "RENJIAO-G4-MATH-S",
+      "cluster_id": "RENJIAO-G4-MATH-S-kc-除法的计算与规律",
+      "name": "除数是两位数的笔算除法",
+      "description": "从被除数高位除起，先用除数试除前两位，不够除再试前三位，除到哪一位商写在哪一位上。",
+      "prerequisites": [
+        "除数是一位数的除法",
+        "试商方法（除数接近整十数）"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G4-MATH-S-ku-除数是两位数的除法计算方法",
+      "textbook_id": "RENJIAO-G4-MATH-S",
+      "cluster_id": "RENJIAO-G4-MATH-S-kc-除数是两位数的除法计算法则",
+      "name": "除数是两位数的除法计算方法",
+      "description": "从被除数高位除起，先用除数试除前两位，不够除试前三位，除到哪一位商写在哪一位，余数小于除数。",
+      "prerequisites": [
+        "用“四舍五入”法试商",
+        "整十数除三位数的笔算"
+      ],
+      "related_kus": [],
+      "difficulty": 0.6,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G4-MATH-S-ku-面积单位换算",
+      "textbook_id": "RENJIAO-G4-MATH-S",
+      "cluster_id": "RENJIAO-G4-MATH-S-kc-1亿的感知与面积单位",
+      "name": "面积单位换算",
+      "description": "1公顷=10000平方米，1平方千米=100公顷，平方米与公顷、平方千米的换算。",
+      "prerequisites": [
+        "公顷的定义",
+        "平方千米的定义"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    }
+  ]
+}

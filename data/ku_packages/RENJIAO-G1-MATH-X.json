@@ -1,0 +1,1212 @@
+{
+  "textbook": {
+    "id": "RENJIAO-G1-MATH-X",
+    "subject": "math",
+    "grade": "G1",
+    "edition": "2022修订",
+    "book_name": "人教版·数学一年级下册"
+  },
+  "clusters": [
+    {
+      "id": "RENJIAO-G1-MATH-X-kc-认识平面图形",
+      "name": "认识平面图形",
+      "display_order": 1,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G1-MATH-X-kc-20以内退位减法",
+      "name": "20以内退位减法",
+      "display_order": 2,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G1-MATH-X-kc-100以内数的认识",
+      "name": "100以内数的认识",
+      "display_order": 3,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G1-MATH-X-kc-100以内口算加-减法-不进位-不退位及进位",
+      "name": "100以内口算加、减法（不进位、不退位及进位）",
+      "display_order": 4,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G1-MATH-X-kc-口算加法",
+      "name": "口算加法",
+      "display_order": 5,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G1-MATH-X-kc-口算减法",
+      "name": "口算减法",
+      "display_order": 6,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G1-MATH-X-kc-减法应用",
+      "name": "减法应用",
+      "display_order": 7,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G1-MATH-X-kc-加减法应用",
+      "name": "加减法应用",
+      "display_order": 8,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G1-MATH-X-kc-图形与拼组",
+      "name": "图形与拼组",
+      "display_order": 9,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G1-MATH-X-kc-加减法计算",
+      "name": "加减法计算",
+      "display_order": 10,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G1-MATH-X-kc-数的认识与比较",
+      "name": "数的认识与比较",
+      "display_order": 11,
+      "description": null
+    }
+  ],
+  "units": [
+    {
+      "id": "RENJIAO-G1-MATH-X-ku-100以内数的大小比较",
+      "textbook_id": "RENJIAO-G1-MATH-X",
+      "cluster_id": "RENJIAO-G1-MATH-X-kc-100以内数的认识",
+      "name": "100以内数的大小比较",
+      "description": "先比十位，十位大的数大；十位相同比个位。",
+      "prerequisites": [
+        "ku-010"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G1-MATH-X-ku-100以内数的读法和写法",
+      "textbook_id": "RENJIAO-G1-MATH-X",
+      "cluster_id": "RENJIAO-G1-MATH-X-kc-100以内数的认识",
+      "name": "100以内数的读法和写法",
+      "description": "从右边起第一位是个位，第二位是十位，第三位是百位；读数和写数都从高位起。",
+      "prerequisites": [
+        "ku-010"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G1-MATH-X-ku-七巧板的组成与拼图",
+      "textbook_id": "RENJIAO-G1-MATH-X",
+      "cluster_id": "RENJIAO-G1-MATH-X-kc-认识平面图形",
+      "name": "七巧板的组成与拼图",
+      "description": "七巧板由7块板组成（1个正方形、1个平行四边形、5个三角形），可拼出各种图案。",
+      "prerequisites": [
+        "ku-001"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G1-MATH-X-ku-两位数减一位数-不退位-口算",
+      "textbook_id": "RENJIAO-G1-MATH-X",
+      "cluster_id": "RENJIAO-G1-MATH-X-kc-口算减法",
+      "name": "两位数减一位数（不退位）口算",
+      "description": "个位相减，十位不变。如35-2，先算5-2=3，再算30+3=33。",
+      "prerequisites": [],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G1-MATH-X-ku-两位数减一位数-退位-口算",
+      "textbook_id": "RENJIAO-G1-MATH-X",
+      "cluster_id": "RENJIAO-G1-MATH-X-kc-口算减法",
+      "name": "两位数减一位数（退位）口算",
+      "description": "个位不够减，从十位退1作10，与个位合并再减。如36-8，先算16-8=8，再算20+8=28。",
+      "prerequisites": [
+        "ku-004"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G1-MATH-X-ku-两位数减两位数-不退位-口算",
+      "textbook_id": "RENJIAO-G1-MATH-X",
+      "cluster_id": "RENJIAO-G1-MATH-X-kc-口算减法",
+      "name": "两位数减两位数（不退位）口算",
+      "description": "个位减个位，十位减十位。如76-45，先算6-5=1，再算70-40=30，得31。",
+      "prerequisites": [
+        "ku-004",
+        "ku-005"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G1-MATH-X-ku-两位数减两位数-退位-口算",
+      "textbook_id": "RENJIAO-G1-MATH-X",
+      "cluster_id": "RENJIAO-G1-MATH-X-kc-口算减法",
+      "name": "两位数减两位数（退位）口算",
+      "description": "个位不够减，从十位退1，十位相减时少1。如35-22，先算15-2=13，再算20-20=0，得13。",
+      "prerequisites": [
+        "ku-006",
+        "ku-007"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G1-MATH-X-ku-两位数减整十数口算",
+      "textbook_id": "RENJIAO-G1-MATH-X",
+      "cluster_id": "RENJIAO-G1-MATH-X-kc-口算减法",
+      "name": "两位数减整十数口算",
+      "description": "十位相减，个位不变。如35-20，先算30-20=10，再算10+5=15。",
+      "prerequisites": [],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G1-MATH-X-ku-两位数加一位数-不进位",
+      "textbook_id": "RENJIAO-G1-MATH-X",
+      "cluster_id": "RENJIAO-G1-MATH-X-kc-100以内口算加-减法-不进位-不退位及进位",
+      "name": "两位数加一位数（不进位）",
+      "description": "个位相加，十位不变。",
+      "prerequisites": [
+        "ku-010",
+        "20以内加法"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G1-MATH-X-ku-两位数加一位数-不进位-口算",
+      "textbook_id": "RENJIAO-G1-MATH-X",
+      "cluster_id": "RENJIAO-G1-MATH-X-kc-口算加法",
+      "name": "两位数加一位数（不进位）口算",
+      "description": "个位相加，十位不变。如27+4，先算7+4=11，再算20+11=31。",
+      "prerequisites": [],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G1-MATH-X-ku-两位数加一位数-进位",
+      "textbook_id": "RENJIAO-G1-MATH-X",
+      "cluster_id": "RENJIAO-G1-MATH-X-kc-100以内口算加-减法-不进位-不退位及进位",
+      "name": "两位数加一位数（进位）",
+      "description": "个位相加满十，向十位进1。",
+      "prerequisites": [
+        "ku-017",
+        "20以内进位加法"
+      ],
+      "related_kus": [],
+      "difficulty": 0.7,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G1-MATH-X-ku-两位数加一位数-进位-口算",
+      "textbook_id": "RENJIAO-G1-MATH-X",
+      "cluster_id": "RENJIAO-G1-MATH-X-kc-口算加法",
+      "name": "两位数加一位数（进位）口算",
+      "description": "个位相加满十，向十位进1。如36+8，先算6+8=14，再算30+14=44。",
+      "prerequisites": [
+        "ku-001"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G1-MATH-X-ku-两位数加两位数-不进位",
+      "textbook_id": "RENJIAO-G1-MATH-X",
+      "cluster_id": "RENJIAO-G1-MATH-X-kc-100以内口算加-减法-不进位-不退位及进位",
+      "name": "两位数加两位数（不进位）",
+      "description": "个位加个位，十位加十位。",
+      "prerequisites": [
+        "ku-017",
+        "ku-018"
+      ],
+      "related_kus": [],
+      "difficulty": 0.6,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G1-MATH-X-ku-两位数加两位数-不进位-口算",
+      "textbook_id": "RENJIAO-G1-MATH-X",
+      "cluster_id": "RENJIAO-G1-MATH-X-kc-口算加法",
+      "name": "两位数加两位数（不进位）口算",
+      "description": "个位加个位，十位加十位。如64+32，先算4+2=6，再算60+30=90，得96。",
+      "prerequisites": [],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G1-MATH-X-ku-两位数加减一位数-进位退位",
+      "textbook_id": "RENJIAO-G1-MATH-X",
+      "cluster_id": "RENJIAO-G1-MATH-X-kc-加减法计算",
+      "name": "两位数加减一位数（进位退位）",
+      "description": "两位数加一位数进位（如48+2=50），两位数减一位数退位（如63-6=57）。",
+      "prerequisites": [
+        "20以内加减法"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G1-MATH-X-ku-两位数加减两位数-进位退位",
+      "textbook_id": "RENJIAO-G1-MATH-X",
+      "cluster_id": "RENJIAO-G1-MATH-X-kc-加减法计算",
+      "name": "两位数加减两位数（进位退位）",
+      "description": "两位数加两位数进位（如78+16=94），两位数减两位数退位（如47-29=18）。",
+      "prerequisites": [
+        "两位数加减一位数"
+      ],
+      "related_kus": [],
+      "difficulty": 0.6,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G1-MATH-X-ku-两位数加整十数",
+      "textbook_id": "RENJIAO-G1-MATH-X",
+      "cluster_id": "RENJIAO-G1-MATH-X-kc-100以内口算加-减法-不进位-不退位及进位",
+      "name": "两位数加整十数",
+      "description": "十位相加，个位不变。",
+      "prerequisites": [
+        "ku-010",
+        "ku-015"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G1-MATH-X-ku-减法求部分量",
+      "textbook_id": "RENJIAO-G1-MATH-X",
+      "cluster_id": "RENJIAO-G1-MATH-X-kc-加减法应用",
+      "name": "减法求部分量",
+      "description": "已知总数和剩余部分，求减少的部分用减法。",
+      "prerequisites": [
+        "加减法意义"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G1-MATH-X-ku-加减混合运算",
+      "textbook_id": "RENJIAO-G1-MATH-X",
+      "cluster_id": "RENJIAO-G1-MATH-X-kc-加减法计算",
+      "name": "加减混合运算",
+      "description": "加减混合运算按从左到右的顺序计算。",
+      "prerequisites": [
+        "两位数加减法"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G1-MATH-X-ku-十几减5-4-3-2的计算方法",
+      "textbook_id": "RENJIAO-G1-MATH-X",
+      "cluster_id": "RENJIAO-G1-MATH-X-kc-20以内退位减法",
+      "name": "十几减5、4、3、2的计算方法",
+      "description": "十几减5、4、3、2可用想加算减法或破十法。",
+      "prerequisites": [
+        "ku-004",
+        "ku-005"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G1-MATH-X-ku-十几减8-7-6的计算方法",
+      "textbook_id": "RENJIAO-G1-MATH-X",
+      "cluster_id": "RENJIAO-G1-MATH-X-kc-20以内退位减法",
+      "name": "十几减8、7、6的计算方法",
+      "description": "十几减8、7、6可用破十法或想加算减法（如8+几=十几）。",
+      "prerequisites": [
+        "ku-004"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G1-MATH-X-ku-十几减9的计算方法",
+      "textbook_id": "RENJIAO-G1-MATH-X",
+      "cluster_id": "RENJIAO-G1-MATH-X-kc-20以内退位减法",
+      "name": "十几减9的计算方法",
+      "description": "十几减9可用破十法（10-9=1，1+几）或想加算减法（9+几=十几）。",
+      "prerequisites": [
+        "20以内数的认识",
+        "20以内加法"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G1-MATH-X-ku-图形拼组",
+      "textbook_id": "RENJIAO-G1-MATH-X",
+      "cluster_id": "RENJIAO-G1-MATH-X-kc-图形与拼组",
+      "name": "图形拼组",
+      "description": "用多个相同或不同的基本图形（如正方形、三角形）可以拼成新图形。",
+      "prerequisites": [
+        "认识基本图形"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G1-MATH-X-ku-图形计数",
+      "textbook_id": "RENJIAO-G1-MATH-X",
+      "cluster_id": "RENJIAO-G1-MATH-X-kc-图形与拼组",
+      "name": "图形计数",
+      "description": "数出图形中各种基本图形的个数。",
+      "prerequisites": [
+        "认识基本图形"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G1-MATH-X-ku-填未知数",
+      "textbook_id": "RENJIAO-G1-MATH-X",
+      "cluster_id": "RENJIAO-G1-MATH-X-kc-加减法应用",
+      "name": "填未知数",
+      "description": "根据加减法关系，在算式或表格中填出缺失的数。",
+      "prerequisites": [
+        "加减法意义"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G1-MATH-X-ku-套圈得分问题",
+      "textbook_id": "RENJIAO-G1-MATH-X",
+      "cluster_id": "RENJIAO-G1-MATH-X-kc-加减法应用",
+      "name": "套圈得分问题",
+      "description": "根据总分和玩具分值，找出哪些玩具组合得分等于总分。",
+      "prerequisites": [
+        "两位数加减法"
+      ],
+      "related_kus": [],
+      "difficulty": 0.6,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G1-MATH-X-ku-平面图形的拼组",
+      "textbook_id": "RENJIAO-G1-MATH-X",
+      "cluster_id": "RENJIAO-G1-MATH-X-kc-认识平面图形",
+      "name": "平面图形的拼组",
+      "description": "用两个或多个相同的平面图形可以拼成新的平面图形，如两个长方形拼成长方形，两个三角形拼成平行四边形。",
+      "prerequisites": [
+        "ku-001"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G1-MATH-X-ku-数数-数到100",
+      "textbook_id": "RENJIAO-G1-MATH-X",
+      "cluster_id": "RENJIAO-G1-MATH-X-kc-100以内数的认识",
+      "name": "数数：数到100",
+      "description": "从1数到100，理解10个一是1个十，10个十是一百。",
+      "prerequisites": [
+        "20以内数的认识"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G1-MATH-X-ku-数的大小比较",
+      "textbook_id": "RENJIAO-G1-MATH-X",
+      "cluster_id": "RENJIAO-G1-MATH-X-kc-数的认识与比较",
+      "name": "数的大小比较",
+      "description": "比较两位数大小：先比十位，十位相同比个位。",
+      "prerequisites": [
+        "100以内数的认识"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G1-MATH-X-ku-数的组成-几十几的组成",
+      "textbook_id": "RENJIAO-G1-MATH-X",
+      "cluster_id": "RENJIAO-G1-MATH-X-kc-100以内数的认识",
+      "name": "数的组成：几十几的组成",
+      "description": "几十几由几个十和几个一组成，如46由4个十和6个一组成。",
+      "prerequisites": [
+        "ku-009"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G1-MATH-X-ku-数的组成与读写",
+      "textbook_id": "RENJIAO-G1-MATH-X",
+      "cluster_id": "RENJIAO-G1-MATH-X-kc-数的认识与比较",
+      "name": "数的组成与读写",
+      "description": "两位数由几个十和几个一组成，如54里面有5个十和4个一。",
+      "prerequisites": [
+        "100以内数的认识"
+      ],
+      "related_kus": [],
+      "difficulty": 0.2,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G1-MATH-X-ku-整十数减一位数-退位-口算",
+      "textbook_id": "RENJIAO-G1-MATH-X",
+      "cluster_id": "RENJIAO-G1-MATH-X-kc-口算减法",
+      "name": "整十数减一位数（退位）口算",
+      "description": "从十位退1作10，减去一位数。如30-6，先算10-6=4，再算20+4=24。",
+      "prerequisites": [
+        "ku-007"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G1-MATH-X-ku-整十数加一位数及相应的减法",
+      "textbook_id": "RENJIAO-G1-MATH-X",
+      "cluster_id": "RENJIAO-G1-MATH-X-kc-100以内口算加-减法-不进位-不退位及进位",
+      "name": "整十数加一位数及相应的减法",
+      "description": "整十数加一位数得几十几；几十几减几得整十数，几十几减整十数得几。",
+      "prerequisites": [
+        "ku-010",
+        "ku-015"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G1-MATH-X-ku-整十数加减整十数",
+      "textbook_id": "RENJIAO-G1-MATH-X",
+      "cluster_id": "RENJIAO-G1-MATH-X-kc-加减法计算",
+      "name": "整十数加减整十数",
+      "description": "整十数加整十数（如20+45=65），整十数减整十数（如94-60=34）。",
+      "prerequisites": [
+        "100以内数的认识"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G1-MATH-X-ku-整十数加整十数",
+      "textbook_id": "RENJIAO-G1-MATH-X",
+      "cluster_id": "RENJIAO-G1-MATH-X-kc-100以内口算加-减法-不进位-不退位及进位",
+      "name": "整十数加整十数",
+      "description": "整十数相加，十位上的数相加，个位写0。",
+      "prerequisites": [
+        "ku-009"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G1-MATH-X-ku-比多比少综合问题",
+      "textbook_id": "RENJIAO-G1-MATH-X",
+      "cluster_id": "RENJIAO-G1-MATH-X-kc-加减法应用",
+      "name": "比多比少综合问题",
+      "description": "已知两个量的差和其中一个量，求另一个量及总和。",
+      "prerequisites": [
+        "比多比少问题",
+        "两位数加减法"
+      ],
+      "related_kus": [],
+      "difficulty": 0.6,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G1-MATH-X-ku-比多比少问题",
+      "textbook_id": "RENJIAO-G1-MATH-X",
+      "cluster_id": "RENJIAO-G1-MATH-X-kc-加减法应用",
+      "name": "比多比少问题",
+      "description": "已知一个量，另一个量比它多（或少）几，求另一个量用加法（或减法）。",
+      "prerequisites": [
+        "加减法意义"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G1-MATH-X-ku-满减问题",
+      "textbook_id": "RENJIAO-G1-MATH-X",
+      "cluster_id": "RENJIAO-G1-MATH-X-kc-加减法应用",
+      "name": "满减问题",
+      "description": "购物总价满一定金额可减钱，需先计算总价再判断是否满额。",
+      "prerequisites": [
+        "两位数加减法"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G1-MATH-X-ku-用-大得多--大一些--小得多--小一些-描述数的大小关系",
+      "textbook_id": "RENJIAO-G1-MATH-X",
+      "cluster_id": "RENJIAO-G1-MATH-X-kc-100以内数的认识",
+      "name": "用“大得多”“大一些”“小得多”“小一些”描述数的大小关系",
+      "description": "根据两个数相差的多少，用“大得多”“大一些”“小得多”“小一些”描述。",
+      "prerequisites": [
+        "ku-013"
+      ],
+      "related_kus": [],
+      "difficulty": 0.6,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G1-MATH-X-ku-用减法解决-求部分-的实际问题",
+      "textbook_id": "RENJIAO-G1-MATH-X",
+      "cluster_id": "RENJIAO-G1-MATH-X-kc-20以内退位减法",
+      "name": "用减法解决“求部分”的实际问题",
+      "description": "从总数中去掉一部分，求另一部分，用减法计算。",
+      "prerequisites": [
+        "ku-004",
+        "ku-005",
+        "ku-006"
+      ],
+      "related_kus": [],
+      "difficulty": 0.6,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G1-MATH-X-ku-百数表的规律",
+      "textbook_id": "RENJIAO-G1-MATH-X",
+      "cluster_id": "RENJIAO-G1-MATH-X-kc-100以内数的认识",
+      "name": "百数表的规律",
+      "description": "百数表中横着看十位相同，竖着看个位相同，斜着看有规律。",
+      "prerequisites": [
+        "ku-009",
+        "ku-010"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G1-MATH-X-ku-相邻数",
+      "textbook_id": "RENJIAO-G1-MATH-X",
+      "cluster_id": "RENJIAO-G1-MATH-X-kc-数的认识与比较",
+      "name": "相邻数",
+      "description": "一个数前后相邻的两个数分别是比它小1和大1的数。",
+      "prerequisites": [
+        "100以内数的认识"
+      ],
+      "related_kus": [],
+      "difficulty": 0.2,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G1-MATH-X-ku-装盒问题-包含除",
+      "textbook_id": "RENJIAO-G1-MATH-X",
+      "cluster_id": "RENJIAO-G1-MATH-X-kc-加减法应用",
+      "name": "装盒问题（包含除）",
+      "description": "求一个数里面有几个另一个数，用减法或连减。",
+      "prerequisites": [
+        "减法意义"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G1-MATH-X-ku-连减解决实际问题",
+      "textbook_id": "RENJIAO-G1-MATH-X",
+      "cluster_id": "RENJIAO-G1-MATH-X-kc-减法应用",
+      "name": "连减解决实际问题",
+      "description": "用连减（如26-8-8-8）或圈一圈的方法求能装满几袋及剩余。",
+      "prerequisites": [
+        "ku-007"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G1-MATH-X-ku-连加连减",
+      "textbook_id": "RENJIAO-G1-MATH-X",
+      "cluster_id": "RENJIAO-G1-MATH-X-kc-加减法计算",
+      "name": "连加连减",
+      "description": "连加连减按从左到右的顺序计算。",
+      "prerequisites": [
+        "两位数加减法"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G1-MATH-X-ku-退位减法表的整理与规律",
+      "textbook_id": "RENJIAO-G1-MATH-X",
+      "cluster_id": "RENJIAO-G1-MATH-X-kc-20以内退位减法",
+      "name": "退位减法表的整理与规律",
+      "description": "将20以内退位减法按被减数、减数整理成表，发现竖列、横行规律（如被减数不变减数减1差加1）。",
+      "prerequisites": [
+        "ku-004",
+        "ku-005",
+        "ku-006"
+      ],
+      "related_kus": [],
+      "difficulty": 0.6,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G1-MATH-X-ku-长方形-正方形-三角形-平行四边形-圆的直观认识",
+      "textbook_id": "RENJIAO-G1-MATH-X",
+      "cluster_id": "RENJIAO-G1-MATH-X-kc-认识平面图形",
+      "name": "长方形、正方形、三角形、平行四边形、圆的直观认识",
+      "description": "通过观察物体表面，直观辨认长方形、正方形、三角形、平行四边形、圆等平面图形。",
+      "prerequisites": [],
+      "related_kus": [],
+      "difficulty": 0.2,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    }
+  ]
+}

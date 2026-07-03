@@ -1,0 +1,4561 @@
+{
+  "textbook": {
+    "id": "RENJIAO-G8-PHYSICS-X",
+    "subject": "physics",
+    "grade": "G8",
+    "edition": "RENJIAO",
+    "book_name": "人教版物理八年级下册"
+  },
+  "clusters": [
+    {
+      "id": "RENJIAO-G8-PHYSICS-X-kc-力的基本概念与作用效果",
+      "name": "力的基本概念与作用效果",
+      "display_order": 1,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G8-PHYSICS-X-kc-弹力与弹簧测力计",
+      "name": "弹力与弹簧测力计",
+      "display_order": 2,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G8-PHYSICS-X-kc-重力及其测量",
+      "name": "重力及其测量",
+      "display_order": 3,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G8-PHYSICS-X-kc-牛顿第一定律与惯性",
+      "name": "牛顿第一定律与惯性",
+      "display_order": 4,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G8-PHYSICS-X-kc-二力平衡",
+      "name": "二力平衡",
+      "display_order": 5,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G8-PHYSICS-X-kc-摩擦力",
+      "name": "摩擦力",
+      "display_order": 6,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G8-PHYSICS-X-kc-压强概念与实验探究",
+      "name": "压强概念与实验探究",
+      "display_order": 7,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G8-PHYSICS-X-kc-液体压强与连通器",
+      "name": "液体压强与连通器",
+      "display_order": 8,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G8-PHYSICS-X-kc-大气压强与测量",
+      "name": "大气压强与测量",
+      "display_order": 9,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G8-PHYSICS-X-kc-流体压强与流速关系及应用",
+      "name": "流体压强与流速关系及应用",
+      "display_order": 10,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G8-PHYSICS-X-kc-压强概念与计算",
+      "name": "压强概念与计算",
+      "display_order": 11,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G8-PHYSICS-X-kc-大气压及其测量",
+      "name": "大气压及其测量",
+      "display_order": 12,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G8-PHYSICS-X-kc-流体压强与浮力",
+      "name": "流体压强与浮力",
+      "display_order": 13,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G8-PHYSICS-X-kc-浮力基础概念与产生原因",
+      "name": "浮力基础概念与产生原因",
+      "display_order": 14,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G8-PHYSICS-X-kc-浮力大小的探究与测量",
+      "name": "浮力大小的探究与测量",
+      "display_order": 15,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G8-PHYSICS-X-kc-阿基米德原理及其验证",
+      "name": "阿基米德原理及其验证",
+      "display_order": 16,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G8-PHYSICS-X-kc-物体的浮沉条件",
+      "name": "物体的浮沉条件",
+      "display_order": 17,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G8-PHYSICS-X-kc-浮力的应用与模型",
+      "name": "浮力的应用与模型",
+      "display_order": 18,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G8-PHYSICS-X-kc-浮力相关实验活动",
+      "name": "浮力相关实验活动",
+      "display_order": 19,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G8-PHYSICS-X-kc-功的概念与计算",
+      "name": "功的概念与计算",
+      "display_order": 20,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G8-PHYSICS-X-kc-功率的概念与计算",
+      "name": "功率的概念与计算",
+      "display_order": 21,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G8-PHYSICS-X-kc-动能及其影响因素",
+      "name": "动能及其影响因素",
+      "display_order": 22,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G8-PHYSICS-X-kc-势能及其影响因素",
+      "name": "势能及其影响因素",
+      "display_order": 23,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G8-PHYSICS-X-kc-机械能及其转化与守恒",
+      "name": "机械能及其转化与守恒",
+      "display_order": 24,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G8-PHYSICS-X-kc-杠杆基础与平衡",
+      "name": "杠杆基础与平衡",
+      "display_order": 25,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G8-PHYSICS-X-kc-杠杆分类与应用",
+      "name": "杠杆分类与应用",
+      "display_order": 26,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G8-PHYSICS-X-kc-滑轮与滑轮组",
+      "name": "滑轮与滑轮组",
+      "display_order": 27,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G8-PHYSICS-X-kc-其他简单机械",
+      "name": "其他简单机械",
+      "display_order": 28,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G8-PHYSICS-X-kc-机械效率与实验",
+      "name": "机械效率与实验",
+      "display_order": 29,
+      "description": null
+    }
+  ],
+  "units": [
+    {
+      "id": "RENJIAO-G8-PHYSICS-X-ku-万有引力",
+      "textbook_id": "RENJIAO-G8-PHYSICS-X",
+      "cluster_id": "RENJIAO-G8-PHYSICS-X-kc-重力及其测量",
+      "name": "万有引力",
+      "description": "宇宙间的物体，大到天体，小到尘埃，都存在互相吸引的力，这就是万有引力。重力是万有引力在地球附近的表现。\n【适用条件】适用于所有有质量的物体之间。",
+      "prerequisites": [
+        "重力概念"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [],
+      "ku_type": "physical_concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "地球质量 $M = 5.97 \\times 10^{24} \\ \\text{kg}$，半径 $R = 6.37 \\times 10^6 \\ \\text{m}$，一个 $m = 1 \\ \\text{kg}$ 的物体在地面所受万有引力：$$F = G \\frac{M m}{R^2} = 6.67 \\times 10^{-11} \\times \\frac{5.97 \\times 10^{24} \\times 1}{(6.37 \\times 10^6)^2} \\approx 9.8 \\ \\text{N}$$，这就是重力。",
+          "两个质量均为 $50 \\ \\text{kg}$ 的人相距 $1 \\ \\text{m}$ 时，万有引力：$$F = 6.67 \\times 10^{-11} \\times \\frac{50 \\times 50}{1^2} \\approx 1.67 \\times 10^{-7} \\ \\text{N}$$，非常小，几乎感觉不到。"
+        ],
+        "intuition": "为什么苹果会落地，而月球却不会掉到地球上？其实它们都受到地球的引力，只是月球的速度让它绕地球转。",
+        "definition": "万有引力是任何两个有质量的物体之间相互吸引的力，大小与两物体质量的乘积成正比，与它们距离的平方成反比。数学表达式：$$F = G \\frac{m_1 m_2}{r^2}$$，其中 $G = 6.67 \\times 10^{-11} \\ \\text{N·m}^2/\\text{kg}^2$ 为引力常量，$m_1$、$m_2$ 为两物体质量（kg），$r$ 为距离（m）。力是矢量，方向沿两物体连线。",
+        "key_points": [
+          "⚠️ 万有引力存在于任何有质量的物体之间，即使两个小物体（如人和书）之间也有引力，只是非常微弱。",
+          "⚠️ 距离 $r$ 是两物体质心间的距离，不是表面距离。对于均匀球体，可视为质量集中在球心。",
+          "⚠️ 重力只是万有引力在地球表面附近的一个近似，实际上重力略小于万有引力（因地球自转影响）。"
+        ],
+        "connections": "万有引力与重力加速度 $g$ 的关系：$g = G \\frac{M}{R^2}$，其中 $M$ 为地球质量，$R$ 为地球半径。万有引力也用于推导行星运动（开普勒第三定律）。",
+        "common_mistakes": [
+          "⚠️ 误认为只有大质量天体之间才有万有引力，实际上任何有质量的物体之间都存在，只是小质量物体间引力极弱。",
+          "⚠️ 计算时忘记将距离单位统一为米，例如将 km 直接代入公式，导致结果错误。",
+          "⚠️ 混淆万有引力公式中的 $r$ 与物体表面距离：对于地球表面物体，$r$ 是地球半径，不是物体到地面的高度。"
+        ],
+        "counter_examples": "万有引力与重力：重力是地球对物体万有引力的一个分力（另一个分力提供物体随地球自转的向心力），因此重力略小于万有引力，但在粗略计算中常近似相等。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G8-PHYSICS-X-ku-两张纸中间吹气实验",
+      "textbook_id": "RENJIAO-G8-PHYSICS-X",
+      "cluster_id": "RENJIAO-G8-PHYSICS-X-kc-流体压强与流速关系及应用",
+      "name": "两张纸中间吹气实验",
+      "description": "手握两张纸自由下垂，向中间吹气，纸向中间靠拢，说明中间流速大压强小。\n【适用条件】纸片轻，吹气方向平行纸面。\n【实验】目的：验证流体压强与流速的关系；原理：流速大压强小；器材：两张纸；步骤：1. 手握纸自由下垂；2. 向中间吹气；数据处理：观察纸的运动方向",
+      "prerequisites": [
+        "流体压强与流速的关系"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [],
+      "ku_type": "experiment",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "exam_hotspots": [
+          "解释纸片靠拢的原因（伯努利原理）。",
+          "比较纸中间和外侧的气流速度与压强大小。",
+          "联系生活实例（如飞机机翼、喷雾器）。",
+          "分析实验成功的关键条件（纸张轻、吹气平行）。"
+        ],
+        "common_mistakes": [
+          "⚠️ 吹气方向不平行纸面：气流斜吹导致纸片上下受力不均，可能翻转或不动，正确做法是保持吹气方向与纸面平行。",
+          "⚠️ 纸张过重或过厚：重力远大于气压差，纸片难以靠拢，应选用轻薄纸张如A4纸。",
+          "⚠️ 吹气力度过小：气流速度不足，压强差太小，纸片无明显运动，应适度用力吹气。",
+          "⚠️ 手握纸张过紧：纸片无法自由下垂，阻碍运动，应轻捏纸张上端使其自然下垂。"
+        ],
+        "data_processing": "观察纸片是否向中间靠拢，记录靠拢程度（明显/轻微/无）。多次重复实验，控制吹气力度和方向一致，排除偶然误差。无需定量测量，定性判断即可。",
+        "design_rationale": "选用轻质纸张，确保吹气时纸片易受气流影响而运动，避免重力干扰。吹气方向平行纸面，使气流在纸间形成高速区，根据伯努利原理，流速大压强小，纸外侧大气压将纸压向中间，直观验证流体压强与流速的关系。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G8-PHYSICS-X-ku-二力平衡的条件",
+      "textbook_id": "RENJIAO-G8-PHYSICS-X",
+      "cluster_id": "RENJIAO-G8-PHYSICS-X-kc-二力平衡",
+      "name": "二力平衡的条件",
+      "description": "作用在同一物体上的两个力，如果大小相等、方向相反，并且在同一条直线上，这两个力就彼此平衡。\n【适用条件】两个力作用在同一物体上",
+      "prerequisites": [
+        "平衡状态"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [],
+      "ku_type": "physical_law",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "statement": "作用在同一物体上的两个力，如果大小相等、方向相反，并且在同一条直线上，这两个力就彼此平衡。数学表达式：F₁ = F₂，且方向相反，作用线重合。",
+        "conditions": "必须同时满足四个条件：①同一物体；②大小相等；③方向相反；④同一直线。⚠️ 缺少任一条件，物体将不能保持平衡状态，可能加速或转动。",
+        "connections": "二力平衡是牛顿第一定律的推论，也是后续学习多力平衡和力的合成的基础，与相互作用力（牛顿第三定律）有严格区别。",
+        "corollaries": "若物体在两个力作用下保持静止或匀速直线运动，则这两个力一定平衡。反之，若两个力平衡，则物体一定处于静止或匀速直线运动状态。",
+        "typical_uses": [
+          "判断物体是否处于平衡状态：分析物体受力，检查是否满足二力平衡条件。",
+          "求未知力的大小和方向：已知物体平衡，根据二力平衡条件，可求出另一个力的大小和方向。",
+          "解释静止或匀速直线运动：如悬挂的电灯、匀速行驶的汽车，其受力满足二力平衡。"
+        ],
+        "common_mistakes": [
+          "⚠️ 误认为两个力大小相等、方向相反就一定平衡，忽略了“同一物体”和“同一直线”条件。例如，人推墙时，墙也推人，但这两个力作用在不同物体上，不是平衡力。",
+          "⚠️ 混淆平衡力与相互作用力：平衡力作用在同一物体上，相互作用力作用在两个不同物体上。例如，书对桌面的压力和桌面对书的支持力是相互作用力，不是平衡力。",
+          "⚠️ 认为物体静止时一定只受两个力：物体静止可能受多个力，但所有力的合力为零，二力平衡只是其中一种特殊情况。"
+        ],
+        "physical_picture": "想象一辆静止在水平路面上的汽车，它受到向下的重力和向上的支持力，这两个力大小相等、方向相反、作用在同一直线上，因此汽车保持静止状态。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G8-PHYSICS-X-ku-人造地球卫星的机械能转化",
+      "textbook_id": "RENJIAO-G8-PHYSICS-X",
+      "cluster_id": "RENJIAO-G8-PHYSICS-X-kc-机械能及其转化与守恒",
+      "name": "人造地球卫星的机械能转化",
+      "description": "人造地球卫星沿椭圆轨道绕地球运行，在近地点动能最大、势能最小，在远地点势能最大、动能最小，机械能守恒。\n【适用条件】在大气层外运行，不受空气阻力",
+      "prerequisites": [
+        "机械能守恒定律"
+      ],
+      "related_kus": [],
+      "difficulty": 0.7,
+      "exam_frequency": "mid",
+      "question_types": [],
+      "ku_type": "physical_model",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "conditions": "适用条件：卫星在大气层外运行，无空气阻力。⚠️ 不可用判断：若卫星轨道高度较低（如近地轨道），空气阻力不可忽略，机械能不守恒。",
+        "motivation": "引入这个模型是为了简化卫星在椭圆轨道上运动时的能量分析，忽略空气阻力等复杂因素，突出机械能守恒的核心规律。",
+        "assumptions": [
+          "卫星在大气层外运行，不受空气阻力",
+          "地球引力是唯一对卫星做功的力",
+          "卫星质量远小于地球质量，地球视为静止"
+        ],
+        "limitations": "实际中，即使在大气层外，卫星仍受太阳风、地球非球形引力等微小扰动，机械能并非严格守恒，但误差很小。",
+        "typical_scenarios": [
+          "分析卫星从近地点向远地点运动时动能和势能的变化",
+          "计算卫星在近地点和远地点的速度大小关系",
+          "解释卫星变轨过程中机械能的变化（需结合外力做功）"
+        ]
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G8-PHYSICS-X-ku-做功的两个必要因素",
+      "textbook_id": "RENJIAO-G8-PHYSICS-X",
+      "cluster_id": "RENJIAO-G8-PHYSICS-X-kc-功的概念与计算",
+      "name": "做功的两个必要因素",
+      "description": "力学里所说的做功包含两个必要因素：一是作用在物体上的力；二是物体在这个力的方向上移动的距离。\n【适用条件】判断力是否做功时使用",
+      "prerequisites": [
+        "功的概念"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [],
+      "ku_type": "physical_concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "例1：用10N的水平推力推箱子，箱子沿水平方向移动5m，求推力做功。解：$W = Fs = 10\\,\\text{N} \\times 5\\,\\text{m} = 50\\,\\text{J}$。",
+          "例2：用50N的力竖直向上提水桶，但水桶静止未动，求提力做功。解：$s=0$，$W=0\\,\\text{J}$。"
+        ],
+        "intuition": "为什么搬起石头没动会觉得累，但物理学中却说没做功？因为物理学中的'做功'必须同时满足'力'和'在力的方向上移动距离'两个条件，否则即使费力也不算做功。",
+        "definition": "力学中，做功是指作用在物体上的力，使物体在力的方向上移动一段距离。数学表达式：$W = Fs$，其中$W$是功（标量，单位焦耳J），$F$是力（矢量，单位牛顿N），$s$是物体在力的方向上移动的距离（标量，单位米m）。",
+        "key_points": [
+          "⚠️ 物体移动的距离必须与力的方向一致，若方向垂直，则力不做功（如提着水桶水平行走，提力不做功）。",
+          "⚠️ 物体移动的距离必须是力持续作用期间发生的，撤去力后物体靠惯性移动，力不做功。",
+          "⚠️ 力与距离必须对应同一物体，不能张冠李戴。"
+        ],
+        "connections": "功与机械效率：有用功与总功的比值是机械效率（$\\eta = W_{\\text{有}}/W_{\\text{总}}$），反映机械性能。",
+        "common_mistakes": [
+          "⚠️ 误以为只要有力且物体移动就做功，忽略方向一致性。例如：人提着水桶水平行走，提力竖直向上，但移动方向水平，提力不做功。",
+          "⚠️ 误以为物体移动距离就是力的作用距离。例如：踢球后球飞出10m，脚对球的力只在脚接触球的瞬间做功，球飞出后脚力消失，不做功。",
+          "⚠️ 混淆力与距离的对应关系。例如：用绳子拉小车，绳子拉力对小车做功，但人拉绳子的力对绳子做功，不能混为一谈。"
+        ],
+        "counter_examples": "功与功率：功是力在空间上的积累（$W=Fs$），功率是做功的快慢（$P=W/t$），两者不同。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G8-PHYSICS-X-ku-决定浮力大小的因素",
+      "textbook_id": "RENJIAO-G8-PHYSICS-X",
+      "cluster_id": "RENJIAO-G8-PHYSICS-X-kc-浮力大小的探究与测量",
+      "name": "决定浮力大小的因素",
+      "description": "物体在液体中所受浮力的大小，跟它浸在液体中的体积有关、跟液体的密度有关。浸在液体中的体积越大、液体的密度越大，浮力就越大。\n【适用条件】物体浸在液体中",
+      "prerequisites": [
+        "浮力的概念"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [],
+      "ku_type": "physical_law",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "statement": "物体在液体中所受浮力的大小，等于它排开的液体所受的重力，即 $F_\\text{浮} = G_\\text{排} = \\rho_\\text{液} g V_\\text{排}$，其中 $\\rho_\\text{液}$ 为液体密度，$V_\\text{排}$ 为物体排开液体的体积，$g$ 为重力常数，浮力方向竖直向上。",
+        "conditions": "物体必须浸在液体中（包括部分浸入），且液体处于静止或匀速运动状态。⚠️ 若物体与容器底部紧密接触（如桥墩），下表面无液体，则浮力可能为零或显著减小。",
+        "connections": "浮力定律是阿基米德原理的核心内容，与液体压强（$p = \\rho gh$）共同解释浮力产生的原因，并与二力平衡结合分析物体的浮沉状态。",
+        "corollaries": "由 $F_\\text{浮} = \\rho_\\text{液} g V_\\text{排}$ 可得，当物体漂浮时 $F_\\text{浮} = G$，故 $\\rho_\\text{液} g V_\\text{排} = \\rho_\\text{物} g V_\\text{物}$，即 $V_\\text{排} / V_\\text{物} = \\rho_\\text{物} / \\rho_\\text{液}$。",
+        "typical_uses": [
+          "比较不同物体在相同液体中的浮力：直接比较 $V_\\text{排}$，排开液体体积越大，浮力越大。",
+          "计算物体在液体中的视重：$F_\\text{示} = G - F_\\text{浮}$，用于弹簧测力计测浮力。",
+          "判断物体浮沉：比较 $F_\\text{浮}$ 与 $G$ 的大小，或比较 $\\rho_\\text{物}$ 与 $\\rho_\\text{液}$。"
+        ],
+        "common_mistakes": [
+          "⚠️ 误认为浮力与物体深度有关：实际上浮力只取决于 $V_\\text{排}$ 和 $\\rho_\\text{液}$，与深度无关（除非深度影响 $\\rho_\\text{液}$ 或 $g$）。",
+          "⚠️ 混淆 $V_\\text{排}$ 与物体体积：只有物体完全浸没时 $V_\\text{排} = V_\\text{物}$，部分浸入时 $V_\\text{排} < V_\\text{物}$。",
+          "⚠️ 忽略液体密度变化：同一物体在不同液体中（如水和盐水），即使 $V_\\text{排}$ 相同，浮力也不同。"
+        ],
+        "physical_picture": "想象一个浸在液体中的物体，液体对物体上下表面产生压力差，下表面压力大于上表面，这个向上的合力就是浮力。物体排开的液体越多，这个压力差就越大。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G8-PHYSICS-X-ku-力的三要素",
+      "textbook_id": "RENJIAO-G8-PHYSICS-X",
+      "cluster_id": "RENJIAO-G8-PHYSICS-X-kc-力的基本概念与作用效果",
+      "name": "力的三要素",
+      "description": "力的大小、方向、作用点叫做力的三要素，它们都会影响力的作用效果。",
+      "prerequisites": [
+        "力的概念"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [],
+      "ku_type": "physical_concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "用10N的力推一个箱子，作用点在箱子左侧中央，方向水平向右，箱子向右移动；若作用点不变，方向改为斜向上45°，箱子可能被抬起而非平移。",
+          "用同样5N的力关门：手推在门把手（离门轴远）比推在门轴附近（离门轴近）更容易，因为作用点不同导致力臂不同。"
+        ],
+        "intuition": "推门时，手推在门把手上比推在门轴附近更容易打开，说明力的作用点不同，效果不同；同样大小的力，方向不同（向上提或向下压）效果也不同。",
+        "definition": "力的三要素是力的大小、方向和作用点。力是矢量，用带箭头的线段表示，线段长度表示大小，箭头指向表示方向，起点表示作用点。单位：牛顿（N）。",
+        "key_points": [
+          "⚠️ 力的作用点不在物体重心，而在实际接触点；画力的示意图时，起点必须画在作用点上。",
+          "⚠️ 力的大小和方向都相同，但作用点不同，效果可能完全不同（如推门）。",
+          "⚠️ 力的三要素中任意一个改变，力的作用效果都可能改变。"
+        ],
+        "connections": "力的三要素与力的作用效果（形变和运动状态改变）直接相关；在杠杆中，作用点影响力臂，进而影响力矩。",
+        "common_mistakes": [
+          "⚠️ 误认为力的作用点就是物体的重心，实际上作用点是力直接施加的位置，如推桌子时作用点在接触面。",
+          "⚠️ 画力的示意图时，将箭头画在物体中心而非作用点，导致方向表示错误。",
+          "⚠️ 认为力的大小和方向相同，作用效果就一定相同，忽略了作用点的影响。"
+        ],
+        "counter_examples": "力的三要素与力的图示不同：力的图示是表示三要素的图形工具，而三要素是力本身的属性。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G8-PHYSICS-X-ku-力的作用效果",
+      "textbook_id": "RENJIAO-G8-PHYSICS-X",
+      "cluster_id": "RENJIAO-G8-PHYSICS-X-kc-力的基本概念与作用效果",
+      "name": "力的作用效果",
+      "description": "力可以改变物体的形状（使物体发生形变），也可以改变物体的运动状态（包括由静止到运动、由运动到静止、运动快慢或方向改变）。",
+      "prerequisites": [
+        "力的概念"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [],
+      "ku_type": "physical_concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "情景1：用10N的力推静止在水平面上的小车，小车从静止开始运动，速度从0增加到2m/s，说明力改变了小车的运动状态（由静到动）。",
+          "情景2：用手将弹簧拉长5cm，弹簧形状改变，说明力使物体发生形变；若松手，弹簧恢复原状，这是弹性形变。"
+        ],
+        "intuition": "为什么踢球时球会飞出去，而捏橡皮泥时它却变形？力就像一双看不见的手，既能推动物体动起来，也能把物体捏扁或拉长。",
+        "definition": "力是物体对物体的作用，其作用效果有两种：使物体发生形变（形状改变）或改变物体的运动状态（速度大小或方向改变）。力是矢量，单位是牛顿（N）。",
+        "key_points": [
+          "⚠️ 运动状态改变不仅指速度大小变化（如加速、减速），还包括速度方向变化（如匀速圆周运动），即使速度大小不变，方向改变也属于运动状态改变。",
+          "⚠️ 形变不一定肉眼可见，微小形变（如桌面放书）也是形变，只是需要放大才能观察到。",
+          "⚠️ 力不是维持运动的原因，而是改变运动状态的原因——物体不受力时保持静止或匀速直线运动（牛顿第一定律）。"
+        ],
+        "connections": "力的作用效果与牛顿第一定律（惯性定律）直接相关：力是改变物体运动状态的原因，而惯性是物体保持原有运动状态的性质。",
+        "common_mistakes": [
+          "⚠️ 误认为只有速度大小变化才叫运动状态改变，忽略方向变化（如匀速转弯的汽车，运动状态也在改变）。",
+          "⚠️ 认为形变必须肉眼可见，忽略微小形变（如压桌子时桌子发生微小形变）。",
+          "⚠️ 混淆“力”与“运动”的关系，认为有力物体就运动，无力物体就静止（实际上物体不受力时可能做匀速直线运动）。"
+        ],
+        "counter_examples": "“力使物体运动”是常见误解，实际上力是改变运动状态的原因，而不是维持运动的原因；例如踢出去的足球最终会停下，是因为受到阻力（力）改变了它的运动状态。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G8-PHYSICS-X-ku-力的作用是相互的",
+      "textbook_id": "RENJIAO-G8-PHYSICS-X",
+      "cluster_id": "RENJIAO-G8-PHYSICS-X-kc-力的基本概念与作用效果",
+      "name": "力的作用是相互的",
+      "description": "一个物体对另一个物体施力时，另一个物体也同时对它施加力的作用，即物体间力的作用是相互的。",
+      "prerequisites": [
+        "力的概念"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [],
+      "ku_type": "physical_law",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "statement": "物体间力的作用是相互的，即作用力与反作用力大小相等、方向相反、作用在同一直线上，且分别作用在两个不同物体上。数学表达式：$\\vec{F}_{AB} = -\\vec{F}_{BA}$，其中$\\vec{F}_{AB}$表示A对B的作用力，$\\vec{F}_{BA}$表示B对A的反作用力。",
+        "conditions": "该规律普遍成立，无特殊限制。⚠️ 若误认为作用力与反作用力作用在同一物体上，则无法解释物体运动状态的变化，如人推车时车也推人，但人车运动不同。",
+        "connections": "与牛顿第三定律等价，是分析物体受力时区分平衡力与相互作用力的基础。",
+        "corollaries": "1. 一对作用力与反作用力总是同种性质的力（如都是弹力或都是摩擦力）。2. 作用力与反作用力大小相等，与物体运动状态无关。",
+        "typical_uses": [
+          "分析人走路：脚向后蹬地，地给脚向前的反作用力，使人前进。",
+          "解释火箭升空：火箭向下喷出气体，气体给火箭向上的反作用力。",
+          "判断力的存在：如用手拉弹簧，弹簧对手也有拉力，证明力是相互的。"
+        ],
+        "common_mistakes": [
+          "⚠️ 误认为作用力与反作用力可以抵消。正确做法：它们作用在不同物体上，不能求合力，因此不会抵消。",
+          "⚠️ 认为先有作用力后有反作用力。正确做法：两者同时产生、同时消失，无先后之分。",
+          "⚠️ 认为只有接触物体间才有相互作用力。正确做法：不接触的物体间（如磁铁吸引铁钉）也存在相互作用力。"
+        ],
+        "physical_picture": "想象你站在滑板上推墙，墙不动，但你却向后滑去。这是因为你推墙时，墙也以同样大小的力反推你，让你后退。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G8-PHYSICS-X-ku-力的概念",
+      "textbook_id": "RENJIAO-G8-PHYSICS-X",
+      "cluster_id": "RENJIAO-G8-PHYSICS-X-kc-力的基本概念与作用效果",
+      "name": "力的概念",
+      "description": "力是物体对物体的作用，用符号F表示，单位是牛顿（N）。发生作用的两个物体，一个是施力物体，另一个是受力物体。",
+      "prerequisites": [],
+      "related_kus": [],
+      "difficulty": 0.2,
+      "exam_frequency": "mid",
+      "question_types": [],
+      "ku_type": "physical_concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "人用10N的力水平推桌子，桌子受到10N的推力，施力物体是人，受力物体是桌子。",
+          "用手拍桌子，手对桌子施加向下的力，同时桌子对手施加向上的反作用力，手会感到疼。"
+        ],
+        "intuition": "为什么推车会动、踢球会飞？因为一个物体对另一个物体施加了推、拉、提、压等作用，这种作用就是力。没有力，静止的物体不会自己动起来。",
+        "definition": "力是物体对物体的作用，用符号F表示，单位是牛顿（N）。力是矢量，既有大小又有方向。发生作用的两个物体，一个是施力物体，另一个是受力物体。",
+        "key_points": [
+          "⚠️ 力不能离开物体单独存在，一个力必然对应两个物体（施力物体和受力物体）。",
+          "⚠️ 物体间力的作用是相互的，施力物体同时也是受力物体。",
+          "⚠️ 相互接触的物体不一定有力的作用（如并排放置但不挤压的两本书），不接触的物体也可能有力的作用（如磁铁吸引铁钉）。"
+        ],
+        "connections": "力与运动状态改变（牛顿第一定律）直接相关，力也是压强（压力/受力面积）和功（力×距离）计算的基础。",
+        "common_mistakes": [
+          "⚠️ 误认为只有接触才有力：如磁铁吸引铁钉，不接触也有力。",
+          "⚠️ 误认为施力物体不受到力：如手推墙，手也受到墙的反作用力。",
+          "⚠️ 混淆“力”与“质量”：力是作用，单位是牛顿；质量是物体所含物质的多少，单位是千克。"
+        ],
+        "counter_examples": "力不是“物体具有的某种属性”，而是物体间的相互作用。不能说“桌子有10N的力”，只能说“桌子受到10N的推力”。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G8-PHYSICS-X-ku-力的示意图",
+      "textbook_id": "RENJIAO-G8-PHYSICS-X",
+      "cluster_id": "RENJIAO-G8-PHYSICS-X-kc-力的基本概念与作用效果",
+      "name": "力的示意图",
+      "description": "用一条带箭头的线段表示力：在受力物体上沿力的方向画线段，末端画箭头表示方向，起点或终点表示作用点，线段长度表示力的大小，可标数值和单位。\n【适用条件】适用于表示任何力，通常在同一图中力越大线段越长。",
+      "prerequisites": [
+        "力的三要素"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [],
+      "ku_type": "method",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "steps": [
+          "第1步：确定受力物体，在物体上标出力的作用点（可用小圆点或线段起点）。",
+          "第2步：从作用点沿力的方向画一条线段，线段长度按比例表示力的大小（力越大线段越长）。",
+          "第3步：在线段末端画一个箭头，箭头指向力的方向。",
+          "第4步（可选）：在箭头旁标注力的大小数值和单位（如F=10N），或力的符号（如G、F拉）。"
+        ],
+        "example": "题目：用示意图表示水平向右、大小为20N的拉力F拉木块。\n解题：在木块右侧画一作用点，从该点向右画一条水平线段，长度适中；在线段右端画箭头；在箭头旁标注“F=20N”。",
+        "key_points": [
+          "⚠️ 作用点必须画在受力物体上，不能画在施力物体上。",
+          "⚠️ 线段长度要大致反映力的大小比例，同一图中力越大线段越长。",
+          "⚠️ 箭头必须画在线段末端，不能画在线段中间或起点。"
+        ],
+        "when_to_use": "当需要直观表示一个力的大小、方向和作用点三个要素时，使用力的示意图。通常用于分析物体受力或比较多个力的大小关系。",
+        "common_mistakes": [
+          "⚠️ 错误：将箭头画在线段中间或起点，导致方向不明。正确做法：箭头必须在线段末端。",
+          "⚠️ 错误：作用点画在施力物体（如手）上。正确做法：作用点画在受力物体（如木块）上。"
+        ]
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G8-PHYSICS-X-ku-功率的概念",
+      "textbook_id": "RENJIAO-G8-PHYSICS-X",
+      "cluster_id": "RENJIAO-G8-PHYSICS-X-kc-功率的概念与计算",
+      "name": "功率的概念",
+      "description": "功与做功所用时间之比叫做功率，表示做功的快慢，数值上等于单位时间内所做的功。",
+      "prerequisites": [
+        "功的计算公式"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [],
+      "ku_type": "physical_concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "一台起重机在10秒内将重物提升，做功20000 J，则功率 $P = \\frac{20000\\,\\text{J}}{10\\,\\text{s}} = 2000\\,\\text{W}$。",
+          "小明用50 N的力将箱子匀速推上3 m高的斜坡，用时6 s，则做功 $W = 50\\,\\text{N} \\times 3\\,\\text{m} = 150\\,\\text{J}$，功率 $P = \\frac{150\\,\\text{J}}{6\\,\\text{s}} = 25\\,\\text{W}$。"
+        ],
+        "intuition": "为什么搬同样多的砖，有人快有人慢？功率就是用来衡量做功快慢的，就像速度衡量运动快慢一样。",
+        "definition": "功率是功与做功所用时间之比，表示做功的快慢。数学表达式为 $P = \\frac{W}{t}$，其中 $W$ 是功（单位：焦耳，J），$t$ 是时间（单位：秒，s）。功率是标量，单位是瓦特（W），1 W = 1 J/s。",
+        "key_points": [
+          "⚠️ 功率大不一定做功多，还要看时间；功率小但时间长，做功也可能多。",
+          "⚠️ 功率是比值定义，与 $W$ 和 $t$ 的具体大小无关，只反映快慢。",
+          "⚠️ 功率的符号 $P$ 不要与压强符号 $p$ 混淆。"
+        ],
+        "connections": "功率与速度类似，都是比值定义；与机械效率结合可分析机械性能，如功率大但效率低可能浪费能量。",
+        "common_mistakes": [
+          "⚠️ 误认为功率越大做功越多，忽略了时间因素。",
+          "⚠️ 计算时忘记将时间单位统一为秒，如用分钟直接代入公式。",
+          "⚠️ 混淆功率符号 $P$ 与压强符号 $p$，导致公式写错。"
+        ],
+        "counter_examples": "功率与机械效率不同：功率衡量做功快慢，效率衡量有用功占总功的比例，两者无关。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G8-PHYSICS-X-ku-功率的计算公式",
+      "textbook_id": "RENJIAO-G8-PHYSICS-X",
+      "cluster_id": "RENJIAO-G8-PHYSICS-X-kc-功率的概念与计算",
+      "name": "功率的计算公式",
+      "description": "功率的表达式为P = W/t，其中W为功，t为时间。\n【适用条件】功W与时间t对应同一过程",
+      "prerequisites": [
+        "功率的概念"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [],
+      "ku_type": "formula",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "formula": "功率公式：$P = \\frac{W}{t}$，其中 $W$ 为功（单位：焦耳，J），$t$ 为时间（单位：秒，s），功率 $P$ 的单位为瓦特（W，1 W = 1 J/s）。",
+        "variants": [
+          "$W = Pt$：已知功率和时间，求功（如计算电器消耗的电能）。",
+          "$t = \\frac{W}{P}$：已知功和功率，求做功时间（如估算机器运行时长）。",
+          "结合 $W = Fs$ 得 $P = Fv$：用于恒力做功且速度恒定时，求瞬时功率或平均功率。"
+        ],
+        "conditions": "适用条件：功 $W$ 与时间 $t$ 必须对应同一做功过程，且 $t$ 不为零。若做功过程不均匀，$P$ 表示平均功率。",
+        "derivation": "功率是描述做功快慢的物理量，等于单位时间内所做的功。记忆口诀：“功除以时得功率，快慢一目了然。”",
+        "typical_uses": [
+          "计算机械或电器的额定功率（如灯泡铭牌上的功率）。",
+          "比较不同物体做功的快慢（如起重机与人的功率对比）。",
+          "结合速度公式求牵引力或速度（如汽车爬坡时的功率问题）。"
+        ],
+        "common_mistakes": [
+          "⚠️ 误将总功与部分时间对应：如用全程总功除以某段短时间，正确做法是功与时间必须对应同一段过程。",
+          "⚠️ 单位混淆：如功用千瓦时（kW·h）而时间用秒，正确做法是统一单位（1 kW·h = 3.6×10⁶ J）。",
+          "⚠️ 忽略功率的瞬时性：用 $P = Fv$ 时，若 $v$ 是平均速度，则 $P$ 为平均功率；若 $v$ 是瞬时速度，则 $P$ 为瞬时功率。"
+        ]
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G8-PHYSICS-X-ku-功的概念",
+      "textbook_id": "RENJIAO-G8-PHYSICS-X",
+      "cluster_id": "RENJIAO-G8-PHYSICS-X-kc-功的概念与计算",
+      "name": "功的概念",
+      "description": "如果一个力作用在物体上，物体在这个力的方向上移动了一段距离，就说这个力对物体做了功。\n【适用条件】力与位移方向一致，且物体在力的方向上移动距离",
+      "prerequisites": [],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [],
+      "ku_type": "physical_concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "用10 N的水平推力推箱子，箱子沿推力方向移动5 m，则推力做功：$W = 10\\,\\text{N} \\times 5\\,\\text{m} = 50\\,\\text{J}$。",
+          "用20 N的力竖直向上提水桶，但水桶静止不动，位移为0，则力不做功（$W=0$）。"
+        ],
+        "intuition": "为什么搬起重物会累，而推墙却不会累？功就是用来量化力在空间上累积效果的物理量，它告诉我们力到底有没有‘产生效果’。",
+        "definition": "功等于力与物体在力的方向上移动距离的乘积。数学表达式：$W = F \\cdot s$，其中$F$是作用在物体上的力（单位：牛顿，N），$s$是物体在力的方向上移动的距离（单位：米，m）。功是标量，单位是焦耳（J），$1\\,\\text{J} = 1\\,\\text{N} \\cdot \\text{m}$。",
+        "key_points": [
+          "⚠️ 物体移动方向必须与力的方向一致（或至少在同一直线上）才算做功，垂直方向移动时力不做功。",
+          "⚠️ 即使物体移动了，如果力与位移方向垂直（如提着水桶水平行走），力也不做功。",
+          "⚠️ 功是过程量，与具体路径无关，只与力和沿力方向的位移有关。"
+        ],
+        "connections": "功与能量密切相关：做功的过程就是能量转化的过程，做了多少功就有多少能量发生转化（如重力做功对应重力势能变化）。",
+        "common_mistakes": [
+          "⚠️ 误认为只要物体移动了力就一定做功：例如提着水桶水平行走，拉力竖直向上，位移水平，两者垂直，拉力不做功。",
+          "⚠️ 混淆距离与路程：功中的距离是物体在力的方向上移动的直线距离，不是物体实际走过的总路程。",
+          "⚠️ 忘记考虑力的方向：计算功时，必须取力与位移方向一致的分量，不能直接用合力或任意方向的力。"
+        ],
+        "counter_examples": "功率是描述做功快慢的物理量，而功是描述力在空间上累积效果的物理量，两者不同：功率大不一定做功多，还要看时间。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G8-PHYSICS-X-ku-功的计算公式",
+      "textbook_id": "RENJIAO-G8-PHYSICS-X",
+      "cluster_id": "RENJIAO-G8-PHYSICS-X-kc-功的概念与计算",
+      "name": "功的计算公式",
+      "description": "功等于力与物体在力的方向上移动的距离的乘积，即W = Fs。\n【适用条件】力F与位移s方向相同，且F为恒力",
+      "prerequisites": [
+        "功的概念"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [],
+      "ku_type": "formula",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "formula": "功的计算公式：$W = Fs$，其中 $W$ 表示功，单位焦耳（J）；$F$ 表示作用在物体上的力，单位牛顿（N）；$s$ 表示物体在力的方向上移动的距离，单位米（m）。",
+        "variants": [
+          "变形 $F = \\frac{W}{s}$：已知功和距离，求力的大小。",
+          "变形 $s = \\frac{W}{F}$：已知功和力，求物体在力的方向上移动的距离。",
+          "变形 $W = Fs\\cos\\theta$：当力与位移方向夹角为 $\\theta$ 时，计算功的通用公式。"
+        ],
+        "conditions": "适用条件：力 $F$ 为恒力，且物体在力的方向上移动距离 $s$，即力与位移方向相同。若力与位移方向垂直，则不做功；若方向有夹角，需用 $W = Fs\\cos\\theta$。",
+        "derivation": "力乘距离得功，方向一致才算数；恒力直线功易求，单位焦耳记清楚。",
+        "typical_uses": [
+          "计算水平推力对物体做的功，如推箱子。",
+          "计算竖直向上提物体克服重力做的功，如提水桶上楼。",
+          "计算斜面拉动物体时拉力做的功（需注意拉力方向与斜面平行）。"
+        ],
+        "common_mistakes": [
+          "⚠️ 误将物体移动的总距离当作 $s$：如物体在水平面上被推10米，但推力方向与水平面成30°角，错误直接代入10米，正确做法是取推力方向上的分位移 $s\\cos30°$。",
+          "⚠️ 忽略力的方向与位移方向不一致：如提着水桶水平行走，误以为提力做功，实际提力竖直向上，位移水平，提力不做功。",
+          "⚠️ 混淆重力做功与拉力做功：如物体被竖直提升，误用拉力乘以总路程，正确应使用拉力乘以竖直方向上的位移。"
+        ]
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G8-PHYSICS-X-ku-动滑轮定义与特点",
+      "textbook_id": "RENJIAO-G8-PHYSICS-X",
+      "cluster_id": "RENJIAO-G8-PHYSICS-X-kc-滑轮与滑轮组",
+      "name": "动滑轮定义与特点",
+      "description": "轴随被吊物体一起运动的滑轮。使用动滑轮可以省力，但不改变力的方向，且费距离。\n【适用条件】不计绳重和摩擦，动滑轮自重不计",
+      "prerequisites": [],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [],
+      "ku_type": "physical_concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "用动滑轮提升 100 N 的重物，不计摩擦和动滑轮重，拉力 F = 100 N / 2 = 50 N。若物体上升 2 m，绳子自由端需拉 4 m。",
+          "若动滑轮自重 10 N，仍提升 100 N 重物，不计摩擦，则拉力 F = (100 N + 10 N) / 2 = 55 N。"
+        ],
+        "intuition": "当你一个人搬不动重物时，动滑轮就像一位帮手，帮你分担一半的重量，让你轻松提起重物。",
+        "definition": "动滑轮是轴随被吊物体一起运动的滑轮。使用动滑轮可以省力，但不改变力的方向，且费距离。不计绳重和摩擦、动滑轮自重不计时，拉力 F = G/2，其中 G 为物重，F 为拉力，单位均为牛顿（N）。",
+        "key_points": [
+          "⚠️ 动滑轮省力一半的前提是“不计动滑轮自重和摩擦”，实际中动滑轮有自重，拉力 F > G/2。",
+          "⚠️ 动滑轮费距离：绳子自由端移动距离 s 是物体上升高度 h 的 2 倍，即 s = 2h。",
+          "⚠️ 动滑轮不改变力的方向：拉力方向与物体运动方向相同（向上拉），而使用定滑轮可以改变方向。"
+        ],
+        "connections": "动滑轮与杠杆原理相关：动滑轮可视为动力臂为阻力臂 2 倍的省力杠杆；与功的原理相关：使用动滑轮省力但费距离，不省功。",
+        "common_mistakes": [
+          "⚠️ 误以为动滑轮一定省力一半：实际中若动滑轮有自重或存在摩擦，拉力会大于物重的一半。",
+          "⚠️ 混淆绳子自由端移动距离与物体上升距离：错误认为 s = h，实际 s = 2h。",
+          "⚠️ 忽略“不计绳重和摩擦”条件：在计算中直接套用 F = G/2，未考虑额外因素。"
+        ],
+        "counter_examples": "定滑轮：轴固定不动，不省力但改变力的方向；动滑轮：轴随物体移动，省力但不改变方向。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G8-PHYSICS-X-ku-动能和势能的相互转化",
+      "textbook_id": "RENJIAO-G8-PHYSICS-X",
+      "cluster_id": "RENJIAO-G8-PHYSICS-X-kc-机械能及其转化与守恒",
+      "name": "动能和势能的相互转化",
+      "description": "动能和势能可以相互转化，例如物体下落时重力势能转化为动能，弯弓射箭时弹性势能转化为动能。",
+      "prerequisites": [
+        "机械能的概念"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [],
+      "ku_type": "physical_law",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "statement": "在只有重力或弹力做功的系统中，动能和势能可以相互转化，但机械能总量保持不变。数学表达式：$E_{k1}+E_{p1}=E_{k2}+E_{p2}$，其中 $E_k=\\frac{1}{2}mv^2$ 为动能，$E_p=mgh$ 为重力势能（或 $E_p=\\frac{1}{2}kx^2$ 为弹性势能）。",
+        "conditions": "成立条件：只有重力或弹力做功，无其他外力（如摩擦力、空气阻力）做功。⚠️ 若存在摩擦力，部分机械能会转化为内能，导致机械能减少，不能直接用该规律。",
+        "connections": "该规律是机械能守恒定律的特例，而机械能守恒又是能量守恒定律在力学中的体现，与功、功率等概念紧密相关。",
+        "corollaries": "机械能守恒定律：$\\Delta E_k = -\\Delta E_p$，即动能增量等于势能减少量。对于弹簧系统，$\\frac{1}{2}mv^2 + \\frac{1}{2}kx^2 = \\text{常量}$。",
+        "typical_uses": [
+          "物体自由下落：重力势能转化为动能，求落地速度时直接用 $mgh=\\frac{1}{2}mv^2$。",
+          "单摆摆动：最高点势能最大，最低点动能最大，忽略阻力时机械能守恒。",
+          "弹簧振子：压缩或拉伸弹簧后释放，弹性势能与动能相互转化，求最大速度。"
+        ],
+        "common_mistakes": [
+          "⚠️ 误认为‘动能增加时势能一定减少’：正确说法是‘在只有重力或弹力做功时’才成立，若有外力做功则不一定。",
+          "⚠️ 忽略方向性：势能减少量等于动能增加量，但需注意势能参考面（如地面）的选择会影响具体数值，但差值不变。",
+          "⚠️ 混淆弹性势能与重力势能：弹性势能公式 $E_p=\\frac{1}{2}kx^2$ 中的 $x$ 是形变量，不是弹簧长度。"
+        ],
+        "physical_picture": "想象一个过山车从高处滑下，速度越来越快，同时高度降低；随后冲上另一个高坡，速度减慢，高度回升。这就像能量在动能和势能之间来回‘转账’，总量不变。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G8-PHYSICS-X-ku-动能大小的影响因素",
+      "textbook_id": "RENJIAO-G8-PHYSICS-X",
+      "cluster_id": "RENJIAO-G8-PHYSICS-X-kc-动能及其影响因素",
+      "name": "动能大小的影响因素",
+      "description": "质量相同的物体，运动的速度越大，动能越大；运动速度相同的物体，质量越大，动能越大。",
+      "prerequisites": [
+        "探究物体的动能跟哪些因素有关"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [],
+      "ku_type": "physical_law",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "statement": "动能大小与物体的质量和速度有关：质量相同时，速度越大动能越大；速度相同时，质量越大动能越大。数学表达式为 $E_k = \\frac{1}{2}mv^2$，其中 $E_k$ 表示动能（单位J），$m$ 表示质量（单位kg），$v$ 表示速度（单位m/s）。",
+        "conditions": "成立条件：物体做机械运动，且速度远小于光速（经典力学范围）。⚠️ 若速度接近光速，需用相对论动能公式；若物体静止（$v=0$），动能为零，不适用此规律。",
+        "connections": "动能是机械能的一种，与势能（重力势能、弹性势能）共同构成机械能，在只有重力或弹力做功时机械能守恒。",
+        "corollaries": "由 $E_k = \\frac{1}{2}mv^2$ 可推导：若动能不变，质量增大时速度减小；反之质量减小时速度增大。另外，动能变化量等于合外力做的功（动能定理）。",
+        "typical_uses": [
+          "比较不同物体动能大小：给定质量和速度，直接代入 $E_k = \\frac{1}{2}mv^2$ 计算并比较。",
+          "分析交通事故：车速越快或质量越大，动能越大，刹车距离更长，撞击破坏力更强。",
+          "解释安全限速和限载：同一路段，限制车速和质量以控制动能，避免失控。"
+        ],
+        "common_mistakes": [
+          "⚠️ 误认为动能与速度成正比：正确关系是动能与速度的平方成正比，速度加倍则动能变为4倍。",
+          "⚠️ 忽略质量的影响：只关注速度而忽略质量，例如认为慢速大卡车动能一定小于快速小轿车，实际需计算比较。",
+          "⚠️ 混淆动能与动量：动能是标量 $\\frac{1}{2}mv^2$，动量是矢量 $mv$，两者物理意义不同，不能混用。"
+        ],
+        "physical_picture": "想象两辆相同的小汽车，一辆慢速行驶，一辆高速飞驰，高速车撞到障碍物时破坏力更大；或者一辆空卡车和一辆满载卡车以相同速度行驶，满载卡车更难停下来，破坏力也更强。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G8-PHYSICS-X-ku-动能的概念",
+      "textbook_id": "RENJIAO-G8-PHYSICS-X",
+      "cluster_id": "RENJIAO-G8-PHYSICS-X-kc-动能及其影响因素",
+      "name": "动能的概念",
+      "description": "物体由于运动而具有的能叫做动能。一切运动的物体都具有动能。",
+      "prerequisites": [
+        "能量的概念"
+      ],
+      "related_kus": [],
+      "difficulty": 0.2,
+      "exam_frequency": "mid",
+      "question_types": [],
+      "ku_type": "physical_concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "一辆质量为1000 kg的汽车以20 m/s行驶，其动能为 $E_k = \\frac{1}{2} \\times 1000 \\times 20^2 = 200000$ J。",
+          "一个质量为0.5 kg的足球以10 m/s飞行，动能为 $E_k = \\frac{1}{2} \\times 0.5 \\times 10^2 = 25$ J。"
+        ],
+        "intuition": "为什么一辆高速行驶的汽车比一辆慢速的自行车更难停下来？因为运动物体具有一种“运动能量”，速度越快、质量越大，这种能量就越大。",
+        "definition": "动能是物体由于运动而具有的能量，是标量，单位是焦耳（J）。数学表达式为 $E_k = \\frac{1}{2}mv^2$，其中 $m$ 是质量（kg），$v$ 是速度（m/s）。",
+        "key_points": [
+          "⚠️ 动能与速度的平方成正比，速度加倍时动能变为原来的4倍，而非2倍。",
+          "⚠️ 动能是标量，没有方向，只与速度大小有关，与运动方向无关。",
+          "⚠️ 动能总是非负值，因为质量和速度平方均为非负。"
+        ],
+        "connections": "动能与功的关系：合外力对物体做的功等于物体动能的变化量（动能定理）。动能与动量：$E_k = \\frac{p^2}{2m}$，其中 $p$ 为动量。",
+        "common_mistakes": [
+          "⚠️ 误认为动能与速度成正比：例如速度从10 m/s增加到20 m/s，动能不是翻倍，而是变为4倍。",
+          "⚠️ 忽略质量单位换算：计算时质量必须用kg，速度用m/s，否则结果单位不是焦耳。",
+          "⚠️ 混淆动能与势能：静止在高处的物体有重力势能，但没有动能。"
+        ],
+        "counter_examples": "动能与动量不同：动量是矢量（$p=mv$），与速度方向相同；动能是标量，只与速度大小有关。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G8-PHYSICS-X-ku-单摆实验",
+      "textbook_id": "RENJIAO-G8-PHYSICS-X",
+      "cluster_id": "RENJIAO-G8-PHYSICS-X-kc-机械能及其转化与守恒",
+      "name": "单摆实验",
+      "description": "分析小球在摆动过程中动能和势能的相互转化：从A到B重力势能转化为动能，从B到C动能转化为重力势能。\n【适用条件】忽略空气阻力\n【实验】目的：观察动能和重力势能的相互转化；原理：小球摆动过程中高度变化引起重力势能变化，速度变化引起动能变化；器材：单摆装置；步骤：1. 将小球拉到A点释放；2. 观察小球经过B点（最低点）和到达C点的过程；数据处理：定性观察",
+      "prerequisites": [
+        "动能和势能的相互转化"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [],
+      "ku_type": "experiment",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "exam_hotspots": [
+          "动能和重力势能相互转化的过程分析",
+          "机械能守恒条件的判断（忽略空气阻力）",
+          "单摆摆动中能量转化与摆角的关系",
+          "实验误差来源及改进措施"
+        ],
+        "common_mistakes": [
+          "⚠️ 释放小球时施加推力→导致初始速度不为零，破坏机械能守恒条件→应无初速度释放",
+          "⚠️ 小球摆动幅度过大→超过5°时简谐近似失效，能量转化分析复杂→保持摆角小于5°",
+          "⚠️ 忽略空气阻力→实际能量有损耗，观察不到完全对称的摆动→实验中应尽量减小阻力，如使用轻质细线和小密度小球",
+          "⚠️ 误认为B点速度最大时动能最大→正确，但需注意B点重力势能最小，动能最大"
+        ],
+        "data_processing": "定性观察为主，记录小球到达最高点A和C的高度是否相同，判断机械能是否守恒。若高度逐渐降低，说明存在阻力，需分析能量损失原因。",
+        "design_rationale": "小球从A点释放，利用重力势能转化为动能，通过最低点B后动能再转化为重力势能到达C点。忽略空气阻力，机械能守恒，从而直观展示能量转化过程。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G8-PHYSICS-X-ku-压力",
+      "textbook_id": "RENJIAO-G8-PHYSICS-X",
+      "cluster_id": "RENJIAO-G8-PHYSICS-X-kc-压强概念与实验探究",
+      "name": "压力",
+      "description": "垂直作用在物体表面上的力叫做压力，方向垂直于受力面。\n【适用条件】接触面间有挤压，且接触面垂直。",
+      "prerequisites": [],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [],
+      "ku_type": "physical_concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "一个质量为50kg的人站在水平地面上，每只脚与地面接触面积为200cm²。求人对地面的压力。解：$F = G = mg = 50 \\times 9.8 = 490\\,\\text{N}$，压力为490N。",
+          "用20N的力将图钉按入木板，图钉尖面积为0.05mm²，求图钉尖对木板的压力。解：压力等于手按的力，$F = 20\\,\\text{N}$。"
+        ],
+        "intuition": "为什么人站在松软雪地上会陷下去，而穿上滑雪板就不会？因为压力的大小不仅与体重有关，还与受力面积有关。引入压力是为了定量描述垂直作用在物体表面上的力的效果。",
+        "definition": "压力是垂直作用在物体表面上的力，方向垂直于受力面。数学表达式为 $F = p \\cdot S$，其中 $F$ 为压力（单位：N），$p$ 为压强（单位：Pa），$S$ 为受力面积（单位：m²）。压力是矢量，方向垂直于接触面。",
+        "key_points": [
+          "⚠️ 压力不一定等于重力：只有物体静止在水平面上且无其他外力时，压力才等于重力；斜面上压力小于重力。",
+          "⚠️ 压力的方向总是垂直于受力面，而不是竖直向下：例如手按墙壁时，压力垂直于墙壁。",
+          "⚠️ 受力面积是两物体实际接触的面积，不是物体的底面积：如图钉尖与墙接触面积很小。"
+        ],
+        "connections": "压力与压强直接相关：$p = F/S$，压强反映压力的作用效果。压力也与支持力互为作用力与反作用力（牛顿第三定律）。",
+        "common_mistakes": [
+          "⚠️ 误认为压力总等于重力：例如物体放在斜面上，压力小于重力，因为重力分解为垂直斜面的分力和沿斜面的分力。",
+          "⚠️ 混淆受力面积与物体表面积：如计算人对地面压力时，应取两只脚与地面的接触面积，而不是人的占地面积。",
+          "⚠️ 忽略压力方向：如手推墙时，压力方向垂直于墙，而不是水平向左或向右。"
+        ],
+        "counter_examples": "压力与压强不同：压力是力，单位是N；压强是单位面积上受到的压力，单位是Pa。例如，同样压力下，受力面积越小，压强越大。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G8-PHYSICS-X-ku-压强",
+      "textbook_id": "RENJIAO-G8-PHYSICS-X",
+      "cluster_id": "RENJIAO-G8-PHYSICS-X-kc-压强概念与实验探究",
+      "name": "压强",
+      "description": "物体所受压力的大小与受力面积之比叫做压强，公式p=F/S，反映压力作用效果。\n【适用条件】固体、液体、气体均可适用，但需明确压力和受力面积。",
+      "prerequisites": [
+        "压力"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [],
+      "ku_type": "physical_concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "一个质量为 60 kg 的人站立时，每只脚面积 0.02 m²，求对地面压强。解：F=G=mg=60×10=600 N，双脚总面积 S=0.04 m²，p=600/0.04=15000 Pa。",
+          "若该人改为单脚站立，S=0.02 m²，则 p=600/0.02=30000 Pa，压强增大一倍，说明受力面积越小压强越大。"
+        ],
+        "intuition": "为什么用同样大小的力，图钉尖能扎进墙里而图钉帽不能？因为压力作用效果不仅与力的大小有关，还与受力面积有关，于是引入压强来定量描述这种效果。",
+        "definition": "压强是物体所受压力与受力面积之比，反映压力作用效果。公式 p = F/S，其中 F 为垂直作用在物体表面上的压力（单位 N），S 为受力面积（单位 m²）。压强是标量，单位帕斯卡（Pa），1 Pa = 1 N/m²。",
+        "key_points": [
+          "⚠️ 压力不一定等于重力：只有物体水平静止时，压力才等于重力；斜面上压力小于重力。",
+          "⚠️ 受力面积是两物体实际接触的面积，不是物体的底面积或表面积。",
+          "⚠️ 压强公式 p=F/S 对固体、液体、气体都适用，但液体压强还取决于深度和密度，不能直接用 F/S 计算。"
+        ],
+        "connections": "压强与压力（F=pS）和受力面积（S=F/p）相互换算；液体压强与深度（h）和液体密度（ρ）成正比，公式 p=ρgh。",
+        "common_mistakes": [
+          "⚠️ 误认为压力总是等于重力：例如用手按图钉时，压力来自手按的力，与图钉重力无关。",
+          "⚠️ 计算压强时受力面积取错：如人走路时，只算一只脚着地的面积，而不是两只脚。",
+          "⚠️ 混淆固体压强与液体压强：固体压强用 p=F/S，液体压强用 p=ρgh，不能混用。"
+        ],
+        "counter_examples": "压强与压力不同：压力是垂直作用在物体表面的力（矢量），而压强是单位面积上所受的压力（标量），反映效果。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G8-PHYSICS-X-ku-压强公式-p-f-s",
+      "textbook_id": "RENJIAO-G8-PHYSICS-X",
+      "cluster_id": "RENJIAO-G8-PHYSICS-X-kc-压强概念与实验探究",
+      "name": "压强公式 p=F/S",
+      "description": "p = F / S，其中p为压强，F为压力，S为受力面积。\n【适用条件】压力垂直于受力面，S为实际接触面积。",
+      "prerequisites": [
+        "压强"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [],
+      "ku_type": "formula",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "formula": "压强公式 $p = \\frac{F}{S}$，其中 $p$ 为压强（单位：帕斯卡，Pa，1 Pa = 1 N/m²），$F$ 为压力（单位：牛顿，N），$S$ 为受力面积（单位：平方米，m²）。压力垂直于受力面，$S$ 为实际接触面积。",
+        "variants": [
+          "$F = pS$：已知压强和受力面积，求压力。",
+          "$S = \\frac{F}{p}$：已知压力和压强，求受力面积。"
+        ],
+        "conditions": "压力必须垂直于受力面；$S$ 是实际接触面积，不是物体底面积或表面积；适用于固体、液体、气体，但液体内部压强需用 $p=\\rho gh$。",
+        "derivation": "压力除以面积得压强，压力越大压强越大，面积越小压强越大。",
+        "typical_uses": [
+          "计算固体对水平面的压强（如砖块、人站立）。",
+          "比较不同受力面积下的压强（如刀锋、滑雪板）。",
+          "求压力或受力面积（如限压阀、图钉）。"
+        ],
+        "common_mistakes": [
+          "⚠️ 误将物体重力当作压力：只有物体水平放置且无其他外力时，压力才等于重力；斜面上压力小于重力。",
+          "⚠️ 受力面积取错：如人走路时一只脚着地，面积应取一只脚的面积，不是两只脚。",
+          "⚠️ 单位不统一：压力用 N，面积用 cm² 时未换算成 m²，导致压强数值错误。"
+        ]
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G8-PHYSICS-X-ku-口吹硬币跳越木块实验",
+      "textbook_id": "RENJIAO-G8-PHYSICS-X",
+      "cluster_id": "RENJIAO-G8-PHYSICS-X-kc-流体压强与流速关系及应用",
+      "name": "口吹硬币跳越木块实验",
+      "description": "在硬币上方沿桌面方向吹气，硬币上方空气流速大压强小，下方压强大，硬币跳起。\n【适用条件】硬币轻，桌面光滑，吹气方向平行桌面。\n【实验】目的：探究流体压强与流速的关系；原理：流速大压强小，产生压力差；器材：铝质硬币、木块、笔记本；步骤：1. 硬币前放木块，后放笔记本；2. 在硬币上方沿桌面吹气；数据处理：观察硬币是否跳起",
+      "prerequisites": [
+        "流体压强与流速的关系"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [],
+      "ku_type": "experiment",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "exam_hotspots": [
+          "流体压强与流速的关系（流速大压强小）",
+          "压力差产生的原因及方向判断",
+          "实验变量控制（质量、光滑度、吹气方向）",
+          "生活应用举例（如飞机机翼、喷雾器）"
+        ],
+        "common_mistakes": [
+          "⚠️ 吹气方向倾斜向上→气流未充分流经硬币上方，压力差不足→保持吹气方向严格平行桌面",
+          "⚠️ 硬币过重（如铁质）→所需压力差大，不易跳起→选用轻质铝币",
+          "⚠️ 桌面粗糙或硬币下有杂物→增大摩擦力，阻碍硬币跳起→确保桌面光滑干净",
+          "⚠️ 木块与硬币间距过大→气流分散，流速差减小→木块紧贴硬币前方放置"
+        ],
+        "data_processing": "观察硬币是否跳起并记录跳起高度（目测或尺量）；重复实验3次取平均值减小偶然误差；若硬币未跳起，检查吹气方向、桌面光滑度及硬币质量是否合适。",
+        "design_rationale": "铝质硬币质量小，易被气流扰动；木块阻挡气流使硬币上方流速增大，笔记本阻挡后方气流防止干扰；吹气方向平行桌面确保气流主要流经硬币上方，形成压力差使硬币跳起。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G8-PHYSICS-X-ku-塑料袋热气球实验",
+      "textbook_id": "RENJIAO-G8-PHYSICS-X",
+      "cluster_id": "RENJIAO-G8-PHYSICS-X-kc-浮力相关实验活动",
+      "name": "塑料袋热气球实验",
+      "description": "用薄塑料袋和电吹风制作热气球，利用热空气密度小获得浮力上升。\n【实验】目的：体验热气球升空原理；原理：热空气密度小于冷空气，产生浮力；器材：薄塑料袋、细铜丝、电吹风；步骤：1. 用铜丝框成圆口固定在袋口；2. 用电吹风向袋内吹热空气；3. 放手观察塑料袋上升；数据处理：定性观察",
+      "prerequisites": [
+        "气球和飞艇的浮沉原理"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [],
+      "ku_type": "experiment",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "exam_hotspots": [
+          "热空气密度小导致浮力（阿基米德原理应用）",
+          "塑料袋上升过程中受力分析（浮力与重力比较）",
+          "实验改进：如何增大浮力（增大体积或减小自重）",
+          "与真实热气球对比：燃烧器加热空气与电吹风原理异同"
+        ],
+        "common_mistakes": [
+          "⚠️ 电吹风距离袋口太近：高温熔化塑料袋或烫伤手→应保持10-15cm距离，用中温档。",
+          "⚠️ 未扎紧袋口或铜丝框松动：热空气泄漏，浮力不足→需用细铜丝拧紧袋口，确保密封。",
+          "⚠️ 吹热空气时间过短：袋内空气未充分加热，密度差小→应持续吹气30秒以上至塑料袋膨胀鼓起。",
+          "⚠️ 在密闭或气流不稳环境实验：外部气流干扰上升轨迹→选择室内无风处操作。"
+        ],
+        "data_processing": "本实验为定性观察，无需定量数据。重点记录塑料袋上升高度、持续时间及稳定性，可多次重复并比较不同加热时间或袋口大小对上升效果的影响。",
+        "design_rationale": "薄塑料袋轻且密封性好，减少自重并防止热空气逸散；铜丝框保持袋口张开，确保热空气持续进入并均匀加热内部空气，使袋内空气密度降低，产生足够浮力克服重力上升。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G8-PHYSICS-X-ku-增大和减小压强的方法",
+      "textbook_id": "RENJIAO-G8-PHYSICS-X",
+      "cluster_id": "RENJIAO-G8-PHYSICS-X-kc-压强概念与实验探究",
+      "name": "增大和减小压强的方法",
+      "description": "增大压强：增大压力或减小受力面积；减小压强：减小压力或增大受力面积。\n【适用条件】固体压强问题中常用。",
+      "prerequisites": [
+        "压强"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [],
+      "ku_type": "method",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "steps": [
+          "第1步：明确问题要求是增大还是减小压强。",
+          "第2步：根据公式 p=F/S，确定需要改变压力 F 还是受力面积 S。",
+          "第3步：若增大压强，则增大压力或减小受力面积；若减小压强，则减小压力或增大受力面积。",
+          "第4步：结合具体情境，判断改变哪个因素更可行（如人走路时减小受力面积更易实现）。"
+        ],
+        "example": "题目：为什么刀刃要磨得很锋利？解题：刀刃磨锋利是减小受力面积，根据 p=F/S，在压力（手施加的力）一定时，受力面积越小，压强越大，越容易切开物体。",
+        "key_points": [
+          "⚠️ 注意压力与重力的区别：只有物体水平放置时压力才等于重力。",
+          "⚠️ 受力面积是两物体实际接触的面积，不是物体的底面积。",
+          "⚠️ 同时改变压力和受力面积时，需比较两者变化对压强的综合影响。"
+        ],
+        "when_to_use": "当题目涉及固体压强大小变化，需要判断如何通过改变压力或受力面积来增大或减小压强时使用。",
+        "common_mistakes": [
+          "⚠️ 错误：认为增大压力一定能增大压强。纠正：若同时增大受力面积，压强可能不变或减小，需控制变量。",
+          "⚠️ 错误：把受力面积当成物体表面积。纠正：如人站立时受力面积是两只脚底面积，不是整个身体面积。"
+        ]
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G8-PHYSICS-X-ku-增大和减小摩擦的方法",
+      "textbook_id": "RENJIAO-G8-PHYSICS-X",
+      "cluster_id": "RENJIAO-G8-PHYSICS-X-kc-摩擦力",
+      "name": "增大和减小摩擦的方法",
+      "description": "通过改变压力或接触面粗糙程度来增大或减小摩擦；用滚动代替滑动、加润滑剂、气垫等可减小摩擦。\n【适用条件】实际应用场景",
+      "prerequisites": [
+        "影响滑动摩擦力大小的因素"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [],
+      "ku_type": "method",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "steps": [
+          "第1步：明确目标——需要增大摩擦还是减小摩擦。",
+          "第2步：分析现有条件——接触面粗糙程度、压力大小、是否滑动。",
+          "第3步：选择方法——增大：增大压力或使接触面更粗糙；减小：减小压力、加润滑剂、用滚动代替滑动或气垫。",
+          "第4步：验证结果——检查是否满足实际需求（如防滑、省力）。"
+        ],
+        "example": "题目：自行车刹车时，如何增大摩擦？\n解题：刹车时，捏紧刹车把手，增大刹车皮对车轮钢圈的压力（压力增大→摩擦力增大）；同时刹车皮表面粗糙（接触面粗糙→摩擦力增大），从而快速减速。",
+        "key_points": [
+          "⚠️ 区分“滑动摩擦”与“滚动摩擦”：滚动摩擦通常远小于滑动摩擦，但并非所有滚动都绝对减小摩擦（如刹车时滚动变滑动）。",
+          "⚠️ 压力增大不一定总有效：若接触面已很粗糙，过度加压可能损坏表面，需结合实际。"
+        ],
+        "when_to_use": "当题目涉及改变摩擦力大小（如防滑、省力、减少磨损）时，判断是增大还是减小摩擦，并选择对应方法。",
+        "common_mistakes": [
+          "⚠️ 误认为“加润滑油”能增大摩擦：实际润滑油使接触面分离，减小摩擦，常用于机械润滑而非防滑。",
+          "⚠️ 混淆“滚动代替滑动”与“滑动变滚动”：如行李箱装轮子减小摩擦，但若轮子卡住变为滑动，摩擦反而增大。"
+        ]
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G8-PHYSICS-X-ku-大气压",
+      "textbook_id": "RENJIAO-G8-PHYSICS-X",
+      "cluster_id": "RENJIAO-G8-PHYSICS-X-kc-大气压及其测量",
+      "name": "大气压",
+      "description": "大气产生的压强，标准大气压等于760mm高水银柱产生的压强，大小为1.013×10^5 Pa。\n【适用条件】适用于地球表面附近，随高度升高而降低。",
+      "prerequisites": [
+        "压强",
+        "液体压强公式 p=ρgh"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [],
+      "ku_type": "physical_concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "用吸管喝饮料：吸管内气压减小，外界大气压将饮料压入吸管，若吸管漏气则无法吸上。",
+          "马德堡半球实验：两个半球抽成真空，需16匹马才能拉开，证明大气压存在且很大。"
+        ],
+        "intuition": "我们生活在大气海洋的底部，却感觉不到它的重量，但吸盘挂钩、吸管喝饮料都离不开大气压。",
+        "definition": "大气对浸在它里面的物体产生的压强，方向垂直于接触面，是标量。标准大气压 $p_0 = \\rho g h = 1.013 \\times 10^5 \\ \\mathrm{Pa}$，其中 $\\rho$ 为水银密度，$g$ 为重力加速度，$h=760\\ \\mathrm{mm}$。",
+        "key_points": [
+          "⚠️ 大气压随高度升高而降低，但并非线性关系，在海拔2km内每升高12m约降低1mmHg。",
+          "⚠️ 大气压与液体压强不同，它没有固定深度，而是由上方空气柱重力产生，且向各个方向都有压强。",
+          "⚠️ 标准大气压是人为规定的，实际大气压随天气、温度变化，并非固定值。"
+        ],
+        "connections": "大气压与液体压强公式 $p=\\rho gh$ 形式相同，但液体压强与深度成正比，大气压则随高度增加而减小。",
+        "common_mistakes": [
+          "⚠️ 误认为大气压只向下作用，实际上大气压向各个方向都有压强，如吸盘能贴在墙上。",
+          "⚠️ 混淆标准大气压与760mmHg：760mmHg是水银柱产生的压强，但大气压数值等于该压强，并非大气压就是水银柱。",
+          "⚠️ 认为大气压随高度均匀减小：实际在低空变化较快，高空变化慢，且受温度影响。"
+        ],
+        "counter_examples": "大气压不是“空气的压强”，而是大气层重力产生的压强；而气体压强（如封闭容器内）由分子碰撞产生，两者成因不同。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G8-PHYSICS-X-ku-大气压存在的实验验证",
+      "textbook_id": "RENJIAO-G8-PHYSICS-X",
+      "cluster_id": "RENJIAO-G8-PHYSICS-X-kc-大气压强与测量",
+      "name": "大气压存在的实验验证",
+      "description": "通过吸盘、覆杯实验、吸饮料等实验证明大气压的存在。\n【适用条件】密封条件良好，内外气压差明显。\n【实验】目的：验证大气压的存在；原理：内外气压差导致现象；器材：塑料吸盘、玻璃杯、纸片、塑料管、饮料；步骤：1. 吸盘压墙；2. 杯口朝下纸片托水；3. 吸饮料；数据处理：观察现象，定性分析",
+      "prerequisites": [
+        "大气压强"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [],
+      "ku_type": "experiment",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "exam_hotspots": [
+          "覆杯实验中纸片不掉落的原理（大气压与水的压强平衡）",
+          "吸盘挂钩的受力分析（大气压力与物体重力平衡）",
+          "吸饮料过程中口腔内气压变化与大气压的关系",
+          "实验失败原因分析（漏气、密封不良等）"
+        ],
+        "common_mistakes": [
+          "⚠️ 吸盘未完全挤压空气，残留空气减小内外压差，导致吸盘易脱落；应用力挤压排出空气。",
+          "⚠️ 覆杯实验杯口未完全浸没水中，纸片与杯口间有气泡，水会漏出；应确保杯口水平且纸片完全湿润密封。",
+          "⚠️ 吸饮料时吸管漏气，口腔无法形成低压，饮料吸不上来；应检查吸管无破损且口部密封。",
+          "⚠️ 覆杯实验纸片太薄易破，水会流出；应选用硬质纸片或塑料片，确保能承受水压。"
+        ],
+        "data_processing": "本实验为定性观察，无需定量计算。重点记录现象是否成功，分析失败原因（如漏气、密封不严）。误差控制：确保器材干燥、密封良好，重复实验验证。",
+        "design_rationale": "吸盘挤压排出空气，内外气压差使其紧贴墙面；覆杯实验纸片托水，杯内气压小于大气压，大气压托住纸片；吸饮料时口腔内气压降低，大气压将饮料压入口中。核心逻辑是制造内外气压差，利用大气压作用。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G8-PHYSICS-X-ku-大气压强",
+      "textbook_id": "RENJIAO-G8-PHYSICS-X",
+      "cluster_id": "RENJIAO-G8-PHYSICS-X-kc-大气压强与测量",
+      "name": "大气压强",
+      "description": "大气对浸在其中的物体产生的压强，简称大气压，方向向各个方向。\n【适用条件】地球表面附近，有空气存在。",
+      "prerequisites": [],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [],
+      "ku_type": "physical_concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "用吸管喝饮料：吸管内的气压减小，外界大气压将饮料压入吸管。",
+          "马德堡半球实验：将两个半球合拢抽去内部空气，需要16匹马才能拉开，证明大气压存在且很大。"
+        ],
+        "intuition": "为什么吸盘能牢牢贴在墙上？为什么用吸管能喝到饮料？这些现象背后都是大气压在起作用。",
+        "definition": "大气对浸在其中的物体产生的压强，简称大气压。方向向各个方向。标准大气压 $p_0 = 1.013 \\times 10^5 \\, \\text{Pa}$，是标量。",
+        "key_points": [
+          "⚠️ 大气压的方向是向各个方向的，不是只有向下。",
+          "⚠️ 大气压的大小与海拔高度有关，海拔越高，大气压越小。",
+          "⚠️ 大气压的大小还与天气、季节有关，不是固定不变的。"
+        ],
+        "connections": "大气压与沸点有关：气压越高，沸点越高；气压越低，沸点越低。",
+        "common_mistakes": [
+          "⚠️ 误认为大气压只向下作用，实际上大气压向各个方向都有压强。",
+          "⚠️ 误认为大气压是无限大的，实际上标准大气压约为 $1.01 \\times 10^5 \\, \\text{Pa}$。",
+          "⚠️ 误认为吸饮料是“吸”上来的，实际上是大气压把饮料压上来的。"
+        ],
+        "counter_examples": "大气压与液体压强不同：液体压强随深度增加而增大，大气压随高度增加而减小。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G8-PHYSICS-X-ku-大气压的测量",
+      "textbook_id": "RENJIAO-G8-PHYSICS-X",
+      "cluster_id": "RENJIAO-G8-PHYSICS-X-kc-大气压及其测量",
+      "name": "大气压的测量",
+      "description": "用水银气压计或无液气压计测量大气压。\n【适用条件】水银气压计需在标准重力环境下使用，无液气压计受温度影响。\n【实验】目的：测量大气压的数值；原理：利用大气压支持液柱或弹性元件变形；器材：水银气压计、无液气压计；步骤：水银气压计：将水银槽与玻璃管连接，读取液面高度差；无液气压计：直接读取指针示数；数据处理：直接读取数值",
+      "prerequisites": [
+        "大气压"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [],
+      "ku_type": "experiment",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "exam_hotspots": [
+          "托里拆利实验原理及水银柱高度与大气压的关系",
+          "水银气压计中混入空气对测量结果的影响分析",
+          "无液气压计与标准气压计的校准方法",
+          "大气压随海拔和天气变化的定性判断"
+        ],
+        "common_mistakes": [
+          "⚠️ 水银气压计读数时未保持玻璃管竖直，导致液柱倾斜，测量值偏大；正确做法：确保玻璃管垂直，读取液面最高点。",
+          "⚠️ 无液气压计使用前未校准零点，指针初始偏移导致读数系统误差；正确做法：使用前用标准气压计校准。",
+          "⚠️ 水银气压计中混入空气，使液柱上方有气压，导致测量值偏小；正确做法：确保玻璃管内为真空。",
+          "⚠️ 无液气压计在温度变化大的环境中直接使用，未考虑热胀冷缩影响，读数不准确；正确做法：记录环境温度并参考温度补偿曲线。"
+        ],
+        "data_processing": "水银气压计直接读取水银柱高度（单位mm或cmHg），注意有效数字（如760.0 mmHg）；无液气压计读取指针示数，需多次测量取平均值减小偶然误差，并记录环境温度以修正。",
+        "design_rationale": "水银气压计利用大气压支持水银柱，通过液柱高度差直接反映气压值，原理基于托里拆利实验；无液气压计利用弹性金属盒的形变带动指针，通过机械放大显示气压，便于携带但需温度补偿。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G8-PHYSICS-X-ku-大气压随高度变化",
+      "textbook_id": "RENJIAO-G8-PHYSICS-X",
+      "cluster_id": "RENJIAO-G8-PHYSICS-X-kc-大气压强与测量",
+      "name": "大气压随高度变化",
+      "description": "海拔越高，大气压越小；在海拔3000m以内，每升高10m大气压减小约100Pa。\n【适用条件】海拔3000m以内近似线性。",
+      "prerequisites": [
+        "大气压强"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [],
+      "ku_type": "physical_law",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "statement": "海拔越高，大气压越小；在海拔3000m以内，每升高10m大气压减小约100Pa。数学表达式：$P = P_0 - \\frac{100\\,\\text{Pa}}{10\\,\\text{m}} \\cdot h$，其中$P_0$为海平面大气压（约1.013×10⁵Pa），$h$为海拔高度（单位m）。",
+        "conditions": "仅适用于海拔3000m以内，且大气状态稳定（无剧烈天气变化）。⚠️ 超过3000m后，气压随高度变化不再线性，误差增大；若遇强对流天气，气压变化受天气影响大于高度影响，规律失效。",
+        "connections": "与液体压强随深度变化规律类似，但大气密度不均匀，故仅在有限高度内近似线性；同时影响沸点，气压越低沸点越低（如高山上煮饭不易熟）。",
+        "corollaries": "海拔每升高100m，气压约下降1000Pa（即1kPa）。由此可推导：在3000m内，气压与高度近似线性反比关系。",
+        "typical_uses": [
+          "已知两地海拔差，计算气压差（如登山时估算山顶气压）",
+          "已知某高度气压，反推海拔高度（如用气压计测山高）",
+          "比较不同高度的大气压对沸点的影响（气压低沸点低）"
+        ],
+        "common_mistakes": [
+          "⚠️ 误以为每升高10m气压减小100Pa是精确值，忽略3000m内近似条件，导致高海拔计算偏差大。正确做法：超过3000m需用指数模型。",
+          "⚠️ 混淆高度差与绝对高度，如从1000m到2000m，气压减小值用1000m×10Pa/m计算，但实际应分段或使用公式。正确做法：直接用高度差乘以100Pa/10m。",
+          "⚠️ 忘记海平面气压$P_0$不是固定值，受天气影响，导致计算误差。正确做法：使用当地实时海平面气压值。"
+        ],
+        "physical_picture": "想象一座高山，山脚空气稠密像厚棉被，越往上空气越稀薄像薄纱，所以大气压随高度增加而减小。在3000米以内，这种减小近似均匀，每升高10米气压约降100帕。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G8-PHYSICS-X-ku-定滑轮定义与特点",
+      "textbook_id": "RENJIAO-G8-PHYSICS-X",
+      "cluster_id": "RENJIAO-G8-PHYSICS-X-kc-滑轮与滑轮组",
+      "name": "定滑轮定义与特点",
+      "description": "轴固定不动的滑轮。使用定滑轮不省力，但可以改变力的方向。\n【适用条件】不计绳重和摩擦",
+      "prerequisites": [],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [],
+      "ku_type": "physical_concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "升旗时，国旗重10N，旗手向下拉绳，不计摩擦，拉力F=10N，方向向下，国旗向上运动。",
+          "用定滑轮将重50N的物体匀速提升2m，不计绳重和摩擦，拉力F=50N，绳子移动距离也是2m。"
+        ],
+        "intuition": "升旗时，旗手向下拉绳子，国旗却向上运动，这就是定滑轮的作用——改变力的方向，让人站在地面就能完成高处的工作。",
+        "definition": "轴固定不动的滑轮称为定滑轮。使用定滑轮不省力，也不费力，但可以改变力的方向。不计绳重和摩擦时，拉力F等于物体重力G，即F=G。拉力与重力均为矢量，单位是牛顿（N）。",
+        "key_points": [
+          "⚠️ 定滑轮不省力，但很多人误以为它能省力，实际上它只改变力的方向。",
+          "⚠️ 定滑轮实质是一个等臂杠杆，动力臂等于阻力臂，所以不省力也不费力。",
+          "⚠️ 不计绳重和摩擦时，拉力才等于物重；实际中绳重和摩擦会使拉力略大于物重。"
+        ],
+        "connections": "定滑轮与杠杆原理相关，其实质是等臂杠杆；与动滑轮组合成滑轮组，可以同时省力和改变方向。",
+        "common_mistakes": [
+          "⚠️ 误认为定滑轮能省力：比如认为用定滑轮提100N物体只需50N拉力，实际拉力等于物重。",
+          "⚠️ 混淆绳子移动距离与物体上升高度：定滑轮中绳子移动距离等于物体上升高度，不是两倍。",
+          "⚠️ 忽略绳重和摩擦：实际计算时若题目未说明“不计”，则拉力应大于物重。"
+        ],
+        "counter_examples": "动滑轮可以省一半力，但定滑轮不省力；两者区别在于轴是否随物体移动。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G8-PHYSICS-X-ku-帕斯卡-压强单位",
+      "textbook_id": "RENJIAO-G8-PHYSICS-X",
+      "cluster_id": "RENJIAO-G8-PHYSICS-X-kc-压强概念与实验探究",
+      "name": "帕斯卡（压强单位）",
+      "description": "压强的国际单位，1 Pa = 1 N/m²，简称帕。",
+      "prerequisites": [
+        "压强公式 p=F/S"
+      ],
+      "related_kus": [],
+      "difficulty": 0.1,
+      "exam_frequency": "mid",
+      "question_types": [],
+      "ku_type": "physical_concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "一个质量为60kg的人站在水平地面上，每只脚与地面的接触面积为200cm²，求人对地面的压强。解：压力 $F=G=mg=60\\times10=600\\,\\text{N}$，受力面积 $S=2\\times200\\times10^{-4}=0.04\\,\\text{m}^2$，压强 $p=\\frac{600}{0.04}=15000\\,\\text{Pa}$。",
+          "用10N的力将图钉按入木板，图钉尖面积为0.05mm²，求钉尖对木板的压强。解：$S=0.05\\times10^{-6}=5\\times10^{-8}\\,\\text{m}^2$，$p=\\frac{10}{5\\times10^{-8}}=2\\times10^8\\,\\text{Pa}$，可见面积极小时压强巨大。"
+        ],
+        "intuition": "为什么用针尖轻轻一扎就能刺破皮肤，而用同样力气的拳头却不行？因为压强衡量的是力在单位面积上的作用效果，针尖面积小，压强就大。",
+        "definition": "压强是物体单位面积上所受压力的大小，定义式为 $p = \\frac{F}{S}$，其中 $F$ 为垂直作用在物体表面上的压力（单位N），$S$ 为受力面积（单位m²），压强是标量，国际单位是帕斯卡（Pa），1 Pa = 1 N/m²。",
+        "key_points": [
+          "⚠️ 压强与压力不同：压力是垂直作用在物体表面的力，而压强是压力与受力面积的比值，反映压力的作用效果。",
+          "⚠️ 受力面积不是接触面积：受力面积是两物体实际接触并传递压力的那部分面积，例如图钉尖的面积远小于图钉帽的面积。",
+          "⚠️ 压力不一定等于重力：只有当物体静止在水平面上且不受其他外力时，压力大小才等于重力大小。"
+        ],
+        "connections": "与液体压强的关系：液体内部压强 $p=\\rho gh$，其本质也是单位面积上所受压力，但由液体重力产生；与大气压强的关系：标准大气压约为 $1.013\\times10^5\\,\\text{Pa}$，相当于10m高水柱产生的压强。",
+        "common_mistakes": [
+          "⚠️ 计算压强时受力面积取错：如人站立时只算一只脚的面积，应算两只脚的总面积。",
+          "⚠️ 单位换算错误：1 cm² = 10⁻⁴ m²，而非10⁻² m²，常误将cm²直接当m²代入。",
+          "⚠️ 认为压力总是等于重力：例如斜面上的物体，压力小于重力；用手压墙时，压力与重力无关。"
+        ],
+        "counter_examples": "压强与压力混淆：压力是力（矢量），单位N；压强是压力作用效果（标量），单位Pa。例如，同一把刀，磨得越锋利（减小受力面积），切菜时压强越大，但手施加的压力可能相同。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G8-PHYSICS-X-ku-平衡状态",
+      "textbook_id": "RENJIAO-G8-PHYSICS-X",
+      "cluster_id": "RENJIAO-G8-PHYSICS-X-kc-二力平衡",
+      "name": "平衡状态",
+      "description": "物体受到几个力作用时，如果保持静止或匀速直线运动状态，就说物体处于平衡状态。\n【适用条件】物体受多个力作用",
+      "prerequisites": [
+        "牛顿第一定律"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [],
+      "ku_type": "physical_concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "一个质量为2kg的物体静止在水平桌面上，受到重力$G=20\\,\\text{N}$（向下）和桌面支持力$N=20\\,\\text{N}$（向上），合力为零，处于平衡状态。",
+          "一辆汽车以10m/s的速度在平直公路上匀速行驶，牵引力与阻力大小相等、方向相反，合力为零，处于平衡状态。"
+        ],
+        "intuition": "为什么一辆静止在路上的汽车，或者一个匀速下降的降落伞，看起来好像没有受到力？其实它们受到多个力，只是这些力相互抵消了，所以运动状态不变。",
+        "definition": "物体受到多个力作用时，如果保持静止或匀速直线运动状态，则称物体处于平衡状态。数学表达式为合力为零：$\\sum \\vec{F} = 0$，其中$\\vec{F}$是矢量，单位为牛顿（N）。",
+        "key_points": [
+          "⚠️ 平衡状态包括静止和匀速直线运动，两者都是速度不变（加速度为零），但静止是速度恒为零的特殊情况。",
+          "⚠️ 平衡状态要求合力为零，但物体不一定不受力，可能受多个力但相互抵消。",
+          "⚠️ 平衡状态是瞬时概念，与时间无关，只要合力为零，物体就处于平衡状态。"
+        ],
+        "connections": "平衡状态与牛顿第一定律（惯性定律）直接相关：物体在不受力或合力为零时保持原有运动状态；与牛顿第二定律$F=ma$中$a=0$对应，即合力为零时加速度为零。",
+        "common_mistakes": [
+          "⚠️ 误以为静止的物体一定不受力：例如放在斜面上的物体静止，实际受到重力、支持力和静摩擦力，三力平衡。",
+          "⚠️ 误以为匀速直线运动的物体一定不受摩擦力：例如汽车匀速行驶时，牵引力与摩擦力平衡，摩擦力存在。",
+          "⚠️ 误以为速度为零就是平衡状态：例如竖直上抛到最高点的物体，速度为零但合力为重力，不是平衡状态。"
+        ],
+        "counter_examples": "平衡状态与“不受力”不同：不受力是合力为零的特例（如太空中的物体），而平衡状态可以受多个力但合力为零。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G8-PHYSICS-X-ku-弹力",
+      "textbook_id": "RENJIAO-G8-PHYSICS-X",
+      "cluster_id": "RENJIAO-G8-PHYSICS-X-kc-弹力与弹簧测力计",
+      "name": "弹力",
+      "description": "物体由于发生弹性形变而产生的力叫做弹力。常见的弹力有支持力、压力、拉力等。\n【适用条件】物体必须发生弹性形变，且形变在弹性限度内。",
+      "prerequisites": [
+        "弹性与塑性"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [],
+      "ku_type": "physical_concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "一根弹簧原长 10 cm，劲度系数 $k=200\\ \\mathrm{N/m}$，挂上 2 kg 物体后弹簧伸长到 12 cm。求弹力大小。解：形变量 $x=12\\ \\mathrm{cm}-10\\ \\mathrm{cm}=0.02\\ \\mathrm{m}$，由胡克定律 $F=kx=200\\times0.02=4\\ \\mathrm{N}$。",
+          "放在水平桌面上的书，受到桌面对它的支持力。书对桌面有压力，桌面对书有支持力，两者互为作用力与反作用力，大小相等、方向相反。"
+        ],
+        "intuition": "为什么拉弓时箭会飞出？为什么坐在沙发上会下陷？这些现象背后都是物体在恢复形变时产生的力，我们称之为弹力。",
+        "definition": "弹力是物体发生弹性形变后，由于要恢复原状而对与之接触的物体产生的力。常见弹力有支持力、压力、拉力等。弹力是矢量，方向与形变方向相反，单位是牛顿（N）。数学表达式通常为胡克定律：$F = kx$，其中 $F$ 为弹力，$k$ 为劲度系数（单位 N/m），$x$ 为形变量（单位 m）。",
+        "key_points": [
+          "⚠️ 弹力产生的条件：两物体必须接触且发生弹性形变。只接触无形变（如靠在一起但不挤压）则无弹力。",
+          "⚠️ 弹力方向总是指向施力物体恢复原状的方向，而非受力物体的运动方向。例如，支持力垂直于接触面向上，压力垂直于接触面向下。",
+          "⚠️ 弹性形变与塑性形变不同：弹性形变可恢复（如弹簧），塑性形变不可恢复（如橡皮泥）。只有弹性形变才产生弹力。"
+        ],
+        "connections": "弹力与摩擦力密切相关：弹力是产生摩擦力的前提条件之一（接触面间有弹力且粗糙）。此外，弹力与重力、支持力等常共同作用，影响物体的平衡状态。",
+        "common_mistakes": [
+          "⚠️ 误认为只要物体接触就一定有弹力。例如，两个小球靠在一起但未挤压，它们之间没有弹力。",
+          "⚠️ 混淆形变量与弹簧长度。形变量是弹簧长度变化量，不是弹簧总长度。计算时需用 $x = |L - L_0|$。",
+          "⚠️ 认为弹力方向总是与物体运动方向相同。例如，被压缩的弹簧推动小球时，弹力方向与小球运动方向相同；但被拉伸的弹簧拉小球时，弹力方向也与小球运动方向相同，但形变方向不同。"
+        ],
+        "counter_examples": "弹力与重力不同：重力是地球吸引产生的非接触力，方向竖直向下；弹力是接触力，方向垂直于接触面。例如，放在斜面上的物体，重力竖直向下，而斜面对物体的支持力垂直于斜面向上。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G8-PHYSICS-X-ku-弹性与塑性",
+      "textbook_id": "RENJIAO-G8-PHYSICS-X",
+      "cluster_id": "RENJIAO-G8-PHYSICS-X-kc-弹力与弹簧测力计",
+      "name": "弹性与塑性",
+      "description": "弹性：物体受力发生形变，不受力时能自动恢复原状的性质。塑性：物体形变后不能自动恢复原状的性质。",
+      "prerequisites": [],
+      "related_kus": [],
+      "difficulty": 0.2,
+      "exam_frequency": "mid",
+      "question_types": [],
+      "ku_type": "physical_concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "拉长弹簧：在弹性限度内，拉力为5N时弹簧伸长2cm，撤去拉力后弹簧恢复原长，这是弹性。",
+          "按压橡皮泥：用10N力压出凹痕，撤去力后凹痕保留，橡皮泥发生塑性形变。"
+        ],
+        "intuition": "为什么弹簧能弹回原状，而橡皮泥一捏就变形？这背后就是弹性和塑性的区别，它们描述了物体受力形变后能否恢复原状的能力。",
+        "definition": "弹性：物体受力发生形变，撤去外力后能自动恢复原状的性质。塑性：物体受力形变后，撤去外力不能自动恢复原状的性质。两者均为物质属性，无数学表达式，但可通过形变恢复程度判断。",
+        "key_points": [
+          "⚠️ 弹性形变和塑性形变是过程，弹性和塑性是性质，不要混淆。",
+          "⚠️ 弹性限度：超过此限度，物体将发生塑性形变，不再完全恢复。",
+          "⚠️ 所有物体都有弹性限度，只是大小不同，没有绝对弹性或塑性物体。"
+        ],
+        "connections": "弹性和塑性是材料力学的基础概念，与“应力-应变曲线”直接相关：弹性阶段对应胡克定律，塑性阶段则涉及屈服强度和断裂。",
+        "common_mistakes": [
+          "⚠️ 误认为“弹性”就是“弹簧”，实际上弹簧只是弹性物体的一个例子，橡皮筋、钢尺等也有弹性。",
+          "⚠️ 认为“塑性物体不能发生弹性形变”，实际上所有物体在受力很小时都可能先发生弹性形变，超过弹性限度才进入塑性。",
+          "⚠️ 混淆“形变”与“性质”：形变是现象，弹性和塑性是物体抵抗形变恢复的能力。"
+        ],
+        "counter_examples": "弹性与塑性是相互对立的概念，但并非非此即彼：一根铁丝轻微弯曲可弹回（弹性），弯折过度则留下折痕（塑性），同一物体在不同条件下可表现不同性质。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G8-PHYSICS-X-ku-弹性势能大小的影响因素",
+      "textbook_id": "RENJIAO-G8-PHYSICS-X",
+      "cluster_id": "RENJIAO-G8-PHYSICS-X-kc-势能及其影响因素",
+      "name": "弹性势能大小的影响因素",
+      "description": "物体的弹性形变越大，它具有的弹性势能就越大。\n【适用条件】在弹性限度内",
+      "prerequisites": [
+        "弹性势能的概念"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [],
+      "ku_type": "physical_law",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "statement": "在弹性限度内，物体的弹性形变越大，它具有的弹性势能就越大。对于弹簧，弹性势能表达式为 $E_p = \\frac{1}{2} k x^2$，其中 $k$ 是劲度系数（单位 N/m），$x$ 是形变量（单位 m），$E_p$ 是弹性势能（单位 J）。",
+        "conditions": "⚠️ 必须在弹性限度内，即形变不超过材料的弹性极限。若超出弹性限度，物体发生塑性形变，公式不再适用，且物体可能无法恢复原状，弹性势能概念失效。",
+        "connections": "弹性势能是机械能的一种，与动能、重力势能共同构成机械能，在只有弹力做功时机械能守恒。",
+        "corollaries": "1. 弹性势能的变化量等于弹力做功的负值：$\\Delta E_p = -W_{\\text{弹}}$。2. 对于同一弹簧，形变量加倍，弹性势能变为原来的4倍。",
+        "typical_uses": [
+          "弹簧振子问题：已知弹簧劲度系数和压缩量，求弹性势能，直接代入 $E_p = \\frac{1}{2} k x^2$。",
+          "蹦床或弹弓问题：分析弹性势能与动能或重力势能的转化，利用机械能守恒列方程。",
+          "比较不同弹簧的弹性势能：给定形变量相同，劲度系数大的弹簧弹性势能更大。"
+        ],
+        "common_mistakes": [
+          "⚠️ 误认为形变量 $x$ 是弹簧总长度，正确应为相对于原长的变化量（伸长或压缩量）。",
+          "⚠️ 忽略弹性限度，认为形变无限增大弹性势能也无限增大，实际超出弹性限度后物体损坏，公式失效。",
+          "⚠️ 混淆劲度系数 $k$ 与形变量 $x$ 的关系，误以为 $E_p$ 与 $x$ 成正比，实际与 $x^2$ 成正比。"
+        ],
+        "physical_picture": "想象一根弹簧或橡皮筋，当你用力拉长或压缩它时，它就会储存能量。形变越大（比如拉得越长），它储存的弹性势能就越大，就像拉满的弓能把箭射得更远。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G8-PHYSICS-X-ku-弹性势能的概念",
+      "textbook_id": "RENJIAO-G8-PHYSICS-X",
+      "cluster_id": "RENJIAO-G8-PHYSICS-X-kc-势能及其影响因素",
+      "name": "弹性势能的概念",
+      "description": "物体由于发生弹性形变而具有的能叫做弹性势能。\n【适用条件】物体发生弹性形变，且能恢复原状",
+      "prerequisites": [
+        "能量的概念"
+      ],
+      "related_kus": [],
+      "difficulty": 0.2,
+      "exam_frequency": "mid",
+      "question_types": [],
+      "ku_type": "physical_concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "一根劲度系数 $k=100\\,\\text{N/m}$ 的弹簧被拉伸 $0.2\\,\\text{m}$，弹性势能 $E_p = \\frac{1}{2} \\times 100 \\times (0.2)^2 = 2\\,\\text{J}$。",
+          "弹弓橡皮筋拉长 $0.1\\,\\text{m}$，劲度系数 $50\\,\\text{N/m}$，弹性势能 $E_p = \\frac{1}{2} \\times 50 \\times (0.1)^2 = 0.25\\,\\text{J}$。"
+        ],
+        "intuition": "拉弓射箭时，弓弦被拉弯后能释放出能量将箭射出，这种储存在形变物体中的能量就是弹性势能。",
+        "definition": "物体由于发生弹性形变而具有的能叫做弹性势能。对于弹簧，弹性势能表达式为 $E_p = \\frac{1}{2} k x^2$，其中 $k$ 为劲度系数（单位 N/m），$x$ 为形变量（单位 m），弹性势能为标量，单位焦耳（J）。",
+        "key_points": [
+          "⚠️ 弹性势能只存在于弹性形变中，塑性形变（如橡皮泥被捏）不产生弹性势能。",
+          "⚠️ 弹性势能的大小与形变量平方成正比，而非与形变量成正比。",
+          "⚠️ 同一弹簧，拉伸和压缩相同长度时弹性势能相同。"
+        ],
+        "connections": "弹性势能与动能通过做功相互转化（如弹簧振子），且与重力势能同属机械能中的势能部分。",
+        "common_mistakes": [
+          "⚠️ 误认为形变量越大弹性势能一定越大：实际上必须是在弹性限度内，超过弹性限度后物体可能无法恢复原状，弹性势能概念不再适用。",
+          "⚠️ 混淆弹性势能与动能：弹性势能是储存的势能，动能是运动时具有的能，两者可以相互转化。",
+          "⚠️ 计算时忘记平方：如将 $E_p = \\frac{1}{2} k x^2$ 误写为 $\\frac{1}{2} k x$，导致结果错误。"
+        ],
+        "counter_examples": "重力势能是物体被举高而具有的能，与弹性形变无关；弹性势能则源于物体形状的改变。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G8-PHYSICS-X-ku-弹簧测力计原理",
+      "textbook_id": "RENJIAO-G8-PHYSICS-X",
+      "cluster_id": "RENJIAO-G8-PHYSICS-X-kc-弹力与弹簧测力计",
+      "name": "弹簧测力计原理",
+      "description": "在弹性限度内，弹簧受到的拉力越大，弹簧的伸长量就越长。\n【适用条件】必须在弹性限度内使用。",
+      "prerequisites": [
+        "弹力"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [],
+      "ku_type": "physical_law",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "statement": "在弹性限度内，弹簧受到的拉力F与弹簧的伸长量ΔL成正比，即F = k·ΔL，其中k为弹簧的劲度系数（单位N/m），ΔL = 弹簧现长 - 原长。拉力方向沿弹簧轴线向外。",
+        "conditions": "必须在弹性限度内使用，即弹簧形变后能完全恢复原状。⚠️ 若超过弹性限度，弹簧发生塑性形变，伸长量与拉力不再成正比，且弹簧可能损坏无法恢复。",
+        "connections": "该原理是胡克定律在弹簧上的具体应用，与重力、弹力、二力平衡等概念紧密相关，常用于测量力的大小。",
+        "corollaries": "弹簧的劲度系数k = F/ΔL，表示弹簧每伸长1米所需拉力；弹簧串联时总劲度系数满足1/k总 = 1/k1 + 1/k2。",
+        "typical_uses": [
+          "弹簧测力计读数：根据指针位置对应的伸长量，利用F=kΔL直接读出拉力大小",
+          "比较弹簧劲度系数：相同拉力下，伸长量小的弹簧劲度系数大",
+          "弹簧串联/并联问题：串联时总劲度系数变小，并联时总劲度系数变大"
+        ],
+        "common_mistakes": [
+          "⚠️ 误将弹簧总长当作伸长量：正确做法是伸长量=现长-原长，不是直接读总长",
+          "⚠️ 忽略弹性限度：认为拉力与伸长量永远成正比，实际超过限度后比例关系失效",
+          "⚠️ 混淆劲度系数k与弹簧长度：k由弹簧材料、粗细、匝数决定，与长度无关"
+        ],
+        "physical_picture": "想象一根弹簧挂在支架上，下端挂一个钩码。钩码越重，弹簧被拉得越长，就像橡皮筋被拉长一样，但弹簧能自动恢复原状。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G8-PHYSICS-X-ku-影响滑动摩擦力大小的因素",
+      "textbook_id": "RENJIAO-G8-PHYSICS-X",
+      "cluster_id": "RENJIAO-G8-PHYSICS-X-kc-摩擦力",
+      "name": "影响滑动摩擦力大小的因素",
+      "description": "滑动摩擦力的大小跟接触面所受的压力和接触面的粗糙程度有关。压力越大，接触面越粗糙，滑动摩擦力越大。\n【适用条件】滑动摩擦，接触面相对滑动",
+      "prerequisites": [
+        "滑动摩擦力"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [],
+      "ku_type": "physical_law",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "statement": "滑动摩擦力的大小与接触面间的压力成正比，与接触面的粗糙程度有关，方向与相对运动方向相反。数学表达式：$f = \\mu N$，其中 $f$ 为滑动摩擦力，$\\mu$ 为动摩擦因数（由接触面粗糙程度决定），$N$ 为正压力。",
+        "conditions": "适用于两个物体接触且有相对滑动的情况。⚠️ 若接触面光滑（$\\mu=0$）或物体静止（静摩擦），此规律不适用；若压力为零，则无滑动摩擦力。",
+        "connections": "与静摩擦力不同，滑动摩擦力有确定公式 $f=\\mu N$，而静摩擦力大小需通过平衡条件求解，且最大静摩擦力略大于滑动摩擦力。",
+        "corollaries": "滑动摩擦力大小与相对速度无关（低速范围内）。动摩擦因数 $\\mu$ 由接触面材料决定，通常 $0<\\mu<1$。",
+        "typical_uses": [
+          "计算水平面上物体滑动时的摩擦力：先求正压力 $N=mg$，再乘以 $\\mu$。",
+          "斜面上物体滑动：正压力 $N=mg\\cos\\theta$，摩擦力 $f=\\mu mg\\cos\\theta$。",
+          "判断摩擦力方向：与物体相对接触面的运动方向相反，如传送带问题。"
+        ],
+        "common_mistakes": [
+          "⚠️ 误认为滑动摩擦力大小与接触面积有关：实际无关，只与压力和粗糙程度有关，如宽木块和窄木块在相同条件下摩擦力相同。",
+          "⚠️ 混淆正压力与重力：正压力是垂直于接触面的力，不一定等于重力，如物体在斜面上时 $N=mg\\cos\\theta$。",
+          "⚠️ 认为滑动摩擦力方向与运动方向相反：实际是与相对运动方向相反，如物体在传送带上随传送带运动时，摩擦力方向可能与运动方向相同。"
+        ],
+        "physical_picture": "想象一个木块在水平桌面上滑动，桌面对木块的阻碍力就是滑动摩擦力。压力越大（如木块上加重物），或桌面越粗糙（如砂纸），滑动摩擦力就越大。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G8-PHYSICS-X-ku-惯性",
+      "textbook_id": "RENJIAO-G8-PHYSICS-X",
+      "cluster_id": "RENJIAO-G8-PHYSICS-X-kc-牛顿第一定律与惯性",
+      "name": "惯性",
+      "description": "一切物体都有保持原来运动状态不变的性质，叫做惯性。\n【适用条件】一切物体在任何状态下都有惯性",
+      "prerequisites": [
+        "牛顿第一定律"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [],
+      "ku_type": "physical_concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "跳远时，助跑后起跳，身体由于惯性继续向前运动，所以能跳得更远。",
+          "锤头松了，把锤柄在地上撞几下，锤柄突然停止，锤头由于惯性继续向下运动，就套紧了。"
+        ],
+        "intuition": "坐公交车时，车突然刹车，人会向前倾；车突然启动，人会向后仰。这就是因为身体想保持原来的运动状态，这个性质就是惯性。",
+        "definition": "一切物体都有保持原来运动状态（静止或匀速直线运动）不变的性质，叫做惯性。惯性是物体本身的属性，不是力，没有数学表达式，也没有单位，是标量。",
+        "key_points": [
+          "⚠️ 惯性不是力，不能说“受到惯性”或“惯性力”，只能说“由于惯性”或“具有惯性”。",
+          "⚠️ 惯性大小只与质量有关，与速度、是否运动、是否受力无关。质量越大，惯性越大。",
+          "⚠️ 一切物体在任何状态下（静止、运动、失重）都有惯性，没有例外。"
+        ],
+        "connections": "惯性大小与质量成正比，质量是惯性的唯一量度；惯性与牛顿第一定律（惯性定律）紧密相关，后者是前者的理论表述。",
+        "common_mistakes": [
+          "⚠️ 错误：速度越大惯性越大。纠正：惯性只与质量有关，速度大只是改变运动状态更难（因为动量更大），但惯性不变。",
+          "⚠️ 错误：物体静止时没有惯性，运动时才有。纠正：一切物体在任何状态下都有惯性，静止的物体有保持静止的惯性。",
+          "⚠️ 错误：惯性是一种力，所以可以说“受到惯性作用”。纠正：惯性是性质，不是力，只能说“由于惯性”。"
+        ],
+        "counter_examples": "惯性与牛顿第一定律（惯性定律）不同：惯性是物体本身的属性，而惯性定律是描述物体在不受力时的运动规律。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G8-PHYSICS-X-ku-托里拆利实验",
+      "textbook_id": "RENJIAO-G8-PHYSICS-X",
+      "cluster_id": "RENJIAO-G8-PHYSICS-X-kc-大气压强与测量",
+      "name": "托里拆利实验",
+      "description": "用长约1m一端封闭的玻璃管灌满水银倒插入水银槽，测出大气压值约为760mm水银柱。\n【适用条件】水银密度大，玻璃管足够长，管内无空气。\n【实验】目的：精确测量大气压的数值；原理：大气压支持水银柱，p0=ρgh；器材：长约1m一端封闭的玻璃管、水银槽、水银、刻度尺；步骤：1. 灌满水银；2. 倒插入水银槽；3. 测量水银柱高度差；数据处理：读取水银柱竖直高度，计算p0=ρgh",
+      "prerequisites": [
+        "大气压强",
+        "液体压强公式 p=ρgh"
+      ],
+      "related_kus": [],
+      "difficulty": 0.6,
+      "exam_frequency": "mid",
+      "question_types": [],
+      "ku_type": "experiment",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "exam_hotspots": [
+          "托里拆利实验的原理（大气压支持水银柱，p0=ρgh）",
+          "水银柱高度与大气压的关系（760mm水银柱对应标准大气压）",
+          "玻璃管倾斜、粗细、上提下压对水银柱高度的影响（竖直高度不变）",
+          "实验失败原因分析（管内空气、管口漏气、水银不足）"
+        ],
+        "common_mistakes": [
+          "⚠️ 玻璃管未灌满水银（残留空气→水银柱高度偏小，测量值偏小→应反复灌满至无气泡）",
+          "⚠️ 倒插时手指未堵住管口（水银漏出→实验失败→用食指堵紧管口再缓慢倒置）",
+          "⚠️ 测量时未读取竖直高度（斜量长度偏大→计算值偏大→用刻度尺测管内外水银面竖直距离）",
+          "⚠️ 玻璃管倾斜后未调整（水银柱竖直高度不变但长度变长→误以为气压变化→保持玻璃管竖直或读取竖直高度）"
+        ],
+        "data_processing": "读取水银柱竖直高度时视线与液面平齐，多次测量取平均值减小偶然误差；若水银柱高度低于760mm，考虑气压偏低或管内混入空气；有效数字保留到毫米（如760mm），计算p0=ρgh时ρ取13.6×10³kg/m³，g取9.8N/kg。",
+        "design_rationale": "玻璃管长约1m确保水银柱高度（约760mm）有足够空间，避免水银柱顶到管顶；灌满水银排尽空气，防止空气混入影响真空度；倒插入水银槽后管内上方形成真空，大气压通过水银槽液面传递，支持水银柱，从而利用p0=ρgh精确测量大气压。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G8-PHYSICS-X-ku-探究二力平衡的条件实验",
+      "textbook_id": "RENJIAO-G8-PHYSICS-X",
+      "cluster_id": "RENJIAO-G8-PHYSICS-X-kc-二力平衡",
+      "name": "探究二力平衡的条件实验",
+      "description": "通过小车在光滑桌面上受两个拉力，改变砝码质量和方向，探究二力平衡的条件。\n【适用条件】桌面光滑，忽略摩擦力\n【实验】目的：探究二力平衡的条件；原理：二力平衡时，大小相等、方向相反、同一直线；器材：光滑桌面、小车、托盘、砝码、细绳；步骤：1.使两托盘砝码质量不相等；2.使质量相等；3.扭转小车释放；4.记录小车运动状态；数据处理：记录表格，分析小车运动状态是否改变",
+      "prerequisites": [
+        "二力平衡的条件"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [],
+      "ku_type": "experiment",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "exam_hotspots": [
+          "考查二力平衡的四个条件（大小相等、方向相反、同一直线、同一物体）。",
+          "实验步骤中如何控制变量（如保持桌面光滑、砝码质量相同）。",
+          "扭转小车的目的：验证两个力是否必须在同一直线上。",
+          "实验改进：用弹簧测力计代替砝码，直接测量拉力大小。"
+        ],
+        "common_mistakes": [
+          "⚠️ 未将桌面调至水平：导致小车受重力分力，影响拉力平衡，应先用水平仪调整桌面。",
+          "⚠️ 扭转小车后直接释放：未确保两力在同一直线，应缓慢释放并观察小车是否转动。",
+          "⚠️ 砝码质量差异过小：小车可能静止但实际未平衡，应逐步增加质量差至明显运动。",
+          "⚠️ 忽略细绳与滑轮摩擦：导致拉力不准确，应使用轻质滑轮并涂抹润滑油减小摩擦。"
+        ],
+        "data_processing": "记录小车运动状态（静止或匀速直线运动），分析拉力大小和方向关系。若小车静止但砝码质量不等，需检查摩擦力影响；有效数字保留至砝码标称值，误差主要来自摩擦和滑轮阻力。",
+        "design_rationale": "使用光滑桌面是为了减小摩擦力对实验的干扰，确保小车仅受两个拉力作用，从而准确探究二力平衡条件。通过改变砝码质量调整拉力大小，扭转小车改变力的方向，观察小车运动状态是否改变，验证二力平衡需大小相等、方向相反、同一直线。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G8-PHYSICS-X-ku-探究压力作用效果的影响因素",
+      "textbook_id": "RENJIAO-G8-PHYSICS-X",
+      "cluster_id": "RENJIAO-G8-PHYSICS-X-kc-压强概念与实验探究",
+      "name": "探究压力作用效果的影响因素",
+      "description": "通过小桌、海绵、砝码探究压力作用效果与压力大小和受力面积的关系。\n【适用条件】海绵形变明显，可定性显示压力作用效果。\n【实验】目的：探究压力作用效果与压力大小和受力面积的关系；原理：海绵的形变程度反映压力作用效果；器材：小桌、海绵、砝码；步骤：甲图小桌放海绵上；乙图加砝码；丙图小桌翻面加砝码，观察海绵凹陷程度；数据处理：比较海绵凹陷深度，定性分析",
+      "prerequisites": [
+        "压力"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [],
+      "ku_type": "experiment",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "exam_hotspots": [
+          "控制变量法的应用：如何设计实验分别探究压力大小和受力面积的影响。",
+          "转换法的理解：海绵形变程度反映压力作用效果。",
+          "实验步骤的排序与纠错：判断操作顺序是否正确。",
+          "实验结论的表述：压力一定时，受力面积越小，压力作用效果越明显；受力面积一定时，压力越大，压力作用效果越明显。"
+        ],
+        "common_mistakes": [
+          "⚠️ 未控制受力面积相同：比较压力大小影响时，小桌正放和倒放受力面积不同，导致无法得出正确结论。正确做法：保持受力面积相同，只改变砝码数量。",
+          "⚠️ 未控制压力相同：比较受力面积影响时，小桌正放和倒放时压力不同（砝码数量不同），导致混淆。正确做法：保持压力相同，只改变小桌放置方式。",
+          "⚠️ 误用木板代替海绵：木板形变不明显，无法定性显示压力作用效果。正确做法：必须使用海绵等易形变材料。",
+          "⚠️ 忽略砝码放置位置：砝码未放在小桌中央，导致压力分布不均，影响海绵凹陷程度。正确做法：砝码应放在小桌中央。"
+        ],
+        "data_processing": "通过观察海绵凹陷深度定性比较，无需定量测量。注意多次实验取平均值减小偶然误差，若海绵凹陷过深或过浅，需调整砝码数量或更换海绵。",
+        "design_rationale": "小桌正放和倒放改变受力面积，砝码改变压力大小，海绵形变明显可定性显示压力作用效果。通过控制变量法，分别探究压力大小和受力面积对压力作用效果的影响，体现物理逻辑。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G8-PHYSICS-X-ku-探究杠杆的平衡条件实验",
+      "textbook_id": "RENJIAO-G8-PHYSICS-X",
+      "cluster_id": "RENJIAO-G8-PHYSICS-X-kc-杠杆基础与平衡",
+      "name": "探究杠杆的平衡条件实验",
+      "description": "通过调节钩码数量和位置，使杠杆在水平位置平衡，记录动力、动力臂、阻力、阻力臂，分析数据得出F1l1=F2l2。\n【适用条件】杠杆水平平衡，忽略杠杆自重\n【实验】目的：探究杠杆平衡时动力、动力臂、阻力、阻力臂之间的关系；原理：杠杆平衡时动力×动力臂=阻力×阻力臂；器材：杠杆、钩码、刻度尺、铁架台；步骤：调节杠杆平衡；挂不同数量钩码并移动位置使杠杆水平平衡；记录F1、l1、F2、l2；多次实验；数据处理：列表记录数据，分析乘积关系",
+      "prerequisites": [
+        "杠杆五要素"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [],
+      "ku_type": "experiment",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "exam_hotspots": [
+          "实验步骤中调节杠杆平衡的方法及目的",
+          "力臂的正确测量与判断",
+          "分析实验数据得出F1l1=F2l2的结论",
+          "实验误差分析（如杠杆自重、力臂测量误差的影响）"
+        ],
+        "common_mistakes": [
+          "⚠️ 未调节杠杆平衡就挂钩码：杠杆自重导致初始不平衡，后续测量数据不准确。正确做法：先调节平衡螺母使杠杆水平静止。",
+          "⚠️ 误将钩码到支点的斜线距离当力臂：力臂是支点到力的作用线的垂直距离，不是悬挂点间的直线距离。正确做法：用刻度尺测量支点到钩码悬挂点的水平距离。",
+          "⚠️ 只做一次实验就得出结论：偶然误差大，结论不可靠。正确做法：改变钩码数量和位置，多次实验，分析数据规律。",
+          "⚠️ 忽略杠杆自重对平衡的影响：若杠杆未水平，自重会产生额外力矩。正确做法：确保杠杆水平平衡，并尽量使用轻质杠杆。"
+        ],
+        "data_processing": "多次测量后，计算每组F1l1与F2l2的乘积，比较是否相等；若存在微小差异，取平均值或分析误差来源（如力臂测量不精确、杠杆自重等）；有效数字保留到刻度尺最小分度值。",
+        "design_rationale": "调节杠杆在水平位置平衡，是为了使杠杆自重对平衡的影响最小化，同时便于直接测量力臂（即支点到钩码悬挂点的距离），从而简化实验条件，突出动力与阻力、动力臂与阻力臂之间的定量关系。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G8-PHYSICS-X-ku-探究浮力的大小跟哪些因素有关-实验",
+      "textbook_id": "RENJIAO-G8-PHYSICS-X",
+      "cluster_id": "RENJIAO-G8-PHYSICS-X-kc-浮力大小的探究与测量",
+      "name": "探究浮力的大小跟哪些因素有关（实验）",
+      "description": "通过控制变量法，分别探究浮力与浸没深度、浸在液体中的体积、液体密度的关系。\n【实验】目的：探究浮力的大小跟哪些因素有关；原理：浮力大小与浸在液体中的体积和液体密度有关，与浸没深度无关；器材：弹簧测力计、柱状固体、不同密度的液体（清水、盐水等）、烧杯；步骤：1. 探究与深度的关系：物体浸没后改变深度，观察测力计示数；2. 探究与浸在液体中体积的关系：逐渐增大浸入体积，观察示数变化；3. 探究与液体密度的关系：同一物体浸没在不同液体中，比较示数；数据处理：比较弹簧测力计示数变化，定性分析浮力大小变化",
+      "prerequisites": [
+        "测量浮力的方法（称重法）",
+        "决定浮力大小的因素",
+        "控制变量法探究浮力影响因素"
+      ],
+      "related_kus": [],
+      "difficulty": 0.6,
+      "exam_frequency": "mid",
+      "question_types": [],
+      "ku_type": "experiment",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "exam_hotspots": [
+          "控制变量法的具体操作和变量识别",
+          "称重法计算浮力的公式应用",
+          "实验步骤排序及错误操作辨析",
+          "根据实验数据判断浮力与哪些因素有关"
+        ],
+        "common_mistakes": [
+          "⚠️ 物体未完全浸没就改变深度：误将部分浸入时的深度变化当作浸没深度变化，导致浮力变化被体积变化干扰。正确做法：先让物体完全浸没，再改变深度。",
+          "⚠️ 未擦干物体表面水珠：水珠增加重力，使测力计示数偏大，计算出的浮力偏小。正确做法：每次取出后擦干再测量重力。",
+          "⚠️ 改变液体密度时未控制浸入体积相同：若体积不同，无法单独比较密度对浮力的影响。正确做法：保持物体浸没且深度相同，仅更换液体。"
+        ],
+        "data_processing": "记录每次G和F示，计算F浮=G-F示。绘制F浮与V排关系图应为过原点直线，若偏离则检查是否漏气或弹簧测力计未调零。有效数字保留到测力计最小分度值。",
+        "design_rationale": "使用弹簧测力计测量浮力，通过称重法（F浮=G-F示）间接得到浮力大小。控制变量法确保每次只改变一个因素（深度、体积或密度），其他条件相同，从而独立探究各因素对浮力的影响。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G8-PHYSICS-X-ku-探究浮力的大小跟排开液体所受重力的关系-实验",
+      "textbook_id": "RENJIAO-G8-PHYSICS-X",
+      "cluster_id": "RENJIAO-G8-PHYSICS-X-kc-阿基米德原理及其验证",
+      "name": "探究浮力的大小跟排开液体所受重力的关系（实验）",
+      "description": "用弹簧测力计测出物体所受浮力，用溢水杯和测力计测出排开液体所受重力，比较两者大小关系。\n【实验】目的：探究浮力的大小跟排开液体所受重力的定量关系；原理：阿基米德原理：F浮 = G排；器材：弹簧测力计、物体、溢水杯、小桶、水；步骤：1. 测物体重力；2. 物体浸没溢水杯中，读测力计示数，收集排开水；3. 测小桶和排开水总重力；4. 测小桶重力；5. 计算浮力和排开水重力，比较；数据处理：记录数据表格，计算浮力与排开水重力，比较是否相等",
+      "prerequisites": [
+        "测量浮力的方法（称重法）",
+        "阿基米德原理"
+      ],
+      "related_kus": [],
+      "difficulty": 0.7,
+      "exam_frequency": "mid",
+      "question_types": [],
+      "ku_type": "experiment",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "exam_hotspots": [
+          "阿基米德原理的表达式及适用条件",
+          "实验步骤排序与操作要点（如溢水杯使用）",
+          "误差分析：物体沾水、桶壁残留水的影响",
+          "图像分析：F浮与V排的关系图线"
+        ],
+        "common_mistakes": [
+          "⚠️ 未等溢水杯水面与溢水口相平就放入物体→排开水体积偏小→应先将水加至溢水口流出再放入物体",
+          "⚠️ 物体未完全浸没就读数→浮力测量偏小→应确保物体浸没且不与杯底接触",
+          "⚠️ 先测小桶重力再测总重→桶内残留水导致总重偏大→正确顺序为先测总重再测桶重",
+          "⚠️ 弹簧测力计未调零或读数时视线未平齐→数据偏差→使用前调零，读数时视线与指针平齐"
+        ],
+        "data_processing": "计算浮力F浮=G物-F拉，排开水重力G排=G总-G桶；比较两者是否相等（考虑误差允许范围）；记录数据保留两位小数，注意有效数字对齐。",
+        "design_rationale": "溢水杯确保物体排开的水全部流入小桶，使排开液体重力测量准确；先测总重再测桶重可避免桶壁残留水导致的误差，体现控制变量与等效替代思想。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G8-PHYSICS-X-ku-探究液体内部压强的特点",
+      "textbook_id": "RENJIAO-G8-PHYSICS-X",
+      "cluster_id": "RENJIAO-G8-PHYSICS-X-kc-液体压强与连通器",
+      "name": "探究液体内部压强的特点",
+      "description": "使用压强计探头放入液体中，观察U形管液面高度差，探究液体压强与深度、方向、密度的关系。\n【适用条件】液体静止，探头橡皮膜完好。\n【实验】目的：探究液体内部压强的特点；原理：U形管液面高度差反映探头薄膜所受压强；器材：压强计（探头、U形管）、水、乙醇、硫酸铜溶液；步骤：1. 探头放入水中观察压强存在；2. 同一深度改变方向；3. 增大深度；4. 换用不同液体；数据处理：记录U形管液面高度差，比较分析",
+      "prerequisites": [
+        "液体压强"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [],
+      "ku_type": "experiment",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "exam_hotspots": [
+          "控制变量法的应用：探究深度、方向、密度时如何控制变量。",
+          "U形管液面高度差与液体压强的关系（转换法）。",
+          "液体压强与深度的正比关系及公式p=ρgh的推导。",
+          "实验误差分析：橡皮膜漏气、U形管未调零等对结果的影响。"
+        ],
+        "common_mistakes": [
+          "⚠️ 探头未完全浸入液体，导致橡皮膜未接触液体，U形管无高度差，应确保探头浸没。",
+          "⚠️ 改变方向时未保持深度不变，导致压强变化由深度引起而非方向，应固定深度再旋转探头。",
+          "⚠️ 换用不同液体时未清洗探头，残留液体影响密度，应用待测液体冲洗探头后再实验。",
+          "⚠️ 读数时U形管未竖直放置，液面倾斜造成读数误差，应保持U形管竖直且视线与液面相平。"
+        ],
+        "data_processing": "记录U形管左右液面高度差，取多次测量平均值减小误差。比较同深度不同方向数据，若高度差相同则压强相等；比较不同深度数据，高度差随深度增大而增大；比较不同液体同深度数据，密度越大高度差越大。注意有效数字保留到毫米。",
+        "design_rationale": "压强计通过U形管液面高度差将液体内部压强转化为可观测的压强差，利用橡皮膜形变传递压强。控制变量法探究深度、方向、密度的影响，确保单一变量，避免干扰。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G8-PHYSICS-X-ku-探究物体的动能跟哪些因素有关",
+      "textbook_id": "RENJIAO-G8-PHYSICS-X",
+      "cluster_id": "RENJIAO-G8-PHYSICS-X-kc-动能及其影响因素",
+      "name": "探究物体的动能跟哪些因素有关",
+      "description": "通过钢球从斜槽滚下撞击木块的实验，探究动能与质量和速度的关系。\n【适用条件】控制变量法，水平面相同，木块相同\n【实验】目的：探究动能大小与质量和速度的关系；原理：钢球撞击木块，木块被撞距离反映钢球动能大小；器材：斜槽、钢球（不同质量）、木块、刻度尺；步骤：1. 同一钢球从不同高度滚下，比较木块被撞距离；2. 不同质量钢球从同一高度滚下，比较木块被撞距离；数据处理：比较木块被撞距离，定性分析动能与质量、速度的关系",
+      "prerequisites": [
+        "动能的概念"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [],
+      "ku_type": "experiment",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "exam_hotspots": [
+          "控制变量法的应用：如何设计实验探究动能与质量或速度的关系",
+          "转换法的理解：木块被撞距离如何反映动能大小",
+          "实验步骤的排序与纠错：常见操作错误及改正",
+          "实验结论的表述：质量一定时，速度越大动能越大；速度一定时，质量越大动能越大"
+        ],
+        "common_mistakes": [
+          "⚠️ 未控制斜面高度：不同高度释放钢球，速度不同，无法单独探究质量对动能的影响→应保持同一高度释放不同质量钢球",
+          "⚠️ 木块初始位置未对齐：木块起始点不同，撞击距离无法直接比较→每次实验前将木块置于同一标记位置",
+          "⚠️ 忽略水平面摩擦差异：水平面粗糙程度不同，木块移动距离受摩擦力影响→确保每次实验在同一水平面上进行",
+          "⚠️ 误认为钢球质量越大动能一定越大：未考虑速度因素，质量大但速度小可能动能更小→需控制速度相同再比较质量影响"
+        ],
+        "data_processing": "记录木块被撞后移动的距离，多次测量取平均值减小偶然误差；若同一条件下距离差异过大，检查钢球释放高度或水平面是否一致；数据仅作定性比较，无需计算具体动能值。",
+        "design_rationale": "钢球从斜槽滚下，重力势能转化为动能，高度决定速度；不同质量钢球从同一高度滚下，到达底端速度相同，从而控制速度变量；木块被撞距离直观反映动能大小，基于能量守恒与摩擦力做功原理。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G8-PHYSICS-X-ku-探究重力的大小跟质量的关系",
+      "textbook_id": "RENJIAO-G8-PHYSICS-X",
+      "cluster_id": "RENJIAO-G8-PHYSICS-X-kc-重力及其测量",
+      "name": "探究重力的大小跟质量的关系",
+      "description": "通过实验测量不同质量钩码所受重力，描点作图，发现重力与质量成正比的关系。\n【适用条件】使用弹簧测力计测量重力时，钩码需静止，示数等于重力大小。\n【实验】目的：探究重力的大小跟质量的关系；原理：物体所受重力与质量成正比；器材：弹簧测力计、钩码（已知质量）；步骤：1.将钩码挂在弹簧测力计上，静止时读数；2.逐次增挂钩码，记录重力；3.以质量为横坐标、重力为纵坐标描点连线；数据处理：描点作图法，分析图像得出正比关系",
+      "prerequisites": [
+        "重力与质量的关系",
+        "练习使用弹簧测力计"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [],
+      "ku_type": "experiment",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "exam_hotspots": [
+          "考查实验步骤中弹簧测力计的使用规范（调零、静止读数）。",
+          "考查描点作图及图像分析（正比关系、斜率含义）。",
+          "考查误差分析（弹簧自重、未调零对结果的影响）。",
+          "考查实验结论的表述（重力与质量成正比，比值g=9.8N/kg）。"
+        ],
+        "common_mistakes": [
+          "⚠️ 钩码未静止时读数：弹簧测力计示数不稳定，导致测量值偏大或偏小。正确做法：待钩码静止后视线平视指针读数。",
+          "⚠️ 弹簧测力计未调零：测量前指针不在零刻度，使所有测量值系统偏大或偏小。正确做法：使用前竖直调零。",
+          "⚠️ 钩码质量超出量程：弹簧测力计被拉坏或示数不准确。正确做法：预估重力，选择合适量程的测力计。",
+          "⚠️ 描点连线时强行过原点：若数据点不通过原点，可能因弹簧自重或调零误差，应拟合直线而非强制过原点。"
+        ],
+        "data_processing": "描点作图时，若图像为过原点的倾斜直线，则重力与质量成正比。注意剔除明显偏离直线的异常点，重力读数保留到分度值下一位，质量已知无需估读。",
+        "design_rationale": "弹簧测力计测量重力时，钩码静止使拉力与重力平衡，示数等于重力大小。逐次增挂钩码可获取多组数据，便于描点作图发现正比关系，避免偶然性。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G8-PHYSICS-X-ku-控制变量法探究浮力影响因素",
+      "textbook_id": "RENJIAO-G8-PHYSICS-X",
+      "cluster_id": "RENJIAO-G8-PHYSICS-X-kc-浮力大小的探究与测量",
+      "name": "控制变量法探究浮力影响因素",
+      "description": "在检验浮力与某一个量的关系时，必须使其他量保持不变，或者确认浮力跟这些量无关。\n【适用条件】多因素问题",
+      "prerequisites": [
+        "决定浮力大小的因素"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [],
+      "ku_type": "method",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "steps": [
+          "第1步：明确要探究的变量（如液体密度），并确定需要控制的变量（如排开液体体积、物体形状等）。",
+          "第2步：设计实验，只改变探究变量（如换用不同密度的液体），保持其他变量完全相同。",
+          "第3步：测量并比较浮力大小（如弹簧测力计示数差），若浮力改变则有关，否则无关。",
+          "第4步（可选）：重复实验，换用不同物体或条件，验证结论的普遍性。"
+        ],
+        "example": "题目：探究浮力是否与液体密度有关。步骤：1. 用弹簧测力计测出同一金属块的重力G。2. 将金属块分别浸没在水和盐水中（排开液体体积相同），记录示数F₁、F₂。3. 计算浮力F浮=G-F，发现F浮盐水>F浮水，说明浮力与液体密度有关。",
+        "key_points": [
+          "⚠️ 控制变量必须“同时”且“完全”相同，例如探究深度时，要确保物体浸入液体的体积不变（如用弹簧测力计挂同一物体缓慢浸入）。",
+          "⚠️ 浮力大小与浸没深度无关，但前提是物体完全浸没且液体密度均匀，此时排开液体体积不变。"
+        ],
+        "when_to_use": "当探究浮力大小与多个因素（如液体密度、排开液体体积、浸没深度等）的关系时，需要判断哪个因素真正影响浮力。",
+        "common_mistakes": [
+          "⚠️ 错误：探究浮力与深度关系时，未控制排开液体体积不变，例如将物体从部分浸入到完全浸入，误以为浮力变大是深度导致，实际是排开液体体积增大。",
+          "⚠️ 错误：探究浮力与物体形状关系时，未控制排开液体体积和液体密度相同，例如用橡皮泥捏成不同形状但体积不同，导致浮力差异来自体积而非形状。"
+        ]
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G8-PHYSICS-X-ku-提高机械效率的方法",
+      "textbook_id": "RENJIAO-G8-PHYSICS-X",
+      "cluster_id": "RENJIAO-G8-PHYSICS-X-kc-机械效率与实验",
+      "name": "提高机械效率的方法",
+      "description": "改进结构使机械更合理轻巧，按规程保养使机械处于良好状态。\n【适用条件】使用机械时",
+      "prerequisites": [
+        "机械效率定义"
+      ],
+      "related_kus": [],
+      "difficulty": 0.2,
+      "exam_frequency": "mid",
+      "question_types": [],
+      "ku_type": "method",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "steps": [
+          "第1步：识别机械中的额外功来源，如摩擦、机械自重等。",
+          "第2步：针对额外功来源采取措施：减小摩擦（加润滑油、用滚动代替滑动）、减轻机械自重（使用轻质材料、优化结构）。",
+          "第3步：定期保养机械，保持润滑良好、零件紧固，避免因磨损或松动增加额外功。",
+          "第4步（可选）：改进机械设计，如使用更合理的杠杆、滑轮组组合，减少无用运动。"
+        ],
+        "example": "题目：用动滑轮提升重物，已知动滑轮重10N，物重100N，提升高度2m，求机械效率。若将动滑轮换成更轻的（重5N），效率如何变化？\n解：原效率η=W有/W总=Gh/(Gh+G动h)=100×2/(100×2+10×2)=200/220≈90.9%。换轻滑轮后η'=200/(200+10)=200/210≈95.2%，效率提高。",
+        "key_points": [
+          "⚠️ 减小摩擦时，注意润滑剂要适量，过多可能增加阻力。",
+          "⚠️ 减轻自重时，不能过度削弱机械强度，否则易损坏。",
+          "⚠️ 保养时，要检查所有活动部件，不能只关注主要零件。"
+        ],
+        "when_to_use": "使用机械时，需要减少额外功（如克服摩擦、机械自重）以提高有用功占总功的比例。",
+        "common_mistakes": [
+          "⚠️ 错误：认为减小摩擦就是加更多润滑油。实际上，过量润滑油会增大粘滞阻力，反而降低效率。",
+          "⚠️ 错误：认为减轻机械自重一定提高效率。若减轻自重导致机械变形或卡顿，额外功可能增加。"
+        ]
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G8-PHYSICS-X-ku-斜面",
+      "textbook_id": "RENJIAO-G8-PHYSICS-X",
+      "cluster_id": "RENJIAO-G8-PHYSICS-X-kc-其他简单机械",
+      "name": "斜面",
+      "description": "一种简单机械，通过增加路程来省力，如盘山公路。\n【适用条件】忽略摩擦",
+      "prerequisites": [],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [],
+      "ku_type": "physical_model",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "conditions": "适用条件：忽略摩擦，斜面倾角固定，物体匀速或缓慢运动。⚠️ 若存在显著摩擦或物体加速运动，则不能直接用斜面省力公式。",
+        "motivation": "引入斜面模型是为了简化分析，将物体沿斜面运动视为恒力做功过程，忽略摩擦后能量转化关系更清晰。",
+        "assumptions": [
+          "斜面是刚性的，不发生形变",
+          "物体与斜面间无摩擦",
+          "物体视为质点，忽略形状影响"
+        ],
+        "limitations": "实际中摩擦不可避免，且物体可能发生滚动或滑动混合，导致省力效果低于理论值。",
+        "typical_scenarios": [
+          "盘山公路的设计分析",
+          "斜坡上推拉重物的力学计算",
+          "斜面省力原理的演示实验"
+        ]
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G8-PHYSICS-X-ku-有用功和额外功",
+      "textbook_id": "RENJIAO-G8-PHYSICS-X",
+      "cluster_id": "RENJIAO-G8-PHYSICS-X-kc-机械效率与实验",
+      "name": "有用功和额外功",
+      "description": "有用功W有：为达到目的必须做的功；额外功W额：克服机械自重和摩擦等额外做的功；总功W总=W有+W额。\n【适用条件】使用机械做功时",
+      "prerequisites": [],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [],
+      "ku_type": "physical_concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "用动滑轮提升重物：物重G=100N，提升高度h=2m，拉力F=60N，绳子移动距离s=4m。W有=Gh=100N×2m=200J，W总=Fs=60N×4m=240J，W额=W总-W有=40J。",
+          "用斜面推箱子：斜面长L=5m，高h=1m，物重G=500N，推力F=150N。W有=Gh=500N×1m=500J，W总=FL=150N×5m=750J，W额=250J（克服摩擦）。"
+        ],
+        "intuition": "想象你提一桶水上楼，水是你想要的，但桶和你的身体也做了功——这就是额外功。有用功是‘必须做的’，额外功是‘不得不做的’。",
+        "definition": "有用功W有：为达到目的必须做的功，标量，单位焦耳(J)；额外功W额：克服机械自重和摩擦等额外做的功，标量，单位焦耳(J)；总功W总=W有+W额，标量，单位焦耳(J)。数学表达式：W总=Fs（动力做功），W有=Gh（提升重物），W额=W总-W有。",
+        "key_points": [
+          "⚠️ 有用功不是‘人做的功’，而是‘对目的物做的功’（如提水时对水做的功）。",
+          "⚠️ 额外功不一定‘无用’，如滑轮组中克服动滑轮重力做的功是额外功，但动滑轮能省力。",
+          "⚠️ 总功总是大于有用功，因为额外功不可避免（理想机械除外）。"
+        ],
+        "connections": "与机械效率η=W有/W总直接相关，η越大表示有用功占比越高；与功率P=W/t不同，功率反映做功快慢，不涉及有用与额外之分。",
+        "common_mistakes": [
+          "⚠️ 误将人对机械做的功（总功）当作有用功，如用滑轮组时直接算拉力×绳子移动距离为有用功。",
+          "⚠️ 忽略额外功的存在，认为总功等于有用功（如认为斜面光滑）。",
+          "⚠️ 混淆有用功和总功的力与距离对应关系：有用功用目的力×目的方向距离，总功用动力×动力方向距离。"
+        ],
+        "counter_examples": "有用功与总功：有用功是目的功，总功是实际做的全部功；总功包含有用功和额外功，二者不是并列关系。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G8-PHYSICS-X-ku-机械效率定义",
+      "textbook_id": "RENJIAO-G8-PHYSICS-X",
+      "cluster_id": "RENJIAO-G8-PHYSICS-X-kc-机械效率与实验",
+      "name": "机械效率定义",
+      "description": "有用功跟总功的比值，η = W有/W总，通常用百分数表示，总是小于1。\n【适用条件】使用任何机械时",
+      "prerequisites": [
+        "有用功和额外功"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [],
+      "ku_type": "physical_concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "用滑轮组将重100N的物体提升2m，拉力F=40N，绳子自由端移动6m。有用功W有=100N×2m=200J，总功W总=40N×6m=240J，机械效率η=200J/240J≈83.3%。",
+          "用斜面将重500N的物体推上1m高的平台，推力200N，斜面长3m。有用功W有=500N×1m=500J，总功W总=200N×3m=600J，机械效率η=500J/600J≈83.3%。"
+        ],
+        "intuition": "你花100元买了个玩具，但发现只有60元花在了玩具本身，其余40元浪费在了包装和运费上。机械效率就是告诉你，你付出的“总功”中有多少真正用在了“有用”的地方。",
+        "definition": "有用功跟总功的比值，η = W有/W总，其中W有是对人们有用的功（单位焦耳），W总是动力对机械做的总功（单位焦耳）。η是标量，无单位，通常用百分数表示，且总是小于1。",
+        "key_points": [
+          "⚠️ 机械效率永远小于1，因为任何机械都不可避免地要做额外功（如克服摩擦、提升机械自身重力）。",
+          "⚠️ 机械效率与功率无关：效率高不一定功率大，功率大也不一定效率高。",
+          "⚠️ 有用功和总功必须对应同一过程，不能把不同机械或不同阶段的功混在一起计算。"
+        ],
+        "connections": "机械效率与额外功直接相关：额外功越大，效率越低；额外功越小，效率越高。同时，机械效率与总功、有用功满足W总=W有+W额。",
+        "common_mistakes": [
+          "⚠️ 误认为机械效率可以大于1：忘记额外功的存在，错误地认为总功可以全部转化为有用功。",
+          "⚠️ 混淆有用功和总功：例如在滑轮组问题中，把物体重力乘以绳子移动距离当成有用功（正确应为物体重力乘以物体上升高度）。",
+          "⚠️ 认为效率高的机械一定省力：效率与省力无关，例如斜面越陡效率越高但越费力。"
+        ],
+        "counter_examples": "机械效率与功率不同：功率表示做功的快慢（单位时间做功多少），而效率表示有用功占总功的比例，两者描述的是完全不同的物理量。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G8-PHYSICS-X-ku-机械能守恒定律",
+      "textbook_id": "RENJIAO-G8-PHYSICS-X",
+      "cluster_id": "RENJIAO-G8-PHYSICS-X-kc-机械能及其转化与守恒",
+      "name": "机械能守恒定律",
+      "description": "如果只有动能和势能相互转化，尽管动能、势能的大小会变化，但机械能的总和不变，即机械能守恒。\n【适用条件】只有动能和势能相互转化，无其他能量转化（如摩擦生热）",
+      "prerequisites": [
+        "动能和势能的相互转化"
+      ],
+      "related_kus": [],
+      "difficulty": 0.6,
+      "exam_frequency": "mid",
+      "question_types": [],
+      "ku_type": "physical_law",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "statement": "在只有动能和势能相互转化的过程中，物体的机械能总量保持不变。数学表达式：$E_{\\text{机械}} = E_k + E_p = \\text{常量}$，其中 $E_k = \\frac{1}{2}mv^2$ 为动能，$E_p = mgh$ 为重力势能（以地面为零势能面）。",
+        "conditions": "成立条件：只有动能和势能相互转化，无其他能量形式（如摩擦生热、空气阻力）参与。⚠️ 若存在摩擦力或非弹性碰撞，机械能会部分转化为内能，总量减少，此时需用能量守恒定律而非机械能守恒。",
+        "connections": "机械能守恒是能量守恒定律在特定条件下的特例，当无耗散力时，能量仅在动能和势能间转化。",
+        "corollaries": "若系统内只有重力（或弹力）做功，则机械能守恒；反之，若有其他力做功（如摩擦力），机械能不守恒。",
+        "typical_uses": [
+          "自由落体：物体只受重力，下落时重力势能转化为动能，可求落地速度。",
+          "光滑斜面下滑：无摩擦，物体从顶端滑到底端，用 $mgh = \\frac{1}{2}mv^2$ 求速度。",
+          "单摆摆动：忽略空气阻力，摆球从最高点到最低点，势能转化为动能，可求最低点速度。"
+        ],
+        "common_mistakes": [
+          "⚠️ 错误：认为有摩擦力时机械能仍守恒。正确做法：有摩擦时机械能减少，需用能量守恒（$E_{\\text{初}} = E_{\\text{末}} + Q$）。",
+          "⚠️ 错误：混淆动能和势能的方向，如认为上升时动能全部转化为势能。正确做法：上升时动能减少量等于势能增加量，但需注意零势能面的选择。",
+          "⚠️ 错误：忽略弹簧的弹性势能。正确做法：若涉及弹簧，机械能应包括弹性势能 $E_p = \\frac{1}{2}kx^2$，总机械能守恒。"
+        ],
+        "physical_picture": "想象一个光滑的滑梯上，小球从高处滑下：高度降低时速度增加，势能转化为动能；再滑上另一侧时速度减小、高度回升，动能又变回势能，整个过程总机械能不变。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G8-PHYSICS-X-ku-机械能的概念",
+      "textbook_id": "RENJIAO-G8-PHYSICS-X",
+      "cluster_id": "RENJIAO-G8-PHYSICS-X-kc-机械能及其转化与守恒",
+      "name": "机械能的概念",
+      "description": "动能、重力势能和弹性势能统称为机械能。一个物体可以既有动能又有势能。",
+      "prerequisites": [
+        "动能的概念",
+        "重力势能的概念",
+        "弹性势能的概念"
+      ],
+      "related_kus": [],
+      "difficulty": 0.2,
+      "exam_frequency": "mid",
+      "question_types": [],
+      "ku_type": "physical_concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "一个质量为2kg的物体从离地5m高处自由下落，落地前瞬间速度10m/s。此时动能 $E_k=\\frac{1}{2}\\times2\\times10^2=100J$，重力势能（以地面为零势能面）$E_p=0$，机械能 $E=100J$。",
+          "弹簧振子：将弹簧压缩0.1m（k=200N/m），弹性势能 $E_p=\\frac{1}{2}\\times200\\times0.1^2=1J$，释放后振子经过平衡位置时动能最大为1J，机械能始终为1J（无摩擦）。"
+        ],
+        "intuition": "为什么跳高运动员起跳后还能继续上升？因为他在起跳时获得的动能转化成了重力势能。机械能帮我们统一描述物体由于运动或位置而具有的“做功本领”。",
+        "definition": "机械能是动能和势能（重力势能、弹性势能）的总和，标量，单位焦耳（J）。表达式：$E_{机械}=E_k+E_p$，其中 $E_k=\\frac{1}{2}mv^2$（m为质量，v为速度），$E_p=mgh$（h为相对参考面的高度）或 $E_p=\\frac{1}{2}kx^2$（k为劲度系数，x为形变量）。",
+        "key_points": [
+          "⚠️ 机械能是标量，没有方向，但动能总是非负，势能可正可负（取决于参考面）。",
+          "⚠️ 一个物体可以同时具有动能和势能（如空中飞行的足球），机械能是它们的代数和。",
+          "⚠️ 机械能守恒只在只有重力或弹力做功时成立，有摩擦力时机械能减少。"
+        ],
+        "connections": "机械能与功直接相关：外力对物体做功等于机械能的变化量（功能原理）。与功率的关系：功率是做功的快慢，$P=\\frac{W}{t}$，而机械能变化量等于功。",
+        "common_mistakes": [
+          "⚠️ 误认为“速度为零时机械能为零”——静止在空中的物体（如悬停的直升机）有重力势能，机械能不为零。",
+          "⚠️ 计算重力势能时忘记选参考面——同一物体在不同参考面下势能值不同，但机械能变化量不变。",
+          "⚠️ 混淆“机械能守恒”与“能量守恒”——机械能守恒是能量守恒的特例，有非保守力做功时机械能不守恒但总能量守恒。"
+        ],
+        "counter_examples": "机械能不同于内能：机械能是宏观的动能和势能，内能是微观分子热运动动能和分子势能的总和。例如，静止在地面的物体机械能为零，但内能不为零。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G8-PHYSICS-X-ku-机翼升力模型",
+      "textbook_id": "RENJIAO-G8-PHYSICS-X",
+      "cluster_id": "RENJIAO-G8-PHYSICS-X-kc-流体压强与流速关系及应用",
+      "name": "机翼升力模型",
+      "description": "机翼上表面弯曲，下表面平，气流经过时上方流速大压强小，下方流速小压强大，产生向上的升力。\n【适用条件】飞机前进时，机翼与空气相对运动。",
+      "prerequisites": [
+        "流体压强与流速的关系"
+      ],
+      "related_kus": [],
+      "difficulty": 0.6,
+      "exam_frequency": "mid",
+      "question_types": [],
+      "ku_type": "physical_model",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "conditions": "适用于飞机水平匀速飞行时，机翼与空气有相对速度。⚠️ 当飞机速度极低或处于失速状态时，模型失效。",
+        "motivation": "将复杂的空气动力学简化为伯努利原理的直观应用，便于初中生理解升力产生的基本机制。",
+        "assumptions": [
+          "空气为不可压缩的理想流体",
+          "气流在机翼上下表面同时到达后缘",
+          "忽略空气粘性和机翼攻角的影响"
+        ],
+        "limitations": "实际中气流并非同时到达后缘，且粘性、涡流和攻角变化会显著影响升力，模型无法解释失速现象。",
+        "typical_scenarios": [
+          "解释飞机起飞时机翼产生升力",
+          "分析机翼形状对升力的影响",
+          "对比对称翼型与弯度翼型的升力差异"
+        ]
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G8-PHYSICS-X-ku-机翼模型实验",
+      "textbook_id": "RENJIAO-G8-PHYSICS-X",
+      "cluster_id": "RENJIAO-G8-PHYSICS-X-kc-流体压强与流速关系及应用",
+      "name": "机翼模型实验",
+      "description": "用纸折成机翼模型，用嘴沿水平方向吹气，模型向上翘起，验证升力产生原因。\n【适用条件】模型轻，吹气方向水平。\n【实验】目的：验证机翼升力产生的原因；原理：流速大压强小，产生压力差；器材：纸、胶带、细线；步骤：1. 按尺寸剪折机翼模型；2. 固定细线；3. 沿水平方向吹气；数据处理：观察模型是否向上翘起",
+      "prerequisites": [
+        "机翼升力模型"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [],
+      "ku_type": "experiment",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "exam_hotspots": [
+          "考查伯努利原理：流速大压强小，解释升力来源。",
+          "考查控制变量法：对比不同吹气方向、模型形状对升力的影响。",
+          "考查实验操作细节：吹气方向、模型固定方式。",
+          "考查生活应用：飞机机翼、喷雾器原理类比。"
+        ],
+        "common_mistakes": [
+          "⚠️ 吹气方向倾斜向下：导致模型被向下压，无法上翘。正确做法：保持吹气方向严格水平。",
+          "⚠️ 模型过重或纸张太厚：升力不足以克服重力，模型不动。正确做法：选用轻质薄纸。",
+          "⚠️ 未固定细线或固定点偏后：模型旋转或侧翻，干扰观察。正确做法：细线系于机翼重心处，保持平衡。",
+          "⚠️ 吹气距离过远或气流分散：机翼上方流速不够大，升力不足。正确做法：嘴距机翼前缘约5cm，集中吹气。"
+        ],
+        "data_processing": "观察模型是否向上翘起，记录翘起角度（定性）。若模型不动，检查吹气方向、模型重量、气流强度。无需定量计算，但需排除重力干扰。",
+        "design_rationale": "纸模型轻质，便于观察微小升力；水平吹气使机翼上方流速大于下方，产生向上压力差，验证伯努利原理。细线固定模型，防止侧翻，确保气流方向水平。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G8-PHYSICS-X-ku-杠杆五要素",
+      "textbook_id": "RENJIAO-G8-PHYSICS-X",
+      "cluster_id": "RENJIAO-G8-PHYSICS-X-kc-杠杆基础与平衡",
+      "name": "杠杆五要素",
+      "description": "支点O、动力F1、阻力F2、动力臂l1（支点到动力作用线的距离）、阻力臂l2（支点到阻力作用线的距离）。\n【适用条件】杠杆处于平衡或转动状态",
+      "prerequisites": [
+        "杠杆定义"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [],
+      "ku_type": "physical_concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "用撬棍撬石头：支点在撬棍与地面接触点，动力F1=100N向下压，动力臂l1=1.2m，阻力F2=300N（石头重力），阻力臂l2=0.4m。计算：100N×1.2m=120N·m，300N×0.4m=120N·m，杠杆平衡。",
+          "用羊角锤拔钉子：支点在锤头与木板接触点，动力F1=50N，动力臂l1=0.2m，阻力F2=200N，阻力臂l2=0.05m。计算：50N×0.2m=10N·m，200N×0.05m=10N·m，杠杆平衡。"
+        ],
+        "intuition": "为什么用一根撬棍能轻松抬起重物？杠杆五要素揭示了力、支点和距离如何共同决定转动效果，让你明白省力或省距离的奥秘。",
+        "definition": "杠杆五要素包括支点O（杠杆绕其转动的固定点）、动力F1（使杠杆转动的力）、阻力F2（阻碍杠杆转动的力）、动力臂l1（支点到动力作用线的垂直距离）、阻力臂l2（支点到阻力作用线的垂直距离）。单位：力为牛顿(N)，力臂为米(m)。",
+        "key_points": [
+          "⚠️ 力臂是支点到力的作用线的垂直距离，不是支点到力的作用点的距离。",
+          "⚠️ 动力和阻力是相对的，使杠杆转动的力是动力，阻碍转动的力是阻力，并非固定。",
+          "⚠️ 杠杆平衡时，动力×动力臂 = 阻力×阻力臂，但力臂为零时力再大也不产生转动效果。"
+        ],
+        "connections": "杠杆五要素与力矩（M=F×l）直接相关，力矩是力与力臂的乘积，决定转动效果；与功（W=F×s）关联，省力杠杆费距离，省距离杠杆费力。",
+        "common_mistakes": [
+          "⚠️ 误认为力臂是支点到力的作用点的连线长度，如将斜拉杠杆的力臂直接量取斜边长度，实际应作垂线。",
+          "⚠️ 混淆动力和阻力方向：认为动力一定向下、阻力一定向上，实际取决于杠杆转动方向。",
+          "⚠️ 忽略杠杆自重：在非轻质杠杆问题中，忘记将杠杆自身重力作为阻力或动力考虑。"
+        ],
+        "counter_examples": "杠杆五要素与滑轮不同：滑轮是变形的杠杆，但支点位置随滑轮类型变化（定滑轮支点在轴心，动滑轮支点在绳与轮接触点），而杠杆支点固定。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G8-PHYSICS-X-ku-杠杆原理应用-现代版曹冲称象",
+      "textbook_id": "RENJIAO-G8-PHYSICS-X",
+      "cluster_id": "RENJIAO-G8-PHYSICS-X-kc-杠杆分类与应用",
+      "name": "杠杆原理应用（现代版曹冲称象）",
+      "description": "利用杠杆平衡条件，通过测量动力和动力臂、阻力臂，间接测量大象质量。\n【适用条件】杠杆水平静止，不计铁笼质量，g取10 N/kg",
+      "prerequisites": [
+        "杠杆平衡条件"
+      ],
+      "related_kus": [],
+      "difficulty": 0.6,
+      "exam_frequency": "mid",
+      "question_types": [],
+      "ku_type": "physical_model",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "conditions": "适用条件：杠杆水平静止，不计铁笼质量，g取10 N/kg。⚠️ 若杠杆未水平或铁笼质量不可忽略，则模型不适用，需考虑额外力矩。",
+        "motivation": "将复杂的大象称重问题简化为杠杆平衡模型，忽略铁笼质量、杠杆自重和摩擦，便于学生理解杠杆原理在间接测量中的应用。",
+        "assumptions": [
+          "杠杆水平静止，处于平衡状态",
+          "不计铁笼质量，忽略其对杠杆的影响",
+          "g取10 N/kg，简化重力计算"
+        ],
+        "limitations": "实际中杠杆自重、铁笼质量及摩擦不可忽略，会导致测量误差，且大象移动时杠杆难以保持水平静止。",
+        "typical_scenarios": [
+          "用已知质量的小石头和杠杆测量大象质量",
+          "通过调整动力臂和阻力臂使杠杆平衡，间接求阻力",
+          "在实验室中用弹簧测力计和杠杆测量重物质量"
+        ]
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G8-PHYSICS-X-ku-杠杆定义",
+      "textbook_id": "RENJIAO-G8-PHYSICS-X",
+      "cluster_id": "RENJIAO-G8-PHYSICS-X-kc-杠杆基础与平衡",
+      "name": "杠杆定义",
+      "description": "一根硬棒，在力的作用下能绕着固定点O转动，这根硬棒就是杠杆。\n【适用条件】硬棒，可绕固定点转动",
+      "prerequisites": [],
+      "related_kus": [],
+      "difficulty": 0.2,
+      "exam_frequency": "mid",
+      "question_types": [],
+      "ku_type": "physical_concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "用一根长2m的撬棍撬石头，支点距石头0.5m，若石头阻力为1000N，则动力至少为多少？解：动力臂=2-0.5=1.5m，阻力臂=0.5m，由F₁×1.5=1000×0.5，得F₁≈333.3N。",
+          "用镊子夹取物体，支点在镊子顶端，动力臂短，阻力臂长，是费力杠杆，但能省距离。"
+        ],
+        "intuition": "为什么用一根棍子就能轻松撬起很重的石头？因为杠杆能放大你施加的力，让你用较小的力克服较大的阻力。",
+        "definition": "一根硬棒，在力的作用下能绕着固定点O转动，这根硬棒就是杠杆。数学表达式：动力×动力臂=阻力×阻力臂，即F₁L₁=F₂L₂。F₁、F₂是力（矢量，单位N），L₁、L₂是力臂（标量，单位m）。",
+        "key_points": [
+          "⚠️ 力臂不是支点到力的作用点的距离，而是支点到力的作用线的垂直距离。",
+          "⚠️ 杠杆不一定是一根直棒，弯的硬棒（如羊角锤）也是杠杆。",
+          "⚠️ 支点不一定在杠杆中间，可以在两端或任意位置。"
+        ],
+        "connections": "与滑轮、轮轴同属简单机械，核心都是利用力臂关系改变力的大小或方向。",
+        "common_mistakes": [
+          "⚠️ 误以为力臂就是支点到力的作用点的连线长度，实际应作垂线。",
+          "⚠️ 认为杠杆必须水平放置，忽略倾斜时力臂仍为垂直距离。",
+          "⚠️ 混淆动力和阻力的方向，认为它们必须相反，实际它们使杠杆转动的方向相反即可。"
+        ],
+        "counter_examples": "滑轮不是杠杆，但定滑轮本质是等臂杠杆，动滑轮是动力臂为阻力臂2倍的杠杆。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G8-PHYSICS-X-ku-杠杆平衡条件",
+      "textbook_id": "RENJIAO-G8-PHYSICS-X",
+      "cluster_id": "RENJIAO-G8-PHYSICS-X-kc-杠杆基础与平衡",
+      "name": "杠杆平衡条件",
+      "description": "杠杆平衡时，动力×动力臂 = 阻力×阻力臂，即F1l1 = F2l2。\n【适用条件】杠杆在动力和阻力作用下静止或匀速转动",
+      "prerequisites": [
+        "杠杆五要素"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [],
+      "ku_type": "physical_law",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "statement": "杠杆平衡条件：动力×动力臂 = 阻力×阻力臂，即 F₁l₁ = F₂l₂。其中 F₁ 为使杠杆转动的力（动力），F₂ 为阻碍杠杆转动的力（阻力），l₁ 和 l₂ 分别为支点到动力和阻力作用线的垂直距离（力臂）。",
+        "conditions": "杠杆在动力和阻力作用下处于静止或匀速转动状态。⚠️ 若杠杆加速转动或受其他力（如摩擦力、重力）影响，该条件不成立，需考虑合力矩为零。",
+        "connections": "杠杆平衡条件是力矩平衡的特例，与滑轮、轮轴等简单机械的原理相通，也是机械效率计算的基础。",
+        "corollaries": "由 F₁l₁ = F₂l₂ 可得 F₁/F₂ = l₂/l₁，即动力与阻力之比等于阻力臂与动力臂之比。若 l₁ > l₂，则 F₁ < F₂，为省力杠杆；反之则为费力杠杆。",
+        "typical_uses": [
+          "计算未知力：已知动力臂、阻力臂和阻力，求动力大小（如撬石头）。",
+          "判断杠杆类型：比较动力臂与阻力臂长度，确定省力或费力杠杆（如剪刀、镊子）。",
+          "调节平衡：在杠杆两端增减钩码或移动位置，使杠杆重新平衡（如实验探究题）。"
+        ],
+        "common_mistakes": [
+          "⚠️ 误将支点到力的作用点的距离当作力臂。正确做法：力臂是支点到力的作用线的垂直距离，而非连线长度。",
+          "⚠️ 忽略力的方向，认为力臂总是正值。正确做法：力臂有正负，通常规定使杠杆顺时针转动的力矩为负，逆时针为正。",
+          "⚠️ 在杠杆倾斜时仍用水平方向的距离计算力臂。正确做法：力臂必须垂直于力的方向，倾斜时需用几何方法求垂直距离。"
+        ],
+        "physical_picture": "一根硬棒绕固定点（支点）转动，动力和阻力分别作用在两侧，当杠杆静止或匀速转动时，动力与动力臂的乘积等于阻力与阻力臂的乘积。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G8-PHYSICS-X-ku-标准大气压",
+      "textbook_id": "RENJIAO-G8-PHYSICS-X",
+      "cluster_id": "RENJIAO-G8-PHYSICS-X-kc-大气压强与测量",
+      "name": "标准大气压",
+      "description": "标准大气压p0=1.013×10⁵ Pa，粗略计算取1×10⁵ Pa。\n【适用条件】海平面附近，0℃时。",
+      "prerequisites": [
+        "托里拆利实验"
+      ],
+      "related_kus": [],
+      "difficulty": 0.2,
+      "exam_frequency": "mid",
+      "question_types": [],
+      "ku_type": "physical_concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "马德堡半球实验：用16匹马才拉开两个半球，说明大气压很大。若半球内抽成真空，外部大气压约1×10⁵ Pa，作用在0.5m²面积上，压力约5×10⁴ N。",
+          "用吸管喝饮料：吸管内的气压小于外界大气压，外界大气压把饮料压入口中。若吸管长超过10.3m，则无法吸上水（标准大气压只能支撑10.3m水柱）。"
+        ],
+        "intuition": "为什么我们感觉不到空气有重量？标准大气压就像头顶上压着一座10米高的水塔，但身体内外气压平衡，所以感觉不到。",
+        "definition": "标准大气压是海平面、0℃时的大气压强，符号p₀，标量，单位帕斯卡(Pa)。p₀=1.013×10⁵ Pa，粗略计算取1×10⁵ Pa。",
+        "key_points": [
+          "⚠️ 大气压不是固定不变的，标准大气压只是特定条件下的参考值，海拔越高气压越低。",
+          "⚠️ 1标准大气压能支撑约760mm汞柱或10.3m水柱，这个高度与液体密度有关，不要误以为任何液体都是10.3m。",
+          "⚠️ 大气压的方向是向各个方向的，不是只有向下，因为空气是流体，内部压强向各个方向传递。"
+        ],
+        "connections": "标准大气压与液体压强（p=ρgh）相关：1标准大气压约等于10.3m水柱产生的压强；与气压计原理相关：托里拆利实验用汞柱高度直接测量大气压。",
+        "common_mistakes": [
+          "⚠️ 误认为大气压只向下作用：实际上大气压向各个方向都有压强，比如吸盘挂钩能贴在墙上就是侧向大气压的作用。",
+          "⚠️ 计算压力时忘记单位换算：例如面积用cm²，压强用Pa，必须统一为m²，1cm²=10⁻⁴m²。",
+          "⚠️ 混淆标准大气压与标准状况：标准大气压是压强条件，标准状况还包括温度0℃、气体摩尔体积22.4L等，不要混为一谈。"
+        ],
+        "counter_examples": "标准大气压与液体压强不同：液体压强只与深度和密度有关，方向竖直向下；大气压是气体压强，方向各向同性，且随高度变化。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G8-PHYSICS-X-ku-橡皮泥船实验",
+      "textbook_id": "RENJIAO-G8-PHYSICS-X",
+      "cluster_id": "RENJIAO-G8-PHYSICS-X-kc-浮力相关实验活动",
+      "name": "橡皮泥船实验",
+      "description": "将橡皮泥捏成瓢状（小船），使其漂浮在水面并能承载重物，体验改变排开液体体积来增大浮力。\n【实验】目的：探究如何使密度大于水的物体漂浮并承载重物；原理：通过改变形状增大排开水的体积，从而增大浮力；器材：橡皮泥、水槽、水、小重物；步骤：1. 将橡皮泥捏成小船形状；2. 放入水中观察是否漂浮；3. 逐渐添加重物，观察承载能力；数据处理：定性观察",
+      "prerequisites": [
+        "阿基米德原理",
+        "轮船与排水量"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [],
+      "ku_type": "experiment",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "exam_hotspots": [
+          "浮力与排开液体体积的关系（阿基米德原理）",
+          "物体浮沉条件（浮力与重力比较）",
+          "改变物体形状对浮力的影响",
+          "实验操作中的控制变量（如保持橡皮泥质量不变）"
+        ],
+        "common_mistakes": [
+          "⚠️ 将橡皮泥捏成实心球放入水中→排开水体积小，浮力小于重力，下沉→应捏成中空薄壳状增大排开体积",
+          "⚠️ 添加重物时直接放在船体一侧→船体倾斜进水，导致下沉→应将重物均匀放置在船体中央",
+          "⚠️ 认为橡皮泥漂浮是因为密度变小→密度是物质属性，不变；漂浮是因为形状改变增大了排开水的体积",
+          "⚠️ 忽略船体进水后排水体积变化→进水后船体总重增加，若排水体积不变则下沉→需保持船体不进水"
+        ],
+        "data_processing": "定性观察，记录船体是否漂浮、承载重物数量及最大承载量。注意每次添加重物后待船体稳定再记录，避免船体倾斜或进水影响结果。",
+        "design_rationale": "橡皮泥密度大于水，通常下沉。捏成瓢状增大排开水的体积，使浮力等于重力，实现漂浮。添加重物时，船体下沉，排开水体积进一步增大，浮力随之增大，直至浮力等于总重力。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G8-PHYSICS-X-ku-气压计",
+      "textbook_id": "RENJIAO-G8-PHYSICS-X",
+      "cluster_id": "RENJIAO-G8-PHYSICS-X-kc-大气压强与测量",
+      "name": "气压计",
+      "description": "测量大气压的仪器，有水银气压计和无液气压计（金属盒气压计）。",
+      "prerequisites": [
+        "大气压强"
+      ],
+      "related_kus": [],
+      "difficulty": 0.2,
+      "exam_frequency": "mid",
+      "question_types": [],
+      "ku_type": "physical_concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "在海拔0米处，水银气压计读数为760 mm Hg。若登山至海拔1000米，气压约降为90 kPa，水银柱高度约675 mm。",
+          "用金属盒气压计测教室气压，指针指在101 kPa，说明此时大气压接近标准值。"
+        ],
+        "intuition": "为什么我们感觉不到大气压，但吸盘挂钩却能牢牢吸在墙上？因为大气压无处不在，气压计就是测量这个看不见的压力的工具。",
+        "definition": "气压计是测量大气压的仪器。大气压指单位面积上所受大气柱的重力，常用水银气压计或金属盒气压计测量。标准大气压为1.013×10⁵ Pa，或760 mmHg。",
+        "key_points": [
+          "⚠️ 水银气压计中，水银柱高度与大气压成正比，但水银柱的粗细不影响测量结果（压强只与高度有关）。",
+          "⚠️ 无液气压计（金属盒）内部是真空，大气压变化使金属盒形变，带动指针，但精度受温度影响。",
+          "⚠️ 气压计读数需考虑海拔：海拔越高，大气压越小，水银柱越低。"
+        ],
+        "connections": "大气压与沸点相关：气压越低，沸点越低（如高山上煮饭不易熟）。大气压还与天气变化相关：高压区常晴好，低压区常阴雨。",
+        "common_mistakes": [
+          "⚠️ 误以为水银气压计中水银柱高度与管径有关：实际上，只要管足够长，高度只由大气压决定。",
+          "⚠️ 混淆气压计与高度计：高度计本质是气压计，但刻度直接标为高度，需注意气压随高度变化并非线性。",
+          "⚠️ 认为无液气压计读数永远准确：金属盒弹性会疲劳，需定期校准。"
+        ],
+        "counter_examples": "气压计测量的是大气压，不是液体内部压强（如液体压强计）。液体压强计用U形管测液体内部压强，而气压计专测大气压。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G8-PHYSICS-X-ku-气球和飞艇的浮沉原理",
+      "textbook_id": "RENJIAO-G8-PHYSICS-X",
+      "cluster_id": "RENJIAO-G8-PHYSICS-X-kc-浮力的应用与模型",
+      "name": "气球和飞艇的浮沉原理",
+      "description": "气球和飞艇充入密度小于空气的气体（氢气、氦气或热空气），利用空气浮力升空。通过改变自身重力（如放气）或体积（热胀冷缩）控制升降。\n【适用条件】在空气中，忽略空气流动影响",
+      "prerequisites": [
+        "阿基米德原理",
+        "物体的浮沉条件（受力分析）"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [],
+      "ku_type": "physical_model",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "conditions": "适用条件：在静止空气中，气球或飞艇充入密度小于空气的气体（氢气、氦气或热空气），通过改变重力或体积控制升降。⚠️ 不可用：当空气流动剧烈（如强风）或高度变化导致空气密度显著改变时，模型失效。",
+        "motivation": "引入气球和飞艇浮沉原理模型，是为了简化分析浮力与重力平衡关系，忽略空气流动等复杂因素，聚焦于密度差和体积变化对升降的控制。",
+        "assumptions": [
+          "空气密度均匀且恒定，忽略高度变化对密度的影响",
+          "气球或飞艇内部气体均匀，且与外界空气无热交换",
+          "忽略空气流动（如风）对浮力和运动轨迹的干扰"
+        ],
+        "limitations": "实际中空气密度随高度变化，且气球材料弹性有限，导致体积变化不理想，模型在极端高度或快速升降时误差较大。",
+        "typical_scenarios": [
+          "热气球通过加热空气增大体积，使浮力大于重力而上升",
+          "飞艇通过释放部分气体减小重力，实现缓慢下降",
+          "气象气球充入氦气，利用浮力升空进行高空探测"
+        ]
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G8-PHYSICS-X-ku-水能和风能的利用",
+      "textbook_id": "RENJIAO-G8-PHYSICS-X",
+      "cluster_id": "RENJIAO-G8-PHYSICS-X-kc-机械能及其转化与守恒",
+      "name": "水能和风能的利用",
+      "description": "自然界的流水和风都具有大量机械能，可用于发电等。拦河坝提高水位增加水的重力势能，风车将风能转化为电能。\n【适用条件】实际应用，考虑能量转化效率",
+      "prerequisites": [
+        "机械能的概念"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [],
+      "ku_type": "physical_concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "一座水电站，拦河坝使水位提高50米，每秒有1000千克水流下。水的重力势能减少量为 $E_p = mgh = 1000 \\times 10 \\times 50 = 500000$ 焦耳/秒，即500千瓦。若发电效率为80%，则实际发电功率为 $500 \\times 0.8 = 400$ 千瓦。",
+          "一台风力发电机，叶片扫过面积内风速为10米/秒，空气密度1.2千克/立方米，每秒通过叶片的气流质量为 $m = \\rho A v$（假设A=100平方米），则 $m = 1.2 \\times 100 \\times 10 = 1200$ 千克，风的动能为 $E_k = \\frac{1}{2} \\times 1200 \\times 10^2 = 60000$ 焦耳/秒，即60千瓦。若效率为40%，则发电功率为24千瓦。"
+        ],
+        "intuition": "为什么水从高处落下或风吹过能发电？因为流动的水和风携带着大量机械能，就像你站在瀑布下感受到的冲击力或大风中难以站稳一样，这些能量可以被我们利用。",
+        "definition": "水能和风能是自然界中流动的水和空气（风）所具有的机械能，包括动能和势能。水能利用中，拦河坝提高水位增加水的重力势能，公式为 $E_p = mgh$（$m$为质量，$g$为重力加速度，$h$为高度差）；风能利用中，风车将风的动能转化为电能，风的动能公式为 $E_k = \\frac{1}{2}mv^2$（$m$为空气质量，$v$为风速）。两者均为标量，单位是焦耳（J）。",
+        "key_points": [
+          "⚠️ 水能发电中，水的重力势能转化为电能，但并非全部转化，存在能量损失（如摩擦、热能），实际效率通常只有60%-80%。",
+          "⚠️ 风能的大小与风速的立方成正比（$P \\propto v^3$），风速增加一倍，功率增加八倍，因此风速很小的变化会导致发电量巨大差异。",
+          "⚠️ 水能和风能都是可再生能源，但受自然条件（如季节、地理位置）影响大，不能稳定持续供电，需要储能或与其他能源互补。"
+        ],
+        "connections": "水能和风能都与机械能（动能和势能）直接相关，且可转化为电能，与能量守恒定律紧密相连——转化过程中总能量守恒，但部分转化为内能（热能）散失。",
+        "common_mistakes": [
+          "⚠️ 误以为水能只来自水的动能：实际上水能主要来自水的重力势能（高度差），而不是水流速度本身，例如瀑布比平缓河流能量大得多。",
+          "⚠️ 认为风能大小与风速成正比：实际与风速的立方成正比，因此风速测量误差会导致发电量估算严重偏差。",
+          "⚠️ 忽略能量转化效率：认为水能或风能全部转化为电能，实际中机械摩擦、热损失等使效率远低于100%。"
+        ],
+        "counter_examples": "水能和风能不是“凭空产生”的能量，它们本质上是太阳能的间接形式（太阳蒸发水形成降水、加热空气形成风），因此不能无限获取，受气候和地理限制。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G8-PHYSICS-X-ku-流体压强与流速的关系",
+      "textbook_id": "RENJIAO-G8-PHYSICS-X",
+      "cluster_id": "RENJIAO-G8-PHYSICS-X-kc-流体压强与流速关系及应用",
+      "name": "流体压强与流速的关系",
+      "description": "在气体和液体中，流速越大的位置，压强越小。\n【适用条件】流体流动时，忽略粘性等次要因素。",
+      "prerequisites": [
+        "液体压强",
+        "大气压强"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [],
+      "ku_type": "physical_law",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "statement": "在气体和液体中，流速越大的位置，压强越小。数学表达式：$p_1 + \\frac{1}{2}\\rho v_1^2 = p_2 + \\frac{1}{2}\\rho v_2^2$（伯努利方程简化形式），其中$p$为压强，$\\rho$为密度，$v$为流速，方向沿流线。",
+        "conditions": "适用于理想流体（无粘性、不可压缩）且流动稳定（定常流）。⚠️ 若流体有显著粘性（如蜂蜜）或流动不稳定，该关系不成立，需考虑能量损失。",
+        "connections": "该规律是伯努利原理在水平流动中的简化，与能量守恒定律（机械能守恒）紧密相关。",
+        "corollaries": "伯努利方程：$p + \\frac{1}{2}\\rho v^2 + \\rho gh = \\text{常数}$（水平流动时忽略$\\rho gh$）。",
+        "typical_uses": [
+          "解释飞机机翼升力：机翼上方空气流速大、压强小，下方流速小、压强大，产生向上的升力。",
+          "分析火车站安全线：列车高速通过时，附近空气流速大、压强小，人若靠近会被外侧大气压推向列车。",
+          "喷雾器原理：细管口空气流速大、压强小，将液体吸上来并喷出。"
+        ],
+        "common_mistakes": [
+          "⚠️ 误认为流速越大压强越大：正确关系是流速大压强小，如吹两张纸中间，纸会靠近而非分开。",
+          "⚠️ 忽略流体方向性：认为所有位置都适用，实际需沿流线比较，不同流线间压强关系不直接。",
+          "⚠️ 混淆动压与静压：误将$\\frac{1}{2}\\rho v^2$当作总压强，实际它是动压，总压是静压与动压之和。"
+        ],
+        "physical_picture": "想象两艘并排航行的船，中间水流快，外侧水流慢，中间压强小，外侧压强大，船会被推向中间。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G8-PHYSICS-X-ku-测量浮力的方法-称重法",
+      "textbook_id": "RENJIAO-G8-PHYSICS-X",
+      "cluster_id": "RENJIAO-G8-PHYSICS-X-kc-浮力大小的探究与测量",
+      "name": "测量浮力的方法（称重法）",
+      "description": "用弹簧测力计测出物体在空气中的重力G，再测出物体浸在液体中时的示数F，浮力F浮 = G - F。\n【适用条件】物体密度大于液体密度，能浸没且不与容器底接触",
+      "prerequisites": [
+        "浮力的概念"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [],
+      "ku_type": "method",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "steps": [
+          "第1步：用弹簧测力计测出物体在空气中的重力G，记录读数。",
+          "第2步：将物体浸没在液体中，确保不与容器底或壁接触，读出此时弹簧测力计示数F。",
+          "第3步：计算浮力F浮 = G - F。",
+          "第4步（可选）：多次测量取平均值以减小误差。"
+        ],
+        "example": "例：用弹簧测力计测石块在空气中重力为4N，浸没水中后示数为3N，求浮力。解：F浮 = G - F = 4N - 3N = 1N。",
+        "key_points": [
+          "⚠️ 物体必须完全浸没且不与容器底接触，否则测得的F偏大或偏小。",
+          "⚠️ 弹簧测力计使用前需调零，读数时视线与指针平齐。"
+        ],
+        "when_to_use": "物体密度大于液体密度，能浸没且不与容器底接触时，用弹簧测力计测量浮力。",
+        "common_mistakes": [
+          "⚠️ 误将F当作浮力：学生常直接认为弹簧测力计示数F就是浮力，忘记浮力是G与F的差值。",
+          "⚠️ 物体未完全浸没：若只浸入部分，测得的F偏大，导致F浮偏小。"
+        ]
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G8-PHYSICS-X-ku-测量滑动摩擦力实验",
+      "textbook_id": "RENJIAO-G8-PHYSICS-X",
+      "cluster_id": "RENJIAO-G8-PHYSICS-X-kc-摩擦力",
+      "name": "测量滑动摩擦力实验",
+      "description": "用弹簧测力计水平匀速拉动木块，根据二力平衡，拉力等于滑动摩擦力。\n【适用条件】木块做匀速直线运动，水平桌面\n【实验】目的：测量滑动摩擦力的大小；原理：二力平衡：拉力等于滑动摩擦力；器材：弹簧测力计、木块、长木板；步骤：1.水平匀速拉动木块；2.读取弹簧测力计示数；数据处理：直接读数",
+      "prerequisites": [
+        "二力平衡的条件",
+        "滑动摩擦力"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [],
+      "ku_type": "experiment",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "exam_hotspots": [
+          "二力平衡条件的应用（拉力与摩擦力相等）",
+          "控制变量法探究影响滑动摩擦力大小的因素（压力、接触面粗糙程度）",
+          "弹簧测力计的正确使用与读数",
+          "实验操作中的误差分析（如未匀速拉动、未水平拉动）"
+        ],
+        "common_mistakes": [
+          "⚠️ 未匀速拉动：弹簧测力计示数不稳定，导致读数不准确。正确做法：保持木块匀速直线运动，手拉速度均匀。",
+          "⚠️ 弹簧测力计未调零：初始示数不为零，导致测量值偏大或偏小。正确做法：使用前在水平方向调零。",
+          "⚠️ 拉动时弹簧测力计倾斜：拉力有竖直分量，使水平拉力不等于摩擦力。正确做法：保持弹簧测力计水平。",
+          "⚠️ 木块未放在水平桌面上：斜面会使重力分力影响摩擦力测量。正确做法：确保桌面水平。"
+        ],
+        "data_processing": "多次测量取平均值减小偶然误差；若弹簧测力计示数波动，取中间稳定值；读数时视线与指针平齐，保留到分度值下一位。",
+        "design_rationale": "弹簧测力计测量的是拉力，只有木块做匀速直线运动时，水平方向二力平衡，拉力才等于滑动摩擦力。水平拉动确保摩擦力在水平方向，避免重力干扰。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G8-PHYSICS-X-ku-测量滑轮组的机械效率实验",
+      "textbook_id": "RENJIAO-G8-PHYSICS-X",
+      "cluster_id": "RENJIAO-G8-PHYSICS-X-kc-机械效率与实验",
+      "name": "测量滑轮组的机械效率实验",
+      "description": "测量钩码重力G、提升高度h、拉力F、绳端移动距离s，计算有用功、总功和机械效率。\n【适用条件】缓慢拉动弹簧测力计，不计绳重和摩擦\n【实验】目的：测量滑轮组的机械效率，探究影响机械效率的因素；原理：η = W有/W总，W有=Gh，W总=Fs；器材：滑轮组、弹簧测力计、钩码、刻度尺、铁架台；步骤：测量钩码重力；安装滑轮组并记下位置；缓慢拉动测力计使钩码升高，记录F、h、s；改变钩码数量重复实验；数据处理：计算W有=Gh，W总=Fs，η=W有/W总，比较不同钩码数量下的η",
+      "prerequisites": [
+        "滑轮组",
+        "机械效率定义"
+      ],
+      "related_kus": [],
+      "difficulty": 0.6,
+      "exam_frequency": "mid",
+      "question_types": [],
+      "ku_type": "experiment",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "exam_hotspots": [
+          "实验原理及公式η=Gh/Fs的变形计算",
+          "绳子段数n的判断（通过动滑轮上绳子股数）",
+          "影响机械效率的因素（钩码重力、动滑轮重力、摩擦）",
+          "实验操作步骤及注意事项（缓慢匀速、竖直拉动）"
+        ],
+        "common_mistakes": [
+          "⚠️ 拉动测力计过快或忽快忽慢→拉力读数不稳定，导致总功计算偏差→应缓慢匀速拉动，待示数稳定后读数",
+          "⚠️ 未竖直向上拉动测力计→拉力方向倾斜，实际拉力偏大，总功偏大→应保持测力计竖直向上，与绳子方向一致",
+          "⚠️ 忘记测量钩码重力G，直接用钩码标称质量计算→忽略测力计自身误差，导致有用功不准确→每次实验前用测力计实际测量钩码重力",
+          "⚠️ 测量h和s时未从同一初始位置开始→h和s对应关系错误，机械效率计算错误→应标记滑轮组和钩码初始位置，同时测量提升前后距离"
+        ],
+        "data_processing": "计算η=Gh/Fs，注意s=nh（n为绳子段数），若s≠nh则检查测量或组装错误；多次实验取平均值减小偶然误差；有效数字保留与测量工具精度一致（如弹簧测力计0.1N，刻度尺1mm）。",
+        "design_rationale": "使用弹簧测力计缓慢匀速拉动，使滑轮组处于平衡状态，拉力F等于实际拉力，避免加速时额外力干扰；刻度尺测量h和s，通过s=nh（n为承担重物绳子段数）验证机械效率公式，体现功的原理。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G8-PHYSICS-X-ku-浮力",
+      "textbook_id": "RENJIAO-G8-PHYSICS-X",
+      "cluster_id": "RENJIAO-G8-PHYSICS-X-kc-流体压强与浮力",
+      "name": "浮力",
+      "description": "浸在液体或气体中的物体受到向上的力，这个力叫做浮力。\n【适用条件】适用于物体浸入流体中的情况。",
+      "prerequisites": [
+        "压强",
+        "液体压强公式 p=ρgh"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [],
+      "ku_type": "physical_concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "一个重10N的铁块挂在弹簧测力计下，浸没在水中时示数为8N，则铁块受到的浮力F浮 = 10N - 8N = 2N。",
+          "一个体积为0.5m³的木块漂浮在水面上，排开水的体积为0.3m³，则木块受到的浮力F浮 = ρ水gV排 = 1000kg/m³ × 10N/kg × 0.3m³ = 3000N。"
+        ],
+        "intuition": "为什么游泳时感觉身体变轻？为什么轮船能浮在水面？因为液体或气体对浸入其中的物体会施加一个向上的托举力，这个力就是浮力。",
+        "definition": "浸在液体或气体中的物体受到向上的力，叫做浮力。浮力方向始终竖直向上，施力物体是流体。浮力大小可用弹簧测力计测量：F浮 = G - F拉，其中G为物体重力，F拉为物体浸入流体中时弹簧测力计的示数。单位：牛顿（N）。",
+        "key_points": [
+          "⚠️ 浮力方向总是竖直向上，与物体形状、密度无关，即使物体沉底，只要底部有液体，浮力仍存在。",
+          "⚠️ 浮力产生的原因是物体上下表面受到液体压力差，若下表面紧贴容器底无液体，则物体不受浮力（如桥墩）。",
+          "⚠️ 物体浸没时，浮力大小与深度无关（液体密度和排开液体体积不变时）。"
+        ],
+        "connections": "浮力与阿基米德原理直接相关：F浮 = G排 = ρ液gV排；浮力大小也与液体压强有关，因为浮力源于液体对物体上下表面的压力差。",
+        "common_mistakes": [
+          "⚠️ 误认为物体下沉时不受浮力：实际上只要物体浸入流体中，上下表面有压力差，就受浮力，下沉是因为重力大于浮力。",
+          "⚠️ 误认为浮力大小与物体密度有关：根据阿基米德原理，浮力只与液体密度和排开液体体积有关，与物体密度无关。",
+          "⚠️ 误认为漂浮物体浮力等于重力，但浸没物体浮力不一定等于重力：浸没时浮力与重力大小关系取决于物体密度与液体密度。"
+        ],
+        "counter_examples": "浮力与重力不同：重力是地球对物体的吸引力，方向竖直向下；浮力是流体对物体的向上托力，方向竖直向上。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G8-PHYSICS-X-ku-浮力产生的原因",
+      "textbook_id": "RENJIAO-G8-PHYSICS-X",
+      "cluster_id": "RENJIAO-G8-PHYSICS-X-kc-流体压强与浮力",
+      "name": "浮力产生的原因",
+      "description": "浮力是由于液体（或气体）对物体上下表面的压力差产生的。\n【适用条件】适用于物体完全或部分浸入流体中，且流体静止。",
+      "prerequisites": [
+        "浮力",
+        "液体压强公式 p=ρgh"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [],
+      "ku_type": "physical_law",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "statement": "浮力是由于液体（或气体）对浸入其中的物体上下表面产生的压力差。数学表达式：$F_\\text{浮}=F_\\text{向上}-F_\\text{向下}=p_\\text{下}S-p_\\text{上}S=\\rho_\\text{液}gh_\\text{下}S-\\rho_\\text{液}gh_\\text{上}S$，其中$\\rho_\\text{液}$为液体密度，$g$为重力加速度，$h_\\text{下}$、$h_\\text{上}$为下、上表面深度，$S$为表面积。浮力方向竖直向上。",
+        "conditions": "物体必须完全或部分浸入静止的流体中，且流体对物体上下表面有压力差。⚠️ 若物体底部与容器底部紧密接触（如桥墩），则下表面无液体压力，浮力消失。若物体在真空中或流体非静止（如高速流动），该规律不适用。",
+        "connections": "浮力产生的原因是液体压强随深度增加的结果，与液体压强公式$p=\\rho gh$直接相关，也是阿基米德原理的微观解释基础。",
+        "corollaries": "1. 浮力大小与物体形状、密度无关，只与排开液体的体积和液体密度有关（阿基米德原理）。2. 物体在气体中也受浮力，如氢气球上升，原理相同。",
+        "typical_uses": [
+          "计算浸没物体的浮力：已知物体上下表面深度和面积，直接代入$F_\\text{浮}=\\rho g (h_\\text{下}-h_\\text{上})S$。",
+          "判断浮力方向：分析物体上下表面压力差的方向，总是竖直向上。",
+          "解释物体沉浮：当浮力大于重力时上浮，小于时下沉，等于时悬浮。"
+        ],
+        "common_mistakes": [
+          "⚠️ 误认为浮力等于物体所受液体压力的总和，实际是上下表面压力差，侧向压力相互抵消。",
+          "⚠️ 忽略物体形状：认为只有规则形状才有压力差，实际上任何形状物体上下表面深度不同都会产生压力差。",
+          "⚠️ 混淆深度：计算时误用物体中心深度代替上下表面深度，正确做法是分别取上下表面实际深度。"
+        ],
+        "physical_picture": "想象一个浸在水中的立方体，水对它的前、后、左、右、上、下六个面都有压力。由于深度不同，下表面受到的水压大于上表面，因此下表面向上的压力大于上表面向下的压力，这个压力差就是浮力。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G8-PHYSICS-X-ku-浮力的概念",
+      "textbook_id": "RENJIAO-G8-PHYSICS-X",
+      "cluster_id": "RENJIAO-G8-PHYSICS-X-kc-浮力基础概念与产生原因",
+      "name": "浮力的概念",
+      "description": "浸在液体中的物体受到向上的力，这个力叫做浮力。\n【适用条件】物体浸在液体中（包括漂浮和浸没）",
+      "prerequisites": [],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [],
+      "ku_type": "physical_concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "一个重10N的金属块，用弹簧测力计吊着浸没在水中，示数为8N，则浮力F浮 = 10N - 8N = 2N。",
+          "一个木块漂浮在水面上，重力为5N，则浮力等于5N，方向竖直向上。"
+        ],
+        "intuition": "为什么木头能浮在水面，而石头却沉底？因为水对浸入其中的物体会施加一个向上的托举力，这个力就是浮力。",
+        "definition": "浸在液体中的物体受到液体对它向上的托力，这个力叫做浮力。浮力方向始终竖直向上，施力物体是液体。浮力大小可用弹簧测力计测量：F浮 = G - F示，其中G为物体重力，F示为物体浸在液体中时弹簧测力计的示数。单位：牛顿（N）。",
+        "key_points": [
+          "⚠️ 浮力方向总是竖直向上，与物体形状、是否漂浮无关，即使物体沉底，只要与底部不完全密合，仍有浮力。",
+          "⚠️ 浮力是液体对物体上下表面压力差产生的，并非液体对物体的“总压力”。",
+          "⚠️ 物体浸没后，浮力大小与深度无关（前提是液体密度均匀）。"
+        ],
+        "connections": "浮力与“液体压强”相关：浮力本质是液体对物体上下表面的压力差，而压力由液体压强产生（p=ρgh）。",
+        "common_mistakes": [
+          "⚠️ 误认为沉底的物体不受浮力：只要物体与容器底部不紧密贴合，液体仍能对物体下表面产生向上的压力，从而有浮力。",
+          "⚠️ 误认为浮力方向与物体倾斜方向一致：浮力始终竖直向上，不随物体倾斜而改变。",
+          "⚠️ 误认为物体浸没越深浮力越大：在液体密度不变时，浸没后排开液体体积不变，浮力不变。"
+        ],
+        "counter_examples": "浮力与“液体对物体的压力”不同：浮力是上下表面压力差，而液体对物体的总压力包括侧面压力，其合力才是浮力。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G8-PHYSICS-X-ku-液体压强",
+      "textbook_id": "RENJIAO-G8-PHYSICS-X",
+      "cluster_id": "RENJIAO-G8-PHYSICS-X-kc-液体压强与连通器",
+      "name": "液体压强",
+      "description": "液体内部向各个方向都有压强，同一深度各方向压强相等，深度越大压强越大，且与液体密度有关。\n【适用条件】液体静止时适用。",
+      "prerequisites": [
+        "压强"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [],
+      "ku_type": "physical_concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "一个水深10m的游泳池底部，水的密度 $\\rho = 1000\\,\\text{kg/m}^3$，$g=10\\,\\text{N/kg}$，则底部压强 $p = 1000 \\times 10 \\times 10 = 100000\\,\\text{Pa}$。",
+          "潜水员在海水（$\\rho=1030\\,\\text{kg/m}^3$）中下潜20m，所受压强 $p = 1030 \\times 10 \\times 20 = 206000\\,\\text{Pa}$，比同深度淡水大。"
+        ],
+        "intuition": "游泳时潜入水中，耳朵会感到疼痛，且越往深处痛感越强，说明液体内部存在压强且随深度增加而增大。",
+        "definition": "液体内部向各个方向都有压强，同一深度各方向压强相等，深度越大压强越大，且与液体密度有关。数学表达式：$p = \\rho g h$，其中 $p$ 为液体压强（标量，单位Pa），$\\rho$ 为液体密度（kg/m³），$g$ 为重力加速度（N/kg），$h$ 为深度（m）。",
+        "key_points": [
+          "⚠️ 液体压强只与液体密度和深度有关，与容器形状、液体体积、液体总重无关。",
+          "⚠️ 深度 $h$ 是指从液面到所求点的竖直距离，不是液柱长度或斜线距离。",
+          "⚠️ 液体内部同一深度处，向各个方向的压强大小相等，包括向上、向下和侧面。"
+        ],
+        "connections": "液体压强与浮力（$F_\\text{浮} = \\rho g V_\\text{排}$）共享密度和深度因素；与连通器原理（静止液体中同一水平面压强相等）直接相关。",
+        "common_mistakes": [
+          "⚠️ 误认为液体压强与液体体积有关，例如认为大桶水底部压强比小桶大，实际上深度相同则压强相同。",
+          "⚠️ 计算深度时误用容器高度或液柱斜长，例如将倾斜管中液柱长度当作深度。",
+          "⚠️ 忽略液体密度的影响，认为所有液体在同一深度压强都相等。"
+        ],
+        "counter_examples": "液体压强与固体压强不同：固体压强只与压力和受力面积有关，而液体压强由液体重力和流动性共同决定，与容器形状无关。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G8-PHYSICS-X-ku-液体压强公式-p-ρgh",
+      "textbook_id": "RENJIAO-G8-PHYSICS-X",
+      "cluster_id": "RENJIAO-G8-PHYSICS-X-kc-液体压强与连通器",
+      "name": "液体压强公式 p=ρgh",
+      "description": "p = ρgh，ρ为液体密度，g为重力加速度，h为液面到该点的竖直深度。\n【适用条件】液体静止，密度均匀，h为竖直深度。",
+      "prerequisites": [
+        "液体压强"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [],
+      "ku_type": "formula",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "formula": "p = ρgh，其中ρ为液体密度（单位：kg/m³），g为重力加速度（通常取9.8 N/kg或10 N/kg），h为液面到该点的竖直深度（单位：m）。",
+        "variants": [
+          "p=ρgh（求液体内部某点压强）",
+          "Δp=ρgΔh（求液体中两点压强差）",
+          "F=pS（由压强求液体对容器底的压力）"
+        ],
+        "conditions": "适用于静止、密度均匀的液体内部压强计算，且h必须是从液面到所求点的竖直深度，不能是斜线长度。",
+        "derivation": "液体压强由重力产生，推导时先取液柱模型：F=G=mg=ρVg=ρShg，再除以底面积S得p=ρgh。口诀：液柱重力除面积，密度深度乘g。",
+        "typical_uses": [
+          "计算液体内部不同深度处的压强大小",
+          "比较不同液体在同一深度处的压强（密度不同）",
+          "求解液体对容器底或侧壁的压力"
+        ],
+        "common_mistakes": [
+          "⚠️ 误将h当作液柱高度或容器高度，正确做法：h是液面到所求点的竖直深度，与容器形状无关。",
+          "⚠️ 忽略液体密度单位换算，如将g/cm³直接代入，正确做法：统一用kg/m³。",
+          "⚠️ 认为液体压强只与液体重力有关，正确做法：压强由ρ、g、h共同决定，与液体总重无关。"
+        ]
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G8-PHYSICS-X-ku-滑动摩擦力",
+      "textbook_id": "RENJIAO-G8-PHYSICS-X",
+      "cluster_id": "RENJIAO-G8-PHYSICS-X-kc-摩擦力",
+      "name": "滑动摩擦力",
+      "description": "两个相互接触的物体，当它们相对滑动时，在接触面上会产生一种阻碍相对运动的力，叫做滑动摩擦力。\n【适用条件】两个物体相互接触并发生相对滑动",
+      "prerequisites": [
+        "二力平衡的条件"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [],
+      "ku_type": "physical_concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "一个质量为 10 kg 的木箱在水平地面上滑动，动摩擦因数 $\\mu = 0.3$，则滑动摩擦力 $f = \\mu N = 0.3 \\times 10 \\times 9.8 = 29.4$ N，方向与运动方向相反。",
+          "用 50 N 的水平力推一个重 200 N 的物体，物体未动时静摩擦力为 50 N；当物体开始滑动后，若动摩擦因数为 0.2，则滑动摩擦力为 $0.2 \\times 200 = 40$ N，小于推力。"
+        ],
+        "intuition": "推箱子时感觉越推越费力，就是因为地面和箱子之间产生了阻碍相对滑动的力，这就是滑动摩擦力。",
+        "definition": "滑动摩擦力是两个相互接触并发生相对滑动的物体，在接触面上产生的阻碍相对运动的力。数学表达式为 $f = \\mu N$，其中 $f$ 是滑动摩擦力（矢量，方向与相对运动方向相反），$\\mu$ 是动摩擦因数（无单位，与接触面材料和粗糙程度有关），$N$ 是正压力（标量，单位牛顿）。",
+        "key_points": [
+          "⚠️ 滑动摩擦力方向与物体相对运动方向相反，而非与运动方向相反（如传送带上物体可能随传送带运动，但相对传送带向后滑，摩擦力向前）。",
+          "⚠️ 滑动摩擦力大小只与正压力和动摩擦因数有关，与接触面积大小无关（如同样重量的箱子，平放和侧放滑动摩擦力相同）。",
+          "⚠️ 正压力 $N$ 不一定等于重力，例如在斜面上物体对斜面的正压力小于重力。"
+        ],
+        "connections": "滑动摩擦力与正压力成正比（$f = \\mu N$），与最大静摩擦力关系密切（通常最大静摩擦力略大于滑动摩擦力）。",
+        "common_mistakes": [
+          "⚠️ 误认为滑动摩擦力方向总与物体运动方向相反（如人走路时鞋底相对地面向后滑，摩擦力向前，与运动方向相同）。",
+          "⚠️ 误认为滑动摩擦力大小与速度有关（实际上 $f = \\mu N$ 与速度无关，只要相对滑动，大小不变）。",
+          "⚠️ 误认为正压力 $N$ 总是等于物体重力（如物体在斜面上时，$N = mg\\cos\\theta$，小于重力）。"
+        ],
+        "counter_examples": "静摩擦力与滑动摩擦力不同：静摩擦力发生在相对静止但有相对运动趋势的物体间，大小可变（从零到最大静摩擦力），而滑动摩擦力大小恒定（$f = \\mu N$）。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G8-PHYSICS-X-ku-滑轮组",
+      "textbook_id": "RENJIAO-G8-PHYSICS-X",
+      "cluster_id": "RENJIAO-G8-PHYSICS-X-kc-滑轮与滑轮组",
+      "name": "滑轮组",
+      "description": "定滑轮和动滑轮组合而成。动滑轮上有几段绳子承担物重，提起物体的力就是物重的几分之一。\n【适用条件】忽略动滑轮自重、绳重及摩擦",
+      "prerequisites": [
+        "定滑轮定义与特点",
+        "动滑轮定义与特点"
+      ],
+      "related_kus": [],
+      "difficulty": 0.6,
+      "exam_frequency": "mid",
+      "question_types": [],
+      "ku_type": "physical_model",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "conditions": "适用条件：动滑轮上承担物重的绳子段数n明确，且忽略动滑轮自重、绳重及摩擦。⚠️ 不可用时的判断标准：若动滑轮自重不可忽略或存在显著摩擦，则实际拉力大于物重的1/n，需考虑额外功。",
+        "motivation": "将定滑轮和动滑轮组合使用，以在提升重物时同时获得省力和改变用力方向的便利，简化了实际机械中绳重、摩擦和滑轮自重的影响。",
+        "assumptions": [
+          "忽略动滑轮自身的重力，认为其质量为零。",
+          "忽略绳子的重力，认为绳子是轻质且不可伸长的。",
+          "忽略滑轮轴与绳子之间的摩擦，认为所有接触面光滑。"
+        ],
+        "limitations": "实际中滑轮自重、绳重和摩擦无法完全忽略，导致实际拉力大于理论值，且机械效率低于100%。",
+        "typical_scenarios": [
+          "建筑工地上用滑轮组提升砖块或水泥，既省力又能改变拉力方向。",
+          "起重机吊臂上的滑轮组用于吊装大型构件，通过多段绳子分担重量。",
+          "旗杆顶部的定滑轮与地面动滑轮组合，便于升旗时省力且方向向下。"
+        ]
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G8-PHYSICS-X-ku-滚摆实验",
+      "textbook_id": "RENJIAO-G8-PHYSICS-X",
+      "cluster_id": "RENJIAO-G8-PHYSICS-X-kc-机械能及其转化与守恒",
+      "name": "滚摆实验",
+      "description": "观察滚摆在运动过程中动能和势能的转化：下降时重力势能转化为动能，上升时动能转化为重力势能。\n【适用条件】忽略空气阻力\n【实验】目的：观察动能和重力势能的相互转化；原理：滚摆下降时重力势能减小、动能增大，上升时相反；器材：滚摆装置；步骤：1. 将滚摆提升到一定高度释放；2. 观察滚摆下降和上升过程中速度和高度的变化；数据处理：定性观察",
+      "prerequisites": [
+        "动能和势能的相互转化"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [],
+      "ku_type": "experiment",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "exam_hotspots": [
+          "滚摆下降时能量转化过程（重力势能→动能）",
+          "滚摆上升时能量转化过程（动能→重力势能）",
+          "忽略空气阻力的条件对实验结论的影响",
+          "比较滚摆在不同释放高度时的最大速度"
+        ],
+        "common_mistakes": [
+          "⚠️ 释放时手推滚摆（施加额外初速度）→ 导致初始动能不为零，干扰转化观察 → 应自然释放，让滚摆从静止开始运动",
+          "⚠️ 未在竖直平面内释放（滚摆偏离竖直面）→ 产生水平分力，运动轨迹混乱 → 确保滚摆沿竖直面摆动",
+          "⚠️ 忽略空气阻力影响（实验时间过长）→ 滚摆最高点逐渐降低，误以为能量不守恒 → 应快速完成观察，或使用轻质摆锤减小阻力",
+          "⚠️ 仅观察一次就下结论（偶然误差大）→ 可能因释放高度不一致导致结果偏差 → 应重复多次实验，取平均现象"
+        ],
+        "data_processing": "本实验为定性观察，无需精确数据。重点记录滚摆每次上升的最高点高度是否大致相同（验证机械能守恒），以及速度变化趋势。若高度明显下降，说明空气阻力不可忽略。",
+        "design_rationale": "滚摆装置通过细绳悬挂重物，使其在竖直平面内摆动。提升滚摆到一定高度释放，是为了赋予其初始重力势能；忽略空气阻力，确保机械能守恒，从而清晰观察动能与势能的相互转化。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G8-PHYSICS-X-ku-潜水艇的浮沉原理",
+      "textbook_id": "RENJIAO-G8-PHYSICS-X",
+      "cluster_id": "RENJIAO-G8-PHYSICS-X-kc-浮力的应用与模型",
+      "name": "潜水艇的浮沉原理",
+      "description": "潜水艇通过改变自身重力（向水舱充水或排水）来实现上浮、下潜或悬浮，体积不变。\n【适用条件】潜水艇浸没在水中",
+      "prerequisites": [
+        "物体的浮沉条件（受力分析）"
+      ],
+      "related_kus": [],
+      "difficulty": 0.6,
+      "exam_frequency": "mid",
+      "question_types": [],
+      "ku_type": "physical_model",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "conditions": "适用于潜水艇完全浸没在水中的浮沉分析。⚠️ 当潜水艇部分露出水面或未完全浸没时，排开水的体积会改变，此模型不再适用。",
+        "motivation": "将潜水艇简化为体积不变的密闭容器，通过改变自身重力解释浮沉原理，忽略水压变化对体积的微小影响。",
+        "assumptions": [
+          "潜水艇完全浸没在水中，排开水的体积不变",
+          "潜水艇外壳刚性，体积不随深度变化",
+          "忽略海水密度不均匀及温度变化的影响"
+        ],
+        "limitations": "实际中潜水艇体积会因水压增大而略微减小，且海水密度随深度变化，导致浮力计算有微小偏差。",
+        "typical_scenarios": [
+          "分析潜水艇下潜时向水舱充水增加重力",
+          "分析潜水艇上浮时向水舱排水减小重力",
+          "分析潜水艇悬浮时重力等于浮力"
+        ]
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G8-PHYSICS-X-ku-焦耳-功的单位",
+      "textbook_id": "RENJIAO-G8-PHYSICS-X",
+      "cluster_id": "RENJIAO-G8-PHYSICS-X-kc-功的概念与计算",
+      "name": "焦耳（功的单位）",
+      "description": "功的单位是牛米，专门名称叫焦耳，简称焦，符号J。1 J = 1 N·m。",
+      "prerequisites": [
+        "功的计算公式"
+      ],
+      "related_kus": [],
+      "difficulty": 0.1,
+      "exam_frequency": "mid",
+      "question_types": [],
+      "ku_type": "physical_concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "用10 N的力水平推箱子移动2 m，做功 W = 10 N × 2 m = 20 J。",
+          "将质量为0.5 kg的书包匀速举高0.8 m（g取10 N/kg），需克服重力做功 W = (0.5×10) N × 0.8 m = 4 J。"
+        ],
+        "intuition": "当你把1牛顿的苹果举高1米，你做的功就是1焦耳——它把力和距离打包成一个方便的能量单位。",
+        "definition": "焦耳是功和能量的国际单位，定义为1牛顿的力使物体沿力的方向移动1米所做的功。数学表达式：W = F·s，其中W是功（标量，单位J），F是力（矢量，单位N），s是位移（矢量，单位m）。1 J = 1 N·m。",
+        "key_points": [
+          "⚠️ 焦耳是标量，但由两个矢量（力和位移）的点积得到，方向不影响大小。",
+          "⚠️ 1 N·m 只适用于力与位移同向；若方向不同，需用分力或分位移计算。",
+          "⚠️ 焦耳也是能量的单位，但功是过程量，能量是状态量，两者单位相同但含义不同。"
+        ],
+        "connections": "焦耳与功率（瓦特）相关：功率 = 功 / 时间，1 W = 1 J/s；与能量守恒定律紧密相连，功是能量转化的量度。",
+        "common_mistakes": [
+          "⚠️ 误认为1 J = 1 N·m 在任何情况下都成立，实际上只有力与位移同向时才能直接相乘。",
+          "⚠️ 混淆焦耳与瓦特：焦耳是功的单位，瓦特是功率的单位，1 W = 1 J/s。",
+          "⚠️ 计算时忘记单位换算：如将厘米直接代入米，导致结果差100倍。"
+        ],
+        "counter_examples": "焦耳（J）与牛顿·米（N·m）数值相等，但牛顿·米也是力矩的单位，力矩是矢量，功是标量，两者物理意义不同。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G8-PHYSICS-X-ku-牛顿第一定律",
+      "textbook_id": "RENJIAO-G8-PHYSICS-X",
+      "cluster_id": "RENJIAO-G8-PHYSICS-X-kc-牛顿第一定律与惯性",
+      "name": "牛顿第一定律",
+      "description": "一切物体在没有受到力的作用时，总保持静止状态或匀速直线运动状态。\n【适用条件】物体不受任何外力（理想情况）",
+      "prerequisites": [
+        "阻力对物体运动的影响实验"
+      ],
+      "related_kus": [],
+      "difficulty": 0.6,
+      "exam_frequency": "mid",
+      "question_types": [],
+      "ku_type": "physical_law",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "statement": "一切物体在没有受到力的作用时，总保持静止状态或匀速直线运动状态。数学表达：若 $F_{\\text{合}}=0$，则 $v$ 恒定（大小方向均不变），其中 $v$ 为速度矢量。",
+        "conditions": "物体不受任何外力（理想情况）。⚠️ 若物体受外力但合力为零，也等效满足此定律；若合力不为零，则物体运动状态必改变（加速、减速或转弯）。",
+        "connections": "牛顿第一定律是牛顿第二定律的特例（$F_{\\text{合}}=0$ 时 $a=0$），也为惯性参考系的定义提供基础。",
+        "corollaries": "惯性是物体保持原来运动状态的性质，质量是惯性大小的唯一量度。推论：若物体不受外力，其动量 $p=mv$ 守恒。",
+        "typical_uses": [
+          "判断物体在光滑水平面上滑行时的运动状态：不受力则保持匀速直线运动",
+          "分析竖直上抛物体到达最高点时：瞬间速度为零但合力为重力，不满足牛顿第一定律条件，故不会静止",
+          "解释汽车急刹车时人前倾：人上半身因惯性保持原来速度，而车减速，导致相对运动"
+        ],
+        "common_mistakes": [
+          "⚠️ 误以为“不受力”物体一定静止：正确是保持原状态，原来运动则继续匀速直线运动",
+          "⚠️ 混淆惯性与力：认为物体运动需要力来维持，实际上力是改变运动状态的原因，不是维持原因",
+          "⚠️ 忽略合力为零的情况：认为只有不受力才满足定律，实际上受平衡力时物体也保持静止或匀速直线运动"
+        ],
+        "physical_picture": "想象一个在绝对光滑冰面上的冰壶，不受任何摩擦或阻力，它将永远沿直线匀速滑下去；或者一个静止在太空中的小球，没有外力推它，它就永远停在那里。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G8-PHYSICS-X-ku-物体的浮沉条件-受力分析",
+      "textbook_id": "RENJIAO-G8-PHYSICS-X",
+      "cluster_id": "RENJIAO-G8-PHYSICS-X-kc-物体的浮沉条件",
+      "name": "物体的浮沉条件（受力分析）",
+      "description": "浸没在液体中的物体：F浮 > G 时上浮；F浮 = G 时悬浮；F浮 < G 时下沉。漂浮时 F浮 = G。\n【适用条件】物体浸没在液体中或漂浮",
+      "prerequisites": [
+        "浮力的概念",
+        "阿基米德原理"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [],
+      "ku_type": "physical_law",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "statement": "浸没在液体中的物体，其浮沉由浮力与重力的合力决定：当 $F_\\text{浮} > G$ 时，物体上浮；当 $F_\\text{浮} = G$ 时，物体悬浮；当 $F_\\text{浮} < G$ 时，物体下沉。漂浮时物体部分露出液面，$F_\\text{浮} = G$。其中 $F_\\text{浮} = \\rho_\\text{液} g V_\\text{排}$，方向竖直向上；$G = mg$，方向竖直向下。",
+        "conditions": "物体必须浸没在液体中（或漂浮时部分浸入），且只考虑重力和浮力，忽略其他力（如液体流动、容器壁支持等）。若不满足，如物体与容器底接触，则可能受支持力，浮沉条件需重新分析。",
+        "connections": "浮沉条件是阿基米德原理（$F_\\text{浮} = \\rho_\\text{液} g V_\\text{排}$）与二力平衡（$F_\\text{浮} = G$ 或 $F_\\text{浮} \\neq G$）的综合应用，也是物体密度与液体密度比较的物理基础。",
+        "corollaries": "由浮沉条件可推导：上浮物体密度小于液体密度（$\\rho_\\text{物} < \\rho_\\text{液}$），悬浮物体密度等于液体密度（$\\rho_\\text{物} = \\rho_\\text{液}$），下沉物体密度大于液体密度（$\\rho_\\text{物} > \\rho_\\text{液}$）。",
+        "typical_uses": [
+          "判断物体浮沉：已知物体密度和液体密度，比较 $\\rho_\\text{物}$ 与 $\\rho_\\text{液}$ 的大小（上浮：$\\rho_\\text{物} < \\rho_\\text{液}$；悬浮：$\\rho_\\text{物} = \\rho_\\text{液}$；下沉：$\\rho_\\text{物} > \\rho_\\text{液}$）。",
+          "计算漂浮物体浸入体积：利用 $F_\\text{浮} = G$ 得 $\\rho_\\text{液} g V_\\text{排} = \\rho_\\text{物} g V_\\text{物}$，求 $V_\\text{排}$。",
+          "分析轮船从淡水驶入海水：浮力不变（等于重力），但海水密度大，故 $V_\\text{排}$ 减小，船身上浮一些。"
+        ],
+        "common_mistakes": [
+          "⚠️ 误认为漂浮时浮力大于重力：实际上漂浮时物体静止，二力平衡，浮力等于重力。错误原因：混淆了上浮过程（浮力大于重力）与最终漂浮状态。",
+          "⚠️ 认为悬浮和漂浮时浮力都等于重力，但混淆了 $V_\\text{排}$：悬浮时 $V_\\text{排} = V_\\text{物}$，漂浮时 $V_\\text{排} < V_\\text{物}$。错误原因：未区分物体是否完全浸没。",
+          "⚠️ 忽略方向性：浮力竖直向上，重力竖直向下，比较大小前需确认方向相反。错误原因：若物体受其他力（如拉力），则不能直接比较浮力和重力。"
+        ],
+        "physical_picture": "想象一个浸没在水中的木块或铁块，它同时受到向上的浮力和向下的重力。浮力像一只向上托的手，重力像向下拉的地球引力，两者的大小关系决定了物体是上浮、悬浮还是下沉。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G8-PHYSICS-X-ku-物体的浮沉条件-密度比较",
+      "textbook_id": "RENJIAO-G8-PHYSICS-X",
+      "cluster_id": "RENJIAO-G8-PHYSICS-X-kc-物体的浮沉条件",
+      "name": "物体的浮沉条件（密度比较）",
+      "description": "浸没在液体中的物体：ρ物 < ρ液 时上浮；ρ物 = ρ液 时悬浮；ρ物 > ρ液 时下沉。\n【适用条件】物体浸没在液体中，且物体实心、密度均匀",
+      "prerequisites": [
+        "物体的浮沉条件（受力分析）"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [],
+      "ku_type": "physical_law",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "statement": "浸没在液体中的实心均匀物体，其浮沉由物体密度ρ物与液体密度ρ液比较决定：ρ物 < ρ液时上浮（F浮 > G），ρ物 = ρ液时悬浮（F浮 = G），ρ物 > ρ液时下沉（F浮 < G）。",
+        "conditions": "物体必须完全浸没、实心且密度均匀。若物体空心或密度不均匀，则需用平均密度与液体密度比较，否则结论可能错误（如空心铁球可能漂浮）。",
+        "connections": "该条件是阿基米德原理（F浮 = ρ液gV排）与二力平衡（F浮与G比较）在密度层面的直接推论，也是物体浮沉条件的简化形式。",
+        "corollaries": "1. 漂浮时，ρ物/ρ液 = V排/V物（物体密度与液体密度之比等于排开体积与总体积之比）。2. 同一物体在不同液体中漂浮时，液体密度越大，V排越小。",
+        "typical_uses": [
+          "判断物体浮沉状态：已知物体和液体密度，直接比较确定上浮、悬浮或下沉。",
+          "选择材料实现浮沉：如设计潜水艇时，通过改变自身平均密度（注水/排水）实现下潜或上浮。",
+          "解释生活现象：如盐水选种时，饱满种子密度大下沉，瘪种子密度小上浮。"
+        ],
+        "common_mistakes": [
+          "误认为密度大的物体一定下沉：忽略物体是否实心，例如空心铁球平均密度可能小于水而漂浮。",
+          "混淆“上浮”与“漂浮”：上浮是物体从浸没到露出液面的过程，漂浮是最终静止状态（ρ物 < ρ液），两者不同。",
+          "认为悬浮时ρ物一定等于ρ液：仅当物体完全浸没且静止时成立；若物体部分露出（漂浮），则ρ物 < ρ液。"
+        ],
+        "physical_picture": "将一块实心木块和一块实心铁块完全浸没在水中，木块密度小于水，松手后上浮；铁块密度大于水，松手后下沉。密度等于水的物体（如悬浮的鸡蛋）可停留在水中任意深度。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G8-PHYSICS-X-ku-理想实验法-科学推理",
+      "textbook_id": "RENJIAO-G8-PHYSICS-X",
+      "cluster_id": "RENJIAO-G8-PHYSICS-X-kc-牛顿第一定律与惯性",
+      "name": "理想实验法（科学推理）",
+      "description": "在实验基础上，通过逻辑推理得出无法直接验证的结论，如牛顿第一定律的得出。\n【适用条件】无法直接实验验证的物理规律",
+      "prerequisites": [
+        "阻力对物体运动的影响实验"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [],
+      "ku_type": "method",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "steps": [
+          "第1步：设计一个基于真实实验的简化情景，排除次要因素。",
+          "第2步：进行理想化推理，假设理想条件（如无摩擦、无空气阻力）。",
+          "第3步：根据实验现象和逻辑规律，推导出在理想条件下的结论。",
+          "第4步：将结论推广到一般情况，形成物理规律。"
+        ],
+        "example": "题目：如何得出牛顿第一定律？过程：让小车从斜面同一高度滑下，分别滑上毛巾、棉布、木板表面，观察到表面越光滑，小车运动越远。推理：若表面绝对光滑（无摩擦），小车将一直匀速运动下去。结论：一切物体在不受力时，总保持静止或匀速直线运动状态。",
+        "key_points": [
+          "⚠️ 理想化条件必须合理，不能脱离实验基础。",
+          "⚠️ 推理过程要严格遵循已知物理规律，避免主观臆断。",
+          "⚠️ 结论需与已有实验现象一致，否则推理有误。"
+        ],
+        "when_to_use": "当物理规律无法通过直接实验验证，但可以通过实验现象和逻辑推理间接得出时，使用理想实验法。",
+        "common_mistakes": [
+          "⚠️ 错误：认为理想实验可以完全脱离实验。实际上，理想实验必须以真实实验为基础，否则结论不可靠。",
+          "⚠️ 错误：在推理中忽略次要因素，如认为无摩擦时物体速度会无限增大。正确推理是速度保持不变，而非无限增大。"
+        ]
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G8-PHYSICS-X-ku-瓦特-功率的单位",
+      "textbook_id": "RENJIAO-G8-PHYSICS-X",
+      "cluster_id": "RENJIAO-G8-PHYSICS-X-kc-功率的概念与计算",
+      "name": "瓦特（功率的单位）",
+      "description": "功率的单位是焦耳每秒，专门名称叫瓦特，简称瓦，符号W。1 kW = 10^3 W。",
+      "prerequisites": [
+        "功率的计算公式"
+      ],
+      "related_kus": [],
+      "difficulty": 0.1,
+      "exam_frequency": "mid",
+      "question_types": [],
+      "ku_type": "physical_concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "一台机器在5秒内做了1000焦耳的功，功率为 $P = \\frac{1000\\,\\text{J}}{5\\,\\text{s}} = 200\\,\\text{W}$。",
+          "一个100W的灯泡工作10小时，消耗能量 $E = P \\times t = 100\\,\\text{W} \\times 10\\,\\text{h} = 1\\,\\text{kWh}$。"
+        ],
+        "intuition": "为什么电灯泡有60W和100W的区别？瓦特衡量的是能量转换的快慢，就像汽车的马力越大，加速越快。",
+        "definition": "功率是单位时间内做功的多少，定义式为 $P = \\frac{W}{t}$，其中 $W$ 是功（焦耳），$t$ 是时间（秒）。功率是标量，单位是瓦特（W），1 W = 1 J/s。",
+        "key_points": [
+          "⚠️ 瓦特是功率的单位，不是能量的单位。功率大不代表能量多，还要看时间。",
+          "⚠️ 1 kW = 1000 W，但千瓦时（kWh）是能量单位，不是功率单位。",
+          "⚠️ 功率的符号是P，瓦特的符号是W，两者不要混淆。"
+        ],
+        "connections": "功率与功（W）的关系：$P = \\frac{W}{t}$；与电压、电流的关系（电学）：$P = UI$（适用于纯电阻电路）。",
+        "common_mistakes": [
+          "⚠️ 误以为功率越大，消耗的能量一定越多。实际上，能量=功率×时间，短时间大功率可能比长时间小功率消耗能量少。",
+          "⚠️ 混淆功率和功：功是能量转移的量，功率是转移的快慢。例如，100W灯泡1秒做功100J，但功本身不是100W。",
+          "⚠️ 单位换算错误：1 kW = 1000 W，但1 kWh = 3.6×10^6 J，不是1000 J。"
+        ],
+        "counter_examples": "瓦特（W）是功率单位，表示做功快慢；千瓦时（kWh）是能量单位，表示做功总量。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G8-PHYSICS-X-ku-用传感器研究气体流速与压强的关系",
+      "textbook_id": "RENJIAO-G8-PHYSICS-X",
+      "cluster_id": "RENJIAO-G8-PHYSICS-X-kc-流体压强与流速关系及应用",
+      "name": "用传感器研究气体流速与压强的关系",
+      "description": "将三节不同直径的塑料管连接，用抽气机抽气，通过气体压强传感器测量不同流速处的压强。\n【适用条件】抽气机稳定工作，传感器校准。\n【实验】目的：定量研究气体流速与压强的关系；原理：同一时间内通过各管气体总量相同，细管流速大，压强小；器材：三节不同直径塑料管、抽气机、气体压强传感器、计算机；步骤：1. 连接装置；2. 启动抽气机；3. 读取传感器数据；数据处理：比较不同位置压强数值",
+      "prerequisites": [
+        "流体压强与流速的关系"
+      ],
+      "related_kus": [],
+      "difficulty": 0.6,
+      "exam_frequency": "mid",
+      "question_types": [],
+      "ku_type": "experiment",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "exam_hotspots": [
+          "连续性原理的应用（流量相等与流速关系）",
+          "伯努利原理在生活中的实例（如喷雾器、飞机机翼）",
+          "传感器读数与流速的定量分析",
+          "实验误差来源及改进措施"
+        ],
+        "common_mistakes": [
+          "⚠️ 未校准传感器：直接使用未校准的传感器会导致压强读数偏差，正确做法是实验前用标准气压计校准。",
+          "⚠️ 抽气机不稳定：抽气机未稳定工作就读数，导致流速变化，压强数据波动大，应待抽气机运行平稳后再记录。",
+          "⚠️ 连接处漏气：管道连接不紧密，气体泄漏影响流速和压强，应检查各接口并用密封胶带加固。",
+          "⚠️ 忽略管径差异：未准确测量各管直径，导致流速计算错误，应使用游标卡尺精确测量内径。"
+        ],
+        "data_processing": "多次测量取平均值减小偶然误差；绘制压强-流速图像，若出现异常点需检查漏气或传感器故障；压强数据保留到小数点后两位，流速计算时注意有效数字。",
+        "design_rationale": "利用抽气机使气体在粗细不同的管道中稳定流动，根据连续性原理，同一时间内通过各管气体总量相同，细管横截面积小则流速大。气体流速大的地方压强小，通过传感器测量不同位置压强，验证伯努利原理。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G8-PHYSICS-X-ku-盐水浮鸡蛋实验",
+      "textbook_id": "RENJIAO-G8-PHYSICS-X",
+      "cluster_id": "RENJIAO-G8-PHYSICS-X-kc-浮力相关实验活动",
+      "name": "盐水浮鸡蛋实验",
+      "description": "将新鲜鸡蛋分别浸入水和浓盐水中，观察鸡蛋的浮沉情况，验证浮力与液体密度的关系。\n【实验】目的：观察鸡蛋在不同密度液体中的浮沉，体验浮力与液体密度的关系；原理：液体密度越大，浮力越大；器材：新鲜鸡蛋、水、浓盐水、两个容器；步骤：1. 将鸡蛋放入水中，观察沉浮；2. 将鸡蛋放入浓盐水中，观察沉浮；数据处理：定性观察",
+      "prerequisites": [
+        "决定浮力大小的因素"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [],
+      "ku_type": "experiment",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "exam_hotspots": [
+          "浮力与液体密度的关系（密度越大，浮力越大）",
+          "物体浮沉条件（ρ液>ρ物时上浮）",
+          "控制变量法（鸡蛋相同，仅改变液体密度）",
+          "盐水饱和度的判断（如何确保密度足够大）"
+        ],
+        "common_mistakes": [
+          "⚠️ 鸡蛋不新鲜（气室变大导致密度减小，可能浮于水面，误判浮力关系）→ 应选用新鲜鸡蛋。",
+          "⚠️ 盐水浓度不足（未饱和，密度不够大，鸡蛋仍下沉）→ 应充分溶解食盐至饱和。",
+          "⚠️ 鸡蛋放入时用力过猛（导致水花溅起，影响观察）→ 应轻轻放入，避免扰动。",
+          "⚠️ 忽略鸡蛋表面气泡（气泡增加浮力，使鸡蛋上浮）→ 应先用清水洗净鸡蛋。"
+        ],
+        "data_processing": "定性观察记录鸡蛋浮沉状态（漂浮/悬浮/沉底），无需定量数据，但需确保盐水密度大于鸡蛋密度（约1.03 g/cm³），避免因浓度不足导致误判。",
+        "design_rationale": "使用新鲜鸡蛋确保密度稳定，浓盐水通过增加溶质提高密度，对比水和盐水使浮力差异明显，直观验证浮力与液体密度的正比关系。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G8-PHYSICS-X-ku-省力杠杆",
+      "textbook_id": "RENJIAO-G8-PHYSICS-X",
+      "cluster_id": "RENJIAO-G8-PHYSICS-X-kc-杠杆分类与应用",
+      "name": "省力杠杆",
+      "description": "动力臂大于阻力臂的杠杆，省力但费距离，如撬棒。\n【适用条件】杠杆平衡时使用",
+      "prerequisites": [
+        "杠杆平衡条件"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [],
+      "ku_type": "physical_model",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "conditions": "适用条件：杠杆平衡且动力臂大于阻力臂。⚠️ 若动力臂等于或小于阻力臂，则不省力；若杠杆不平衡或非刚性，模型失效。",
+        "motivation": "引入省力杠杆模型是为了简化分析动力臂与阻力臂长度关系对力的影响，忽略杠杆自重和摩擦，突出力与距离的权衡。",
+        "assumptions": [
+          "杠杆为刚性且质量不计",
+          "支点无摩擦且位置固定",
+          "动力和阻力均垂直于杠杆作用"
+        ],
+        "limitations": "实际中杠杆自重和摩擦会消耗部分力，且动力臂过长可能导致操作空间不足或杠杆变形，使省力效果打折扣。",
+        "typical_scenarios": [
+          "用撬棒撬起大石块",
+          "用开瓶器打开瓶盖",
+          "用羊角锤拔钉子"
+        ]
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G8-PHYSICS-X-ku-研究定滑轮和动滑轮的特点实验",
+      "textbook_id": "RENJIAO-G8-PHYSICS-X",
+      "cluster_id": "RENJIAO-G8-PHYSICS-X-kc-滑轮与滑轮组",
+      "name": "研究定滑轮和动滑轮的特点实验",
+      "description": "通过弹簧测力计测量拉力大小和方向，以及钩码和测力计移动距离，比较定滑轮和动滑轮的特点。\n【适用条件】不计绳重和摩擦\n【实验】目的：探究定滑轮和动滑轮是否省力、是否省距离；原理：定滑轮不省力，动滑轮省力但费距离；器材：定滑轮、动滑轮、弹簧测力计、钩码、细绳、铁架台；步骤：分别安装定滑轮和动滑轮；测量拉力大小和方向；测量钩码和测力计移动距离；设计表格记录数据；数据处理：比较拉力与物重、移动距离与提升高度",
+      "prerequisites": [
+        "定滑轮定义与特点",
+        "动滑轮定义与特点"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [],
+      "ku_type": "experiment",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "exam_hotspots": [
+          "定滑轮和动滑轮的省力与费距离特点判断",
+          "实验操作中匀速拉动的必要性及原因",
+          "根据实验数据绘制F-s或F-h图像并分析",
+          "结合不计绳重和摩擦的条件进行理论推导"
+        ],
+        "common_mistakes": [
+          "⚠️ 未匀速拉动测力计：拉力忽大忽小，导致读数不准确→应保持匀速直线运动。",
+          "⚠️ 测力计未竖直使用：斜拉时拉力包含水平分量，读数偏大→应使测力计轴线与绳子方向一致。",
+          "⚠️ 忽略绳重和摩擦：直接比较拉力与物重，误以为定滑轮不省力但实际拉力略大于物重→应在实验前说明不计绳重和摩擦。",
+          "⚠️ 距离测量起点错误：未从滑轮轴心或钩码初始位置开始测量，导致s和h数据偏差→应标记初始和终点位置，用刻度尺直接测量。"
+        ],
+        "data_processing": "多次测量取平均值减小偶然误差；比较F与G、s与h的比值，若F≈G且s≈h则为定滑轮，若F≈G/2且s≈2h则为动滑轮；有效数字保留到测力计分度值下一位。",
+        "design_rationale": "弹簧测力计需匀速竖直拉动，确保拉力等于滑轮两侧绳子的合力，避免额外摩擦；测量钩码和测力计移动距离，通过比较s与h的关系验证定滑轮不省距离、动滑轮费距离的物理规律。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G8-PHYSICS-X-ku-研究影响滑动摩擦力大小的因素实验",
+      "textbook_id": "RENJIAO-G8-PHYSICS-X",
+      "cluster_id": "RENJIAO-G8-PHYSICS-X-kc-摩擦力",
+      "name": "研究影响滑动摩擦力大小的因素实验",
+      "description": "通过改变压力或接触面粗糙程度，用弹簧测力计测滑动摩擦力，探究影响因素。\n【适用条件】控制变量法，水平匀速拉动木块\n【实验】目的：研究影响滑动摩擦力大小的因素；原理：控制变量法，二力平衡测摩擦力；器材：弹簧测力计、木块、砝码、长木板（不同粗糙度）；步骤：1.测木块与木板间摩擦力；2.加砝码改变压力测摩擦力；3.换粗糙木板测摩擦力；数据处理：设计表格记录数据，比较分析",
+      "prerequisites": [
+        "测量滑动摩擦力实验",
+        "影响滑动摩擦力大小的因素"
+      ],
+      "related_kus": [],
+      "difficulty": 0.6,
+      "exam_frequency": "mid",
+      "question_types": [],
+      "ku_type": "experiment",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "exam_hotspots": [
+          "控制变量法的具体应用（如探究压力影响时需保持接触面粗糙程度不变）",
+          "二力平衡条件的理解与实验操作（匀速拉动的判断）",
+          "实验数据表格的设计与结论归纳（如压力增大一倍，摩擦力也增大一倍）",
+          "实验误差分析（如未匀速拉动或弹簧测力计未调零的影响）"
+        ],
+        "common_mistakes": [
+          "⚠️ 未水平匀速拉动木块：导致弹簧测力计示数不稳定，无法准确读数；应保持木块沿水平方向做匀速直线运动。",
+          "⚠️ 弹簧测力计未调零或未水平放置：测量前指针未归零或测力计倾斜，造成读数偏大或偏小；使用前需在水平方向调零。",
+          "⚠️ 误认为滑动摩擦力与接触面积有关：实验中未控制接触面积变量，错误改变木块放置方式（如侧放），导致结论混淆；应保持接触面积不变。",
+          "⚠️ 读数时视线未与指针平齐：俯视或仰视导致读数误差；应使视线与指针所指刻度线垂直。"
+        ],
+        "data_processing": "记录每次实验的拉力（即摩擦力）和对应压力、接触面粗糙程度。比较相同粗糙程度下压力与摩擦力的关系（成正比），或相同压力下粗糙程度与摩擦力的关系。注意多次测量取平均值减小误差，保留有效数字。",
+        "design_rationale": "弹簧测力计测滑动摩擦力利用了二力平衡原理：水平匀速拉动木块时，拉力与摩擦力大小相等。控制变量法通过改变压力（加砝码）或接触面粗糙程度（换木板）来探究单一因素的影响，确保实验结论的可靠性。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G8-PHYSICS-X-ku-等臂杠杆",
+      "textbook_id": "RENJIAO-G8-PHYSICS-X",
+      "cluster_id": "RENJIAO-G8-PHYSICS-X-kc-杠杆分类与应用",
+      "name": "等臂杠杆",
+      "description": "动力臂等于阻力臂的杠杆，不省力也不费力，如天平。\n【适用条件】杠杆平衡时使用",
+      "prerequisites": [
+        "杠杆平衡条件"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [],
+      "ku_type": "physical_model",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "conditions": "适用条件：杠杆平衡且动力臂等于阻力臂。⚠️ 若杠杆倾斜或力不垂直，则不能直接使用等臂模型，需考虑分力或力矩平衡。",
+        "motivation": "等臂杠杆模型简化了杠杆平衡分析，将复杂的力矩计算转化为直观的力臂相等条件，便于理解天平、跷跷板等工具的平衡原理。",
+        "assumptions": [
+          "杠杆为刚性且质量不计",
+          "支点位于杠杆中点且无摩擦",
+          "动力和阻力均垂直于杠杆作用"
+        ],
+        "limitations": "实际中杠杆自重、支点摩擦或力不垂直时，等臂模型会失效，需引入额外力矩修正。",
+        "typical_scenarios": [
+          "天平称量物体质量",
+          "跷跷板两端坐等重的人时保持水平",
+          "实验室中调节平衡螺母使天平平衡"
+        ]
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G8-PHYSICS-X-ku-练习使用弹簧测力计",
+      "textbook_id": "RENJIAO-G8-PHYSICS-X",
+      "cluster_id": "RENJIAO-G8-PHYSICS-X-kc-弹力与弹簧测力计",
+      "name": "练习使用弹簧测力计",
+      "description": "通过实验学习弹簧测力计的使用方法：观察量程和分度值，调零，测量拉力，记录数据，总结操作要求。\n【适用条件】加在弹簧测力计上的力不允许超过最大测量值。\n【实验】目的：学习弹簧测力计的使用方法；原理：在弹性限度内，弹簧的伸长量与拉力成正比；器材：弹簧测力计、文具袋等；步骤：1.观察量程和分度值；2.检查并调节指针到零刻度；3.用手拉挂钩感受不同大小的力；4.测量文具袋对挂钩的拉力；5.总结注意事项；数据处理：直接读取弹簧测力计示数并记录",
+      "prerequisites": [
+        "弹簧测力计原理"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [],
+      "ku_type": "experiment",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "exam_hotspots": [
+          "弹簧测力计的原理（胡克定律）及弹性限度条件",
+          "调零和量程选择的必要性",
+          "读数时视线与指针平齐及估读规则",
+          "实验操作中弹簧与外壳摩擦、超量程等错误分析"
+        ],
+        "common_mistakes": [
+          "⚠️ 未调零直接测量：导致读数偏大或偏小（如指针在零上，读数偏小），正确做法是使用前轻拉挂钩并调节指针至零刻度。",
+          "⚠️ 测量时弹簧与外壳摩擦：使读数偏小，正确做法是保持弹簧轴线与拉力方向一致，避免倾斜或卡住。",
+          "⚠️ 超量程使用：弹簧无法恢复原状，损坏测力计，正确做法是测量前估计力的大小，选择合适量程。",
+          "⚠️ 读数时视线未与指针平齐：仰视或俯视导致读数偏大或偏小，正确做法是视线正对指针所指刻度。"
+        ],
+        "data_processing": "记录数据时保留到分度值的下一位（估读），多次测量取平均值减小偶然误差。若图像中弹簧伸长量与拉力不成正比，可能是超弹性限度或弹簧损坏，需检查操作。",
+        "design_rationale": "弹簧测力计基于胡克定律：在弹性限度内，弹簧伸长量与拉力成正比。观察量程和分度值确保测量不超限，调零消除初始误差，用手拉挂钩感受不同力可建立力感，测量文具袋拉力则应用原理于实际物体，步骤设计遵循从观察到操作、从定性到定量的物理认知逻辑。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G8-PHYSICS-X-ku-能量的概念",
+      "textbook_id": "RENJIAO-G8-PHYSICS-X",
+      "cluster_id": "RENJIAO-G8-PHYSICS-X-kc-动能及其影响因素",
+      "name": "能量的概念",
+      "description": "物体能够对外做功，就说这个物体具有能量，简称能。能量的单位与功的单位相同，也是焦耳。",
+      "prerequisites": [
+        "功的计算公式"
+      ],
+      "related_kus": [],
+      "difficulty": 0.2,
+      "exam_frequency": "mid",
+      "question_types": [],
+      "ku_type": "physical_concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "一个质量为2kg的物体从10m高处自由下落，落地时重力势能转化为动能，重力势能减少量约为2×10×10=200J。",
+          "用10N的力将弹簧压缩0.2m，弹簧获得弹性势能，做功为10×0.2=2J，即弹簧储存了2J的能量。"
+        ],
+        "intuition": "为什么推车累了会出汗？因为你对车做了功，消耗了体内的化学能。能量就是用来衡量物体'干活'本领的物理量。",
+        "definition": "物体能够对外做功，就说这个物体具有能量，简称能。能量是标量，单位与功相同，也是焦耳（J）。",
+        "key_points": [
+          "⚠️ 能量是状态量，不是过程量，它描述物体在某一时刻的'做功本领'，而不是做功的过程。",
+          "⚠️ 物体具有能量不一定正在做功，比如静止在高处的石头具有重力势能，但没对外做功。",
+          "⚠️ 能量可以转化或转移，但总量守恒，不会凭空消失或产生。"
+        ],
+        "connections": "能量与功的关系：功是能量转化的量度，做了多少功就有多少能量发生转化。",
+        "common_mistakes": [
+          "⚠️ 误认为'有能量就一定会做功'，比如静止在桌上的书本有重力势能，但没做功。",
+          "⚠️ 混淆能量和功的单位，虽然都是焦耳，但能量是状态量，功是过程量。",
+          "⚠️ 认为能量可以'消耗掉'而不守恒，实际上能量只是转化形式，总量不变。"
+        ],
+        "counter_examples": "能量与功不同：功是过程量，描述能量转化的多少；能量是状态量，描述物体做功的本领。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G8-PHYSICS-X-ku-自制气压计",
+      "textbook_id": "RENJIAO-G8-PHYSICS-X",
+      "cluster_id": "RENJIAO-G8-PHYSICS-X-kc-大气压强与测量",
+      "name": "自制气压计",
+      "description": "用瓶子、细玻璃管、带色水制作简易气压计，观察高度变化时水柱高度变化。\n【适用条件】瓶内气体密封，外界气压变化时水柱移动。\n【实验】目的：观察大气压随高度的变化；原理：瓶内气压基本不变，外界气压变化导致水柱升降；器材：瓶子、带色水、两端开口细玻璃管、橡皮塞；步骤：1. 瓶内装水，插入玻璃管；2. 吹气使水柱上升；3. 从低处到高处观察水柱变化；数据处理：记录不同高度水柱高度差",
+      "prerequisites": [
+        "大气压强"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [],
+      "ku_type": "experiment",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "exam_hotspots": [
+          "考查瓶内气压近似不变的条件（密封、温度恒定）。",
+          "考查水柱高度变化与外界气压的关系（外界气压降低，水柱上升）。",
+          "考查实验误差来源（漏气、温度变化、读数误差）。",
+          "考查与托里拆利实验的对比（原理、器材、操作差异）。"
+        ],
+        "common_mistakes": [
+          "⚠️ 吹气使水柱上升时用力过猛，导致瓶内气压过大，水柱喷出或瓶塞松动，应缓慢吹气至水柱稳定。",
+          "⚠️ 玻璃管插入过浅或密封不严，漏气使瓶内气压与外界连通，水柱无法反映气压变化，应确保橡皮塞紧密封口。",
+          "⚠️ 从低处到高处过程中手捏瓶子或温度变化，导致瓶内气体体积改变，干扰测量，应避免手直接接触瓶身并保持环境温度稳定。",
+          "⚠️ 读数时视线未与液面相平，产生视差，应平视水柱凹液面最低处读数。"
+        ],
+        "data_processing": "记录不同高度时水柱高度差，取多次测量平均值减小偶然误差；若水柱高度差随高度增加而增大，则外界气压降低；注意有效数字保留到毫米位。",
+        "design_rationale": "瓶子密封使内部气体体积和温度基本不变，从而瓶内气压近似恒定；外界气压变化时，水柱高度差反映内外气压差，实现气压的间接测量。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G8-PHYSICS-X-ku-船闸模型",
+      "textbook_id": "RENJIAO-G8-PHYSICS-X",
+      "cluster_id": "RENJIAO-G8-PHYSICS-X-kc-液体压强与连通器",
+      "name": "船闸模型",
+      "description": "利用连通器原理，通过闸室和阀门使船只通过水位差大的河段。\n【适用条件】上下游水位差较大，需逐级升降。",
+      "prerequisites": [
+        "连通器"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [],
+      "ku_type": "physical_model",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "conditions": "适用于上下游水位差较大、需逐级升降的河道或运河。⚠️ 若水位差极小（小于船体吃水深度）或河道无闸门控制，则模型不适用。",
+        "motivation": "船闸模型简化了真实船闸的复杂操作，将船只通过水位差的过程抽象为连通器原理的典型应用，便于学生理解液体压强与水位平衡。",
+        "assumptions": [
+          "假设闸室与上下游之间仅通过阀门连通，忽略闸门开启时的水流冲击",
+          "假设液体为理想流体，忽略水体的粘滞阻力和能量损失",
+          "假设船体体积不影响闸室水位变化，即船体排水量可忽略"
+        ],
+        "limitations": "实际船闸中，闸门开启时水流湍急、船体受水流影响显著，且闸室尺寸有限，模型忽略了这些动态因素。",
+        "typical_scenarios": [
+          "三峡大坝船闸中船只从上游到下游的逐级下降过程",
+          "巴拿马运河船闸中船只通过不同水位段的升降操作",
+          "模拟实验中用U形管和阀门演示水位平衡与船只通行"
+        ]
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G8-PHYSICS-X-ku-费力杠杆",
+      "textbook_id": "RENJIAO-G8-PHYSICS-X",
+      "cluster_id": "RENJIAO-G8-PHYSICS-X-kc-杠杆分类与应用",
+      "name": "费力杠杆",
+      "description": "动力臂小于阻力臂的杠杆，费力但省距离，如船桨。\n【适用条件】杠杆平衡时使用",
+      "prerequisites": [
+        "杠杆平衡条件"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [],
+      "ku_type": "physical_model",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "conditions": "适用条件：杠杆平衡时，动力×动力臂 = 阻力×阻力臂。⚠️ 若杠杆不平衡或发生形变，此模型不适用。",
+        "motivation": "将实际杠杆抽象为刚体绕支点转动模型，忽略摩擦和自重，聚焦力与力臂的乘积关系，便于分析费力但省距离的机械特性。",
+        "assumptions": [
+          "杠杆为刚性，不发生形变",
+          "支点位置固定且无摩擦",
+          "动力和阻力均垂直于杠杆作用"
+        ],
+        "limitations": "实际中杠杆自重、摩擦和弹性形变会改变力臂和平衡条件，导致计算值与真实受力有偏差。",
+        "typical_scenarios": [
+          "划船时船桨入水，手拉桨柄费力但桨叶移动距离小",
+          "用镊子夹取细小物体，手捏处费力但尖端省距离",
+          "钓鱼竿提鱼时，手压竿柄费力但竿尖上升距离小"
+        ]
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G8-PHYSICS-X-ku-轮船与排水量",
+      "textbook_id": "RENJIAO-G8-PHYSICS-X",
+      "cluster_id": "RENJIAO-G8-PHYSICS-X-kc-浮力的应用与模型",
+      "name": "轮船与排水量",
+      "description": "轮船用钢铁制成，通过做成空心（瓢状）增大排开水的体积，从而获得较大浮力漂浮。排水量是轮船装满货物时排开水的质量。\n【适用条件】轮船漂浮在水面",
+      "prerequisites": [
+        "阿基米德原理",
+        "物体的浮沉条件（受力分析）"
+      ],
+      "related_kus": [],
+      "difficulty": 0.6,
+      "exam_frequency": "mid",
+      "question_types": [],
+      "ku_type": "physical_model",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "conditions": "适用于轮船静止漂浮在水面上的情况。⚠️ 当轮船搁浅、触底或完全沉没时，排水量不再等于浮力对应的排开水质量，模型失效。",
+        "motivation": "将复杂的轮船浮力问题简化为排水量与浮力的直接关系，忽略船体形状、材料分布等细节，便于学生理解阿基米德原理在漂浮物体上的应用。",
+        "assumptions": [
+          "轮船始终处于漂浮状态，浮力等于重力。",
+          "轮船排开水的体积等于浸入水中部分的体积。",
+          "忽略海水密度变化及船体形变的影响。"
+        ],
+        "limitations": "实际中船体并非绝对空心，且海水密度、波浪等因素会影响浮力，模型在极端海况或船体破损时与实际情况偏差较大。",
+        "typical_scenarios": [
+          "计算轮船满载时的总质量（排水量数值）。",
+          "比较不同装载量下轮船吃水深度的变化。",
+          "分析轮船从淡水驶入海水时排水量的变化。"
+        ]
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G8-PHYSICS-X-ku-轮轴",
+      "textbook_id": "RENJIAO-G8-PHYSICS-X",
+      "cluster_id": "RENJIAO-G8-PHYSICS-X-kc-其他简单机械",
+      "name": "轮轴",
+      "description": "由具有共同转动轴的大轮和小轮组成，大轮叫轮，小轮叫轴。如门把手、方向盘。",
+      "prerequisites": [],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [],
+      "ku_type": "physical_model",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "conditions": "适用于力作用在轮或轴边缘且绕固定轴转动的情况。⚠️ 当存在显著摩擦或轮轴发生弹性形变时，模型不再准确。",
+        "motivation": "轮轴模型将复杂的旋转机械简化为两个同轴圆盘，便于分析力与运动的关系，突出杠杆原理在旋转中的应用。",
+        "assumptions": [
+          "轮和轴刚性连接，无相对滑动",
+          "转动轴固定且无摩擦",
+          "轮和轴的质量分布均匀，忽略形变"
+        ],
+        "limitations": "实际中轮轴存在摩擦和材料形变，导致机械效率低于理想值，且高速转动时惯性影响不可忽略。",
+        "typical_scenarios": [
+          "门把手：手推轮缘带动轴转动开门",
+          "方向盘：转动大轮控制转向轴",
+          "螺丝刀：手拧大柄带动小轴旋转螺丝"
+        ]
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G8-PHYSICS-X-ku-连通器",
+      "textbook_id": "RENJIAO-G8-PHYSICS-X",
+      "cluster_id": "RENJIAO-G8-PHYSICS-X-kc-液体压强与连通器",
+      "name": "连通器",
+      "description": "上端开口、下端连通的容器，装入同种液体静止时各液面高度相同。\n【适用条件】同种液体，液体不流动。",
+      "prerequisites": [
+        "液体压强"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [],
+      "ku_type": "physical_model",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "conditions": "适用条件：同种液体、液体不流动。⚠️ 若液体不同（密度不同）或液体流动（如船闸充水时），则液面高度不相等，模型失效。",
+        "motivation": "连通器模型将复杂液体系统简化为仅受重力与大气压作用的理想情况，忽略液体粘性和表面张力，便于分析液面平衡规律。",
+        "assumptions": [
+          "同种液体，密度均匀且不变",
+          "液体静止，无流动或扰动",
+          "各容器开口处大气压相等"
+        ],
+        "limitations": "实际中液体粘性、毛细现象或容器形状突变处可能引起微小液面差，但连通器模型忽略这些效应，仅适用于理想静止状态。",
+        "typical_scenarios": [
+          "茶壶壶身与壶嘴的液面等高",
+          "锅炉水位计显示水位",
+          "船闸利用连通器原理使船只通过水位差"
+        ]
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G8-PHYSICS-X-ku-连通器原理",
+      "textbook_id": "RENJIAO-G8-PHYSICS-X",
+      "cluster_id": "RENJIAO-G8-PHYSICS-X-kc-压强概念与计算",
+      "name": "连通器原理",
+      "description": "当连通器里的同种液体不流动时，连通器各部分中的液面高度总是相同的。\n【适用条件】适用于连通器中装有同种液体且液体静止的情况。",
+      "prerequisites": [
+        "液体压强公式 p=ρgh"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [],
+      "ku_type": "physical_law",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "statement": "连通器里的同种液体不流动时，各部分液面高度总是相同的。数学表达式：$h_1 = h_2 = h_3 = \\dots$，其中$h$表示各容器液面到同一参考面的垂直高度。",
+        "conditions": "必须满足：①连通器中为同种液体；②液体静止（不流动）。⚠️ 若液体不同（如一边水一边油），液面高度不同；若液体流动，则液面高度不相等。",
+        "connections": "连通器原理是液体压强平衡的直接应用，即静止液体中同一水平面上各点压强相等。",
+        "corollaries": "若连通器内液体静止且不同密度，则密度小的液体液面更高，满足关系$\\rho_1 h_1 = \\rho_2 h_2$（以同一参考面计算压强）。",
+        "typical_uses": [
+          "茶壶壶嘴与壶身液面相平：判断壶嘴高度是否合理。",
+          "船闸工作原理：利用连通器使上下游水位相平，船只通过。",
+          "水塔与用户水管：水塔水位与用户水龙头水位相平，保证供水压力。"
+        ],
+        "common_mistakes": [
+          "⚠️ 误认为连通器内液体不同时液面也相平：实际密度不同时，密度小的液体液面更高，正确做法是考虑压强平衡。",
+          "⚠️ 忽略液体静止条件：认为连通器内液体总是相平，但若液体流动（如倒水过程中），液面高度会变化。",
+          "⚠️ 混淆液面高度与液体深度：液面高度指到同一水平参考面的垂直距离，不是容器内液体的深度。"
+        ],
+        "physical_picture": "想象一个U形管或茶壶，底部连通，当倒入同种液体（如水）且静止时，两侧或各部分的液面最终会齐平，就像被无形的手拉平一样。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G8-PHYSICS-X-ku-重力与质量的关系",
+      "textbook_id": "RENJIAO-G8-PHYSICS-X",
+      "cluster_id": "RENJIAO-G8-PHYSICS-X-kc-重力及其测量",
+      "name": "重力与质量的关系",
+      "description": "物体所受的重力跟它的质量成正比，关系式为G=mg，其中g=9.8 N/kg（粗略计算可取10 N/kg）。\n【适用条件】地球表面附近，g值随纬度、高度略有变化，但通常视为常数。",
+      "prerequisites": [
+        "重力概念"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [],
+      "ku_type": "physical_law",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "statement": "物体所受的重力G与它的质量m成正比，关系式为G=mg，其中G的单位为牛顿(N)，m的单位为千克(kg)，g=9.8 N/kg，方向竖直向下。",
+        "conditions": "适用于地球表面附近，且物体静止或匀速运动（忽略空气阻力等）。若物体远离地球（如太空）或g值变化显著（如不同纬度、高度），则G与m的正比关系不再成立，需用万有引力公式计算。",
+        "connections": "重力是万有引力的一种表现，而质量是物体惯性的量度，两者通过g联系，但本质不同（重力是力，质量是属性）。",
+        "corollaries": "1. 同一地点，重力与质量比值恒定，即g=G/m为常数。2. 不同物体在同一地点，重力与质量比值相同，与物体形状、密度无关。",
+        "typical_uses": [
+          "已知质量求重力：直接代入G=mg计算，如50 kg的人重力为490 N。",
+          "已知重力求质量：变形为m=G/g，如某物体重196 N，则质量m=20 kg。",
+          "比较不同地点重力：同一物体在赤道和两极重力不同，因g值差异（两极g略大）。"
+        ],
+        "common_mistakes": [
+          "⚠️ 误将g=9.8 N/kg当作9.8 m/s²，混淆重力与质量的关系和加速度概念。正确：g是重力与质量的比值，单位是N/kg。",
+          "⚠️ 认为重力与质量成正比时，忽略方向性，误以为重力是标量。正确：重力是矢量，方向竖直向下。",
+          "⚠️ 计算时单位不统一，如质量用克(g)直接代入公式。正确：质量必须用千克(kg)，1 kg=1000 g。"
+        ],
+        "physical_picture": "想象你站在体重秤上，秤显示的数值就是地球对你的引力大小。质量越大，地球拉你的力就越大，就像用不同重量的砝码拉弹簧，弹簧伸长量与砝码质量成正比。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G8-PHYSICS-X-ku-重力势能大小的影响因素",
+      "textbook_id": "RENJIAO-G8-PHYSICS-X",
+      "cluster_id": "RENJIAO-G8-PHYSICS-X-kc-势能及其影响因素",
+      "name": "重力势能大小的影响因素",
+      "description": "物体的质量越大，位置越高，它具有的重力势能就越大。\n【适用条件】在地球表面附近，高度相对于参考平面",
+      "prerequisites": [
+        "重力势能的概念"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [],
+      "ku_type": "physical_law",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "statement": "重力势能大小由物体质量与相对高度共同决定，表达式为 $E_p = mgh$，其中 $m$ 为质量（kg），$g$ 为重力加速度（约 $9.8\\,\\text{N/kg}$），$h$ 为相对于参考平面的高度（m）。重力势能是标量，无方向，但高度有正负。",
+        "conditions": "仅在地球表面附近且 $g$ 视为常数时成立；参考平面必须事先选定，否则高度无意义。若物体远离地球（如太空），$g$ 变化，公式失效，需用引力势能公式。",
+        "connections": "重力势能是机械能的一部分，与动能相互转化时遵循机械能守恒定律（无其他力做功时）。",
+        "corollaries": "重力势能变化只与竖直高度差有关，与路径无关；重力做功等于重力势能减少量：$W_G = mgh_1 - mgh_2$。",
+        "typical_uses": [
+          "比较不同物体重力势能：先统一参考平面，再比较 $m$ 和 $h$ 的乘积",
+          "计算物体下落时重力势能减少量：$\\Delta E_p = mg\\Delta h$，用于求速度或做功",
+          "判断斜面或竖直运动中的势能变化：只看竖直高度差，与路径无关"
+        ],
+        "common_mistakes": [
+          "⚠️ 误认为高度越大势能一定越大：若参考平面选在物体上方，高度为负，势能反而小；正确做法是明确参考平面后再比较",
+          "⚠️ 忽略质量差异：认为同一高度不同物体势能相同，实际质量大的势能大",
+          "⚠️ 混淆重力势能与重力做功：势能是状态量，做功是过程量，两者关系为 $W_G = -\\Delta E_p$"
+        ],
+        "physical_picture": "想象一个举高的铅球和一个小石子，铅球质量大、位置高，砸下来破坏力更强；同一铅球举得越高，落下时砸出的坑越深。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G8-PHYSICS-X-ku-重力势能的概念",
+      "textbook_id": "RENJIAO-G8-PHYSICS-X",
+      "cluster_id": "RENJIAO-G8-PHYSICS-X-kc-势能及其影响因素",
+      "name": "重力势能的概念",
+      "description": "在地球表面附近，物体由于受到重力并处在一定高度时所具有的能，叫做重力势能。\n【适用条件】在地球表面附近，考虑重力作用",
+      "prerequisites": [
+        "能量的概念"
+      ],
+      "related_kus": [],
+      "difficulty": 0.2,
+      "exam_frequency": "mid",
+      "question_types": [],
+      "ku_type": "physical_concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "一个质量为 2 kg 的箱子放在 3 m 高的架子上（以地面为零势能面），它的重力势能 $E_p = 2 \\times 9.8 \\times 3 = 58.8\\,\\text{J}$。",
+          "同一箱子放在 1 m 高的桌子上，$E_p = 2 \\times 9.8 \\times 1 = 19.6\\,\\text{J}$。高度减半，势能也减半。"
+        ],
+        "intuition": "当你把一本书举到高处，松开手它会掉下来砸到脚——为什么越高越疼？因为书在高处储存了能量，这种能量就是重力势能。",
+        "definition": "物体由于被举高而具有的能量，叫重力势能。数学表达式：$E_p = mgh$，其中 $m$ 为质量（kg），$g$ 为重力加速度（约 $9.8\\,\\text{N/kg}$），$h$ 为相对参考面的高度（m）。重力势能是标量，单位是焦耳（J）。",
+        "key_points": [
+          "⚠️ 重力势能的大小是相对的，必须选定零势能参考面（如地面），换参考面数值会变。",
+          "⚠️ 重力势能的正负表示相对于零势能面的高低：$h>0$ 时 $E_p>0$，$h<0$ 时 $E_p<0$。",
+          "⚠️ 重力势能是物体和地球共有的，不能单独说“物体具有重力势能”。"
+        ],
+        "connections": "重力势能与重力做功密切相关：重力做功 $W_G = -\\Delta E_p$，即重力做正功时重力势能减少。",
+        "common_mistakes": [
+          "⚠️ 误认为重力势能只与高度有关，忽略质量：比如认为 1 kg 物体在 10 m 高处和 2 kg 物体在 5 m 高处势能相同（实际前者 98 J，后者 98 J，相同是巧合，但原理不同）。",
+          "⚠️ 忘记选参考面：计算时直接取高度数值，比如从 5 m 落到 2 m，误用 $h=5$ 而不是高度差 $\\Delta h=3$。",
+          "⚠️ 混淆重力势能与重力做功：重力做功等于重力势能的减少量，但重力势能本身是状态量，做功是过程量。"
+        ],
+        "counter_examples": "重力势能与动能不同：动能是物体运动时具有的能量，与速度有关；重力势能是物体被举高时具有的能量，与高度有关。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G8-PHYSICS-X-ku-重力概念",
+      "textbook_id": "RENJIAO-G8-PHYSICS-X",
+      "cluster_id": "RENJIAO-G8-PHYSICS-X-kc-重力及其测量",
+      "name": "重力概念",
+      "description": "由于地球的吸引而使物体受到的力叫做重力，通常用字母G表示。地球附近的所有物体都受到重力的作用。\n【适用条件】地球附近的所有物体，不考虑远离地球的情况。",
+      "prerequisites": [
+        "力的概念"
+      ],
+      "related_kus": [],
+      "difficulty": 0.2,
+      "exam_frequency": "mid",
+      "question_types": [],
+      "ku_type": "physical_concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "一个质量为50kg的人在地球表面所受重力：G=mg=50kg×9.8N/kg=490N。若他登上月球，质量仍为50kg，但重力变为约81.7N（月球g≈1.63N/kg）。",
+          "一个苹果质量为0.2kg，重力为0.2×9.8=1.96N，约等于2N，所以常说一个苹果重约2N。"
+        ],
+        "intuition": "为什么苹果会落地？为什么跳起来总会回到地面？重力就是地球对物体的吸引力，它让我们感受到重量，也决定了物体下落的运动。",
+        "definition": "重力是由于地球的吸引而使物体受到的力，用字母G表示，方向竖直向下。数学表达式为G=mg，其中m是物体质量（单位kg），g是重力加速度（约9.8N/kg），重力是矢量，单位是牛顿（N）。",
+        "key_points": [
+          "⚠️ 重力并不等于地球对物体的万有引力，它只是万有引力的一个分力（另一个分力提供物体随地球自转的向心力），但在初中阶段近似相等。",
+          "⚠️ 重力的方向是竖直向下（垂直于水平面），而不是指向地心，只有在赤道和两极才严格指向地心。",
+          "⚠️ 物体所受重力与质量成正比，但重力随地理位置（如纬度、高度）变化，而质量不变。"
+        ],
+        "connections": "重力与质量成正比（G=mg），与压力（在水平面上时大小相等）和浮力（重力大于浮力则下沉）密切相关。",
+        "common_mistakes": [
+          "⚠️ 误认为重力方向是“垂直向下”，实际上垂直向下指垂直于接触面，而重力方向是“竖直向下”（垂直于水平面），两者不同。",
+          "⚠️ 混淆“重力”与“压力”：物体静止在水平面上时，重力大小等于压力，但重力作用在物体上，压力作用在支撑面上，不是同一个力。",
+          "⚠️ 认为g=9.8N/kg是固定不变的，实际上g随纬度和高度变化，赤道处g≈9.78N/kg，两极处g≈9.83N/kg。"
+        ],
+        "counter_examples": "重力与质量不同：质量是物体所含物质的多少，是标量，不随位置改变；重力是力，是矢量，随位置改变。例如，同一物体在地球和月球上质量相同，但重力不同。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G8-PHYSICS-X-ku-重力的方向",
+      "textbook_id": "RENJIAO-G8-PHYSICS-X",
+      "cluster_id": "RENJIAO-G8-PHYSICS-X-kc-重力及其测量",
+      "name": "重力的方向",
+      "description": "重力的方向总是竖直向下的（垂直于水平面指向地心）。建筑中常用铅垂线检查墙壁是否竖直。\n【适用条件】在地球表面附近，竖直向下方向与当地水平面垂直。",
+      "prerequisites": [
+        "重力概念"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [],
+      "ku_type": "physical_concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "建筑工人用铅垂线检查墙壁是否竖直：若铅垂线与墙壁平行，则墙壁竖直。",
+          "从高处自由释放小球，小球沿竖直方向下落，说明重力的方向是竖直向下的。"
+        ],
+        "intuition": "为什么跳起后总会落回地面？为什么水总是往低处流？因为地球对物体有引力，这个引力的方向就是重力的方向。",
+        "definition": "重力的方向总是竖直向下，即垂直于当地水平面指向地心。重力是矢量，单位是牛顿（N）。数学表达式为 G=mg，其中 G 为重力，m 为质量，g 为重力加速度。",
+        "key_points": [
+          "⚠️ 竖直向下 ≠ 垂直向下：竖直向下是垂直于水平面，而垂直向下是垂直于接触面，两者不同。",
+          "⚠️ 重力方向并不严格指向地心：由于地球自转，重力是万有引力的一个分力，方向略有偏离，但初中阶段近似为指向地心。",
+          "⚠️ 在不同位置，竖直向下方向不同：例如赤道和两极的竖直向下方向并不平行。"
+        ],
+        "connections": "重力与质量成正比（G=mg），g 值随纬度、高度变化；重力与压力不同，压力方向垂直于接触面，而重力方向始终竖直向下。",
+        "common_mistakes": [
+          "⚠️ 误认为重力方向是“垂直向下”：垂直向下通常指垂直于接触面，而重力方向是垂直于水平面，两者混淆。",
+          "⚠️ 认为重力方向总是指向地心：初中阶段可近似，但严格来说由于地球自转，重力方向并不严格指向地心。",
+          "⚠️ 认为物体静止时重力方向与支持力方向相反：支持力垂直于接触面，而重力竖直向下，两者不一定在一条直线上（如斜面）。"
+        ],
+        "counter_examples": "重力的方向与物体运动方向无关：例如斜向上抛的物体，运动方向变化，但重力始终竖直向下。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G8-PHYSICS-X-ku-重心",
+      "textbook_id": "RENJIAO-G8-PHYSICS-X",
+      "cluster_id": "RENJIAO-G8-PHYSICS-X-kc-重力及其测量",
+      "name": "重心",
+      "description": "重力的等效作用点叫做重心。形状规则、质量分布均匀的物体，重心在几何中心上。\n【适用条件】对于整个物体，重力作用等效于作用在重心上。",
+      "prerequisites": [
+        "重力概念"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [],
+      "ku_type": "physical_concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "均匀直尺长1m，质量均匀，重心在0.5m处。若在左端挂0.2kg重物，尺子质量0.1kg，则新重心位置：$x = \\frac{0.1 \\times 0.5 + 0.2 \\times 0}{0.1+0.2} = 0.167\\,\\text{m}$（从挂物端算起）。",
+          "一个均匀三角形薄板，重心在三条中线的交点（重心），距离每个顶点2/3中线长。"
+        ],
+        "intuition": "为什么一个物体可以看作所有重力都作用在一个点上？比如你用手指顶起一把尺子，找到平衡点就能让尺子不掉，这个点就是重心。",
+        "definition": "重心是物体各部分所受重力的等效作用点。对于形状规则、质量均匀的物体，重心在几何中心。数学上，重心位置由各质点重力矩平衡决定：$\\vec{r}_{\\text{G}} = \\frac{\\sum m_i \\vec{r}_i}{\\sum m_i}$，其中 $m_i$ 为质点质量，$\\vec{r}_i$ 为位置矢量，单位为米（m），是矢量。",
+        "key_points": [
+          "⚠️ 重心不一定在物体内部：例如圆环或L形物体，重心可能在物体外部空间。",
+          "⚠️ 重心与质量分布有关：形状规则但质量不均匀时，重心会偏向质量大的一侧。",
+          "⚠️ 重心与悬挂法：用细线悬挂物体，重心一定在悬线的延长线上，两次悬挂交点即重心。"
+        ],
+        "connections": "重心与重力势能：物体重心高度变化决定重力势能变化 $\\Delta E_p = mg\\Delta h$；与力矩平衡：物体平衡时，重力对支点的力矩为零，即支点通过重心。",
+        "common_mistakes": [
+          "⚠️ 误认为重心一定在物体内部：如圆环重心在圆心（空心处），不在环上。",
+          "⚠️ 认为形状规则物体重心一定在几何中心：只有质量分布均匀时才成立，否则需计算。",
+          "⚠️ 悬挂法找重心时，只挂一次就确定：必须两次不同方向悬挂，交点才是重心。"
+        ],
+        "counter_examples": "重心与质心不同：重心是重力等效作用点，质心是质量分布中心。在均匀重力场中两者重合，但在非均匀重力场中（如高空）重心可能偏离质心。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G8-PHYSICS-X-ku-铁锁实验",
+      "textbook_id": "RENJIAO-G8-PHYSICS-X",
+      "cluster_id": "RENJIAO-G8-PHYSICS-X-kc-机械能及其转化与守恒",
+      "name": "铁锁实验",
+      "description": "将铁锁拉到鼻子附近释放，观察铁锁摆回时是否会打到鼻子，验证机械能守恒。\n【适用条件】忽略空气阻力，绳子无弹性\n【实验】目的：验证机械能守恒；原理：铁锁摆动过程中机械能守恒，摆回时不会达到原来高度；器材：铁锁、绳子；步骤：1. 将铁锁拉到鼻子附近释放；2. 观察铁锁摆回时的位置；数据处理：定性观察",
+      "prerequisites": [
+        "机械能守恒定律"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [],
+      "ku_type": "experiment",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "exam_hotspots": [
+          "考查机械能守恒条件（忽略空气阻力、绳子无弹性）",
+          "考查实验现象与结论（铁锁不会打到鼻子，验证机械能守恒）",
+          "考查能量转化过程（重力势能→动能→重力势能）",
+          "考查误差分析（空气阻力导致回摆高度降低）"
+        ],
+        "common_mistakes": [
+          "⚠️ 释放时手推铁锁（施加额外初速度→铁锁摆回可能超过原高度打到鼻子→应静止释放）",
+          "⚠️ 绳子有弹性（摆长变化导致机械能不守恒，铁锁回摆位置不准确→应使用无弹性细绳）",
+          "⚠️ 释放时铁锁未与鼻子对齐（初始高度不同→回摆高度无法准确比较→应使铁锁紧贴鼻尖释放）",
+          "⚠️ 忽略空气阻力（实际有阻力时铁锁回摆高度略低，误以为机械能不守恒→应强调理想条件，定性观察即可）"
+        ],
+        "data_processing": "本实验为定性观察，无需精确测量。重点记录铁锁回摆时是否到达原高度，若明显低于原高度，说明机械能不守恒（有能量损失）。误差主要来自空气阻力和绳子摩擦，定性判断即可。",
+        "design_rationale": "铁锁拉到鼻子附近释放，初始位置与鼻子等高，摆回时若机械能守恒，应回到等高点，不会打到鼻子。绳子无弹性确保摆长不变，忽略空气阻力减少能量损失，使实验现象直观验证机械能守恒。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G8-PHYSICS-X-ku-阻力对物体运动的影响实验",
+      "textbook_id": "RENJIAO-G8-PHYSICS-X",
+      "cluster_id": "RENJIAO-G8-PHYSICS-X-kc-牛顿第一定律与惯性",
+      "name": "阻力对物体运动的影响实验",
+      "description": "通过小车从斜面滑下，在不同粗糙度水平面上滑行距离不同，探究阻力对物体运动的影响。\n【适用条件】小车从同一斜面同一高度静止释放，水平面材料不同（棉布、木板）\n【实验】目的：探究阻力对物体运动的影响；原理：阻力越小，物体运动距离越远；器材：斜面、小车、棉布、木板、刻度尺；步骤：1.铺棉布，小车从斜面顶端静止滑下，测滑行距离；2.去掉棉布，重复实验；3.比较滑行距离；数据处理：比较不同表面下滑行距离",
+      "prerequisites": [],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [],
+      "ku_type": "experiment",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "exam_hotspots": [
+          "控制变量法：如何保证初速度相同（同一高度静止释放）。",
+          "实验现象与推理：阻力越小，运动距离越远，推理出物体不受力时将匀速直线运动。",
+          "转换法的应用：通过滑行距离反映阻力大小。",
+          "实验误差分析：斜面摩擦、小车释放位置偏差对结果的影响。"
+        ],
+        "common_mistakes": [
+          "⚠️ 小车释放高度不同：导致初速度不同，无法比较阻力影响；应每次从同一高度静止释放。",
+          "⚠️ 水平面未铺平或小车未从斜面顶端释放：使小车初速度不恒定或受力不均，影响距离测量；应确保斜面固定、水平面平整。",
+          "⚠️ 测量滑行距离时未从斜面底端开始：起点错误导致数据偏差；应从小车到达水平面时前端位置开始测量。",
+          "⚠️ 忽略小车质量变化：若更换不同质量小车，未控制变量，阻力影响无法比较；应使用同一小车重复实验。"
+        ],
+        "data_processing": "多次测量取平均值减小偶然误差；比较不同表面滑行距离，阻力越小距离越大；有效数字保留到刻度尺最小分度值下一位；若出现距离反常（如木板比棉布短），检查斜面高度或表面平整度。",
+        "design_rationale": "小车从同一斜面同一高度静止释放，确保到达水平面时初速度相同，控制变量；通过改变水平面粗糙度改变阻力大小，比较滑行距离，推理阻力对运动的影响。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G8-PHYSICS-X-ku-阿基米德原理",
+      "textbook_id": "RENJIAO-G8-PHYSICS-X",
+      "cluster_id": "RENJIAO-G8-PHYSICS-X-kc-阿基米德原理及其验证",
+      "name": "阿基米德原理",
+      "description": "浸在液体中的物体受到向上的浮力，浮力的大小等于它排开的液体所受的重力。公式：F浮 = G排。也适用于气体。\n【适用条件】物体浸在液体或气体中",
+      "prerequisites": [
+        "浮力的概念",
+        "决定浮力大小的因素"
+      ],
+      "related_kus": [],
+      "difficulty": 0.6,
+      "exam_frequency": "mid",
+      "question_types": [],
+      "ku_type": "physical_law",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "statement": "浸在液体中的物体受到向上的浮力，浮力的大小等于它排开的液体所受的重力。公式：$F_\\text{浮} = G_\\text{排} = \\rho_\\text{液} g V_\\text{排}$，其中 $\\rho_\\text{液}$ 为液体密度，$g$ 为重力加速度，$V_\\text{排}$ 为物体排开液体的体积。浮力方向竖直向上。",
+        "conditions": "物体必须浸在液体或气体中，且排开流体（液体或气体）的体积 $V_\\text{排}$ 需准确对应。⚠️ 若物体未完全浸没，$V_\\text{排}$ 不等于物体体积；若物体沉底且与容器底部紧密接触（如吸盘），下表面不受液体压力，则阿基米德原理不适用。",
+        "connections": "阿基米德原理是浮力产生的根本原因——液体对物体上下表面压力差的结果，与物体密度、形状无关，只取决于排开液体的重力和液体密度。",
+        "corollaries": "物体在液体中漂浮时，$F_\\text{浮} = G_\\text{物}$，即 $\\rho_\\text{液} g V_\\text{排} = \\rho_\\text{物} g V_\\text{物}$，可得 $V_\\text{排}/V_\\text{物} = \\rho_\\text{物}/\\rho_\\text{液}$。",
+        "typical_uses": [
+          "计算浮力：已知液体密度和排开体积，直接代入 $F_\\text{浮} = \\rho_\\text{液} g V_\\text{排}$。",
+          "判断物体浮沉：比较 $F_\\text{浮}$ 与物体重力 $G$，$F_\\text{浮} > G$ 上浮，$F_\\text{浮} < G$ 下沉。",
+          "测量密度：利用漂浮时 $F_\\text{浮} = G$，结合排开体积求物体或液体密度。"
+        ],
+        "common_mistakes": [
+          "⚠️ 误认为 $V_\\text{排}$ 总是等于物体体积：正确做法是 $V_\\text{排}$ 等于物体浸入液面以下部分的体积，漂浮时 $V_\\text{排} < V_\\text{物}$。",
+          "⚠️ 忽略浮力方向：浮力总是竖直向上，不是垂直于物体表面，也不是沿斜面方向。",
+          "⚠️ 混淆 $\\rho_\\text{液}$ 与 $\\rho_\\text{物}$：公式中密度是液体密度，不是物体密度，物体密度影响的是重力而非浮力。"
+        ],
+        "physical_picture": "想象一个浸在液体中的物体，它排开了一部分液体，就像把一块石头放入水中，水面会上升。物体受到的浮力大小，恰好等于它排开的那部分液体的重力。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G8-PHYSICS-X-ku-阿基米德原理公式",
+      "textbook_id": "RENJIAO-G8-PHYSICS-X",
+      "cluster_id": "RENJIAO-G8-PHYSICS-X-kc-阿基米德原理及其验证",
+      "name": "阿基米德原理公式",
+      "description": "F浮 = G排 = ρ液 g V排\n【适用条件】物体浸在液体或气体中，ρ液为液体密度，V排为排开液体的体积",
+      "prerequisites": [
+        "阿基米德原理"
+      ],
+      "related_kus": [],
+      "difficulty": 0.6,
+      "exam_frequency": "mid",
+      "question_types": [],
+      "ku_type": "formula",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "formula": "F浮 = G排 = ρ液 g V排，其中F浮为浮力（N），G排为排开液体的重力（N），ρ液为液体密度（kg/m³），g取9.8 N/kg或10 N/kg，V排为排开液体的体积（m³）。",
+        "variants": [
+          "F浮 = ρ液 g V排（已知液体密度和排开体积求浮力）",
+          "V排 = F浮 / (ρ液 g)（已知浮力和液体密度求排开体积）",
+          "ρ液 = F浮 / (g V排)（已知浮力和排开体积求液体密度）"
+        ],
+        "conditions": "适用于物体浸在液体或气体中，且物体静止或匀速运动；ρ液为液体密度，V排为物体排开液体的体积，物体必须完全或部分浸没。",
+        "derivation": "物体浸入液体中，排开液体的重力等于浮力，即“排液重即浮力”。",
+        "typical_uses": [
+          "计算物体浸没在水中时的浮力大小",
+          "判断物体在液体中的浮沉状态（比较浮力与重力）",
+          "利用浮力测量不规则物体的体积（V排 = F浮 / (ρ液 g)）"
+        ],
+        "common_mistakes": [
+          "⚠️ 误将V排当作物体体积：物体未完全浸没时V排小于物体体积，正确做法是V排为物体浸入部分的体积。",
+          "⚠️ 混淆ρ液与ρ物：浮力只与液体密度有关，与物体密度无关，正确做法是代入液体密度。",
+          "⚠️ 忽略g的取值：计算时g取9.8 N/kg或10 N/kg需统一，否则结果偏差，正确做法是明确题目中g的取值。"
+        ]
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    }
+  ]
+}

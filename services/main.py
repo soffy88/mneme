@@ -31,7 +31,6 @@ import re
 from obase.db import get_db, SessionLocal
 from services.logging_config import configure_logging, logger
 from obase.prior_provider import PriorProvider
-from obase.llm import register_default_providers
 from obase.auth import decode_access_token
 from omodul.cognitive import InteractionInput
 from oprim.prereq_graph import topo_sort_by_prereq
@@ -57,6 +56,7 @@ from services.seed import seed_bkt_priors
 from services.models import (
     DailyMission,
     EffortfulGain,
+    EvaluationRun,
     InteractionEvent,
     KCMastery,
     MasterySnapshot,
@@ -212,15 +212,11 @@ async def lifespan(app: FastAPI):
         await seed_bkt_priors(session)
         await session.commit()
         await PriorProvider.warm_up(session)
-    register_default_providers()
+    # LLM/VLM provider 装配（单源，API 与 worker 共用；含 MNEME_LLM=ollama 覆盖）
+    from services.providers.setup import configure_llm_providers
 
-    # 可选：把文本 LLM 的 default 切到本机 Ollama（DeepSeek 余额不足时；不影响 VLM/OCR）
-    if os.environ.get("MNEME_LLM", "").lower() == "ollama":
-        from services.providers.ollama_caller import OllamaCaller
-        from obase.provider_registry import ProviderRegistry
-
-        ProviderRegistry.get().register_llm("default", OllamaCaller(), replace=True)
-        ProviderRegistry.get().register_llm("ollama", OllamaCaller(), replace=True)
+    _llm_tag = configure_llm_providers()
+    logger.info(f"LLM default provider: {_llm_tag}")
 
     # Register English speaking practice generic callers (real or mock)
     from services.providers.aliyun_pronunciation import AliyunPronunciationCaller
@@ -1098,6 +1094,57 @@ async def get_calibration(
     )
 
 
+@app.get("/v1/moat/evaluation-history")
+async def get_evaluation_history(
+    limit: int = Query(52, ge=1, le=520),
+    _auth: User = Depends(get_current_user),
+    db: AsyncSession = Depends(get_db),
+):
+    """GET /v1/moat/evaluation-history — 护城河实证历史（周评估 AUC/log-loss 落表）。
+    登录即可读（模型质量是全体聚合数据，无个人信息）；按 ran_at 倒序。
+    """
+    rows = (
+        (
+            await db.execute(
+                select(EvaluationRun).order_by(EvaluationRun.ran_at.desc()).limit(limit)
+            )
+        )
+        .scalars()
+        .all()
+    )
+    return {
+        "runs": [
+            {
+                "id": str(r.id),
+                "ran_at": r.ran_at.isoformat() if r.ran_at else None,
+                "window_start": r.window_start.isoformat() if r.window_start else None,
+                "window_end": r.window_end.isoformat() if r.window_end else None,
+                "n_events": r.n_events,
+                "n_students": r.n_students,
+                "auc": round(r.auc, 4) if r.auc is not None else None,
+                "log_loss": round(r.log_loss, 4) if r.log_loss is not None else None,
+                "meta": r.meta,
+            }
+            for r in rows
+        ]
+    }
+
+
+@app.get("/v1/moat/retention-metrics")
+async def get_retention_metrics(
+    _auth: User = Depends(get_current_user),
+    db: AsyncSession = Depends(get_db),
+):
+    """GET /v1/moat/retention-metrics — 留存三指标（T.2）。
+
+    D7 留存 / 到期复习完成率 / 保留探针校准（实测召回 vs FSRS 预测 R）。
+    登录即可读（全体聚合数据，无个人信息）；口径见 services.retention_service。
+    """
+    from services.retention_service import retention_metrics
+
+    return await retention_metrics(db)
+
+
 # ===== §F.1 苏格拉底会话 =====
 
 
@@ -1204,8 +1251,18 @@ async def get_parent_overview(
 # ===== §H.1 求解接口 =====
 
 
+from services.ratelimit import rate_limit
+
+# 匿名昂贵端点限流：每 IP 60s 内 30 次求解（防刷算力）
+_solve_rate_limit = rate_limit(limit=30, window_seconds=60, scope="solve")
+
+
 @app.post("/v1/solve")
-async def post_solve(kc_id: str = Query(...), expression: str = Query(...)):
+async def post_solve(
+    kc_id: str = Query(...),
+    expression: str = Query(...),
+    _: None = Depends(_solve_rate_limit),
+):
     """POST /v1/solve — 调 oskill.solve_and_visualize 确定性求解。"""
     from oskill.solve_and_visualize import SolveAndVisualizeInput, solve_and_visualize
 

@@ -1,0 +1,1084 @@
+{
+  "textbook": {
+    "id": "RENJIAO-G3-MATH-S",
+    "subject": "math",
+    "grade": "G3",
+    "edition": "2022修订",
+    "book_name": "人教版·数学三年级上册"
+  },
+  "clusters": [
+    {
+      "id": "RENJIAO-G3-MATH-S-kc-观察物体",
+      "name": "观察物体",
+      "display_order": 1,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G3-MATH-S-kc-混合运算的运算顺序",
+      "name": "混合运算的运算顺序",
+      "display_order": 2,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G3-MATH-S-kc-用混合运算解决问题",
+      "name": "用混合运算解决问题",
+      "display_order": 3,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G3-MATH-S-kc-长度单位",
+      "name": "长度单位",
+      "display_order": 4,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G3-MATH-S-kc-估计与测量",
+      "name": "估计与测量",
+      "display_order": 5,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G3-MATH-S-kc-质量单位",
+      "name": "质量单位",
+      "display_order": 6,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G3-MATH-S-kc-口算乘法",
+      "name": "口算乘法",
+      "display_order": 7,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G3-MATH-S-kc-笔算乘法-不进位",
+      "name": "笔算乘法（不进位）",
+      "display_order": 8,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G3-MATH-S-kc-笔算乘法-进位",
+      "name": "笔算乘法（进位）",
+      "display_order": 9,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G3-MATH-S-kc-特殊因数的乘法",
+      "name": "特殊因数的乘法",
+      "display_order": 10,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G3-MATH-S-kc-估算应用",
+      "name": "估算应用",
+      "display_order": 11,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G3-MATH-S-kc-分数的初步认识与表示",
+      "name": "分数的初步认识与表示",
+      "display_order": 12,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G3-MATH-S-kc-分数的大小比较",
+      "name": "分数的大小比较",
+      "display_order": 13,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G3-MATH-S-kc-分数的简单计算",
+      "name": "分数的简单计算",
+      "display_order": 14,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G3-MATH-S-kc-分数的应用与拓展",
+      "name": "分数的应用与拓展",
+      "display_order": 15,
+      "description": null
+    }
+  ],
+  "units": [
+    {
+      "id": "RENJIAO-G3-MATH-S-ku-1减去一个分数",
+      "textbook_id": "RENJIAO-G3-MATH-S",
+      "cluster_id": "RENJIAO-G3-MATH-S-kc-分数的简单计算",
+      "name": "1减去一个分数",
+      "description": "1可以看作分子分母相同的分数（如4/4），减去一个分数时，分母不变，分子相减。如1-3/4=1/4。",
+      "prerequisites": [
+        "ku-008"
+      ],
+      "related_kus": [],
+      "difficulty": 0.6,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G3-MATH-S-ku-三位数乘一位数-不进位-的笔算",
+      "textbook_id": "RENJIAO-G3-MATH-S",
+      "cluster_id": "RENJIAO-G3-MATH-S-kc-笔算乘法-不进位",
+      "name": "三位数乘一位数（不进位）的笔算",
+      "description": "用竖式计算，从个位乘起，依次乘每一位，积的每一位对齐相应数位。",
+      "prerequisites": [
+        "两位数乘一位数（不进位）的笔算"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G3-MATH-S-ku-三位数乘一位数-进位-的笔算",
+      "textbook_id": "RENJIAO-G3-MATH-S",
+      "cluster_id": "RENJIAO-G3-MATH-S-kc-笔算乘法-进位",
+      "name": "三位数乘一位数（进位）的笔算",
+      "description": "用竖式计算，哪一位乘得的积满几十，就向前一位进几。",
+      "prerequisites": [
+        "三位数乘一位数（不进位）的笔算",
+        "两位数乘一位数（进位）的笔算"
+      ],
+      "related_kus": [],
+      "difficulty": 0.6,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G3-MATH-S-ku-两位数乘一位数-不进位-的口算",
+      "textbook_id": "RENJIAO-G3-MATH-S",
+      "cluster_id": "RENJIAO-G3-MATH-S-kc-口算乘法",
+      "name": "两位数乘一位数（不进位）的口算",
+      "description": "将两位数拆成整十数和一位数，分别乘一位数后相加。",
+      "prerequisites": [
+        "整十、整百、整千数乘一位数的口算"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G3-MATH-S-ku-两位数乘一位数-不进位-的笔算",
+      "textbook_id": "RENJIAO-G3-MATH-S",
+      "cluster_id": "RENJIAO-G3-MATH-S-kc-笔算乘法-不进位",
+      "name": "两位数乘一位数（不进位）的笔算",
+      "description": "用竖式计算，从个位乘起，积的个位对齐个位，十位对齐十位。",
+      "prerequisites": [
+        "两位数乘一位数（不进位）的口算"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G3-MATH-S-ku-两位数乘一位数-进位-的笔算",
+      "textbook_id": "RENJIAO-G3-MATH-S",
+      "cluster_id": "RENJIAO-G3-MATH-S-kc-笔算乘法-进位",
+      "name": "两位数乘一位数（进位）的笔算",
+      "description": "用竖式计算，哪一位乘得的积满几十，就向前一位进几。",
+      "prerequisites": [
+        "两位数乘一位数（不进位）的笔算"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G3-MATH-S-ku-两级运算的运算顺序",
+      "textbook_id": "RENJIAO-G3-MATH-S",
+      "cluster_id": "RENJIAO-G3-MATH-S-kc-混合运算的运算顺序",
+      "name": "两级运算的运算顺序",
+      "description": "既有乘、除法，又有加、减法的算式，要先算乘、除法，再算加、减法。",
+      "prerequisites": [
+        "ku-005"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G3-MATH-S-ku-从不同方向观察物体",
+      "textbook_id": "RENJIAO-G3-MATH-S",
+      "cluster_id": "RENJIAO-G3-MATH-S-kc-观察物体",
+      "name": "从不同方向观察物体",
+      "description": "从不同方向观察同一物体，看到的形状通常不同。",
+      "prerequisites": [],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G3-MATH-S-ku-估计距离的方法",
+      "textbook_id": "RENJIAO-G3-MATH-S",
+      "cluster_id": "RENJIAO-G3-MATH-S-kc-估计与测量",
+      "name": "估计距离的方法",
+      "description": "估计一段距离时，先选择一个长度作为标准（如步长、站距等），再推算。",
+      "prerequisites": [
+        "千米的认识"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G3-MATH-S-ku-几分之几的认识",
+      "textbook_id": "RENJIAO-G3-MATH-S",
+      "cluster_id": "RENJIAO-G3-MATH-S-kc-分数的初步认识与表示",
+      "name": "几分之几的认识",
+      "description": "像2/5、3/5、4/5、2/10、3/10、7/10……这样的数，也都是分数。表示把一个整体平均分成若干份，取其中的几份。",
+      "prerequisites": [
+        "ku-001"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G3-MATH-S-ku-分子为1的分数大小比较",
+      "textbook_id": "RENJIAO-G3-MATH-S",
+      "cluster_id": "RENJIAO-G3-MATH-S-kc-分数的大小比较",
+      "name": "分子为1的分数大小比较",
+      "description": "分子相同（都是1），分母越大，分数越小。",
+      "prerequisites": [
+        "ku-001"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G3-MATH-S-ku-分数墙与分数单位",
+      "textbook_id": "RENJIAO-G3-MATH-S",
+      "cluster_id": "RENJIAO-G3-MATH-S-kc-分数的应用与拓展",
+      "name": "分数墙与分数单位",
+      "description": "分数墙中，1里面有几个1/2、几个1/3等，不同分数相加等于1。如1/2+1/2=1。",
+      "prerequisites": [
+        "ku-001",
+        "ku-007"
+      ],
+      "related_kus": [],
+      "difficulty": 0.6,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G3-MATH-S-ku-分数的初步认识-几分之一",
+      "textbook_id": "RENJIAO-G3-MATH-S",
+      "cluster_id": "RENJIAO-G3-MATH-S-kc-分数的初步认识与表示",
+      "name": "分数的初步认识（几分之一）",
+      "description": "像1/2、1/3、1/4、1/5……这样的数，都是分数。表示把一个整体平均分成若干份，取其中的一份。",
+      "prerequisites": [],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G3-MATH-S-ku-分数的读写",
+      "textbook_id": "RENJIAO-G3-MATH-S",
+      "cluster_id": "RENJIAO-G3-MATH-S-kc-分数的初步认识与表示",
+      "name": "分数的读写",
+      "description": "分数由分子、分数线、分母组成，读作：几分之几。如1/2读作二分之一。",
+      "prerequisites": [
+        "ku-001"
+      ],
+      "related_kus": [],
+      "difficulty": 0.2,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G3-MATH-S-ku-分数表示涂色部分",
+      "textbook_id": "RENJIAO-G3-MATH-S",
+      "cluster_id": "RENJIAO-G3-MATH-S-kc-分数的初步认识与表示",
+      "name": "分数表示涂色部分",
+      "description": "用分数表示图形中涂色部分占整个图形的几分之几，分母表示平均分的份数，分子表示涂色的份数。",
+      "prerequisites": [
+        "ku-001",
+        "ku-003"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G3-MATH-S-ku-分数表示部分与整体的关系",
+      "textbook_id": "RENJIAO-G3-MATH-S",
+      "cluster_id": "RENJIAO-G3-MATH-S-kc-分数的应用与拓展",
+      "name": "分数表示部分与整体的关系",
+      "description": "分数可以表示部分与整体之间的关系，如把一盒苹果平均分成2份，每份是这盒苹果的1/2。",
+      "prerequisites": [
+        "ku-001"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G3-MATH-S-ku-分米的认识",
+      "textbook_id": "RENJIAO-G3-MATH-S",
+      "cluster_id": "RENJIAO-G3-MATH-S-kc-长度单位",
+      "name": "分米的认识",
+      "description": "分米（dm）是比厘米更大的长度单位，1分米=10厘米。量物体的长度有时用分米。",
+      "prerequisites": [
+        "厘米的认识"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G3-MATH-S-ku-千米的认识",
+      "textbook_id": "RENJIAO-G3-MATH-S",
+      "cluster_id": "RENJIAO-G3-MATH-S-kc-长度单位",
+      "name": "千米的认识",
+      "description": "千米（km）是较大的长度单位，1千米=1000米。计量比较长的路程通常用千米。",
+      "prerequisites": [
+        "米的认识"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G3-MATH-S-ku-同分母分数减法",
+      "textbook_id": "RENJIAO-G3-MATH-S",
+      "cluster_id": "RENJIAO-G3-MATH-S-kc-分数的简单计算",
+      "name": "同分母分数减法",
+      "description": "同分母分数相减，分母不变，分子相减。如2/8-1/8=1/8。",
+      "prerequisites": [
+        "ku-003"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G3-MATH-S-ku-同分母分数加法",
+      "textbook_id": "RENJIAO-G3-MATH-S",
+      "cluster_id": "RENJIAO-G3-MATH-S-kc-分数的简单计算",
+      "name": "同分母分数加法",
+      "description": "同分母分数相加，分母不变，分子相加。如1/8+2/8=3/8。",
+      "prerequisites": [
+        "ku-003"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G3-MATH-S-ku-同分母分数大小比较",
+      "textbook_id": "RENJIAO-G3-MATH-S",
+      "cluster_id": "RENJIAO-G3-MATH-S-kc-分数的大小比较",
+      "name": "同分母分数大小比较",
+      "description": "分母相同，分子越大，分数越大。等分的份数越多，每份就越小。",
+      "prerequisites": [
+        "ku-003"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G3-MATH-S-ku-同级运算的运算顺序",
+      "textbook_id": "RENJIAO-G3-MATH-S",
+      "cluster_id": "RENJIAO-G3-MATH-S-kc-混合运算的运算顺序",
+      "name": "同级运算的运算顺序",
+      "description": "只有加、减法或只有乘、除法的算式，从左往右按顺序计算。",
+      "prerequisites": [
+        "ku-005"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G3-MATH-S-ku-因数中间有0的乘法",
+      "textbook_id": "RENJIAO-G3-MATH-S",
+      "cluster_id": "RENJIAO-G3-MATH-S-kc-特殊因数的乘法",
+      "name": "因数中间有0的乘法",
+      "description": "0乘任何数都得0；因数中间有0时，用一位数乘0得0，占位后继续乘。",
+      "prerequisites": [
+        "三位数乘一位数（进位）的笔算"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G3-MATH-S-ku-因数末尾有0的乘法",
+      "textbook_id": "RENJIAO-G3-MATH-S",
+      "cluster_id": "RENJIAO-G3-MATH-S-kc-特殊因数的乘法",
+      "name": "因数末尾有0的乘法",
+      "description": "先把0前面的数相乘，再在积的末尾添上因数末尾的0。",
+      "prerequisites": [
+        "整十、整百、整千数乘一位数的口算"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G3-MATH-S-ku-总量等于各分量之和",
+      "textbook_id": "RENJIAO-G3-MATH-S",
+      "cluster_id": "RENJIAO-G3-MATH-S-kc-质量单位",
+      "name": "总量等于各分量之和",
+      "description": "总质量等于各次称出的质量之和。",
+      "prerequisites": [
+        "ku-019"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G3-MATH-S-ku-括号改变运算顺序",
+      "textbook_id": "RENJIAO-G3-MATH-S",
+      "cluster_id": "RENJIAO-G3-MATH-S-kc-混合运算的运算顺序",
+      "name": "括号改变运算顺序",
+      "description": "算式里有括号，要先算括号里面的。括号可以改变运算顺序。",
+      "prerequisites": [
+        "ku-007"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G3-MATH-S-ku-整十-整百-整千数乘一位数的口算",
+      "textbook_id": "RENJIAO-G3-MATH-S",
+      "cluster_id": "RENJIAO-G3-MATH-S-kc-口算乘法",
+      "name": "整十、整百、整千数乘一位数的口算",
+      "description": "整十、整百、整千数乘一位数，先转化为表内乘法，再在积的末尾添上相应个数的0。",
+      "prerequisites": [
+        "表内乘法"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G3-MATH-S-ku-正方体展开图判断",
+      "textbook_id": "RENJIAO-G3-MATH-S",
+      "cluster_id": "RENJIAO-G3-MATH-S-kc-观察物体",
+      "name": "正方体展开图判断",
+      "description": "判断给定的平面图形能否折成正方体，需满足特定展开图结构。",
+      "prerequisites": [
+        "ku-003"
+      ],
+      "related_kus": [],
+      "difficulty": 0.6,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G3-MATH-S-ku-毫米的认识",
+      "textbook_id": "RENJIAO-G3-MATH-S",
+      "cluster_id": "RENJIAO-G3-MATH-S-kc-长度单位",
+      "name": "毫米的认识",
+      "description": "毫米（mm）是比厘米更小的长度单位，1厘米=10毫米。量比较短的物体或要求精确时用毫米。",
+      "prerequisites": [
+        "厘米的认识"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G3-MATH-S-ku-求一个数的几分之几是多少-整数除法乘法",
+      "textbook_id": "RENJIAO-G3-MATH-S",
+      "cluster_id": "RENJIAO-G3-MATH-S-kc-分数的应用与拓展",
+      "name": "求一个数的几分之几是多少（整数除法乘法）",
+      "description": "求一个数的几分之几，先除以分母（求一份），再乘以分子（求几份）。如12人的1/3：12÷3=4人。",
+      "prerequisites": [
+        "ku-003",
+        "整数除法",
+        "整数乘法"
+      ],
+      "related_kus": [],
+      "difficulty": 0.7,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G3-MATH-S-ku-用估算解决问题",
+      "textbook_id": "RENJIAO-G3-MATH-S",
+      "cluster_id": "RENJIAO-G3-MATH-S-kc-估算应用",
+      "name": "用估算解决问题",
+      "description": "把多位数往大或往小估成整十、整百数，再乘一位数，判断结果是否满足条件。",
+      "prerequisites": [
+        "整十、整百、整千数乘一位数的口算"
+      ],
+      "related_kus": [],
+      "difficulty": 0.6,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G3-MATH-S-ku-用综合算式解决多步问题",
+      "textbook_id": "RENJIAO-G3-MATH-S",
+      "cluster_id": "RENJIAO-G3-MATH-S-kc-用混合运算解决问题",
+      "name": "用综合算式解决多步问题",
+      "description": "解决需要多步计算的实际问题，可列综合算式，注意运算顺序和括号的使用。",
+      "prerequisites": [
+        "ku-008"
+      ],
+      "related_kus": [],
+      "difficulty": 0.6,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G3-MATH-S-ku-画线段图分析数量关系",
+      "textbook_id": "RENJIAO-G3-MATH-S",
+      "cluster_id": "RENJIAO-G3-MATH-S-kc-用混合运算解决问题",
+      "name": "画线段图分析数量关系",
+      "description": "用线段图表示已知条件和问题，帮助分析数量关系，确定解题步骤。",
+      "prerequisites": [
+        "ku-009"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G3-MATH-S-ku-等量的等量相等",
+      "textbook_id": "RENJIAO-G3-MATH-S",
+      "cluster_id": "RENJIAO-G3-MATH-S-kc-质量单位",
+      "name": "等量的等量相等",
+      "description": "如果两个量分别等于同一个量，那么这两个量相等。曹冲称象中，大象质量等于石头总质量。",
+      "prerequisites": [],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G3-MATH-S-ku-米和分米的关系",
+      "textbook_id": "RENJIAO-G3-MATH-S",
+      "cluster_id": "RENJIAO-G3-MATH-S-kc-长度单位",
+      "name": "米和分米的关系",
+      "description": "1米=10分米。",
+      "prerequisites": [
+        "分米的认识"
+      ],
+      "related_kus": [],
+      "difficulty": 0.2,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G3-MATH-S-ku-综合算式的概念",
+      "textbook_id": "RENJIAO-G3-MATH-S",
+      "cluster_id": "RENJIAO-G3-MATH-S-kc-混合运算的运算顺序",
+      "name": "综合算式的概念",
+      "description": "像24-13+18这样把两个或两个以上算式合并成一个的算式叫综合算式。",
+      "prerequisites": [],
+      "related_kus": [],
+      "difficulty": 0.2,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G3-MATH-S-ku-观察立体图形的一个面",
+      "textbook_id": "RENJIAO-G3-MATH-S",
+      "cluster_id": "RENJIAO-G3-MATH-S-kc-观察物体",
+      "name": "观察立体图形的一个面",
+      "description": "根据看到的一个面（如正方形）推测立体图形可能是正方体等。",
+      "prerequisites": [
+        "ku-001"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G3-MATH-S-ku-质量单位克和千克",
+      "textbook_id": "RENJIAO-G3-MATH-S",
+      "cluster_id": "RENJIAO-G3-MATH-S-kc-质量单位",
+      "name": "质量单位克和千克",
+      "description": "克（g）和千克（kg）是常用质量单位，1千克=1000克。计量较轻物品用克，较重物品用千克。",
+      "prerequisites": [],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G3-MATH-S-ku-质量单位吨",
+      "textbook_id": "RENJIAO-G3-MATH-S",
+      "cluster_id": "RENJIAO-G3-MATH-S-kc-质量单位",
+      "name": "质量单位吨",
+      "description": "吨（t）是较大质量单位，1吨=1000千克。计量较重的或大宗物品的质量用吨。",
+      "prerequisites": [
+        "ku-017"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G3-MATH-S-ku-长度单位间的换算",
+      "textbook_id": "RENJIAO-G3-MATH-S",
+      "cluster_id": "RENJIAO-G3-MATH-S-kc-长度单位",
+      "name": "长度单位间的换算",
+      "description": "相邻长度单位间的进率：1千米=1000米，1米=10分米，1分米=10厘米，1厘米=10毫米。",
+      "prerequisites": [
+        "ku-011",
+        "ku-012",
+        "ku-014"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G3-MATH-S-ku-长方体展开图",
+      "textbook_id": "RENJIAO-G3-MATH-S",
+      "cluster_id": "RENJIAO-G3-MATH-S-kc-观察物体",
+      "name": "长方体展开图",
+      "description": "将长方体纸盒沿棱剪开，得到由6个面组成的平面图形，每组相对的面不相连。",
+      "prerequisites": [
+        "ku-001"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    }
+  ]
+}

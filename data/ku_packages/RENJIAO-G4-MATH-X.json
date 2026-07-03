@@ -1,0 +1,1870 @@
+{
+  "textbook": {
+    "id": "RENJIAO-G4-MATH-X",
+    "subject": "math",
+    "grade": "G4",
+    "edition": "2011",
+    "book_name": "人教版·数学四年级下册"
+  },
+  "clusters": [
+    {
+      "id": "RENJIAO-G4-MATH-X-kc-加减法的意义与关系",
+      "name": "加减法的意义与关系",
+      "display_order": 1,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G4-MATH-X-kc-乘除法的意义与关系",
+      "name": "乘除法的意义与关系",
+      "display_order": 2,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G4-MATH-X-kc-四则混合运算顺序与优化",
+      "name": "四则混合运算顺序与优化",
+      "display_order": 3,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G4-MATH-X-kc-小数的意义与计数单位",
+      "name": "小数的意义与计数单位",
+      "display_order": 4,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G4-MATH-X-kc-小数的读写与数位",
+      "name": "小数的读写与数位",
+      "display_order": 5,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G4-MATH-X-kc-小数的性质与大小比较",
+      "name": "小数的性质与大小比较",
+      "display_order": 6,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G4-MATH-X-kc-小数点移动规律",
+      "name": "小数点移动规律",
+      "display_order": 7,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G4-MATH-X-kc-小数与单位换算",
+      "name": "小数与单位换算",
+      "display_order": 8,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G4-MATH-X-kc-小数的近似数与改写",
+      "name": "小数的近似数与改写",
+      "display_order": 9,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G4-MATH-X-kc-三角形的认识与分类",
+      "name": "三角形的认识与分类",
+      "display_order": 10,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G4-MATH-X-kc-三角形的内角和与多边形内角和",
+      "name": "三角形的内角和与多边形内角和",
+      "display_order": 11,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G4-MATH-X-kc-小数的加减法",
+      "name": "小数的加减法",
+      "display_order": 12,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G4-MATH-X-kc-图形的运动-轴对称与平移",
+      "name": "图形的运动（轴对称与平移）",
+      "display_order": 13,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G4-MATH-X-kc-平均数与条形统计图",
+      "name": "平均数与条形统计图",
+      "display_order": 14,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G4-MATH-X-kc-统计图与统计表",
+      "name": "统计图与统计表",
+      "display_order": 15,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G4-MATH-X-kc-平均数及其应用",
+      "name": "平均数及其应用",
+      "display_order": 16,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G4-MATH-X-kc-综合应用与计算工具",
+      "name": "综合应用与计算工具",
+      "display_order": 17,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G4-MATH-X-kc-鸡兔同笼问题",
+      "name": "鸡兔同笼问题",
+      "display_order": 18,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G4-MATH-X-kc-四则运算与运算律",
+      "name": "四则运算与运算律",
+      "display_order": 19,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G4-MATH-X-kc-小数的认识与运算",
+      "name": "小数的认识与运算",
+      "display_order": 20,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G4-MATH-X-kc-三角形的性质与分类",
+      "name": "三角形的性质与分类",
+      "display_order": 21,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G4-MATH-X-kc-图形的运动与观察",
+      "name": "图形的运动与观察",
+      "display_order": 22,
+      "description": null
+    }
+  ],
+  "units": [
+    {
+      "id": "RENJIAO-G4-MATH-X-ku-0的运算规则",
+      "textbook_id": "RENJIAO-G4-MATH-X",
+      "cluster_id": "RENJIAO-G4-MATH-X-kc-乘除法的意义与关系",
+      "name": "0的运算规则",
+      "description": "一个数加0还得原数；被减数等于减数时差为0；一个数和0相乘得0；0除以非0数得0；0不能作除数。",
+      "prerequisites": [],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G4-MATH-X-ku-三角形三边关系",
+      "textbook_id": "RENJIAO-G4-MATH-X",
+      "cluster_id": "RENJIAO-G4-MATH-X-kc-三角形的认识与分类",
+      "name": "三角形三边关系",
+      "description": "三角形任意两边的和大于第三边。",
+      "prerequisites": [
+        "ku-002"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G4-MATH-X-ku-三角形内角和",
+      "textbook_id": "RENJIAO-G4-MATH-X",
+      "cluster_id": "RENJIAO-G4-MATH-X-kc-三角形的性质与分类",
+      "name": "三角形内角和",
+      "description": "三角形内角和等于180°。",
+      "prerequisites": [
+        "角的认识"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G4-MATH-X-ku-三角形的内角和",
+      "textbook_id": "RENJIAO-G4-MATH-X",
+      "cluster_id": "RENJIAO-G4-MATH-X-kc-三角形的内角和与多边形内角和",
+      "name": "三角形的内角和",
+      "description": "三角形的内角和是180°。",
+      "prerequisites": [
+        "ku-004"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G4-MATH-X-ku-三角形的分类",
+      "textbook_id": "RENJIAO-G4-MATH-X",
+      "cluster_id": "RENJIAO-G4-MATH-X-kc-三角形的性质与分类",
+      "name": "三角形的分类",
+      "description": "按角分：锐角三角形、直角三角形、钝角三角形；按边分：等腰三角形、等边三角形。",
+      "prerequisites": [
+        "角的认识"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G4-MATH-X-ku-三角形的分类-按角",
+      "textbook_id": "RENJIAO-G4-MATH-X",
+      "cluster_id": "RENJIAO-G4-MATH-X-kc-三角形的认识与分类",
+      "name": "三角形的分类（按角）",
+      "description": "锐角三角形：三个角都是锐角；直角三角形：有一个角是直角；钝角三角形：有一个角是钝角。",
+      "prerequisites": [],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G4-MATH-X-ku-三角形的稳定性",
+      "textbook_id": "RENJIAO-G4-MATH-X",
+      "cluster_id": "RENJIAO-G4-MATH-X-kc-三角形的认识与分类",
+      "name": "三角形的稳定性",
+      "description": "三角形具有稳定性，不易变形。",
+      "prerequisites": [],
+      "related_kus": [],
+      "difficulty": 0.2,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G4-MATH-X-ku-两点间的距离",
+      "textbook_id": "RENJIAO-G4-MATH-X",
+      "cluster_id": "RENJIAO-G4-MATH-X-kc-三角形的认识与分类",
+      "name": "两点间的距离",
+      "description": "两点间所有连线中线段最短，这条线段的长度叫作两点间的距离。",
+      "prerequisites": [],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G4-MATH-X-ku-乘法各部分间的关系",
+      "textbook_id": "RENJIAO-G4-MATH-X",
+      "cluster_id": "RENJIAO-G4-MATH-X-kc-乘除法的意义与关系",
+      "name": "乘法各部分间的关系",
+      "description": "积=因数×因数；因数=积÷另一个因数。",
+      "prerequisites": [
+        "乘法的意义"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G4-MATH-X-ku-乘法的意义",
+      "textbook_id": "RENJIAO-G4-MATH-X",
+      "cluster_id": "RENJIAO-G4-MATH-X-kc-乘除法的意义与关系",
+      "name": "乘法的意义",
+      "description": "求几个相同加数的和的简便运算，叫作乘法。相乘的两个数叫作因数，乘得的数叫作积。",
+      "prerequisites": [],
+      "related_kus": [],
+      "difficulty": 0.2,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G4-MATH-X-ku-从不同方向观察物体",
+      "textbook_id": "RENJIAO-G4-MATH-X",
+      "cluster_id": "RENJIAO-G4-MATH-X-kc-图形的运动与观察",
+      "name": "从不同方向观察物体",
+      "description": "从前面、上面、左面观察立体图形，画出或识别对应视图。",
+      "prerequisites": [
+        "立体图形"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G4-MATH-X-ku-减法各部分间的关系",
+      "textbook_id": "RENJIAO-G4-MATH-X",
+      "cluster_id": "RENJIAO-G4-MATH-X-kc-加减法的意义与关系",
+      "name": "减法各部分间的关系",
+      "description": "差=被减数-减数；被减数=减数+差；减数=被减数-差。",
+      "prerequisites": [
+        "减法的意义"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G4-MATH-X-ku-减法的意义",
+      "textbook_id": "RENJIAO-G4-MATH-X",
+      "cluster_id": "RENJIAO-G4-MATH-X-kc-加减法的意义与关系",
+      "name": "减法的意义",
+      "description": "已知两个加数的和与其中一个加数，求另一个加数的运算，叫作减法。减法是加法的逆运算。",
+      "prerequisites": [
+        "加法的意义"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G4-MATH-X-ku-加法各部分间的关系",
+      "textbook_id": "RENJIAO-G4-MATH-X",
+      "cluster_id": "RENJIAO-G4-MATH-X-kc-加减法的意义与关系",
+      "name": "加法各部分间的关系",
+      "description": "和=加数+加数；加数=和-另一个加数。",
+      "prerequisites": [
+        "加法的意义"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G4-MATH-X-ku-加法的意义",
+      "textbook_id": "RENJIAO-G4-MATH-X",
+      "cluster_id": "RENJIAO-G4-MATH-X-kc-加减法的意义与关系",
+      "name": "加法的意义",
+      "description": "把两个数合并成一个数的运算，叫作加法。相加的两个数叫作加数，加得的数叫作和。",
+      "prerequisites": [],
+      "related_kus": [],
+      "difficulty": 0.2,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G4-MATH-X-ku-含中括号的混合运算顺序",
+      "textbook_id": "RENJIAO-G4-MATH-X",
+      "cluster_id": "RENJIAO-G4-MATH-X-kc-四则混合运算顺序与优化",
+      "name": "含中括号的混合运算顺序",
+      "description": "一个算式里既有小括号又有中括号，先算小括号里面的，再算中括号里面的。",
+      "prerequisites": [
+        "含小括号的混合运算顺序"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G4-MATH-X-ku-含小括号的混合运算顺序",
+      "textbook_id": "RENJIAO-G4-MATH-X",
+      "cluster_id": "RENJIAO-G4-MATH-X-kc-四则混合运算顺序与优化",
+      "name": "含小括号的混合运算顺序",
+      "description": "先算小括号里面的，再算小括号外面的。",
+      "prerequisites": [
+        "四则混合运算顺序（无括号）"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G4-MATH-X-ku-四则混合运算顺序-无括号",
+      "textbook_id": "RENJIAO-G4-MATH-X",
+      "cluster_id": "RENJIAO-G4-MATH-X-kc-四则混合运算顺序与优化",
+      "name": "四则混合运算顺序（无括号）",
+      "description": "先乘除，后加减；同级运算从左到右。",
+      "prerequisites": [],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G4-MATH-X-ku-四则运算的关系",
+      "textbook_id": "RENJIAO-G4-MATH-X",
+      "cluster_id": "RENJIAO-G4-MATH-X-kc-四则运算与运算律",
+      "name": "四则运算的关系",
+      "description": "加法和减法互为逆运算，乘法和除法互为逆运算。",
+      "prerequisites": [
+        "加法",
+        "减法",
+        "乘法",
+        "除法"
+      ],
+      "related_kus": [],
+      "difficulty": 0.2,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G4-MATH-X-ku-四边形的内角和",
+      "textbook_id": "RENJIAO-G4-MATH-X",
+      "cluster_id": "RENJIAO-G4-MATH-X-kc-三角形的内角和与多边形内角和",
+      "name": "四边形的内角和",
+      "description": "四边形的内角和是360°。",
+      "prerequisites": [
+        "ku-007"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G4-MATH-X-ku-复式条形统计图的绘制",
+      "textbook_id": "RENJIAO-G4-MATH-X",
+      "cluster_id": "RENJIAO-G4-MATH-X-kc-平均数与条形统计图",
+      "name": "复式条形统计图的绘制",
+      "description": "复式条形统计图用两种不同颜色（或图案）的直条表示两组数据，便于比较。",
+      "prerequisites": [
+        "单式条形统计图"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G4-MATH-X-ku-复式条形统计图的绘制与解读",
+      "textbook_id": "RENJIAO-G4-MATH-X",
+      "cluster_id": "RENJIAO-G4-MATH-X-kc-统计图与统计表",
+      "name": "复式条形统计图的绘制与解读",
+      "description": "根据两组数据绘制复式条形统计图，并能从图中获取信息、比较数据差异。",
+      "prerequisites": [
+        "条形统计图"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G4-MATH-X-ku-复式条形统计图的解读",
+      "textbook_id": "RENJIAO-G4-MATH-X",
+      "cluster_id": "RENJIAO-G4-MATH-X-kc-平均数与条形统计图",
+      "name": "复式条形统计图的解读",
+      "description": "从复式条形统计图中可以直观看出各组数据的多少和差异。",
+      "prerequisites": [
+        "ku-020"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G4-MATH-X-ku-复式统计表的填写与计算",
+      "textbook_id": "RENJIAO-G4-MATH-X",
+      "cluster_id": "RENJIAO-G4-MATH-X-kc-统计图与统计表",
+      "name": "复式统计表的填写与计算",
+      "description": "根据数据填写统计表，计算合计、结存等。",
+      "prerequisites": [
+        "加法",
+        "减法"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G4-MATH-X-ku-多边形内角和公式",
+      "textbook_id": "RENJIAO-G4-MATH-X",
+      "cluster_id": "RENJIAO-G4-MATH-X-kc-三角形的内角和与多边形内角和",
+      "name": "多边形内角和公式",
+      "description": "n边形的内角和 = 180°×(n-2)。",
+      "prerequisites": [
+        "ku-008"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G4-MATH-X-ku-小数与单位换算-低级单位化高级单位",
+      "textbook_id": "RENJIAO-G4-MATH-X",
+      "cluster_id": "RENJIAO-G4-MATH-X-kc-小数与单位换算",
+      "name": "小数与单位换算（低级单位化高级单位）",
+      "description": "低级单位的名数改写成高级单位的名数，除以进率，利用小数点移动规律。",
+      "prerequisites": [
+        "小数点移动引起小数大小的变化",
+        "长度单位、质量单位等进率"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G4-MATH-X-ku-小数与单位换算-高级单位化低级单位",
+      "textbook_id": "RENJIAO-G4-MATH-X",
+      "cluster_id": "RENJIAO-G4-MATH-X-kc-小数与单位换算",
+      "name": "小数与单位换算（高级单位化低级单位）",
+      "description": "高级单位的名数改写成低级单位的名数，乘进率，利用小数点移动规律。",
+      "prerequisites": [
+        "小数点移动引起小数大小的变化",
+        "长度单位、质量单位等进率"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G4-MATH-X-ku-小数与整数的互化-扩大或缩小",
+      "textbook_id": "RENJIAO-G4-MATH-X",
+      "cluster_id": "RENJIAO-G4-MATH-X-kc-小数的认识与运算",
+      "name": "小数与整数的互化（扩大或缩小）",
+      "description": "小数扩大10倍、100倍等，小数点右移；缩小到1/10、1/100等，小数点左移。",
+      "prerequisites": [
+        "小数计数单位"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G4-MATH-X-ku-小数加减法",
+      "textbook_id": "RENJIAO-G4-MATH-X",
+      "cluster_id": "RENJIAO-G4-MATH-X-kc-小数的认识与运算",
+      "name": "小数加减法",
+      "description": "小数点对齐，按整数加减法计算，结果点上小数点。",
+      "prerequisites": [
+        "整数加减法",
+        "小数性质"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G4-MATH-X-ku-小数加减法的竖式计算",
+      "textbook_id": "RENJIAO-G4-MATH-X",
+      "cluster_id": "RENJIAO-G4-MATH-X-kc-小数的认识与运算",
+      "name": "小数加减法的竖式计算",
+      "description": "小数点对齐，按位加减，注意进位和退位。",
+      "prerequisites": [
+        "小数加减法"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G4-MATH-X-ku-小数加减法的计算方法",
+      "textbook_id": "RENJIAO-G4-MATH-X",
+      "cluster_id": "RENJIAO-G4-MATH-X-kc-小数的加减法",
+      "name": "小数加减法的计算方法",
+      "description": "先把各数的小数点对齐（相同数位对齐），再按整数加减法法则计算，最后在得数里点上小数点，末尾有0可去掉。",
+      "prerequisites": [
+        "整数加减法"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G4-MATH-X-ku-小数加减混合运算",
+      "textbook_id": "RENJIAO-G4-MATH-X",
+      "cluster_id": "RENJIAO-G4-MATH-X-kc-小数的加减法",
+      "name": "小数加减混合运算",
+      "description": "小数加减混合运算的顺序与整数相同，可以按从左到右顺序计算，也可以运用运算律简便计算。",
+      "prerequisites": [
+        "ku-010"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G4-MATH-X-ku-小数点移动引起小数大小的变化",
+      "textbook_id": "RENJIAO-G4-MATH-X",
+      "cluster_id": "RENJIAO-G4-MATH-X-kc-小数点移动规律",
+      "name": "小数点移动引起小数大小的变化",
+      "description": "小数点向右移动一位、两位……小数扩大到原数的10倍、100倍……；向左移动一位、两位……小数缩小到原数的1/10、1/100……",
+      "prerequisites": [
+        "小数的意义"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G4-MATH-X-ku-小数的产生与意义",
+      "textbook_id": "RENJIAO-G4-MATH-X",
+      "cluster_id": "RENJIAO-G4-MATH-X-kc-小数的意义与计数单位",
+      "name": "小数的产生与意义",
+      "description": "分母是10、100、1000……的分数可以用小数表示。",
+      "prerequisites": [
+        "分数的初步认识"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G4-MATH-X-ku-小数的写法",
+      "textbook_id": "RENJIAO-G4-MATH-X",
+      "cluster_id": "RENJIAO-G4-MATH-X-kc-小数的读写与数位",
+      "name": "小数的写法",
+      "description": "写小数时，整数部分按整数写法，小数点写作“.”，小数部分依次写出每个数字。",
+      "prerequisites": [
+        "小数的数位顺序表"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G4-MATH-X-ku-小数的大小比较",
+      "textbook_id": "RENJIAO-G4-MATH-X",
+      "cluster_id": "RENJIAO-G4-MATH-X-kc-小数的性质与大小比较",
+      "name": "小数的大小比较",
+      "description": "比较两个小数的大小，先看整数部分，整数部分大的大；整数部分相同看十分位，以此类推。",
+      "prerequisites": [
+        "小数的数位顺序表"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G4-MATH-X-ku-小数的性质",
+      "textbook_id": "RENJIAO-G4-MATH-X",
+      "cluster_id": "RENJIAO-G4-MATH-X-kc-小数的性质与大小比较",
+      "name": "小数的性质",
+      "description": "小数的末尾添上“0”或去掉“0”，小数的大小不变。",
+      "prerequisites": [
+        "小数的意义"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G4-MATH-X-ku-小数的性质与大小比较",
+      "textbook_id": "RENJIAO-G4-MATH-X",
+      "cluster_id": "RENJIAO-G4-MATH-X-kc-小数的认识与运算",
+      "name": "小数的性质与大小比较",
+      "description": "小数末尾添0或去0大小不变；比较时先看整数部分，再依次比较小数部分。",
+      "prerequisites": [
+        "小数计数单位"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G4-MATH-X-ku-小数的数位顺序表",
+      "textbook_id": "RENJIAO-G4-MATH-X",
+      "cluster_id": "RENJIAO-G4-MATH-X-kc-小数的读写与数位",
+      "name": "小数的数位顺序表",
+      "description": "小数由整数部分、小数点、小数部分组成，数位包括十分位、百分位、千分位等。",
+      "prerequisites": [
+        "小数的计数单位"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G4-MATH-X-ku-小数的计数单位",
+      "textbook_id": "RENJIAO-G4-MATH-X",
+      "cluster_id": "RENJIAO-G4-MATH-X-kc-小数的意义与计数单位",
+      "name": "小数的计数单位",
+      "description": "小数的计数单位是十分之一、百分之一、千分之一……分别写作0.1、0.01、0.001……",
+      "prerequisites": [
+        "小数的产生与意义"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G4-MATH-X-ku-小数的计数单位与读写",
+      "textbook_id": "RENJIAO-G4-MATH-X",
+      "cluster_id": "RENJIAO-G4-MATH-X-kc-小数的认识与运算",
+      "name": "小数的计数单位与读写",
+      "description": "小数计数单位有十分之一、百分之一等，读法按位读，写法按位写。",
+      "prerequisites": [
+        "整数计数单位"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G4-MATH-X-ku-小数的读法",
+      "textbook_id": "RENJIAO-G4-MATH-X",
+      "cluster_id": "RENJIAO-G4-MATH-X-kc-小数的读写与数位",
+      "name": "小数的读法",
+      "description": "读小数时，整数部分按整数读法，小数点读作“点”，小数部分依次读出每个数字。",
+      "prerequisites": [
+        "小数的数位顺序表"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G4-MATH-X-ku-平均数在比赛中的应用",
+      "textbook_id": "RENJIAO-G4-MATH-X",
+      "cluster_id": "RENJIAO-G4-MATH-X-kc-平均数及其应用",
+      "name": "平均数在比赛中的应用",
+      "description": "比赛成绩通常取多次成绩的平均数，但需考虑是否合理（如跳远取最好成绩）。",
+      "prerequisites": [
+        "平均数"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G4-MATH-X-ku-平均数的意义",
+      "textbook_id": "RENJIAO-G4-MATH-X",
+      "cluster_id": "RENJIAO-G4-MATH-X-kc-平均数与条形统计图",
+      "name": "平均数的意义",
+      "description": "平均数是一组数据的平均水平，等于总数除以个数。",
+      "prerequisites": [
+        "除法"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G4-MATH-X-ku-平均数的计算",
+      "textbook_id": "RENJIAO-G4-MATH-X",
+      "cluster_id": "RENJIAO-G4-MATH-X-kc-平均数与条形统计图",
+      "name": "平均数的计算",
+      "description": "平均数 = 总数 ÷ 个数。",
+      "prerequisites": [
+        "ku-017"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G4-MATH-X-ku-平均数的计算与意义",
+      "textbook_id": "RENJIAO-G4-MATH-X",
+      "cluster_id": "RENJIAO-G4-MATH-X-kc-平均数及其应用",
+      "name": "平均数的计算与意义",
+      "description": "平均数是一组数据的平均值，计算时需去掉极端值（如最高分和最低分）以反映一般水平。",
+      "prerequisites": [
+        "除法"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G4-MATH-X-ku-平移",
+      "textbook_id": "RENJIAO-G4-MATH-X",
+      "cluster_id": "RENJIAO-G4-MATH-X-kc-图形的运动与观察",
+      "name": "平移",
+      "description": "图形沿直线方向移动，形状大小不变，对应点距离相等。",
+      "prerequisites": [
+        "方向与位置"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G4-MATH-X-ku-平移的应用-求面积",
+      "textbook_id": "RENJIAO-G4-MATH-X",
+      "cluster_id": "RENJIAO-G4-MATH-X-kc-图形的运动-轴对称与平移",
+      "name": "平移的应用（求面积）",
+      "description": "利用平移将不规则图形转化为规则图形，再计算面积。",
+      "prerequisites": [
+        "ku-015",
+        "长方形面积"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G4-MATH-X-ku-平移的概念",
+      "textbook_id": "RENJIAO-G4-MATH-X",
+      "cluster_id": "RENJIAO-G4-MATH-X-kc-图形的运动-轴对称与平移",
+      "name": "平移的概念",
+      "description": "平移是指图形沿某个方向移动一定的距离，形状和大小不变。",
+      "prerequisites": [],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G4-MATH-X-ku-改写成用-万-或-亿-作单位的数",
+      "textbook_id": "RENJIAO-G4-MATH-X",
+      "cluster_id": "RENJIAO-G4-MATH-X-kc-小数的近似数与改写",
+      "name": "改写成用“万”或“亿”作单位的数",
+      "description": "在万位或亿位右边点上小数点，去掉末尾的0，加上“万”或“亿”字。",
+      "prerequisites": [
+        "小数的性质",
+        "求小数的近似数"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G4-MATH-X-ku-整数加法运算律推广到小数",
+      "textbook_id": "RENJIAO-G4-MATH-X",
+      "cluster_id": "RENJIAO-G4-MATH-X-kc-小数的加减法",
+      "name": "整数加法运算律推广到小数",
+      "description": "整数加法的交换律、结合律对小数加法同样适用，应用运算律可使计算简便。",
+      "prerequisites": [
+        "ku-010",
+        "整数加法运算律"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G4-MATH-X-ku-有余数除法各部分间的关系",
+      "textbook_id": "RENJIAO-G4-MATH-X",
+      "cluster_id": "RENJIAO-G4-MATH-X-kc-乘除法的意义与关系",
+      "name": "有余数除法各部分间的关系",
+      "description": "被除数=商×除数+余数。",
+      "prerequisites": [
+        "除法各部分间的关系"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G4-MATH-X-ku-求小数的近似数-四舍五入法",
+      "textbook_id": "RENJIAO-G4-MATH-X",
+      "cluster_id": "RENJIAO-G4-MATH-X-kc-小数的近似数与改写",
+      "name": "求小数的近似数（四舍五入法）",
+      "description": "用“四舍五入”法保留一定的小数位数，保留整数精确到个位，保留一位小数精确到十分位等。",
+      "prerequisites": [
+        "小数的数位顺序表"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G4-MATH-X-ku-用平均数比较两组数据",
+      "textbook_id": "RENJIAO-G4-MATH-X",
+      "cluster_id": "RENJIAO-G4-MATH-X-kc-平均数与条形统计图",
+      "name": "用平均数比较两组数据",
+      "description": "当两组数据个数不同时，用平均数比较整体水平更合理。",
+      "prerequisites": [
+        "ku-018"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G4-MATH-X-ku-用计算器进行加减乘除",
+      "textbook_id": "RENJIAO-G4-MATH-X",
+      "cluster_id": "RENJIAO-G4-MATH-X-kc-综合应用与计算工具",
+      "name": "用计算器进行加减乘除",
+      "description": "使用计算器进行四则运算，注意输入顺序。",
+      "prerequisites": [
+        "四则运算"
+      ],
+      "related_kus": [],
+      "difficulty": 0.2,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G4-MATH-X-ku-租船问题-最优化策略",
+      "textbook_id": "RENJIAO-G4-MATH-X",
+      "cluster_id": "RENJIAO-G4-MATH-X-kc-四则混合运算顺序与优化",
+      "name": "租船问题（最优化策略）",
+      "description": "通过比较单价、考虑空位，调整方案使总租金最少。",
+      "prerequisites": [
+        "四则混合运算顺序（无括号）"
+      ],
+      "related_kus": [],
+      "difficulty": 0.6,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G4-MATH-X-ku-等腰三角形的定义及各部分名称",
+      "textbook_id": "RENJIAO-G4-MATH-X",
+      "cluster_id": "RENJIAO-G4-MATH-X-kc-三角形的认识与分类",
+      "name": "等腰三角形的定义及各部分名称",
+      "description": "两条边相等的三角形叫作等腰三角形。相等的两条边叫腰，另一条边叫底，两腰的夹角叫顶角，底和腰的两个夹角叫底角。",
+      "prerequisites": [
+        "ku-004"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G4-MATH-X-ku-等边三角形的分割",
+      "textbook_id": "RENJIAO-G4-MATH-X",
+      "cluster_id": "RENJIAO-G4-MATH-X-kc-三角形的性质与分类",
+      "name": "等边三角形的分割",
+      "description": "将等边三角形分成4个全等的小等边三角形，连接各边中点。",
+      "prerequisites": [
+        "等边三角形"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G4-MATH-X-ku-等边三角形的定义",
+      "textbook_id": "RENJIAO-G4-MATH-X",
+      "cluster_id": "RENJIAO-G4-MATH-X-kc-三角形的认识与分类",
+      "name": "等边三角形的定义",
+      "description": "三条边都相等的三角形叫作等边三角形，也叫正三角形。等边三角形也是等腰三角形。",
+      "prerequisites": [
+        "ku-005"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G4-MATH-X-ku-营养午餐搭配与条件限制",
+      "textbook_id": "RENJIAO-G4-MATH-X",
+      "cluster_id": "RENJIAO-G4-MATH-X-kc-综合应用与计算工具",
+      "name": "营养午餐搭配与条件限制",
+      "description": "根据热量不低于2926千焦、脂肪不超过50g的条件，从多种菜肴中搭配合格午餐方案。",
+      "prerequisites": [
+        "加法",
+        "比较大小"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G4-MATH-X-ku-补全轴对称图形",
+      "textbook_id": "RENJIAO-G4-MATH-X",
+      "cluster_id": "RENJIAO-G4-MATH-X-kc-图形的运动-轴对称与平移",
+      "name": "补全轴对称图形",
+      "description": "根据对称轴，找出关键点的对称点，再顺次连接，补全轴对称图形。",
+      "prerequisites": [
+        "ku-013"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G4-MATH-X-ku-轴对称图形的特征",
+      "textbook_id": "RENJIAO-G4-MATH-X",
+      "cluster_id": "RENJIAO-G4-MATH-X-kc-图形的运动-轴对称与平移",
+      "name": "轴对称图形的特征",
+      "description": "轴对称图形中，对应点到对称轴的距离相等，对应点连线垂直于对称轴。",
+      "prerequisites": [],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G4-MATH-X-ku-轴对称图形的补全",
+      "textbook_id": "RENJIAO-G4-MATH-X",
+      "cluster_id": "RENJIAO-G4-MATH-X-kc-图形的运动与观察",
+      "name": "轴对称图形的补全",
+      "description": "根据对称轴，将图形另一半补全，对应点到对称轴距离相等。",
+      "prerequisites": [
+        "轴对称图形"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G4-MATH-X-ku-运算律-乘法交换律和结合律",
+      "textbook_id": "RENJIAO-G4-MATH-X",
+      "cluster_id": "RENJIAO-G4-MATH-X-kc-四则运算与运算律",
+      "name": "运算律（乘法交换律和结合律）",
+      "description": "乘法交换律：a×b=b×a；乘法结合律：(a×b)×c=a×(b×c)。",
+      "prerequisites": [
+        "乘法"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G4-MATH-X-ku-运算律-乘法分配律",
+      "textbook_id": "RENJIAO-G4-MATH-X",
+      "cluster_id": "RENJIAO-G4-MATH-X-kc-四则运算与运算律",
+      "name": "运算律（乘法分配律）",
+      "description": "(a+b)×c=a×c+b×c。",
+      "prerequisites": [
+        "乘法",
+        "加法"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G4-MATH-X-ku-运算律-加法交换律和结合律",
+      "textbook_id": "RENJIAO-G4-MATH-X",
+      "cluster_id": "RENJIAO-G4-MATH-X-kc-四则运算与运算律",
+      "name": "运算律（加法交换律和结合律）",
+      "description": "加法交换律：a+b=b+a；加法结合律：(a+b)+c=a+(b+c)。",
+      "prerequisites": [
+        "加法"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G4-MATH-X-ku-除法各部分间的关系",
+      "textbook_id": "RENJIAO-G4-MATH-X",
+      "cluster_id": "RENJIAO-G4-MATH-X-kc-乘除法的意义与关系",
+      "name": "除法各部分间的关系",
+      "description": "商=被除数÷除数；除数=被除数÷商；被除数=商×除数。",
+      "prerequisites": [
+        "除法的意义"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G4-MATH-X-ku-除法的意义",
+      "textbook_id": "RENJIAO-G4-MATH-X",
+      "cluster_id": "RENJIAO-G4-MATH-X-kc-乘除法的意义与关系",
+      "name": "除法的意义",
+      "description": "已知两个因数的积与其中一个因数，求另一个因数的运算，叫作除法。除法是乘法的逆运算。",
+      "prerequisites": [
+        "乘法的意义"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G4-MATH-X-ku-鸡兔同笼问题-假设法",
+      "textbook_id": "RENJIAO-G4-MATH-X",
+      "cluster_id": "RENJIAO-G4-MATH-X-kc-鸡兔同笼问题",
+      "name": "鸡兔同笼问题（假设法）",
+      "description": "假设全是鸡（或兔），计算脚数差，再根据每只兔比鸡多2只脚求出兔（或鸡）的数量。",
+      "prerequisites": [
+        "乘法",
+        "减法"
+      ],
+      "related_kus": [],
+      "difficulty": 0.6,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G4-MATH-X-ku-鸡兔同笼问题-列表法",
+      "textbook_id": "RENJIAO-G4-MATH-X",
+      "cluster_id": "RENJIAO-G4-MATH-X-kc-鸡兔同笼问题",
+      "name": "鸡兔同笼问题（列表法）",
+      "description": "通过列表枚举鸡和兔的数量，逐步调整直到满足头数和脚数条件。",
+      "prerequisites": [
+        "乘法",
+        "加法"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G4-MATH-X-ku-鸡兔同笼问题-抬脚法",
+      "textbook_id": "RENJIAO-G4-MATH-X",
+      "cluster_id": "RENJIAO-G4-MATH-X-kc-鸡兔同笼问题",
+      "name": "鸡兔同笼问题（抬脚法）",
+      "description": "让鸡和兔抬起一半脚，脚数减头数等于兔数。",
+      "prerequisites": [
+        "除法",
+        "减法"
+      ],
+      "related_kus": [],
+      "difficulty": 0.7,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G4-MATH-X-ku-鸡兔同笼问题的变式应用",
+      "textbook_id": "RENJIAO-G4-MATH-X",
+      "cluster_id": "RENJIAO-G4-MATH-X-kc-鸡兔同笼问题",
+      "name": "鸡兔同笼问题的变式应用",
+      "description": "将鸡兔同笼方法应用于分组问题（如科技类与艺术类），假设全为一种，再调整。",
+      "prerequisites": [
+        "鸡兔同笼假设法"
+      ],
+      "related_kus": [],
+      "difficulty": 0.6,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    }
+  ]
+}

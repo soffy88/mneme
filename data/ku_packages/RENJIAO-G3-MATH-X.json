@@ -1,0 +1,1664 @@
+{
+  "textbook": {
+    "id": "RENJIAO-G3-MATH-X",
+    "subject": "math",
+    "grade": "G3",
+    "edition": "2022修订",
+    "book_name": "人教版·数学三年级下册"
+  },
+  "clusters": [
+    {
+      "id": "RENJIAO-G3-MATH-X-kc-口算除法",
+      "name": "口算除法",
+      "display_order": 1,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G3-MATH-X-kc-笔算除法基础",
+      "name": "笔算除法基础",
+      "display_order": 2,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G3-MATH-X-kc-商中间或末尾有0的除法",
+      "name": "商中间或末尾有0的除法",
+      "display_order": 3,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G3-MATH-X-kc-0的除法与验算",
+      "name": "0的除法与验算",
+      "display_order": 4,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G3-MATH-X-kc-用乘除法解决实际问题",
+      "name": "用乘除法解决实际问题",
+      "display_order": 5,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G3-MATH-X-kc-多边形的认识与分类",
+      "name": "多边形的认识与分类",
+      "display_order": 6,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G3-MATH-X-kc-周长的概念与计算",
+      "name": "周长的概念与计算",
+      "display_order": 7,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G3-MATH-X-kc-数据的收集与整理",
+      "name": "数据的收集与整理",
+      "display_order": 8,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G3-MATH-X-kc-年-月-日的基本知识",
+      "name": "年、月、日的基本知识",
+      "display_order": 9,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G3-MATH-X-kc-24时计时法与时间计算",
+      "name": "24时计时法与时间计算",
+      "display_order": 10,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G3-MATH-X-kc-小数的初步认识与意义",
+      "name": "小数的初步认识与意义",
+      "display_order": 11,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G3-MATH-X-kc-小数的比较与运算",
+      "name": "小数的比较与运算",
+      "display_order": 12,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G3-MATH-X-kc-除数是一位数的除法",
+      "name": "除数是一位数的除法",
+      "display_order": 13,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G3-MATH-X-kc-图形的运动与特征",
+      "name": "图形的运动与特征",
+      "display_order": 14,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G3-MATH-X-kc-长方形和正方形的认识与测量",
+      "name": "长方形和正方形的认识与测量",
+      "display_order": 15,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G3-MATH-X-kc-年-月-日与时间",
+      "name": "年、月、日与时间",
+      "display_order": 16,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G3-MATH-X-kc-数与运算",
+      "name": "数与运算",
+      "display_order": 17,
+      "description": null
+    },
+    {
+      "id": "RENJIAO-G3-MATH-X-kc-数学广角-重叠问题",
+      "name": "数学广角：重叠问题",
+      "display_order": 18,
+      "description": null
+    }
+  ],
+  "units": [
+    {
+      "id": "RENJIAO-G3-MATH-X-ku-0除以任何不是0的数都得0",
+      "textbook_id": "RENJIAO-G3-MATH-X",
+      "cluster_id": "RENJIAO-G3-MATH-X-kc-0的除法与验算",
+      "name": "0除以任何不是0的数都得0",
+      "description": "0除以任何不是0的数都得0。",
+      "prerequisites": [],
+      "related_kus": [],
+      "difficulty": 0.2,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G3-MATH-X-ku-24时计时法",
+      "textbook_id": "RENJIAO-G3-MATH-X",
+      "cluster_id": "RENJIAO-G3-MATH-X-kc-24时计时法与时间计算",
+      "name": "24时计时法",
+      "description": "从0时到24时的计时法，下午1时即13时，晚上12时即24时或0时。",
+      "prerequisites": [],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G3-MATH-X-ku-一位小数的意义",
+      "textbook_id": "RENJIAO-G3-MATH-X",
+      "cluster_id": "RENJIAO-G3-MATH-X-kc-小数的初步认识与意义",
+      "name": "一位小数的意义",
+      "description": "把1米平均分成10份，每份是0.1米；1分米=0.1米。",
+      "prerequisites": [
+        "ku-014"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G3-MATH-X-ku-三位数除以一位数的笔算-首位不够除",
+      "textbook_id": "RENJIAO-G3-MATH-X",
+      "cluster_id": "RENJIAO-G3-MATH-X-kc-笔算除法基础",
+      "name": "三位数除以一位数的笔算（首位不够除）",
+      "description": "用被除数前两位除以除数，商写在十位，余数落位与个位合并继续除。",
+      "prerequisites": [
+        "三位数除以一位数的笔算（首位够除）"
+      ],
+      "related_kus": [],
+      "difficulty": 0.6,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G3-MATH-X-ku-三位数除以一位数的笔算-首位够除",
+      "textbook_id": "RENJIAO-G3-MATH-X",
+      "cluster_id": "RENJIAO-G3-MATH-X-kc-笔算除法基础",
+      "name": "三位数除以一位数的笔算（首位够除）",
+      "description": "从百位除起，商写在百位，余数落位与十位合并，再与个位合并继续除。",
+      "prerequisites": [
+        "两位数除以一位数的笔算（首位能整除）"
+      ],
+      "related_kus": [],
+      "difficulty": 0.6,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G3-MATH-X-ku-两位小数的意义",
+      "textbook_id": "RENJIAO-G3-MATH-X",
+      "cluster_id": "RENJIAO-G3-MATH-X-kc-小数的初步认识与意义",
+      "name": "两位小数的意义",
+      "description": "把1米平均分成100份，每份是0.01米；1厘米=0.01米。",
+      "prerequisites": [
+        "ku-014"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G3-MATH-X-ku-两位数除以一位数的口算-拆十和个",
+      "textbook_id": "RENJIAO-G3-MATH-X",
+      "cluster_id": "RENJIAO-G3-MATH-X-kc-口算除法",
+      "name": "两位数除以一位数的口算（拆十和个）",
+      "description": "把两位数拆成整十数和一位数，分别除以除数，再相加。",
+      "prerequisites": [
+        "整十数除以一位数的口算",
+        "表内除法"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G3-MATH-X-ku-两位数除以一位数的笔算-首位能整除",
+      "textbook_id": "RENJIAO-G3-MATH-X",
+      "cluster_id": "RENJIAO-G3-MATH-X-kc-笔算除法基础",
+      "name": "两位数除以一位数的笔算（首位能整除）",
+      "description": "从十位除起，商写在十位，余数落位与个位合并继续除。",
+      "prerequisites": [
+        "表内除法",
+        "两位数除以一位数的口算（拆十和个）"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G3-MATH-X-ku-乘除法关系与验算",
+      "textbook_id": "RENJIAO-G3-MATH-X",
+      "cluster_id": "RENJIAO-G3-MATH-X-kc-除数是一位数的除法",
+      "name": "乘除法关系与验算",
+      "description": "除法可以用乘法验算，如126÷3=42，验算42×3=126。",
+      "prerequisites": [
+        "ku-024"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G3-MATH-X-ku-几百几十数除以一位数的口算",
+      "textbook_id": "RENJIAO-G3-MATH-X",
+      "cluster_id": "RENJIAO-G3-MATH-X-kc-口算除法",
+      "name": "几百几十数除以一位数的口算",
+      "description": "把几百几十数看作几十几个十，用表内除法口算。",
+      "prerequisites": [
+        "整十、整百、整千数除以一位数的口算"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G3-MATH-X-ku-分段整理数据",
+      "textbook_id": "RENJIAO-G3-MATH-X",
+      "cluster_id": "RENJIAO-G3-MATH-X-kc-数据的收集与整理",
+      "name": "分段整理数据",
+      "description": "根据需要将数据按一定标准分成若干段（如时长分段），再统计各段数量。",
+      "prerequisites": [
+        "ku-002"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G3-MATH-X-ku-周长",
+      "textbook_id": "RENJIAO-G3-MATH-X",
+      "cluster_id": "RENJIAO-G3-MATH-X-kc-图形的运动与特征",
+      "name": "周长",
+      "description": "封闭图形一周的长度是它的周长。长方形周长=（长+宽）×2，正方形周长=边长×4。",
+      "prerequisites": [
+        "ku-030"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G3-MATH-X-ku-周长的定义",
+      "textbook_id": "RENJIAO-G3-MATH-X",
+      "cluster_id": "RENJIAO-G3-MATH-X-kc-周长的概念与计算",
+      "name": "周长的定义",
+      "description": "封闭图形一周的长度是它的周长。",
+      "prerequisites": [],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G3-MATH-X-ku-商中间有0的除法笔算",
+      "textbook_id": "RENJIAO-G3-MATH-X",
+      "cluster_id": "RENJIAO-G3-MATH-X-kc-商中间或末尾有0的除法",
+      "name": "商中间有0的除法笔算",
+      "description": "被除数某一位不够商1，商0占位，再与下一位合并继续除。",
+      "prerequisites": [
+        "三位数除以一位数的笔算（首位不够除）"
+      ],
+      "related_kus": [],
+      "difficulty": 0.7,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G3-MATH-X-ku-商末尾有0的除法笔算",
+      "textbook_id": "RENJIAO-G3-MATH-X",
+      "cluster_id": "RENJIAO-G3-MATH-X-kc-商中间或末尾有0的除法",
+      "name": "商末尾有0的除法笔算",
+      "description": "除到被除数末尾，不够商1，商0占位，余数小于除数。",
+      "prerequisites": [
+        "三位数除以一位数的笔算（首位不够除）"
+      ],
+      "related_kus": [],
+      "difficulty": 0.7,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G3-MATH-X-ku-复式统计表",
+      "textbook_id": "RENJIAO-G3-MATH-X",
+      "cluster_id": "RENJIAO-G3-MATH-X-kc-数据的收集与整理",
+      "name": "复式统计表",
+      "description": "把两个或多个单式统计表合并成一个表，能更简洁地表示多组数据。",
+      "prerequisites": [
+        "ku-002"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G3-MATH-X-ku-多边形的分类-按边数",
+      "textbook_id": "RENJIAO-G3-MATH-X",
+      "cluster_id": "RENJIAO-G3-MATH-X-kc-多边形的认识与分类",
+      "name": "多边形的分类（按边数）",
+      "description": "多边形按边的条数可分为三角形、四边形、五边形、六边形等。",
+      "prerequisites": [
+        "ku-001"
+      ],
+      "related_kus": [],
+      "difficulty": 0.2,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G3-MATH-X-ku-多边形的定义",
+      "textbook_id": "RENJIAO-G3-MATH-X",
+      "cluster_id": "RENJIAO-G3-MATH-X-kc-多边形的认识与分类",
+      "name": "多边形的定义",
+      "description": "由线段围成的封闭图形叫做多边形。",
+      "prerequisites": [],
+      "related_kus": [],
+      "difficulty": 0.2,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G3-MATH-X-ku-大月-小月-二月",
+      "textbook_id": "RENJIAO-G3-MATH-X",
+      "cluster_id": "RENJIAO-G3-MATH-X-kc-年-月-日与时间",
+      "name": "大月、小月、二月",
+      "description": "大月31天（1,3,5,7,8,10,12），小月30天（4,6,9,11），二月平年28天闰年29天",
+      "prerequisites": [
+        "年、月、日"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G3-MATH-X-ku-大月和小月",
+      "textbook_id": "RENJIAO-G3-MATH-X",
+      "cluster_id": "RENJIAO-G3-MATH-X-kc-年-月-日的基本知识",
+      "name": "大月和小月",
+      "description": "有31天的月份是大月（1、3、5、7、8、10、12月），有30天的月份是小月（4、6、9、11月）。",
+      "prerequisites": [
+        "ku-006"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G3-MATH-X-ku-小数与分数-元角分的关系",
+      "textbook_id": "RENJIAO-G3-MATH-X",
+      "cluster_id": "RENJIAO-G3-MATH-X-kc-小数的初步认识与意义",
+      "name": "小数与分数、元角分的关系",
+      "description": "1角=0.1元，1分=0.01元；小数可以表示十分之几、百分之几的分数。",
+      "prerequisites": [
+        "ku-016",
+        "ku-017"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G3-MATH-X-ku-小数加减法",
+      "textbook_id": "RENJIAO-G3-MATH-X",
+      "cluster_id": "RENJIAO-G3-MATH-X-kc-数与运算",
+      "name": "小数加减法",
+      "description": "小数点对齐，按整数加减法计算，点上小数点",
+      "prerequisites": [
+        "小数的初步认识"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G3-MATH-X-ku-小数的初步认识",
+      "textbook_id": "RENJIAO-G3-MATH-X",
+      "cluster_id": "RENJIAO-G3-MATH-X-kc-小数的初步认识与意义",
+      "name": "小数的初步认识",
+      "description": "像3.45、0.85这样的数叫小数，小数点左边是整数部分，右边是小数部分。",
+      "prerequisites": [],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G3-MATH-X-ku-小数的大小比较",
+      "textbook_id": "RENJIAO-G3-MATH-X",
+      "cluster_id": "RENJIAO-G3-MATH-X-kc-小数的比较与运算",
+      "name": "小数的大小比较",
+      "description": "先比较整数部分，整数部分大的小数大；整数部分相同再比较小数部分。",
+      "prerequisites": [
+        "ku-014"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G3-MATH-X-ku-小数的读法",
+      "textbook_id": "RENJIAO-G3-MATH-X",
+      "cluster_id": "RENJIAO-G3-MATH-X-kc-小数的初步认识与意义",
+      "name": "小数的读法",
+      "description": "读小数时，整数部分按整数读法，小数点读作“点”，小数部分依次读出每个数字。",
+      "prerequisites": [
+        "ku-014"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G3-MATH-X-ku-平年与闰年",
+      "textbook_id": "RENJIAO-G3-MATH-X",
+      "cluster_id": "RENJIAO-G3-MATH-X-kc-年-月-日与时间",
+      "name": "平年与闰年",
+      "description": "平年365天，闰年366天；公历年份是4的倍数通常是闰年",
+      "prerequisites": [
+        "年、月、日"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G3-MATH-X-ku-平年和闰年",
+      "textbook_id": "RENJIAO-G3-MATH-X",
+      "cluster_id": "RENJIAO-G3-MATH-X-kc-年-月-日的基本知识",
+      "name": "平年和闰年",
+      "description": "2月有28天的年份是平年，有29天的年份是闰年。通常每4年有一个闰年。",
+      "prerequisites": [
+        "ku-006"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G3-MATH-X-ku-平移",
+      "textbook_id": "RENJIAO-G3-MATH-X",
+      "cluster_id": "RENJIAO-G3-MATH-X-kc-图形的运动与特征",
+      "name": "平移",
+      "description": "物体沿某一方向移动，形状和大小不变，只是位置改变。",
+      "prerequisites": [],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G3-MATH-X-ku-年-月-日的基本关系",
+      "textbook_id": "RENJIAO-G3-MATH-X",
+      "cluster_id": "RENJIAO-G3-MATH-X-kc-年-月-日的基本知识",
+      "name": "年、月、日的基本关系",
+      "description": "一年有12个月，每个月的天数不同，有31天、30天或28/29天。",
+      "prerequisites": [],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G3-MATH-X-ku-拼图形周长最短问题",
+      "textbook_id": "RENJIAO-G3-MATH-X",
+      "cluster_id": "RENJIAO-G3-MATH-X-kc-周长的概念与计算",
+      "name": "拼图形周长最短问题",
+      "description": "用相同小正方形拼长方形或正方形时，拼成正方形周长最短。",
+      "prerequisites": [
+        "ku-006",
+        "ku-007"
+      ],
+      "related_kus": [],
+      "difficulty": 0.6,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G3-MATH-X-ku-数据分析与决策",
+      "textbook_id": "RENJIAO-G3-MATH-X",
+      "cluster_id": "RENJIAO-G3-MATH-X-kc-数据的收集与整理",
+      "name": "数据分析与决策",
+      "description": "根据统计结果进行分析，提出建议或做出决策，如选择班牌颜色、推荐课外小组等。",
+      "prerequisites": [
+        "ku-002"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G3-MATH-X-ku-数据收集方法",
+      "textbook_id": "RENJIAO-G3-MATH-X",
+      "cluster_id": "RENJIAO-G3-MATH-X-kc-数据的收集与整理",
+      "name": "数据收集方法",
+      "description": "收集数据的方法有举手、问卷调查等，记录数据常用画“正”字的方法。",
+      "prerequisites": [],
+      "related_kus": [],
+      "difficulty": 0.2,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G3-MATH-X-ku-数据整理与统计表",
+      "textbook_id": "RENJIAO-G3-MATH-X",
+      "cluster_id": "RENJIAO-G3-MATH-X-kc-数据的收集与整理",
+      "name": "数据整理与统计表",
+      "description": "将收集的数据分类整理，填入统计表中，便于分析和比较。",
+      "prerequisites": [
+        "ku-001"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G3-MATH-X-ku-整十-整百-整千数除以一位数的口算",
+      "textbook_id": "RENJIAO-G3-MATH-X",
+      "cluster_id": "RENJIAO-G3-MATH-X-kc-口算除法",
+      "name": "整十、整百、整千数除以一位数的口算",
+      "description": "把整十、整百、整千数看作几个十、几个百、几个千，用表内除法口算。",
+      "prerequisites": [
+        "表内除法"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G3-MATH-X-ku-旋转",
+      "textbook_id": "RENJIAO-G3-MATH-X",
+      "cluster_id": "RENJIAO-G3-MATH-X-kc-图形的运动与特征",
+      "name": "旋转",
+      "description": "物体绕某一点转动，形状和大小不变，方向改变。",
+      "prerequisites": [],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G3-MATH-X-ku-普通计时法与24时计时法的转换",
+      "textbook_id": "RENJIAO-G3-MATH-X",
+      "cluster_id": "RENJIAO-G3-MATH-X-kc-24时计时法与时间计算",
+      "name": "普通计时法与24时计时法的转换",
+      "description": "下午时间加12得24时计时法，如下午6时=18时；上午时间不变。",
+      "prerequisites": [
+        "ku-011"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G3-MATH-X-ku-正方形周长公式",
+      "textbook_id": "RENJIAO-G3-MATH-X",
+      "cluster_id": "RENJIAO-G3-MATH-X-kc-周长的概念与计算",
+      "name": "正方形周长公式",
+      "description": "正方形的周长 = 边长 × 4。",
+      "prerequisites": [
+        "ku-004",
+        "ku-005"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G3-MATH-X-ku-正方形特征",
+      "textbook_id": "RENJIAO-G3-MATH-X",
+      "cluster_id": "RENJIAO-G3-MATH-X-kc-长方形和正方形的认识与测量",
+      "name": "正方形特征",
+      "description": "四条边相等，四个直角",
+      "prerequisites": [],
+      "related_kus": [],
+      "difficulty": 0.2,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G3-MATH-X-ku-正方形的特征",
+      "textbook_id": "RENJIAO-G3-MATH-X",
+      "cluster_id": "RENJIAO-G3-MATH-X-kc-多边形的认识与分类",
+      "name": "正方形的特征",
+      "description": "正方形四条边都相等，四个角都是直角。",
+      "prerequisites": [
+        "ku-002"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G3-MATH-X-ku-正方形面积公式",
+      "textbook_id": "RENJIAO-G3-MATH-X",
+      "cluster_id": "RENJIAO-G3-MATH-X-kc-长方形和正方形的认识与测量",
+      "name": "正方形面积公式",
+      "description": "边长×边长",
+      "prerequisites": [
+        "ku-004"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G3-MATH-X-ku-用乘除法解决两步问题",
+      "textbook_id": "RENJIAO-G3-MATH-X",
+      "cluster_id": "RENJIAO-G3-MATH-X-kc-除数是一位数的除法",
+      "name": "用乘除法解决两步问题",
+      "description": "先根据条件求出中间量，再求最终结果，可列分步或综合算式。",
+      "prerequisites": [
+        "ku-024",
+        "ku-025"
+      ],
+      "related_kus": [],
+      "difficulty": 0.6,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G3-MATH-X-ku-用乘除混合运算解决实际问题-归一问题",
+      "textbook_id": "RENJIAO-G3-MATH-X",
+      "cluster_id": "RENJIAO-G3-MATH-X-kc-用乘除法解决实际问题",
+      "name": "用乘除混合运算解决实际问题（归一问题）",
+      "description": "先求单一量，再求总量。",
+      "prerequisites": [
+        "用连除解决实际问题",
+        "用连乘解决实际问题"
+      ],
+      "related_kus": [],
+      "difficulty": 0.7,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G3-MATH-X-ku-用乘除混合运算解决实际问题-归总问题",
+      "textbook_id": "RENJIAO-G3-MATH-X",
+      "cluster_id": "RENJIAO-G3-MATH-X-kc-用乘除法解决实际问题",
+      "name": "用乘除混合运算解决实际问题（归总问题）",
+      "description": "先求总量，再求单一量。",
+      "prerequisites": [
+        "用连乘解决实际问题",
+        "用连除解决实际问题"
+      ],
+      "related_kus": [],
+      "difficulty": 0.7,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G3-MATH-X-ku-用小数解决实际问题",
+      "textbook_id": "RENJIAO-G3-MATH-X",
+      "cluster_id": "RENJIAO-G3-MATH-X-kc-小数的比较与运算",
+      "name": "用小数解决实际问题",
+      "description": "根据问题情境，运用小数加减法解决购物、长度等实际问题。",
+      "prerequisites": [
+        "ku-020",
+        "ku-021"
+      ],
+      "related_kus": [],
+      "difficulty": 0.6,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G3-MATH-X-ku-用连乘解决实际问题",
+      "textbook_id": "RENJIAO-G3-MATH-X",
+      "cluster_id": "RENJIAO-G3-MATH-X-kc-用乘除法解决实际问题",
+      "name": "用连乘解决实际问题",
+      "description": "根据数量关系，用两步乘法计算解决实际问题。",
+      "prerequisites": [
+        "多位数乘一位数"
+      ],
+      "related_kus": [],
+      "difficulty": 0.6,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G3-MATH-X-ku-用连除解决实际问题",
+      "textbook_id": "RENJIAO-G3-MATH-X",
+      "cluster_id": "RENJIAO-G3-MATH-X-kc-用乘除法解决实际问题",
+      "name": "用连除解决实际问题",
+      "description": "根据数量关系，用两步除法计算解决实际问题。",
+      "prerequisites": [
+        "除数是一位数的除法笔算"
+      ],
+      "related_kus": [],
+      "difficulty": 0.6,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G3-MATH-X-ku-简单的小数减法",
+      "textbook_id": "RENJIAO-G3-MATH-X",
+      "cluster_id": "RENJIAO-G3-MATH-X-kc-小数的比较与运算",
+      "name": "简单的小数减法",
+      "description": "列竖式计算时小数点对齐，从低位减起，不够减时向前一位借一当十。",
+      "prerequisites": [
+        "ku-014"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G3-MATH-X-ku-简单的小数加法",
+      "textbook_id": "RENJIAO-G3-MATH-X",
+      "cluster_id": "RENJIAO-G3-MATH-X-kc-小数的比较与运算",
+      "name": "简单的小数加法",
+      "description": "列竖式计算时小数点对齐，从低位加起，满十进一。",
+      "prerequisites": [
+        "ku-014"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G3-MATH-X-ku-经过时间的计算",
+      "textbook_id": "RENJIAO-G3-MATH-X",
+      "cluster_id": "RENJIAO-G3-MATH-X-kc-24时计时法与时间计算",
+      "name": "经过时间的计算",
+      "description": "用结束时间减去开始时间，注意时间单位的换算（1小时=60分）。",
+      "prerequisites": [
+        "ku-011"
+      ],
+      "related_kus": [],
+      "difficulty": 0.6,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G3-MATH-X-ku-记忆月份天数的方法",
+      "textbook_id": "RENJIAO-G3-MATH-X",
+      "cluster_id": "RENJIAO-G3-MATH-X-kc-年-月-日的基本知识",
+      "name": "记忆月份天数的方法",
+      "description": "用拳头记忆：凸起处为31天（大月），凹下处为30天（小月），2月除外。",
+      "prerequisites": [
+        "ku-007"
+      ],
+      "related_kus": [],
+      "difficulty": 0.2,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G3-MATH-X-ku-轴对称图形",
+      "textbook_id": "RENJIAO-G3-MATH-X",
+      "cluster_id": "RENJIAO-G3-MATH-X-kc-图形的运动与特征",
+      "name": "轴对称图形",
+      "description": "沿一条直线对折，两边完全重合的图形是轴对称图形，这条直线是对称轴。",
+      "prerequisites": [],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G3-MATH-X-ku-重叠问题-容斥原理",
+      "textbook_id": "RENJIAO-G3-MATH-X",
+      "cluster_id": "RENJIAO-G3-MATH-X-kc-数学广角-重叠问题",
+      "name": "重叠问题（容斥原理）",
+      "description": "总人数=两部分人数之和-重叠部分人数",
+      "prerequisites": [],
+      "related_kus": [],
+      "difficulty": 0.6,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G3-MATH-X-ku-长方形周长公式",
+      "textbook_id": "RENJIAO-G3-MATH-X",
+      "cluster_id": "RENJIAO-G3-MATH-X-kc-周长的概念与计算",
+      "name": "长方形周长公式",
+      "description": "长方形的周长 = (长 + 宽) × 2。",
+      "prerequisites": [
+        "ku-003",
+        "ku-005"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G3-MATH-X-ku-长方形和正方形的特征",
+      "textbook_id": "RENJIAO-G3-MATH-X",
+      "cluster_id": "RENJIAO-G3-MATH-X-kc-图形的运动与特征",
+      "name": "长方形和正方形的特征",
+      "description": "长方形对边相等，四个角都是直角；正方形四条边相等，四个角都是直角。",
+      "prerequisites": [],
+      "related_kus": [],
+      "difficulty": 0.2,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G3-MATH-X-ku-长方形特征",
+      "textbook_id": "RENJIAO-G3-MATH-X",
+      "cluster_id": "RENJIAO-G3-MATH-X-kc-长方形和正方形的认识与测量",
+      "name": "长方形特征",
+      "description": "对边相等，四个直角",
+      "prerequisites": [],
+      "related_kus": [],
+      "difficulty": 0.2,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G3-MATH-X-ku-长方形的特征",
+      "textbook_id": "RENJIAO-G3-MATH-X",
+      "cluster_id": "RENJIAO-G3-MATH-X-kc-多边形的认识与分类",
+      "name": "长方形的特征",
+      "description": "长方形对边相等，四个角都是直角。",
+      "prerequisites": [
+        "ku-002"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G3-MATH-X-ku-长方形面积公式",
+      "textbook_id": "RENJIAO-G3-MATH-X",
+      "cluster_id": "RENJIAO-G3-MATH-X-kc-长方形和正方形的认识与测量",
+      "name": "长方形面积公式",
+      "description": "长×宽",
+      "prerequisites": [
+        "ku-001"
+      ],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G3-MATH-X-ku-闰年判断规则",
+      "textbook_id": "RENJIAO-G3-MATH-X",
+      "cluster_id": "RENJIAO-G3-MATH-X-kc-年-月-日的基本知识",
+      "name": "闰年判断规则",
+      "description": "公历年份是4的倍数的一般是闰年，但年份是100的倍数时必须是400的倍数才是闰年。",
+      "prerequisites": [
+        "ku-008"
+      ],
+      "related_kus": [],
+      "difficulty": 0.6,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G3-MATH-X-ku-除数是一位数的除法",
+      "textbook_id": "RENJIAO-G3-MATH-X",
+      "cluster_id": "RENJIAO-G3-MATH-X-kc-数与运算",
+      "name": "除数是一位数的除法",
+      "description": "从被除数的高位除起，除到哪一位商写在那一位上",
+      "prerequisites": [
+        "表内除法"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G3-MATH-X-ku-除数是一位数的除法-口算",
+      "textbook_id": "RENJIAO-G3-MATH-X",
+      "cluster_id": "RENJIAO-G3-MATH-X-kc-除数是一位数的除法",
+      "name": "除数是一位数的除法（口算）",
+      "description": "整十、整百数除以一位数，可以先用0前面的数除以一位数，再在结果后面添0。",
+      "prerequisites": [
+        "表内除法"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G3-MATH-X-ku-除数是一位数的除法-笔算",
+      "textbook_id": "RENJIAO-G3-MATH-X",
+      "cluster_id": "RENJIAO-G3-MATH-X-kc-除数是一位数的除法",
+      "name": "除数是一位数的除法（笔算）",
+      "description": "从被除数的高位除起，除到哪一位就把商写在那一位上面，余数必须比除数小。",
+      "prerequisites": [
+        "表内除法"
+      ],
+      "related_kus": [],
+      "difficulty": 0.6,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G3-MATH-X-ku-除数是一位数的除法估算-用整十整百数",
+      "textbook_id": "RENJIAO-G3-MATH-X",
+      "cluster_id": "RENJIAO-G3-MATH-X-kc-口算除法",
+      "name": "除数是一位数的除法估算（用整十整百数）",
+      "description": "将被除数看作接近的整十、整百数，再口算估算。",
+      "prerequisites": [
+        "整十、整百、整千数除以一位数的口算"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G3-MATH-X-ku-除数是一位数除法的验算-无余数",
+      "textbook_id": "RENJIAO-G3-MATH-X",
+      "cluster_id": "RENJIAO-G3-MATH-X-kc-0的除法与验算",
+      "name": "除数是一位数除法的验算（无余数）",
+      "description": "商×除数=被除数。",
+      "prerequisites": [
+        "两位数除以一位数的笔算（首位能整除）",
+        "三位数除以一位数的笔算（首位够除）"
+      ],
+      "related_kus": [],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G3-MATH-X-ku-除数是一位数除法的验算-有余数",
+      "textbook_id": "RENJIAO-G3-MATH-X",
+      "cluster_id": "RENJIAO-G3-MATH-X-kc-0的除法与验算",
+      "name": "除数是一位数除法的验算（有余数）",
+      "description": "商×除数+余数=被除数。",
+      "prerequisites": [
+        "除数是一位数除法的验算（无余数）"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G3-MATH-X-ku-面积",
+      "textbook_id": "RENJIAO-G3-MATH-X",
+      "cluster_id": "RENJIAO-G3-MATH-X-kc-图形的运动与特征",
+      "name": "面积",
+      "description": "物体表面或封闭图形的大小是它的面积。长方形面积=长×宽，正方形面积=边长×边长。",
+      "prerequisites": [
+        "ku-030"
+      ],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": null,
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    }
+  ]
+}
