@@ -1589,6 +1589,69 @@ async def get_achievements(
     return {"achievements": out}
 
 
+def _league_tier(pct: float) -> str:
+    """百分位 → 匿名段位（SDT 归属，无 PII）。"""
+    if pct >= 90:
+        return "钻石"
+    if pct >= 70:
+        return "黄金"
+    if pct >= 40:
+        return "白银"
+    return "青铜"
+
+
+@app.get("/v1/league/{student_id}")
+async def get_league(
+    student_id: UUID,
+    _auth: User = Depends(require_student_access),
+    db: AsyncSession = Depends(get_db),
+):
+    """匿名同年级联赛（SDT 归属）：仅返回本人在同年级中的百分位/段位/队列人数，
+    不含任何他人身份或分数（合规：未成年不暴露真实排名/PII）。"""
+    from oprim import compute_peer_percentile
+
+    grade = (
+        await db.execute(select(User.grade).where(User.id == student_id))
+    ).scalar_one_or_none()
+
+    # 同年级学生的"已掌握 KU 数"作为联赛指标（努力/掌握代理，非绝对分数）
+    counts_stmt = (
+        select(KCMastery.student_id, func.count().label("n"))
+        .join(User, User.id == KCMastery.student_id)
+        .where(
+            User.role == UserRole.student,
+            User.deleted_at.is_(None),
+            KCMastery.p_mastery >= 0.7,
+        )
+    )
+    if grade:
+        counts_stmt = counts_stmt.where(User.grade == grade)
+    counts_stmt = counts_stmt.group_by(KCMastery.student_id)
+    rows = (await db.execute(counts_stmt)).all()
+
+    peer_values = [float(n) for _, n in rows]
+    my_value = float(next((n for sid, n in rows if sid == student_id), 0))
+    # 队列里没有别人（或本人无掌握）时给中位，避免误导
+    if len(peer_values) < 2:
+        return {
+            "grade": grade,
+            "cohort_size": len(peer_values),
+            "my_mastered": int(my_value),
+            "percentile": None,
+            "tier": None,
+            "note": "同年级样本不足，暂无排名",
+        }
+    res = compute_peer_percentile(my_value, peer_values)
+    pct = round(float(res.percentile), 1)
+    return {
+        "grade": grade,
+        "cohort_size": len(peer_values),
+        "my_mastered": int(my_value),
+        "percentile": pct,
+        "tier": _league_tier(pct),
+    }
+
+
 class PracticeSubmitReq(BaseModel):
     question_id: UUID  # 公共题库行（student_id IS NULL）
     student_id: UUID

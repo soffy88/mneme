@@ -699,6 +699,10 @@ POST /v1/parent/delete-request/{student_id} → 触发删除（合规）
   KU 为 mastered/learning/**learnable(outer fringe：前置全掌握、自身未开始)**/**locked(前置未齐)**；
   门控阈值 0.6（对齐 daily_plan P4）。`/v1/knowledge-points` 附 `fringe` 字段供前端锁态展示。
   红线：确定性、纯函数、不改 BKT/FSRS 契约。
+- **02 SDT 留存层**：胜任=`/v1/achievements`（已有，多档徽章）；**归属**=`/v1/league/{sid}`
+  匿名同年级联赛（`oprim.compute_peer_percentile` 复用掌握 KU 数，返回百分位/段位/队列人数，
+  **无任何他人身份/分数**，合规红线：未成年不暴露真实排名/PII，样本<2 不排名）；
+  自主=每日目标自选强度（待 migration + 前端）。激励绑检索/努力行为，防裸积分挤出内在动机。
 
 ---
 
