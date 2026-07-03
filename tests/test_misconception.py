@@ -1,6 +1,29 @@
 """L3 误解诊断骨架：干扰项精确映射 + KU 名关键词退回。纯函数。"""
 
-from oprim.misconception import DISTRACTOR_MAP, diagnose_misconception
+from oprim.misconception import (
+    DISTRACTOR_MAP,
+    MISCONCEPTIONS,
+    diagnose_misconception,
+)
+
+
+def test_registry_integrity():
+    """登记表：id 唯一、字段齐全、科目合法、关键词非空。"""
+    ids = [m["id"] for m in MISCONCEPTIONS]
+    assert len(ids) == len(set(ids)), "误解 id 有重复"
+    for m in MISCONCEPTIONS:
+        assert m["subject"] in {"math", "physics"}, m["id"]
+        assert m["id"] == m["id"].upper()
+        assert m["label"] and m["remediation"]
+        assert m["keywords"] and all(k.strip() for k in m["keywords"])
+
+
+def test_new_seed_entries_diagnosable():
+    """抽查教研补充条目可经关键词命中。"""
+    m = diagnose_misconception("physics", "牛顿第三定律的理解")
+    assert m is not None and m["id"] == "PHYS-N3-EQUAL"
+    m = diagnose_misconception("math", "一元一次不等式的解法")
+    assert m is not None and m["id"] == "MATH-INEQ-NEG-MULT"
 
 
 def test_heuristic_match_by_keyword():
