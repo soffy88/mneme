@@ -113,6 +113,7 @@ class User(Base):
     grade: Mapped[Optional[str]] = mapped_column(String(10))
     province: Mapped[Optional[str]] = mapped_column(String(10), server_default="广东")
     exam_date: Mapped[Optional[date]] = mapped_column(Date)  # 考期感知(06)
+    share_process_with_parent: Mapped[bool] = mapped_column(Boolean, server_default=text("false"))  # L6 隐私分层
     invite_code: Mapped[Optional[str]] = mapped_column(String(6), unique=True)
     created_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True), server_default=text("now()")
