@@ -746,6 +746,9 @@ async def list_knowledge_points(
 async def get_knowledge_point(
     ku_id: str,
     student_id: Optional[UUID] = Query(None),
+    low_bandwidth: bool = Query(
+        False, description="U.23：跳过 rich_content（讲透内容，通常最大的字段）"
+    ),
     current_user: User = Depends(get_current_user),
     db: AsyncSession = Depends(get_db),
 ):
@@ -801,7 +804,7 @@ async def get_knowledge_point(
         "p_mastery": mastery_map.get(ku_id),
         "mastery_color": _mastery_color(mastery_map.get(ku_id)),
         "prereq_mastery": prereq_mastery,
-        "rich_content": ku.rich_content,
+        "rich_content": None if low_bandwidth else ku.rich_content,
     }
 
 
@@ -1527,12 +1530,15 @@ _solve_rate_limit = rate_limit(limit=30, window_seconds=60, scope="solve")
 async def post_solve(
     kc_id: str = Query(...),
     expression: str = Query(...),
+    low_bandwidth: bool = Query(False, description="U.23：跳过 SVG 生成，减小响应体积"),
     _: None = Depends(_solve_rate_limit),
 ):
     """POST /v1/solve — 调 oskill.solve_and_visualize 确定性求解。"""
     from oskill.solve_and_visualize import SolveAndVisualizeInput, solve_and_visualize
 
-    inp = SolveAndVisualizeInput(expression=expression, problem_type="auto")
+    inp = SolveAndVisualizeInput(
+        expression=expression, problem_type="auto", generate_svg=not low_bandwidth
+    )
     try:
         result = solve_and_visualize(inp)
         return {
@@ -1549,9 +1555,17 @@ async def post_solve(
 # ===== §H.2 讲解页 =====
 
 
+def _trim_plot_data(plot_data: Optional[dict], low_bandwidth: bool) -> Optional[dict]:
+    """U.23 低带宽模式：去掉 svg（通常最大的字段），保留 steps 等文本内容。"""
+    if not low_bandwidth or not plot_data:
+        return plot_data
+    return {k: v for k, v in plot_data.items() if k != "svg"}
+
+
 @app.get("/v1/lesson/{question_id}")
 async def get_lesson(
     question_id: UUID,
+    low_bandwidth: bool = Query(False, description="U.23：跳过 SVG，减小响应体积"),
     current_user: User = Depends(get_current_user),
     db: AsyncSession = Depends(get_db),
 ):
@@ -1574,7 +1588,7 @@ async def get_lesson(
     if cached:
         return {
             "question_id": str(question_id),
-            "plot_data": cached.plot_data,
+            "plot_data": _trim_plot_data(cached.plot_data, low_bandwidth),
             "self_check_passed": cached.self_check_passed,
             "cached": True,
         }
@@ -1621,7 +1635,10 @@ async def get_lesson(
             await db.rollback()
     return {
         "question_id": str(question_id),
-        "plot_data": {"svg": result.get("svg", ""), "steps": result.get("steps", [])},
+        "plot_data": _trim_plot_data(
+            {"svg": result.get("svg", ""), "steps": result.get("steps", [])},
+            low_bandwidth,
+        ),
         "answer": result.get("answer", ""),
         "self_check_passed": result.get("self_check_passed"),
         "status": result.get("status"),
@@ -2012,6 +2029,65 @@ async def set_privacy(
     )
     await db.commit()
     return {"share_process_with_parent": body.share_process_with_parent}
+
+
+# ===== §U.23 UDL 无障碍 =====
+
+from services.accessibility_service import (
+    get_accessibility_prefs,
+    read_aloud_ku,
+    set_accessibility_prefs,
+)
+
+
+class AccessibilityPrefsReq(BaseModel):
+    font_size: Optional[str] = None
+    line_height: Optional[str] = None
+    color_scheme: Optional[str] = None
+    low_bandwidth: Optional[bool] = None
+
+
+@app.get("/v1/users/{student_id}/accessibility")
+async def get_user_accessibility(
+    student_id: UUID,
+    _auth: User = Depends(require_student_access),
+    db: AsyncSession = Depends(get_db),
+):
+    """GET /v1/users/{student_id}/accessibility — 无障碍偏好（字体/行距/配色/低带宽），
+    跨设备持久化；渲染在 mneme-web 前端，这里只存偏好。"""
+    return await get_accessibility_prefs(db, student_id)
+
+
+@app.post("/v1/users/{student_id}/accessibility")
+async def post_user_accessibility(
+    student_id: UUID,
+    body: AccessibilityPrefsReq,
+    current_user: User = Depends(get_current_user),
+    db: AsyncSession = Depends(get_db),
+):
+    """POST /v1/users/{student_id}/accessibility — 更新无障碍偏好（部分更新）。仅本人。"""
+    if student_id != current_user.id:
+        raise HTTPException(status_code=403, detail="只能设置本人偏好")
+    updates = {k: v for k, v in body.model_dump().items() if v is not None}
+    result = await set_accessibility_prefs(db, student_id, updates)
+    if "error" in result:
+        raise HTTPException(status_code=422, detail=result["error"])
+    return result
+
+
+@app.post("/v1/knowledge-points/{ku_id}/read-aloud")
+async def post_ku_read_aloud(
+    ku_id: str,
+    language: str = Query("zh"),
+    current_user: User = Depends(get_current_user),
+    db: AsyncSession = Depends(get_db),
+):
+    """POST /v1/knowledge-points/{ku_id}/read-aloud — 公式/知识点内容朗读（UDL）。
+    展平 rich_content 为可读文本后调 TTS；无内容时 available=False，不报错。"""
+    result = await read_aloud_ku(db, ku_id, language=language)
+    if result.get("error") == "not_found":
+        raise HTTPException(status_code=404, detail="KnowledgeUnit not found")
+    return result
 
 
 @app.get("/v1/affect/{student_id}")

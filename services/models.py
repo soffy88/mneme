@@ -126,6 +126,12 @@ class User(Base):
         Boolean, server_default=text("false")
     )  # L6 隐私分层
     invite_code: Mapped[Optional[str]] = mapped_column(String(6), unique=True)
+    # U.23 UDL 无障碍：字体/行距/配色/低带宽偏好，跨设备持久化。渲染在 mneme-web
+    # 前端，这里只存偏好 + 供后端按需裁剪响应（低带宽模式）。默认空={} = 未设置，
+    # 前端按各自默认值展示，不代表"无障碍"。
+    accessibility_prefs: Mapped[dict] = mapped_column(
+        JSONB, server_default=text("'{}'::jsonb")
+    )
     created_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True), server_default=text("now()")
     )
