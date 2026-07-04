@@ -18,7 +18,15 @@ from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_asyn
 from obase.auth import create_access_token
 from obase.config import settings
 from services.main import app
-from services.models import SocraticSession, SocraticMode, User, UserRole
+from services.models import (
+    SocraticSession,
+    SocraticMode,
+    User,
+    UserRole,
+    KCMastery,
+    InteractionEvent,
+    MasterySnapshot,
+)
 
 # ── fixtures ─────────────────────────────────────────────────────────────────
 
@@ -49,6 +57,9 @@ async def student(db: AsyncSession):
     await db.commit()
     yield sid, create_access_token({"sub": str(sid)})
     await db.execute(delete(SocraticSession).where(SocraticSession.student_id == sid))
+    await db.execute(delete(InteractionEvent).where(InteractionEvent.student_id == sid))
+    await db.execute(delete(MasterySnapshot).where(MasterySnapshot.student_id == sid))
+    await db.execute(delete(KCMastery).where(KCMastery.student_id == sid))
     await db.execute(delete(User).where(User.id == sid))
     await db.commit()
 
@@ -481,3 +492,205 @@ async def test_reading_guide_workflow_subject_in_response():
         assert result["status"] == "ok"
         assert result.get("subject") == subj
         assert "assistant_text" in result
+
+
+# ── T.10 非数学接入认知主线：受力分析/阅读引导 end-session ────────────────────
+
+
+KU = "test-guide-ku"
+
+
+@pytest.mark.asyncio
+async def test_force_analysis_end_confirms_when_equation_ready(db, student):
+    from services.physics_service import end_force_analysis_session
+
+    sid, _ = student
+    session_id = uuid.uuid4()
+    db.add(
+        SocraticSession(
+            id=session_id,
+            student_id=sid,
+            mode=SocraticMode.force_analysis,
+            messages={"ku_id": KU, "equation_ready_ever": True, "history": []},
+        )
+    )
+    await db.commit()
+
+    result = await end_force_analysis_session(db, session_id, outcome="success")
+    await db.commit()
+
+    assert result["outcome"] == "success"
+    assert result["kc_updated"] is True
+
+    from sqlalchemy import select
+
+    row = (
+        await db.execute(
+            select(KCMastery).where(
+                KCMastery.student_id == sid, KCMastery.knowledge_point == KU
+            )
+        )
+    ).scalar_one_or_none()
+    assert row is not None
+
+
+@pytest.mark.asyncio
+async def test_force_analysis_end_downgrades_unverified_success(db, student):
+    """client 报 success 但 equation_ready 从未为真 → 降级 partial，不更新掌握度。"""
+    from services.physics_service import end_force_analysis_session
+
+    sid, _ = student
+    session_id = uuid.uuid4()
+    db.add(
+        SocraticSession(
+            id=session_id,
+            student_id=sid,
+            mode=SocraticMode.force_analysis,
+            messages={"ku_id": KU, "equation_ready_ever": False, "history": []},
+        )
+    )
+    await db.commit()
+
+    result = await end_force_analysis_session(db, session_id, outcome="success")
+
+    assert result["outcome"] == "partial"
+    assert result["client_outcome"] == "success"
+    assert result["kc_updated"] is False
+
+
+@pytest.mark.asyncio
+async def test_force_analysis_end_without_ku_id_skips_update(db, student):
+    from services.physics_service import end_force_analysis_session
+
+    sid, _ = student
+    session_id = uuid.uuid4()
+    db.add(
+        SocraticSession(
+            id=session_id,
+            student_id=sid,
+            mode=SocraticMode.force_analysis,
+            messages={"ku_id": None, "equation_ready_ever": True, "history": []},
+        )
+    )
+    await db.commit()
+
+    result = await end_force_analysis_session(db, session_id, outcome="success")
+    assert result["kc_updated"] is False
+
+
+@pytest.mark.asyncio
+async def test_force_analysis_end_api(db, student):
+    sid, token = student
+    session_id = uuid.uuid4()
+    db.add(
+        SocraticSession(
+            id=session_id,
+            student_id=sid,
+            mode=SocraticMode.force_analysis,
+            messages={"ku_id": KU, "equation_ready_ever": True, "history": []},
+        )
+    )
+    await db.commit()
+
+    async with AsyncClient(
+        transport=ASGITransport(app=app), base_url="http://test"
+    ) as c:
+        r = await c.post(
+            f"/v1/physics/force-analysis/{session_id}/end",
+            params={"outcome": "success"},
+            headers=_headers(token),
+        )
+    assert r.status_code == 200
+    assert r.json()["kc_updated"] is True
+
+    # 端点用的是它自己 Depends(get_db) 注入的另一个 session；真正验证持久化必须
+    # 用测试自己这条 db 连接重新查一次（同一 session 内的"看得见"不算数）。
+    from sqlalchemy import select
+
+    row = (
+        await db.execute(
+            select(KCMastery).where(
+                KCMastery.student_id == sid, KCMastery.knowledge_point == KU
+            )
+        )
+    ).scalar_one_or_none()
+    assert row is not None
+
+
+@pytest.mark.asyncio
+async def test_reading_guide_end_confirms_when_located_passage(db, student):
+    from services.reading_guide_service import end_reading_guide_session
+
+    sid, _ = student
+    session_id = uuid.uuid4()
+    db.add(
+        SocraticSession(
+            id=session_id,
+            student_id=sid,
+            mode=SocraticMode.reading_guide,
+            messages={"ku_id": KU, "located_passage_ever": True, "history": []},
+        )
+    )
+    await db.commit()
+
+    result = await end_reading_guide_session(db, session_id, outcome="success")
+    assert result["outcome"] == "success"
+    assert result["kc_updated"] is True
+
+
+@pytest.mark.asyncio
+async def test_reading_guide_end_downgrades_unverified_success(db, student):
+    from services.reading_guide_service import end_reading_guide_session
+
+    sid, _ = student
+    session_id = uuid.uuid4()
+    db.add(
+        SocraticSession(
+            id=session_id,
+            student_id=sid,
+            mode=SocraticMode.reading_guide,
+            messages={"ku_id": KU, "located_passage_ever": False, "history": []},
+        )
+    )
+    await db.commit()
+
+    result = await end_reading_guide_session(db, session_id, outcome="success")
+    assert result["outcome"] == "partial"
+    assert result["kc_updated"] is False
+
+
+@pytest.mark.asyncio
+async def test_reading_guide_end_api(db, student):
+    sid, token = student
+    session_id = uuid.uuid4()
+    db.add(
+        SocraticSession(
+            id=session_id,
+            student_id=sid,
+            mode=SocraticMode.reading_guide,
+            messages={"ku_id": KU, "located_passage_ever": True, "history": []},
+        )
+    )
+    await db.commit()
+
+    async with AsyncClient(
+        transport=ASGITransport(app=app), base_url="http://test"
+    ) as c:
+        r = await c.post(
+            f"/v1/reading/guide/{session_id}/end",
+            params={"outcome": "success"},
+            headers=_headers(token),
+        )
+    assert r.status_code == 200
+    assert r.json()["kc_updated"] is True
+
+    from sqlalchemy import select
+
+    row = (
+        await db.execute(
+            select(KCMastery).where(
+                KCMastery.student_id == sid, KCMastery.knowledge_point == KU
+            )
+        )
+    ).scalar_one_or_none()
+    assert row is not None

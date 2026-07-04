@@ -3,12 +3,16 @@ reading_guide_service.py — 阅读理解引导服务（英语/语文）
 
 3O 边界：接请求 → 鉴权 → 调 omodul.reading_guide_workflow → SSE 返回。
 零业务逻辑（引导逻辑全在 oskill 层）。
+
+T.10 非数学接入认知主线：会话可选带 ku_id，结束时把结果回写 process_interaction
+（伪名化红线保持）。没有 ku_id 的会话跳过认知更新，不强行瞎猜。
 """
+
 from __future__ import annotations
 
 import uuid
 from pathlib import Path
-from typing import AsyncGenerator
+from typing import AsyncGenerator, Optional
 
 from sqlalchemy import select, update
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -23,6 +27,7 @@ async def start_reading_guide(
     question: str,
     subject: str,
     student_id: uuid.UUID,
+    ku_id: Optional[str] = None,
 ) -> dict:
     """开始阅读理解引导会话，返回开场引导问（不含答案）。"""
     from omodul import reading_guide_workflow, ReadingGuideConfig, ReadingGuideInput
@@ -52,6 +57,8 @@ async def start_reading_guide(
             "article_text": article_text,
             "question": question,
             "subject": subject,
+            "ku_id": ku_id,
+            "located_passage_ever": False,
             "history": [{"role": "assistant", "content": first_question}],
         },
     )
@@ -73,18 +80,25 @@ async def reading_guide_message_stream(
     """处理学生回复，SSE 流式返回下一个引导问题。"""
     from omodul import reading_guide_workflow, ReadingGuideConfig, ReadingGuideInput
 
-    row = (await db.execute(
-        select(SocraticSession).where(SocraticSession.id == session_id)
-    )).scalar_one_or_none()
+    row = (
+        await db.execute(
+            select(SocraticSession).where(SocraticSession.id == session_id)
+        )
+    ).scalar_one_or_none()
 
     if not row:
         yield "data: {'error':'session not found'}\n\n"
         return
 
-    messages_data: dict = row.messages or {"article_text": "", "question": "", "subject": "chinese", "history": []}
+    messages_data: dict = row.messages or {
+        "article_text": "",
+        "question": "",
+        "subject": "chinese",
+        "history": [],
+    }
     article_text: str = messages_data.get("article_text", "")
-    question: str     = messages_data.get("question", "")
-    subject: str      = messages_data.get("subject", "chinese")
+    question: str = messages_data.get("question", "")
+    subject: str = messages_data.get("subject", "chinese")
     history: list[dict] = messages_data.get("history", [])
 
     student_messages = [m["content"] for m in history if m.get("role") == "user"]
@@ -109,14 +123,90 @@ async def reading_guide_message_stream(
 
     history.append({"role": "user", "content": student_message})
     history.append({"role": "assistant", "content": reply})
+    located_passage_ever = (
+        bool(messages_data.get("located_passage_ever")) or located_passage
+    )
     await db.execute(
-        update(SocraticSession).where(SocraticSession.id == session_id).values(
-            messages={**messages_data, "history": history}
+        update(SocraticSession)
+        .where(SocraticSession.id == session_id)
+        .values(
+            messages={
+                **messages_data,
+                "history": history,
+                "located_passage_ever": located_passage_ever,
+            }
         )
     )
     await db.commit()
 
     import json
-    payload = json.dumps({"reply": reply, "located_passage": located_passage}, ensure_ascii=False)
+
+    payload = json.dumps(
+        {"reply": reply, "located_passage": located_passage}, ensure_ascii=False
+    )
     yield f"data: {payload}\n\n"
     yield "data: [DONE]\n\n"
+
+
+async def end_reading_guide_session(
+    db: AsyncSession, session_id: uuid.UUID, outcome: str = "partial"
+) -> dict:
+    """结束阅读引导会话，结果回写 process_interaction（T.10）。
+
+    红线（同 physics_service.end_force_analysis_session）：client 报 success 但
+    从未 located_passage 过，一律降级为 partial（不更新掌握度）。
+    """
+    from datetime import datetime, timezone
+
+    from services.models import SocraticOutcome
+
+    now = datetime.now(timezone.utc)
+    session = (
+        await db.execute(
+            select(SocraticSession).where(SocraticSession.id == session_id)
+        )
+    ).scalar_one_or_none()
+    if not session:
+        return {"error": "session not found"}
+
+    messages_data: dict = session.messages or {}
+    ku_id: Optional[str] = messages_data.get("ku_id")
+    located_passage_ever = bool(messages_data.get("located_passage_ever"))
+
+    effective = outcome
+    if outcome == "success" and not located_passage_ever:
+        effective = "partial"
+
+    duration = (
+        int((now - session.created_at).total_seconds()) if session.created_at else 0
+    )
+    await db.execute(
+        update(SocraticSession)
+        .where(SocraticSession.id == session_id)
+        .values(duration_seconds=duration, outcome=SocraticOutcome(effective))
+    )
+    await db.flush()
+
+    kc_updated = False
+    if ku_id and effective in ("success", "failed"):
+        from services.cognitive_service import process_interaction
+
+        assert session.student_id is not None
+        await process_interaction(
+            db,
+            student_id=session.student_id,
+            kc_id=ku_id,
+            is_correct=(effective == "success"),
+            question_type="reading_guide",
+            source="reading_guide",
+            struggled=True,
+        )
+        kc_updated = True
+
+    return {
+        "session_id": str(session_id),
+        "outcome": effective,
+        "client_outcome": outcome,
+        "duration_seconds": duration,
+        "kc_updated": kc_updated,
+    }

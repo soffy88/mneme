@@ -61,6 +61,10 @@ class InteractionSource(str, enum.Enum):
     # U.18 迁移探针：已掌握 KU 现场生成的全新核验变式（不落库/不进练习池），
     # 混入复习队列测"同 KU 新实例迁移"（near transfer；非跨 KU 远迁移，见 transfer_probe_service）。
     transfer_probe = "transfer_probe"
+    # T.10 非数学接入认知主线：physics/reading/speaking 会话结果回写 process_interaction。
+    force_analysis = "force_analysis"
+    reading_guide = "reading_guide"
+    speaking = "speaking"
     # FIRe-lite 前置信用回写（M-H §4.8）：综合题答对顺延前置 due 的记账事件。
     # 非真实作答：不进 BKT/FSRS 重放/校准/学习量统计，且不得再触发 FIRe（不级联）。
     fire_credit = "fire_credit"

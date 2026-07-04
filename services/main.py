@@ -2696,11 +2696,14 @@ class SpeakingPracticeRequest(BaseModel):
     topic: str
     target_sentences: str
     grade: str
+    ku_id: Optional[str] = None  # T.10：从知识点入口进入时传，供归因更新掌握度
 
 
 @app.post("/v1/speaking/practice")
 async def post_speaking_practice(
-    req: SpeakingPracticeRequest, current_user: User = Depends(get_current_user)
+    req: SpeakingPracticeRequest,
+    current_user: User = Depends(get_current_user),
+    db: AsyncSession = Depends(get_db),
 ):
     """
     POST /v1/speaking/practice
@@ -2718,6 +2721,8 @@ async def post_speaking_practice(
         topic=req.topic,
         target_sentences=req.target_sentences,
         grade=req.grade,
+        db=db,
+        ku_id=req.ku_id,
     )
 
     if result["status"] == "failed":
@@ -2731,6 +2736,7 @@ async def post_speaking_practice(
         "turns": result["turns"],
         "pronunciation_scores": result["pronunciation_scores"],
         "overall_progress": result["overall_progress"],
+        "kc_updated": result.get("kc_updated", False),
     }
 
 
@@ -2766,12 +2772,19 @@ async def get_speaking_history(
 
 # ===== §M.4 受力分析引导（物理）=====
 
-from services.physics_service import start_force_analysis, force_analysis_message_stream
+from services.physics_service import (
+    start_force_analysis,
+    force_analysis_message_stream,
+    end_force_analysis_session,
+)
 
 
 @app.post("/v1/physics/force-analysis/start")
 async def post_force_analysis_start(
     question_text: str = Query(...),
+    ku_id: Optional[str] = Query(
+        None, description="T.10：从知识点入口进入时传，供结束时归因更新掌握度"
+    ),
     current_user: User = Depends(get_current_user),
     db: AsyncSession = Depends(get_db),
 ):
@@ -2779,7 +2792,7 @@ async def post_force_analysis_start(
 
     返回开场引导问（苏格拉底式，不含答案/受力图）。
     """
-    result = await start_force_analysis(db, question_text, current_user.id)
+    result = await start_force_analysis(db, question_text, current_user.id, ku_id)
     return result
 
 
@@ -2806,11 +2819,32 @@ async def post_force_analysis_message(
     return StreamingResponse(event_stream(), media_type="text/event-stream")
 
 
+@app.post("/v1/physics/force-analysis/{session_id}/end")
+async def post_force_analysis_end(
+    session_id: UUID,
+    outcome: str = Query("partial"),
+    current_user: User = Depends(get_current_user),
+    db: AsyncSession = Depends(get_db),
+):
+    """POST /v1/physics/force-analysis/{session_id}/end — 结束会话（T.10 认知主线接入）。
+
+    outcome: success|partial|failed|abandoned（客户端提示，服务层用 equation_ready
+    历史核对，未核实的 success 降级 partial）。仅会话归属学生本人。
+    """
+    await _ensure_session_owner(db, current_user, session_id)
+    result = await end_force_analysis_session(db, session_id, outcome)
+    await (
+        db.commit()
+    )  # end_force_analysis_session 内的 process_interaction 不自己 commit
+    return result
+
+
 # ===== §M.5 阅读理解引导（英语/语文）=====
 
 from services.reading_guide_service import (
     start_reading_guide,
     reading_guide_message_stream,
+    end_reading_guide_session,
 )
 
 
@@ -2818,6 +2852,7 @@ class ReadingGuideStartReq(BaseModel):
     article_text: str
     question: str
     subject: str = "chinese"
+    ku_id: Optional[str] = None  # T.10：从知识点入口进入时传
 
 
 @app.post("/v1/reading/guide/start")
@@ -2831,7 +2866,7 @@ async def post_reading_guide_start(
     subject: "chinese" 或 "english"。文章正文走 body（可能很长）。返回开场引导问（不含答案）。
     """
     result = await start_reading_guide(
-        db, body.article_text, body.question, body.subject, current_user.id
+        db, body.article_text, body.question, body.subject, current_user.id, body.ku_id
     )
     return result
 
@@ -2853,6 +2888,26 @@ async def post_reading_guide_message(
     from fastapi.responses import StreamingResponse
 
     return StreamingResponse(event_stream(), media_type="text/event-stream")
+
+
+@app.post("/v1/reading/guide/{session_id}/end")
+async def post_reading_guide_end(
+    session_id: UUID,
+    outcome: str = Query("partial"),
+    current_user: User = Depends(get_current_user),
+    db: AsyncSession = Depends(get_db),
+):
+    """POST /v1/reading/guide/{session_id}/end — 结束会话（T.10 认知主线接入）。
+
+    outcome: success|partial|failed|abandoned（客户端提示，服务层用 located_passage
+    历史核对，未核实的 success 降级 partial）。仅会话归属学生本人。
+    """
+    await _ensure_session_owner(db, current_user, session_id)
+    result = await end_reading_guide_session(db, session_id, outcome)
+    await (
+        db.commit()
+    )  # end_reading_guide_session 内的 process_interaction 不自己 commit
+    return result
 
 
 # ===== §教材阅读器 — 文件/高亮/笔记 =====

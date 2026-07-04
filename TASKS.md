@@ -950,12 +950,42 @@ Phase 3：K（合规）+ L（部署）
   DoD：每 N 天生成限时 quiz mission(5题,到期/薄弱KC,交错)；提交计时判分回写 BKT/FSRS；失败 KC 自动生成复习任务；前端小测页；测试；check.sh 绿。
 - [ ] **T.9 [P2] 错题本打印/导出**
   DoD：mneme-web 错题本打印视图(可选含变式、可隐藏答案供重做)；typecheck 绿。
-- [ ] **T.10 [P1] 非数学接入认知主线**
-  DoD：物理题库灌内容(现有 import 脚本)；physics/reading/speaking 会话结果接 process_interaction(伪名化红线保持)；PhysicsPractice 指向真练习流；测试；check.sh 绿。
+- [~] **T.10 [P1] 非数学接入认知主线（后端完成，前端待 mneme-web 接线）** 🔄 2026-07-04
+  ✅ **物理/语文/英语公共题库数据恢复**：`import_ceval_questions.py`/`import_gaokao_questions.py`/
+  `import_cmmlu_questions.py` 三个脚本都在，但库里数据是 0——和 KU 内容同一次数据丢失事故里一起
+  没的，之前没被发现。容器出不了公网（`helios-net` 防火墙/路由问题，诊断到第 6 层未解，判断是
+  这个容器特有的问题，风险收益比不划算就没再深挖），改为宿主机拉数据存 JSON/parquet 文件（仓库
+  `.:/app` 整体 bind-mount，容器内直接可读），容器内 monkeypatch 三个脚本的联网函数从本地文件读，
+  三个脚本本体一行没改。恢复：physics 390 / chinese 832 / english 105 条公共题库题
+  （`wrong_questions.student_id=NULL`）。
+  ✅ **physics/reading/speaking 接入 process_interaction**：`InteractionSource` 加
+  `force_analysis`/`reading_guide`/`speaking` 三个值（migration 2b3c4d5e6f7a）。
+  - physics/reading 原来只有 start+message，没有"结束"概念；新增
+    `end_force_analysis_session`/`end_reading_guide_session`（同 socratic_service.end_session
+    模式）：client 报的 outcome 只是提示，服务层用会话内"是否曾经 equation_ready/located_passage"
+    核对，未核实的 success 降级 partial，不放行污染掌握度；`POST /v1/physics/force-analysis/
+    {sid}/end`、`POST /v1/reading/guide/{sid}/end`。start 端点加可选 `ku_id`（从知识点入口进入时
+    传），无 ku_id 的自由输入会话跳过认知更新，不强行瞎猜归因。
+  - speaking 是单次完整会话（无三段式），直接在 `handle_speaking_practice` 结束处用
+    `overall_progress`(0-1 均值发音分)≥0.6 判对，接 `process_interaction`；`/v1/speaking/practice`
+    加可选 `ku_id`。
+  - ⚠️ **过程中抓到一个真实 bug**：`process_interaction` 从不自己 `commit`（同 `/v1/interaction`
+    的既有约定，调用方必须提交），我一开始漏了这一步——直接调用测试能过（同一 session 内看得见
+    自己未提交的写入），但 API 级测试如果只看响应体不重新查库，也测不出来。已在三处补
+    `await db.commit()`，并把 API 级测试从"只断言响应体"改成"另开一次查询验证真落库"，避免同类
+    bug 再溜过去。
+  - 5 新测试（physics end 确认/降级/无ku_id跳过/API+持久化验证）+ 5 新测试（reading 同构）+ 2 新
+    测试（speaking 带ku_id更新/不带ku_id跳过）= 9 新测试；pytest 423 passed（+9）/3 skipped，
+    check.sh 全绿。
+  ⏳ **未完成**：`PhysicsPractice` 指向真练习流是 mneme-web（真前端，独立仓库）的活，本仓库
+  `frontend/` 已废弃不能算数——本次只做了后端 API 面（`ku_id` 参数 + `/end` 端点），前端接线需要
+  另开 mneme-web 会话。同 U.17/U.18，容器需 rebuild 才让相关改动在 :8000 生效。
 
 ### 阻塞在人（🚨 Needs Human）
 - 阿里云短信报备（完成前勿开公网注册）
 - 真实学生数据（0.77 AUC 验证、FSRS 权重拟合启用、FIRe 上线 A/B 均以此为前提）
+- U.21 课标标注质量：现有 LLM（qwen2.5vl:3b 本地 / DeepSeek key 401 失效）均不足以支撑批量标注，
+  需换更强本地模型或修复 DeepSeek key 才能重新开始量产（管道已就绪，见 U.21）
 
 ---
 
@@ -1055,15 +1085,20 @@ Phase 3：K（合规）+ L（部署）
   ✅ `scripts/tag_curriculum_standard_pilot.py`：小规模试点脚本（LLM 从 `data/curriculum_std.py`
   既有课标节点里选码+`is_valid_std_code`校验+落库，不合法/选不出优雅跳过不硬凑），支持
   `--textbook-id`/`--limit`/`--dry-run`。
-  ⚠️ **试点脚本本次未能实际标出数据（外部环境阻塞，非工程缺口）**：容器内 Ollama
-  (`host.docker.internal:11434`) connection refused（宿主 Ollama 疑似只绑定 127.0.0.1，docker
-  网桥进来的请求连不上，非应用代码问题）；DeepSeek key 401 invalid。两条 LLM 通路都不可用，
-  未做进一步host网络改动（超出本次工程范围）。管道本身（校验/落库/API 反查）已用真实合法编码
-  手工验证跑通（见测试）。
-  6 新测试（U.20 相关略）+ 3 个 U.21 专属（默认值/未知编码反查/已标注编码反查）；pytest 414
-  passed（+3）/3 skipped，check.sh 全绿。
-  待续：LLM 通路恢复后先跑 `--dry-run` 抽查质量，再正式量产（数学~11600 个 KU，其余学科暂无
-  课标编码体系，需先扩 `data/curriculum_std.py`）；题库诊断化改造（按曝光量滚动）未开始。
+  ✅ **2026-07-04 续**：Ollama 连通性根因定位并修复——`ollama.service`（systemd）默认只绑
+  `127.0.0.1:11434`，docker 网桥（host.docker.internal）连不上；加 systemd override
+  （`OLLAMA_HOST=0.0.0.0:11434`）+ `daemon-reload` + `restart` 后容器可正常访问。
+  ⚠️ **试跑 15 个 KU（RENJIAO-G10-MATH-BX2），管道机制通了，但标注质量不合格**：9 条"成功"
+  标注里，对照 description 逐条核对，至少 5 条明显错误（如"证明三棱锥P-ABC中AB垂直于PB"
+  这种清楚的立体几何证明被 `qwen2.5vl:3b` 打成"一元函数的导数及其应用"；"1的三次方根"打成
+  "三角函数"）——3B 小模型看得懂中文描述，但学科分类判断力不够，不是 prompt/数据问题。
+  **已把这 9 条错误标注从库里撤回**（`curriculum_standard` 复位 NULL），未留坏数据。
+  用户决定：暂停 U.21 量产，等有更强模型（Ollama 换更大参数量模型，或修好 DeepSeek key）再回来做。
+  9 新测试（U.20相关+U.21专属：默认值/未知编码反查/已标注编码反查）；pytest 414 passed（+9）/
+  3 skipped，check.sh 全绿。
+  🚨 Needs Human：标注质量需要更强 LLM（本地更大参数模型 或 DeepSeek key 修复）才能重新开始量产；
+  管道（schema/API/校验/回滚）已就绪，随时可接。其余学科暂无课标编码体系，需先扩
+  `data/curriculum_std.py`；题库诊断化改造（按曝光量滚动）未开始。
 - [x] **U.22 [P0] L8 红队 CI 越狱门禁** ✅ 2026-07-03
   ✅ **essay_guide 从零拦截补到有拦截**（最大缺口）：新增 `_looks_like_handoff` 检测——代写交接措辞
   （"帮你改写/直接给你写"等）+ 超长(>80字符)且不含引导问句特征的整段文本，命中即替换为引导语并标记
