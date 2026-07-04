@@ -237,7 +237,10 @@ async def process_interaction(
 
     # 自我解释（Chi 效应，教育理念 04）：附到本次刚写入的事件（occurred_at==now 唯一定位），
     # 纯采集不参与判分/掌握度（只增不改红线不破——是 INSERT 后一次性 annotate，非改历史）
-    if self_explanation:
+    # U.24 教学机制 feature-flag（PEDAGOGY_SELF_EXPLANATION_ENABLED=0 急停：不采集，不报错）
+    from services.feature_flags import PEDAGOGY_SELF_EXPLANATION, pedagogy_enabled
+
+    if self_explanation and pedagogy_enabled(PEDAGOGY_SELF_EXPLANATION):
         await db.execute(
             update(InteractionEvent)
             .where(
@@ -295,12 +298,18 @@ async def process_interaction(
         )
 
     # 成长型思维措辞（教育理念 05）：过程表扬/错误正常化/"还没"文化
+    # U.24 教学机制 feature-flag（PEDAGOGY_GROWTH_FEEDBACK_ENABLED=0 急停）
+    from services.feature_flags import PEDAGOGY_GROWTH_FEEDBACK, pedagogy_enabled
     from oprim.growth_feedback import growth_message
 
-    growth = growth_message(
-        is_correct=is_correct,
-        error_type=findings.error_type,
-        struggled=struggled,
+    growth = (
+        growth_message(
+            is_correct=is_correct,
+            error_type=findings.error_type,
+            struggled=struggled,
+        )
+        if pedagogy_enabled(PEDAGOGY_GROWTH_FEEDBACK)
+        else None
     )
 
     feedback = None

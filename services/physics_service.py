@@ -18,7 +18,7 @@ from typing import AsyncGenerator, Optional
 from sqlalchemy import select, update
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from services.models import SocraticMode, SocraticSession
+from services.models import KnowledgeUnit, SocraticMode, SocraticSession, Textbook
 from services.anon import anon_ref
 
 
@@ -206,4 +206,117 @@ async def end_force_analysis_session(
         "client_outcome": outcome,
         "duration_seconds": duration,
         "kc_updated": kc_updated,
+    }
+
+
+# ── U.19 物理概念优先范式：FCI式诊断 → 认知冲突 → 计算迁移 ─────────────────────
+#
+# 第一步（诊断）：本函数。命中已知误解 → 生成二选一诊断题（不下发哪个选项=误解）。
+# 第二步（认知冲突）：submit_concept_diagnosis_answer 判定学生选中误解项时，
+#   直接呈现 remediation（教研预先写好的冲突案例文本，确定性，不需要 LLM 判分）。
+# 第三步（计算迁移）：由客户端拿到 diagnosis 结果后另起 start_force_analysis 会话
+#   （同一 ku_id），复用既有受力分析引导，不在本 omodul 内调用其它 omodul。
+
+
+async def start_concept_diagnosis(
+    db: AsyncSession, ku_id: str, student_id: uuid.UUID
+) -> dict:
+    """开始物理概念诊断，返回诊断题（不含哪个选项=误解）。
+
+    非物理 KU 或 KU 不存在：返回 has_candidate=False, error 说明，不强行诊断。
+    """
+    from omodul import (
+        PhysicsConceptDiagnosisConfig,
+        PhysicsConceptDiagnosisInput,
+        physics_concept_diagnosis_workflow,
+    )
+
+    row = (
+        await db.execute(
+            select(KnowledgeUnit, Textbook)
+            .join(Textbook, KnowledgeUnit.textbook_id == Textbook.id)
+            .where(KnowledgeUnit.id == ku_id)
+        )
+    ).first()
+    if row is None:
+        return {"has_candidate": False, "error": "KU 不存在"}
+    ku, textbook = row
+    if textbook.subject != "physics":
+        return {"has_candidate": False, "error": "非物理知识点，不适用概念优先诊断"}
+
+    session_id = uuid.uuid4()
+    output_dir = Path(f"/tmp/mneme/concept_diagnosis/{session_id}")
+
+    result = await physics_concept_diagnosis_workflow(
+        config=PhysicsConceptDiagnosisConfig(),
+        input_data=PhysicsConceptDiagnosisInput(
+            ku_name=ku.name, ku_id=ku_id, user_id=anon_ref(student_id)
+        ),
+        output_dir=output_dir,
+    )
+
+    if not result.get("has_candidate"):
+        return {"has_candidate": False}
+
+    session = SocraticSession(
+        id=session_id,
+        student_id=student_id,
+        mode=SocraticMode.concept_diagnosis,
+        messages={
+            "ku_id": ku_id,
+            "misconception_id": result["misconception_id"],
+            "remediation": result["remediation"],
+            "misconception_option": result["misconception_option"],
+            "answered": False,
+        },
+    )
+    db.add(session)
+    await db.commit()
+
+    return {
+        "has_candidate": True,
+        "session_id": str(session_id),
+        "scenario": result["scenario"],
+        "option_a": result["option_a"],
+        "option_b": result["option_b"],
+    }
+
+
+async def submit_concept_diagnosis_answer(
+    db: AsyncSession, session_id: uuid.UUID, chosen_option: str
+) -> dict:
+    """提交诊断题作答，判定是否命中误解（确定性查表，不需要 LLM）。
+
+    命中误解 → 呈现 remediation（认知冲突/概念重建文本）；未命中 → 简短肯定。
+    不回写 process_interaction：诊断题测的是概念信念而非计算掌握，不计入 BKT/FSRS。
+    """
+    session = (
+        await db.execute(
+            select(SocraticSession).where(SocraticSession.id == session_id)
+        )
+    ).scalar_one_or_none()
+    if session is None or session.mode != SocraticMode.concept_diagnosis:
+        return {"error": "session not found"}
+
+    messages_data: dict = session.messages or {}
+    misconception_option = messages_data.get("misconception_option")
+    remediation = messages_data.get("remediation")
+    ku_id = messages_data.get("ku_id")
+
+    holds_misconception = chosen_option.strip().upper() == misconception_option
+
+    await db.execute(
+        update(SocraticSession)
+        .where(SocraticSession.id == session_id)
+        .values(
+            messages={**messages_data, "answered": True, "chosen_option": chosen_option}
+        )
+    )
+    await db.commit()
+
+    return {
+        "session_id": str(session_id),
+        "ku_id": ku_id,
+        "holds_misconception": holds_misconception,
+        "remediation": remediation if holds_misconception else None,
     }

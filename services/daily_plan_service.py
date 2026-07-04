@@ -85,17 +85,21 @@ async def build_daily_plan(
         now = datetime.now(timezone.utc)
 
     # ── 0. 考期感知（教育理念 06）：算距考天数；临考(≤14天)停推新知、向巩固倾斜 ──
+    # U.24 教学机制 feature-flag（PEDAGOGY_EXAM_AWARE_ENABLED=0 急停：忽略 exam_date，
+    # 不停推新知也不显示倒计时，整个机制视为不存在）
+    from services.feature_flags import PEDAGOGY_EXAM_AWARE, pedagogy_enabled
     from services.models import User
 
-    exam_date = (
-        await db.execute(select(User.exam_date).where(User.id == student_id))
-    ).scalar_one_or_none()
     exam_countdown_days: Optional[int] = None
     near_exam = False
-    if exam_date is not None:
-        exam_countdown_days = (exam_date - now.date()).days
-        # 临考窗口内（还剩 0–14 天）：停推新知，把精力压到复习/薄弱巩固
-        near_exam = 0 <= exam_countdown_days <= _NEAR_EXAM_DAYS
+    if pedagogy_enabled(PEDAGOGY_EXAM_AWARE):
+        exam_date = (
+            await db.execute(select(User.exam_date).where(User.id == student_id))
+        ).scalar_one_or_none()
+        if exam_date is not None:
+            exam_countdown_days = (exam_date - now.date()).days
+            # 临考窗口内（还剩 0–14 天）：停推新知，把精力压到复习/薄弱巩固
+            near_exam = 0 <= exam_countdown_days <= _NEAR_EXAM_DAYS
 
     # ── 0.5 会话时间设计（L5，U.20）：22:30 后不排新任务，睡眠巩固优先 ──────────
     late_night = _is_late_night(now)

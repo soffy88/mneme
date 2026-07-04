@@ -672,6 +672,11 @@ async def list_knowledge_points(
     all_ku_ids = [ku.id for ku, _, _ in rows]
     file_map = await _textbook_file_map(db, all_tb_ids)
     mastery_map = await _mastery_map(db, student_id, all_ku_ids) if student_id else {}
+    from services.feature_flags import PEDAGOGY_FRINGE, pedagogy_enabled
+
+    fringe_enabled = pedagogy_enabled(
+        PEDAGOGY_FRINGE
+    )  # U.24（PEDAGOGY_FRINGE_ENABLED=0 急停）
 
     items = [
         {
@@ -698,10 +703,11 @@ async def list_knowledge_points(
             "verified": ku.verified,
             "p_mastery": mastery_map.get(ku.id),
             "mastery_color": _mastery_color(mastery_map.get(ku.id)),
-            # KST fringe（掌握门控）：mastered/learning/learnable/locked；仅在有 student 时有意义
+            # KST fringe（掌握门控，U.24 教育理念01）：mastered/learning/learnable/locked；
+            # 仅在有 student 且开关开启时有意义
             "fringe": (
                 fringe_status(mastery_map.get(ku.id), ku.prerequisites, mastery_map)
-                if student_id
+                if student_id and fringe_enabled
                 else None
             ),
             # L4 语文双轨：记诵轨(FSRS)/素养轨(策略)，供前端路由；非语文为 None
@@ -1870,7 +1876,12 @@ async def get_league(
     db: AsyncSession = Depends(get_db),
 ):
     """匿名同年级联赛（SDT 归属）：仅返回本人在同年级中的百分位/段位/队列人数，
-    不含任何他人身份或分数（合规：未成年不暴露真实排名/PII）。"""
+    不含任何他人身份或分数（合规：未成年不暴露真实排名/PII）。
+    U.24 教学机制 feature-flag（PEDAGOGY_LEAGUE_ENABLED=0 急停）。"""
+    from services.feature_flags import PEDAGOGY_LEAGUE, pedagogy_enabled
+
+    if not pedagogy_enabled(PEDAGOGY_LEAGUE):
+        raise HTTPException(status_code=404, detail="Feature disabled")
     from oprim import compute_peer_percentile
 
     grade = (
@@ -1924,7 +1935,12 @@ async def get_learner_model(
 ):
     """开放学习者模型(OLM，教育理念 03)：把 KT 模型**透明摊给学生自己看**以促元认知。
     返回长期掌握 P(L)、此刻可提取性 R、有效掌握、错因画像(粗心 vs 没学会)、下次复习。
-    "协商挑战"（我觉得我会了→做一题验证）复用现有 practice/submit，本端点只做透明读。"""
+    "协商挑战"（我觉得我会了→做一题验证）复用现有 practice/submit，本端点只做透明读。
+    U.24 教学机制 feature-flag（PEDAGOGY_OLM_ENABLED=0 急停）。"""
+    from services.feature_flags import PEDAGOGY_OLM, pedagogy_enabled
+
+    if not pedagogy_enabled(PEDAGOGY_OLM):
+        raise HTTPException(status_code=404, detail="Feature disabled")
     from oprim import KCState
     from oprim._cognitive import bkt_error_weights
     from oprim.fsrs_engine import fsrs_retrievability
@@ -2097,7 +2113,12 @@ async def get_affect(
     db: AsyncSession = Depends(get_db),
 ):
     """情感感知（教育理念 08）：从近 12 次作答的**行为信号**估计情感态(挫败/脱离/心流/中性)
-    + 自适应建议。启发式，无生物特征采集。"""
+    + 自适应建议。启发式，无生物特征采集。
+    U.24 教学机制 feature-flag（PEDAGOGY_AFFECT_ENABLED=0 急停）。"""
+    from services.feature_flags import PEDAGOGY_AFFECT, pedagogy_enabled
+
+    if not pedagogy_enabled(PEDAGOGY_AFFECT):
+        raise HTTPException(status_code=404, detail="Feature disabled")
     from oprim.affect import affect_estimate
 
     rows = (
@@ -2244,8 +2265,15 @@ async def post_practice_submit(
     await db.commit()
 
     # 刻意练习细颗粒反馈（教育理念 07）：答错且带步骤时，确定性定位首个错步（非整题重来）
+    # U.24 教学机制 feature-flag（PEDAGOGY_FINE_FEEDBACK_ENABLED=0 急停）
+    from services.feature_flags import PEDAGOGY_FINE_FEEDBACK, pedagogy_enabled
+
     step_analysis = None
-    if not is_correct and body.student_steps:
+    if (
+        not is_correct
+        and body.student_steps
+        and pedagogy_enabled(PEDAGOGY_FINE_FEEDBACK)
+    ):
         from oskill import verify_steps_chain
 
         chain = verify_steps_chain(body.student_steps)
@@ -2965,6 +2993,47 @@ async def post_force_analysis_end(
     await (
         db.commit()
     )  # end_force_analysis_session 内的 process_interaction 不自己 commit
+    return result
+
+
+# ===== §M.4b 物理概念优先诊断（U.19：FCI式诊断→认知冲突→计算迁移）=====
+
+from services.physics_service import (
+    start_concept_diagnosis,
+    submit_concept_diagnosis_answer,
+)
+
+
+@app.post("/v1/physics/concept-diagnosis/start")
+async def post_concept_diagnosis_start(
+    ku_id: str = Query(..., description="必须是物理 KU"),
+    current_user: User = Depends(get_current_user),
+    db: AsyncSession = Depends(get_db),
+):
+    """POST /v1/physics/concept-diagnosis/start — 学习前先诊断是否持有该 KU 常见误解。
+
+    命中已知误解 → 返回 FCI 式二选一诊断题（不下发哪个选项=误解）；
+    未命中或非物理 KU → has_candidate=False，客户端应跳过诊断直接进入
+    /v1/physics/force-analysis/start 做计算迁移。
+    """
+    result = await start_concept_diagnosis(db, ku_id, current_user.id)
+    return result
+
+
+@app.post("/v1/physics/concept-diagnosis/{session_id}/submit")
+async def post_concept_diagnosis_submit(
+    session_id: UUID,
+    chosen_option: str = Query(..., pattern="^[ABab]$"),
+    current_user: User = Depends(get_current_user),
+    db: AsyncSession = Depends(get_db),
+):
+    """POST /v1/physics/concept-diagnosis/{session_id}/submit — 提交诊断题作答。
+
+    holds_misconception=true 时 remediation 非空（认知冲突/概念重建文本，
+    教研预先写好，确定性呈现，不需要 LLM 判分）；不影响 BKT/FSRS 掌握度。
+    """
+    await _ensure_session_owner(db, current_user, session_id)
+    result = await submit_concept_diagnosis_answer(db, session_id, chosen_option)
     return result
 
 

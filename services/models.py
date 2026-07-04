@@ -78,6 +78,7 @@ class SocraticMode(str, enum.Enum):
     sprint = "sprint"
     force_analysis = "force_analysis"
     reading_guide = "reading_guide"
+    concept_diagnosis = "concept_diagnosis"
 
 
 class SocraticOutcome(str, enum.Enum):
