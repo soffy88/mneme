@@ -14,6 +14,7 @@ import uuid
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from services.learner_model import GATE
 from services.models import KCMastery, VocabularyItem
 
 _VOCAB_KP_PREFIX = "vocab-"
@@ -130,7 +131,7 @@ async def submit_vocab_review(
 
 
 async def estimate_reading_level(
-    db: AsyncSession, student_id: uuid.UUID, gate: float = 0.6
+    db: AsyncSession, student_id: uuid.UUID, gate: float = GATE
 ) -> int:
     """按学生词汇掌握度估计当前阅读水平（供分级泛读 i+1 对齐）。
 

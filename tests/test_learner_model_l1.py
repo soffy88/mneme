@@ -35,9 +35,27 @@ def test_fringe_uses_gate_threshold():
 
 
 def test_call_sites_migrated_to_single_source():
-    """守卫：main.py 掌握色委托 learner_model；daily_plan 用 GATE。"""
+    """守卫：main.py 掌握色/fringe 委托 learner_model；daily_plan 用 GATE。
+
+    2026-07-04 审计发现的漂移（各自硬编码 0.5/0.4/0.6，未从 learner_model 导入，
+    容易和权威阈值悄悄脱节）已修复，这里补守卫防止再犯。
+    """
     main_src = open("services/main.py", encoding="utf-8").read()
     assert "from services.learner_model import mastery_color" in main_src
+    assert "from services.learner_model import fringe" in main_src
     assert "_MASTERED" in main_src
     dp_src = open("services/daily_plan_service.py", encoding="utf-8").read()
     assert "GATE as MASTERY_THRESHOLD" in dp_src
+
+    cog_src = open("services/cognitive_service.py", encoding="utf-8").read()
+    assert "from services.learner_model import GATE" in cog_src
+    assert "KCMastery.p_mastery < 0.5" not in cog_src
+    assert "mastery_threshold: float = 0.6" not in cog_src
+
+    vocab_src = open("services/vocab_service.py", encoding="utf-8").read()
+    assert "from services.learner_model import GATE" in vocab_src
+    assert "gate: float = 0.6" not in vocab_src
+
+    socratic_src = open("services/socratic_service.py", encoding="utf-8").read()
+    assert "from services.learner_model import YELLOW" in socratic_src
+    assert "< 0.4 else" not in socratic_src

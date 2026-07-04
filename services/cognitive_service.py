@@ -31,6 +31,7 @@ from oprim.learning_metrics import (
 )
 from oskill.interleave_select import QuestionItem, interleave_select
 
+from services.learner_model import GATE
 from services.models import (
     EffortfulGain,
     InteractionEvent,
@@ -83,7 +84,7 @@ async def daily_report(db: AsyncSession, student_id: UUID, day=None) -> dict:
             select(func.count())
             .select_from(KCMastery)
             .where(KCMastery.student_id == student_id)
-            .where(KCMastery.p_mastery < 0.5)
+            .where(KCMastery.p_mastery < GATE)
         )
     ).scalar() or 0
 
@@ -378,7 +379,7 @@ async def weakness_roots(
     db: AsyncSession,
     student_id: UUID,
     *,
-    mastery_threshold: float = 0.6,
+    mastery_threshold: float = GATE,
     limit: int = 10,
 ) -> list[dict]:
     """前置图谱归因：对学生的薄弱知识点，沿 KU.prerequisites 上溯，找出

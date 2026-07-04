@@ -20,6 +20,7 @@ from omodul.socratic_session_workflow import (
     SocraticInput,
     socratic_session_workflow,
 )
+from services.learner_model import YELLOW
 from services.models import (
     KCMastery,
     SocraticMode,
@@ -63,7 +64,7 @@ async def start_session(
             ).scalar_one_or_none()
 
     p_mastery = mastery_row.p_mastery if mastery_row else 0.5
-    mode = "deep" if (p_mastery or 0) < 0.4 else "mixed"
+    mode = "deep" if (p_mastery or 0) < YELLOW else "mixed"
 
     session_id = uuid.uuid4()
     session = SocraticSession(

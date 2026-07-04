@@ -33,7 +33,7 @@ from services.logging_config import configure_logging, logger
 from obase.prior_provider import PriorProvider
 from obase.auth import decode_access_token
 from omodul.cognitive import InteractionInput
-from oprim.prereq_graph import topo_sort_by_prereq, fringe_status
+from oprim.prereq_graph import topo_sort_by_prereq
 from oprim.chinese_track import chinese_track as _chinese_track
 from services.learner_model import MASTERED as _MASTERED
 from oprim.calibration import brier_calibration
@@ -627,6 +627,17 @@ def _mastery_color(p: float | None) -> str:
     return mastery_color(p)
 
 
+def _fringe(
+    p_mastery: float | None,
+    prerequisites: list[str] | None,
+    mastery_map: dict[str, float | None],
+) -> str:
+    # L1 单源：委托 learner_model.fringe（阈值统一在那里，不直接调 oprim.prereq_graph）
+    from services.learner_model import fringe
+
+    return fringe(p_mastery, prerequisites, mastery_map)
+
+
 _FREQ_RANK = {"high": 2, "mid": 1, "low": 0}
 _MASTERY_RANK = {"red": 0, "yellow": 1, "unknown": 2, "green": 3}
 
@@ -706,7 +717,7 @@ async def list_knowledge_points(
             # KST fringe（掌握门控，U.24 教育理念01）：mastered/learning/learnable/locked；
             # 仅在有 student 且开关开启时有意义
             "fringe": (
-                fringe_status(mastery_map.get(ku.id), ku.prerequisites, mastery_map)
+                _fringe(mastery_map.get(ku.id), ku.prerequisites, mastery_map)
                 if student_id and fringe_enabled
                 else None
             ),
@@ -1482,7 +1493,9 @@ async def get_parent_overview(
         .scalars()
         .all()
     )
-    weak_kc = [r for r in rows if (r.p_mastery or 0) < 0.5]
+    from services.learner_model import GATE
+
+    weak_kc = [r for r in rows if (r.p_mastery or 0) < GATE]
     from services.cognitive_service import _get_streak_dict
 
     streak = await _get_streak_dict(db, student_id)
