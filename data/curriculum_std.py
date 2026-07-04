@@ -252,6 +252,15 @@ STD_NODES: list[dict] = [
         "kind": "unit",
     },
     {
+        "code": "GB-MATH-GZ-BX-GEOM-CPLX",
+        "seg": "GZ",
+        "stage": "BX",
+        "domain": "GM",
+        "topic": "GEOM",
+        "name": "复数",
+        "kind": "unit",
+    },
+    {
         "code": "GB-MATH-GZ-BX-GEOM-SOLID",
         "seg": "GZ",
         "stage": "BX",
