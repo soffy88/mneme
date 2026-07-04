@@ -849,6 +849,12 @@ Phase 3：K（合规）+ L（部署）
   ⏸ 已停手动任务（已生成 9 个，162 个待续，进度保留）。
   ⏰ 设本地 crontab 每天 01:00 自动跑 `scripts/run_enrich_gaoyi.sh`（含 Ollama 守护检测 + 5h 封顶 + 断点续 + UTF-8 wrapper），
      避开其它 AII 夜间 GPU 任务（2:30/4:00）。日志 `scripts/enrich_gaoyi_cron.log`。完成后跑 qc 验证、可 `crontab -e` 删行。
+  🚨 **2026-07-04 发现异常并修复**：该 crontab 条目只跑过一次（6-29，5h 封顶正常结束），此后从
+  crontab 里完全消失（只剩备份任务），162/171 个高一 KU 一直没继续补。根因未查明——机器
+  6-29 后重启过 4 次，journalctl 日志轮转已覆盖不到当时的 crontab 变更记录，也无权限读
+  `/var/spool/cron/crontabs/` 核对备份，只能推测可能是后续加备份任务的 crontab 写入意外
+  覆盖掉了这行（不确定）。已重新把这行加回 crontab（`0 1 * * * ... run_enrich_gaoyi.sh ...`），
+  与备份任务共存于同一 crontab；后续如再发现任务莫名消失，先查是否又被其它 crontab 写入覆盖。
 
 - [x] **R.12 [P2] MathText 扩面 + 家长端每周摘要复用** ✅ 2026-06-28
   ✅ MathText 接到更多展示点：`SocraticDialog`(AI 追问含公式，流式逐段渲染) + `MathPractice` 标题。累计渲染点：补救阶梯/KUDetailPanel描述/苏格拉底/练习页。
