@@ -29,11 +29,23 @@ from services.models import KCMastery, KnowledgeUnit, Textbook, WrongQuestion
 # ── 常量 ────────────────────────────────────────────────────────────────────
 
 from services.learner_model import GATE as MASTERY_THRESHOLD  # L1 单源(=0.6)
+
 _NEAR_EXAM_DAYS = 14  # 距考 ≤ 此天数进入临考窗口：停推新知，向复习/巩固倾斜
 MINUTES_PER_REVIEW_KU = 5
 MINUTES_PER_WQ = 5
 MINUTES_PER_WEAK_KU = 15
 MINUTES_PER_NEW_KU = 20
+
+# L5 会话时间设计（2026-07-04，对照教育架构评审 U.20）
+_LATE_NIGHT_HOUR = 22
+_LATE_NIGHT_MINUTE = 30  # 22:30 后不排新任务（睡眠巩固优先）——比 mission_service 23:00
+# 的"直接休息"更早一步，先只停推新知，仍可完成已在进行的复习/巩固
+DEFAULT_SUGGESTED_BREAK_MINUTES = 25  # 连续学习 25 分钟建议柔性中断
+
+
+def _is_late_night(now: datetime) -> bool:
+    return (now.hour, now.minute) >= (_LATE_NIGHT_HOUR, _LATE_NIGHT_MINUTE)
+
 
 ALL_SUBJECTS = ["math", "physics", "english", "chinese"]
 
@@ -58,12 +70,16 @@ async def build_daily_plan(
     student_id: uuid.UUID,
     subject: Optional[str] = None,
     now: Optional[datetime] = None,
+    budget_minutes: Optional[int] = None,
 ) -> dict:
     """
     生成该学生的每日计划任务列表。
 
     subject=None  → 所有科目混排（首页）
     subject=xxx   → 单科过滤（学科页）
+    budget_minutes=None（默认）→ 不裁剪，保持既有行为（避免悄悄改变已接入前端的响应形状）；
+                    传入具体分钟数 → 按 priority 顺序贪心纳入任务，超预算的任务整体砍掉
+                    （不拆分单任务），砍掉的任务列在 dropped_tasks 里，不静默丢弃。
     """
     if now is None:
         now = datetime.now(timezone.utc)
@@ -80,6 +96,9 @@ async def build_daily_plan(
         exam_countdown_days = (exam_date - now.date()).days
         # 临考窗口内（还剩 0–14 天）：停推新知，把精力压到复习/薄弱巩固
         near_exam = 0 <= exam_countdown_days <= _NEAR_EXAM_DAYS
+
+    # ── 0.5 会话时间设计（L5，U.20）：22:30 后不排新任务，睡眠巩固优先 ──────────
+    late_night = _is_late_night(now)
 
     # ── 1. 拉取该学生所有 kc_mastery ──────────────────────────────────────
     masteries: list[KCMastery] = list(
@@ -203,10 +222,11 @@ async def build_daily_plan(
 
     # ── P4: 新知识点（按科目过滤，遵守 prerequisites）────────────────────
     # 考期感知（06）：临考窗口内停推新知，把时间压到复习/薄弱巩固（分布式练习向巩固倾斜）。
+    # 会话时间设计（U.20）：22:30 后同样停推新知（睡眠巩固优先）。
     new_by_subject: dict[str, list[KnowledgeUnit]] = {}
     for ku in ku_rows:
-        if near_exam:
-            break  # 临考不学新
+        if near_exam or late_night:
+            break  # 临考或深夜不学新
         if ku.id in known_kp_set:
             continue  # 已接触过
         tb = tb_map.get(ku.textbook_id)
@@ -257,6 +277,22 @@ async def build_daily_plan(
     subject_order = {s: i for i, s in enumerate(ALL_SUBJECTS)}
     tasks.sort(key=lambda t: (t["priority"], subject_order.get(t["subject"], 99)))
 
+    # ── 6.5 会话预算裁剪（L5 会话时间设计，U.20）：按 priority 顺序贪心纳入，
+    #        不拆分单个任务；预算内至少保留第一个任务，避免预算过小导致计划整体清零。
+    dropped_tasks: list[dict] = []
+    if budget_minutes is not None:
+        kept: list[dict] = []
+        used = 0
+        for t in tasks:
+            if not kept or used + t["estimated_minutes"] <= budget_minutes:
+                kept.append(t)
+                used += t["estimated_minutes"]
+            else:
+                dropped_tasks.append(
+                    {"type": t["type"], "subject": t["subject"], "title": t["title"]}
+                )
+        tasks = kept
+
     # ── 7. subjects_summary ────────────────────────────────────────────────
     summary_map: dict[str, dict] = {}
     for t in tasks:
@@ -275,6 +311,10 @@ async def build_daily_plan(
         "date": now.date().isoformat(),
         "exam_countdown_days": exam_countdown_days,  # 06 考期感知
         "near_exam": near_exam,
+        "late_night": late_night,  # U.20 会话时间设计：22:30 后不排新任务
+        "suggested_break_minutes": DEFAULT_SUGGESTED_BREAK_MINUTES,  # U.20 建议柔性中断
+        "budget_minutes": budget_minutes,
+        "dropped_tasks": dropped_tasks,  # U.20 预算裁剪掉的任务（如实记录，不静默丢弃）
         "subjects_summary": subjects_summary,
         "tasks": tasks,
         "interleaved_queue": interleaved_queue,

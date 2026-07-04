@@ -598,3 +598,94 @@ async def test_p1_estimated_minutes_per_ku(db, student):
     assert len(review_tasks) == 1
     assert review_tasks[0]["estimated_minutes"] == 10
     assert len(review_tasks[0]["ku_ids"]) == 2
+
+
+# ── U.20 会话时间设计：late_night / budget_minutes ────────────────────────────
+
+
+@pytest.mark.asyncio
+async def test_late_night_suppresses_new_learn(db, student, ku_seed):
+    """22:30 后不排新任务：new_learn 任务应被停推（同 near_exam 机制）。"""
+    late = datetime(2026, 7, 4, 22, 45, tzinfo=timezone.utc)
+    plan = await build_daily_plan(db, student, now=late)
+    assert plan["late_night"] is True
+    new_tasks = [t for t in plan["tasks"] if t["type"] == "new_learn"]
+    assert len(new_tasks) == 0
+
+
+@pytest.mark.asyncio
+async def test_before_late_night_still_recommends_new_learn(db, student, ku_seed):
+    """22:29 仍在正常时段：new_learn 任务照常出现。"""
+    before = datetime(2026, 7, 4, 22, 29, tzinfo=timezone.utc)
+    plan = await build_daily_plan(db, student, now=before)
+    assert plan["late_night"] is False
+    new_tasks = [t for t in plan["tasks"] if t["type"] == "new_learn"]
+    assert len(new_tasks) >= 1
+
+
+@pytest.mark.asyncio
+async def test_budget_minutes_none_keeps_all_tasks_and_empty_dropped(
+    db, student, ku_seed
+):
+    """budget_minutes 不传（默认）：不裁剪，dropped_tasks 为空——不悄悄改变既有行为。"""
+    plan = await build_daily_plan(db, student)
+    assert plan["budget_minutes"] is None
+    assert plan["dropped_tasks"] == []
+    assert plan["suggested_break_minutes"] == 25
+
+
+@pytest.mark.asyncio
+async def test_budget_minutes_truncates_lower_priority_tasks(db, student):
+    """预算裁剪：P1到期(10分钟)+P3薄弱(15分钟)=25分钟，预算10分钟时只留P1，P3 记入 dropped_tasks。"""
+    db.add(
+        KCMastery(
+            student_id=student,
+            knowledge_point="GDMATH-SET-01",
+            p_mastery=0.8,
+            p_init=0.45,
+            p_transit=0.35,
+            p_guess=0.25,
+            p_slip=0.08,
+            fsrs_card_json=_fsrs_card(overdue_days=2),
+        )
+    )
+    db.add(
+        KCMastery(
+            student_id=student,
+            knowledge_point="GDMATH-SET-02",
+            p_mastery=0.3,
+            p_init=0.3,
+            p_transit=0.3,
+            p_guess=0.15,
+            p_slip=0.1,
+        )
+    )
+    await db.commit()
+
+    plan = await build_daily_plan(db, student, budget_minutes=10)
+    types = [t["type"] for t in plan["tasks"]]
+    assert types == ["review"]
+    assert plan["dropped_tasks"]
+    assert plan["dropped_tasks"][0]["type"] == "weak_practice"
+
+
+@pytest.mark.asyncio
+async def test_budget_minutes_always_keeps_first_task_even_if_oversized(db, student):
+    """预算过小（小于任何单任务耗时）时仍至少保留第一个任务，避免计划整体清零。"""
+    db.add(
+        KCMastery(
+            student_id=student,
+            knowledge_point="GDMATH-SET-01",
+            p_mastery=0.8,
+            p_init=0.45,
+            p_transit=0.35,
+            p_guess=0.25,
+            p_slip=0.08,
+            fsrs_card_json=_fsrs_card(overdue_days=2),
+        )
+    )
+    await db.commit()
+
+    plan = await build_daily_plan(db, student, budget_minutes=1)
+    assert len(plan["tasks"]) == 1
+    assert plan["tasks"][0]["type"] == "review"

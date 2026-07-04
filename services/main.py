@@ -469,6 +469,43 @@ async def get_mastery_curve(
     }
 
 
+@app.get("/v1/mastery/gate-check/{student_id}/{ku_id}")
+async def get_mastery_gate_check(
+    student_id: UUID,
+    ku_id: str,
+    _auth: User = Depends(require_student_access),
+    db: AsyncSession = Depends(get_db),
+):
+    """GET /v1/mastery/gate-check/{student_id}/{ku_id} — U.17 掌握裁决（发起）。
+
+    现场生成一道内核核验题（不落库、不进练习池），从不返回答案。
+    """
+    from services.mastery_gate_service import start_gate_check
+
+    return await start_gate_check(db, student_id, ku_id)
+
+
+class MasteryGateSubmitReq(BaseModel):
+    student_answer: str
+
+
+@app.post("/v1/mastery/gate-check/{student_id}/{ku_id}")
+async def post_mastery_gate_check(
+    student_id: UUID,
+    ku_id: str,
+    req: MasteryGateSubmitReq,
+    _auth: User = Depends(require_student_access),
+    db: AsyncSession = Depends(get_db),
+):
+    """POST /v1/mastery/gate-check/{student_id}/{ku_id} — U.17 掌握裁决（提交）。
+
+    答对 → mastery_confirmed=True（独立于 BKT p_mastery，不改动算法状态）。
+    """
+    from services.mastery_gate_service import submit_gate_check
+
+    return await submit_gate_check(db, student_id, ku_id, req.student_answer)
+
+
 @app.get("/v1/mastery/{student_id}")
 async def get_mastery(
     student_id: UUID,
@@ -758,11 +795,45 @@ async def get_knowledge_point(
         "question_types": ku.question_types,
         "ku_type": ku.ku_type,
         "curriculum_standard": ku.curriculum_standard,
+        "exam_region_tags": ku.exam_region_tags,  # U.21 骨架
+        "textbook_edition_variant_of": ku.textbook_edition_variant_of,  # U.21 骨架
         "mastery_levels": ku.mastery_levels,
         "p_mastery": mastery_map.get(ku_id),
         "mastery_color": _mastery_color(mastery_map.get(ku_id)),
         "prereq_mastery": prereq_mastery,
         "rich_content": ku.rich_content,
+    }
+
+
+@app.get("/v1/curriculum-standards/{code}/kus")
+async def get_kus_by_curriculum_standard(
+    code: str,
+    current_user: User = Depends(get_current_user),
+    db: AsyncSession = Depends(get_db),
+):
+    """GET /v1/curriculum-standards/{code}/kus — U.21 课标反查：哪些 KU 挂了这个课标编码。
+
+    双向映射的"反向"一侧（KU→课标已在 /v1/knowledge-points/{ku_id} 的 curriculum_standard
+    字段里）；code 的合法性/节点信息见 data/curriculum_std.py（义教2022/高中2017课标骨架，
+    数学 only，其余学科暂无课标编码体系）。
+    """
+    from data.curriculum_std import get_node
+
+    node = get_node(code)
+    rows = (
+        (
+            await db.execute(
+                select(KnowledgeUnit).where(KnowledgeUnit.curriculum_standard == code)
+            )
+        )
+        .scalars()
+        .all()
+    )
+    return {
+        "code": code,
+        "node": node,  # None = 不是已知合法编码（不代表查询失败，只是未登记）
+        "kus": [{"id": ku.id, "name": ku.name} for ku in rows],
+        "count": len(rows),
     }
 
 
@@ -985,20 +1056,27 @@ async def post_complete_mission(
 async def get_daily_plan(
     student_id: UUID,
     subject: Optional[str] = Query(None),
+    budget_minutes: Optional[int] = Query(
+        None, description="U.20 会话预算：不传则不裁剪（保持既有行为）"
+    ),
     _auth: User = Depends(require_student_access),
     db: AsyncSession = Depends(get_db),
 ):
-    """GET /v1/daily-plan/{student_id}?subject=xxx — 每日学习计划规则引擎。
+    """GET /v1/daily-plan/{student_id}?subject=xxx&budget_minutes=25 — 每日学习计划规则引擎。
     鉴权：学生本人或绑定家长（原先只验登录不验归属）。
 
     subject 不传 → 所有科目汇总（首页用）
     subject=math  → 单科详细（学科页用）
+    budget_minutes 不传 → 不裁剪（默认，避免悄悄改变现有前端响应）；
+    传入则按 20-30 分钟量级的会话预算贪心裁剪任务列表（U.20 L5 会话时间设计）。
 
     优先级：P1 FSRS到期 > P2 错题 > P3 薄弱 > P4 新知识点
     """
     from services.daily_plan_service import build_daily_plan
 
-    return await build_daily_plan(db, student_id, subject=subject)
+    return await build_daily_plan(
+        db, student_id, subject=subject, budget_minutes=budget_minutes
+    )
 
 
 # ===== §F.0 努力收益看板（M-F）=====

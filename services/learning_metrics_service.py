@@ -68,6 +68,21 @@ async def compute_learning_metrics(db: AsyncSession) -> dict:
     else:
         overconfidence = None
 
+    # ── 迁移率：迁移探针(U.18，现场生成不落库，同 KU 新实例)实测正确率 ──────────
+    transfer_rows = (
+        await db.execute(
+            select(InteractionEvent.is_correct).where(
+                InteractionEvent.source == InteractionSource.transfer_probe
+            )
+        )
+    ).all()
+    n_transfer = len(transfer_rows)
+    transfer_rate = (
+        round(sum(1 for (c,) in transfer_rows if c) / n_transfer, 4)
+        if n_transfer
+        else None
+    )
+
     return {
         "mastery_speed": mastery_speed,  # 已掌握 KU / 学习小时
         "mastery_speed_detail": {
@@ -78,9 +93,12 @@ async def compute_learning_metrics(db: AsyncSession) -> dict:
         "delayed_retention_n": n_probe,
         "calibration_overconfidence": overconfidence,  # >0=高估, 目标趋 0
         "calibration_n": n_jol,
-        # 迁移率需与练习池物理隔离的远迁移题池；暂缺题池 → None
-        "transfer_rate": None,
-        "transfer_note": "需与练习池物理隔离的远迁移题池（L3），暂未建",
+        "transfer_rate": transfer_rate,  # 迁移探针实测正确率
+        "transfer_rate_n": n_transfer,
+        "transfer_note": (
+            "U.18：现场生成同 KU 新实例变式（near transfer），非跨 KU/新情境的"
+            "远迁移（far transfer）；真远迁移题池需教研设计，暂未建"
+        ),
     }
 
 

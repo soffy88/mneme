@@ -4,6 +4,12 @@ Async, single LLM call.
 After the LLM response, the answer field is ALWAYS cleared (forced empty)
 and kernel_verified is set to False — the variant must be verified separately.
 
+2026-07-04: added `expression` — an LLM-proposed sympy-parseable symbolic form
+of the variant, passed through UNVERIFIED (same untrusted status as `answer`).
+Callers that need a real kernel_verified/answer must independently solve
+`expression` (see oskill.variant_for_review) — this oprim never verifies its
+own output (oprims stay single-call/stateless, no oprim-calls-oprim).
+
 Version: oprim v3.5.0
 """
 
@@ -62,6 +68,11 @@ class VariantItem:
     variant_type : str
     success : bool
     error : str
+    expression : str
+        LLM-proposed sympy-parseable symbolic form of the variant (e.g.
+        "x**2 - 5*x + 6 < 0"), for a caller to independently kernel-verify.
+        UNVERIFIED — same untrusted status as `answer`; empty if the LLM
+        didn't provide one or the question has no clean symbolic form.
     """
 
     question: str = ""
@@ -72,15 +83,20 @@ class VariantItem:
     variant_type: str = "same_structure"
     success: bool = True
     error: str = ""
+    expression: str = ""
 
 
 _VARIANT_SYSTEM = (
     "You are a math question generator. Create a variant of the given math question "
     "that tests the same knowledge components but uses different numbers, contexts, "
     "or slightly different structures. "
-    "Return JSON: {\"question\": str, \"answer\": str, \"difficulty\": \"easy|medium|hard\", "
-    "\"kc_ids\": [str]}. "
-    "The answer field will be discarded for verification purposes."
+    'Return JSON: {"question": str, "answer": str, "expression": str, '
+    '"difficulty": "easy|medium|hard", "kc_ids": [str]}. '
+    '"expression" is a clean sympy-parseable symbolic form of the question '
+    '(e.g. "x**2 - 5*x + 6 < 0"), leave it empty if the question has no such '
+    "clean symbolic form (e.g. word problems without a single equation). "
+    "The answer field will be discarded for verification purposes; expression "
+    "will be independently solved by a symbolic kernel, not trusted from you either."
 )
 
 
@@ -141,19 +157,20 @@ async def generate_variant(
         data = json.loads(raw)
         item = VariantItem(
             question=data.get("question", ""),
-            answer="",              # 强制清空，不论 LLM 返回什么
+            answer="",  # 强制清空，不论 LLM 返回什么
             kernel_verified=False,  # 强制
             kc_ids=data.get("kc_ids", inp.kc_ids),
             difficulty=data.get("difficulty", "medium"),
             variant_type=inp.variant_type,
             success=True,
+            expression=data.get("expression", ""),  # 同样未受信，交调用方独立核验
         )
         return item
 
     except Exception as exc:
         return VariantItem(
-            answer="",             # 强制清空
-            kernel_verified=False, # 强制
+            answer="",  # 强制清空
+            kernel_verified=False,  # 强制
             success=False,
             error=str(exc),
         )

@@ -998,14 +998,72 @@ Phase 3：K（合规）+ L（部署）
 - [x] **U.16 arch/l3-wire-misconception** practice/submit 答错回挂误解诊断（seed 触达学生）
 
 ### 待办（对照评审文档核实后新记，尚未落地）
-- [ ] **U.17 [P1] L3 掌握裁决题池物理隔离** —— 现掌握判定与练习池未隔离，存在"背答案"污染掌握裁决的风险
-- [ ] **U.18 [P1] L3 远迁移探针题池** —— 现仅有留存探针（T.2），无迁移探针，L0 迁移率指标无数据源
+- [x] **U.17 [P1] L3 掌握裁决题池物理隔离** ✅ 2026-07-04
+  ✅ 方案：现场生成不落库（用户批准）。`kc_mastery` 新增 `mastery_confirmed`/`mastery_confirmed_at`
+  （migration 00fd98e3ad80，独立于 BKT p_mastery，算法状态不动）；`services/mastery_gate_service.py`：
+  `start_gate_check`（p_mastery≥MASTERED(0.7) 才 eligible → 现场生成一道内核核验题，答案缓存 Redis
+  30min TTL，**从不落库/从不进练习池/从不返回答案**）+ `submit_gate_check`（判对才 mastery_confirmed=True）；
+  `GET/POST /v1/mastery/gate-check/{sid}/{ku_id}`；`learner_model.get_mastery` 补 `mastery_confirmed` 字段。
+  ⚠️ **过程中发现并修复一个真实死代码 bug**（阻塞本任务，已获用户批准顺带修）：`oprim.generate_variant`
+  强制清空 answer/kernel_verified 后，**从无任何调用方补做独立求解验证**——导致 review_service（T.2/R.14/R.15
+  已上线功能）"只有 kernel_verified 才展示变式，否则同题复现"的判断恒为假，静默恒等降级，从未真正展示过
+  变式题。修复：`generate_variant` 新增 `expression` 字段（LLM 提议的 sympy 可解形式，同样不受信）；
+  `variant_for_review`（oskill）新增独立核验——调 sibling oskill `solve_and_visualize` 对 expression
+  求解，成功才置信 kernel_verified/answer，失败保持原样（不引入新失败模式，不落库）。改动在共享平台包
+  platform/3O（无 git，hicode 共享，已确认 hicode 不依赖这两个函数）；同步 vendor 镜像。
+  9+3 新测试（掌握裁决门槛/裁决题池隔离/答案不泄露/BKT状态不受影响 + variant 核验的可解/不可解/表达式
+  非法三态）；pytest 404 passed（+12）/3 skipped，check.sh 全绿。
+  ⚠️ 容器需 rebuild 才让 platform/3O 改动在 :8000 生效（同 R.9 先例，pytest 走 vendor/ 已验证正确）。
+- [x] **U.18 [P1] L3 远迁移探针题池** ✅ 2026-07-04
+  ✅ `InteractionSource` 加 `transfer_probe` 枚举值（migration 1a2b3c4d5e6f）；
+  `services/transfer_probe_service.py`：sha256(学生+日期) 确定性门（约1/20天，与 T.2 保留探针
+  独立盐值不撞车）→ 选已掌握(p_mastery≥MASTERED)且最近14天未测过的 KU → 现场调
+  `variant_for_review`（复用 U.17 修复的真实内核核验）生成全新变式题 → 只有 kernel_verified 才
+  用，答案缓存 Redis（不落库、不进 practice/generate 静态题库）；生成失败/无合适 KU 一律优雅返回
+  None，不硬凑。接入 `review_service.get_due_variants`（**独立于 generate_variants 参数**——否则
+  会重蹈 R.14/R.15 变式功能"默认关=永远不触发"的覆辙）；`_probe_context`/`_answer_for_review` 优先
+  识别迁移探针缓存（判分用探针的新答案，不用原题答案）；`learning_metrics_service.transfer_rate`
+  从硬编码 None 接上真实探针数据源。
+  ⚠️ **如实标注局限**：现无跨 KU 组合/新情境生成能力，这里的"迁移"是**同 KU 新实例迁移**（near
+  transfer：全新数字/表述），不是教育文献意义上的**远迁移**（far transfer：新情境/跨知识点组合）——
+  真远迁移题池需要教研设计"如何定义新情境""如何组合 KU"，超出本次工程范围。
+  7 新测试（门控确定性/门未开返回None/无掌握KU返回None/未核验返回None/生成成功缓存答案/
+  端到端队列+判分识别source+按新答案判分/迁移率指标接入）；pytest 411 passed（+7）/3 skipped，
+  check.sh 全绿。同 U.17，容器需 rebuild 才让 platform/3O 改动在 :8000 生效。
 - [ ] **U.19 [P2] L4 物理概念优先范式**（FCI式诊断→认知冲突→计算迁移）/**英语习得型范式**（词汇FSRS+
   分级泛读 i+1）—— 现物理/英语仍走通用引导入口，未独立范式化
-- [ ] **U.20 [P1] L5 会话时间设计** —— 20-30分钟/日预算感知调度 + 25分钟柔性中断 + 22:30后不排新任务
-  （睡眠巩固证据优先于临考压缩），现无实现
-- [ ] **U.21 [P1] L7 KU↔课标双向映射表规模化** —— 现仅 29/11646 KU 挂课标，教材版本适配层、中高考区域
-  变体标签、题库诊断化改造（按曝光量滚动）均未开始
+- [x] **U.20 [P1] L5 会话时间设计** ✅ 2026-07-04
+  ✅ `daily_plan_service.build_daily_plan` 新增 `budget_minutes`（可选，不传则不裁剪，避免悄悄改变
+  已接入前端的响应形状）：传入时按 priority 顺序贪心纳入任务，超预算的整体砍掉（不拆分单任务），
+  砍掉的任务记入 `dropped_tasks`（如实记录不静默丢弃）；预算内至少保留第一个任务，避免过小预算把
+  计划清零。`GET /v1/daily-plan/{sid}?budget_minutes=25` 透传。
+  ✅ 22:30 后不排新任务：`_is_late_night` 同 near_exam 机制停推 P4 新知识点，响应加 `late_night` 字段
+  （比 mission_service 23:00 的"直接休息"更早一步，只停新知，复习/巩固仍可继续）。
+  ✅ `suggested_break_minutes`（默认25）随响应返回，供前端渲染柔性中断提示——25分钟柔性中断本身是
+  前端计时器交互，属于 mneme-web（真前端）范畴，本仓库只提供后端建议值，未跨仓库实现前端交互。
+  5 新测试（late_night 触发/未触发、budget=None 不裁剪、budget 裁剪低优先级、budget 过小仍保底一个
+  任务）；pytest 392 passed（+5）/3 skipped，check.sh 全绿。
+- [~] **U.21 [P1] L7 KU↔课标双向映射表规模化（骨架+小规模试点，未全量）** 🔄 2026-07-04
+  核实纠正：实测 `knowledge_units` 表 11646 个 KU 只有 **5 个**打了 `curriculum_standard`（此前说的
+  "29个"是旧 GDMATH KC 字典的另一套系统，与 knowledge_units 无关）。方案：只建 schema/API 骨架+小
+  规模试点（用户批准），不做全量批量标注（同 rich_content 先例，属外部 LLM 依赖的内容量产任务）。
+  ✅ `knowledge_units` 新增 `exam_region_tags`（中高考区域变体标签，JSONB list，默认[]）+
+  `textbook_edition_variant_of`（教材版本适配层骨架，自引用可空字符串）（migration 4bc93a14fea8）。
+  ✅ `GET /v1/curriculum-standards/{code}/kus`：课标反查 KU（双向映射的反向一侧；正向已有
+  `/v1/knowledge-points/{ku_id}.curriculum_standard`）；`/v1/knowledge-points/{ku_id}` 补
+  `exam_region_tags`/`textbook_edition_variant_of` 字段。
+  ✅ `scripts/tag_curriculum_standard_pilot.py`：小规模试点脚本（LLM 从 `data/curriculum_std.py`
+  既有课标节点里选码+`is_valid_std_code`校验+落库，不合法/选不出优雅跳过不硬凑），支持
+  `--textbook-id`/`--limit`/`--dry-run`。
+  ⚠️ **试点脚本本次未能实际标出数据（外部环境阻塞，非工程缺口）**：容器内 Ollama
+  (`host.docker.internal:11434`) connection refused（宿主 Ollama 疑似只绑定 127.0.0.1，docker
+  网桥进来的请求连不上，非应用代码问题）；DeepSeek key 401 invalid。两条 LLM 通路都不可用，
+  未做进一步host网络改动（超出本次工程范围）。管道本身（校验/落库/API 反查）已用真实合法编码
+  手工验证跑通（见测试）。
+  6 新测试（U.20 相关略）+ 3 个 U.21 专属（默认值/未知编码反查/已标注编码反查）；pytest 414
+  passed（+3）/3 skipped，check.sh 全绿。
+  待续：LLM 通路恢复后先跑 `--dry-run` 抽查质量，再正式量产（数学~11600 个 KU，其余学科暂无
+  课标编码体系，需先扩 `data/curriculum_std.py`）；题库诊断化改造（按曝光量滚动）未开始。
 - [x] **U.22 [P0] L8 红队 CI 越狱门禁** ✅ 2026-07-03
   ✅ **essay_guide 从零拦截补到有拦截**（最大缺口）：新增 `_looks_like_handoff` 检测——代写交接措辞
   （"帮你改写/直接给你写"等）+ 超长(>80字符)且不含引导问句特征的整段文本，命中即替换为引导语并标记

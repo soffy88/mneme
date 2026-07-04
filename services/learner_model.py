@@ -91,16 +91,32 @@ def get_zpd_band(p_mastery: Optional[float], theta: Optional[float] = None) -> d
 
 
 async def get_mastery(db: AsyncSession, student_id: UUID, ku_id: str) -> dict:
-    """单 KU 掌握读门面：{p, evidence_n, started}。上层只读这里，不自算。"""
+    """单 KU 掌握读门面：{p, evidence_n, started, mastery_confirmed}。上层只读这里，不自算。
+
+    mastery_confirmed（U.17）是独立于 p（BKT 持续估计）的裁决状态，只由
+    mastery_gate_service 的隔离裁决题判定写入，不随日常练习/复习自动变化。
+    """
     row = (
         await db.execute(
-            select(KCMastery.p_mastery, KCMastery.n_attempts).where(
+            select(
+                KCMastery.p_mastery, KCMastery.n_attempts, KCMastery.mastery_confirmed
+            ).where(
                 KCMastery.student_id == student_id,
                 KCMastery.knowledge_point == ku_id,
             )
         )
     ).first()
     if row is None:
-        return {"p": None, "evidence_n": 0, "started": False}
-    p, n = row
-    return {"p": p, "evidence_n": int(n or 0), "started": True}
+        return {
+            "p": None,
+            "evidence_n": 0,
+            "started": False,
+            "mastery_confirmed": False,
+        }
+    p, n, confirmed = row
+    return {
+        "p": p,
+        "evidence_n": int(n or 0),
+        "started": True,
+        "mastery_confirmed": bool(confirmed),
+    }

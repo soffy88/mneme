@@ -105,7 +105,17 @@ async def _probe_context(
     探针判据（与队列侧混入规则一致，无须前端回传标记）：该 KC 的卡片**未到期**
     （正常复习队列只发到期卡）且距上次 FSRS 复习 ≥24h（排除到期复习刚提交后的
     重复提交被误判）。是探针则算出**此刻**的 FSRS 预测可提取性 R（用该生实际
-    生效的个性化权重，与调度同口径）随事件落库。"""
+    生效的个性化权重，与调度同口径）随事件落库。
+
+    U.18 迁移探针优先判定：Redis 里若缓存着该 (student, kc) 的迁移探针答案
+    （由 transfer_probe_service 现场生成时写入），说明这就是一道迁移探针，
+    直接返回 source="transfer_probe"（不需要 predicted_r，那是 FSRS 保留探针
+    专属概念）——优先于下面的保留探针时序判定，避免同一 KU 被误判成保留探针。"""
+    from services.transfer_probe_service import get_cached_transfer_probe_answer
+
+    if await get_cached_transfer_probe_answer(student_id, kc_id):
+        return "transfer_probe", None
+
     now = now or datetime.now(timezone.utc)
     card = (
         await db.execute(
@@ -161,8 +171,14 @@ async def _cache_variant_answer(student_id: uuid.UUID, kc_id: str, answer: str) 
 async def _answer_for_review(
     db: AsyncSession, student_id: uuid.UUID, kc_id: str
 ) -> str:
-    """判分/揭示用的答案：优先取"本次展示的内核已验证变式答案"（Redis），
-    否则回退原错题答案（同题复现路径，题面=原题，答案天然一致）。"""
+    """判分/揭示用的答案：优先取 U.18 迁移探针的内核答案，其次取"本次展示的内核
+    已验证变式答案"（Redis），否则回退原错题答案（同题复现路径，题面=原题，答案天然一致）。"""
+    from services.transfer_probe_service import get_cached_transfer_probe_answer
+
+    transfer_answer = await get_cached_transfer_probe_answer(student_id, kc_id)
+    if transfer_answer:
+        return str(transfer_answer)
+
     import redis.asyncio as aioredis
 
     r = aioredis.from_url(settings.REDIS_URL, decode_responses=True)
@@ -295,6 +311,18 @@ async def get_due_variants(
                     "fsrs_interval": (probe.fsrs_card_json or {}).get("stability", 0),
                 }
             )
+
+    # 迁移探针（U.18）：独立于 generate_variants 参数——它是这条队列里**唯一**必须
+    # 现场生成才有意义的项（同题复现无法测迁移），由自己的概率门（约1/20天）控制
+    # 调用频率，与"是否愿意为常规变式付 LLM 成本"的参数解耦，否则默认关闭的
+    # generate_variants 会让 U.18 和 R.14/R.15 一样变成永远不触发的死配置。
+    from services.transfer_probe_service import maybe_build_transfer_probe
+
+    transfer_item = await maybe_build_transfer_probe(
+        db, student_id, masteries, caller=caller, now=now
+    )
+    if transfer_item is not None:
+        due_items.append(transfer_item)
 
     if due_items:
         # 4. Wrap with due_recall_push (omodul)

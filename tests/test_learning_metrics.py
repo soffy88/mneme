@@ -27,7 +27,7 @@ async def test_learning_metrics_shape():
         "transfer_rate",
     ):
         assert k in m
-    # 迁移率暂缺题池 → None + 说明
+    # 迁移探针题池已建（U.18），但本次聚合口径下暂无 transfer_probe 事件 → None + 说明
     assert m["transfer_rate"] is None and "转移" not in m  # 有 note
     assert "transfer_note" in m
     # 数值型或 None（不编数）

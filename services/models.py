@@ -58,6 +58,9 @@ class InteractionSource(str, enum.Enum):
     review = "review"
     socratic = "socratic"
     probe = "probe"  # 保留探针：远未到期的稳定卡混入复习队列，实测召回 vs 预测 R
+    # U.18 迁移探针：已掌握 KU 现场生成的全新核验变式（不落库/不进练习池），
+    # 混入复习队列测"同 KU 新实例迁移"（near transfer；非跨 KU 远迁移，见 transfer_probe_service）。
+    transfer_probe = "transfer_probe"
     # FIRe-lite 前置信用回写（M-H §4.8）：综合题答对顺延前置 due 的记账事件。
     # 非真实作答：不进 BKT/FSRS 重放/校准/学习量统计，且不得再触发 FIRe（不级联）。
     fire_credit = "fire_credit"
@@ -113,7 +116,9 @@ class User(Base):
     grade: Mapped[Optional[str]] = mapped_column(String(10))
     province: Mapped[Optional[str]] = mapped_column(String(10), server_default="广东")
     exam_date: Mapped[Optional[date]] = mapped_column(Date)  # 考期感知(06)
-    share_process_with_parent: Mapped[bool] = mapped_column(Boolean, server_default=text("false"))  # L6 隐私分层
+    share_process_with_parent: Mapped[bool] = mapped_column(
+        Boolean, server_default=text("false")
+    )  # L6 隐私分层
     invite_code: Mapped[Optional[str]] = mapped_column(String(6), unique=True)
     created_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True), server_default=text("now()")
@@ -264,6 +269,14 @@ class KCMastery(Base):
     n_attempts: Mapped[Optional[int]] = mapped_column(Integer, server_default="0")
     updated_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True), server_default=text("now()")
+    )
+    # U.17 掌握裁决题池隔离：与 BKT p_mastery 分离的独立裁决状态，只由
+    # mastery_gate_service 现场生成的题目（不落库、不进练习池）判定写入。
+    mastery_confirmed: Mapped[bool] = mapped_column(
+        Boolean, server_default=text("false"), nullable=False
+    )
+    mastery_confirmed_at: Mapped[Optional[datetime]] = mapped_column(
+        DateTime(timezone=True)
     )
 
 
@@ -726,6 +739,17 @@ class KnowledgeUnit(Base):
     curriculum_standard: Mapped[Optional[str]] = mapped_column(Text, nullable=True)
     mastery_levels: Mapped[list] = mapped_column(
         JSONB, server_default=text("'[]'::jsonb")
+    )
+    # U.21 骨架（2026-07-04，只搭骨架+小规模试点，未做全量批量标注）：
+    # 中高考区域变体标签（如 ["广东","全国甲卷"]）——该 KU 在这些地区考纲/题型上有
+    # 显著差异，供考期感知调度（T.7）未来按地区细化用；默认空 = 未标注，非"无差异"。
+    exam_region_tags: Mapped[list] = mapped_column(
+        JSONB, server_default=text("'[]'::jsonb")
+    )
+    # 教材版本适配层骨架：指向"同一课标条目下的另一版本教材 KU"（如人教版 vs 北师大版
+    # 同一知识点），自引用、可空。默认为空 = 未建立跨版本关联（不代表无对应版本）。
+    textbook_edition_variant_of: Mapped[Optional[str]] = mapped_column(
+        String(100), nullable=True
     )
     rich_content: Mapped[Optional[dict]] = mapped_column(JSONB, nullable=True)
     # 提取可信度（item 2，防 AI 幻觉污染学习）：

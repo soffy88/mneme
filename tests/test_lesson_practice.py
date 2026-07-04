@@ -239,6 +239,72 @@ async def test_get_single_ku_with_prereq_mastery(seed_ku, student):
     assert any(p["ku_id"] == seed_ku["ku1_id"] for p in d["prereq_mastery"])
 
 
+# ── tests: U.21 课标映射骨架 ───────────────────────────────────────────────────
+
+
+@pytest.mark.asyncio
+async def test_ku_detail_exposes_u21_fields_default_empty(seed_ku, student):
+    """未标注时 exam_region_tags=[]、textbook_edition_variant_of=None（默认值，非缺失字段）。"""
+    _, token = student
+    async with AsyncClient(
+        transport=ASGITransport(app=app), base_url="http://test"
+    ) as c:
+        r = await c.get(
+            f"/v1/knowledge-points/{seed_ku['ku1_id']}",
+            headers=_h(token),
+        )
+    assert r.status_code == 200
+    d = r.json()
+    assert d["exam_region_tags"] == []
+    assert d["textbook_edition_variant_of"] is None
+    assert d["curriculum_standard"] is None
+
+
+@pytest.mark.asyncio
+async def test_curriculum_standard_reverse_lookup_unknown_code(student):
+    """未登记编码：node=None、kus=[]（不是查询失败，只是这个码没人挂）。"""
+    _, token = student
+    async with AsyncClient(
+        transport=ASGITransport(app=app), base_url="http://test"
+    ) as c:
+        r = await c.get(
+            "/v1/curriculum-standards/NOT-A-REAL-CODE/kus", headers=_h(token)
+        )
+    assert r.status_code == 200
+    d = r.json()
+    assert d["node"] is None
+    assert d["kus"] == []
+    assert d["count"] == 0
+
+
+@pytest.mark.asyncio
+async def test_curriculum_standard_reverse_lookup_finds_tagged_ku(db, seed_ku, student):
+    """给 ku1 打一个真实合法编码后，反查应能找到它（双向映射的反向一侧）。"""
+    from data.curriculum_std import STD_NODES
+    from sqlalchemy import update
+    from services.models import KnowledgeUnit
+
+    real_code = STD_NODES[0]["code"]
+    await db.execute(
+        update(KnowledgeUnit)
+        .where(KnowledgeUnit.id == seed_ku["ku1_id"])
+        .values(curriculum_standard=real_code)
+    )
+    await db.commit()
+
+    _, token = student
+    async with AsyncClient(
+        transport=ASGITransport(app=app), base_url="http://test"
+    ) as c:
+        r = await c.get(f"/v1/curriculum-standards/{real_code}/kus", headers=_h(token))
+    assert r.status_code == 200
+    d = r.json()
+    assert d["node"] is not None
+    assert d["node"]["code"] == real_code
+    assert any(k["id"] == seed_ku["ku1_id"] for k in d["kus"])
+    assert d["count"] >= 1
+
+
 # ── tests: textbook file meta ─────────────────────────────────────────────────
 
 
