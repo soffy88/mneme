@@ -2553,6 +2553,54 @@ async def post_review_submit(
     return result
 
 
+# ===== §T.8 周期限时小测（检索检查点）=====
+
+from services.quiz_service import get_or_create_due_quiz, submit_quiz
+
+
+@app.get("/v1/quiz/due/{student_id}")
+async def get_quiz_due(
+    student_id: UUID,
+    _auth: User = Depends(require_student_access),
+    db: AsyncSession = Depends(get_db),
+):
+    """GET /v1/quiz/due/{student_id} — 是否到期该做限时小测；到期则现场生成一份返回
+    （每 3 天一次，取到期/薄弱 KC，交错排布，不含答案）。"""
+    return await get_or_create_due_quiz(db, student_id)
+
+
+class QuizAnswerItem(BaseModel):
+    question_id: str
+    student_answer: str = ""
+
+
+class QuizSubmitReq(BaseModel):
+    answers: list[QuizAnswerItem]
+    time_spent_seconds: int
+
+
+@app.post("/v1/quiz/{quiz_id}/submit")
+async def post_quiz_submit(
+    quiz_id: UUID,
+    student_id: UUID = Query(...),
+    body: QuizSubmitReq = Body(...),
+    _auth: User = Depends(require_student_access),
+    db: AsyncSession = Depends(get_db),
+):
+    """POST /v1/quiz/{quiz_id}/submit — 提交限时小测，判分回写 BKT/FSRS（source=quiz）。
+
+    答错的 KC 不需要额外"生成复习任务"：FSRS Again 评级本身就会顺延到近期 due，
+    自然进入 /v1/review/due 队列（同一套机制）。
+    """
+    return await submit_quiz(
+        db,
+        student_id,
+        quiz_id,
+        [a.model_dump() for a in body.answers],
+        body.time_spent_seconds,
+    )
+
+
 # ===== §Error Journal =====
 
 from obase.error_tag_store import get_error_distribution

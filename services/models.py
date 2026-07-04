@@ -65,6 +65,8 @@ class InteractionSource(str, enum.Enum):
     force_analysis = "force_analysis"
     reading_guide = "reading_guide"
     speaking = "speaking"
+    # T.8 周期限时小测（检索检查点）。
+    quiz = "quiz"
     # FIRe-lite 前置信用回写（M-H §4.8）：综合题答对顺延前置 due 的记账事件。
     # 非真实作答：不进 BKT/FSRS 重放/校准/学习量统计，且不得再触发 FIRe（不级联）。
     fire_credit = "fire_credit"
@@ -536,6 +538,30 @@ class DailyMission(Base):
     )
     completed: Mapped[Optional[bool]] = mapped_column(Boolean, server_default="false")
     completed_at: Mapped[Optional[datetime]] = mapped_column(DateTime(timezone=True))
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), server_default=text("now()")
+    )
+
+
+class TimedQuiz(Base):
+    """T.8 周期限时小测（检索检查点）。items 只存 kc_id/question_id/question_text
+    （不含答案——判分时按 question_id 反查 wrong_questions.correct_answer，单一真相源，
+    不在这张表复制一份答案增加泄露面）。"""
+
+    __tablename__ = "timed_quizzes"
+
+    id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True), primary_key=True, server_default=text("gen_random_uuid()")
+    )
+    student_id: Mapped[Optional[uuid.UUID]] = mapped_column(
+        UUID(as_uuid=True), ForeignKey("users.id")
+    )
+    items: Mapped[list] = mapped_column(JSONB, server_default=text("'[]'::jsonb"))
+    time_limit_seconds: Mapped[int] = mapped_column(Integer, server_default="300")
+    submitted_at: Mapped[Optional[datetime]] = mapped_column(DateTime(timezone=True))
+    time_spent_seconds: Mapped[Optional[int]] = mapped_column(Integer)
+    score: Mapped[Optional[float]] = mapped_column(Float)
+    results: Mapped[Optional[list]] = mapped_column(JSONB)
     created_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True), server_default=text("now()")
     )

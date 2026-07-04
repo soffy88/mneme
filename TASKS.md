@@ -946,8 +946,30 @@ Phase 3：K（合规）+ L（部署）
   ✅ 已随 `pedagogy/06` 完成：`users.exam_date`(migration) + `daily_plan_service` 读 exam_date 算
   `exam_countdown_days`，临考(`_NEAR_EXAM_DAYS`=14天内)向巩固倾斜、停推新知；`GET /v1/daily-plan` 返回
   exam_countdown_days；`POST /v1/users/{student_id}/exam-date` 设置端点。详见下方 U 章 U.6。
-- [ ] **T.8 [P1] 周期限时小测（检索检查点）**
-  DoD：每 N 天生成限时 quiz mission(5题,到期/薄弱KC,交错)；提交计时判分回写 BKT/FSRS；失败 KC 自动生成复习任务；前端小测页；测试；check.sh 绿。
+- [~] **T.8 [P1] 周期限时小测（检索检查点，后端完成，前端待 mneme-web 接线）** 🔄 2026-07-04
+  ✅ 新表 `timed_quizzes`（migration 75cc7c17edbe）+ `InteractionSource` 加 `quiz` 值；
+  `services/quiz_service.py`：每 3 天一次（`_QUIZ_CADENCE_DAYS`，非每日任务）——
+  `get_or_create_due_quiz` 查上次小测时间判是否到期，到期则取到期(FSRS due)优先/薄弱
+  (p_mastery<GATE)兜底的 KC 池（最多5个，不足如实少给不硬凑），每 KC 配一道
+  `wrong_questions` 里的题，交错排布（复用 `oskill.interleave_select`）；`submit_quiz`
+  判分回写 BKT/FSRS（source=quiz），自由作答判不出对错（unsure）不喂 BKT（宁可不确定
+  不误判，同 review_service 既有原则）。**答错的 KC 不需要额外"生成复习任务"**：FSRS
+  Again 评级本身就会顺延到近期 due，自然进入 `/v1/review/due` 队列，没有另造一套机制。
+  `GET /v1/quiz/due/{student_id}` + `POST /v1/quiz/{quiz_id}/submit`。
+  ⚠️ **过程中抓到一个会导致该端点第一次调用必炸的真实 bug**：`obase.db.SessionLocal`
+  （`get_db()` 依赖用的那个）没设 `expire_on_commit=False`（默认 `True`），`commit()` 后
+  所有对象属性过期；我原来在 `commit()` 之后读 `quiz.id`/`quiz.time_limit_seconds` 这两个
+  ORM 属性，触发隐式惰性刷新——而 `AsyncSession` 下隐式（非 `await session.refresh()`）
+  的惰性刷新不支持，直接炸 `MissingGreenlet`。测试用的是我自己 `expire_on_commit=False`
+  的独立 engine，所以一直测不出来，是换成 app 真实 `SessionLocal` 手动排查六层调用栈才
+  揪出来的。修复：改成用 commit 前就已知道的本地变量（`quiz_id`/`time_limit_seconds`），
+  commit 后不再碰 ORM 对象属性。这个坑对任何"写完 commit 后马上读对象属性"的新服务函数
+  都通用，值得记住。
+  7 新测试（无到期/薄弱KC跳过、到期生成+不返回答案、cadence窗口内不重复出、正确判分
+  回写BKT、答错顺延FSRS due、重复提交拒绝、API端到端+持久化验证）；pytest 430 passed
+  （+7）/3 skipped，check.sh 全绿。
+  ⏳ **未完成**：前端小测页是 mneme-web 的活，本仓库只做了后端 API 面，前端接线留待
+  mneme-web 会话。同 U.17/U.18/T.10，容器需 rebuild 才让改动在 :8000 生效。
 - [ ] **T.9 [P2] 错题本打印/导出**
   DoD：mneme-web 错题本打印视图(可选含变式、可隐藏答案供重做)；typecheck 绿。
 - [~] **T.10 [P1] 非数学接入认知主线（后端完成，前端待 mneme-web 接线）** 🔄 2026-07-04
