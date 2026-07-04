@@ -13,6 +13,7 @@
 from __future__ import annotations
 
 import math
+import uuid
 from collections import defaultdict
 
 from sqlalchemy import select
@@ -149,19 +150,24 @@ async def _persist_run(
 ) -> str:
     """全体评估结果落一行 evaluation_runs（历史供 /v1/moat/evaluation-history 查询）。"""
     all_ts = [ts for seq in cards.values() for ts, *_ in seq]
-    run = EvaluationRun(
-        window_start=min(all_ts) if all_ts else None,
-        window_end=max(all_ts) if all_ts else None,
-        n_events=m["n"],
-        n_students=len({sid for sid, _ in cards}),
-        auc=m["auc"],
-        log_loss=m["logloss"],
-        meta={
-            "verdict": m.get("verdict"),
-            "base_rate": m.get("base_rate"),
-            "n_cards": m.get("n_cards"),
-        },
+    run_id = uuid.uuid4()
+    db.add(
+        EvaluationRun(
+            id=run_id,
+            window_start=min(all_ts) if all_ts else None,
+            window_end=max(all_ts) if all_ts else None,
+            n_events=m["n"],
+            n_students=len({sid for sid, _ in cards}),
+            auc=m["auc"],
+            log_loss=m["logloss"],
+            meta={
+                "verdict": m.get("verdict"),
+                "base_rate": m.get("base_rate"),
+                "n_cards": m.get("n_cards"),
+            },
+        )
     )
-    db.add(run)
     await db.commit()
-    return str(run.id)
+    # 注：commit 后不读 ORM 对象属性——obase.db.SessionLocal 用默认 expire_on_commit=True，
+    # 隐式惰性刷新在 AsyncSession 下不支持，会炸 MissingGreenlet（同 quiz_service 教训）。
+    return str(run_id)

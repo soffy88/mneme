@@ -981,6 +981,11 @@ async def post_bind_child(
         raise HTTPException(
             status_code=404, detail="Student not found with invite code"
         )
+    # 提前捕获为本地变量：obase.db.SessionLocal 用默认 expire_on_commit=True，
+    # commit 后再读 ORM 对象属性会触发 AsyncSession 不支持的隐式惰性刷新
+    # （MissingGreenlet，同 quiz_service/evaluation_service 教训）。
+    student_id_str = str(student.id)
+    student_name = student.name
     existing = (
         await db.execute(
             select(ParentStudent).where(
@@ -992,7 +997,7 @@ async def post_bind_child(
     if not existing:
         db.add(ParentStudent(parent_id=current_user.id, student_id=student.id))
         await db.commit()
-    return {"ok": True, "student_id": str(student.id), "student_name": student.name}
+    return {"ok": True, "student_id": student_id_str, "student_name": student_name}
 
 
 @app.get("/v1/parent/children")

@@ -251,3 +251,63 @@ async def test_auth_me_returns_invite_code(client, db, actors):
     assert body["grade"] == "高一"
     assert body["invite_code"] == student.invite_code
     assert body["invite_code"]  # 非空，供家长绑定
+
+
+# ── ⑤ bind-child：commit 后读 ORM 对象属性回归测试 ────────────────────────────
+# 这条走的是 app 自己的 get_db()（真实 obase.db.SessionLocal，expire_on_commit=True
+# 默认值），不是本文件 db 夹具那个专门设了 expire_on_commit=False 的测试 engine——
+# 所以能测出"commit 后读对象属性触发 MissingGreenlet"这类坑，本文件其它测试测不出来。
+
+
+@pytest.mark.asyncio
+async def test_bind_child_unknown_invite_code_404(client, actors):
+    r = await client.post(
+        "/v1/auth/bind-child",
+        params={"invite_code": "ZZZZZZ"},
+        headers=_h(actors["p"]),
+    )
+    assert r.status_code == 404
+
+
+@pytest.mark.asyncio
+async def test_bind_new_child_success_after_commit(client, db):
+    """真实新增绑定路径（此前无绑定关系，触发 add+commit）：返回体读
+    student_id/student_name 不应该因 commit 后隐式惰性刷新而 500。"""
+    parent_id, student_id = uuid.uuid4(), uuid.uuid4()
+    code = uuid.uuid4().hex[:6].upper()
+    db.add(
+        User(
+            id=parent_id,
+            phone=f"194{str(parent_id.int)[:8]}",
+            role=UserRole.parent,
+            name="家长Q",
+        )
+    )
+    db.add(
+        User(
+            id=student_id,
+            phone=f"195{str(student_id.int)[:8]}",
+            role=UserRole.student,
+            name="学生C",
+            grade="高二",
+            invite_code=code,
+        )
+    )
+    await db.commit()
+    try:
+        r = await client.post(
+            "/v1/auth/bind-child",
+            params={"invite_code": code},
+            headers=_h(parent_id),
+        )
+        assert r.status_code == 200
+        body = r.json()
+        assert body["ok"] is True
+        assert body["student_id"] == str(student_id)
+        assert body["student_name"] == "学生C"
+    finally:
+        await db.execute(
+            delete(ParentStudent).where(ParentStudent.parent_id == parent_id)
+        )
+        await db.execute(delete(User).where(User.id.in_([parent_id, student_id])))
+        await db.commit()

@@ -176,3 +176,33 @@ async def test_evaluation_history_anonymous_401():
     ) as c:
         r = await c.get("/v1/moat/evaluation-history")
     assert r.status_code == 401
+
+
+# ── commit 后读 ORM 对象属性回归测试 ────────────────────────────────────────
+# 本文件其它测试的 db 夹具显式设了 expire_on_commit=False，系统性掩盖了"commit 后
+# 读对象属性触发 AsyncSession 隐式惰性刷新 MissingGreenlet"这类坑（同 quiz_service/
+# bind-child 教训）。这里改用真实 obase.db.SessionLocal（Celery beat 实际调用
+# evaluate_model 时用的那个，expire_on_commit 默认 True）才测得出来。
+
+
+@pytest.mark.asyncio
+async def test_persist_run_does_not_crash_via_real_session_local():
+    from obase.db import SessionLocal
+
+    sids: list[uuid.UUID] = []
+    run_id: uuid.UUID | None = None
+    async with SessionLocal() as s:
+        try:
+            await _seed_two_cohorts(s, sids)
+            m = await evaluate_model(s)
+            assert "run_id" in m
+            run_id = uuid.UUID(m["run_id"])
+        finally:
+            await s.execute(
+                delete(InteractionEvent).where(InteractionEvent.knowledge_point == KC)
+            )
+            for sid in sids:
+                await s.execute(delete(User).where(User.id == sid))
+            if run_id:
+                await s.execute(delete(EvaluationRun).where(EvaluationRun.id == run_id))
+            await s.commit()

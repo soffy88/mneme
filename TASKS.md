@@ -1003,6 +1003,27 @@ Phase 3：K（合规）+ L（部署）
   `frontend/` 已废弃不能算数——本次只做了后端 API 面（`ku_id` 参数 + `/end` 端点），前端接线需要
   另开 mneme-web 会话。同 U.17/U.18，容器需 rebuild 才让相关改动在 :8000 生效。
 
+## housekeeping · 全仓库 expire_on_commit 审计（2026-07-04）
+
+T.8 开发中发现 `quiz_service.py` 有个"commit 后读 ORM 对象属性触发 `MissingGreenlet`"的 bug 后，
+排查了全仓库同款写法（`obase.db.SessionLocal`——即 `get_db()` 真实用的那个——默认
+`expire_on_commit=True`，commit 后所有对象属性过期，`AsyncSession` 下隐式惰性刷新不支持）：
+
+- 检查范围：全部 7 个有 `await db.commit()` 的 service 文件，`main.py` 里全部 26 处 commit 逐一过了一遍。
+- ✅ **另找到 2 处真实同款 bug 并修复**：
+  1. `services/evaluation_service.py::_persist_run`（`run.id` 依赖 server_default，commit 后读）
+  2. `services/main.py::post_bind_child`（`student` 是 commit 前查出来的对象，commit 后读
+     `student.id`/`student.name`）——这个接口之前**完全没有测试**，novel binding 路径一直没人测出来过。
+- ✅ 两处都补了回归测试：`evaluation_service` 走真实 `SessionLocal`（本文件其它测试的 db 夹具都设了
+  `expire_on_commit=False`，系统性掩盖这类 bug，测不出来）；`bind-child` 走真实 ASGI app（`get_db()`
+  本来就是真实 session，不用特地换）。
+- ✅ 顺手确认 highlights/reading-notes 的 update 端点已经用 `await db.refresh()` 正确规避了同款问题
+  （说明这坑之前真的在这仓库炸过，有人已经手动趟过一次坑）。
+- 其余检查过的 commit 点均安全（用本地变量/dict/column-only select，未在 commit 后碰 ORM 对象属性）。
+- pytest 433 passed（+3：bind-child ×2 + evaluation_service ×1）/3 skipped，check.sh 全绿。
+  mneme 自己的 service 文件走 bind mount，`docker compose restart api worker beat` 即生效（不需要
+  像 platform/3O 那样 rebuild 镜像）。
+
 ### 阻塞在人（🚨 Needs Human）
 - 阿里云短信报备（完成前勿开公网注册）
 - 真实学生数据（0.77 AUC 验证、FSRS 权重拟合启用、FIRe 上线 A/B 均以此为前提）
