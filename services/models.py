@@ -70,6 +70,9 @@ class InteractionSource(str, enum.Enum):
     # FIRe-lite 前置信用回写（M-H §4.8）：综合题答对顺延前置 due 的记账事件。
     # 非真实作答：不进 BKT/FSRS 重放/校准/学习量统计，且不得再触发 FIRe（不级联）。
     fire_credit = "fire_credit"
+    # U.19 英语习得型范式：词汇 FSRS 复现卡片作答（认识/不认识），复用既有
+    # KCMastery/process_interaction 通用字符串 knowledge_point 机制，不新建调度表。
+    vocab_review = "vocab_review"
 
 
 class SocraticMode(str, enum.Enum):
@@ -798,3 +801,51 @@ class KnowledgeUnit(Base):
     source_excerpt: Mapped[Optional[str]] = mapped_column(Text, nullable=True)
     ai_generated: Mapped[bool] = mapped_column(Boolean, server_default=text("true"))
     verified: Mapped[bool] = mapped_column(Boolean, server_default=text("false"))
+
+
+# U.19 英语习得型范式：词汇 FSRS + 分级泛读（i+1）。地基与数学/物理不同——
+# 英语当前零 KU/零词汇表/零分级读物，词频/难度分档均从下方同一份 Simple English
+# Wikipedia 语料库（CC BY-SA 4.0，见 source_url 溯源）自行统计得出，不依赖许可不明的
+# 第三方词表，词汇表与读物同源、同许可。
+
+
+class VocabularyItem(Base):
+    """英语词汇 FSRS 记忆单元。knowledge_point 复用为 f"vocab-{id}"（见 vocab_service）。"""
+
+    __tablename__ = "vocabulary_items"
+
+    id: Mapped[str] = mapped_column(String(100), primary_key=True)
+    word: Mapped[str] = mapped_column(String(100), nullable=False)
+    pos: Mapped[Optional[str]] = mapped_column(String(20), nullable=True)  # 词性
+    meaning_cn: Mapped[Optional[str]] = mapped_column(Text, nullable=True)
+    example_sentence: Mapped[Optional[str]] = mapped_column(Text, nullable=True)
+    frequency_rank: Mapped[int] = mapped_column(Integer, nullable=False)
+    # 频率分档 1(最高频)-5(最低频)，由语料库词频分位数切出，供 i+1 读物难度对齐。
+    frequency_band: Mapped[int] = mapped_column(Integer, nullable=False)
+    source: Mapped[str] = mapped_column(String(50), server_default=text("'simplewiki'"))
+    # meaning_cn/example_sentence 是否 LLM 生成（词频/分档本身是确定性统计，不受影响）。
+    ai_generated: Mapped[bool] = mapped_column(Boolean, server_default=text("true"))
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), server_default=text("now()")
+    )
+
+
+class ReadingPassage(Base):
+    """分级泛读文章。difficulty_band 与 VocabularyItem.frequency_band 同一 1-5 分档尺度。"""
+
+    __tablename__ = "reading_passages"
+
+    id: Mapped[str] = mapped_column(String(100), primary_key=True)
+    subject: Mapped[str] = mapped_column(String(20), server_default=text("'english'"))
+    title: Mapped[str] = mapped_column(String(300), nullable=False)
+    body_text: Mapped[str] = mapped_column(Text, nullable=False)
+    source_url: Mapped[str] = mapped_column(String(500), nullable=False)
+    license: Mapped[str] = mapped_column(
+        String(50), server_default=text("'CC BY-SA 4.0'")
+    )
+    word_count: Mapped[int] = mapped_column(Integer, nullable=False)
+    readability_score: Mapped[float] = mapped_column(Float, nullable=False)
+    difficulty_band: Mapped[int] = mapped_column(Integer, nullable=False)
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), server_default=text("now()")
+    )

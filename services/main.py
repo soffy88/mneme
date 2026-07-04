@@ -3108,6 +3108,64 @@ async def post_reading_guide_end(
     return result
 
 
+# ===== §M.5b 英语习得型范式：词汇 FSRS + 分级泛读（U.19）=====
+
+from services.vocab_service import get_due_vocab_reviews, submit_vocab_review
+from services.graded_reading_service import select_graded_passage
+
+
+@app.get("/v1/vocab/due")
+async def get_vocab_due(
+    student_id: UUID = Query(...),
+    limit: int = Query(10, ge=1, le=50),
+    current_user: User = Depends(get_current_user),
+    db: AsyncSession = Depends(get_db),
+):
+    """GET /v1/vocab/due — 取到期复现词 + 补新词。仅学生本人。"""
+    _ensure_student_self(current_user, student_id)
+    return await get_due_vocab_reviews(db, student_id, limit)
+
+
+class VocabReviewSubmitReq(BaseModel):
+    student_id: UUID
+    vocab_id: str
+    remembered: bool
+
+
+@app.post("/v1/vocab/review")
+async def post_vocab_review(
+    body: VocabReviewSubmitReq,
+    current_user: User = Depends(get_current_user),
+    db: AsyncSession = Depends(get_db),
+):
+    """POST /v1/vocab/review — 提交一次词汇闪卡复现（认识/不认识）。仅学生本人。"""
+    _ensure_student_self(current_user, body.student_id)
+    result = await submit_vocab_review(
+        db, body.student_id, body.vocab_id, body.remembered
+    )
+    if "error" in result:
+        raise HTTPException(status_code=404, detail=result["error"])
+    return result
+
+
+@app.get("/v1/reading/graded-passage")
+async def get_graded_passage(
+    student_id: UUID = Query(...),
+    current_user: User = Depends(get_current_user),
+    db: AsyncSession = Depends(get_db),
+):
+    """GET /v1/reading/graded-passage — 按词汇水平选 i+1 档分级泛读文章。
+
+    素养轨：只做内容分发，不套 BKT/FSRS；理解引导另调既有
+    /v1/reading/guide/start（article_text 传本接口返回的 body_text）。
+    """
+    _ensure_student_self(current_user, student_id)
+    result = await select_graded_passage(db, student_id)
+    if "error" in result:
+        raise HTTPException(status_code=404, detail=result["error"])
+    return result
+
+
 # ===== §教材阅读器 — 文件/高亮/笔记 =====
 
 
