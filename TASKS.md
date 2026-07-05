@@ -855,6 +855,18 @@ Phase 3：K（合规）+ L（部署）
   `/var/spool/cron/crontabs/` 核对备份，只能推测可能是后续加备份任务的 crontab 写入意外
   覆盖掉了这行（不确定）。已重新把这行加回 crontab（`0 1 * * * ... run_enrich_gaoyi.sh ...`），
   与备份任务共存于同一 crontab；后续如再发现任务莫名消失，先查是否又被其它 crontab 写入覆盖。
+  🚨 **2026-07-05 发现第二个异常并修复**：cron 条目本身没再消失，7-05 01:00 确实触发了，但
+  `run_enrich_gaoyi.sh` 报错崩溃——脚本调用 `.venv/bin/python`，但宿主机压根没有这个
+  venv（本项目所有 Python 从一开始就是在 docker 容器里跑的，脚本写错了执行方式，是历史遗留
+  bug，从未在这台机器上真正跑通过，6-29 那次"成功"很可能是巧合下的空跑或另一执行路径）。
+  连带发现 `enrich_ku_content.py` 的 DB_DSN 也硬编码成宿主机直连（`host=localhost port=5433`），
+  容器内跑不通；且脚本依赖的 `psycopg2`/`openai` 不在 `requirements.txt` 里（此前都是临时
+  `pip install` 应急，容器重建就丢）。三处都修：① `requirements.txt` 加
+  `psycopg2-binary`/`openai`（永久生效，`docker compose build api` 重建过）；②
+  `enrich_ku_content.py` 的 `DB_DSN` 改成读 `DATABASE_URL_SYNC` 环境变量（不传时保留宿主机
+  直连默认值，向后兼容）；③ `run_enrich_gaoyi.sh` 改成 `docker compose exec api python3 ...`
+  （模型也顺手把不存在的 `qwen2.5:7b` 改成实际已拉取的 `qwen2.5vl:7b`）。`--limit 1` 实测跑通
+  （161 个高一 KU 待补，1 个刚验证成功）；今晚 01:00 起 cron 应该能真正跑起来。
 
 - [x] **R.12 [P2] MathText 扩面 + 家长端每周摘要复用** ✅ 2026-06-28
   ✅ MathText 接到更多展示点：`SocraticDialog`(AI 追问含公式，流式逐段渲染) + `MathPractice` 标题。累计渲染点：补救阶梯/KUDetailPanel描述/苏格拉底/练习页。

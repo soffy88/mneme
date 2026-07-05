@@ -1,2 +1,5 @@
 === 2026-06-29 01:00:01 开始 高一 enrich ===
 === 2026-06-29 06:00:01 结束（退出码 0）===
+=== 2026-07-05 01:00:01 开始 高一 enrich ===
+timeout: failed to execute process: No such file or directory (os error 2)
+=== 2026-07-05 01:00:01 结束（退出码 0）===
