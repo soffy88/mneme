@@ -14,6 +14,7 @@ from __future__ import annotations
 
 import argparse
 import os
+import re
 import sys
 
 import psycopg2
@@ -28,15 +29,38 @@ LLM_API_KEY = os.environ.get("LLM_API_KEY") or os.environ.get("DEEPSEEK_API_KEY"
 
 client = OpenAI(api_key=LLM_API_KEY, base_url=LLM_BASE_URL)
 
-_JY_MARKERS = ("G7", "G8", "G9", "初中", "七年级", "八年级", "九年级")
-_GZ_MARKERS = ("G10", "G11", "G12", "高一", "高二", "高三", "高中")
+# 年级号（G1..G12）用 \b 边界匹配，避免子串误判（"G1" 是 "G10"/"G11"/"G12" 的前缀）。
+_JY_GRADE_NUMS = (1, 2, 3, 4, 5, 6, 7, 8, 9)
+_GZ_GRADE_NUMS = (10, 11, 12)
+_JY_TEXT_MARKERS = (
+    "小学",
+    "初中",
+    "一年级",
+    "二年级",
+    "三年级",
+    "四年级",
+    "五年级",
+    "六年级",
+    "七年级",
+    "八年级",
+    "九年级",
+)
+_GZ_TEXT_MARKERS = ("高一", "高二", "高三", "高中")
+
+
+def _has_grade_marker(hay: str, grade_nums: tuple[int, ...]) -> bool:
+    return any(re.search(rf"\bG{n}\b", hay, re.IGNORECASE) for n in grade_nums)
 
 
 def _guess_seg(textbook_id: str, grade: str) -> str | None:
     hay = f"{textbook_id} {grade}"
-    if any(m in hay for m in _JY_MARKERS):
+    if _has_grade_marker(hay, _JY_GRADE_NUMS) or any(
+        m in hay for m in _JY_TEXT_MARKERS
+    ):
         return "JY"
-    if any(m in hay for m in _GZ_MARKERS):
+    if _has_grade_marker(hay, _GZ_GRADE_NUMS) or any(
+        m in hay for m in _GZ_TEXT_MARKERS
+    ):
         return "GZ"
     return None
 
