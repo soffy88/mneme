@@ -598,7 +598,7 @@ A → B → C → D → E → F
   要给这些列加外键约束）时再评估要不要做，届时需要先解决数据层面的 ID 体系
   统一问题，而不是先改列名。
 
-- [~] **N.4 [P2] 阶段4：用户教材绑定** 🔄 后端已完成，前端 PR #16 待合并
+- [x] **N.4 [P2] 阶段4：用户教材绑定** ✅ 2026-07-09（前后端均已合并，mneme-web PR #16）
   ```
   - 调研后改用 JSONB 映射 users.textbook_bindings={subject: textbook_id}（单列
     textbook_id 装不下"数学/物理/语文/英语各自一本"，且发现该孤儿列从未接
@@ -609,7 +609,7 @@ A → B → C → D → E → F
     混排影响，无需改
   - 后端 507 passed，check.sh 全绿；已 push 到 main
   - 前端：首页"我的教材"卡片（四学科下拉，镜像 DailyPlanPrefsCard 模式），
-    tsc+build 通过，mneme-web PR #16 待合并
+    tsc+build 通过，mneme-web PR #16 已合并
   ```
 
 - [ ] **N.5 [P3] 阶段5：主库 KCState 重命名** ⏳ 独立主库决策
