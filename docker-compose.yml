@@ -71,14 +71,25 @@ services:
       SMS_PROVIDER: mock
       # SMS_SIGN_NAME: ""        # 阿里云短信签名（报备后填写）
       # SMS_TEMPLATE_CODE: ""    # 阿里云短信模板CODE（报备后填写）
+      # 邮箱注册验证码：默认 mock（打日志）。上线设 EMAIL_PROVIDER=smtp + 填任意
+      # 免费邮件服务的 SMTP 凭据（推荐国内免费 QQ/163 邮箱授权码）。
+      EMAIL_PROVIDER: ${EMAIL_PROVIDER:-mock}
+      SMTP_HOST: ${SMTP_HOST:-}
+      SMTP_PORT: ${SMTP_PORT:-587}
+      SMTP_USER: ${SMTP_USER:-}
+      SMTP_PASSWORD: ${SMTP_PASSWORD:-}
+      SMTP_FROM: ${SMTP_FROM:-}
       # 环境标记：默认 dev（prod-safety 门不武装，行为不变）。真上线时设成 prod，
       # _assert_prod_safety 才会拒绝"默认JWT密钥/mock短信"启动。此前 MNEME_ENV
       # 只在 .env 里、没进 compose，pydantic 丢弃，那道门永远处于 dev 态形同虚设。
       MNEME_ENV: ${MNEME_ENV:-dev}
-      # 文本 LLM 走本机 Ollama（DeepSeek 余额不足时）；OCR/VLM 不受影响
-      MNEME_LLM: ollama
-      OLLAMA_BASE_URL: http://host.docker.internal:11434/v1
-      OLLAMA_MODEL: qwen2.5:7b
+      # 云模型：文本用阿里云通义千问(qwen-plus)、视觉OCR用通义千问视觉(qwen-vl-max)，
+      # 均中国网信办备案合规。需在 .env 配 DASHSCOPE_API_KEY（阿里云百炼 sk-...）。
+      # 未配 key 时文本会回落到内核默认、视觉无 provider——上线前必须配 key 并实测。
+      MNEME_LLM: qwen
+      DASHSCOPE_API_KEY: ${DASHSCOPE_API_KEY:-}
+      QWEN_MODEL: ${QWEN_MODEL:-qwen-plus}
+      QWEN_VL_MODEL: ${QWEN_VL_MODEL:-qwen-vl-max}
     extra_hosts:
       - "host.docker.internal:host-gateway"
     volumes:
@@ -117,9 +128,11 @@ services:
       MINIO_BUCKET: mneme
       DEEPSEEK_API_KEY: ${DEEPSEEK_API_KEY}
       SMS_PROVIDER: mock
-      MNEME_LLM: ollama
-      OLLAMA_BASE_URL: http://host.docker.internal:11434/v1
-      OLLAMA_MODEL: qwen2.5:7b
+      # 云模型同 api：阿里云通义千问文本+视觉（worker 跑异步 OCR/变式，须一致）
+      MNEME_LLM: qwen
+      DASHSCOPE_API_KEY: ${DASHSCOPE_API_KEY:-}
+      QWEN_MODEL: ${QWEN_MODEL:-qwen-plus}
+      QWEN_VL_MODEL: ${QWEN_VL_MODEL:-qwen-vl-max}
     extra_hosts:
       - "host.docker.internal:host-gateway"
     volumes:

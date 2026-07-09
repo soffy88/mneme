@@ -15,13 +15,43 @@ from obase.llm import register_default_providers
 
 
 def configure_llm_providers() -> str:
-    """注册默认 LLM/VLM provider；`MNEME_LLM=ollama` 时把文本 LLM default 切到本机 Ollama。
+    """注册 LLM/VLM provider。`MNEME_LLM` 选后端：
 
-    返回生效的文本 LLM 标签（"ollama" 或 "default"）。VLM/OCR 不受影响。
+    - `qwen`：阿里云通义千问——文本 qwen-plus + 视觉 qwen-vl（中国备案合规）。
+      内核 register_default_providers 只支持 Anthropic/Gemini 视觉，这里补上
+      Qwen-VL 作为 default VLM（拍卷 OCR 用）。凭据走 DASHSCOPE_API_KEY。
+    - `ollama`：本机 Ollama（仅文本，VLM 不受影响）。
+    - 其它/空：走内核默认（按 key 优先级 DeepSeek>Qwen>Anthropic>OpenAI）。
+
+    返回生效的文本 LLM 标签。
     """
     register_default_providers()
 
-    if os.environ.get("MNEME_LLM", "").lower() == "ollama":
+    backend = os.environ.get("MNEME_LLM", "").lower()
+
+    if backend == "qwen":
+        from obase.llm import QwenCaller
+        from obase.provider_registry import ProviderRegistry
+
+        from services.providers.qwenvl_caller import QwenVLCaller
+
+        registry = ProviderRegistry.get()
+        # 直接从环境读 DASHSCOPE key 自建 caller，不依赖 register_default_providers——
+        # 后者用 `QWEN_API_KEY or DASHSCOPE_API_KEY`，而 QWEN_API_KEY 占位符
+        # "your_key_here" 是 truthy，会短路盖掉真正的 DASHSCOPE_API_KEY，qwen 永远
+        # 注册不上。绕开这个坑，在本层显式注册文本 qwen + 视觉 qwen-vl。
+        key = (
+            os.environ.get("DASHSCOPE_API_KEY") or os.environ.get("QWEN_API_KEY") or ""
+        )
+        if key and key != "your_key_here":
+            text_model = os.environ.get("QWEN_MODEL", "qwen-plus")
+            registry.register_llm("default", QwenCaller(key, text_model), replace=True)
+            registry.register_llm("qwen", QwenCaller(key, text_model), replace=True)
+            registry.register_vlm("default", QwenVLCaller(key), replace=True)
+            registry.register_vlm("qwen-vl", QwenVLCaller(key), replace=True)
+        return "qwen"
+
+    if backend == "ollama":
         from obase.provider_registry import ProviderRegistry
 
         from services.providers.ollama_caller import OllamaCaller
