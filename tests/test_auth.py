@@ -7,6 +7,7 @@ C.1 认证测试
 - 合规红线：<14岁无监护人同意 → 422；带同意 → 201
 - 验证码过期/错误 → 400
 """
+
 from __future__ import annotations
 
 import uuid
@@ -24,6 +25,7 @@ from sqlalchemy import delete, select, update
 
 
 # ── helpers ───────────────────────────────────────────────────────────────────
+
 
 async def _clean_phone(phone: str) -> None:
     """Remove user+guardian records, clear Redis SMS keys."""
@@ -55,13 +57,17 @@ async def _inject_code(phone: str, code: str = "123456") -> None:
 
 # ── fixtures ──────────────────────────────────────────────────────────────────
 
+
 @pytest.fixture
 async def client():
-    async with AsyncClient(transport=ASGITransport(app=app), base_url="http://test") as c:
+    async with AsyncClient(
+        transport=ASGITransport(app=app), base_url="http://test"
+    ) as c:
         yield c
 
 
 # ── tests ─────────────────────────────────────────────────────────────────────
+
 
 @pytest.mark.asyncio
 async def test_auth_full_flow(client):
@@ -75,13 +81,16 @@ async def test_auth_full_flow(client):
     assert res.json()["ok"] is True
 
     # 2. 注册 (mock 模式 Redis 里存的就是 123456)
-    res = await client.post("/v1/auth/register/student", json={
-        "phone": phone,
-        "code": "123456",
-        "name": "Test Student",
-        "birth_date": "2000-01-01",
-        "grade": "高三",
-    })
+    res = await client.post(
+        "/v1/auth/register/student",
+        json={
+            "phone": phone,
+            "code": "123456",
+            "name": "Test Student",
+            "birth_date": "2000-01-01",
+            "grade": "高三",
+        },
+    )
     assert res.status_code == 201, res.text
     data = res.json()
     assert "token" in data
@@ -125,13 +134,16 @@ async def test_invalid_code_rejected(client):
     await _clean_phone(phone)
     await _inject_code(phone, "123456")
 
-    res = await client.post("/v1/auth/register/student", json={
-        "phone": phone,
-        "code": "999999",
-        "name": "Wrong Code",
-        "birth_date": "2000-01-01",
-        "grade": "高一",
-    })
+    res = await client.post(
+        "/v1/auth/register/student",
+        json={
+            "phone": phone,
+            "code": "999999",
+            "name": "Wrong Code",
+            "birth_date": "2000-01-01",
+            "grade": "高一",
+        },
+    )
     assert res.status_code == 400
     await _clean_phone(phone)
 
@@ -143,13 +155,16 @@ async def test_minor_without_guardian_rejected(client):
     await _clean_phone(phone)
     await _inject_code(phone, "123456")
 
-    res = await client.post("/v1/auth/register/student", json={
-        "phone": phone,
-        "code": "123456",
-        "name": "Small Kid Fail",
-        "birth_date": "2020-01-01",
-        "grade": "三年级",
-    })
+    res = await client.post(
+        "/v1/auth/register/student",
+        json={
+            "phone": phone,
+            "code": "123456",
+            "name": "Small Kid Fail",
+            "birth_date": "2020-01-01",
+            "grade": "三年级",
+        },
+    )
     assert res.status_code == 422, res.text
     assert "Guardian consent required" in res.json()["detail"]
 
@@ -163,23 +178,32 @@ async def test_minor_with_guardian_accepted(client):
     await _clean_phone(phone)
     await _inject_code(phone, "123456")
 
-    res = await client.post("/v1/auth/register/student", json={
-        "phone": phone,
-        "code": "123456",
-        "name": "Small Kid OK",
-        "birth_date": "2020-01-01",
-        "grade": "三年级",
-        "guardian_phone": "13888888888",
-        "guardian_consent": True,
-    })
+    res = await client.post(
+        "/v1/auth/register/student",
+        json={
+            "phone": phone,
+            "code": "123456",
+            "name": "Small Kid OK",
+            "birth_date": "2020-01-01",
+            "grade": "三年级",
+            "guardian_phone": "13888888888",
+            "guardian_consent": True,
+        },
+    )
     assert res.status_code == 201, res.text
 
     async with SessionLocal() as session:
-        consent = (await session.execute(
-            select(GuardianConsent).where(GuardianConsent.guardian_phone == "13888888888")
-        )).scalar_one_or_none()
+        consent = (
+            await session.execute(
+                select(GuardianConsent).where(
+                    GuardianConsent.guardian_phone == "13888888888"
+                )
+            )
+        ).scalar_one_or_none()
         assert consent is not None
         assert consent.consent_type == "registration"
+        # X.4：合规审计留痕，注册IP应该被记下来（此前字段定义了但从没写入过）
+        assert consent.ip_address is not None
 
     await _clean_phone(phone)
 
@@ -191,24 +215,30 @@ async def test_code_consumed_after_use(client):
     await _clean_phone(phone)
     await _inject_code(phone, "123456")
 
-    res = await client.post("/v1/auth/register/student", json={
-        "phone": phone,
-        "code": "123456",
-        "name": "Consume Test",
-        "birth_date": "2000-01-01",
-        "grade": "高二",
-    })
+    res = await client.post(
+        "/v1/auth/register/student",
+        json={
+            "phone": phone,
+            "code": "123456",
+            "name": "Consume Test",
+            "birth_date": "2000-01-01",
+            "grade": "高二",
+        },
+    )
     assert res.status_code == 201, res.text
 
     # 同手机号再注册（注入新验证码），应返回 409
     await _inject_code(phone, "123456")
-    res2 = await client.post("/v1/auth/register/student", json={
-        "phone": phone,
-        "code": "123456",
-        "name": "Consume Test 2",
-        "birth_date": "2000-01-01",
-        "grade": "高二",
-    })
+    res2 = await client.post(
+        "/v1/auth/register/student",
+        json={
+            "phone": phone,
+            "code": "123456",
+            "name": "Consume Test 2",
+            "birth_date": "2000-01-01",
+            "grade": "高二",
+        },
+    )
     assert res2.status_code == 409
 
     await _clean_phone(phone)
@@ -221,20 +251,32 @@ async def test_deleted_user_cannot_login_or_query(client):
     await _clean_phone(phone)
     await _inject_code(phone)
 
-    rs = await client.post("/v1/auth/register/student", json={
-        "phone": phone, "code": "123456", "name": "ToDelete", "birth_date": "2000-01-01", "grade": "高三",
-    })
+    rs = await client.post(
+        "/v1/auth/register/student",
+        json={
+            "phone": phone,
+            "code": "123456",
+            "name": "ToDelete",
+            "birth_date": "2000-01-01",
+            "grade": "高三",
+        },
+    )
     assert rs.status_code == 201, rs.text
     token = rs.json()["token"]
     student_id = rs.json()["user"]["id"]
 
     # 删除前 token 可用
-    assert (await client.get("/v1/auth/me", headers={"Authorization": f"Bearer {token}"})).status_code == 200
+    assert (
+        await client.get("/v1/auth/me", headers={"Authorization": f"Bearer {token}"})
+    ).status_code == 200
 
     # 软删除
     async with SessionLocal() as s:
-        await s.execute(update(User).where(User.id == uuid.UUID(student_id)).values(
-            deleted_at=datetime.now(timezone.utc)))
+        await s.execute(
+            update(User)
+            .where(User.id == uuid.UUID(student_id))
+            .values(deleted_at=datetime.now(timezone.utc))
+        )
         await s.commit()
 
     # 删除后：已签发 token 失效
@@ -264,10 +306,22 @@ async def test_register_parent_binds_child(client):
 
     async def _cleanup():
         async with SessionLocal() as s:
-            ids = (await s.execute(select(User.id).where(User.phone.in_([s_phone, p_phone])))).scalars().all()
+            ids = (
+                (
+                    await s.execute(
+                        select(User.id).where(User.phone.in_([s_phone, p_phone]))
+                    )
+                )
+                .scalars()
+                .all()
+            )
             if ids:
-                await s.execute(delete(ParentStudent).where(
-                    (ParentStudent.parent_id.in_(ids)) | (ParentStudent.student_id.in_(ids))))
+                await s.execute(
+                    delete(ParentStudent).where(
+                        (ParentStudent.parent_id.in_(ids))
+                        | (ParentStudent.student_id.in_(ids))
+                    )
+                )
                 await s.commit()
         await _clean_phone(p_phone)
         await _clean_phone(s_phone)
@@ -276,31 +330,52 @@ async def test_register_parent_binds_child(client):
     try:
         # 学生注册（≥14，无需监护人同意），拿到 invite_code
         await _inject_code(s_phone)
-        rs = await client.post("/v1/auth/register/student", json={
-            "phone": s_phone, "code": "123456", "name": "娃", "birth_date": "2008-01-01", "grade": "高一",
-        })
+        rs = await client.post(
+            "/v1/auth/register/student",
+            json={
+                "phone": s_phone,
+                "code": "123456",
+                "name": "娃",
+                "birth_date": "2008-01-01",
+                "grade": "高一",
+            },
+        )
         assert rs.status_code == 201, rs.text
         invite = rs.json()["user"]["invite_code"]
         assert invite and len(invite) == 6
 
         # 家长注册 + 凭 invite_code 绑定
         await _inject_code(p_phone)
-        rp = await client.post("/v1/auth/register/parent", json={
-            "phone": p_phone, "code": "123456", "name": "家长", "invite_code": invite,
-        })
+        rp = await client.post(
+            "/v1/auth/register/parent",
+            json={
+                "phone": p_phone,
+                "code": "123456",
+                "name": "家长",
+                "invite_code": invite,
+            },
+        )
         assert rp.status_code == 201, rp.text
         ptok = rp.json()["token"]
 
         # 家长能看到孩子
-        rc = await client.get("/v1/parent/children", headers={"Authorization": f"Bearer {ptok}"})
+        rc = await client.get(
+            "/v1/parent/children", headers={"Authorization": f"Bearer {ptok}"}
+        )
         assert rc.status_code == 200, rc.text
         assert "娃" in [c["name"] for c in rc.json()]
 
         # 错误邀请码 → 404
         await _inject_code("13988880003")
-        rbad = await client.post("/v1/auth/register/parent", json={
-            "phone": "13988880003", "code": "123456", "name": "X", "invite_code": "ZZZZZZ",
-        })
+        rbad = await client.post(
+            "/v1/auth/register/parent",
+            json={
+                "phone": "13988880003",
+                "code": "123456",
+                "name": "X",
+                "invite_code": "ZZZZZZ",
+            },
+        )
         assert rbad.status_code == 404
     finally:
         await _clean_phone("13988880003")

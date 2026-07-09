@@ -325,9 +325,12 @@ def _require_registration_open() -> None:
 @app.post("/v1/auth/register/student", status_code=201)
 async def post_register_student(
     payload: RegisterStudentInput,
+    request: Request,
     db: AsyncSession = Depends(get_db),
 ):
-    """注册学生：Redis验证码校验 + 合规校验 + 写库 + 返回JWT。"""
+    """注册学生：Redis验证码校验 + 合规校验 + 写库 + 返回JWT。
+    <14岁监护人同意时留痕注册IP（guardian_consents.ip_address，此前定义但从未
+    写入）——合规审计留痕，不是业务逻辑依赖。"""
     _require_registration_open()
     result = await auth_service.register_student(
         db=db,
@@ -338,6 +341,7 @@ async def post_register_student(
         grade=payload.grade,
         guardian_phone=payload.guardian_phone,
         guardian_consent=payload.guardian_consent,
+        ip_address=request.client.host if request.client else None,
     )
     if "error" in result:
         raise HTTPException(status_code=result["error_code"], detail=result["error"])

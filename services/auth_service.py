@@ -7,6 +7,7 @@
 因为 omodul.auth 的 verify_otp 接口与 Redis 验证码机制耦合，
 无法在不重建镜像的情况下透明替换。
 """
+
 from __future__ import annotations
 
 import logging
@@ -25,8 +26,8 @@ from sqlalchemy.ext.asyncio import AsyncSession
 logger = logging.getLogger(__name__)
 
 # ── 常量 ─────────────────────────────────────────────────────────────────────
-CODE_TTL = 300      # 验证码有效期：5分钟
-RATE_TTL = 60       # 防刷窗口：60秒
+CODE_TTL = 300  # 验证码有效期：5分钟
+RATE_TTL = 60  # 防刷窗口：60秒
 MOCK_CODE = "123456"
 
 
@@ -39,6 +40,7 @@ def _redis() -> aioredis.Redis:
 
 
 # ── SMS 存码 ─────────────────────────────────────────────────────────────────
+
 
 async def send_code(phone: str, provider) -> dict:
     """
@@ -69,6 +71,7 @@ async def send_code(phone: str, provider) -> dict:
 
 # ── 验证码校验 ────────────────────────────────────────────────────────────────
 
+
 async def verify_code(phone: str, code: str) -> bool:
     """从 Redis 校验验证码，成功则消费（删除）。
     mock 模式下 MOCK_CODE 直接通过，无需先调 send-code。
@@ -92,6 +95,7 @@ async def verify_code(phone: str, code: str) -> bool:
 
 # ── 注册/登录 ─────────────────────────────────────────────────────────────────
 
+
 async def register_student(
     db: AsyncSession,
     phone: str,
@@ -101,6 +105,7 @@ async def register_student(
     grade: str,
     guardian_phone: Optional[str] = None,
     guardian_consent: bool = False,
+    ip_address: Optional[str] = None,
 ) -> dict:
     """
     注册学生：
@@ -121,10 +126,15 @@ async def register_student(
     age = (today - birth_date).days // 365
     if age < 14:
         if not guardian_phone or not guardian_consent:
-            return {"error_code": 422, "error": "Guardian consent required for students under 14"}
+            return {
+                "error_code": 422,
+                "error": "Guardian consent required for students under 14",
+            }
 
     # 手机号唯一
-    existing = (await db.execute(select(User).where(User.phone == phone))).scalar_one_or_none()
+    existing = (
+        await db.execute(select(User).where(User.phone == phone))
+    ).scalar_one_or_none()
     if existing:
         return {"error_code": 409, "error": "该手机号已注册"}
 
@@ -134,26 +144,33 @@ async def register_student(
         name=name,
         role=UserRole.student,
         grade=grade,
-        invite_code=uuid.uuid4().hex[:6].upper(),   # 供家长绑定
+        invite_code=uuid.uuid4().hex[:6].upper(),  # 供家长绑定
     )
     db.add(user)
     await db.flush()
 
     if age < 14 and guardian_phone:
-        db.add(GuardianConsent(
-            id=uuid.uuid4(),
-            student_id=user.id,
-            guardian_phone=guardian_phone,
-            consent_type="registration",
-            consent_version="1.0",
-        ))
+        db.add(
+            GuardianConsent(
+                id=uuid.uuid4(),
+                student_id=user.id,
+                guardian_phone=guardian_phone,
+                consent_type="registration",
+                consent_version="1.0",
+                ip_address=ip_address,
+            )
+        )
         await db.flush()
 
     token = create_access_token({"sub": str(user.id), "role": user.role.value})
     return {
         "token": token,
-        "user": {"id": str(user.id), "name": user.name, "phone": user.phone,
-                 "invite_code": user.invite_code},
+        "user": {
+            "id": str(user.id),
+            "name": user.name,
+            "phone": user.phone,
+            "invite_code": user.invite_code,
+        },
     }
 
 
@@ -170,13 +187,19 @@ async def register_parent(
     if not await verify_code(phone, code):
         return {"error_code": 400, "error": "验证码无效或已过期"}
 
-    existing = (await db.execute(select(User).where(User.phone == phone))).scalar_one_or_none()
+    existing = (
+        await db.execute(select(User).where(User.phone == phone))
+    ).scalar_one_or_none()
     if existing:
         return {"error_code": 409, "error": "该手机号已注册"}
 
-    student = (await db.execute(
-        select(User).where(User.invite_code == invite_code, User.role == UserRole.student)
-    )).scalar_one_or_none()
+    student = (
+        await db.execute(
+            select(User).where(
+                User.invite_code == invite_code, User.role == UserRole.student
+            )
+        )
+    ).scalar_one_or_none()
     if not student:
         return {"error_code": 404, "error": "邀请码无效"}
 
@@ -200,9 +223,11 @@ async def login(db: AsyncSession, phone: str, code: str) -> dict:
     if not await verify_code(phone, code):
         return {"error_code": 400, "error": "验证码无效或已过期"}
 
-    user = (await db.execute(
-        select(User).where(User.phone == phone, User.deleted_at.is_(None))
-    )).scalar_one_or_none()
+    user = (
+        await db.execute(
+            select(User).where(User.phone == phone, User.deleted_at.is_(None))
+        )
+    ).scalar_one_or_none()
     if not user:
         return {"error_code": 404, "error": "用户不存在，请先注册"}
 

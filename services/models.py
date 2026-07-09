@@ -124,7 +124,6 @@ class User(Base):
     name: Mapped[Optional[str]] = mapped_column(String(40))
     birth_date: Mapped[Optional[date]] = mapped_column(Date)
     grade: Mapped[Optional[str]] = mapped_column(String(10))
-    province: Mapped[Optional[str]] = mapped_column(String(10), server_default="广东")
     exam_date: Mapped[Optional[date]] = mapped_column(Date)  # 考期感知(06)
     share_process_with_parent: Mapped[bool] = mapped_column(
         Boolean, server_default=text("false")
@@ -187,33 +186,11 @@ class GuardianConsent(Base):
 
 
 # ===== 学习数据 =====
-class Exam(Base):
-    __tablename__ = "exams"
-
-    id: Mapped[uuid.UUID] = mapped_column(
-        UUID(as_uuid=True), primary_key=True, server_default=text("gen_random_uuid()")
-    )
-    student_id: Mapped[Optional[uuid.UUID]] = mapped_column(
-        UUID(as_uuid=True), ForeignKey("users.id")
-    )
-    exam_name: Mapped[Optional[str]] = mapped_column(String(100))
-    exam_date: Mapped[Optional[date]] = mapped_column(Date)
-    subject: Mapped[Optional[str]] = mapped_column(String(20), server_default="math")
-    total_score: Mapped[Optional[int]] = mapped_column(Integer)
-    scores: Mapped[Optional[dict]] = mapped_column(JSONB)
-    created_at: Mapped[datetime] = mapped_column(
-        DateTime(timezone=True), server_default=text("now()")
-    )
-
-
 class Paper(Base):
     __tablename__ = "papers"
 
     id: Mapped[uuid.UUID] = mapped_column(
         UUID(as_uuid=True), primary_key=True, server_default=text("gen_random_uuid()")
-    )
-    exam_id: Mapped[Optional[uuid.UUID]] = mapped_column(
-        UUID(as_uuid=True), ForeignKey("exams.id")
     )
     student_id: Mapped[Optional[uuid.UUID]] = mapped_column(
         UUID(as_uuid=True), ForeignKey("users.id")
@@ -441,26 +418,6 @@ class MasterySnapshot(Base):
     )
 
 
-class LearningPattern(Base):
-    __tablename__ = "learning_patterns"
-
-    id: Mapped[uuid.UUID] = mapped_column(
-        UUID(as_uuid=True), primary_key=True, server_default=text("gen_random_uuid()")
-    )
-    student_id: Mapped[Optional[uuid.UUID]] = mapped_column(
-        UUID(as_uuid=True), ForeignKey("users.id")
-    )
-    pattern_type: Mapped[Optional[str]] = mapped_column(String(50))
-    description: Mapped[Optional[str]] = mapped_column(Text)
-    confidence: Mapped[Optional[float]] = mapped_column(Float)
-    evidence: Mapped[Optional[dict]] = mapped_column(JSONB)
-    suggestion: Mapped[Optional[str]] = mapped_column(Text)
-    detected_at: Mapped[datetime] = mapped_column(
-        DateTime(timezone=True), server_default=text("now()")
-    )
-    user_marked_useful: Mapped[Optional[bool]] = mapped_column(Boolean)
-
-
 # ===== 机制增强 =====
 class SolveCache(Base):
     __tablename__ = "solve_cache"
@@ -625,22 +582,6 @@ class ParentAlert(Base):
     created_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True), server_default=text("now()")
     )
-
-
-class DailyReport(Base):
-    __tablename__ = "daily_reports"
-    __table_args__ = (UniqueConstraint("student_id", "date"),)
-
-    id: Mapped[uuid.UUID] = mapped_column(
-        UUID(as_uuid=True), primary_key=True, server_default=text("gen_random_uuid()")
-    )
-    student_id: Mapped[Optional[uuid.UUID]] = mapped_column(
-        UUID(as_uuid=True), ForeignKey("users.id")
-    )
-    date: Mapped[Optional[date]] = mapped_column(Date)
-    report_text: Mapped[Optional[str]] = mapped_column(Text)
-    sent_at: Mapped[Optional[datetime]] = mapped_column(DateTime(timezone=True))
-    delivery_status: Mapped[Optional[str]] = mapped_column(String(20))
 
 
 class SpeakingSession(Base):
