@@ -1647,6 +1647,12 @@ async def get_lesson(
         ),
         output_dir=Path(f"/tmp/mneme/lesson/{question_id}"),
     )
+    # 同源自检红线：图示/答案/末步三处不一致 → 不交付（不是打个flag照样给）。
+    if result.get("status") == "self_check_failed":
+        raise HTTPException(
+            status_code=422,
+            detail="lesson_page 同源自检未通过（图示/答案/末步不一致），拒绝交付",
+        )
     if result.get("status") == "ok":
         from services.models import LessonPage
 
