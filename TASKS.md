@@ -563,16 +563,40 @@ A → B → C → D → E → F
   ⏳ 英语/历史：待导入（英语走独立词汇 FSRS 体系 U.19，暂不计划用 knowledge_units）
   ```
 
-- [ ] **N.3 [P1] 阶段3：API 层切换（ku_id 对外）** ⏳ 阶段2数学/物理/语文已完成
-  （英语/历史暂不计划用 knowledge_units，不再是阻塞——见上条 N.2 更正），理论上
-  可以开始，但下面这几个改动面较大，需要用户拍板是否现在做
-  ```
-  - Alembic migration：knowledge_point 列改名为 ku_id（kc_mastery/bkt_priors/
-    interaction_events/mastery_snapshots）
-  - main.py/cognitive_service 等：knowledge_point → ku_id
-  - API 响应体/路径参数：kc_id → ku_id，/v1/kc → /v1/ku
-  - 前端 types/api-client 统一换 ku_id/kuId
-  ```
+- [~] **N.3 [P1] 阶段3：API 层切换（ku_id 对外，缩小范围版）** 🔄 2026-07-09
+  原计划四件套（DB列名改名+后端引用+API+前端）调研后发现比预期危险：
+  `kc_mastery`/`bkt_priors`/`interaction_events`/`mastery_snapshots` 的
+  `knowledge_point`/`kc_id` 列**从来没有外键约束**，现在混着三套互不兼容 ID
+  体系——数学 `GDMATH-*` 旧字典（`knowledge_units` 表里根本没这些 id）、
+  物理/语文真实 `knowledge_units.id`（格式 `RENJIAO-G10-PHYSICS-BX1-ku-xxx`）、
+  英语词汇 `vocab-{id}` 合成编码。真做 DB 列改名只是"看起来"统一，物理意义
+  不变，还可能造成"以为都是KU引用"的误导。且 2026-06-20 有过一次"确认废弃
+  GDMATH"的清库操作，数学从没真的迁移掉——本仓库"已确认废弃"的说法历史上
+  不可全信。跟用户对齐后**缩小范围：只统一 API 对外命名**（query/path参数名+
+  请求响应体字段名），不碰 DB 列名/ORM属性名（`knowledge_point`/内部函数参数
+  `kc_id` 保留，纯内部实现细节），不解决三套 ID 体系混用（不在本次范围）。
+  ✅ **后端完成**：`services/main.py` 十余个端点改名（`/v1/kc`→`/v1/ku`、
+  `/v1/interaction`、`/v1/mastery`、`/v1/mastery/curve`、`/v1/review-queue`、
+  `/v1/error-journal`、`/v1/review/due`/`reveal`/`submit`、`/v1/quiz/*`、
+  `/v1/learner-model`、`/v1/patterns`、`/v1/solve`、`/v1/practice/generate`、
+  `/v1/instant-solve`、`/v1/parent/export` 等）+ `vendor/omodul/cognitive.py`
+  的 `InteractionInput`/`InteractionFindings`（本次改动链路最深的一处——这两个
+  Pydantic 字段既是 wire schema 又在整个认知更新工作流内部被复用，牵连
+  `mastery_overview_workflow`/`review_queue_workflow`/`daily_mission_workflow`
+  等好几个 omodul 的输出字典 key 跟着改）；过程中顺手修了一个真实静默 bug——
+  `due_recall_push.py` 的推送文案用 `.get("kc_id")` 软读取，字段改名后会静默
+  取到 `None`（不报错但推送文案变成"你的知识点【None】该复习啦"），非本次改动
+  引入但被本次改名过程揪出来顺手修了。新增/更新约 20 处测试断言；502 passed
+  （净增1）/3 skipped，check.sh 全绿。
+  ✅ **前端完成**（mneme-web PR #15，待合并）：`types/api.ts` 16个`kc_id`+9个
+  `kc_name`字段改名，`api-client.ts`顺带修了两处历史命名不一致
+  （`getTeachingPolicy`/`getLearnerModel`参数名和实际拼URL用的字段名对不上，
+  蒙对至今没人发现），8个调用点文件+`mock-data.ts`同步改名，`mastery`页内部
+  路由参数`/curve?kc=`顺手改成`/curve?ku=`。
+  🔜 **仍未做（明确排除在本次范围外）**：DB 列名改名、三套 ID 体系统一——
+  这两个才是 N.3 原始描述里真正"名实相符"的部分，留给以后有明确需求（比如真
+  要给这些列加外键约束）时再评估要不要做，届时需要先解决数据层面的 ID 体系
+  统一问题，而不是先改列名。
 
 - [ ] **N.4 [P2] 阶段4：用户教材绑定** ⏳ 等阶段3完成
   ```
