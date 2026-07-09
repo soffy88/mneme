@@ -19,12 +19,15 @@ from services.models import (
     DailyMission,
     InteractionEvent,
     KCMastery,
+    KnowledgeCluster,
+    KnowledgeUnit,
     MasterySnapshot,
     Paper,
     PaperStatus,
     ParentStudent,
     SocraticSession,
     Streak,
+    Textbook,
     User,
     UserRole,
     WrongQuestion,
@@ -332,6 +335,61 @@ async def test_practice_generate_kc_not_found(client):
     )
     assert resp.status_code == 404
     print("  POST /v1/practice/generate 404 ✓")
+
+
+@pytest.mark.asyncio
+async def test_practice_generate_physics_subject(client, db):
+    """非数学"跳到具体知识点做题"闭环泛化：get_kc()(数学旧字典)查不到时退到
+    knowledge_units 表，物理 kc_id 应该不再 404，且 subject 正确透传给
+    practice_workflow(不再写死"math")。"""
+    tb_id = f"test-tb-{uuid.uuid4().hex[:8]}"
+    cluster_id = f"test-cl-{uuid.uuid4().hex[:8]}"
+    ku_id = f"test-ku-{uuid.uuid4().hex[:8]}"
+    db.add(
+        Textbook(
+            id=tb_id,
+            subject="physics",
+            grade="高一",
+            edition="测试版",
+            book_name="测试物理必修",
+        )
+    )
+    await db.flush()
+    db.add(
+        KnowledgeCluster(
+            id=cluster_id, textbook_id=tb_id, name="第一章", display_order=1
+        )
+    )
+    await db.flush()
+    db.add(
+        KnowledgeUnit(
+            id=ku_id,
+            textbook_id=tb_id,
+            cluster_id=cluster_id,
+            name="测试物理知识点",
+            description="测试用",
+            difficulty=0.5,
+        )
+    )
+    await db.commit()
+    try:
+        resp = await client.post(
+            "/v1/practice/generate", params={"kc_id": ku_id, "count": 1}
+        )
+        assert resp.status_code == 200
+        data = resp.json()
+        assert data["kc_id"] == ku_id
+        assert data["kc_name"] == "测试物理知识点"
+        print(
+            "  POST /v1/practice/generate 物理 kc_id（knowledge_units 回退查找）不再 404 ✓"
+        )
+    finally:
+        await db.execute(delete(KnowledgeUnit).where(KnowledgeUnit.id == ku_id))
+        await db.execute(
+            delete(KnowledgeCluster).where(KnowledgeCluster.id == cluster_id)
+        )
+        await db.execute(delete(Textbook).where(Textbook.id == tb_id))
+        await db.commit()
 
 
 # ── K.2 User deletion (compliance red line) ─────────────────────────────────

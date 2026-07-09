@@ -1736,13 +1736,29 @@ async def post_practice_generate(
     current_user: User = Depends(get_current_user),
     db: AsyncSession = Depends(get_db),
 ):
-    """POST /v1/practice/generate — 生成变式题（调 omodul.practice_workflow）。"""
+    """POST /v1/practice/generate — 生成变式题（调 omodul.practice_workflow）。
+    KC 名称/学科先查 get_kc()（数学旧版 GDMATH-* 静态字典，历史 kc_id 仍在用，
+    knowledge_units 表里没有这些 id，不能直接替换），查不到再退到 knowledge_units 表
+    （DB-backed，覆盖物理/语文的新版 ku_id；英语暂无数据，两处都查不到照样 404）。"""
     await _ensure_student_access(db, current_user, student_id)
     from omodul.practice_workflow import PracticeConfig, practice_workflow
 
     kc = get_kc(kc_id)
-    if not kc:
-        raise HTTPException(status_code=404, detail="KC not found")
+    if kc:
+        kc_name = kc.get("name", kc_id)
+        ku_subject = "math"
+    else:
+        ku_row = (
+            await db.execute(
+                select(KnowledgeUnit, Textbook.subject)
+                .join(Textbook, KnowledgeUnit.textbook_id == Textbook.id)
+                .where(KnowledgeUnit.id == kc_id)
+            )
+        ).first()
+        if ku_row is None:
+            raise HTTPException(status_code=404, detail="KC not found")
+        ku, ku_subject = ku_row
+        kc_name = ku.name or kc_id
     sid = student_id or uuid.uuid4()
     result = await practice_workflow(
         config=PracticeConfig(
@@ -1750,6 +1766,7 @@ async def post_practice_generate(
             count=count,
             difficulty=difficulty,
             question_type=question_type,
+            subject=ku_subject,
         ),
         input_data=None,
         output_dir=Path(f"/tmp/mneme/practice/{sid}"),
@@ -1757,7 +1774,7 @@ async def post_practice_generate(
     items = result.get("items", [])
     return {
         "kc_id": kc_id,
-        "kc_name": kc.get("name", kc_id),
+        "kc_name": kc_name,
         "items": items,
         "status": result.get("status", "ok"),
     }
