@@ -95,6 +95,12 @@ async def build_daily_plan(
 
     prefs = await get_daily_plan_prefs(db, student_id)
 
+    # ── N.4 用户教材绑定：{subject: textbook_id}，未绑定学科不在此 dict 里，
+    # P4 新知识点推荐照旧全教材混排（向后兼容，不强制旧用户补填）。
+    from services.textbook_bindings_service import get_textbook_bindings
+
+    textbook_bindings = await get_textbook_bindings(db, student_id)
+
     # ── 0. 考期感知（教育理念 06）：算距考天数；临考(≤14天)停推新知、向巩固倾斜 ──
     # U.24 教学机制 feature-flag（PEDAGOGY_EXAM_AWARE_ENABLED=0 急停：忽略 exam_date，
     # 不停推新知也不显示倒计时，整个机制视为不存在）
@@ -253,6 +259,11 @@ async def build_daily_plan(
             continue
         subj = tb.subject
         if subject and subj != subject:
+            continue
+        # N.4：该科目绑定了具体教材时，只推荐这本教材的新知识点；未绑定则
+        # 保持原样全教材混排（bound_tb 为 None 时条件恒假，行为不变）。
+        bound_tb = textbook_bindings.get(subj)
+        if bound_tb and ku.textbook_id != bound_tb:
             continue
         # 检查前置：所有 prerequisites 均已掌握（在 mastered_kp_set 中）
         prereqs: list[str] = ku.prerequisites or []

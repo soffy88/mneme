@@ -2178,6 +2178,81 @@ async def post_user_daily_plan_prefs(
     return result
 
 
+# ===== §N.4 用户教材绑定 =====
+
+from services.textbook_bindings_service import (
+    get_textbook_bindings,
+    set_textbook_bindings,
+)
+
+
+class TextbookBindingsReq(BaseModel):
+    math: Optional[str] = None
+    physics: Optional[str] = None
+    chinese: Optional[str] = None
+    english: Optional[str] = None
+
+
+@app.get("/v1/users/{student_id}/textbook-bindings")
+async def get_user_textbook_bindings(
+    student_id: UUID,
+    _auth: User = Depends(require_student_access),
+    db: AsyncSession = Depends(get_db),
+):
+    """GET /v1/users/{student_id}/textbook-bindings — 学生按学科绑定的教材
+    （{subject: textbook_id}）。未绑定的学科不在返回的 dict 里——daily_plan_service
+    据此回退"该学科全部教材混排"的既有行为，不代表出错。"""
+    return await get_textbook_bindings(db, student_id)
+
+
+@app.post("/v1/users/{student_id}/textbook-bindings")
+async def post_user_textbook_bindings(
+    student_id: UUID,
+    body: TextbookBindingsReq,
+    current_user: User = Depends(get_current_user),
+    db: AsyncSession = Depends(get_db),
+):
+    """POST /v1/users/{student_id}/textbook-bindings — 更新教材绑定（部分更新）。
+    仅本人。同 daily-plan-prefs 用 exclude_unset 区分"学科未传"与"显式传 null
+    清除该学科绑定"。"""
+    if student_id != current_user.id:
+        raise HTTPException(status_code=403, detail="只能设置本人偏好")
+    updates = body.model_dump(exclude_unset=True)
+    result = await set_textbook_bindings(db, student_id, updates)
+    if "error" in result:
+        raise HTTPException(status_code=422, detail=result["error"])
+    return result
+
+
+@app.get("/v1/textbooks")
+async def list_textbooks_by_subject(
+    subject: str = Query(...),
+    current_user: User = Depends(get_current_user),
+    db: AsyncSession = Depends(get_db),
+):
+    """GET /v1/textbooks?subject=X — 该学科可选教材列表（供"我的教材"绑定选择器）。
+    不 JOIN textbook_files（跟 /v1/library/textbooks 不同）——绑定教材不要求该教材
+    已经上传过阅读文件，否则会漏掉一部分可选项。复用 _grade_sort_key 排序、同款
+    测试条目过滤。"""
+    stmt = select(Textbook).where(
+        Textbook.subject == subject,
+        ~Textbook.id.like("tb-lp-%"),
+        Textbook.book_name != "练习教材",
+    )
+    rows = (await db.execute(stmt)).scalars().all()
+    books = [
+        {
+            "textbook_id": tb.id,
+            "book_name": tb.book_name,
+            "grade": tb.grade,
+            "edition": tb.edition,
+        }
+        for tb in rows
+    ]
+    books.sort(key=lambda x: _grade_sort_key(x["grade"]))
+    return books
+
+
 @app.post("/v1/knowledge-points/{ku_id}/read-aloud")
 async def post_ku_read_aloud(
     ku_id: str,

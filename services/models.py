@@ -141,6 +141,11 @@ class User(Base):
     daily_plan_prefs: Mapped[dict] = mapped_column(
         JSONB, server_default=text("'{}'::jsonb")
     )
+    # N.4 用户教材绑定：{subject: textbook_id}，学生按学科分别绑（一个学科可能有
+    # 多本教材，单列存不下）。未绑定学科=该 key 不存在=向后兼容，回退全教材混排。
+    textbook_bindings: Mapped[dict] = mapped_column(
+        JSONB, server_default=text("'{}'::jsonb")
+    )
     created_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True), server_default=text("now()")
     )
