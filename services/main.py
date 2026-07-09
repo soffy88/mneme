@@ -2104,6 +2104,54 @@ async def post_user_accessibility(
     return result
 
 
+# ===== §V.2 每日计划参数可见+可配置 =====
+
+from services.daily_plan_prefs_service import (
+    get_daily_plan_prefs,
+    set_daily_plan_prefs,
+)
+
+
+class DailyPlanPrefsReq(BaseModel):
+    budget_minutes: Optional[int] = None
+    late_night_hour: Optional[int] = None
+    late_night_minute: Optional[int] = None
+    weak_max_items: Optional[int] = None
+    new_max_items: Optional[int] = None
+
+
+@app.get("/v1/users/{student_id}/daily-plan-prefs")
+async def get_user_daily_plan_prefs(
+    student_id: UUID,
+    _auth: User = Depends(require_student_access),
+    db: AsyncSession = Depends(get_db),
+):
+    """GET /v1/users/{student_id}/daily-plan-prefs — 每日计划生成参数（时长预算/
+    晚间截止/薄弱与新学每日条数上限），跨设备持久化。GATE 掌握度阈值不在此列
+    （单源常量，见 services/learner_model.py）。"""
+    return await get_daily_plan_prefs(db, student_id)
+
+
+@app.post("/v1/users/{student_id}/daily-plan-prefs")
+async def post_user_daily_plan_prefs(
+    student_id: UUID,
+    body: DailyPlanPrefsReq,
+    current_user: User = Depends(get_current_user),
+    db: AsyncSession = Depends(get_db),
+):
+    """POST /v1/users/{student_id}/daily-plan-prefs — 更新每日计划参数（部分更新）。
+    仅本人。用 exclude_unset 区分"字段未传"与"显式传 null"——budget_minutes 的合法值
+    本身包含 null(=不限)，不能用"非 None 才更新"的简单过滤（会导致永远清不回不限）。
+    """
+    if student_id != current_user.id:
+        raise HTTPException(status_code=403, detail="只能设置本人偏好")
+    updates = body.model_dump(exclude_unset=True)
+    result = await set_daily_plan_prefs(db, student_id, updates)
+    if "error" in result:
+        raise HTTPException(status_code=422, detail=result["error"])
+    return result
+
+
 @app.post("/v1/knowledge-points/{ku_id}/read-aloud")
 async def post_ku_read_aloud(
     ku_id: str,

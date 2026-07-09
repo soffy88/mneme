@@ -716,6 +716,14 @@ POST /v1/parent/delete-request/{student_id} → 触发删除（合规）
 - **06 考期感知调度**：`users.exam_date`(migration f6d3e4a5b8c9)+`POST /v1/users/{sid}/exam-date`；
   `build_daily_plan` 算 `exam_countdown_days`，临考窗口(≤14天)`near_exam=True` 停推新知 P4、
   向复习/薄弱巩固倾斜(分布式练习压缩)。FSRS 目标 R 上调/间隔封顶待后续。
+- **06.5 每日计划参数可见+可配置（V.2，2026-07-09）**：`users.daily_plan_prefs`(migration
+  b47f12cef853，`services/daily_plan_prefs_service.py`)，学生可调 `budget_minutes`(每日
+  时长预算，None=不限)/`late_night_hour`+`late_night_minute`(晚间截止，默认22:30)/
+  `weak_max_items`(薄弱知识点每日上限，默认3)/`new_max_items`(新知识点每日上限，默认2)，
+  `GET/POST /v1/users/{sid}/daily-plan-prefs`。**明确排除 GATE**（掌握度阈值 0.6）：它是
+  `services/learner_model.py` 的单源常量，BKT薄弱判定/前置锁定/小测选题/词汇FSRS 都读
+  同一个值，做成 per-student 会让同一知识点在不同入口"薄弱"判定不一致，破坏 L1 反漂移
+  红线，不做。
 - **07 刻意练习细颗粒反馈**：practice/submit 收 `student_steps`，答错时复用 `oskill.verify_steps_chain`
   (确定性，同拍卷 T.6) 定位首个错步返回 `step_analysis{first_wrong_step, step_verdicts}`——
   针对错步而非整题重来。红线：确定性判步不靠 LLM。分步作答 UI 待前端。

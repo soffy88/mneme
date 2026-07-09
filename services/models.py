@@ -136,6 +136,11 @@ class User(Base):
     accessibility_prefs: Mapped[dict] = mapped_column(
         JSONB, server_default=text("'{}'::jsonb")
     )
+    # V.2 每日计划参数可见+可配置：budget_minutes/late_night_hour/minute/weak_max_items/
+    # new_max_items，学生可调；GATE(掌握度阈值)单源不在此列，见 daily_plan_prefs_service.py。
+    daily_plan_prefs: Mapped[dict] = mapped_column(
+        JSONB, server_default=text("'{}'::jsonb")
+    )
     created_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True), server_default=text("now()")
     )
