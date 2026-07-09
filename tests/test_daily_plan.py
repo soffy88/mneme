@@ -32,6 +32,10 @@ from services.models import (
 )
 from services.daily_plan_service import build_daily_plan
 
+# 固定白天时刻传给 build_daily_plan——否则 P4 新知识点推荐会因真实时间过了 22:30
+# late_night 停推新知而落空，导致这些断言 P4 的测试每晚 22:30 后（UTC）必挂。
+_DAYTIME = datetime(2026, 7, 9, 10, 0, tzinfo=timezone.utc)
+
 # ── fixtures ─────────────────────────────────────────────────────────────────
 
 
@@ -187,7 +191,7 @@ async def test_p1_fsrs_due_generates_review_task(db, student):
     )
     await db.commit()
 
-    plan = await build_daily_plan(db, student)
+    plan = await build_daily_plan(db, student, now=_DAYTIME)
     review_tasks = [t for t in plan["tasks"] if t["type"] == "review"]
     assert len(review_tasks) == 1
     assert review_tasks[0]["priority"] == 1
@@ -211,7 +215,7 @@ async def test_p1_not_due_no_review_task(db, student):
     )
     await db.commit()
 
-    plan = await build_daily_plan(db, student)
+    plan = await build_daily_plan(db, student, now=_DAYTIME)
     review_tasks = [t for t in plan["tasks"] if t["type"] == "review"]
     assert len(review_tasks) == 0
 
@@ -232,7 +236,7 @@ async def test_p1_no_fsrs_card_not_due(db, student):
     )
     await db.commit()
 
-    plan = await build_daily_plan(db, student)
+    plan = await build_daily_plan(db, student, now=_DAYTIME)
     review_tasks = [t for t in plan["tasks"] if t["type"] == "review"]
     assert len(review_tasks) == 0
 
@@ -255,7 +259,7 @@ async def test_p3_weak_mastery_generates_weak_task(db, student):
     )
     await db.commit()
 
-    plan = await build_daily_plan(db, student)
+    plan = await build_daily_plan(db, student, now=_DAYTIME)
     weak_tasks = [t for t in plan["tasks"] if t["type"] == "weak_practice"]
     assert len(weak_tasks) == 1
     assert weak_tasks[0]["priority"] == 3
@@ -277,7 +281,7 @@ async def test_p3_above_threshold_no_weak_task(db, student):
     )
     await db.commit()
 
-    plan = await build_daily_plan(db, student)
+    plan = await build_daily_plan(db, student, now=_DAYTIME)
     weak_tasks = [t for t in plan["tasks"] if t["type"] == "weak_practice"]
     assert len(weak_tasks) == 0
 
@@ -288,7 +292,7 @@ async def test_p3_above_threshold_no_weak_task(db, student):
 @pytest.mark.asyncio
 async def test_p4_new_learn_no_prereqs(db, student, ku_seed):
     """New student with no kc_mastery: should recommend KUs with no prerequisites (ku_a, ku_c)."""
-    plan = await build_daily_plan(db, student)
+    plan = await build_daily_plan(db, student, now=_DAYTIME)
     new_tasks = [t for t in plan["tasks"] if t["type"] == "new_learn"]
     assert len(new_tasks) >= 1
     all_ku_ids = {ku_id for t in new_tasks for ku_id in t["ku_ids"]}
@@ -319,7 +323,7 @@ async def test_p4_prerequisite_unlocks_after_mastery(db, student, ku_seed):
     )
     await db.commit()
 
-    plan = await build_daily_plan(db, student)
+    plan = await build_daily_plan(db, student, now=_DAYTIME)
     new_tasks = [t for t in plan["tasks"] if t["type"] == "new_learn"]
     all_ku_ids = {ku_id for t in new_tasks for ku_id in t["ku_ids"]}
 
@@ -352,7 +356,7 @@ async def test_p4_chained_prerequisites(db, student, ku_seed):
         )
     await db.commit()
 
-    plan = await build_daily_plan(db, student)
+    plan = await build_daily_plan(db, student, now=_DAYTIME)
     new_tasks = [t for t in plan["tasks"] if t["type"] == "new_learn"]
     all_ku_ids = {ku_id for t in new_tasks for ku_id in t["ku_ids"]}
     assert ku_d in all_ku_ids
@@ -377,7 +381,7 @@ async def test_p4_below_mastery_threshold_does_not_unlock(db, student, ku_seed):
     )
     await db.commit()
 
-    plan = await build_daily_plan(db, student)
+    plan = await build_daily_plan(db, student, now=_DAYTIME)
     new_tasks = [t for t in plan["tasks"] if t["type"] == "new_learn"]
     all_ku_ids = {ku_id for t in new_tasks for ku_id in t["ku_ids"]}
     assert ku_b not in all_ku_ids
@@ -427,7 +431,7 @@ async def test_p4_verified_ku_preferred_over_unverified(db, student):
     await db.commit()
 
     try:
-        plan = await build_daily_plan(db, student, subject="math")
+        plan = await build_daily_plan(db, student, subject="math", now=_DAYTIME)
         new_tasks = [t for t in plan["tasks"] if t["type"] == "new_learn"]
         all_ku_ids = {ku_id for t in new_tasks for ku_id in t["ku_ids"]}
         assert ku_v in all_ku_ids
@@ -463,7 +467,7 @@ async def test_priority_order_p1_before_p3(db, student):
     )
     await db.commit()
 
-    plan = await build_daily_plan(db, student)
+    plan = await build_daily_plan(db, student, now=_DAYTIME)
     types_in_order = [t["type"] for t in plan["tasks"]]
     assert types_in_order.index("review") < types_in_order.index("weak_practice")
 
@@ -474,7 +478,7 @@ async def test_priority_order_p1_before_p3(db, student):
 @pytest.mark.asyncio
 async def test_subject_filter_isolates_correctly(db, student, ku_seed):
     """subject=math should return only math tasks (ku_seed is math)."""
-    plan_math = await build_daily_plan(db, student, subject="math")
+    plan_math = await build_daily_plan(db, student, subject="math", now=_DAYTIME)
 
     # math plan should have P4 tasks (ku_seed is math)
     math_new = [t for t in plan_math["tasks"] if t["type"] == "new_learn"]
@@ -567,7 +571,7 @@ async def test_api_empty_plan_for_new_student(db):
 
 @pytest.mark.asyncio
 async def test_subjects_summary_structure(db, student, ku_seed):
-    plan = await build_daily_plan(db, student)
+    plan = await build_daily_plan(db, student, now=_DAYTIME)
     for s in plan["subjects_summary"]:
         assert "subject" in s
         assert "task_count" in s
@@ -593,7 +597,7 @@ async def test_p1_estimated_minutes_per_ku(db, student):
         )
     await db.commit()
 
-    plan = await build_daily_plan(db, student)
+    plan = await build_daily_plan(db, student, now=_DAYTIME)
     review_tasks = [t for t in plan["tasks"] if t["type"] == "review"]
     assert len(review_tasks) == 1
     assert review_tasks[0]["estimated_minutes"] == 10
@@ -628,7 +632,7 @@ async def test_budget_minutes_none_keeps_all_tasks_and_empty_dropped(
     db, student, ku_seed
 ):
     """budget_minutes 不传（默认）：不裁剪，dropped_tasks 为空——不悄悄改变既有行为。"""
-    plan = await build_daily_plan(db, student)
+    plan = await build_daily_plan(db, student, now=_DAYTIME)
     assert plan["budget_minutes"] is None
     assert plan["dropped_tasks"] == []
     assert plan["suggested_break_minutes"] == 25

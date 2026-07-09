@@ -146,7 +146,7 @@ async def test_soft_prerequisites_do_not_block_p4_new_learn(seed, student, db):
     """核心验证：ku_target 的软前置(ku_soft_id)完全未掌握，但硬前置(prerequisites)
     为空——P4 新知识点推荐应该正常把 ku_target 纳入候选，不能被软前置卡住。这是
     软/硬前置语义独立的关键：软前置只是建议，不是门控。"""
-    now = datetime.now(timezone.utc)
+    now = datetime(2026, 7, 9, 10, 0, tzinfo=timezone.utc)  # 固定白天，避开22:30后停推新知
     plan = await build_daily_plan(db, student, subject="math", now=now)
     new_learn_ku_ids: set[str] = set()
     for t in plan["tasks"]:

@@ -195,7 +195,7 @@ async def test_bound_textbook_scopes_p4_new_learn(
     )
     assert resp.status_code == 200
 
-    now = datetime.now(timezone.utc)
+    now = datetime(2026, 7, 9, 10, 0, tzinfo=timezone.utc)  # 固定白天，避开22:30后停推新知
     plan = await build_daily_plan(db, student, subject="math", now=now)
     new_learn_ku_ids: set[str] = set()
     for t in plan["tasks"]:
@@ -216,7 +216,7 @@ async def test_unbound_subject_keeps_existing_mixed_behavior(
     ku_a = two_math_textbooks["a"]["ku_id"]
     ku_b = two_math_textbooks["b"]["ku_id"]
 
-    now = datetime.now(timezone.utc)
+    now = datetime(2026, 7, 9, 10, 0, tzinfo=timezone.utc)  # 固定白天，避开22:30后停推新知
     plan = await build_daily_plan(db, student, subject="math", now=now)
     new_learn_ku_ids: set[str] = set()
     for t in plan["tasks"]:
