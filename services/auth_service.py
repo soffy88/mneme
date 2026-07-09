@@ -14,7 +14,7 @@ import logging
 import os
 import random
 import uuid
-from datetime import date, datetime, timezone
+from datetime import date
 from typing import Optional
 
 import redis.asyncio as aioredis
@@ -33,6 +33,13 @@ MOCK_CODE = "123456"
 
 def _is_mock() -> bool:
     return os.environ.get("SMS_PROVIDER", "mock").lower() != "aliyun"
+
+
+def _mask_phone(phone: str) -> str:
+    """日志脱敏：138****1234，不在日志里落完整手机号（PII）。"""
+    if len(phone) != 11:
+        return "***"
+    return f"{phone[:3]}****{phone[-4:]}"
 
 
 def _redis() -> aioredis.Redis:
@@ -60,10 +67,12 @@ async def send_code(phone: str, provider) -> dict:
 
         ok = await provider.send_code(phone, code)
         if not ok:
-            logger.warning(f"SMS provider返回失败 phone={phone}")
+            logger.warning(f"SMS provider返回失败 phone={_mask_phone(phone)}")
             return {"ok": False, "message": "发送失败，请稍后重试"}
 
-        logger.info(f"SMS code sent phone={phone} provider={type(provider).__name__}")
+        logger.info(
+            f"SMS code sent phone={_mask_phone(phone)} provider={type(provider).__name__}"
+        )
         return {"ok": True, "message": "验证码已发送"}
     finally:
         await r.aclose()
@@ -121,10 +130,12 @@ async def register_student(
     if not await verify_code(phone, code):
         return {"error_code": 400, "error": "验证码无效或已过期"}
 
-    # 合规：年龄
-    today = datetime.now(timezone.utc).date()
-    age = (today - birth_date).days // 365
-    if age < 14:
+    # 合规：年龄。用单源日历算法（privacy._age），不用 //365——后者会少算几天，
+    # 生日前几天的 13 岁会被当成 14 岁，绕过监护同意闸门（合规红线，宁可算小不算大）。
+    from services.privacy import _age
+
+    age = _age(birth_date)
+    if age is not None and age < 14:
         if not guardian_phone or not guardian_consent:
             return {
                 "error_code": 422,
@@ -149,7 +160,7 @@ async def register_student(
     db.add(user)
     await db.flush()
 
-    if age < 14 and guardian_phone:
+    if age is not None and age < 14 and guardian_phone:
         db.add(
             GuardianConsent(
                 id=uuid.uuid4(),

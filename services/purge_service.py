@@ -36,6 +36,10 @@ _STUDENT_TABLES: list[tuple[str, str]] = [
     ("socratic_sessions", "student_id"),
     ("speaking_sessions", "student_id"),
     ("streaks", "student_id"),
+    ("timed_quizzes", "student_id"),
+    # textbook_files 必须排在 highlights/reading_notes 之后——它俩 file_id 外键
+    # 指向 textbook_files，先删父行会违反外键。列名是 owner_student_id 不是 student_id。
+    ("textbook_files", "owner_student_id"),
 ]
 
 
