@@ -1755,6 +1755,7 @@ async def post_practice_generate(
     kc = get_kc(ku_id)
     if kc:
         ku_name = kc.get("name", ku_id)
+        ku_description = ""
         ku_subject = "math"
     else:
         ku_row = (
@@ -1768,6 +1769,7 @@ async def post_practice_generate(
             raise HTTPException(status_code=404, detail="KC not found")
         ku, ku_subject = ku_row
         ku_name = ku.name or ku_id
+        ku_description = ku.description or ""
     sid = student_id or uuid.uuid4()
     result = await practice_workflow(
         config=PracticeConfig(
@@ -1776,6 +1778,8 @@ async def post_practice_generate(
             difficulty=difficulty,
             question_type=question_type,
             subject=ku_subject,
+            ku_name=ku_name,
+            ku_description=ku_description,
         ),
         input_data=None,
         output_dir=Path(f"/tmp/mneme/practice/{sid}"),

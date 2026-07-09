@@ -392,6 +392,38 @@ async def test_practice_generate_physics_subject(client, db):
         await db.commit()
 
 
+def test_get_template_uses_ku_name_not_raw_id_when_no_keyword_match():
+    """变式题生成质量抽查（2026-07-09）：物理/语文 kc_id 不命中 _KC_TEMPLATES 十个
+    数学关键词时，此前兜底文案直接拼裸 kc_id（对 LLM 无语义），现在改用调用方传入的
+    ku_name/ku_description（knowledge_units 表已有的真实人类可读内容）。"""
+    from omodul.practice_workflow import _get_template
+
+    raw_id = "RENJIAO-G10-PHYSICS-BX1-ku-测量纸带的瞬时速度"
+
+    # 无 ku_name 时保持旧行为（旧调用方兼容）
+    q, _ = _get_template(raw_id)
+    assert raw_id in q
+
+    # 传了 ku_name：不再把裸 kc_id 拼进"原题"文案里
+    q, _ = _get_template(raw_id, ku_name="测量纸带的瞬时速度")
+    assert raw_id not in q
+    assert "测量纸带的瞬时速度" in q
+
+    # 传了 ku_description：一并纳入种子文案
+    q, _ = _get_template(
+        raw_id, ku_name="七月流火", ku_description="指夏历七月大火星西降，天气转凉。"
+    )
+    assert "七月流火" in q
+    assert "大火星西降" in q
+
+    # 数学关键词命中时行为不变（不受 ku_name 影响，走既有精确模板）
+    q, _ = _get_template("GDMATH-FUNC-01", ku_name="不应该被用到")
+    assert q == "求函数 f(x) = 2x² - 3x + 1 的最小值。"
+    print(
+        "  _get_template 兜底文案改用 ku_name/ku_description，数学关键词命中不受影响 ✓"
+    )
+
+
 # ── K.2 User deletion (compliance red line) ─────────────────────────────────
 
 

@@ -43,14 +43,25 @@ _KC_TEMPLATES: dict[str, tuple[str, str]] = {
 }
 
 
-def _get_template(kc_id: str) -> tuple[str, str]:
+def _get_template(
+    kc_id: str, ku_name: str = "", ku_description: str = ""
+) -> tuple[str, str]:
     """Return (question_text, answer) template for given KC.
-    _KC_TEMPLATES 关键词表仍是数学专属（未对物理/语文建对应模板），对非数学 kc_id
-    天然不命中、落兜底模板——这是可接受的启发式降级，不是 bug。"""
+
+    _KC_TEMPLATES 关键词表仍是数学专属，未命中时若调用方传了 ku_name/ku_description
+    （knowledge_units 表已有的人类可读名称/释义），拿这些真实内容当"原题"种子，而不是
+    把内部 kc_id 原样拼进 prompt——kc_id 对 LLM 没有语义（例如
+    "RENJIAO-G10-PHYSICS-BX1-ku-测量纸带的瞬时速度"），拿它当"原题"等于让模型对着
+    一句非题目文本生成变式。两者都没传（旧调用方/无匹配数据）才退回原始兜底。"""
     kc_lower = kc_id.lower()
     for key, (q, _) in _KC_TEMPLATES.items():
         if key in kc_lower:
             return q, ""
+    if ku_name:
+        seed = f"这是高中「{ku_name}」相关的知识点。"
+        if ku_description:
+            seed += f"说明：{ku_description}"
+        return seed, ""
     return f"与知识点 {kc_id} 相关的练习题。", ""
 
 
@@ -66,6 +77,8 @@ class PracticeConfig(BaseConfig):
     question_type: str = "solve"
     model: str = "claude-sonnet-4-6"
     subject: str = "math"
+    ku_name: str = ""
+    ku_description: str = ""
 
 
 async def practice_workflow(
@@ -98,7 +111,9 @@ async def practice_workflow(
     try:
         trail.record(event="start", kc_id=config.kc_id, count=config.count)
 
-        template_q, _ = _get_template(config.kc_id)
+        template_q, _ = _get_template(
+            config.kc_id, config.ku_name, config.ku_description
+        )
         variant_type = _difficulty_to_variant_type(config.difficulty)
 
         items: list[dict] = []
