@@ -777,6 +777,13 @@ class KnowledgeUnit(Base):
     prerequisites: Mapped[list] = mapped_column(
         JSONB, server_default=text("'[]'::jsonb")
     )
+    # 软前置（建议先学，不阻断）：跟 prerequisites（硬前置，P4 新知识点推荐/fringe
+    # 门控靠它判定是否解锁）语义不同、字段独立——不复用 prerequisites 混装类型标签，
+    # 避免 daily_plan_service/learner_model/cognitive_service/前端 等既有全部消费者
+    # 都要跟着改。默认空表示"无软前置建议"，向后兼容，不影响任何既有掌握度/解锁判定。
+    soft_prerequisites: Mapped[list] = mapped_column(
+        JSONB, server_default=text("'[]'::jsonb")
+    )
     related_kus: Mapped[list] = mapped_column(JSONB, server_default=text("'[]'::jsonb"))
     difficulty: Mapped[float] = mapped_column(Float, server_default=text("0.5"))
     exam_frequency: Mapped[str] = mapped_column(
