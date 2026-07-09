@@ -119,7 +119,9 @@ class User(Base):
     id: Mapped[uuid.UUID] = mapped_column(
         UUID(as_uuid=True), primary_key=True, server_default=text("gen_random_uuid()")
     )
-    phone: Mapped[str] = mapped_column(String(11), unique=True, nullable=False)
+    phone: Mapped[Optional[str]] = mapped_column(String(11), unique=True)
+    # 邮箱注册（新主标识）：唯一可空——老用户手机号注册无 email，新用户邮箱注册无 phone。
+    email: Mapped[Optional[str]] = mapped_column(String(254), unique=True)
     role: Mapped[UserRole] = mapped_column(nullable=False)
     name: Mapped[Optional[str]] = mapped_column(String(40))
     birth_date: Mapped[Optional[date]] = mapped_column(Date)
@@ -176,7 +178,9 @@ class GuardianConsent(Base):
     student_id: Mapped[Optional[uuid.UUID]] = mapped_column(
         UUID(as_uuid=True), ForeignKey("users.id")
     )
-    guardian_phone: Mapped[str] = mapped_column(String(11), nullable=False)
+    guardian_phone: Mapped[Optional[str]] = mapped_column(String(11))
+    # 邮箱注册的<14监护同意：监护人邮箱（手机号注册走 guardian_phone，二选一）
+    guardian_email: Mapped[Optional[str]] = mapped_column(String(254))
     consent_type: Mapped[str] = mapped_column(String(50), nullable=False)
     consent_version: Mapped[str] = mapped_column(String(20), nullable=False)
     consented_at: Mapped[datetime] = mapped_column(

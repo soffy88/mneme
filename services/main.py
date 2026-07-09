@@ -40,6 +40,7 @@ from oprim.calibration import brier_calibration
 from omodul.auth import SendCodeInput, RegisterStudentInput, LoginInput
 import services.auth_service as auth_service
 from services.sms import get_sms_provider
+from services.email import get_email_provider
 from omodul.paper import upload_paper_workflow, PaperConfig, PaperUploadInput
 from services.cognitive_service import (
     mastery_overview,
@@ -273,11 +274,14 @@ async def lifespan(app: FastAPI):
 
     _self._sms_provider = get_sms_provider()
     logger.info(f"SMS provider: {type(_self._sms_provider).__name__}")
+    _self._email_provider = get_email_provider()
+    logger.info(f"Email provider: {type(_self._email_provider).__name__}")
 
     yield
 
 
 _sms_provider = get_sms_provider()  # module-level default; replaced in lifespan
+_email_provider = get_email_provider()  # module-level default; replaced in lifespan
 
 app = FastAPI(title="Mneme API", version="0.1.0", lifespan=lifespan)
 
@@ -385,12 +389,138 @@ async def post_login(payload: LoginInput, db: AsyncSession = Depends(get_db)):
     return result
 
 
+# ===== §8b 邮箱注册/登录（新主标识；手机号端点完整保留向后兼容）=====
+
+import re as _re_email
+from pydantic import field_validator
+
+# 轻量邮箱格式校验（不引 email-validator 依赖，避免重建镜像/改 Master）。
+# 真正的所有权校验靠"收到验证码"，这里只挡明显非法格式。
+_EMAIL_RE = _re_email.compile(r"^[^@\s]+@[^@\s]+\.[^@\s]+$")
+
+
+def _validate_email(v: str) -> str:
+    v = v.strip()
+    if not _EMAIL_RE.match(v):
+        raise ValueError("邮箱格式不正确")
+    return v.lower()
+
+
+class SendEmailCodeReq(BaseModel):
+    email: str
+
+    _v = field_validator("email")(lambda cls, v: _validate_email(v))
+
+
+class RegisterStudentEmailReq(BaseModel):
+    email: str
+    code: str
+    name: str
+    birth_date: date
+    grade: str
+    guardian_email: Optional[str] = None
+    guardian_consent: bool = False
+
+    _v = field_validator("email")(lambda cls, v: _validate_email(v))
+
+    @field_validator("guardian_email")
+    @classmethod
+    def _v_guardian(cls, v: Optional[str]) -> Optional[str]:
+        return _validate_email(v) if v else v
+
+
+class RegisterParentEmailReq(BaseModel):
+    email: str
+    code: str
+    name: str
+    invite_code: str
+
+    _v = field_validator("email")(lambda cls, v: _validate_email(v))
+
+
+class LoginEmailReq(BaseModel):
+    email: str
+    code: str
+
+    _v = field_validator("email")(lambda cls, v: _validate_email(v))
+
+
+@app.post("/v1/auth/send-email-code")
+async def post_send_email_code(payload: SendEmailCodeReq):
+    """POST /v1/auth/send-email-code — 发送邮箱验证码，存 Redis TTL=5min，60s防刷。"""
+    import services.main as _self
+
+    result = await auth_service.send_email_code(
+        str(payload.email), _self._email_provider
+    )
+    if not result["ok"]:
+        raise HTTPException(status_code=429, detail=result["message"])
+    return result
+
+
+@app.post("/v1/auth/register/student-email", status_code=201)
+async def post_register_student_email(
+    payload: RegisterStudentEmailReq,
+    request: Request,
+    db: AsyncSession = Depends(get_db),
+):
+    """邮箱注册学生：验证码 + 合规(<14监护同意) + 写库 + JWT。<14 时留注册IP留痕。"""
+    _require_registration_open()
+    result = await auth_service.register_student_email(
+        db=db,
+        email=str(payload.email),
+        code=payload.code,
+        name=payload.name,
+        birth_date=payload.birth_date,
+        grade=payload.grade,
+        guardian_email=str(payload.guardian_email) if payload.guardian_email else None,
+        guardian_consent=payload.guardian_consent,
+        ip_address=request.client.host if request.client else None,
+    )
+    if "error" in result:
+        raise HTTPException(status_code=result["error_code"], detail=result["error"])
+    await db.commit()
+    return result
+
+
+@app.post("/v1/auth/register/parent-email", status_code=201)
+async def post_register_parent_email(
+    payload: RegisterParentEmailReq,
+    db: AsyncSession = Depends(get_db),
+):
+    """邮箱注册家长：验证码 + 邮箱唯一 + 凭 invite_code 绑定孩子 + JWT。"""
+    _require_registration_open()
+    result = await auth_service.register_parent_email(
+        db=db,
+        email=str(payload.email),
+        code=payload.code,
+        name=payload.name,
+        invite_code=payload.invite_code,
+    )
+    if "error" in result:
+        raise HTTPException(status_code=result["error_code"], detail=result["error"])
+    await db.commit()
+    return result
+
+
+@app.post("/v1/auth/login-email")
+async def post_login_email(payload: LoginEmailReq, db: AsyncSession = Depends(get_db)):
+    """邮箱登录：验证码校验 → JWT。"""
+    result = await auth_service.login_email(
+        db=db, email=str(payload.email), code=payload.code
+    )
+    if "error" in result:
+        raise HTTPException(status_code=result["error_code"], detail=result["error"])
+    return result
+
+
 @app.get("/v1/auth/me")
 async def get_me(user: User = Depends(get_current_user)):
     """获取当前用户信息。"""
     return {
         "id": str(user.id),
         "phone": user.phone,
+        "email": getattr(user, "email", None),
         "role": user.role.value,
         "name": user.name,
         "grade": getattr(user, "grade", None),
