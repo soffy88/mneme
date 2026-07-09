@@ -563,7 +563,7 @@ A → B → C → D → E → F
   ⏳ 英语/历史：待导入（英语走独立词汇 FSRS 体系 U.19，暂不计划用 knowledge_units）
   ```
 
-- [~] **N.3 [P1] 阶段3：API 层切换（ku_id 对外，缩小范围版）** 🔄 2026-07-09
+- [x] **N.3 [P1] 阶段3：API 层切换（ku_id 对外，缩小范围版）** ✅ 2026-07-09
   原计划四件套（DB列名改名+后端引用+API+前端）调研后发现比预期危险：
   `kc_mastery`/`bkt_priors`/`interaction_events`/`mastery_snapshots` 的
   `knowledge_point`/`kc_id` 列**从来没有外键约束**，现在混着三套互不兼容 ID
@@ -588,7 +588,7 @@ A → B → C → D → E → F
   取到 `None`（不报错但推送文案变成"你的知识点【None】该复习啦"），非本次改动
   引入但被本次改名过程揪出来顺手修了。新增/更新约 20 处测试断言；502 passed
   （净增1）/3 skipped，check.sh 全绿。
-  ✅ **前端完成**（mneme-web PR #15，待合并）：`types/api.ts` 16个`kc_id`+9个
+  ✅ **前端完成**（mneme-web PR #15，已合并）：`types/api.ts` 16个`kc_id`+9个
   `kc_name`字段改名，`api-client.ts`顺带修了两处历史命名不一致
   （`getTeachingPolicy`/`getLearnerModel`参数名和实际拼URL用的字段名对不上，
   蒙对至今没人发现），8个调用点文件+`mock-data.ts`同步改名，`mastery`页内部
