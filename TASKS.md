@@ -552,16 +552,20 @@ A → B → C → D → E → F
   /v1/knowledge-points/{ku_id} 两端点；Textbook/KnowledgeCluster/KnowledgeUnit ORM 模型；
   9 个新测试全绿；92/92 pytest 全绿，覆盖率 70%。
 
-- [x] **N.2 [P1] 阶段2：种子数据导入（数学+物理已完成，语文待完成）**
+- [x] **N.2 [P1] 阶段2：种子数据导入（数学+物理+语文已完成，英语/历史待完成）**
   ```
   ✅ 数学：2395 KU / 26 本教材（含 G10-A 人教版必修一~五 + 选必一~三等）
   ✅ 物理：1551 KU / 9 本教材
-  ⏳ 语文：0 KU（试抽进行，待 prompt 去重纠错修正后批量入库）
-     阻塞原因：语文 KU 粒度界定待定（积累型 vs 鉴赏表达能力型如何分类）
-  ⏳ 英语/历史：待导入
+  ✅ 语文：7700 KU / 12 本教材 —— 本条记录此前长期停留在"0 KU"，实际已在
+     2026-07-03（commit 27ebfbe）批量恢复，只是没回填这份文档；2026-07-09
+     做 V.3（非数学练习闭环）时直接查库核实（`knowledge_units` 表 subject='chinese'
+     count=7700），补记于此。U.21 的课标标注（2392/2393 通过）也是基于这批数据做的。
+  ⏳ 英语/历史：待导入（英语走独立词汇 FSRS 体系 U.19，暂不计划用 knowledge_units）
   ```
 
-- [ ] **N.3 [P1] 阶段3：API 层切换（ku_id 对外）** ⏳ 等阶段2完成
+- [ ] **N.3 [P1] 阶段3：API 层切换（ku_id 对外）** ⏳ 阶段2数学/物理/语文已完成
+  （英语/历史暂不计划用 knowledge_units，不再是阻塞——见上条 N.2 更正），理论上
+  可以开始，但下面这几个改动面较大，需要用户拍板是否现在做
   ```
   - Alembic migration：knowledge_point 列改名为 ku_id（kc_mastery/bkt_priors/
     interaction_events/mastery_snapshots）
