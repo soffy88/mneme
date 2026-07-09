@@ -89,28 +89,6 @@ from .refactor_transaction import (
 from .install_plugin import InstallPluginConfig, InstallPluginInput, install_plugin
 
 # M-E: Mneme omodul elements
-from .knowledge_profiling_workflow import (
-    KnowledgeProfilingConfig,
-    KnowledgeProfilingInput,
-    knowledge_profiling_workflow,
-)
-from .adaptive_quiz_session import (
-    AdaptiveQuizConfig,
-    AdaptiveQuizInput,
-    adaptive_quiz_session,
-)
-from .socratic_tutor_session import (
-    SocraticTutorConfig,
-    SocraticTutorInput,
-    socratic_tutor_session,
-)
-from .grade_paper_workflow import (
-    GradePaperConfig,
-    GradePaperInput,
-    PaperQuestion,
-    grade_paper_workflow,
-)
-
 try:
     from .analyze_paper import (
         AnalyzePaperConfig,
@@ -149,11 +127,6 @@ from .variant_generation_workflow import (
     VariantGenerationInput,
     VariantSource,
     variant_generation_workflow,
-)
-from .learning_progress_report import (
-    LearningProgressConfig,
-    ProgressInput,
-    learning_progress_report,
 )
 from .breakpoint_remediation_workflow import (
     BreakpointRemediationConfig,

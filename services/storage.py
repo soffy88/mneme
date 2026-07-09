@@ -1,4 +1,5 @@
 """MinIO 文件存储工具 — 教材文件 upload/download/delete。"""
+
 from __future__ import annotations
 
 import io
@@ -42,7 +43,7 @@ def upload_file(object_path: str, data: bytes, content_type: str) -> None:
 def download_file(object_path: str) -> bytes:
     # curriculum_standards/ 文件直接从本地文件系统读（不走 MinIO）
     if object_path.startswith("curriculum_standards/"):
-        filename = object_path[len("curriculum_standards/"):]
+        filename = object_path[len("curriculum_standards/") :]
         local = _CURRICULUM_DIR / filename
         if local.exists():
             return local.read_bytes()
@@ -53,14 +54,6 @@ def download_file(object_path: str) -> bytes:
         return resp.read()
     except S3Error as e:
         raise FileNotFoundError(f"Object not found: {object_path}") from e
-
-
-def delete_file(object_path: str) -> None:
-    c = _client()
-    try:
-        c.remove_object(TEXTBOOKS_BUCKET, object_path)
-    except S3Error:
-        pass
 
 
 def content_type_for(file_type: str) -> str:
