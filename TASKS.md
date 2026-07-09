@@ -996,9 +996,9 @@ Phase 3：K（合规）+ L（部署）
   （loading→not-due→active→grading→result 状态机，倒计时到 0 自动交卷，批量提交，
   三态结果卡片）+ `api-client.ts` 的 `getQuizDue`/`submitQuiz`（real-only，不走 mock）+
   首页"限时小测"入口卡片（仅 `due===true` 时显示，同"今日复习"卡片模式）。
-- [~] **T.9 [P2] 错题本打印/导出** 🔄 2026-07-09
+- [x] **T.9 [P2] 错题本打印/导出** ✅ 2026-07-09
   DoD：mneme-web 错题本打印视图(可选含变式、可隐藏答案供重做)；typecheck 绿。
-  ✅ mneme-web PR #13（待合并）：新增 `/error-journal/print`，默认显示完整错题记录，
+  ✅ mneme-web PR #13（已合并）：新增 `/error-journal/print`，默认显示完整错题记录，
   勾选"隐藏答案"切成空白重做单；勾选"包含变式题"才并发调 `generatePractice` 生成
   （默认关闭，避免默认触发 LLM 调用）；浏览器原生 `window.print()`+手写 print CSS
   （仓库无任何 PDF/打印库先例）；主页头部加"🖨 打印/导出"入口。
