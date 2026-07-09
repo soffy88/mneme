@@ -51,6 +51,7 @@ markers = [
 
 [tool.coverage.run]
 source = ["services"]
+concurrency = ["greenlet", "thread"]
 
 [tool.coverage.report]
 fail_under = 60
