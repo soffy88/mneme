@@ -13,7 +13,7 @@ def test_interleaved_queue_no_adjacent_same_kc():
     due = {"math": ["A"], "physics": ["B"]}
     weak = {"math": ["C"], "english": ["D"]}
     q = _build_interleaved_queue(masteries, due, weak, {}, {})
-    kcs = [x["kc_id"] for x in q]
+    kcs = [x["ku_id"] for x in q]
     assert set(kcs) == {"A", "B", "C", "D"}          # 覆盖全部
     for a, b in zip(kcs, kcs[1:]):
         assert a != b                                 # 相邻 KC 不同（交错红线）
@@ -24,14 +24,14 @@ def test_review_source_overrides_weak():
     due = {"math": ["A"]}
     weak = {"math": ["A"], "physics": ["B"]}          # A 同时到期+薄弱
     q = _build_interleaved_queue(masteries, due, weak, {}, {})
-    a_entry = next(x for x in q if x["kc_id"] == "A")
+    a_entry = next(x for x in q if x["ku_id"] == "A")
     assert a_entry["source"] == "review"
 
 
 def test_single_kc_not_interleaved_no_crash():
     masteries = [_m("A", 0.3)]
     q = _build_interleaved_queue(masteries, {"math": ["A"]}, {}, {}, {})
-    assert [x["kc_id"] for x in q] == ["A"]
+    assert [x["ku_id"] for x in q] == ["A"]
 
 
 def test_empty_pool():

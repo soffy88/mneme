@@ -267,7 +267,7 @@ async def get_due_variants(
             # 而"看答案=放弃检索"会被 reveal 记为 FSRS Again。
             due_items.append(
                 {
-                    "kc_id": m.knowledge_point,
+                    "ku_id": m.knowledge_point,
                     "variant_question": question_text,
                     "answer_source": answer_source,  # kernel(内核验证变式) | original(同题复现)
                     "requires_retrieval": True,
@@ -299,7 +299,7 @@ async def get_due_variants(
             ).scalar_one_or_none()
             due_items.append(
                 {
-                    "kc_id": probe.knowledge_point,
+                    "ku_id": probe.knowledge_point,
                     "variant_question": p_wq.question_text
                     if p_wq
                     else "已知知识点为 " + probe.knowledge_point,
@@ -379,7 +379,7 @@ async def reveal_review_answer(
         used_answer=True,  # 看答案 → fsrs_map_rating 返回 Again
         predicted_r=predicted_r,
     )
-    return {"kc_id": kc_id, "answer": answer, "recorded_again": True}
+    return {"ku_id": kc_id, "answer": answer, "recorded_again": True}
 
 
 async def submit_review_answer(
@@ -404,4 +404,4 @@ async def submit_review_answer(
             source=source,
             predicted_r=predicted_r,
         )
-    return {"kc_id": kc_id, "verdict": verdict, "answer": answer}
+    return {"ku_id": kc_id, "verdict": verdict, "answer": answer}

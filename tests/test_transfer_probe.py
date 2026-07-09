@@ -173,7 +173,7 @@ async def test_builds_item_and_caches_answer_when_eligible(db_student):
         result = await maybe_build_transfer_probe(db, sid, [m], caller=object())
 
     assert result is not None
-    assert result["kc_id"] == KU
+    assert result["ku_id"] == KU
     assert result["variant_question"] == "一个新情境下的等价问题"
     assert result["is_transfer_probe"] is True
     assert "answer" not in result
@@ -216,7 +216,7 @@ async def test_end_to_end_due_queue_and_grading(db_student):
 
     probe_items = [it for it in items if it.get("is_transfer_probe")]
     assert len(probe_items) == 1
-    assert probe_items[0]["kc_id"] == KU
+    assert probe_items[0]["ku_id"] == KU
 
     # 判分：正确答案应为探针的 "99"（新变式答案），不是原题的 "2"
     result = await submit_review_answer(db, sid, KU, "99")

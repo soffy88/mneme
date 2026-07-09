@@ -309,7 +309,7 @@ async def test_fire_credit_source_never_cascades():
         config,
         InteractionInput(
             student_id=student,
-            kc_id="kc-c",
+            ku_id="kc-c",
             is_correct=True,
             source="fire_credit",
             now=NOW,
@@ -335,7 +335,7 @@ async def test_fire_credit_source_never_cascades():
     await process_interaction_workflow(
         config,
         InteractionInput(
-            student_id=student, kc_id="kc-c", is_correct=True, source="review", now=NOW
+            student_id=student, ku_id="kc-c", is_correct=True, source="review", now=NOW
         ),
         store2,
     )

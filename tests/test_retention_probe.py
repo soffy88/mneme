@@ -155,10 +155,10 @@ async def test_probe_mixed_in_and_carries_no_answer(db_probe_student):
             "services.review_service.due_recall_push_workflow", return_value=None
         ):
             items = await get_due_variants(db, sid)
-    kcs = [i["kc_id"] for i in items]
+    kcs = [i["ku_id"] for i in items]
     assert KC_DUE in kcs, "到期卡照常在队列"
     assert KC_STABLE in kcs, "探针卡（远未到期稳定卡）应被混入"
-    probe_item = next(i for i in items if i["kc_id"] == KC_STABLE)
+    probe_item = next(i for i in items if i["ku_id"] == KC_STABLE)
     # 检索门红线：探针同样只发题面，不带任何答案字段
     assert probe_item.get("requires_retrieval") is True
     for key in ("answer", "variant_answer", "correct_answer"):
@@ -169,7 +169,7 @@ async def test_probe_mixed_in_and_carries_no_answer(db_probe_student):
             "services.review_service.due_recall_push_workflow", return_value=None
         ):
             items2 = await get_due_variants(db, sid)
-    assert KC_STABLE not in [i["kc_id"] for i in items2]
+    assert KC_STABLE not in [i["ku_id"] for i in items2]
 
 
 @pytest.mark.asyncio
@@ -192,7 +192,7 @@ async def test_probe_skips_recently_probed_card(db_probe_student):
             "services.review_service.due_recall_push_workflow", return_value=None
         ):
             items = await get_due_variants(db, sid)
-    assert KC_STABLE not in [i["kc_id"] for i in items]
+    assert KC_STABLE not in [i["ku_id"] for i in items]
 
 
 # ── ③ 探针作答落库 ───────────────────────────────────────────────────────────

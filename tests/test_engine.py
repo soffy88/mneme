@@ -19,10 +19,12 @@ from data.guangdong_math_kc import get_bkt_prior
 
 
 def test_mastery_rises_on_correct():
-    s = bkt.new_state_from_prior(kc_id="GDMATH-CONIC-01", prior=get_bkt_prior("GDMATH-CONIC-01"))
+    s = bkt.new_state_from_prior(
+        kc_id="GDMATH-CONIC-01", prior=get_bkt_prior("GDMATH-CONIC-01")
+    )
     seq = []
     for _ in range(8):
-        bkt.bkt_update(state=s, is_correct=True)   # 无遗忘
+        bkt.bkt_update(state=s, is_correct=True)  # 无遗忘
         seq.append(round(s.current(), 3))
     assert seq == sorted(seq), f"应单调上升: {seq}"
     assert s.current() > 0.9, f"连续答对应收敛到高掌握: {s.current()}"
@@ -30,7 +32,9 @@ def test_mastery_rises_on_correct():
 
 
 def test_mastery_falls_on_wrong():
-    s = bkt.new_state_from_prior(kc_id="GDMATH-SET-01", prior=get_bkt_prior("GDMATH-SET-01"))
+    s = bkt.new_state_from_prior(
+        kc_id="GDMATH-SET-01", prior=get_bkt_prior("GDMATH-SET-01")
+    )
     # 先拉高
     for _ in range(5):
         bkt.bkt_update(state=s, is_correct=True)
@@ -43,20 +47,26 @@ def test_mastery_falls_on_wrong():
 
 def test_error_classification():
     # 高掌握 + 答错 → 粗心
-    s = bkt.new_state_from_prior(kc_id="GDMATH-SET-01", prior=get_bkt_prior("GDMATH-SET-01"))
+    s = bkt.new_state_from_prior(
+        kc_id="GDMATH-SET-01", prior=get_bkt_prior("GDMATH-SET-01")
+    )
     for _ in range(8):
         bkt.bkt_update(state=s, is_correct=True)
     assert bkt.classify_error(state=s) == "careless", "高掌握答错应判粗心"
     print(f"  高掌握(P={s.current():.3f})答错 → {bkt.classify_error(state=s)}  ✓")
 
     # 低掌握 + 答错 → 不会
-    s2 = bkt.new_state_from_prior(kc_id="GDMATH-DERIV-03", prior=get_bkt_prior("GDMATH-DERIV-03"))
+    s2 = bkt.new_state_from_prior(
+        kc_id="GDMATH-DERIV-03", prior=get_bkt_prior("GDMATH-DERIV-03")
+    )
     assert bkt.classify_error(state=s2) == "dontknow", "低掌握答错应判不会"
     print(f"  低掌握(P={s2.current():.3f})答错 → {bkt.classify_error(state=s2)}  ✓")
 
 
 def test_forgetting():
-    s = bkt.new_state_from_prior(kc_id="GDMATH-CONIC-01", prior=get_bkt_prior("GDMATH-CONIC-01"))
+    s = bkt.new_state_from_prior(
+        kc_id="GDMATH-CONIC-01", prior=get_bkt_prior("GDMATH-CONIC-01")
+    )
     for _ in range(8):
         bkt.bkt_update(state=s, is_correct=True)
     mastered = s.current()
@@ -64,20 +74,27 @@ def test_forgetting():
     R = bkt.exp_forgetting(days_since=21)
     effective = mastered * R
     assert effective < mastered, "长期不练 effective 掌握度应衰减"
-    print(f"  学会后掌握={mastered:.3f}，21天未练 effective={effective:.3f} (R={R:.3f})  ✓")
+    print(
+        f"  学会后掌握={mastered:.3f}，21天未练 effective={effective:.3f} (R={R:.3f})  ✓"
+    )
 
 
 def test_auc():
     """构造一批『真实掌握 vs 未掌握』的模拟学生，看 BKT 预测能否区分。"""
     import random
+
     random.seed(42)
     preds, labels = [], []
     for _ in range(300):
         true_mastered = random.random() < 0.5
-        s = bkt.new_state_from_prior(kc_id="GDMATH-SEQ-01", prior=get_bkt_prior("GDMATH-SEQ-01"))
+        s = bkt.new_state_from_prior(
+            kc_id="GDMATH-SEQ-01", prior=get_bkt_prior("GDMATH-SEQ-01")
+        )
         # 喂 6 道历史题：掌握者多对，未掌握者多错
         for _ in range(6):
-            obs = (random.random() < 0.85) if true_mastered else (random.random() < 0.25)
+            obs = (
+                (random.random() < 0.85) if true_mastered else (random.random() < 0.25)
+            )
             bkt.bkt_update(state=s, is_correct=obs)
         # 预测第 7 题
         p = bkt.predict_correct(state=s)
@@ -103,27 +120,41 @@ def _auc(scores, labels):
 async def test_end_to_end_with_fsrs():
     """端到端：通过协调器跑一遍 KT+FSRS 统一流程。"""
     from omodul.cognitive import InteractionConfig, InteractionInput
+
     store = CognitiveStore()
     sid = uuid.uuid4()
     now = datetime.now(timezone.utc)
     config = InteractionConfig()
-    
+
     # 学生在椭圆上做错一道
-    input1 = InteractionInput(student_id=sid, kc_id="GDMATH-CONIC-01", is_correct=False, struggled=True, now=now)
+    input1 = InteractionInput(
+        student_id=sid,
+        ku_id="GDMATH-CONIC-01",
+        is_correct=False,
+        struggled=True,
+        now=now,
+    )
     res1 = await process_interaction(config, input1, store)
     r1 = res1["findings"]
-    
+
     assert r1.error_type in ("careless", "dontknow")
     assert r1.next_review_due is not None
-    
+
     # 第二天回顾答对
-    input2 = InteractionInput(student_id=sid, kc_id="GDMATH-CONIC-01", is_correct=True, now=now + timedelta(days=1))
+    input2 = InteractionInput(
+        student_id=sid,
+        ku_id="GDMATH-CONIC-01",
+        is_correct=True,
+        now=now + timedelta(days=1),
+    )
     res2 = await process_interaction(config, input2, store)
     r2 = res2["findings"]
-    
+
     assert r2.p_mastery > r1.p_mastery, "回顾答对掌握度应上升"
-    print(f"  端到端: 首次错(P={r1.p_mastery}, {r1.error_type}) "
-          f"→ 次日对(P={r2.p_mastery}), 下次复习={r2.next_review_due[:10]}  ✓")
+    print(
+        f"  端到端: 首次错(P={r1.p_mastery}, {r1.error_type}) "
+        f"→ 次日对(P={r2.p_mastery}), 下次复习={r2.next_review_due[:10]}  ✓"
+    )
 
 
 if __name__ == "__main__":

@@ -122,7 +122,7 @@ async def analyze_paper_workflow(
             for kc_id in res.get("knowledge_points", []):
                 interaction_input = InteractionInput(
                     student_id=input_data.student_id,
-                    kc_id=kc_id,
+                    ku_id=kc_id,
                     is_correct=False,
                     question_id=uuid.UUID(res["wq_id"]),
                     source="paper",
@@ -189,7 +189,7 @@ async def analyze_paper_workflow(
                 )
 
                 cognitive_updates.append(
-                    {"kc_id": kc_id, "p_mastery": upd_res.state.current()}
+                    {"ku_id": kc_id, "p_mastery": upd_res.state.current()}
                 )
 
     # 4. 更新试卷状态

@@ -144,7 +144,7 @@ async def test_due_generates_quiz_from_due_and_weak_kc(db, student):
     result = await get_or_create_due_quiz(db, sid)
     assert result["due"] is True
     assert len(result["items"]) == 2
-    kc_ids = {it["kc_id"] for it in result["items"]}
+    kc_ids = {it["ku_id"] for it in result["items"]}
     assert kc_ids == {KU_A, KU_B}
     for it in result["items"]:
         assert "correct_answer" not in it  # 从不返回答案
@@ -286,7 +286,7 @@ async def test_submit_wrong_moves_fsrs_due_closer(db, student):
             student_id=sid,
             items=[
                 {
-                    "kc_id": KU_A,
+                    "ku_id": KU_A,
                     "question_id": str(wq_id),
                     "question_text": "选择题",
                 }

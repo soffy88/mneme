@@ -213,7 +213,7 @@ async def process_interaction(
     fsrs_params = await load_weights_for_student(db, student_id)
     input_data = InteractionInput(
         student_id=student_id,
-        kc_id=kc_id,
+        ku_id=kc_id,
         is_correct=is_correct,
         question_type=question_type,
         question_id=question_id,
@@ -333,7 +333,7 @@ async def mastery_overview(
 
     # 获取所有学生在各 KC 的 effective_mastery，用于计算百分位
     # 读 kc_mastery 中各 KC 的全量 p_mastery（简化：以 p_mastery 代替 effective_mastery 做分布）
-    kc_ids = [item["kc_id"] for item in items]
+    kc_ids = [item["ku_id"] for item in items]
     peer_data: dict[str, list[float]] = {}
     if kc_ids:
         rows = (
@@ -362,7 +362,7 @@ async def mastery_overview(
 
     result = []
     for item in items:
-        kc = item["kc_id"]
+        kc = item["ku_id"]
         peer_vals = peer_data.get(kc, [item["effective_mastery"]])
         try:
             pct = compute_peer_percentile(item["effective_mastery"], peer_vals)
@@ -472,7 +472,7 @@ async def review_queue(
         return []
 
     # 从 kc_mastery 取各 KC 的掌握度，用于 interleave 优先级
-    kc_ids = [item["kc_id"] for item in raw]
+    kc_ids = [item["ku_id"] for item in raw]
     mastery_rows = (
         await db.execute(
             select(KCMastery.knowledge_point, KCMastery.p_mastery)
@@ -484,16 +484,16 @@ async def review_queue(
 
     questions = [
         QuestionItem(
-            question_id=item["kc_id"],
-            kc_id=item["kc_id"],
-            mastery=mastery_map.get(item["kc_id"], 0.5),
+            question_id=item["ku_id"],
+            kc_id=item["ku_id"],
+            mastery=mastery_map.get(item["ku_id"], 0.5),
         )
         for item in raw
     ]
     interleaved = interleave_select(questions)
 
     return [
-        {"kc_id": q.kc_id, "due": next(r["due"] for r in raw if r["kc_id"] == q.kc_id)}
+        {"ku_id": q.kc_id, "due": next(r["due"] for r in raw if r["ku_id"] == q.kc_id)}
         for q in interleaved.selected
     ]
 

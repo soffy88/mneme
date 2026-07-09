@@ -32,7 +32,7 @@ def test_daily_mission_adjacent_kc_differ(tmp_path: Path):
     )
     res = daily_mission_workflow(DailyMissionConfig(mission_count=5), inp, tmp_path)
     assert res["status"] == "ok"
-    kcs = [m["kc_id"] for m in res["missions"]]
+    kcs = [m["ku_id"] for m in res["missions"]]
     assert len(kcs) == 5  # 可交错时数量不缩水
     assert set(kcs) == {"KC-A", "KC-B"}
     for a, b in zip(kcs, kcs[1:]):

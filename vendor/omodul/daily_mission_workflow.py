@@ -160,7 +160,7 @@ def daily_mission_workflow(
         missions = [
             {
                 "question_id": it.question_id,
-                "kc_id": it.kc_id,
+                "ku_id": it.kc_id,
                 "difficulty": it.difficulty,
                 "priority": round(_mission_priority(it), 4),
             }
@@ -195,7 +195,7 @@ def daily_mission_workflow(
             subjects_missions[subj] = [
                 {
                     "question_id": it.question_id,
-                    "kc_id": it.kc_id,
+                    "ku_id": it.kc_id,
                     "difficulty": it.difficulty,
                 }
                 for it in subj_items[:2]  # 每科取2个作为演示

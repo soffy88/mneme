@@ -40,7 +40,7 @@ class InteractionConfig(BaseConfig):
 
 class InteractionInput(BaseModel):
     student_id: UUID
-    kc_id: str
+    ku_id: str
     is_correct: bool
     question_type: str = "solve"
     question_id: Optional[UUID] = None
@@ -65,7 +65,7 @@ class InteractionInput(BaseModel):
 
 
 class InteractionFindings(BaseModel):
-    kc_id: str
+    ku_id: str
     p_mastery: float
     long_term_mastery: float
     effective_mastery: float
@@ -85,14 +85,14 @@ async def _fire_credit_writeback(
     """FIRe-lite（M-H §4.8）：对触发 KC 的 verified 前置只顺延 due 并追加
     source="fire_credit" 事件（只增不改）。前置的 BKT 状态与卡片 D/S/R 不动；
     从未练过（无卡）的前置跳过。返回已回写的信用列表（供 decision_trail）。"""
-    prereq_ids = await store.get_verified_prerequisites(input_data.kc_id)
+    prereq_ids = await store.get_verified_prerequisites(input_data.ku_id)
     if not prereq_ids:
         return []
 
     states = await store.get_all_states(input_data.student_id)
     prereqs: list[FirePrereq] = []
     for pid in prereq_ids:
-        if pid == input_data.kc_id:
+        if pid == input_data.ku_id:
             continue  # 自环防御
         entry = states.get(pid)
         if entry is None:
@@ -105,7 +105,7 @@ async def _fire_credit_writeback(
         return []
 
     outcomes = fire_propagate(
-        trigger_kc_id=input_data.kc_id,
+        trigger_kc_id=input_data.ku_id,
         prereqs=prereqs,
         now=now,
         kappa0=config.fire_kappa0,
@@ -120,7 +120,7 @@ async def _fire_credit_writeback(
         new_card = {**card_p, "due": oc.new_due}  # 仅顺延 due，D/S/R 逐位不动
         await store.save(input_data.student_id, oc.kc_id, state_p, new_card)
         credit = {
-            "trigger_kc_id": input_data.kc_id,
+            "trigger_kc_id": input_data.ku_id,
             "trigger_event_id": str(trigger_event_id) if trigger_event_id else None,
             "kappa": oc.kappa,
             "due_before": oc.due_before,
@@ -157,7 +157,7 @@ async def process_interaction_workflow(
 
     # 1. 获取当前状态 (传题型以获取正确的先验)
     state, card_dict = await store.get_or_create(
-        input_data.student_id, input_data.kc_id, input_data.question_type
+        input_data.student_id, input_data.ku_id, input_data.question_type
     )
 
     # 2. 调用认知更新算法 (oskill)
@@ -178,7 +178,7 @@ async def process_interaction_workflow(
 
     # 3. 落库：更新 kc_mastery
     await store.save(
-        input_data.student_id, input_data.kc_id, result.state, result.card_dict
+        input_data.student_id, input_data.ku_id, result.state, result.card_dict
     )
 
     # 4. 落库：追加 interaction_events
@@ -202,7 +202,7 @@ async def process_interaction_workflow(
         "occurred_at": now,
     }
     trigger_event_id = await store.append_event(
-        input_data.student_id, input_data.kc_id, event_data
+        input_data.student_id, input_data.ku_id, event_data
     )
 
     # 4b. FIRe-lite 前置信用回写（M-H §4.8）：主更新链完成落库之后的独立后续步骤。
@@ -222,7 +222,7 @@ async def process_interaction_workflow(
 
     # 5. 组装结果
     findings = InteractionFindings(
-        kc_id=input_data.kc_id,
+        ku_id=input_data.ku_id,
         p_mastery=round(result.state.current(), 4),
         long_term_mastery=round(
             result.state.long_term_mastery or result.state.current(), 4
@@ -237,7 +237,7 @@ async def process_interaction_workflow(
     trail = [
         {
             "step": "get_state",
-            "kc_id": input_data.kc_id,
+            "ku_id": input_data.ku_id,
             "question_type": input_data.question_type,
         },
         {"step": "cognitive_update", "result": findings.model_dump()},
@@ -266,7 +266,7 @@ async def mastery_overview_workflow(
         long_term = state.long_term_mastery or state.current()
         out.append(
             {
-                "kc_id": kc_id,
+                "ku_id": kc_id,
                 "long_term_mastery": round(long_term, 4),
                 # 红线：effective = long_term × R（与 process 路径同口径，非 current()×R）
                 "effective_mastery": round(long_term * R, 4),
@@ -286,5 +286,5 @@ async def review_queue_workflow(
     for kc_id, (state, card) in states_map.items():
         # 单源到期判定（item 13）：统一用 due_compute，避免与其它路径语义分叉。
         if due_compute(card_dict=card, now=now):
-            queue.append({"kc_id": kc_id, "due": fsrs_due_date(card_dict=card)})
+            queue.append({"ku_id": kc_id, "due": fsrs_due_date(card_dict=card)})
     return queue

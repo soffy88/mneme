@@ -167,7 +167,7 @@ async def test_due_item_survives_variant_failure(db_student_wq):
         ):
             items = await get_due_variants(db, sid)
     assert items, "变式失败也不应丢到期项"
-    assert items[0]["kc_id"] == KC
+    assert items[0]["ku_id"] == KC
     assert items[0]["variant_question"]  # 回退到原题面，非空
 
 
@@ -208,7 +208,7 @@ async def test_unverified_variant_degrades_to_original_and_judges_consistently(
         ):
             items = await get_due_variants(db, sid, generate_variants=True)
 
-    assert items and items[0]["kc_id"] == KC
+    assert items and items[0]["ku_id"] == KC
     # 展示的必须是原题面（同题复现），不是被 LLM 改了数值的变式
     assert items[0]["variant_question"] == "x+1=3 求 x"
     assert items[0]["answer_source"] == "original"

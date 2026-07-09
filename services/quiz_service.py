@@ -87,7 +87,7 @@ async def get_or_create_due_quiz(
             continue
         items.append(
             {
-                "kc_id": kc_id,
+                "ku_id": kc_id,
                 "question_id": str(wq.id),
                 "question_text": wq.question_text,
             }
@@ -97,16 +97,16 @@ async def get_or_create_due_quiz(
         return {"due": False, "reason": "到期/薄弱知识点暂无可用题目，不生成小测"}
 
     # 交错：<2 个不同 KC 时无法交错，原样返回（同 daily_plan_service 既有约定）
-    if len({it["kc_id"] for it in items}) >= 2:
+    if len({it["ku_id"] for it in items}) >= 2:
         from oskill.interleave_select import QuestionItem, interleave_select
 
         mastery_map = {m.knowledge_point: (m.p_mastery or 0.5) for m in masteries}
         q_items = [
             QuestionItem(
                 question_id=it["question_id"],
-                kc_id=it["kc_id"],
+                kc_id=it["ku_id"],
                 difficulty=0.5,
-                mastery=mastery_map.get(it["kc_id"], 0.5),
+                mastery=mastery_map.get(it["ku_id"], 0.5),
             )
             for it in items
         ]
@@ -136,7 +136,7 @@ async def get_or_create_due_quiz(
         "time_limit_seconds": time_limit_seconds,
         "items": [
             {
-                "kc_id": it["kc_id"],
+                "ku_id": it["ku_id"],
                 "question_id": it["question_id"],
                 "question_text": it["question_text"],
             }
@@ -177,7 +177,7 @@ async def submit_quiz(
     correct_count = 0
     for it in items:
         qid = it["question_id"]
-        kc_id = it["kc_id"]
+        kc_id = it["ku_id"]
         wq = (
             await db.execute(select(WrongQuestion).where(WrongQuestion.id == qid))
         ).scalar_one_or_none()
@@ -199,7 +199,7 @@ async def submit_quiz(
             if verdict == "correct":
                 correct_count += 1
 
-        results.append({"kc_id": kc_id, "question_id": qid, "verdict": verdict})
+        results.append({"ku_id": kc_id, "question_id": qid, "verdict": verdict})
 
     score = round(correct_count / len(items), 4) if items else 0.0
     now = datetime.now(timezone.utc)
@@ -209,7 +209,7 @@ async def submit_quiz(
     quiz.results = results
     await db.commit()
 
-    failed_kcs = [r["kc_id"] for r in results if r["verdict"] == "wrong"]
+    failed_kcs = [r["ku_id"] for r in results if r["verdict"] == "wrong"]
 
     return {
         "quiz_id": str(quiz_id),

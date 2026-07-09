@@ -55,12 +55,12 @@ async def test_store_consistency(db_context):
     
     for i, interaction in enumerate(interactions):
         # 运行 InMemory
-        input_mem = InteractionInput(student_id=student_id, kc_id=kc_id, is_correct=interaction["is_correct"], used_answer=interaction.get("used_answer", False), now=interaction["now"])
+        input_mem = InteractionInput(student_id=student_id, ku_id=kc_id, is_correct=interaction["is_correct"], used_answer=interaction.get("used_answer", False), now=interaction["now"])
         res_mem_dict = await process_interaction(config, input_mem, in_memory_store)
         res_mem = res_mem_dict["findings"]
         
         # 运行 Pg
-        input_pg = InteractionInput(student_id=student_id, kc_id=kc_id, is_correct=interaction["is_correct"], used_answer=interaction.get("used_answer", False), now=interaction["now"])
+        input_pg = InteractionInput(student_id=student_id, ku_id=kc_id, is_correct=interaction["is_correct"], used_answer=interaction.get("used_answer", False), now=interaction["now"])
         res_pg_dict = await process_interaction(config, input_pg, pg_store)
         res_pg = res_pg_dict["findings"]
         
@@ -90,7 +90,7 @@ async def test_question_type_priors(db_context):
     session.add(user)
     await session.commit()
     
-    input_choice = InteractionInput(student_id=sid_choice, kc_id="GDMATH-SET-01", is_correct=False, question_type="choice")
+    input_choice = InteractionInput(student_id=sid_choice, ku_id="GDMATH-SET-01", is_correct=False, question_type="choice")
     await process_interaction(config, input_choice, pg_store)
     state_choice, _ = await pg_store.get_or_create(sid_choice, "GDMATH-SET-01", "choice")
     assert state_choice.p_guess == 0.25
@@ -101,7 +101,7 @@ async def test_question_type_priors(db_context):
     session.add(user2)
     await session.commit()
     
-    input_fill = InteractionInput(student_id=sid_fill, kc_id="GDMATH-SET-01", is_correct=False, question_type="fill")
+    input_fill = InteractionInput(student_id=sid_fill, ku_id="GDMATH-SET-01", is_correct=False, question_type="fill")
     await process_interaction(config, input_fill, pg_store)
     state_fill, _ = await pg_store.get_or_create(sid_fill, "GDMATH-SET-01", "fill")
     assert state_fill.p_guess == 0.05
@@ -116,7 +116,7 @@ async def test_pg_store_persistence(db_context):
     config = InteractionConfig()
     
     # 第一次交互
-    input1 = InteractionInput(student_id=student_id, kc_id=kc_id, is_correct=True)
+    input1 = InteractionInput(student_id=student_id, ku_id=kc_id, is_correct=True)
     await process_interaction(config, input1, pg_store)
     await session.commit()
     

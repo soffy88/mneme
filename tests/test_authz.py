@@ -92,7 +92,7 @@ async def test_anonymous_interaction_401(client):
         "/v1/interaction",
         json={
             "student_id": str(uuid.uuid4()),
-            "kc_id": KC_ID,
+            "ku_id": KC_ID,
             "is_correct": True,
         },
     )
@@ -149,7 +149,7 @@ async def test_student_a_cannot_write_interaction_for_b(client, actors):
         "/v1/interaction",
         json={
             "student_id": str(actors["b"]),
-            "kc_id": KC_ID,
+            "ku_id": KC_ID,
             "is_correct": True,
         },
         headers=_h(actors["a"]),
@@ -222,7 +222,7 @@ async def test_bound_parent_cannot_write_interaction(client, actors):
         "/v1/interaction",
         json={
             "student_id": str(actors["a"]),
-            "kc_id": KC_ID,
+            "ku_id": KC_ID,
             "is_correct": True,
         },
         headers=_h(actors["p"]),

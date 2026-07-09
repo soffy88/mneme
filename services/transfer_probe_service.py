@@ -143,7 +143,7 @@ async def maybe_build_transfer_probe(
         if variant.kernel_verified and variant.answer and variant.question:
             await cache_transfer_probe_answer(student_id, ku_id, variant.answer)
             return {
-                "kc_id": ku_id,
+                "ku_id": ku_id,
                 "variant_question": variant.question,
                 "requires_retrieval": True,
                 "question_id": str(wq.id),

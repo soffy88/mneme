@@ -264,19 +264,19 @@ async def test_parent_overview_empty(client, student, bypass_auth):
 @pytest.mark.asyncio
 async def test_solve_conic(client):
     resp = await client.post(
-        "/v1/solve", params={"kc_id": KC_ID, "expression": "x^2 + y^2 = 25"}
+        "/v1/solve", params={"ku_id": KC_ID, "expression": "x^2 + y^2 = 25"}
     )
     assert resp.status_code == 200
     data = resp.json()
     assert "solvable" in data
-    assert "kc_id" in data
+    assert "ku_id" in data
     print(f"  POST /v1/solve → solvable={data['solvable']}")
 
 
 @pytest.mark.asyncio
 async def test_solve_linear(client):
     resp = await client.post(
-        "/v1/solve", params={"kc_id": "GDMATH-FUNC-01", "expression": "y = 2*x + 1"}
+        "/v1/solve", params={"ku_id": "GDMATH-FUNC-01", "expression": "y = 2*x + 1"}
     )
     assert resp.status_code == 200
     print("  POST /v1/solve (linear) ✓")
@@ -302,7 +302,7 @@ async def test_patterns_with_interactions(client, student, bypass_auth):
             "/v1/interaction",
             json={
                 "student_id": str(student),
-                "kc_id": KC_ID,
+                "ku_id": KC_ID,
                 "is_correct": True,
             },
         )
@@ -319,11 +319,11 @@ async def test_patterns_with_interactions(client, student, bypass_auth):
 @pytest.mark.asyncio
 async def test_practice_generate(client):
     resp = await client.post(
-        "/v1/practice/generate", params={"kc_id": KC_ID, "count": 3}
+        "/v1/practice/generate", params={"ku_id": KC_ID, "count": 3}
     )
     assert resp.status_code == 200
     data = resp.json()
-    assert data["kc_id"] == KC_ID
+    assert data["ku_id"] == KC_ID
     assert "items" in data
     print(f"  POST /v1/practice/generate → {len(data['items'])} items ✓")
 
@@ -331,7 +331,7 @@ async def test_practice_generate(client):
 @pytest.mark.asyncio
 async def test_practice_generate_kc_not_found(client):
     resp = await client.post(
-        "/v1/practice/generate", params={"kc_id": "NOT-EXIST", "count": 3}
+        "/v1/practice/generate", params={"ku_id": "NOT-EXIST", "count": 3}
     )
     assert resp.status_code == 404
     print("  POST /v1/practice/generate 404 ✓")
@@ -374,12 +374,12 @@ async def test_practice_generate_physics_subject(client, db):
     await db.commit()
     try:
         resp = await client.post(
-            "/v1/practice/generate", params={"kc_id": ku_id, "count": 1}
+            "/v1/practice/generate", params={"ku_id": ku_id, "count": 1}
         )
         assert resp.status_code == 200
         data = resp.json()
-        assert data["kc_id"] == ku_id
-        assert data["kc_name"] == "测试物理知识点"
+        assert data["ku_id"] == ku_id
+        assert data["ku_name"] == "测试物理知识点"
         print(
             "  POST /v1/practice/generate 物理 kc_id（knowledge_units 回退查找）不再 404 ✓"
         )

@@ -4,10 +4,10 @@ B.3 DoD 测试：认知状态 API 路由
 覆盖：
   POST /v1/interaction
   GET  /v1/mastery/{student_id}
-  GET  /v1/mastery/curve/{student_id}/{kc_id}
+  GET  /v1/mastery/curve/{student_id}/{ku_id}
   GET  /v1/review-queue/{student_id}
-  GET  /v1/kc
-  GET  /v1/kc/{kc_id}
+  GET  /v1/ku
+  GET  /v1/ku/{ku_id}
 DoD：接口返回正确契约；重启状态不丢（通过 DB 验证）。
 """
 import uuid
@@ -67,13 +67,13 @@ async def client():
 async def test_interaction_returns_findings(client, student):
     resp = await client.post("/v1/interaction", json={
         "student_id": str(student),
-        "kc_id": KC_ID,
+        "ku_id": KC_ID,
         "is_correct": False,
         "struggled": True,
     })
     assert resp.status_code == 200
     data = resp.json()
-    assert data["kc_id"] == KC_ID
+    assert data["ku_id"] == KC_ID
     assert "p_mastery" in data
     assert "error_type" in data
     assert "rating" in data
@@ -85,7 +85,7 @@ async def test_interaction_returns_findings(client, student):
 async def test_interaction_state_persists(client, student, db):
     """答题后 kc_mastery 写库，状态不丢。"""
     await client.post("/v1/interaction", json={
-        "student_id": str(student), "kc_id": KC_ID, "is_correct": True,
+        "student_id": str(student), "ku_id": KC_ID, "is_correct": True,
     })
     row = (await db.execute(
         __import__("sqlalchemy", fromlist=["select"]).select(KCMastery)
@@ -102,7 +102,7 @@ async def test_interaction_state_persists(client, student, db):
 async def test_mastery_overview_sorted(client, student):
     for kc in (KC_ID, "GDMATH-SET-01"):
         await client.post("/v1/interaction", json={
-            "student_id": str(student), "kc_id": kc, "is_correct": True,
+            "student_id": str(student), "ku_id": kc, "is_correct": True,
         })
     resp = await client.get(f"/v1/mastery/{student}")
     assert resp.status_code == 200
@@ -114,7 +114,7 @@ async def test_mastery_overview_sorted(client, student):
     print("  GET /v1/mastery 升序+百分位 ✓")
 
 
-# ── GET /v1/mastery/curve/{student_id}/{kc_id} ───────────────────────────────
+# ── GET /v1/mastery/curve/{student_id}/{ku_id} ───────────────────────────────
 
 @pytest.mark.asyncio
 async def test_mastery_curve_empty_then_filled(client, student):
@@ -123,11 +123,11 @@ async def test_mastery_curve_empty_then_filled(client, student):
     assert resp.json()["points"] == [], "无数据时 points 应为空"
 
     await client.post("/v1/interaction", json={
-        "student_id": str(student), "kc_id": KC_ID, "is_correct": True,
+        "student_id": str(student), "ku_id": KC_ID, "is_correct": True,
     })
     resp = await client.get(f"/v1/mastery/curve/{student}/{KC_ID}")
     assert resp.status_code == 200
-    curve = resp.json()["points"]   # 当前契约：{kc_id, kc_name, points:[...]}
+    curve = resp.json()["points"]   # 当前契约：{ku_id, ku_name, points:[...]}
     assert len(curve) == 1
     assert "month" in curve[0]
     assert "mastery" in curve[0]
@@ -141,8 +141,8 @@ async def test_mastery_curve_no_conflict_with_overview(client, student):
     resp = await client.get(f"/v1/mastery/curve/{student}/{KC_ID}")
     assert resp.status_code == 200
     body = resp.json()
-    # 当前契约：curve 返回 {kc_id, kc_name, points:[...]}，非掌握度 overview 列表
-    assert isinstance(body, dict) and "points" in body and body["kc_id"] == KC_ID
+    # 当前契约：curve 返回 {ku_id, ku_name, points:[...]}，非掌握度 overview 列表
+    assert isinstance(body, dict) and "points" in body and body["ku_id"] == KC_ID
     print("  curve 路由优先级正确，未被 {student_id} 路由拦截 ✓")
 
 
@@ -151,40 +151,40 @@ async def test_mastery_curve_no_conflict_with_overview(client, student):
 @pytest.mark.asyncio
 async def test_review_queue_after_wrong(client, student):
     await client.post("/v1/interaction", json={
-        "student_id": str(student), "kc_id": KC_ID, "is_correct": False,
+        "student_id": str(student), "ku_id": KC_ID, "is_correct": False,
     })
     future = (datetime.now(timezone.utc) + timedelta(days=1)).isoformat()
     resp = await client.get(f"/v1/review-queue/{student}", params={"now": future})
     assert resp.status_code == 200
     queue = resp.json()
     assert len(queue) >= 1
-    assert queue[0]["kc_id"] == KC_ID
+    assert queue[0]["ku_id"] == KC_ID
     assert "due" in queue[0]
     print(f"  GET /v1/review-queue → {len(queue)} 条待复习 ✓")
 
 
-# ── GET /v1/kc ────────────────────────────────────────────────────────────────
+# ── GET /v1/ku ────────────────────────────────────────────────────────────────
 
 @pytest.mark.asyncio
 async def test_kc_list(client):
-    resp = await client.get("/v1/kc")
+    resp = await client.get("/v1/ku")
     assert resp.status_code == 200
     kc_list = resp.json()
     assert len(kc_list) == 29, f"应有 29 个 KC，实际 {len(kc_list)}"
-    assert all("kc_id" in kc for kc in kc_list)
-    print(f"  GET /v1/kc → {len(kc_list)} 个知识点 ✓")
+    assert all("ku_id" in kc for kc in kc_list)
+    print(f"  GET /v1/ku → {len(kc_list)} 个知识点 ✓")
 
 
 @pytest.mark.asyncio
 async def test_kc_detail(client):
-    resp = await client.get(f"/v1/kc/{KC_ID}")
+    resp = await client.get(f"/v1/ku/{KC_ID}")
     assert resp.status_code == 200
-    assert resp.json()["kc_id"] == KC_ID
-    print(f"  GET /v1/kc/{KC_ID} ✓")
+    assert resp.json()["ku_id"] == KC_ID
+    print(f"  GET /v1/ku/{KC_ID} ✓")
 
 
 @pytest.mark.asyncio
 async def test_kc_detail_not_found(client):
-    resp = await client.get("/v1/kc/NOT-EXIST-KC")
+    resp = await client.get("/v1/ku/NOT-EXIST-KC")
     assert resp.status_code == 404
-    print("  GET /v1/kc/NOT-EXIST-KC → 404 ✓")
+    print("  GET /v1/ku/NOT-EXIST-KC → 404 ✓")

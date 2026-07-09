@@ -412,7 +412,7 @@ async def post_interaction(
         result = await process_interaction(
             db,
             student_id=interaction.student_id,
-            kc_id=interaction.kc_id,
+            kc_id=interaction.ku_id,
             is_correct=interaction.is_correct,
             question_type=interaction.question_type,
             question_id=interaction.question_id,
@@ -433,31 +433,31 @@ async def post_interaction(
         raise HTTPException(status_code=500, detail=str(e))
 
 
-@app.get("/v1/mastery/curve/{student_id}/{kc_id}")
+@app.get("/v1/mastery/curve/{student_id}/{ku_id}")
 async def get_mastery_curve(
     student_id: UUID,
-    kc_id: str,
+    ku_id: str,
     _auth: User = Depends(require_student_access),
     db: AsyncSession = Depends(get_db),
 ):
-    """GET /v1/mastery/curve/{student_id}/{kc_id} — mastery_snapshots 月度时间序列。"""
+    """GET /v1/mastery/curve/{student_id}/{ku_id} — mastery_snapshots 月度时间序列。"""
     rows = (
         (
             await db.execute(
                 select(MasterySnapshot)
                 .where(MasterySnapshot.student_id == student_id)
-                .where(MasterySnapshot.knowledge_point == kc_id)
+                .where(MasterySnapshot.knowledge_point == ku_id)
                 .order_by(MasterySnapshot.snapshot_month)
             )
         )
         .scalars()
         .all()
     )
-    kc = await db.get(KnowledgeUnit, kc_id)
-    _kcd = get_kc(kc_id)
+    kc = await db.get(KnowledgeUnit, ku_id)
+    _kcd = get_kc(ku_id)
     return {
-        "kc_id": kc_id,
-        "kc_name": (kc.name if kc else ((_kcd.get("name") if _kcd else None) or kc_id)),
+        "ku_id": ku_id,
+        "ku_name": (kc.name if kc else ((_kcd.get("name") if _kcd else None) or ku_id)),
         "points": [
             {
                 "month": r.snapshot_month.isoformat(),
@@ -518,7 +518,7 @@ async def get_mastery(
         items = await mastery_overview(db, student_id, now=now)
         # 补 KU 友好名称（命名已统一），避免前端标题空白/显示原始 id
         if isinstance(items, list) and items:
-            ids = list({it.get("kc_id") for it in items if it.get("kc_id")})
+            ids = list({it.get("ku_id") for it in items if it.get("ku_id")})
             if ids:
                 krows = (
                     await db.execute(
@@ -529,12 +529,12 @@ async def get_mastery(
                 ).all()
                 nm = {kid: name for kid, name in krows}
                 for it in items:
-                    kid = it.get("kc_id")
+                    kid = it.get("ku_id")
                     name = nm.get(kid)
                     if not name:  # 回退广东 KC 字典(GDMATH-* 等老命名)
                         kc = get_kc(kid)
                         name = (kc.get("name") if kc else None) or kid
-                    it["kc_name"] = name
+                    it["ku_name"] = name
         return items
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
@@ -554,25 +554,34 @@ async def get_review_queue(
         raise HTTPException(status_code=500, detail=str(e))
 
 
-@app.get("/v1/kc")
+@app.get("/v1/ku")
 async def list_kc():
     """
-    GET /v1/kc
-    获取全部知识点字典。
+    GET /v1/ku
+    获取全部知识点字典。KC_LIST 内部字典的 key 仍叫 kc_id（data/guangdong_math_kc.py
+    内部实现，不是 API 契约，不改），这里响应体边界处把每条的 kc_id 重命名成 ku_id 对外。
     """
-    return KC_LIST
+    out = []
+    for kc in KC_LIST:
+        kc_out = dict(kc)
+        kc_out["ku_id"] = kc_out.pop("kc_id")
+        out.append(kc_out)
+    return out
 
 
-@app.get("/v1/kc/{kc_id}")
-async def get_kc_detail(kc_id: str):
+@app.get("/v1/ku/{ku_id}")
+async def get_kc_detail(ku_id: str):
     """
-    GET /v1/kc/{kc_id}
-    获取特定知识点详情。
+    GET /v1/ku/{ku_id}
+    获取特定知识点详情。get_kc() 内部字典的 key 仍叫 kc_id（data/guangdong_math_kc.py
+    内部实现，不是 API 契约，不改），这里响应体边界处把 kc_id 重命名成 ku_id 对外。
     """
-    kc = get_kc(kc_id)
+    kc = get_kc(ku_id)
     if not kc:
         raise HTTPException(status_code=404, detail="Knowledge Component not found")
-    return kc
+    kc_out = dict(kc)
+    kc_out["ku_id"] = kc_out.pop("kc_id")
+    return kc_out
 
 
 # ===== §2b 知识单元接口（DB 版，替代旧 KC 字典）=====
@@ -946,7 +955,7 @@ async def get_paper(
         "wrong_questions": [
             {
                 "id": str(w.id),
-                "kc_ids": list((w.knowledge_points or {}).keys()),
+                "ku_ids": list((w.knowledge_points or {}).keys()),
                 "error_type": w.error_type.value if w.error_type else None,
             }
             for w in wqs
@@ -1289,7 +1298,7 @@ async def get_learning_metrics(
 @app.get("/v1/teaching/policy")
 async def get_teaching_policy(
     student_id: UUID,
-    kc_id: str,
+    ku_id: str,
     context: str = Query("system_taught"),
     _auth: User = Depends(require_student_access),
     db: AsyncSession = Depends(get_db),
@@ -1303,7 +1312,7 @@ async def get_teaching_policy(
     from oprim.answer_policy import answer_policy
     from services.learner_model import get_mastery, get_stage
 
-    m = await get_mastery(db, student_id, kc_id)
+    m = await get_mastery(db, student_id, ku_id)
     stage = get_stage(m["p"])
     from services.experiment_service import student_arm, teaching_engine_on_for
 
@@ -1547,7 +1556,7 @@ _solve_rate_limit = rate_limit(limit=30, window_seconds=60, scope="solve")
 
 @app.post("/v1/solve")
 async def post_solve(
-    kc_id: str = Query(...),
+    ku_id: str = Query(...),
     expression: str = Query(...),
     low_bandwidth: bool = Query(False, description="U.23：跳过 SVG 生成，减小响应体积"),
     _: None = Depends(_solve_rate_limit),
@@ -1561,7 +1570,7 @@ async def post_solve(
     try:
         result = solve_and_visualize(inp)
         return {
-            "kc_id": kc_id,
+            "ku_id": ku_id,
             "answer": result.solve_answer,
             "solvable": result.solvable,
             "steps": result.solve_steps,
@@ -1728,7 +1737,7 @@ async def list_question_bank(
 
 @app.post("/v1/practice/generate")
 async def post_practice_generate(
-    kc_id: str = Query(...),
+    ku_id: str = Query(...),
     count: int = Query(3),
     difficulty: float = Query(0.5),
     question_type: str = Query("solve"),
@@ -1743,26 +1752,26 @@ async def post_practice_generate(
     await _ensure_student_access(db, current_user, student_id)
     from omodul.practice_workflow import PracticeConfig, practice_workflow
 
-    kc = get_kc(kc_id)
+    kc = get_kc(ku_id)
     if kc:
-        kc_name = kc.get("name", kc_id)
+        ku_name = kc.get("name", ku_id)
         ku_subject = "math"
     else:
         ku_row = (
             await db.execute(
                 select(KnowledgeUnit, Textbook.subject)
                 .join(Textbook, KnowledgeUnit.textbook_id == Textbook.id)
-                .where(KnowledgeUnit.id == kc_id)
+                .where(KnowledgeUnit.id == ku_id)
             )
         ).first()
         if ku_row is None:
             raise HTTPException(status_code=404, detail="KC not found")
         ku, ku_subject = ku_row
-        kc_name = ku.name or kc_id
+        ku_name = ku.name or ku_id
     sid = student_id or uuid.uuid4()
     result = await practice_workflow(
         config=PracticeConfig(
-            kc_id=kc_id,
+            kc_id=ku_id,
             count=count,
             difficulty=difficulty,
             question_type=question_type,
@@ -1773,8 +1782,8 @@ async def post_practice_generate(
     )
     items = result.get("items", [])
     return {
-        "kc_id": kc_id,
-        "kc_name": kc_name,
+        "ku_id": ku_id,
+        "ku_name": ku_name,
         "items": items,
         "status": result.get("status", "ok"),
     }
@@ -1956,10 +1965,10 @@ async def get_league(
     }
 
 
-@app.get("/v1/learner-model/{student_id}/{kc_id}")
+@app.get("/v1/learner-model/{student_id}/{ku_id}")
 async def get_learner_model(
     student_id: UUID,
-    kc_id: str,
+    ku_id: str,
     _auth: User = Depends(require_student_access),
     db: AsyncSession = Depends(get_db),
 ):
@@ -1979,12 +1988,12 @@ async def get_learner_model(
         await db.execute(
             select(KCMastery).where(
                 KCMastery.student_id == student_id,
-                KCMastery.knowledge_point == kc_id,
+                KCMastery.knowledge_point == ku_id,
             )
         )
     ).scalar_one_or_none()
     if row is None:
-        return {"kc_id": kc_id, "started": False}
+        return {"ku_id": ku_id, "started": False}
 
     pm = row.p_mastery or 0.0
     card = row.fsrs_card_json
@@ -1992,7 +2001,7 @@ async def get_learner_model(
     effective = round(pm * r_val, 4) if r_val is not None else round(pm, 4)
 
     state = KCState(
-        kc_id=kc_id,
+        kc_id=ku_id,
         p_init=row.p_init,
         p_transit=row.p_transit,
         p_guess=row.p_guess,
@@ -2008,7 +2017,7 @@ async def get_learner_model(
     tot = (careless_w + dontknow_w) or 1.0
 
     return {
-        "kc_id": kc_id,
+        "ku_id": ku_id,
         "started": True,
         "p_mastery": round(pm, 4),  # 长期 P(L)
         "retrievability": round(r_val, 4)
@@ -2481,7 +2490,7 @@ async def get_patterns(
         "overall_trend": round(result.overall_trend, 4),
         "patterns": [
             {
-                "kc_id": t.kc_id,
+                "ku_id": t.kc_id,
                 "trend": round(t.trend, 4),
                 "current_accuracy": round(t.current_accuracy, 4),
                 "is_forgetting": t.is_forgetting,
@@ -2527,7 +2536,7 @@ async def get_export(
         "student_id": str(student_id),
         "name": user.name,
         "kc_mastery": [
-            {"kc_id": r.knowledge_point, "p_mastery": round(r.p_mastery or 0, 4)}
+            {"ku_id": r.knowledge_point, "p_mastery": round(r.p_mastery or 0, 4)}
             for r in mastery
         ],
         "interaction_count": len(events),
@@ -2708,12 +2717,12 @@ async def post_review_reveal(
     """检索练习红线：揭示复习答案 = 放弃检索 → 记 FSRS Again，再返回答案。"""
     if student_id != current_user.id:
         raise HTTPException(status_code=403, detail="Permission denied")
-    kc_id = payload.get("kc_id")
-    if not kc_id:
-        raise HTTPException(status_code=422, detail="kc_id required")
+    ku_id = payload.get("ku_id")
+    if not ku_id:
+        raise HTTPException(status_code=422, detail="ku_id required")
     from services.review_service import reveal_review_answer
 
-    result = await reveal_review_answer(db, student_id, kc_id)
+    result = await reveal_review_answer(db, student_id, ku_id)
     await db.commit()
     return result
 
@@ -2728,13 +2737,13 @@ async def post_review_submit(
     """提交复习作答（先检索后核对）：确定性判分入 BKT/FSRS，返回参考答案。"""
     if student_id != current_user.id:
         raise HTTPException(status_code=403, detail="Permission denied")
-    kc_id = payload.get("kc_id")
-    if not kc_id:
-        raise HTTPException(status_code=422, detail="kc_id required")
+    ku_id = payload.get("ku_id")
+    if not ku_id:
+        raise HTTPException(status_code=422, detail="ku_id required")
     from services.review_service import submit_review_answer
 
     result = await submit_review_answer(
-        db, student_id, kc_id, str(payload.get("answer", ""))
+        db, student_id, ku_id, str(payload.get("answer", ""))
     )
     await db.commit()
     return result
@@ -2797,7 +2806,7 @@ from services.cognitive_service import PgStore
 @app.get("/v1/error-journal/{student_id}")
 async def get_error_journal(
     student_id: UUID,
-    kc_id: Optional[str] = Query(None),
+    ku_id: Optional[str] = Query(None),
     error_type: Optional[str] = Query(None),
     subject: Optional[str] = Query(None),
     limit: int = Query(20),
@@ -2820,13 +2829,13 @@ async def get_error_journal(
 
     # 1. Get distribution
     pool = await get_pg_pool()
-    dist = await get_error_distribution(pool, student_id, kc_id)
+    dist = await get_error_distribution(pool, student_id, ku_id)
 
     # 2. Get detailed wrong questions
     # Layer 4 query
     stmt = select(WrongQuestion).where(WrongQuestion.student_id == student_id)
-    if kc_id:
-        stmt = stmt.where(WrongQuestion.knowledge_points.has_key(kc_id))
+    if ku_id:
+        stmt = stmt.where(WrongQuestion.knowledge_points.has_key(ku_id))
     if subject:
         stmt = stmt.where(WrongQuestion.subject == subject)
     # Note: error_type filtering would require error_tag join if not in wrong_questions
@@ -2844,11 +2853,11 @@ async def get_error_journal(
             kid = (
                 list(r.knowledge_points.keys())[0] if r.knowledge_points else "unknown"
             )
-            seen[key] = {"row": r, "kc_id": kid, "wrong_count": 1}
+            seen[key] = {"row": r, "ku_id": kid, "wrong_count": 1}
     deduped = list(seen.values())  # dict 保序；all_rows 已按时间倒序
     page = deduped[offset : offset + limit]
 
-    real_ids = {d["kc_id"] for d in page if d["kc_id"] != "unknown"}
+    real_ids = {d["ku_id"] for d in page if d["ku_id"] != "unknown"}
     name_map: dict[str, str] = {}
     if real_ids:
         krows = (
@@ -2862,7 +2871,7 @@ async def get_error_journal(
 
     res = []
     for d in page:
-        r, kid = d["row"], d["kc_id"]
+        r, kid = d["row"], d["ku_id"]
         _name = name_map.get(kid)
         if not _name:
             _kcd = get_kc(kid)
@@ -2870,8 +2879,8 @@ async def get_error_journal(
         res.append(
             {
                 "question_id": str(r.id),
-                "kc_id": kid,
-                "kc_name": _name,
+                "ku_id": kid,
+                "ku_name": _name,
                 "subject": r.subject or "math",
                 "question_text": r.question_text or "",
                 "student_answer": r.student_answer or "",

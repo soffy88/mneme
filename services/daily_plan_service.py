@@ -381,6 +381,6 @@ def _build_interleaved_queue(
     else:
         ordered = interleave_select(items).selected
     return [
-        {"kc_id": it.kc_id, "subject": pool[it.kc_id][0], "source": pool[it.kc_id][1]}
+        {"ku_id": it.kc_id, "subject": pool[it.kc_id][0], "source": pool[it.kc_id][1]}
         for it in ordered
     ]

@@ -271,12 +271,12 @@ async def test_solve_low_bandwidth_skips_svg():
         transport=ASGITransport(app=app), base_url="http://test"
     ) as c:
         normal = await c.post(
-            "/v1/solve", params={"kc_id": "GDMATH-FUNC-01", "expression": "x**2-4"}
+            "/v1/solve", params={"ku_id": "GDMATH-FUNC-01", "expression": "x**2-4"}
         )
         lb = await c.post(
             "/v1/solve",
             params={
-                "kc_id": "GDMATH-FUNC-01",
+                "ku_id": "GDMATH-FUNC-01",
                 "expression": "x**2-4",
                 "low_bandwidth": "true",
             },
