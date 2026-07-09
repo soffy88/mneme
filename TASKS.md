@@ -598,10 +598,17 @@ A → B → C → D → E → F
   要给这些列加外键约束）时再评估要不要做，届时需要先解决数据层面的 ID 体系
   统一问题，而不是先改列名。
 
-- [ ] **N.4 [P2] 阶段4：用户教材绑定** ⏳ 等阶段3完成
+- [~] **N.4 [P2] 阶段4：用户教材绑定** 🔄 后端已完成，前端待做
   ```
-  - 注册/个人设置：让学生选择所用教材（textbook_id）
-  - mastery/practice/mission 等接口按 textbook_id 过滤可见 KU
+  - 调研后改用 JSONB 映射 users.textbook_bindings={subject: textbook_id}（单列
+    textbook_id 装不下"数学/物理/语文/英语各自一本"，且发现该孤儿列从未接
+    线，同迁移一并删除）
+  - GET/POST /v1/users/{id}/textbook-bindings + GET /v1/textbooks?subject=X
+  - daily_plan_service P4 新知识点推荐按绑定过滤，未绑定学科向后兼容混排
+  - 真正需要过滤的只有 P4；mastery/mission 只读学生已接触过的 KU，不受教材
+    混排影响，无需改
+  - 后端 507 passed，check.sh 全绿；已 push 到 main
+  🔜 前端：设置页教材绑定卡片（四学科下拉），待实现+PR
   ```
 
 - [ ] **N.5 [P3] 阶段5：主库 KCState 重命名** ⏳ 独立主库决策
