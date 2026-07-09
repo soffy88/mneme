@@ -2734,6 +2734,7 @@ async def get_error_journal(
     student_id: UUID,
     kc_id: Optional[str] = Query(None),
     error_type: Optional[str] = Query(None),
+    subject: Optional[str] = Query(None),
     limit: int = Query(20),
     offset: int = Query(0),
     db: AsyncSession = Depends(get_db),
@@ -2761,6 +2762,8 @@ async def get_error_journal(
     stmt = select(WrongQuestion).where(WrongQuestion.student_id == student_id)
     if kc_id:
         stmt = stmt.where(WrongQuestion.knowledge_points.has_key(kc_id))
+    if subject:
+        stmt = stmt.where(WrongQuestion.subject == subject)
     # Note: error_type filtering would require error_tag join if not in wrong_questions
 
     stmt = stmt.order_by(WrongQuestion.created_at.desc())
@@ -2804,6 +2807,7 @@ async def get_error_journal(
                 "question_id": str(r.id),
                 "kc_id": kid,
                 "kc_name": _name,
+                "subject": r.subject or "math",
                 "question_text": r.question_text or "",
                 "student_answer": r.student_answer or "",
                 "correct_answer": r.correct_answer or "",
