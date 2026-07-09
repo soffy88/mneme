@@ -237,6 +237,31 @@ async def test_bound_parent_cannot_read_other_student(client, actors):
     assert r.status_code == 403
 
 
+@pytest.mark.asyncio
+async def test_bound_parent_cannot_submit_quiz_for_child(client, actors):
+    """上线体检修复：quiz/submit 是认知写入（回写BKT/FSRS），家长不可替孩子提交。
+    _ensure_student_self 在任何 quiz 查询之前先拦截，随机 quiz_id 也应 403（不是404）。"""
+    r = await client.post(
+        f"/v1/quiz/{uuid.uuid4()}/submit",
+        params={"student_id": str(actors["a"])},
+        json={"answers": [], "time_spent_seconds": 60},
+        headers=_h(actors["p"]),
+    )
+    assert r.status_code == 403
+
+
+@pytest.mark.asyncio
+async def test_bound_parent_cannot_submit_gate_check_for_child(client, actors):
+    """上线体检修复：mastery gate-check 提交会写 KCMastery.mastery_confirmed，
+    属替孩子写掌握状态，家长不可代答 → 403。"""
+    r = await client.post(
+        f"/v1/mastery/gate-check/{actors['a']}/{KC_ID}",
+        json={"student_answer": "42"},
+        headers=_h(actors["p"]),
+    )
+    assert r.status_code == 403
+
+
 # ── ④ /v1/auth/me 返回 invite_code ──────────────────────────────────────────
 
 

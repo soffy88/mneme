@@ -498,13 +498,16 @@ async def post_mastery_gate_check(
     student_id: UUID,
     ku_id: str,
     req: MasteryGateSubmitReq,
-    _auth: User = Depends(require_student_access),
+    current_user: User = Depends(get_current_user),
     db: AsyncSession = Depends(get_db),
 ):
     """POST /v1/mastery/gate-check/{student_id}/{ku_id} — U.17 掌握裁决（提交）。
 
+    仅学生本人：这会写 KCMastery.mastery_confirmed=True，属于替孩子写掌握状态记录，
+    家长不可代答（同其它认知写入红线）。发起端（GET）是只读生成题目，家长可看。
     答对 → mastery_confirmed=True（独立于 BKT p_mastery，不改动算法状态）。
     """
+    _ensure_student_self(current_user, student_id)
     from services.mastery_gate_service import submit_gate_check
 
     return await submit_gate_check(db, student_id, ku_id, req.student_answer)
@@ -2743,8 +2746,14 @@ async def post_quick_question(
 
 
 @app.get("/health")
-async def health_check():
-    """GET /health — 服务健康状态。"""
+async def health_check(db: AsyncSession = Depends(get_db)):
+    """GET /health — 就绪探针：真的打一次 DB（SELECT 1），不是恒返回 ok 的静态桩。
+    静态桩在今天那次"迁移后容器不重启、每个请求都 500"的26小时故障里全程报健康，
+    毫无价值。DB 不通 → 503，可供容器 healthcheck / 负载均衡摘流。"""
+    try:
+        await db.execute(text("SELECT 1"))
+    except Exception:
+        raise HTTPException(status_code=503, detail="db unavailable")
     return {"status": "ok", "version": "0.1.0", "service": "mneme-api"}
 
 
@@ -2774,7 +2783,9 @@ async def post_instant_solve(
         )
         return result
     except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+        # 不把内部异常原文回给客户端（可能泄露栈/连接串/内核细节），只记服务端日志。
+        logger.error("instant-solve failed for %s: %s", current_user.id, e)
+        raise HTTPException(status_code=500, detail="随手拍解析失败，请稍后重试")
 
 
 # ===== §Review Due Variants =====
@@ -2871,14 +2882,17 @@ async def post_quiz_submit(
     quiz_id: UUID,
     student_id: UUID = Query(...),
     body: QuizSubmitReq = Body(...),
-    _auth: User = Depends(require_student_access),
+    current_user: User = Depends(get_current_user),
     db: AsyncSession = Depends(get_db),
 ):
     """POST /v1/quiz/{quiz_id}/submit — 提交限时小测，判分回写 BKT/FSRS（source=quiz）。
 
+    仅学生本人：这是认知写入（process_interaction→BKT/FSRS），家长不可替写，
+    否则污染孩子的掌握度档案（红线，同 /v1/interaction、/v1/practice/submit 等）。
     答错的 KC 不需要额外"生成复习任务"：FSRS Again 评级本身就会顺延到近期 due，
     自然进入 /v1/review/due 队列（同一套机制）。
     """
+    _ensure_student_self(current_user, student_id)
     return await submit_quiz(
         db,
         student_id,
