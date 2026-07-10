@@ -21,20 +21,21 @@ def test_non_prod_env_always_passes(monkeypatch):
     _assert_prod_safety()
 
 
-def test_prod_with_default_jwt_secret_and_mock_sms_refuses_to_start(monkeypatch):
+def test_prod_with_default_jwt_secret_and_mock_channels_refuses_to_start(monkeypatch):
     from obase.config import settings
 
     monkeypatch.setenv("MNEME_ENV", "prod")
     monkeypatch.setattr(settings, "JWT_SECRET", "mneme-dev-secret-change-in-prod!")
     monkeypatch.delenv("SMS_PROVIDER", raising=False)
+    monkeypatch.delenv("EMAIL_PROVIDER", raising=False)
 
     try:
         _assert_prod_safety()
         assert False, "应该拒绝启动"
     except RuntimeError as e:
         assert "JWT_SECRET" in str(e)
-        assert "SMS_PROVIDER" in str(e)
-    print("  prod + 默认密钥 + mock短信 → 拒绝启动，两个问题都报出来 ✓")
+        assert "真实验证通道" in str(e)
+    print("  prod + 默认密钥 + 全 mock 通道 → 拒绝启动，两个问题都报出来 ✓")
 
 
 def test_prod_with_real_secret_and_aliyun_sms_starts_cleanly(monkeypatch):
@@ -43,23 +44,38 @@ def test_prod_with_real_secret_and_aliyun_sms_starts_cleanly(monkeypatch):
     monkeypatch.setenv("MNEME_ENV", "prod")
     monkeypatch.setattr(settings, "JWT_SECRET", "a-real-rotated-production-secret")
     monkeypatch.setenv("SMS_PROVIDER", "aliyun")
+    monkeypatch.delenv("EMAIL_PROVIDER", raising=False)
 
     _assert_prod_safety()  # 不应抛异常
     print("  prod + 真实密钥 + aliyun短信 → 正常放行 ✓")
 
 
-def test_prod_with_only_one_problem_still_refuses(monkeypatch):
-    """只改对了一半（换了密钥但还是mock短信）也不能放行——两个校验独立生效。"""
+def test_prod_with_real_secret_and_smtp_email_starts_cleanly(monkeypatch):
+    """注册已转邮箱：SMTP 邮箱是真实验证通道，短信保持 mock 也应放行。"""
     from obase.config import settings
 
     monkeypatch.setenv("MNEME_ENV", "prod")
     monkeypatch.setattr(settings, "JWT_SECRET", "a-real-rotated-production-secret")
     monkeypatch.setenv("SMS_PROVIDER", "mock")
+    monkeypatch.setenv("EMAIL_PROVIDER", "smtp")
+
+    _assert_prod_safety()  # 不应抛异常
+    print("  prod + 真实密钥 + SMTP邮箱（短信仍mock）→ 正常放行 ✓")
+
+
+def test_prod_with_only_one_problem_still_refuses(monkeypatch):
+    """只改对了一半（换了密钥但短信/邮箱全是mock）也不能放行——两个校验独立生效。"""
+    from obase.config import settings
+
+    monkeypatch.setenv("MNEME_ENV", "prod")
+    monkeypatch.setattr(settings, "JWT_SECRET", "a-real-rotated-production-secret")
+    monkeypatch.setenv("SMS_PROVIDER", "mock")
+    monkeypatch.setenv("EMAIL_PROVIDER", "mock")
 
     try:
         _assert_prod_safety()
         assert False, "应该拒绝启动"
     except RuntimeError as e:
-        assert "SMS_PROVIDER" in str(e)
+        assert "真实验证通道" in str(e)
         assert "JWT_SECRET" not in str(e)  # 密钥这项已经修好了，不该被误报
     print("  只修好一半仍拒绝启动，且不误报已修好的那项 ✓")

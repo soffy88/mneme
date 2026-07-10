@@ -168,8 +168,9 @@ async def _ensure_session_owner(
 
 
 def _assert_prod_safety() -> None:
-    """生产环境(MNEME_ENV=prod)安全闸门：默认 JWT 密钥 / mock 万能码 一律拒启动。
-    demo/dev 环境放行（mock 是无短信通道时的演示机制）。"""
+    """生产环境(MNEME_ENV=prod)安全闸门：默认 JWT 密钥 / 无真实验证通道 一律拒启动。
+    真实验证通道 = aliyun 短信 或 SMTP 邮箱（二选一即可，注册已转邮箱）。
+    demo/dev 环境放行（mock 是无验证通道时的演示机制）。"""
     import os as _os
     from obase.config import settings as _s
 
@@ -178,8 +179,16 @@ def _assert_prod_safety() -> None:
     problems = []
     if _s.JWT_SECRET == "mneme-dev-secret-change-in-prod!":
         problems.append("JWT_SECRET 仍是默认开发密钥（可伪造任意 token）")
-    if _os.environ.get("SMS_PROVIDER", "mock").lower() != "aliyun":
-        problems.append("SMS_PROVIDER 非 aliyun（123456 万能码可登录任何人）")
+    # 至少要有一条真实验证通道：aliyun 短信 或 SMTP 邮箱。两者都是 mock 时，
+    # 万能码 123456 / 验证码打日志 = 任何人可登录任何账号（注册已转邮箱，故
+    # 不再强制短信，但真实通道二选一必须成立）。
+    sms = _os.environ.get("SMS_PROVIDER", "mock").lower()
+    email = _os.environ.get("EMAIL_PROVIDER", "mock").lower()
+    if sms != "aliyun" and email != "smtp":
+        problems.append(
+            "无真实验证通道（SMS_PROVIDER≠aliyun 且 EMAIL_PROVIDER≠smtp，"
+            "mock 万能码/验证码可登录任何人）"
+        )
     if problems:
         raise RuntimeError("❌ 生产环境安全校验失败，拒绝启动：" + "；".join(problems))
 
