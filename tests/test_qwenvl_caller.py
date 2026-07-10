@@ -1,6 +1,7 @@
-"""阿里云 Qwen-VL VLM caller（拍卷 OCR 用）。mock httpx，不真连 DashScope——
-验证请求组装（base64→data URI、多模态 content 结构）+ 响应解析（DashScope
-output.choices[0].message.content 列表 → 文本 → JSON），接口与内核 VLM 一致。"""
+"""阿里云通义千问 caller（文本 QwenTextCaller + 视觉 QwenVLCaller），走 OpenAI
+兼容端点。mock httpx，不真连——验证请求组装（image_url data URI、多模态 content）
++ 响应解析（choices[0].message.content），接口与内核 LLM/VLM 契约一致。
+真实端到端（文本 qwen3.7-plus / 视觉 qwen-vl-max）已在配 key 后手动实测通过。"""
 
 from __future__ import annotations
 
@@ -8,7 +9,7 @@ from unittest.mock import AsyncMock, MagicMock, patch
 
 import pytest
 
-from services.providers.qwenvl_caller import QwenVLCaller, _extract_json
+from services.providers.qwenvl_caller import QwenTextCaller, QwenVLCaller, _extract_json
 
 
 def test_extract_json_handles_fenced_and_bare():
@@ -17,58 +18,71 @@ def test_extract_json_handles_fenced_and_bare():
     assert _extract_json("not json") == "not json"
 
 
-def _fake_dashscope_response(text: str):
+def _fake_openai_response(text: str):
     resp = MagicMock()
     resp.raise_for_status = MagicMock()
     resp.json = MagicMock(
         return_value={
-            "output": {"choices": [{"message": {"content": [{"text": text}]}}]},
-            "usage": {"input_tokens": 11, "output_tokens": 22},
+            "choices": [{"message": {"content": text}}],
+            "usage": {"prompt_tokens": 11, "completion_tokens": 22},
         }
     )
     return resp
 
 
+def _mock_client(resp):
+    c = AsyncMock()
+    c.post = AsyncMock(return_value=resp)
+    c.__aenter__ = AsyncMock(return_value=c)
+    c.__aexit__ = AsyncMock(return_value=False)
+    return c
+
+
 @pytest.mark.asyncio
-async def test_qwenvl_parses_json_ocr_response():
+async def test_text_caller_shapes_request_and_response(monkeypatch):
+    monkeypatch.setenv("QWEN_BASE_URL", "https://maas.example.com/compatible-mode/v1")
+    caller = QwenTextCaller(api_key="sk-test", model="qwen3.7-plus")
+    client = _mock_client(_fake_openai_response("你好世界"))
+    with patch("httpx.AsyncClient", return_value=client):
+        r = await caller(messages=[{"role": "user", "content": "hi"}], system="s")
+    assert r["content"] == "你好世界"
+    assert r["usage"]["input_tokens"] == 11
+    # base_url 生效 + system 前插
+    url = client.post.call_args.args[0]
+    assert url == "https://maas.example.com/compatible-mode/v1/chat/completions"
+    sent = client.post.call_args.kwargs["json"]
+    assert sent["model"] == "qwen3.7-plus"
+    assert sent["messages"][0] == {"role": "system", "content": "s"}
+
+
+@pytest.mark.asyncio
+async def test_vl_caller_parses_json_ocr_response():
     caller = QwenVLCaller(api_key="sk-test", model="qwen-vl-max")
     ocr_json = '{"questions":[{"no":"1","question_text":"1+1=?","student_steps":[]}]}'
+    client = _mock_client(_fake_openai_response(ocr_json))
+    with patch("httpx.AsyncClient", return_value=client):
+        r = await caller(prompt="OCR", image_b64="AAAA", response_format="json")
 
-    mock_client = AsyncMock()
-    mock_client.post = AsyncMock(return_value=_fake_dashscope_response(ocr_json))
-    mock_client.__aenter__ = AsyncMock(return_value=mock_client)
-    mock_client.__aexit__ = AsyncMock(return_value=False)
-
-    with patch("httpx.AsyncClient", return_value=mock_client):
-        r = await caller(prompt="OCR这张卷子", image_b64="AAAA", response_format="json")
-
-    # 响应形状与内核 VLM 契约一致
     assert isinstance(r["content"], dict)
     assert r["content"]["questions"][0]["no"] == "1"
     assert r["usage"]["input_tokens"] == 11
 
-    # 请求组装：base64 被包成 data URI，content 是 [image, text]
-    sent = mock_client.post.call_args.kwargs["json"]
-    parts = sent["input"]["messages"][0]["content"]
-    assert parts[0]["image"] == "data:image/jpeg;base64,AAAA"
-    assert parts[1]["text"] == "OCR这张卷子"
-    assert sent["model"] == "qwen-vl-max"
+    # 请求：OpenAI image_url data URI + [text, image_url]
+    sent = client.post.call_args.kwargs["json"]
+    parts = sent["messages"][0]["content"]
+    assert parts[0] == {"type": "text", "text": "OCR"}
+    assert parts[1]["image_url"]["url"] == "data:image/jpeg;base64,AAAA"
 
 
 @pytest.mark.asyncio
-async def test_qwenvl_passes_through_existing_data_uri():
+async def test_vl_caller_passes_through_existing_data_uri():
     caller = QwenVLCaller(api_key="sk-test")
-    mock_client = AsyncMock()
-    mock_client.post = AsyncMock(return_value=_fake_dashscope_response("hi"))
-    mock_client.__aenter__ = AsyncMock(return_value=mock_client)
-    mock_client.__aexit__ = AsyncMock(return_value=False)
-
-    with patch("httpx.AsyncClient", return_value=mock_client):
+    client = _mock_client(_fake_openai_response("hi"))
+    with patch("httpx.AsyncClient", return_value=client):
         r = await caller(prompt="p", image_b64="data:image/png;base64,ZZZ")
-
-    sent = mock_client.post.call_args.kwargs["json"]
+    sent = client.post.call_args.kwargs["json"]
     assert (
-        sent["input"]["messages"][0]["content"][0]["image"]
+        sent["messages"][0]["content"][1]["image_url"]["url"]
         == "data:image/png;base64,ZZZ"
     )
     assert r["content"] == "hi"  # 非 json 模式返回原文

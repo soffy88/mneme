@@ -88,6 +88,7 @@ services:
       # 未配 key 时文本会回落到内核默认、视觉无 provider——上线前必须配 key 并实测。
       MNEME_LLM: qwen
       DASHSCOPE_API_KEY: ${DASHSCOPE_API_KEY:-}
+      QWEN_BASE_URL: ${QWEN_BASE_URL:-}
       QWEN_MODEL: ${QWEN_MODEL:-qwen-plus}
       QWEN_VL_MODEL: ${QWEN_VL_MODEL:-qwen-vl-max}
     extra_hosts:
@@ -131,6 +132,7 @@ services:
       # 云模型同 api：阿里云通义千问文本+视觉（worker 跑异步 OCR/变式，须一致）
       MNEME_LLM: qwen
       DASHSCOPE_API_KEY: ${DASHSCOPE_API_KEY:-}
+      QWEN_BASE_URL: ${QWEN_BASE_URL:-}
       QWEN_MODEL: ${QWEN_MODEL:-qwen-plus}
       QWEN_VL_MODEL: ${QWEN_VL_MODEL:-qwen-vl-max}
     extra_hosts:

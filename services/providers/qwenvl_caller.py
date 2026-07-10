@@ -1,11 +1,15 @@
-"""阿里云通义千问视觉（Qwen-VL）VLM caller —— DashScope 多模态接口。
+"""阿里云通义千问 caller（文本 + 视觉），走 OpenAI 兼容端点。
 
-内核 VLM 接口只支持 Anthropic/Gemini（海外），本项目要中国备案合规的视觉，
-故自建 Qwen-VL 适配器，接口与内核 VLMCaller 一致
-（__call__(*, prompt, image_b64, response_format) -> {content, raw_text, usage}），
-供拍卷 OCR（oprim.ocr_paper）使用。DashScope 已在网信办备案。
+用户用的是阿里云 MaaS 专属部署（自定义 host，非公共 dashscope.aliyuncs.com），
+但提供 OpenAI 兼容模式（/compatible-mode/v1/chat/completions），文本和视觉都能
+用同一套 chat/completions 调。base_url/api_key/model 全走环境变量，不硬编码。
 
-model: qwen-vl-max / qwen-vl-plus。凭据走 DASHSCOPE_API_KEY 环境变量。
+- QwenTextCaller：文本 LLM，接口同内核 LLMCaller。
+- QwenVLCaller：视觉 VLM（拍卷 OCR），接口同内核 VLMCaller
+  （__call__(*, prompt, image_b64, response_format) -> {content, raw_text, usage}）。
+  内核只支持 Anthropic/Gemini 视觉，中国备案合规视觉自建。
+
+实测（2026-07-10）：文本 qwen3.7-plus、视觉 qwen-vl-max/qwen-vl-ocr 均端到端通。
 """
 
 from __future__ import annotations
@@ -28,64 +32,112 @@ def _extract_json(text: str) -> Any:
         return text
 
 
+def _base_url() -> str:
+    # 默认公共 DashScope 兼容端点；MaaS 专属部署走 QWEN_BASE_URL 覆盖。
+    return (
+        os.environ.get("QWEN_BASE_URL")
+        or "https://dashscope.aliyuncs.com/compatible-mode/v1"
+    ).rstrip("/")
+
+
+class QwenTextCaller:
+    """通义千问文本（OpenAI 兼容 chat/completions）。"""
+
+    def __init__(self, api_key: str, model: str | None = None) -> None:
+        self.api_key = api_key
+        self.model = model or os.environ.get("QWEN_MODEL", "qwen-plus")
+        self.base_url = _base_url()
+
+    async def __call__(
+        self,
+        *,
+        messages: list[dict[str, str]],
+        max_tokens: int = 1000,
+        tools: list[dict[str, Any]] | None = None,
+        response_format: str | None = None,
+        system: str | None = None,
+    ) -> dict[str, Any]:
+        import httpx
+
+        api_messages = list(messages)
+        if system:
+            api_messages.insert(0, {"role": "system", "content": system})
+        payload: dict[str, Any] = {
+            "model": self.model,
+            "messages": api_messages,
+            "max_tokens": max_tokens,
+        }
+        if response_format == "json":
+            payload["response_format"] = {"type": "json_object"}
+        async with httpx.AsyncClient(timeout=120) as client:
+            resp = await client.post(
+                f"{self.base_url}/chat/completions",
+                headers={"Authorization": f"Bearer {self.api_key}"},
+                json=payload,
+            )
+            resp.raise_for_status()
+            data = resp.json()
+        content = data["choices"][0]["message"]["content"] or ""
+        usage = data.get("usage", {})
+        return {
+            "content": content,
+            "usage": {
+                "input_tokens": usage.get("prompt_tokens", 0),
+                "output_tokens": usage.get("completion_tokens", 0),
+            },
+        }
+
+
 class QwenVLCaller:
+    """通义千问视觉（OpenAI 兼容 chat/completions + image_url）。"""
+
     def __init__(self, api_key: str, model: str | None = None) -> None:
         self.api_key = api_key
         self.model = model or os.environ.get("QWEN_VL_MODEL", "qwen-vl-max")
+        self.base_url = _base_url()
 
     async def __call__(
         self, *, prompt: str, image_b64: str, response_format: str = "text"
     ) -> dict[str, Any]:
         import httpx
 
-        # DashScope 多模态：图片可传 data URI(base64) 或 URL；这里用 base64 data URI。
-        img = (
+        url = (
             image_b64
             if image_b64.startswith("data:")
             else f"data:image/jpeg;base64,{image_b64}"
         )
         payload = {
             "model": self.model,
-            "input": {
-                "messages": [
-                    {
-                        "role": "user",
-                        "content": [{"image": img}, {"text": prompt}],
-                    }
-                ]
-            },
-        }
-        headers = {
-            "Authorization": f"Bearer {self.api_key}",
-            "Content-Type": "application/json",
+            "messages": [
+                {
+                    "role": "user",
+                    "content": [
+                        {"type": "text", "text": prompt},
+                        {"type": "image_url", "image_url": {"url": url}},
+                    ],
+                }
+            ],
+            "max_tokens": 2000,
         }
         async with httpx.AsyncClient(timeout=180) as client:
             resp = await client.post(
-                "https://dashscope.aliyuncs.com/api/v1/services/aigc/multimodal-generation/generation",
-                headers=headers,
+                f"{self.base_url}/chat/completions",
+                headers={"Authorization": f"Bearer {self.api_key}"},
                 json=payload,
             )
             resp.raise_for_status()
             data = resp.json()
 
-        # output.choices[0].message.content 是 [{"text": "..."}] 形式
-        raw_text = ""
-        try:
-            parts = data["output"]["choices"][0]["message"]["content"]
-            raw_text = "".join(p.get("text", "") for p in parts if isinstance(p, dict))
-        except (KeyError, IndexError, TypeError):
-            raw_text = ""
-
-        content: Any = raw_text
-        if response_format == "json":
-            content = _extract_json(raw_text)
-
+        raw_text = data["choices"][0]["message"]["content"] or ""
+        content: Any = (
+            _extract_json(raw_text) if response_format == "json" else raw_text
+        )
         usage = data.get("usage", {})
         return {
             "content": content,
             "raw_text": raw_text,
             "usage": {
-                "input_tokens": usage.get("input_tokens", 0),
-                "output_tokens": usage.get("output_tokens", 0),
+                "input_tokens": usage.get("prompt_tokens", 0),
+                "output_tokens": usage.get("completion_tokens", 0),
             },
         }

@@ -30,23 +30,22 @@ def configure_llm_providers() -> str:
     backend = os.environ.get("MNEME_LLM", "").lower()
 
     if backend == "qwen":
-        from obase.llm import QwenCaller
         from obase.provider_registry import ProviderRegistry
 
-        from services.providers.qwenvl_caller import QwenVLCaller
+        from services.providers.qwenvl_caller import QwenTextCaller, QwenVLCaller
 
         registry = ProviderRegistry.get()
-        # 直接从环境读 DASHSCOPE key 自建 caller，不依赖 register_default_providers——
-        # 后者用 `QWEN_API_KEY or DASHSCOPE_API_KEY`，而 QWEN_API_KEY 占位符
-        # "your_key_here" 是 truthy，会短路盖掉真正的 DASHSCOPE_API_KEY，qwen 永远
-        # 注册不上。绕开这个坑，在本层显式注册文本 qwen + 视觉 qwen-vl。
+        # 直接从环境读 DASHSCOPE key 自建 caller，不依赖 register_default_providers
+        # （它用 `QWEN_API_KEY or DASHSCOPE_API_KEY`，QWEN_API_KEY 占位符
+        # "your_key_here" 是 truthy 会短路盖掉真 key）。文本+视觉都走 OpenAI 兼容
+        # 端点（base_url 由 QWEN_BASE_URL 配，支持 MaaS 专属部署），用本地自建的
+        # QwenTextCaller/QwenVLCaller，不用内核 QwenCaller（后者硬编码公共 host）。
         key = (
             os.environ.get("DASHSCOPE_API_KEY") or os.environ.get("QWEN_API_KEY") or ""
         )
         if key and key != "your_key_here":
-            text_model = os.environ.get("QWEN_MODEL", "qwen-plus")
-            registry.register_llm("default", QwenCaller(key, text_model), replace=True)
-            registry.register_llm("qwen", QwenCaller(key, text_model), replace=True)
+            registry.register_llm("default", QwenTextCaller(key), replace=True)
+            registry.register_llm("qwen", QwenTextCaller(key), replace=True)
             registry.register_vlm("default", QwenVLCaller(key), replace=True)
             registry.register_vlm("qwen-vl", QwenVLCaller(key), replace=True)
         return "qwen"
