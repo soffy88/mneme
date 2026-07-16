@@ -294,6 +294,19 @@ _email_provider = get_email_provider()  # module-level default; replaced in life
 
 app = FastAPI(title="Mneme API", version="0.1.0", lifespan=lifespan)
 
+# Phase1 门控内核 MCP 工具面（架构 A：挂进本 app）。依赖 mneme-core（②-0 打包）；
+# 未装时优雅降级——只是 /mcp/* 不可用，不拖垮整个 API。
+try:
+    from services.mcp_router import router as _mcp_router
+
+    app.include_router(_mcp_router)
+except ImportError as _mcp_import_err:  # pragma: no cover
+    import logging as _logging
+
+    _logging.getLogger(__name__).warning(
+        "MCP 工具面未挂载（mneme-core 不可用）: %s", _mcp_import_err
+    )
+
 from fastapi.middleware.cors import CORSMiddleware
 
 app.add_middleware(
