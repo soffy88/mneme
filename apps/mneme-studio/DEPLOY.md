@@ -41,14 +41,22 @@ studio 的 `NEXT_PUBLIC_API_BASE` = 同源（空/`https://sxueji.com`），故 `
 **注意 @helios/blocks 是 `file:` 本地依赖**，Docker build context 不含仓外 platform/ —— 需先把
 `@helios/blocks` vendor 化（tarball 或 copy 进 context）再 `npm install`（同 mneme-web 的 vendor 方案）。
 
-## 🔴 阻断（prod apply 前必须先解决，均属 prod 基础设施 / 需 Cloudflare 账号权限）
-1. **sxueji.com 未接线**：跑着的 tunnel 只有 `*.uex.hk` / `*.kanpan.co`，**无任何 sxueji.com hostname**，
-   mneme-web 现服务于 `mneme.uex.hk` 而非 sxueji.com。同 host 路由要求 sxueji.com 先作为 tunnel host 存在，
-   且 mneme-web/api 也在该 host 提供 —— 即先把整个 sxueji.com（DNS + tunnel + web/api 路由）立起来。
-2. **活的多项目共享 prod 机**：本机同时跑 mneme-web / hevi / aii / helios / stratum / tide / aegis 及各自 tunnel。
-   改 tunnel/网络/compose 有跨项目 blast radius，须在受控窗口由 ops 执行。
-3. **改动活的 mneme-web host 路由**（同 host 模型）：/studio、/mcp 规则要排在 mneme-web 兜底前，
-   需验证不与 SPA 路由冲突。
+## 实测：sxueji.com 已上线（`*.uex.hk`/`*.kanpan.co` 已停用）
+- `https://sxueji.com` → 307 → mneme-web（现有 SPA）。
+- `https://api.sxueji.com/health` → 200（**全 api 已公网，mneme-web 依赖**）。
+- `https://sxueji.com/mcp/*` → 404、`https://sxueji.com/studio/*` → 404（**studio + /mcp 尚未接线**）。
+- sxueji.com 的 ingress **不在本机任何 cloudflared 配置文件**里（本机 config-file tunnel 全是已停用的
+  uex.hk；token/dashboard tunnel 属其他项目）——即 **sxueji.com 走 Cloudflare dashboard 托管 ingress**。
 
-**结论**：studio 侧代码 + 部署规范就绪；实际 prod apply（wiring sxueji.com、加服务、改活 tunnel）
-需 Cloudflare 账号权限 + 受控窗口，交 Wiki/ops。CC 不在 dev 会话里改活的共享 prod。
+## 🔴 阻断（prod apply，需 Cloudflare dashboard 权限 + ops 受控窗口）
+1. **sxueji.com ingress 是 dashboard 托管**：给 sxueji.com 加 `/studio/*→studio`、`/mcp/*→api` 路由，
+   须在 **Cloudflare dashboard** 改该 tunnel 的 public hostname/ingress —— **本机 CLI/文件改不了**，需账号权限。
+2. **活的多项目共享 prod 机**：本机同跑 mneme-web / hevi / aii / helios / stratum / tide / aegis 及各自 tunnel；
+   加 studio 服务/改路由须受控窗口，防跨项目 blast radius。
+3. **同 host 模型改活的 sxueji.com 路由**：/studio、/mcp 规则要排在 mneme-web 兜底前，验不与 SPA 冲突。
+4. **pre-session 端点**：本模型只保证 sxueji.com 这个 host 上非 /studio·/mcp 不额外暴露；但**全 api 仍在
+   api.sxueji.com 公网**（mneme-web 依赖，不动）——锁 api.sxueji.com 是独立的 web/api 安全评审，不在 S3-B。
+
+**结论**：studio 代码 + standalone 产物 + 部署规范就绪；实际 apply（build 镜像、加 compose 服务、
+**Cloudflare dashboard 加 sxueji.com 的 /studio+/mcp ingress**）需账号权限 + ops 受控窗口，交 Wiki/ops。
+CC 不在 dev 会话改活的共享 prod / 无 dashboard 权限。
