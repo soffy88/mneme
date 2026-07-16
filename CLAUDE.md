@@ -4,6 +4,10 @@
 > **唯一权威设计** = `MNEME_MASTER_DESIGN.md`（SSOT）。**执行看板** = `TASKS.md`。
 > 本文件是"怎么干活"的规矩；"做什么/契约"一律以 Master 为准。
 
+> ⚠️ **本机即生产。** 本机的 `mneme-api-1` + `mneme-db-1` 就是 `api.sxueji.com` / `sxueji.com` 的**活后端**，直接服务线上用户 —— **不是 dev 副本**（`docker compose` / `localhost` 会误导你）。
+> **任何破坏性操作必先向用户确认**：删 / purge 用户或数据、`alembic downgrade`、drop / truncate、重启 / recreate 活容器（api.sxueji.com 会瞬时中断）、改活 cloudflared tunnel / 网络 / CORS。
+> 动手前先判"这会不会影响生产"；会，则**先问、先留快照、确认可逆再动**。别把生产当 dev。
+
 ## 这是什么项目
 
 Mneme（对外名**善学记**，旧名"学鉴"已废弃）：面向全年级学生的个人学习成长档案 + 自主学习工具。
