@@ -1,6 +1,10 @@
 # mneme-studio 部署规范（W2b S3-B）
 
-**状态**：**规范就绪，prod apply 阻断**（见 §阻断）。暴露模型已定：**同 host 路径路由**，域名 **sxueji.com**。
+**状态（更新）**：**studio 镜像已建 + 容器已在 helios-net 上跑**（`mneme-studio:3001`，`--restart always`，实测 `mneme-studio:3001/studio/learn → 200`）。**路由不走 Cloudflare dashboard** —— 实测本机 `aegis-caddy` 就是反代（`:8083→mneme-web`、`:8081→mneme-api`），sxueji.com 的 tunnel 指向 caddy `:8083`。**只差 aegis 给 caddy `:8083` 加路径路由**（需求见 `outputs/S3B-CADDY-REQUIREMENT.md`），配好即通。
+
+> 早前"走 Cloudflare dashboard/apply 阻断"的判断已作废 —— 是本机 aegis-caddy 的本地配置，aegis 改即可，无需 Cloudflare 权限。
+
+暴露模型：**同 host 路径路由**，域名 **sxueji.com**。
 
 ## 暴露模型（已拍板）
 同一 host（sxueji.com）按路径路由；studio + `/mcp/*` 对外，其余走 mneme-web：
