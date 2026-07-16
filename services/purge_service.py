@@ -37,9 +37,15 @@ _STUDENT_TABLES: list[tuple[str, str]] = [
     ("speaking_sessions", "student_id"),
     ("streaks", "student_id"),
     ("timed_quizzes", "student_id"),
+    ("user_learner_profiles", "student_id"),
     # textbook_files 必须排在 highlights/reading_notes 之后——它俩 file_id 外键
     # 指向 textbook_files，先删父行会违反外键。列名是 owner_student_id 不是 student_id。
     ("textbook_files", "owner_student_id"),
+    # Phase1 门控内核 gate schema（独立 schema，无 FK，可任意序删）：三表皆带
+    # student_id（未成年 PII 关联），随用户删除一并物理清除（合规红线）。
+    ("gate.pending_question", "student_id"),
+    ("gate.qualitative_mastery", "student_id"),
+    ("gate.evidence", "student_id"),
 ]
 
 
