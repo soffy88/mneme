@@ -61,8 +61,8 @@ async def _seed_student(db, sid):
 
 
 @pytest.mark.asyncio
-async def test_gate_type_from_rubric_presence():
-    """有 rubric 的 KC → CONCEPT(定性)；无 rubric → PROCEDURE(量化)。"""
+async def test_gate_type_from_intent_presence():
+    """意图命中的 KC(ku004) → CONCEPT(定性)；无意图 → PROCEDURE(量化)。R2 §5/M1。"""
     sid = uuid.uuid4()
     async with SessionLocal() as db:
         await _seed_student(db, sid)

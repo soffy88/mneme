@@ -3,9 +3,9 @@
 架构 A：mneme app 侧组装（有 DB），产物喂给纯库 mneme-core 的
 `is_mastered`/`next_objective`/`map_summary`（它们只认 LearningProgress，不碰 IO）。
 
-gate_type 由 rubric 存在性决定（决策 D2.2 净规则，经 gate_store）：
-    有 rubric → kp.type=CONCEPT（定性，读 gate.qualitative_mastery）
-    无 rubric → kp.type=PROCEDURE（量化，读 kc_mastery 下界过门）
+gate_type 由 gate.qualitative_intent 决定（R2 §5 两层解析 / M1，经 gate_store.resolve_gate_type）：
+    意图命中 → kp.type=CONCEPT（定性，读 gate.qualitative_mastery）
+    无意图   → kp.type=PROCEDURE（量化，读 kc_mastery 下界过门）
 导出量（SPEC §4）：n_obs = interaction_events 计数；sigma = 二项近似 sqrt(p(1-p)/n_obs)。
 只读投影，绝不改既有表（铁律）。
 

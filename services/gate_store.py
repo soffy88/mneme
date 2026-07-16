@@ -3,10 +3,12 @@
 架构 A（MCP 工具面并入 mneme app）：gate.* 是 Phase1 门控内核的持久化，只由本模块读写。
 gate 表由 Alembic 迁移 `c4d5e6f7a8b9` 建，无 ORM 模型，本层用 schema 限定的原生 SQL。
 
-决策 D2.2（rev.1）净规则：
-    gate_type(kc) = qualitative  ⟺  gate.rubric 命中该 kc；否则 quantitative。
-即 **rubric 表本身就是 qualitative 注册表**——写一份 rubric = 把该 KC 注册为定性门控，
-与 D1 的 fail-safe（无 rubric 不可走 assess）自洽。
+R2 §5 两层解析（M1：意图与判据分表）：
+    gate_type(kc) = qualitative  ⟺  gate.qualitative_intent 命中该 kc；否则 quantitative。
+**意图**（该 KC 用定性门，教学设计决定）落 gate.qualitative_intent；**判据**（用哪些维度判）
+落 gate.rubric。二者分离——删 rubric 不撤销意图（故 V12「删 rubric → build_path 失败」有牙齿），
+resolve 与 build_path 不再在删 rubric 时分歧。fail-safe：意图定性但无 rubric → 进不了 path、
+走不到 assess（build_path 校验）。
 """
 
 from __future__ import annotations
@@ -23,7 +25,7 @@ QUANTITATIVE = "quantitative"
 
 
 async def has_rubric(db: AsyncSession, kc_id: str) -> bool:
-    """该 KC 在 gate.rubric 是否有行（＝是否注册为定性门控）。"""
+    """该 KC 在 gate.rubric 是否有**判据**（评分维度）。M1 后 rubric 只供判据，不承载意图。"""
     row = (
         await db.execute(
             text("SELECT 1 FROM gate.rubric WHERE kc_id = :kc"), {"kc": kc_id}
@@ -32,9 +34,20 @@ async def has_rubric(db: AsyncSession, kc_id: str) -> bool:
     return row is not None
 
 
+async def has_intent(db: AsyncSession, kc_id: str) -> bool:
+    """该 KC 是否在 gate.qualitative_intent 登记为定性门控**意图**（R2 §5 第 1 层）。"""
+    row = (
+        await db.execute(
+            text("SELECT 1 FROM gate.qualitative_intent WHERE kc_id = :kc"),
+            {"kc": kc_id},
+        )
+    ).first()
+    return row is not None
+
+
 async def resolve_gate_type(db: AsyncSession, kc_id: str) -> str:
-    """D2.2 三层解析塌缩为一条净规则：有 rubric → qualitative；否则 quantitative。"""
-    return QUALITATIVE if await has_rubric(db, kc_id) else QUANTITATIVE
+    """R2 §5 两层解析：意图表命中 → qualitative；否则 quantitative（M1：读意图，不读 rubric）。"""
+    return QUALITATIVE if await has_intent(db, kc_id) else QUANTITATIVE
 
 
 async def get_rubric(db: AsyncSession, kc_id: str) -> Optional[dict]:

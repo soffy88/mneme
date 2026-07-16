@@ -1,7 +1,7 @@
 """B1 / V12 — build_path 校验：意图定性的 KC 必须有 rubric，否则构建失败并给**完整**缺失清单。
 
-意图源（authoring）与运行时 resolve_gate_type（rubric 存在性）分离，故"删 ku004 rubric"
-仍被判失败——这正是 V12 要证的活锁防护。单 session 不 commit，退出回滚。
+意图（gate.qualitative_intent）与判据（gate.rubric）分表（R2 §5/M1），故"删 ku004 rubric"
+只撤判据不撤意图 → 仍被判失败——这正是 V12 要证的活锁防护。单 session 不 commit，退出回滚。
 """
 
 from __future__ import annotations
@@ -42,5 +42,7 @@ async def test_qualitative_requires_rubric():
             text("DELETE FROM gate.rubric WHERE kc_id = :kc"), {"kc": KU004}
         )
         with pytest.raises(PathBuildError) as ei3:
-            await build_path(db, [KU004])  # 默认 intent（QUALITATIVE_INTENT 含 ku004）
+            await build_path(
+                db, [KU004]
+            )  # 默认 intent（gate.qualitative_intent 含 ku004）
         assert ei3.value.missing == [KU004]
