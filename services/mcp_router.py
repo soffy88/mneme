@@ -18,7 +18,7 @@ from typing import Optional
 
 from fastapi import APIRouter, Depends, HTTPException
 from pydantic import BaseModel
-from sqlalchemy import select
+from sqlalchemy import func, select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from mneme_core.oprim.grade import answer_match
@@ -35,7 +35,7 @@ from mneme_core.service.verdict_guard import GuardRejection, enforce
 from obase.db import get_db
 from services import gate_store
 from services.math_grade import grade_math
-from services.models import KnowledgeUnit
+from services.models import KnowledgeUnit, WrongQuestion
 from services.progress_assembler import build_learning_progress
 
 router = APIRouter(prefix="/mcp", tags=["mcp"])
@@ -159,6 +159,126 @@ async def tool_get_review_queue(
             for t in due
         ],
     }
+
+
+def _infer_qtype(expected: str) -> str:
+    """题库无 qtype 列：单字母 A/B/C/D → choice；否则 solve（grade_math sympy+回落兜底）。"""
+    e = (expected or "").strip().upper().replace(" ", "")
+    if 1 <= len(e) <= 3 and all(c in "ABCD、," for c in e):
+        return "choice"
+    return "solve"
+
+
+async def _llm_generate_question(kc_name: str) -> Optional[dict]:
+    """题库无题时 LLM(qwen)兜底：出一道题 + 标准答案。失败→None。expected 不外传。"""
+    import json as _json
+    import os
+
+    key = os.environ.get("DASHSCOPE_API_KEY")
+    if not key:
+        return None
+    try:
+        from services.providers.qwenvl_caller import QwenTextCaller
+
+        caller = QwenTextCaller(
+            api_key=key, model=os.environ.get("QWEN_MODEL", "qwen-plus")
+        )
+        out = await caller(
+            messages=[
+                {
+                    "role": "user",
+                    "content": (
+                        f"为知识点『{kc_name}』出一道适合中学生的题，返回严格 JSON："
+                        '{"prompt":"题干","answer":"标准答案","qtype":"solve"}。只输出 JSON。'
+                    ),
+                }
+            ],
+            max_tokens=512,
+            response_format="json",
+        )
+        data = _json.loads(out.get("content", "{}"))
+        if data.get("prompt") and data.get("answer"):
+            return {
+                "prompt": str(data["prompt"]),
+                "expected": str(data["answer"]),
+                "qtype": str(data.get("qtype", "solve")),
+            }
+    except Exception:
+        return None
+    return None
+
+
+async def tool_request_question(
+    db: AsyncSession, student_id: uuid.UUID, kc_id: str
+) -> dict:
+    """人在环出题（S3-A poser）：为当前 KC 出下一题并登记待答；**只出不答**。
+
+    题库(wrong_questions)优先、LLM(qwen)兜底。expected 只进 gate.pending_question，
+    **绝不进返回体/prompt/LLM 上下文**。幂等：已有该 KC 的 pending 直接返回（不重复出题）。
+    """
+    active = await gate_store.get_active_pending(db, student_id=student_id)
+    if active is not None and active["kc_id"] == kc_id:
+        return {
+            "question_id": active["question_id"],
+            "prompt": active["prompt"],
+            "qtype": active["qtype"],
+            "source": "pending",
+        }
+
+    name_row = (
+        await db.execute(select(KnowledgeUnit.name).where(KnowledgeUnit.id == kc_id))
+    ).first()
+    kc_name = name_row[0] if name_row else kc_id
+    qid = f"q-{uuid.uuid4().hex}"
+    gate_type = await gate_store.resolve_gate_type(db, kc_id)
+
+    if gate_type == gate_store.QUALITATIVE:
+        prompt = f"请用自己的话解释【{kc_name}】的核心概念，并举例说明。"
+        await gate_store.pose_question(
+            db,
+            question_id=qid,
+            student_id=student_id,
+            kc_id=kc_id,
+            prompt=prompt,
+            expected=None,
+            qtype="open",
+        )
+        return {
+            "question_id": qid,
+            "prompt": prompt,
+            "qtype": "open",
+            "source": "generated",
+        }
+
+    bank = (
+        await db.execute(
+            select(WrongQuestion.question_text, WrongQuestion.correct_answer)
+            .where(WrongQuestion.knowledge_points.has_key(kc_id))
+            .order_by(func.random())
+            .limit(1)
+        )
+    ).first()
+    if bank is not None and bank[0]:
+        prompt, expected = str(bank[0]), str(bank[1] or "")
+        qtype = _infer_qtype(expected)
+        source = "bank"
+    else:
+        gen = await _llm_generate_question(kc_name)
+        if gen is None:
+            return {"error": "该知识点暂无可用题目", "kc_id": kc_id}
+        prompt, expected, qtype = gen["prompt"], gen["expected"], gen["qtype"]
+        source = "generated"
+
+    await gate_store.pose_question(
+        db,
+        question_id=qid,
+        student_id=student_id,
+        kc_id=kc_id,
+        prompt=prompt,
+        expected=expected,
+        qtype=qtype,
+    )
+    return {"question_id": qid, "prompt": prompt, "qtype": qtype, "source": source}
 
 
 async def tool_pose_question(
@@ -344,6 +464,11 @@ class GetReviewQueueReq(BaseModel):
     now: Optional[float] = None
 
 
+class RequestQuestionReq(BaseModel):
+    student_id: uuid.UUID
+    kc_id: str
+
+
 class CheckMasteryReq(BaseModel):
     student_id: uuid.UUID
     kc_id: str
@@ -402,6 +527,15 @@ async def mcp_get_review_queue(
     req: GetReviewQueueReq, db: AsyncSession = Depends(get_db)
 ) -> dict:
     return await tool_get_review_queue(db, req.student_id, req.kc_ids, req.now)
+
+
+@router.post("/RequestQuestion")
+async def mcp_request_question(
+    req: RequestQuestionReq, db: AsyncSession = Depends(get_db)
+) -> dict:
+    r = await tool_request_question(db, req.student_id, req.kc_id)
+    await db.commit()
+    return r
 
 
 @router.post("/PoseQuestion")

@@ -74,6 +74,15 @@ export interface GradeResult {
   error?: string;
 }
 
+// 人在环出题（S3-A）：请求下一题。请求只带 kc_id、响应只回 prompt/qtype —— 无 expected。
+export interface PosedQuestion {
+  question_id?: string;
+  prompt?: string;
+  qtype?: string;
+  source?: string;
+  error?: string;
+}
+
 // ── 读工具 + 提交（无 PoseQuestion）─────────────────────────────────────────
 export const mcp = {
   nextObjective: (studentId: string, kcIds: string[]) =>
@@ -87,6 +96,10 @@ export const mcp = {
   getReviewQueue: (studentId: string, kcIds: string[]) =>
     call<{ review_queue: { kc_id: string; due_at: number; priority: number }[] }>(
       "GetReviewQueue", { student_id: studentId, kc_ids: kcIds }),
+
+  // 人在环 poser 触发：服务端出题（题库优先/LLM 兜底），expected 只存服务端。
+  requestQuestion: (studentId: string, kcId: string) =>
+    call<PosedQuestion>("RequestQuestion", { student_id: studentId, kc_id: kcId }),
 
   submitAnswer: (studentId: string, questionId: string, answer: string) =>
     call<GradeResult>("SubmitAnswer", {

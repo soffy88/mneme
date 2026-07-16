@@ -25,6 +25,9 @@ const ACTION_LABEL: Record<string, string> = {
 export default function LearnPage() {
   const [ctx, setCtx] = useState({ studentId: "", kcIds: [] as string[] });
   const [step, setStep] = useState<NextStep | null>(null);
+  const [question, setQuestion] = useState<
+    { question_id: string; prompt: string; qtype: string } | null
+  >(null);
   const [mastery, setMastery] = useState<Mastery | null>(null);
   const [answer, setAnswer] = useState("");
   const [feedback, setFeedback] = useState<{ ok: boolean; msg: string } | null>(null);
@@ -38,6 +41,19 @@ export default function LearnPage() {
       const s = await mcp.nextObjective(c.studentId, c.kcIds);
       setStep(s);
       if (s.kc_id) setMastery(await mcp.checkMastery(c.studentId, s.kc_id));
+      // 人在环出题：complete→无题；已有待答题→用它；否则自动请求下一题（RequestQuestion）。
+      if (s.action === "complete" || !s.kc_id) {
+        setQuestion(null);
+      } else if (s.has_pending && s.pending_question) {
+        setQuestion(s.pending_question);
+      } else {
+        const q = await mcp.requestQuestion(c.studentId, s.kc_id);
+        setQuestion(
+          q.error || !q.question_id || !q.prompt
+            ? null
+            : { question_id: q.question_id, prompt: q.prompt, qtype: q.qtype || "solve" }
+        );
+      }
     } catch (e) {
       setError(e instanceof Error ? e.message : String(e));
     }
@@ -50,11 +66,11 @@ export default function LearnPage() {
   }, [refresh]);
 
   const submit = useCallback(async () => {
-    if (!step?.pending_question || !answer.trim()) return;
+    if (!question || !answer.trim()) return;
     setBusy(true);
     setFeedback(null);
     try {
-      const r = await mcp.submitAnswer(ctx.studentId, step.pending_question.question_id, answer);
+      const r = await mcp.submitAnswer(ctx.studentId, question.question_id, answer);
       if (r.needs_qualitative) {
         setFeedback({ ok: true, msg: "你的解释已提交，老师会评判后给你反馈。" });
       } else if (r.graded) {
@@ -63,13 +79,13 @@ export default function LearnPage() {
           : { ok: false, msg: "这道没答对，别灰心，我们再来一道。" });
       }
       setAnswer("");
-      await refresh(ctx);
+      await refresh(ctx); // 自动拉下一题（人在环连续作答，不需刷新）
     } catch (e) {
       setError(e instanceof Error ? e.message : String(e));
     } finally {
       setBusy(false);
     }
-  }, [step, answer, ctx, refresh]);
+  }, [question, answer, ctx, refresh]);
 
   if (!ctx.studentId || ctx.kcIds.length === 0) {
     return (
@@ -82,7 +98,7 @@ export default function LearnPage() {
     );
   }
 
-  const pq = step?.pending_question;
+  const pq = question;
   const action = step?.action ?? "";
 
   return (
