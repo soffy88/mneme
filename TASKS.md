@@ -1833,3 +1833,15 @@ studio 镜像重建、mneme-api-1 重启后已在 sxueji.com 上线。
   无契合 g10-a KC，多为跨课程立体几何/算法/数论，正确留孤儿）。有高一可服务题的 g10-a KC 30→34。
   抽查 31/31 挂得对（映射→ku004 函数概念、元素∈集合、Venn 计数等）。可回滚：
   outputs/aa9c_rematch_report.json（added_pairs，回滚=删新增 key）。纯数据、无代码。
+
+- [x] **AA.10 判分准确性核查 + 修** ✅（commit 见下；用户 2026-07-17 选"判分准确性核查"）
+  **核查**：真实高一 solve/fill 题（LLM 提取"正确学生会写的答案"喂 grade_math）实测**判对率
+  仅 10%** —— expected 大量带 LaTeX/`$`/尾标点/整段解析 → sympy 解析失败 → 回落字符串精确比对
+  → **正确答案被判错**（踩确定性判分红线，污染 BKT/FSRS）。
+  **修 A（grade_math 归一）**：去 `$`、转 `\frac`/`\sqrt`/`\pi`/`\mathrm{}`/`^{}`/`\le`/`\quad`、
+  去尾标点、回落比对去全空白；关系式/集合符号相减失败 try/except 落字符串回落。8 新单测（含
+  "值不同仍判错"防放水）。
+  **修 B（serve 过滤）**：RequestQuestion 只出**可确定性判分**的题——选择题（字母 answer_match）或
+  短且无解析标记（【解】/见解析/证明/多问 (1)(2)）的 solve/fill；其余回落 LLM（生成 expected 干净）。
+  **复测**：服务子集判对率 10%→**90%**（30 抽样）。残 ~10% 为嵌套 LaTeX/丢符号脏数据/文字答案，难修。
+  ruff+mypy+回归绿、已部署。

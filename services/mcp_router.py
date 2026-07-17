@@ -22,7 +22,7 @@ from typing import Optional
 
 from fastapi import APIRouter, Depends, HTTPException
 from pydantic import BaseModel
-from sqlalchemy import func, select, text
+from sqlalchemy import and_, func, or_, select, text
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from mneme_core.oprim.grade import answer_match
@@ -343,6 +343,18 @@ async def tool_request_question(
                 WrongQuestion.needs_image.is_(False),
                 ~WrongQuestion.question_text.like("%<ImageHere>%"),
                 WrongQuestion.profiler_analysis["grade"].astext == "高一",
+                # 判分红线：只出**可确定性判分**的题，否则回落 LLM（生成的 expected 干净）。
+                # 题库 expected 大量是整段解析/多问（【解】/见解析/证明/(1)(2)），内核判不了、
+                # 学生答对会被标错污染 BKT/FSRS。留：选择题（字母，answer_match 判）或
+                # 短且无解析标记的 solve/fill。
+                or_(
+                    WrongQuestion.correct_answer.op("~")("^[A-D、,]{1,3}$"),
+                    and_(
+                        func.length(WrongQuestion.correct_answer) <= 40,
+                        ~WrongQuestion.correct_answer.op("~")("解析|见解析|【解|证明"),
+                        ~WrongQuestion.correct_answer.op("~")(r"[(（][1１２3３]"),
+                    ),
+                ),
             )
             .order_by(func.random())
             .limit(1)
