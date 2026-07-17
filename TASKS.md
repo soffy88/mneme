@@ -1771,9 +1771,16 @@ studio 镜像重建、mneme-api-1 重启后已在 sxueji.com 上线。
   ku001–003（定量，内核确定性判分）+ ku004（定性概念解释，走真 verifier）——
   登录进去一条路径即测两类判分，多 KC 满足交错红线。
 
-- [ ] **AA.5 学习路径持久化（按学生档案拉课程路径）** ⏸ 暂缓（用户 2026-07-17 定）
-  非 pilot 阻断项。属课程编排决策（renjiao-math-g10-a 有 165 KU，需 grade→教材映射
-  + 前置 topo 排序 + 内容覆盖过滤），归 Master SSOT；pilot 期先用 AA.4 缺省路径。
+- [x] **AA.5 学习路径持久化（按学生档案拉课程路径）** ✅（commit 见下；用户 2026-07-17 定继续做）
+  新 GetPath 工具（认证学生→有序 kc_ids）：该教材（DEFAULT_TEXTBOOK=renjiao-math-g10-a，
+  唯一内容就绪）"有内容"的 KU（清洁题库题或 rubric，共 120 个），按 **cluster.display_order
+  章节序**排（集合→逻辑→不等式→三角…，比纯前置拓扑更贴课程——很多 KU 真实前置在早年级、
+  被剥离后拓扑会误判其"无前置"、把高阶应用排到最前），同章内按难度升序。
+  **派生式不落新表**：确定性派生 = 跨会话稳定 = 持久；学生位置由掌握度追踪（NextObjective
+  取路径中下一个未过门 KC）。studio 加载调 GetPath 取代写死 DEFAULT_KCS（`?kcs=` 仍可覆盖、
+  失败回落 DEFAULT_KCS）。教材按 grade 映射留扩展点。
+  实测：生产 GetPath 返回 120 KC、起点集合基础；NextObjective(120 KC) 0.0s；GetPath 单测
+  + 17 mcp 回归绿、ruff+mypy 过、studio next build 过。
 
 - [x] **AA.7 RequestQuestion 只出自足可作答的题库题** ✅（commit 931e184）
   题库(wrong_questions)有两类题在 studio 无法作答、学生只看到占位"标识"：

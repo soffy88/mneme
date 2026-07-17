@@ -12,26 +12,23 @@ import {
 import { MathText } from "@/components/MathText";
 
 // 一套登录：student_id 取自 mneme 登录会话（mneme_user），**不再走 ?student=**。
-// 学习路径 kcIds 允许 ?kcs= 覆盖；缺省给一组起步知识点，保证登录后进来即可用。
-// 路径持久化（按学生档案拉课程路径）属课程编排、Master SSOT，暂缓；pilot 期用本缺省。禁后门/预填答案。
+// 学习路径（AA.5）：默认经 GetPath 按学生档案拉（有内容的 KC、按章节序）；`?kcs=` 仍可覆盖；
+// GetPath 失败/空时回落 DEFAULT_KCS。禁后门/预填答案。
 //
-// ku001–003 定量（内核确定性判分）+ ku004 定性（概念解释，定性 verifier 已接线，提交即判、
-// 清 pending、前进），一条路径即可测到两类判分；多 KC 亦满足交错红线。
+// DEFAULT_KCS 仅作兜底：ku001–003 定量 + ku004 定性（概念解释，走真 verifier），
+// 一条路径即可测两类判分。
 const DEFAULT_KCS = [
   "renjiao-math-g10-a-ku001",
   "renjiao-math-g10-a-ku002",
   "renjiao-math-g10-a-ku003",
-  "renjiao-math-g10-a-ku004", // 定性：概念解释题，走真 verifier
+  "renjiao-math-g10-a-ku004",
 ];
 
-function readCtx(): { studentId: string; kcIds: string[] } {
-  if (typeof window === "undefined") return { studentId: "", kcIds: [] };
-  const q = new URLSearchParams(window.location.search);
-  const kcs = (q.get("kcs") || "").split(",").filter(Boolean);
-  return {
-    studentId: getStudentId() || "",
-    kcIds: kcs.length > 0 ? kcs : DEFAULT_KCS,
-  };
+function urlKcs(): string[] {
+  if (typeof window === "undefined") return [];
+  return (new URLSearchParams(window.location.search).get("kcs") || "")
+    .split(",")
+    .filter(Boolean);
 }
 
 const ACTION_LABEL: Record<string, string> = {
@@ -82,9 +79,21 @@ export default function LearnPage() {
       redirectToLogin();
       return;
     }
-    const c = readCtx();
-    setCtx(c);
-    void refresh(c);
+    void (async () => {
+      const sid = getStudentId() || "";
+      let kcIds = urlKcs(); // ?kcs= 覆盖优先
+      if (kcIds.length === 0) {
+        try {
+          const path = await mcp.getPath(sid); // AA.5：按学生档案拉路径
+          kcIds = path.kc_ids?.length ? path.kc_ids : DEFAULT_KCS;
+        } catch {
+          kcIds = DEFAULT_KCS; // GetPath 失败 → 兜底
+        }
+      }
+      const c = { studentId: sid, kcIds };
+      setCtx(c);
+      void refresh(c);
+    })();
   }, [refresh]);
 
   const submit = useCallback(async () => {

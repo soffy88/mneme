@@ -133,6 +133,12 @@ export interface PosedQuestion {
 
 // ── 读工具 + 提交（无 PoseQuestion）─────────────────────────────────────────
 export const mcp = {
+  // 按学生档案拉学习路径（有内容的 KC、按章节序）。studio 加载时取代写死的默认 KC。
+  getPath: (studentId: string) =>
+    call<{ textbook_id: string; kc_ids: string[] }>("GetPath", {
+      student_id: studentId,
+    }),
+
   nextObjective: (studentId: string, kcIds: string[]) =>
     call<NextStep>("NextObjective", { student_id: studentId, kc_ids: kcIds }),
 

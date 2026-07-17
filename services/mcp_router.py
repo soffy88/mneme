@@ -21,7 +21,7 @@ from typing import Optional
 
 from fastapi import APIRouter, Depends, HTTPException
 from pydantic import BaseModel
-from sqlalchemy import and_, func, select
+from sqlalchemy import and_, func, select, text
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from mneme_core.oprim.grade import answer_match
@@ -43,13 +43,58 @@ from services.auth_deps import (
     get_current_user,
 )
 from services.math_grade import grade_math
-from services.models import KnowledgeUnit, User, WrongQuestion
+from services.models import KnowledgeCluster, KnowledgeUnit, User, WrongQuestion
 from services.progress_assembler import build_learning_progress
 
 router = APIRouter(prefix="/mcp", tags=["mcp"])
 
 
 # ── 工具逻辑（可脱离 HTTP 直测）─────────────────────────────────────────────
+
+# 内容就绪的默认教材（MVP 只有广东高中数学 renjiao-math-g10-a 备好了题库/rubric）；
+# 未来按学生 grade 映射教材，此处留扩展点。
+DEFAULT_TEXTBOOK = "renjiao-math-g10-a"
+
+# "有内容"KC：有清洁可作答题库题（同 RequestQuestion AA.7 过滤）或有 rubric（定性）。
+_CONTENT_KC_SQL = text(
+    """
+    SELECT DISTINCT jsonb_object_keys(knowledge_points) AS kc
+    FROM wrong_questions
+    WHERE needs_image = false AND question_text NOT LIKE '%<ImageHere>%'
+      AND NOT (correct_answer ~ '^[A-D、,]{1,3}$'
+               AND question_text !~ '[ABCD][.、．：)）]')
+    UNION
+    SELECT kc_id FROM gate.rubric
+    """
+)
+
+
+async def tool_get_path(
+    db: AsyncSession, student_id: uuid.UUID, textbook_id: str = DEFAULT_TEXTBOOK
+) -> dict:
+    """按学生档案拉学习路径：该教材"有内容"的 KU、按**章节序**(cluster.display_order)排列。
+
+    排序取 cluster.display_order（教材编排序：集合→逻辑→不等式→三角…，比纯前置拓扑更贴课程，
+    因很多 KU 的真实前置在早年级、被剥离后拓扑会误判其"无前置"），同章内按难度升序。
+    派生式（不落新表）：确定性派生→跨会话稳定=持久；学生位置由掌握度追踪
+    （NextObjective 取路径中下一个未过门 KC）。教材现固定 DEFAULT_TEXTBOOK，按 grade 映射留
+    扩展点。过滤同 RequestQuestion：只留自足可作答/可判分的 KC。
+    """
+    content = {r[0] for r in (await db.execute(_CONTENT_KC_SQL)).all() if r[0]}
+    rows = (
+        await db.execute(
+            select(KnowledgeUnit.id)
+            .join(KnowledgeCluster, KnowledgeUnit.cluster_id == KnowledgeCluster.id)
+            .where(KnowledgeUnit.textbook_id == textbook_id)
+            .order_by(
+                KnowledgeCluster.display_order,
+                KnowledgeUnit.difficulty,
+                KnowledgeUnit.id,
+            )
+        )
+    ).all()
+    kc_ids = [r[0] for r in rows if r[0] in content]
+    return {"textbook_id": textbook_id, "kc_ids": kc_ids}
 
 
 async def tool_next_objective(
@@ -502,6 +547,10 @@ async def tool_report_result(
 # ── HTTP 端点 ───────────────────────────────────────────────────────────────
 
 
+class GetPathReq(BaseModel):
+    student_id: uuid.UUID
+
+
 class NextObjectiveReq(BaseModel):
     student_id: uuid.UUID
     kc_ids: list[str]
@@ -553,6 +602,16 @@ class ReportResultReq(BaseModel):
     evidence: Optional[dict] = None
     response_time_ms: Optional[int] = None
     model_id: Optional[str] = None
+
+
+@router.post("/GetPath")
+async def mcp_get_path(
+    req: GetPathReq,
+    db: AsyncSession = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+) -> dict:
+    await _ensure_student_access(db, current_user, req.student_id)
+    return await tool_get_path(db, req.student_id)
 
 
 @router.post("/NextObjective")
