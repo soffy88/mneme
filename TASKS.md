@@ -1825,4 +1825,10 @@ studio 镜像重建、mneme-api-1 重启后已在 sxueji.com 上线。
   不删题）。清洗后 ku001 等只剩本知识点题；有高一可服务题的 g10-a KC 30/78，其余 LLM 兜底。
   **可回滚**：快照 outputs/aa9b_relink_snapshot.json（265 题原 knowledge_points）+ 报告
   aa9b_relink_report.json。纯数据变更、无代码，运行中 api 立即生效。
-  📌 只剔除未"重挂"（跑题题未重匹配到正确 KC）；要把它们用起来是更大的一轮活。
+  📌 只剔除未"重挂"（跑题题未重匹配到正确 KC）；见 AA.9c。
+
+- [x] **AA.9c 题库重挂（re-link）** ✅（2026-07-17，记录 outputs/AA9C-REMATCH-RECORD.md）
+  AA.9b 剔后 162 道高一孤儿题：qwen 两道门（从 165 KC 目录匹配 + 相关性验证）→ 只增链、
+  只挂过两门的。**重挂 32 / 162**（其余 130 无契合 g10-a KC，多为跨课程立体几何/算法/数论，
+  正确留孤儿）。有高一可服务题的 g10-a KC 30→35。抽查通过（映射题→ku004 函数概念）。
+  可回滚：outputs/aa9c_rematch_report.json（added_pairs，回滚=删新增 key）。纯新增、无代码。
