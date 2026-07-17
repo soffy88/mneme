@@ -1845,3 +1845,39 @@ studio 镜像重建、mneme-api-1 重启后已在 sxueji.com 上线。
   短且无解析标记（【解】/见解析/证明/多问 (1)(2)）的 solve/fill；其余回落 LLM（生成 expected 干净）。
   **复测**：服务子集判对率 10%→**90%**（30 抽样）。残 ~10% 为嵌套 LaTeX/丢符号脏数据/文字答案，难修。
   ruff+mypy+回归绿、已部署。
+
+## AB · 判分准确率验收漏洞修复（S1，2026-07-17，阻断项）
+
+根因：W1/W2a 只用 3 道构造桩题（tests/test_dod_e2e.py）验收判分，真题库上线后 AA.10
+核查出实际判对率仅 10%。**测试路径 ≠ 真实数据路径**，验收漏洞。S1 补一条从真题库抽样、
+CI 常驻的判分准确率回归门，堵死"构造桩题掩盖真实数据判分崩溃"再犯。
+
+- [x] **AB.1 真题库抽样 fixture + CI 判分准确率门（≥90%）** ✅（本次提交）
+  **Oracle 设计决策**：题库 `wrong_questions.correct_answer` 是唯一答案字段，没有"同一题
+  另一种写法"可互测——纯 identity 测试测不出 AA.10 那类 bug（新旧代码对同一字符串都判对，
+  不触碰归一化路径）。改用 AA.10 原方法（LLM 生成"学生会写的正确答案"）但**冻结成 fixture**：
+  `scripts/build_s1_grading_fixture.py` 一次性人工触发生成 `tests/fixtures/s1_grading_sample.json`
+  （119 题：solve/fill 47 全量收录 + choice 72 随机补足，覆盖 50 个 g10-a KC；choice 答案
+  即字母本身、无需 LLM）；`tests/test_s1_grading_accuracy_e2e.py` 只读 fixture、零 DB/LLM
+  依赖，纳入默认 `pytest`（`testpaths=["tests"]`，无需额外接线），断言 N≥100、KC≥30、
+  准确率≥90%，每次跑无条件把失败样本归档 `outputs/s1_grading_failures.json`（判分改进输入）。
+  抽样口径=RequestQuestion serve 过滤同款（AA.10 修 B）；seed=20260717 固定、solve/fill
+  全收不挑好题、choice 用 `random.Random(seed).sample` 补足。
+  重建：题库大改/grade_math 大改时手动重跑生成脚本（非 CI 内跑，避免 LLM 依赖拖垮 CI 稳定性）。
+  **首跑结果**：119 抽样判对率 **86.6%**（16 败），低于阈值——顺手核出并修 grade_math 三个
+  真 bug（非"挑软柿子凑分"，均通用型修复+补单测）：
+  (1) sympy 对 FiniteSet/Tuple 相减不报错但也永不为 0，故 `{3}` 这类集合从不判等——
+      比对先试结构相等 `x==e` 再退化到 `simplify(x-e)==0`；
+  (2) `\infty`（LaTeX）与 `∞`（学生常打的 unicode 符号）从未归一到同一 token；
+  (3) 多解切分 `_SPLIT` 不识别方括号/花括号内部的逗号（如 `[-1,1]`、`{1,2}`），生的
+      逗号一律切分，导致区间/集合类答案切成两截解析失败——改 `_split_top_level` 按
+      `([{`…`)]}` 括号深度切分，只切顶层分隔符；顺带补中文顿号"、"为合法分隔符；
+      另修 `parse_expr` 对方括号区间解出裸 Python list（非 sympy 对象）导致 `simplify`
+      直接 AttributeError 崩溃 → 强制转 `sp.Tuple`。
+  `tests/test_math_grade.py` 新增 5 单测覆盖以上三类。**复测：92.4%**（119 抽样，9 败）
+  ——残留 9 例为题库本身脏数据（丢符号/漏逗号/OCR 伪影）或区间⇔不等式记法的语义等价
+  gap（`m<=3` vs `m∈(-∞,3]`），非 grade_math 缺陷，已按设计归档进 outputs/ 留后续。
+  ruff+mypy 过（本次改动文件范围内；仓库另有他人在制品 `services/textbook_qa_service.py`
+  等 4 文件 ruff 报错，与本次无关、未动）；`pytest` 全量 609 过/4 败/3 跳——4 败经 stash
+  验证为改动前既有失败（daily_plan FSRS 排程 + test_dod_e2e 定性 verifier 真 LLM 路径），
+  与本次改动无关。

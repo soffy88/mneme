@@ -12,8 +12,8 @@ from __future__ import annotations
 import re
 import unicodedata
 
-# 多根/多解分隔：逗号、分号、"或"、"and"
-_SPLIT = re.compile(r"[,，;；]|\bor\b|\band\b|或")
+# 多根/多解分隔：逗号（含中文顿号）、分号、"或"、"and"
+_SPLIT = re.compile(r"[,，;；、]|\bor\b|\band\b|或")
 # 变量赋值前缀，如 "x=" / "x =" / "x1="
 _ASSIGN = re.compile(r"^[a-zA-Z]\w*\s*=\s*")
 
@@ -47,6 +47,8 @@ def _delatex(text: str) -> str:
     text = re.sub(r"\\le(?:q|qslant)?\b", "<=", text)
     text = re.sub(r"\\ge(?:q|qslant)?\b", ">=", text)
     text = _GREEK.sub(r"\1", text)
+    text = re.sub(r"\\infty\b", "oo", text)  # LaTeX 无穷
+    text = text.replace("∞", "oo")  # 学生常直接打 unicode 无穷符号，两边归一同一 token
     return text.replace("\\", "")  # 残余反斜杠去掉（\sin→sin 等），宁可当普通符号
 
 
@@ -68,6 +70,31 @@ def _normalise_plain(text: str) -> str:
     return text.strip(_STRIP_EDGE)
 
 
+def _split_top_level(text: str) -> list[str]:
+    """按 _SPLIT 切多解，但跳过 `([{`…`)]}` 内部的分隔符（如集合/区间自带的逗号）。"""
+    parts = []
+    depth = 0
+    last = 0
+    i = 0
+    n = len(text)
+    while i < n:
+        c = text[i]
+        if c in "([{":
+            depth += 1
+        elif c in ")]}":
+            depth -= 1
+        elif depth == 0:
+            m = _SPLIT.match(text, i)
+            if m:
+                parts.append(text[last:i])
+                i = m.end()
+                last = i
+                continue
+        i += 1
+    parts.append(text[last:])
+    return parts
+
+
 def _to_exprs(raw: str):
     """把一段作答解析成一组 sympy 表达式（多根→集合）。任一失败→None。"""
     import sympy as sp
@@ -78,17 +105,38 @@ def _to_exprs(raw: str):
     )
 
     transforms = standard_transformations + (implicit_multiplication_application,)
-    parts = [p for p in _SPLIT.split(_norm_ops(raw)) if p.strip()]
+    parts = [p for p in _split_top_level(_norm_ops(raw)) if p.strip()]
     if not parts:
         return None
     exprs = []
     for p in parts:
         p = _ASSIGN.sub("", p.strip())  # 去 "x=" 前缀
         try:
-            exprs.append(sp.simplify(parse_expr(p, transformations=transforms)))
+            val = parse_expr(p, transformations=transforms)
+            if isinstance(
+                val, list
+            ):  # 方括号区间/列表如 [-1,1] 解出裸 list，非 sympy 对象
+                val = sp.Tuple(*val)
+            exprs.append(sp.simplify(val))
         except Exception:
             return None
     return exprs
+
+
+def _expr_eq(x, e) -> bool:  # type: ignore[no-untyped-def]
+    """单项等价：先试结构相等（集合/元组等非算术类型 `-` 不报错但也永不为 0，需要 `==`），
+    再试代数相减化简（多项式/根式等需要）。"""
+    try:
+        if bool(x == e):
+            return True
+    except Exception:
+        pass
+    import sympy as sp
+
+    try:
+        return bool(sp.simplify(x - e) == 0)
+    except Exception:
+        return False
 
 
 def grade_math(answer: str, expected: str) -> bool:
@@ -97,15 +145,13 @@ def grade_math(answer: str, expected: str) -> bool:
         a_exprs = _to_exprs(answer)
         e_exprs = _to_exprs(expected)
         if a_exprs is not None and e_exprs is not None:
-            import sympy as sp
-
             if len(a_exprs) != len(e_exprs):
                 return False
             # 多解按集合比对（顺序无关）：每个期望根都能在作答里找到等价项
             remaining = list(a_exprs)
             for e in e_exprs:
                 hit = next(
-                    (x for x in remaining if sp.simplify(x - e) == 0),
+                    (x for x in remaining if _expr_eq(x, e)),
                     None,
                 )
                 if hit is None:

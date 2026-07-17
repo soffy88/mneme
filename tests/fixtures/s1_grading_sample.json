@@ -1,0 +1,839 @@
+{
+  "seed": 20260717,
+  "source_query": "\n    SELECT id, question_text, correct_answer, knowledge_points, profiler_analysis\n    FROM wrong_questions\n    WHERE needs_image = false\n      AND question_text NOT LIKE '%<ImageHere>%'\n      AND profiler_analysis->>'grade' = '高一'\n      AND (\n        correct_answer ~ '^[A-D、,]{1,3}$'\n        OR (\n          length(correct_answer) <= 40\n          AND correct_answer !~ '解析|见解析|【解|证明'\n          AND correct_answer !~ '[(（][1１２3３]'\n        )\n      )\n      AND EXISTS (\n        SELECT 1 FROM jsonb_object_keys(knowledge_points) k\n        WHERE k LIKE 'renjiao-math-g10-a-%'\n      )\n    ORDER BY id\n",
+  "entries": [
+    {
+      "id": "00d494d6-93db-47b2-ac22-57dd6665d98b",
+      "kc_id": "renjiao-math-g10-a-ku-指数函数与对数函数",
+      "qtype": "solve",
+      "expected": "$\\frac{5}{2}$",
+      "student_answer": "5/2"
+    },
+    {
+      "id": "02aaf420-0c2a-48a0-8c70-a6b50d0d6d5b",
+      "kc_id": "renjiao-math-g10-a-ku-二次函数的零点",
+      "qtype": "solve",
+      "expected": "$(-1,0)$",
+      "student_answer": "(-1,0)"
+    },
+    {
+      "id": "07a74b18-640d-44ed-9627-96c98e550b41",
+      "kc_id": "renjiao-math-g10-a-ku001",
+      "qtype": "solve",
+      "expected": "$a=0$",
+      "student_answer": "a=0"
+    },
+    {
+      "id": "07cf267f-29b6-4712-8b10-a77f3bb17e3d",
+      "kc_id": "renjiao-math-g10-a-ku-真子集的概念",
+      "qtype": "solve",
+      "expected": "6",
+      "student_answer": "6"
+    },
+    {
+      "id": "080958fd-aa30-4ced-ae2f-da78a8116a73",
+      "kc_id": "renjiao-math-g10-a-ku-补集的定义",
+      "qtype": "solve",
+      "expected": "$\\{3\\}$",
+      "student_answer": "{3}"
+    },
+    {
+      "id": "09a2be8c-d1ff-40d1-a4d5-a7bca8c5327f",
+      "kc_id": "renjiao-math-g10-a-ku-函数的概念与表示",
+      "qtype": "solve",
+      "expected": "2",
+      "student_answer": "2"
+    },
+    {
+      "id": "0b026e15-de14-423a-9a9a-deabbb82b17a",
+      "kc_id": "renjiao-math-g10-a-ku-列举法",
+      "qtype": "solve",
+      "expected": "$\\{-1,-3,1,3$ ? $\\}$",
+      "student_answer": "{-3, -1, 1, 3}"
+    },
+    {
+      "id": "0c0ca644-75c8-4a5d-be1c-ab30e614cc2c",
+      "kc_id": "renjiao-math-g10-a-ku-元素与集合的关系",
+      "qtype": "solve",
+      "expected": "$a \\leqslant-2$",
+      "student_answer": "a<=-2"
+    },
+    {
+      "id": "0cafc70d-071d-46e6-a968-9618c951bd26",
+      "kc_id": "renjiao-math-g10-a-ku-零点",
+      "qtype": "solve",
+      "expected": "1",
+      "student_answer": "1"
+    },
+    {
+      "id": "0f205bf7-1dc9-4395-a76c-9314b0ccf629",
+      "kc_id": "renjiao-math-g10-a-ku004",
+      "qtype": "solve",
+      "expected": "$x=\\sqrt{3}$.",
+      "student_answer": "sqrt(3)"
+    },
+    {
+      "id": "1047e47a-15f6-4516-92be-520fdd1a09a5",
+      "kc_id": "renjiao-math-g10-a-ku005",
+      "qtype": "solve",
+      "expected": "-1",
+      "student_answer": "-1"
+    },
+    {
+      "id": "113d7085-6204-427b-8223-1ccbca767e5b",
+      "kc_id": "renjiao-math-g10-a-ku-奇偶性",
+      "qtype": "solve",
+      "expected": "-0.5",
+      "student_answer": "-0.5"
+    },
+    {
+      "id": "138ae881-626a-4afc-8d03-128fba0b7596",
+      "kc_id": "renjiao-math-g10-a-ku-子集的概念",
+      "qtype": "solve",
+      "expected": "$m \\in(-\\infty, 3]$",
+      "student_answer": "m<=3"
+    },
+    {
+      "id": "13ee8ce9-dbe7-4af4-9c6a-56ba5ea5b27f",
+      "kc_id": "renjiao-math-g10-a-ku-指数与对数互化",
+      "qtype": "solve",
+      "expected": "$\\frac{1}{2}$",
+      "student_answer": "1/2"
+    },
+    {
+      "id": "150dcbfb-3486-4988-951c-e1eafadc3d27",
+      "kc_id": "renjiao-math-g10-a-ku-分数指数幂",
+      "qtype": "solve",
+      "expected": "-45",
+      "student_answer": "-45"
+    },
+    {
+      "id": "16937f91-793a-458d-bbeb-fd391d5d9c50",
+      "kc_id": "renjiao-math-g10-a-ku-指数函数与对数函数",
+      "qtype": "solve",
+      "expected": "20",
+      "student_answer": "20"
+    },
+    {
+      "id": "174bda3f-91d4-4f0d-9032-98611522bfa6",
+      "kc_id": "renjiao-math-g10-a-ku004",
+      "qtype": "solve",
+      "expected": "$\\frac{8}{3}$",
+      "student_answer": "8/3"
+    },
+    {
+      "id": "1975a3ab-02a5-41f6-b3b0-b15c5f85651e",
+      "kc_id": "renjiao-math-g10-a-ku004",
+      "qtype": "solve",
+      "expected": "4",
+      "student_answer": "4"
+    },
+    {
+      "id": "1a4cfb9e-89b8-4fe6-830f-2535b884126a",
+      "kc_id": "renjiao-math-g10-a-ku004",
+      "qtype": "solve",
+      "expected": "$(-4,4)$",
+      "student_answer": "(-4,4)"
+    },
+    {
+      "id": "1bfea334-cf91-4bf3-af7e-68c1dc3808e3",
+      "kc_id": "renjiao-math-g10-a-ku-子集的概念",
+      "qtype": "solve",
+      "expected": "$m \\in(-\\infty, 3]$",
+      "student_answer": "m<=3"
+    },
+    {
+      "id": "1ece5b23-f124-4a3e-9466-95e78453cf34",
+      "kc_id": "renjiao-math-g10-a-ku-函数的概念与表示",
+      "qtype": "solve",
+      "expected": "$\\left(\\frac{1}{3},+\\infty\\right)$",
+      "student_answer": "(1/3, +∞)"
+    },
+    {
+      "id": "23fb182b-f3c3-41a8-8e21-10497b14757b",
+      "kc_id": "renjiao-math-g10-a-ku-圆的方程",
+      "qtype": "solve",
+      "expected": "3 或 7",
+      "student_answer": "3或7"
+    },
+    {
+      "id": "24e22147-d399-4020-920a-758d120cdb42",
+      "kc_id": "renjiao-math-g10-a-ku-奇偶性",
+      "qtype": "solve",
+      "expected": "3",
+      "student_answer": "3"
+    },
+    {
+      "id": "25ed809a-6e18-40b0-b2bd-e9a6ba7bb083",
+      "kc_id": "renjiao-math-g10-a-ku-指数函数与对数函数",
+      "qtype": "solve",
+      "expected": "$(0,+\\infty)$",
+      "student_answer": "(0,+∞)"
+    },
+    {
+      "id": "2768c4bc-9ffe-4e9d-95a4-c8f1c2699dea",
+      "kc_id": "renjiao-math-g10-a-ku-函数的概念与表示",
+      "qtype": "solve",
+      "expected": "(4)",
+      "student_answer": "(4)"
+    },
+    {
+      "id": "2827062d-8965-49eb-a318-0668fef471fa",
+      "kc_id": "renjiao-math-g10-a-ku-并集的概念",
+      "qtype": "solve",
+      "expected": "$\\{x \\mid x<1$, 或 $x \\geqslant 2\\}$",
+      "student_answer": "{x | x < 1 或 x >= 2}"
+    },
+    {
+      "id": "2c5b9cbc-b544-426e-b948-5dee05659750",
+      "kc_id": "renjiao-math-g10-a-ku-子集的概念",
+      "qtype": "solve",
+      "expected": "$N M$",
+      "student_answer": "N⊆M"
+    },
+    {
+      "id": "2c623fcf-f896-4ad1-aea2-e8e9c02d7eeb",
+      "kc_id": "renjiao-math-g10-a-ku004",
+      "qtype": "solve",
+      "expected": "11",
+      "student_answer": "11"
+    },
+    {
+      "id": "2d9b5c50-1301-4537-b32d-f2303f041770",
+      "kc_id": "renjiao-math-g10-a-ku-数制及其转换",
+      "qtype": "solve",
+      "expected": "8",
+      "student_answer": "8"
+    },
+    {
+      "id": "2da89e48-15ed-4247-a941-68be6f423d70",
+      "kc_id": "renjiao-math-g10-a-ku005",
+      "qtype": "solve",
+      "expected": "$4-3$",
+      "student_answer": "4; -3"
+    },
+    {
+      "id": "300b9a59-23be-4d07-8c54-67df2276ab9e",
+      "kc_id": "renjiao-math-g10-a-ku-venn图法求集合元素个数",
+      "qtype": "solve",
+      "expected": "12",
+      "student_answer": "12"
+    },
+    {
+      "id": "30ac1748-834d-4cbb-98b0-832a08fc440e",
+      "kc_id": "renjiao-math-g10-a-ku-一元二次方程根的判别式",
+      "qtype": "solve",
+      "expected": "$a \\geq 1$ 或 $a=0$",
+      "student_answer": "a>=1或a=0"
+    },
+    {
+      "id": "326d4717-f107-483e-a83d-df955bcb89b0",
+      "kc_id": "renjiao-math-g10-a-ku004",
+      "qtype": "solve",
+      "expected": "$0,2 \\sqrt{2}-3$",
+      "student_answer": "0"
+    },
+    {
+      "id": "33ade00d-73fc-45cd-8e33-b2d8da405f3d",
+      "kc_id": "renjiao-math-g10-a-ku-循环结构",
+      "qtype": "solve",
+      "expected": "15 .",
+      "student_answer": "15"
+    },
+    {
+      "id": "37ab2759-9313-4ed5-b576-cb6b0569b83f",
+      "kc_id": "renjiao-math-g10-a-ku-实数大小比较的基本事实",
+      "qtype": "solve",
+      "expected": "$[6,+\\infty)$",
+      "student_answer": "a>=6"
+    },
+    {
+      "id": "381d3439-50c0-4e23-b393-9b2f2a21850e",
+      "kc_id": "renjiao-math-g10-a-ku005",
+      "qtype": "solve",
+      "expected": "0",
+      "student_answer": "0"
+    },
+    {
+      "id": "38ee0a91-ddcd-4708-9469-dc803522e7db",
+      "kc_id": "renjiao-math-g10-a-ku001",
+      "qtype": "solve",
+      "expected": "10",
+      "student_answer": "10"
+    },
+    {
+      "id": "397fd761-239d-4b57-a49b-8b4fc350e7a6",
+      "kc_id": "renjiao-math-g10-a-ku005",
+      "qtype": "solve",
+      "expected": "-3",
+      "student_answer": "-3"
+    },
+    {
+      "id": "40188f5d-4fc7-443a-865e-6cd3ebf7268e",
+      "kc_id": "renjiao-math-g10-a-ku004",
+      "qtype": "solve",
+      "expected": "$(0,+\\infty)$",
+      "student_answer": "(0,+∞)"
+    },
+    {
+      "id": "415ab3df-93fd-49df-94f5-bfeb3462f39b",
+      "kc_id": "renjiao-math-g10-a-ku-奇偶性",
+      "qtype": "solve",
+      "expected": "-4",
+      "student_answer": "-4"
+    },
+    {
+      "id": "41d38922-ed39-48ad-a08a-c2931158653b",
+      "kc_id": "renjiao-math-g10-a-ku004",
+      "qtype": "solve",
+      "expected": "$[1,+\\infty)$",
+      "student_answer": "[1,+∞)"
+    },
+    {
+      "id": "435106d3-9856-4a25-a4a7-469050d24f27",
+      "kc_id": "renjiao-math-g10-a-ku-并集的概念",
+      "qtype": "solve",
+      "expected": "4",
+      "student_answer": "4"
+    },
+    {
+      "id": "44be6ea7-68bf-4d44-8f7d-8aa034d83761",
+      "kc_id": "renjiao-math-g10-a-ku-函数的概念与表示",
+      "qtype": "solve",
+      "expected": "$\\left(-2, \\frac{2}{3}\\right)$",
+      "student_answer": "(-2, 2/3)"
+    },
+    {
+      "id": "470256a9-8038-41d1-9ee9-d2d8c09e4588",
+      "kc_id": "renjiao-math-g10-a-ku005",
+      "qtype": "solve",
+      "expected": "2",
+      "student_answer": "2"
+    },
+    {
+      "id": "4c846035-8705-43aa-b529-d1e72f08f3fc",
+      "kc_id": "renjiao-math-g10-a-ku004",
+      "qtype": "solve",
+      "expected": "$1 、[-1,1]$.",
+      "student_answer": "1, [-1,1]"
+    },
+    {
+      "id": "4f581bb0-bc0a-489a-8914-6bd0490a76ef",
+      "kc_id": "renjiao-math-g10-a-ku005",
+      "qtype": "solve",
+      "expected": "$\\frac{2 \\sqrt{6}}{3}$",
+      "student_answer": "2*sqrt(6)/3"
+    },
+    {
+      "id": "cd3474c6-546c-43f7-8a79-37f57a574cf7",
+      "kc_id": "renjiao-math-g10-a-ku-交集的概念",
+      "qtype": "solve",
+      "expected": "2",
+      "student_answer": "2"
+    },
+    {
+      "id": "1f012588-5239-4433-ba74-bec07710aaba",
+      "kc_id": "renjiao-math-g10-a-ku005",
+      "qtype": "choice",
+      "expected": "B",
+      "student_answer": "B"
+    },
+    {
+      "id": "19ad6630-1da0-41ff-b19a-0a251fe566c2",
+      "kc_id": "renjiao-math-g10-a-ku-偶函数定义",
+      "qtype": "choice",
+      "expected": "B",
+      "student_answer": "B"
+    },
+    {
+      "id": "11817866-52c0-40f8-ae16-6cc7d95f5289",
+      "kc_id": "renjiao-math-g10-a-ku-指数函数与对数函数",
+      "qtype": "choice",
+      "expected": "C",
+      "student_answer": "C"
+    },
+    {
+      "id": "2a5a5040-f502-448c-a3b0-957b233bcfab",
+      "kc_id": "renjiao-math-g10-a-ku-解已知两角和一边的三角形",
+      "qtype": "choice",
+      "expected": "C",
+      "student_answer": "C"
+    },
+    {
+      "id": "12db4374-14e5-46c4-88e6-1518175498b8",
+      "kc_id": "renjiao-math-g10-a-ku-实数大小比较的基本事实",
+      "qtype": "choice",
+      "expected": "B",
+      "student_answer": "B"
+    },
+    {
+      "id": "13e34a06-0d14-4e7a-90ab-4ae46564fd07",
+      "kc_id": "renjiao-math-g10-a-ku-实数集及其记法",
+      "qtype": "choice",
+      "expected": "A",
+      "student_answer": "A"
+    },
+    {
+      "id": "0adadfbf-f889-42f1-b79b-e133d83cf7c4",
+      "kc_id": "renjiao-math-g10-a-ku005",
+      "qtype": "choice",
+      "expected": "B",
+      "student_answer": "B"
+    },
+    {
+      "id": "3253a375-854c-492e-8651-fdd5033b8697",
+      "kc_id": "renjiao-math-g10-a-ku004",
+      "qtype": "choice",
+      "expected": "B",
+      "student_answer": "B"
+    },
+    {
+      "id": "3be1ced8-e191-445e-838a-a98967e11981",
+      "kc_id": "renjiao-math-g10-a-ku004",
+      "qtype": "choice",
+      "expected": "C",
+      "student_answer": "C"
+    },
+    {
+      "id": "4278ddd1-26d8-436b-ad9a-4f7d0346ddb3",
+      "kc_id": "renjiao-math-g10-a-ku005",
+      "qtype": "choice",
+      "expected": "D",
+      "student_answer": "D"
+    },
+    {
+      "id": "23ad092c-4c7a-47d3-b05b-2c4687d078a2",
+      "kc_id": "renjiao-math-g10-a-ku-集合的概念与表示",
+      "qtype": "choice",
+      "expected": "A",
+      "student_answer": "A"
+    },
+    {
+      "id": "269f394d-0ffb-4b3f-8aee-360644681e8f",
+      "kc_id": "renjiao-math-g10-a-ku004",
+      "qtype": "choice",
+      "expected": "C",
+      "student_answer": "C"
+    },
+    {
+      "id": "34610948-d400-48d3-88b2-a3717807229a",
+      "kc_id": "renjiao-math-g10-a-ku-赋值语句的理解",
+      "qtype": "choice",
+      "expected": "B",
+      "student_answer": "B"
+    },
+    {
+      "id": "0ad23e79-0dbd-424c-bca9-aef226151577",
+      "kc_id": "renjiao-math-g10-a-ku-补集的定义",
+      "qtype": "choice",
+      "expected": "C",
+      "student_answer": "C"
+    },
+    {
+      "id": "03fb8d4e-5542-4154-a08c-7e3bbaf8ba87",
+      "kc_id": "renjiao-math-g10-a-ku-二分法",
+      "qtype": "choice",
+      "expected": "B",
+      "student_answer": "B"
+    },
+    {
+      "id": "21d3680c-d4c0-4725-ac8b-9784ce502e12",
+      "kc_id": "renjiao-math-g10-a-ku002",
+      "qtype": "choice",
+      "expected": "C",
+      "student_answer": "C"
+    },
+    {
+      "id": "38bfdb2b-873d-4493-bd04-bc3f114b1a3c",
+      "kc_id": "renjiao-math-g10-a-ku-补集的定义",
+      "qtype": "choice",
+      "expected": "B",
+      "student_answer": "B"
+    },
+    {
+      "id": "3a32848c-0245-4f2f-affc-501829ff3425",
+      "kc_id": "renjiao-math-g10-a-ku005",
+      "qtype": "choice",
+      "expected": "B",
+      "student_answer": "B"
+    },
+    {
+      "id": "1da1c6aa-0d7d-4975-8149-e377634a7f36",
+      "kc_id": "renjiao-math-g10-a-ku004",
+      "qtype": "choice",
+      "expected": "D",
+      "student_answer": "D"
+    },
+    {
+      "id": "515091fc-3691-4eee-b40b-f75f6ba82fd7",
+      "kc_id": "renjiao-math-g10-a-ku-集合的概念",
+      "qtype": "choice",
+      "expected": "C",
+      "student_answer": "C"
+    },
+    {
+      "id": "4b7f1f70-15dc-4b5c-b93e-a954cf0398d6",
+      "kc_id": "renjiao-math-g10-a-ku-logarithm-equation",
+      "qtype": "choice",
+      "expected": "B",
+      "student_answer": "B"
+    },
+    {
+      "id": "2ae7f665-6431-48e8-8727-af743dfbc6e4",
+      "kc_id": "renjiao-math-g10-a-ku-对数函数的性质与图像",
+      "qtype": "choice",
+      "expected": "B",
+      "student_answer": "B"
+    },
+    {
+      "id": "0b74ef71-ec9f-4f07-a0b2-9a93b5071612",
+      "kc_id": "renjiao-math-g10-a-ku-极差求法",
+      "qtype": "choice",
+      "expected": "A",
+      "student_answer": "A"
+    },
+    {
+      "id": "2728832f-ee48-4a5a-9286-92357a8a6a6a",
+      "kc_id": "renjiao-math-g10-a-ku-函数的概念与表示",
+      "qtype": "choice",
+      "expected": "B",
+      "student_answer": "B"
+    },
+    {
+      "id": "4e1aa132-ffe4-4219-836d-b5c1c6b0bb14",
+      "kc_id": "renjiao-math-g10-a-ku004",
+      "qtype": "choice",
+      "expected": "A",
+      "student_answer": "A"
+    },
+    {
+      "id": "47a9d39a-4531-428a-a1d7-59aa511cc13b",
+      "kc_id": "renjiao-math-g10-a-ku-集合元素的确定性",
+      "qtype": "choice",
+      "expected": "C",
+      "student_answer": "C"
+    },
+    {
+      "id": "089ec4d7-c674-4526-aa4f-abf184ac73e0",
+      "kc_id": "renjiao-math-g10-a-ku005",
+      "qtype": "choice",
+      "expected": "A",
+      "student_answer": "A"
+    },
+    {
+      "id": "27c2ff66-3073-4483-be19-8643a7502b64",
+      "kc_id": "renjiao-math-g10-a-ku-指数函数与对数函数",
+      "qtype": "choice",
+      "expected": "B",
+      "student_answer": "B"
+    },
+    {
+      "id": "1e44110c-a415-4a33-990b-bff812c8c18d",
+      "kc_id": "renjiao-math-g10-a-ku-集合的概念",
+      "qtype": "choice",
+      "expected": "C",
+      "student_answer": "C"
+    },
+    {
+      "id": "2cbeb5d6-acdb-4a7e-8ad7-97f1499b25c0",
+      "kc_id": "renjiao-math-g10-a-ku-全称量词与全称量词命题",
+      "qtype": "choice",
+      "expected": "A",
+      "student_answer": "A"
+    },
+    {
+      "id": "129e9654-e102-4d1d-a764-5cd775685a9f",
+      "kc_id": "renjiao-math-g10-a-ku-描述法",
+      "qtype": "choice",
+      "expected": "C",
+      "student_answer": "C"
+    },
+    {
+      "id": "139998b0-806d-41df-ab39-23721ef9dbd3",
+      "kc_id": "renjiao-math-g10-a-ku-列举法",
+      "qtype": "choice",
+      "expected": "B",
+      "student_answer": "B"
+    },
+    {
+      "id": "427eefc0-41f2-49e2-b4e9-3d70f9197869",
+      "kc_id": "renjiao-math-g10-a-ku-二分法求方程近似解",
+      "qtype": "choice",
+      "expected": "C",
+      "student_answer": "C"
+    },
+    {
+      "id": "0a7c9a3f-2af0-4feb-853f-37f5604f0c48",
+      "kc_id": "renjiao-math-g10-a-ku004",
+      "qtype": "choice",
+      "expected": "B",
+      "student_answer": "B"
+    },
+    {
+      "id": "10edad83-b370-4223-a858-f6237a72700e",
+      "kc_id": "renjiao-math-g10-a-ku-不等式性质4-乘法保序性",
+      "qtype": "choice",
+      "expected": "C",
+      "student_answer": "C"
+    },
+    {
+      "id": "1a760501-371b-4f6d-9f3e-cd6910617bc5",
+      "kc_id": "renjiao-math-g10-a-ku004",
+      "qtype": "choice",
+      "expected": "D",
+      "student_answer": "D"
+    },
+    {
+      "id": "4864d212-c88e-41e5-a09a-6ea1d8d27dfe",
+      "kc_id": "renjiao-math-g10-a-ku-指数函数与对数函数",
+      "qtype": "choice",
+      "expected": "A",
+      "student_answer": "A"
+    },
+    {
+      "id": "1f7f459e-7222-4340-93bf-e889a4780ae6",
+      "kc_id": "renjiao-math-g10-a-ku-周期函数定义",
+      "qtype": "choice",
+      "expected": "B",
+      "student_answer": "B"
+    },
+    {
+      "id": "26aff83e-2101-4550-b69b-0b8f0a0e72a4",
+      "kc_id": "renjiao-math-g10-a-ku-一元二次不等式与二次函数、一元二次方程的联系",
+      "qtype": "choice",
+      "expected": "B",
+      "student_answer": "B"
+    },
+    {
+      "id": "4b8a1646-5867-41f0-a74e-6e6e7f38497a",
+      "kc_id": "renjiao-math-g10-a-ku-分段函数的基本概念",
+      "qtype": "choice",
+      "expected": "A",
+      "student_answer": "A"
+    },
+    {
+      "id": "1ef24f97-1a92-4dc2-a1c3-3364c4f58cde",
+      "kc_id": "renjiao-math-g10-a-ku002",
+      "qtype": "choice",
+      "expected": "B",
+      "student_answer": "B"
+    },
+    {
+      "id": "1d331912-4aba-408d-8b98-2bfaacdd4bca",
+      "kc_id": "renjiao-math-g10-a-ku004",
+      "qtype": "choice",
+      "expected": "C",
+      "student_answer": "C"
+    },
+    {
+      "id": "215a64b2-3c3c-4040-afca-f74095851712",
+      "kc_id": "renjiao-math-g10-a-ku004",
+      "qtype": "choice",
+      "expected": "D",
+      "student_answer": "D"
+    },
+    {
+      "id": "80876172-e2e7-4113-88b4-9efa694eac81",
+      "kc_id": "renjiao-math-g10-a-ku-指数函数与对数函数",
+      "qtype": "choice",
+      "expected": "A",
+      "student_answer": "A"
+    },
+    {
+      "id": "3f0293e7-5e47-442f-87a1-e60d1465fc76",
+      "kc_id": "renjiao-math-g10-a-ku-元素与集合的关系",
+      "qtype": "choice",
+      "expected": "B",
+      "student_answer": "B"
+    },
+    {
+      "id": "4f40e787-baab-4ad3-a87a-3dc6e56b88c4",
+      "kc_id": "renjiao-math-g10-a-ku-减函数的性质",
+      "qtype": "choice",
+      "expected": "D",
+      "student_answer": "D"
+    },
+    {
+      "id": "10d6a816-b393-4ab5-b11b-e7b4a06c7137",
+      "kc_id": "renjiao-math-g10-a-ku-不等式的性质",
+      "qtype": "choice",
+      "expected": "C",
+      "student_answer": "C"
+    },
+    {
+      "id": "1f8d3307-266e-4ca9-a008-ae4f0f9e0653",
+      "kc_id": "renjiao-math-g10-a-ku005",
+      "qtype": "choice",
+      "expected": "B",
+      "student_answer": "B"
+    },
+    {
+      "id": "2d9bca41-2284-44c4-9728-e8c3bf07429d",
+      "kc_id": "renjiao-math-g10-a-ku-等差数列的性质-若p-q-s-t则ap-aq-as-at",
+      "qtype": "choice",
+      "expected": "C",
+      "student_answer": "C"
+    },
+    {
+      "id": "046c9b49-a447-4036-9dee-45e595a71f72",
+      "kc_id": "renjiao-math-g10-a-ku004",
+      "qtype": "choice",
+      "expected": "C",
+      "student_answer": "C"
+    },
+    {
+      "id": "27a3164e-7e0c-4ac2-b459-bbf9e446edb1",
+      "kc_id": "renjiao-math-g10-a-ku005",
+      "qtype": "choice",
+      "expected": "A",
+      "student_answer": "A"
+    },
+    {
+      "id": "508c73e6-fcf4-49a6-a2ee-21967ad2fb66",
+      "kc_id": "renjiao-math-g10-a-ku004",
+      "qtype": "choice",
+      "expected": "A",
+      "student_answer": "A"
+    },
+    {
+      "id": "29c91cea-b7fc-455a-95f3-2c51e4780516",
+      "kc_id": "renjiao-math-g10-a-ku-正六边形中向量表示",
+      "qtype": "choice",
+      "expected": "B",
+      "student_answer": "B"
+    },
+    {
+      "id": "2a5e0a19-586b-4ed8-9091-bd7c181f1ae9",
+      "kc_id": "renjiao-math-g10-a-ku-二分法与误差控制",
+      "qtype": "choice",
+      "expected": "B",
+      "student_answer": "B"
+    },
+    {
+      "id": "1255f2e8-96af-4040-b4ed-ab905d324530",
+      "kc_id": "renjiao-math-g10-a-ku004",
+      "qtype": "choice",
+      "expected": "C",
+      "student_answer": "C"
+    },
+    {
+      "id": "013503ec-0151-4791-a7ab-f077e31a9972",
+      "kc_id": "renjiao-math-g10-a-ku004",
+      "qtype": "choice",
+      "expected": "C",
+      "student_answer": "C"
+    },
+    {
+      "id": "3829bcdd-b193-4f9d-b22f-b53d251a7190",
+      "kc_id": "renjiao-math-g10-a-ku004",
+      "qtype": "choice",
+      "expected": "A",
+      "student_answer": "A"
+    },
+    {
+      "id": "02e9b025-f85b-4c59-bfb8-85e006866847",
+      "kc_id": "renjiao-math-g10-a-ku-二次函数的零点",
+      "qtype": "choice",
+      "expected": "B",
+      "student_answer": "B"
+    },
+    {
+      "id": "08ce6fbd-6d94-42eb-b845-bdc1e84ff6d1",
+      "kc_id": "renjiao-math-g10-a-ku005",
+      "qtype": "choice",
+      "expected": "B",
+      "student_answer": "B"
+    },
+    {
+      "id": "4dc27b51-b8d2-4381-a83e-29bacd6a1f03",
+      "kc_id": "renjiao-math-g10-a-ku-奇偶性",
+      "qtype": "choice",
+      "expected": "A",
+      "student_answer": "A"
+    },
+    {
+      "id": "28fc4e03-a1cc-4b9b-80b8-a9990d7f673e",
+      "kc_id": "renjiao-math-g10-a-ku005",
+      "qtype": "choice",
+      "expected": "D",
+      "student_answer": "D"
+    },
+    {
+      "id": "2074cc31-7532-474c-8d24-64b1aa001e71",
+      "kc_id": "renjiao-math-g10-a-ku-利用二分法求方程的近似解",
+      "qtype": "choice",
+      "expected": "B",
+      "student_answer": "B"
+    },
+    {
+      "id": "4db0cb26-df4e-4a41-a1b4-3bac5d3e1f98",
+      "kc_id": "renjiao-math-g10-a-ku-补集的定义",
+      "qtype": "choice",
+      "expected": "D",
+      "student_answer": "D"
+    },
+    {
+      "id": "0df1bf7c-b46e-4652-ac33-5e93053f9e2c",
+      "kc_id": "renjiao-math-g10-a-ku004",
+      "qtype": "choice",
+      "expected": "B",
+      "student_answer": "B"
+    },
+    {
+      "id": "189775e6-93b4-42a5-b60d-6fec348bacd6",
+      "kc_id": "renjiao-math-g10-a-ku-集合的概念",
+      "qtype": "choice",
+      "expected": "B",
+      "student_answer": "B"
+    },
+    {
+      "id": "1d69cbd2-7ae8-438e-b88a-f2e16de149d7",
+      "kc_id": "renjiao-math-g10-a-ku004",
+      "qtype": "choice",
+      "expected": "D",
+      "student_answer": "D"
+    },
+    {
+      "id": "0bf2a668-8b69-441e-a5d1-1b28498ae27d",
+      "kc_id": "renjiao-math-g10-a-ku001",
+      "qtype": "choice",
+      "expected": "D",
+      "student_answer": "D"
+    },
+    {
+      "id": "4b4cd20c-2206-4f77-9d3d-e161a06fcf57",
+      "kc_id": "renjiao-math-g10-a-ku-函数的概念与表示",
+      "qtype": "choice",
+      "expected": "D",
+      "student_answer": "D"
+    },
+    {
+      "id": "2f5b100f-ce45-463b-94a6-6aa4cc4dc090",
+      "kc_id": "renjiao-math-g10-a-ku-二进制数转换",
+      "qtype": "choice",
+      "expected": "C",
+      "student_answer": "C"
+    },
+    {
+      "id": "33c12578-1b72-4d11-8953-313aa427b4eb",
+      "kc_id": "renjiao-math-g10-a-ku-子集的性质",
+      "qtype": "choice",
+      "expected": "C",
+      "student_answer": "C"
+    },
+    {
+      "id": "4ff07e55-5b1b-4efb-b95c-cc3ca002c17e",
+      "kc_id": "renjiao-math-g10-a-ku-函数的概念与表示",
+      "qtype": "choice",
+      "expected": "A",
+      "student_answer": "A"
+    },
+    {
+      "id": "3a1d9807-8d52-4d0b-a17a-6eaca4d1159b",
+      "kc_id": "renjiao-math-g10-a-ku005",
+      "qtype": "choice",
+      "expected": "A",
+      "student_answer": "A"
+    }
+  ]
+}

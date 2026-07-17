@@ -66,3 +66,19 @@ def test_latex_superscript_braces():
 def test_latex_mathrm_and_whitespace():
     assert grade_math("p>m>n", "$\\mathrm{p}>\\mathrm{m}>\\mathrm{n}$") is True
     assert grade_math("a>=-1", "$a \\geq -1$") is True
+
+
+# —— S1 真题库抽样核查后补（119 抽样、86.6%→需 ≥90%）——
+def test_set_structural_equality():
+    # sympy 对 FiniteSet 相减不报错也永不为 0，需先试结构相等 `==`（不能只靠 simplify(x-e)）
+    assert grade_math("{3}", "$\\{3\\}$") is True
+    assert grade_math("{1,2}", "$\\{2,1\\}$") is True  # 集合顺序无关
+
+
+def test_infty_unicode_and_latex_normalise():
+    assert grade_math("(0,+∞)", "$(0,+\\infty)$") is True
+    assert grade_math("[1,+∞)", "$[1,+\\infty)$") is True
+
+
+def test_chinese_enumeration_comma_as_separator():
+    assert grade_math("1, [-1,1]", "$1 、[-1,1]$.") is True

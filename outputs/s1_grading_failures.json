@@ -1,0 +1,71 @@
+{
+  "total": 119,
+  "failed": 9,
+  "accuracy": 0.9244,
+  "threshold": 0.9,
+  "failures": [
+    {
+      "id": "0b026e15-de14-423a-9a9a-deabbb82b17a",
+      "kc_id": "renjiao-math-g10-a-ku-列举法",
+      "qtype": "solve",
+      "expected": "$\\{-1,-3,1,3$ ? $\\}$",
+      "student_answer": "{-3, -1, 1, 3}"
+    },
+    {
+      "id": "138ae881-626a-4afc-8d03-128fba0b7596",
+      "kc_id": "renjiao-math-g10-a-ku-子集的概念",
+      "qtype": "solve",
+      "expected": "$m \\in(-\\infty, 3]$",
+      "student_answer": "m<=3"
+    },
+    {
+      "id": "1bfea334-cf91-4bf3-af7e-68c1dc3808e3",
+      "kc_id": "renjiao-math-g10-a-ku-子集的概念",
+      "qtype": "solve",
+      "expected": "$m \\in(-\\infty, 3]$",
+      "student_answer": "m<=3"
+    },
+    {
+      "id": "2827062d-8965-49eb-a318-0668fef471fa",
+      "kc_id": "renjiao-math-g10-a-ku-并集的概念",
+      "qtype": "solve",
+      "expected": "$\\{x \\mid x<1$, 或 $x \\geqslant 2\\}$",
+      "student_answer": "{x | x < 1 或 x >= 2}"
+    },
+    {
+      "id": "2c5b9cbc-b544-426e-b948-5dee05659750",
+      "kc_id": "renjiao-math-g10-a-ku-子集的概念",
+      "qtype": "solve",
+      "expected": "$N M$",
+      "student_answer": "N⊆M"
+    },
+    {
+      "id": "2da89e48-15ed-4247-a941-68be6f423d70",
+      "kc_id": "renjiao-math-g10-a-ku005",
+      "qtype": "solve",
+      "expected": "$4-3$",
+      "student_answer": "4; -3"
+    },
+    {
+      "id": "326d4717-f107-483e-a83d-df955bcb89b0",
+      "kc_id": "renjiao-math-g10-a-ku004",
+      "qtype": "solve",
+      "expected": "$0,2 \\sqrt{2}-3$",
+      "student_answer": "0"
+    },
+    {
+      "id": "37ab2759-9313-4ed5-b576-cb6b0569b83f",
+      "kc_id": "renjiao-math-g10-a-ku-实数大小比较的基本事实",
+      "qtype": "solve",
+      "expected": "$[6,+\\infty)$",
+      "student_answer": "a>=6"
+    },
+    {
+      "id": "4f581bb0-bc0a-489a-8914-6bd0490a76ef",
+      "kc_id": "renjiao-math-g10-a-ku005",
+      "qtype": "solve",
+      "expected": "$\\frac{2 \\sqrt{6}}{3}$",
+      "student_answer": "2*sqrt(6)/3"
+    }
+  ]
+}
