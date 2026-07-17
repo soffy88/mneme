@@ -33,7 +33,9 @@ from mneme_core.oprim.mastery_gate import (
     is_mastered,
     next_objective,
 )
+from mneme_core.oprim.quiz_selection import DifficultyCurve
 from mneme_core.oprim.spacing import due_reviews
+from mneme_core.oskill.quiz_generator import quiz_generator
 from mneme_core.service.verdict_guard import GuardRejection, enforce
 
 from obase.db import get_db
@@ -94,6 +96,40 @@ async def tool_get_path(
     ).all()
     kc_ids = [r[0] for r in rows if r[0] in content]
     return {"textbook_id": textbook_id, "kc_ids": kc_ids}
+
+
+async def tool_generate_quiz(
+    db: AsyncSession,
+    student_id: uuid.UUID,
+    *,
+    kc_ids: Optional[list[str]] = None,
+    size: int = 10,
+    difficulty_curve: DifficultyCurve = "ascending",
+    exclude_mastered: bool = True,
+) -> dict:
+    """组卷（C2）：选 KC + 难度序列，**不选具体题、不判分**。
+
+    候选池不传则用 GetPath 的默认路径 KC。选中的每个 KC 仍经既有 RequestQuestion
+    （AA.7/AA.9/AA.10 过滤）逐题出题，SubmitAnswer + guard 判分回流
+    process_interaction——组卷不新开第二条出题/判分路径，S1 判分 CI 门约束不变。
+    """
+    if kc_ids is None:
+        path = await tool_get_path(db, student_id)
+        kc_ids = path["kc_ids"]
+
+    progress = await build_learning_progress(db, student_id, kc_ids)
+    candidates = progress.modules[0].knowledge_points
+    selected = quiz_generator(
+        progress,
+        candidates,
+        size=size,
+        difficulty_curve=difficulty_curve,
+        exclude_mastered=exclude_mastered,
+    )
+    return {
+        "kc_sequence": [kp.id for kp in selected],
+        "size": len(selected),
+    }
 
 
 async def tool_next_objective(
@@ -585,6 +621,14 @@ class NextObjectiveReq(BaseModel):
     now: Optional[float] = None
 
 
+class GenerateQuizReq(BaseModel):
+    student_id: uuid.UUID
+    kc_ids: Optional[list[str]] = None
+    size: int = 10
+    difficulty_curve: DifficultyCurve = "ascending"
+    exclude_mastered: bool = True
+
+
 class GetKCInfoReq(BaseModel):
     kc_id: str
 
@@ -640,6 +684,23 @@ async def mcp_get_path(
 ) -> dict:
     await _ensure_student_access(db, current_user, req.student_id)
     return await tool_get_path(db, req.student_id)
+
+
+@router.post("/GenerateQuiz")
+async def mcp_generate_quiz(
+    req: GenerateQuizReq,
+    db: AsyncSession = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+) -> dict:
+    await _ensure_student_access(db, current_user, req.student_id)
+    return await tool_generate_quiz(
+        db,
+        req.student_id,
+        kc_ids=req.kc_ids,
+        size=req.size,
+        difficulty_curve=req.difficulty_curve,
+        exclude_mastered=req.exclude_mastered,
+    )
 
 
 @router.post("/NextObjective")

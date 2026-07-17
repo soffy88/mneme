@@ -23,6 +23,9 @@ class KnowledgePoint:
     id: str
     name: str
     type: KnowledgeType
+    difficulty: float = (
+        0.5  # 0-1；无 IRT 题库参数，退化为 KC 级难度（对齐 KnowledgeUnit.difficulty）
+    )
 
 
 @dataclass

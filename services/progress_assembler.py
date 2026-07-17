@@ -65,15 +65,17 @@ async def build_learning_progress(
     db: AsyncSession, student_id: uuid.UUID, kc_ids: list[str]
 ) -> LearningProgress:
     """把给定路径 kc_ids 的真实掌握度/复习/定性状态投影成 LearningProgress。"""
-    # KC 名称（knowledge_units）
+    # KC 名称 + 难度（knowledge_units；难度供 C2 quiz_generator 的难度序列整形用，
+    # 无 IRT 题库参数，退化为 KC 级）
     name_rows = (
         await db.execute(
-            select(KnowledgeUnit.id, KnowledgeUnit.name).where(
-                KnowledgeUnit.id.in_(kc_ids)
-            )
+            select(
+                KnowledgeUnit.id, KnowledgeUnit.name, KnowledgeUnit.difficulty
+            ).where(KnowledgeUnit.id.in_(kc_ids))
         )
     ).all()
     names = {r.id: r.name for r in name_rows}
+    difficulties = {r.id: r.difficulty for r in name_rows}
 
     # 该学生这些 KC 的 kc_mastery
     mastery_rows = (
@@ -104,7 +106,14 @@ async def build_learning_progress(
             if gate_type == gate_store.QUALITATIVE
             else KnowledgeType.PROCEDURE
         )
-        kps.append(KnowledgePoint(id=kc, name=names.get(kc, kc), type=ktype))
+        kps.append(
+            KnowledgePoint(
+                id=kc,
+                name=names.get(kc, kc),
+                type=ktype,
+                difficulty=difficulties.get(kc, 0.5),
+            )
+        )
 
         m = mastery_by_kc.get(kc)
         if m is None or m.p_mastery is None:
