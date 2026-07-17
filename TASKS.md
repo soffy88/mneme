@@ -1786,9 +1786,14 @@ studio 镜像重建、mneme-api-1 重启后已在 sxueji.com 上线。
   ⚠️ 遗留（题库数据质量、属更大数据活，非本次范围）：清洁题量偏少（每 KC 2–4 道 →
   短期重复），部分"读程序"题排版朴素；彻底修需重抽选项/图形。
 
-- [ ] **AA.8 概念题判分延迟优化（~50s）** 待做
-  定性 verifier 一次真 Qwen 调用约 50s，对学生（尤其孩子）等待偏久。诊断模型/模式后
-  择优：给 verifier 用更快模型或收紧 prompt/tokens，或改判分中 UX（不阻断作答）。
+- [x] **AA.8 概念题判分延迟优化（~50s → ~7s）** ✅（commit 见下）
+  诊断：prod QWEN_MODEL=qwen3.7-plus 是**思考模型**，默认开思维链（判分类任务无需），
+  满 rubric prompt 生成大量 reasoning token → ~50s。实测同模型关思维链
+  （DashScope 兼容端点顶层 `enable_thinking:false`）→ 1.5s；qwen-plus/turbo/flash 亦
+  ~1s 可用。取"同模型关思维链"（不换模型、不降判分质）。
+  QwenTextCaller 加可选 `enable_thinking` 参数；qualitative_verify 判分调用传 False。
+  实测：GOOD passed score=1.0（5.8s）、WEAK 判否（3.0s），质量不变；生产 HTTP 概念题
+  提交端到端 7.6s（原 ~50s）。5 单测绿、ruff+mypy 过。
 
 - [ ] **AA.6 S3-C 真人 pilot（Wiki + 孩子实操）** 待跑
   经 sxueji.com/studio/learn 走 P1–P5，W8–W12 真人转绿。CC 不代跑。

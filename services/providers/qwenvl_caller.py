@@ -56,6 +56,7 @@ class QwenTextCaller:
         tools: list[dict[str, Any]] | None = None,
         response_format: str | None = None,
         system: str | None = None,
+        enable_thinking: bool | None = None,
     ) -> dict[str, Any]:
         import httpx
 
@@ -69,6 +70,10 @@ class QwenTextCaller:
         }
         if response_format == "json":
             payload["response_format"] = {"type": "json_object"}
+        # qwen3.x 思考模型默认开思维链（慢，判分类任务无需）：显式关掉可从 ~50s 降到 ~2s。
+        # DashScope OpenAI 兼容端点接受顶层 enable_thinking（非 extra_body）。
+        if enable_thinking is not None:
+            payload["enable_thinking"] = enable_thinking
         async with httpx.AsyncClient(timeout=120) as client:
             resp = await client.post(
                 f"{self.base_url}/chat/completions",

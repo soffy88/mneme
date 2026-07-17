@@ -83,7 +83,12 @@ class _SyncQwenAdapter:
 
     def __call__(self, *, messages: list[dict]) -> str:
         out = asyncio.run(
-            self._caller(messages=messages, max_tokens=1024, response_format="json")
+            self._caller(
+                messages=messages,
+                max_tokens=1024,
+                response_format="json",
+                enable_thinking=False,  # 判分无需思维链：~50s → ~2s，同模型不降质
+            )
         )
         return _repair_spans(str(out.get("content", "")), self._explanation)
 
