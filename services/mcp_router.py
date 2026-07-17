@@ -21,7 +21,7 @@ from typing import Optional
 
 from fastapi import APIRouter, Depends, HTTPException
 from pydantic import BaseModel
-from sqlalchemy import func, select
+from sqlalchemy import and_, func, select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from mneme_core.oprim.grade import answer_match
@@ -258,10 +258,23 @@ async def tool_request_question(
             "source": "generated",
         }
 
+    # 只出**自足可作答**的题库题，否则回落 LLM 生成：
+    # (1) 依赖图形的题：needs_image=true 或题干残留占位符 <ImageHere>（原图被剥离）——
+    #     studio 无法呈现图形，学生只会看到一个占位"标识"。
+    # (2) 选项被剥离的选择题：答案是 A-D 单字母但题干无任何选项标记（A. / A、/ A）等）——
+    #     学生看不到选项、无从作答。保留"题干含选项标记"的正常选择题与 solve/fill。
     bank = (
         await db.execute(
             select(WrongQuestion.question_text, WrongQuestion.correct_answer)
-            .where(WrongQuestion.knowledge_points.has_key(kc_id))
+            .where(
+                WrongQuestion.knowledge_points.has_key(kc_id),
+                WrongQuestion.needs_image.is_(False),
+                ~WrongQuestion.question_text.like("%<ImageHere>%"),
+                ~and_(
+                    WrongQuestion.correct_answer.op("~")("^[A-D、,]{1,3}$"),
+                    ~WrongQuestion.question_text.op("~")("[ABCD][.、．：)）]"),
+                ),
+            )
             .order_by(func.random())
             .limit(1)
         )
