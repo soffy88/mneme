@@ -59,6 +59,14 @@ async def tool_next_objective(
     now: Optional[float] = None,
 ) -> dict:
     """组装 progress → next_objective → 序列化（**绝不含 expected**）。"""
+    # 自愈：清掉遗留的坏 pending（题干含 <ImageHere> 占位、无法作答，AA.7 前出的）。
+    # 否则 build_learning_progress 会把它当 has_pending 返回、studio 照显、学生卡死。
+    active = await gate_store.get_active_pending(db, student_id=student_id)
+    if active is not None and "<ImageHere>" in (active["prompt"] or ""):
+        await gate_store.clear_pending(
+            db, student_id=student_id, question_id=active["question_id"]
+        )
+        await db.commit()
     prog = await build_learning_progress(db, student_id, kc_ids)
     step = next_objective(prog, now=now or time.time())
 
