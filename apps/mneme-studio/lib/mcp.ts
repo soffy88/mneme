@@ -4,8 +4,14 @@
 // 前端只「读待答题(prompt，无 expected)」+「提交真人答案」+「读掌握度」。
 // expected 永不进入本前端（network / DOM / console）。这是 W3 在守的东西，结构上强制。
 
-const API_BASE =
-  process.env.NEXT_PUBLIC_API_BASE?.replace(/\/$/, "") || "http://localhost:8000";
+// 同源优先：生产 Dockerfile 显式设 NEXT_PUBLIC_API_BASE=""，即用相对 /mcp
+// （sxueji.com/mcp → caddy → api，同源无 CORS）。仅当变量整体**未设置**(undefined，
+// 本地 dev)才回退 localhost。**绝不能用 ||** —— "" 是 falsy，会把"同源空串"误判成
+// 需要回退 → 浏览器打 localhost:8000 → Failed to fetch / ERR_CONNECTION_REFUSED。
+const API_BASE = (process.env.NEXT_PUBLIC_API_BASE ?? "http://localhost:8000").replace(
+  /\/$/,
+  ""
+);
 
 // ── 一套登录：复用 mneme-web 的会话（同源 localStorage）──────────────────────
 // studio 与 mneme-web 同源(sxueji.com)，localStorage 按 origin 共享、跨路径可读。
