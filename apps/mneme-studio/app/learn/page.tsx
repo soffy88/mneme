@@ -94,7 +94,13 @@ export default function LearnPage() {
     try {
       const r = await mcp.submitAnswer(ctx.studentId, question.question_id, answer);
       if (r.needs_qualitative) {
+        // verifier 暂不可用（无 key/rubric）→ 交外部评判的退回态
         setFeedback({ ok: true, msg: "你的解释已提交，老师会评判后给你反馈。" });
+      } else if (r.qualitative) {
+        // 概念解释题：真 verifier 按 rubric 裁决
+        setFeedback(r.is_correct
+          ? { ok: true, msg: "你的理解讲清楚了 ✓ 继续下一个。" }
+          : { ok: false, msg: "理解还差点意思，换个角度再讲讲，我们再来一题。" });
       } else if (r.graded) {
         setFeedback(r.is_correct
           ? { ok: true, msg: "答对了！继续保持 🎉" }

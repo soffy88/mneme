@@ -336,11 +336,35 @@ async def tool_submit_answer(
     expected = pending["expected"] or ""
 
     if qtype == "open":
-        # 定性题不走确定性判分；交 assess → ReportResult(llm_verified)
+        # 定性题：服务端跑真 verifier（按 KC rubric 判维度 + evidence 锚定）出裁决，
+        # 再走 tool_report_result 落库（gate.evidence + qualitative_mastery + clear pending），
+        # 学生答完即前进。verifier 不可用（无 key/rubric/非法/LLM 失败）→ 退回 needs_qualitative
+        # 交外部 assess（原行为），提交永不因 verifier 崩。
+        from services.qualitative_verify import run_qualitative_verifier
+
+        verdict = await run_qualitative_verifier(db, kc_id=kc_id, explanation=answer)
+        if verdict is None:
+            return {
+                "needs_qualitative": True,
+                "kc_id": kc_id,
+                "question_id": question_id,
+            }
+        await tool_report_result(
+            db,
+            student_id=student_id,
+            kc_id=kc_id,
+            question_id=question_id,
+            is_correct=verdict.passed,
+            verdict_source="llm_verified",
+            evidence=verdict.to_evidence(),
+        )
         return {
-            "needs_qualitative": True,
+            "graded": True,
+            "is_correct": verdict.passed,
+            "qualitative": True,
+            "verdict_source": "llm_verified",
             "kc_id": kc_id,
-            "question_id": question_id,
+            "score": round(verdict.score, 4),
         }
 
     if qtype in ("solve", "fill"):

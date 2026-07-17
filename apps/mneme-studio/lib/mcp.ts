@@ -116,6 +116,8 @@ export interface GradeResult {
   is_correct?: boolean;
   verdict_source?: string;
   needs_qualitative?: boolean;
+  qualitative?: boolean; // 定性题：由真 verifier 按 rubric 裁决（非确定性判分）
+  score?: number; // 定性达标维度加权分 [0,1]
   kc_id?: string;
   error?: string;
 }
