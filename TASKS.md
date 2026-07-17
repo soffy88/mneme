@@ -1775,5 +1775,20 @@ studio 镜像重建、mneme-api-1 重启后已在 sxueji.com 上线。
   非 pilot 阻断项。属课程编排决策（renjiao-math-g10-a 有 165 KU，需 grade→教材映射
   + 前置 topo 排序 + 内容覆盖过滤），归 Master SSOT；pilot 期先用 AA.4 缺省路径。
 
+- [x] **AA.7 RequestQuestion 只出自足可作答的题库题** ✅（commit 931e184）
+  题库(wrong_questions)有两类题在 studio 无法作答、学生只看到占位"标识"：
+  (1) 依赖图形：needs_image=true 或题干残留占位符 `<ImageHere>`（原图被剥离）。
+  (2) 选项被剥离的选择题：答案是 A-D 单字母但题干无任何选项标记（默认路径 23 道单字母
+      答案题 0 道带选项 → 全不可作答）。
+  bank 查询加 WHERE：needs_image=false + 无 `<ImageHere>` + 排除"单字母答案且题干无选项
+  标记"的题（保留带选项的正常选择题 + solve/fill）；无清洁题库题回落 LLM 自足生成。
+  实测默认路径各 KC 出题均 self-contained、无占位。ruff+mypy 过、既有测试绿。
+  ⚠️ 遗留（题库数据质量、属更大数据活，非本次范围）：清洁题量偏少（每 KC 2–4 道 →
+  短期重复），部分"读程序"题排版朴素；彻底修需重抽选项/图形。
+
+- [ ] **AA.8 概念题判分延迟优化（~50s）** 待做
+  定性 verifier 一次真 Qwen 调用约 50s，对学生（尤其孩子）等待偏久。诊断模型/模式后
+  择优：给 verifier 用更快模型或收紧 prompt/tokens，或改判分中 UX（不阻断作答）。
+
 - [ ] **AA.6 S3-C 真人 pilot（Wiki + 孩子实操）** 待跑
   经 sxueji.com/studio/learn 走 P1–P5，W8–W12 真人转绿。CC 不代跑。
