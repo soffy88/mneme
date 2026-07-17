@@ -807,4 +807,49 @@ FIRe=前置隐式重复信用（只写调度折扣）。**KU≠记忆单元。**
 
 ---
 
+## 附录 · Agent 三层 Memory（S3，2026-07-17）
+
+**动机**：`packages/mneme-agent` 目前零 DB（FC-5 红线：agent 进程无任何 mneme-DB 连接，见
+`tests/test_tutor_loop_fc5.py`）。给 agent 提供跨会话记忆能力，同时不违反 FC-5——数据落在
+mneme 服务层管理的独立 `agent.*` schema（**同一 Postgres 实例**，非 mneme 业务表所在的
+`public` schema，对照既有 `gate.*` 先例），agent 进程本身仍不直连任何 DB，全程经
+`services/memory` 提供的函数读写（未来经 MCP 工具暴露给 agent；**本次只落骨架，不接
+mneme-agent**，是下一个 task 的范围）。
+
+**三层定义**：
+
+- **working**（`agent.working_memory`）：单次会话内的短期上下文，带 `expires_at` TTL，
+  过期视为不可读（读时惰性判断，不强制物理清理任务——物理清理 cron 留后续 task）。
+- **episodic**（`agent.episodic_memory`）：逐次交互/事件的流水记录，**只增不改**（对齐
+  platform/3O `omodul/append_episode.py` 的 Episodic Memory 语义："不去重"是写入路径的
+  设计——永远简单 append，不在写入时做重复检测；这不代表运维侧永不清理，见下方 `dedup`
+  模式：这是独立的周期性运维动作，处理真正异常的重复（如客户端重试导致的重复写），
+  两者不矛盾）。
+- **semantic**（`agent.semantic_memory`）：从 episodic 提炼沉淀的稳定认知摘要，按
+  `(student_id, topic)` 唯一，随时间被 `merge`/`update` 覆盖式演进。
+
+**`services/memory` 四模式**（Layer4 服务函数，raw SQL 风格对照 `gate_store.py`；非
+omodul——不强制三件套签名、不强制"失败不 raise"，可直接 raise 交上层处理）：
+
+| 模式 | 语义 |
+|------|------|
+| `audit(db, student_id)` | 只读，报告三层各自行数 + 疑似重复的 episodic 条目（同 `student_id`+`session_id`+`kind`+`content` 完全相同）。|
+| `dedup(db, student_id, dry_run=True)` | 删除 episodic 里的完全重复项（保留最早一条）；`dry_run=True` 只返回将被删除的 id 列表，不实际写。|
+| `merge(db, student_id, topic, episodic_ids)` | 把指定 episodic 条目的 content 合并进 `semantic_memory[(student_id, topic)]`（不存在则新建），记录 `merged_from` 溯源。**本次机械合并**（追加/去重字段），LLM 语义提炼摘要留后续 task。|
+| `update(db, student_id, topic, content)` | 直接覆盖 `semantic_memory` 的 content（人工/上游校正用）。|
+
+**FC-2 合规**：三张新表均带**真实** `student_id` 列（不用 `services/anon.py` 的
+`anon_ref` 伪名化——伪名化规则只管 omodul 边界的 `_fingerprint_fields`/decision_trail，
+不管主数据表本身；且需要真实 `student_id` 才能被 `purge_service` 物理删除，与
+`kc_mastery`/`wrong_questions` 等既有表一致）。`services/purge_service._STUDENT_TABLES`
+同 PR 补三条（`agent.working_memory`/`agent.episodic_memory`/`agent.semantic_memory`）；
+`tests/test_hard_delete.py::test_every_student_table_is_in_purge_list` 的
+`information_schema` 扫描天然覆盖 `agent` schema（同一 Postgres 实例），无需新建守卫。
+
+**本次范围（S3 骨架）**：Alembic migration 建 `agent` schema + 三表；`services/memory.py`
+四模式函数 + 单测；purge 清单联动。**不做**（留后续 task）：mneme-agent 侧 MCP 工具接线、
+LLM 语义摘要、working memory 物理过期清理 cron。
+
+---
+
 **Mneme 主设计文档结束。本文档为唯一权威，其余历史文档仅作演进参考。**

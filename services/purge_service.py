@@ -46,6 +46,11 @@ _STUDENT_TABLES: list[tuple[str, str]] = [
     ("gate.pending_question", "student_id"),
     ("gate.qualitative_mastery", "student_id"),
     ("gate.evidence", "student_id"),
+    # S3 三层 Agent Memory schema（独立 schema，无 FK，可任意序删）：三表皆带
+    # student_id（未成年 PII 关联），FC-2：新表同 PR 入清单。
+    ("agent.working_memory", "student_id"),
+    ("agent.episodic_memory", "student_id"),
+    ("agent.semantic_memory", "student_id"),
 ]
 
 
