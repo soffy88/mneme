@@ -1829,6 +1829,7 @@ studio 镜像重建、mneme-api-1 重启后已在 sxueji.com 上线。
 
 - [x] **AA.9c 题库重挂（re-link）** ✅（2026-07-17，记录 outputs/AA9C-REMATCH-RECORD.md）
   AA.9b 剔后 162 道高一孤儿题：qwen 两道门（从 165 KC 目录匹配 + 相关性验证）→ 只增链、
-  只挂过两门的。**重挂 32 / 162**（其余 130 无契合 g10-a KC，多为跨课程立体几何/算法/数论，
-  正确留孤儿）。有高一可服务题的 g10-a KC 30→35。抽查通过（映射题→ku004 函数概念）。
-  可回滚：outputs/aa9c_rematch_report.json（added_pairs，回滚=删新增 key）。纯新增、无代码。
+  只挂过两门的。挂成 32，**全量抽查后人工撤 1 条存疑（框图题）→ 净重挂 31 / 162**（其余 130
+  无契合 g10-a KC，多为跨课程立体几何/算法/数论，正确留孤儿）。有高一可服务题的 g10-a KC 30→34。
+  抽查 31/31 挂得对（映射→ku004 函数概念、元素∈集合、Venn 计数等）。可回滚：
+  outputs/aa9c_rematch_report.json（added_pairs，回滚=删新增 key）。纯数据、无代码。
