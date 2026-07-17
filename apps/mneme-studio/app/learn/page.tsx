@@ -9,6 +9,7 @@ import {
   mcp, getStudentId, getToken, redirectToLogin,
   type NextStep, type Mastery,
 } from "@/lib/mcp";
+import { MathText } from "@/components/MathText";
 
 // 一套登录：student_id 取自 mneme 登录会话（mneme_user），**不再走 ?student=**。
 // 学习路径 kcIds 允许 ?kcs= 覆盖；缺省给一组起步知识点，保证登录后进来即可用
@@ -181,10 +182,10 @@ export default function LearnPage() {
           {pq ? (
             <div className="space-y-3" data-testid="question">
               <div
-                className="rounded-lg bg-[var(--o-color-bg-subtle,#f6f6f6)] p-4 whitespace-pre-wrap text-lg"
+                className="rounded-lg bg-[var(--o-color-bg-subtle,#f6f6f6)] p-4 text-lg"
                 data-testid="prompt"
               >
-                {pq.prompt}
+                <MathText text={pq.prompt} />
               </div>
 
               {pq.qtype === "open" ? (
