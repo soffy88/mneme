@@ -12,17 +12,16 @@ import {
 import { MathText } from "@/components/MathText";
 
 // 一套登录：student_id 取自 mneme 登录会话（mneme_user），**不再走 ?student=**。
-// 学习路径 kcIds 允许 ?kcs= 覆盖；缺省给一组起步知识点，保证登录后进来即可用
-// （路径持久化是 W2b 后续；届时改为按学生档案拉路径）。禁后门/预填答案。
+// 学习路径 kcIds 允许 ?kcs= 覆盖；缺省给一组起步知识点，保证登录后进来即可用。
+// 路径持久化（按学生档案拉课程路径）属课程编排、Master SSOT，暂缓；pilot 期用本缺省。禁后门/预填答案。
 //
-// 缺省必须是**定量**知识点：定量题由内核确定性判分（SubmitAnswer→graded→清 pending→
-// 自动续下一题），链路能推进。定性知识点（如 ku004 函数概念）要靠"定性 verifier"出裁决
-// 才能清 pending，而真 verifier 尚未接线（W2b 后续）——缺省若用定性，提交后同一题会一直
-// 复现="不动了"。故缺省用 ku001/002/003（定量，题库有题），并借多 KC 满足交错红线。
+// ku001–003 定量（内核确定性判分）+ ku004 定性（概念解释，定性 verifier 已接线，提交即判、
+// 清 pending、前进），一条路径即可测到两类判分；多 KC 亦满足交错红线。
 const DEFAULT_KCS = [
   "renjiao-math-g10-a-ku001",
   "renjiao-math-g10-a-ku002",
   "renjiao-math-g10-a-ku003",
+  "renjiao-math-g10-a-ku004", // 定性：概念解释题，走真 verifier
 ];
 
 function readCtx(): { studentId: string; kcIds: string[] } {
