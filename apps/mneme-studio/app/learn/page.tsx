@@ -5,15 +5,23 @@ import {
   OButton, OCard, OCardHeader, OCardTitle, OTextInput, OProgress,
   OEmptyState,
 } from "@helios/blocks";
-import { mcp, type NextStep, type Mastery } from "@/lib/mcp";
+import {
+  mcp, getStudentId, getToken, redirectToLogin,
+  type NextStep, type Mastery,
+} from "@/lib/mcp";
 
-// student_id + 学习路径来自 URL query（登录后重定向携带；测试传入）。禁后门/预填答案。
+// 一套登录：student_id 取自 mneme 登录会话（mneme_user），**不再走 ?student=**。
+// 学习路径 kcIds 允许 ?kcs= 覆盖；缺省给一个起步知识点，保证登录后进来即可用
+// （路径持久化是 W2b 后续；届时改为按学生档案拉路径）。禁后门/预填答案。
+const DEFAULT_KCS = ["renjiao-math-g10-a-ku004"]; // 起步：函数的概念与表示（占位）
+
 function readCtx(): { studentId: string; kcIds: string[] } {
   if (typeof window === "undefined") return { studentId: "", kcIds: [] };
   const q = new URLSearchParams(window.location.search);
+  const kcs = (q.get("kcs") || "").split(",").filter(Boolean);
   return {
-    studentId: q.get("student") || "",
-    kcIds: (q.get("kcs") || "").split(",").filter(Boolean),
+    studentId: getStudentId() || "",
+    kcIds: kcs.length > 0 ? kcs : DEFAULT_KCS,
   };
 }
 
@@ -60,6 +68,11 @@ export default function LearnPage() {
   }, []);
 
   useEffect(() => {
+    // 一套登录：未登录 mneme → 直接跳 mneme-web /login（不弹 studio 自己的登录）。
+    if (!getToken() || !getStudentId()) {
+      redirectToLogin();
+      return;
+    }
     const c = readCtx();
     setCtx(c);
     void refresh(c);
@@ -88,12 +101,10 @@ export default function LearnPage() {
   }, [question, answer, ctx, refresh]);
 
   if (!ctx.studentId || ctx.kcIds.length === 0) {
+    // 登录会话读取中 / 未登录跳转中（useEffect 会重定向到 mneme /login）。
     return (
       <main className="mx-auto max-w-xl p-6" data-testid="learn-root">
-        <OEmptyState
-          title="还没有学习任务"
-          description="请从登录后的入口进入学习（需要 ?student= 与 ?kcs= 参数）。"
-        />
+        <OEmptyState title="正在进入学习…" description="正在读取你的登录信息。" />
       </main>
     );
   }

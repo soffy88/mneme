@@ -13,7 +13,6 @@ from fastapi import (
     Body,
 )
 from fastapi.responses import StreamingResponse
-from fastapi.security import OAuth2PasswordBearer
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import func, select, update, or_, text
 from uuid import UUID
@@ -31,7 +30,6 @@ import re
 from obase.db import get_db, SessionLocal
 from services.logging_config import configure_logging, logger
 from obase.prior_provider import PriorProvider
-from obase.auth import decode_access_token
 from omodul.cognitive import InteractionInput
 from oprim.prereq_graph import topo_sort_by_prereq
 from oprim.chinese_track import chinese_track as _chinese_track
@@ -80,74 +78,15 @@ from services.storage import upload_file, download_file, content_type_for
 from data.guangdong_math_kc import KC_LIST, get_kc
 
 # ===== §8 认证依赖 =====
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl="v1/auth/login", auto_error=False)
-
-
-async def get_current_user(
-    token: Optional[str] = Depends(oauth2_scheme), db: AsyncSession = Depends(get_db)
-) -> User:
-    if not token:
-        raise HTTPException(status_code=401, detail="Not authenticated")
-    payload = decode_access_token(token)
-    if not payload:
-        raise HTTPException(status_code=401, detail="Invalid token")
-    user_id = payload.get("sub")
-    if not user_id:
-        raise HTTPException(status_code=401, detail="Invalid token payload")
-
-    stmt = select(User).where(User.id == uuid.UUID(user_id), User.deleted_at.is_(None))
-    user = (await db.execute(stmt)).scalar_one_or_none()
-    if not user:
-        raise HTTPException(status_code=401, detail="User not found")
-    return user
-
-
-async def require_student_access(
-    student_id: UUID,
-    current_user: User = Depends(get_current_user),
-    db: AsyncSession = Depends(get_db),
-) -> User:
-    """越权防护：仅学生本人或其绑定家长可访问该学生数据（合规红线，含未成年人）。
-    student_id 从路径自动解析。"""
-    if current_user.id == student_id:
-        return current_user
-    link = (
-        await db.execute(
-            select(ParentStudent).where(
-                ParentStudent.parent_id == current_user.id,
-                ParentStudent.student_id == student_id,
-            )
-        )
-    ).scalar_one_or_none()
-    if not link:
-        raise HTTPException(status_code=403, detail="无权访问该学生数据")
-    return current_user
-
-
-async def _ensure_student_access(
-    db: AsyncSession, current_user: User, student_id: Optional[UUID]
-) -> None:
-    """IDOR 防护（student_id 在 body/query/关联行里的场景）：
-    仅学生本人或其绑定家长，否则 403。与 require_student_access 同规则。"""
-    if student_id is None or current_user.id == student_id:
-        return
-    link = (
-        await db.execute(
-            select(ParentStudent).where(
-                ParentStudent.parent_id == current_user.id,
-                ParentStudent.student_id == student_id,
-            )
-        )
-    ).scalar_one_or_none()
-    if not link:
-        raise HTTPException(status_code=403, detail="无权访问该学生数据")
-
-
-def _ensure_student_self(current_user: User, student_id: Optional[UUID]) -> None:
-    """学习数据写操作（答题/会话/任务完成）仅学生本人可执行；
-    家长只读，不可替孩子写认知数据（否则污染 BKT/FSRS 档案）。"""
-    if student_id is not None and current_user.id != student_id:
-        raise HTTPException(status_code=403, detail="仅学生本人可执行该操作")
+# 单源：定义在 services/auth_deps.py，此处 re-export 供本模块 Depends() 与既有
+# `from services.main import get_current_user` 等调用点继续沿用（对象同一，
+# 依赖覆盖 dependency_overrides 仍生效）。/mcp router 也从 auth_deps 直接 import。
+from services.auth_deps import (  # noqa: E402
+    _ensure_student_access,
+    _ensure_student_self,
+    get_current_user,
+    require_student_access,
+)
 
 
 async def _ensure_session_owner(

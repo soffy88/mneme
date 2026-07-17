@@ -5,8 +5,11 @@ agent 经 HTTP 调这些工具触达掌握度，**自身零 DB 连接**。工具
 
 红线：期望答案（expected）只存 gate.pending_question，**任何工具响应都不外传**。
 
-W1 说明：
-- 路由暂不加学生鉴权（agent 是内部可信基础设施，须网络隔离；服务令牌留 W2）。
+鉴权（W2b 起）：/mcp 已随 studio 公网暴露到 sxueji.com/mcp，**W1 的"内部可信、靠网络
+隔离免鉴权"前提已废**。所有 HTTP 端点必须携带 JWT（与 mneme-web 同一套 `mneme_token`，
+studio 同源复用），student_id 服务端按越权规则校验（读=本人或绑定家长；写认知数据=仅本人）
+——不再信任 body 里的 student_id。tool_* 纯逻辑函数签名不变（仍可脱 HTTP 直测）。
+
 - NextObjective 暂由请求携带 kc_ids（学习路径）；路径持久化留后续。
 """
 
@@ -34,8 +37,13 @@ from mneme_core.service.verdict_guard import GuardRejection, enforce
 
 from obase.db import get_db
 from services import gate_store
+from services.auth_deps import (
+    _ensure_student_access,
+    _ensure_student_self,
+    get_current_user,
+)
 from services.math_grade import grade_math
-from services.models import KnowledgeUnit, WrongQuestion
+from services.models import KnowledgeUnit, User, WrongQuestion
 from services.progress_assembler import build_learning_progress
 
 router = APIRouter(prefix="/mcp", tags=["mcp"])
@@ -503,36 +511,51 @@ class ReportResultReq(BaseModel):
 
 @router.post("/NextObjective")
 async def mcp_next_objective(
-    req: NextObjectiveReq, db: AsyncSession = Depends(get_db)
+    req: NextObjectiveReq,
+    db: AsyncSession = Depends(get_db),
+    current_user: User = Depends(get_current_user),
 ) -> dict:
+    await _ensure_student_access(db, current_user, req.student_id)
     return await tool_next_objective(db, req.student_id, req.kc_ids, req.now)
 
 
 @router.post("/GetKCInfo")
 async def mcp_get_kc_info(
-    req: GetKCInfoReq, db: AsyncSession = Depends(get_db)
+    req: GetKCInfoReq,
+    db: AsyncSession = Depends(get_db),
+    current_user: User = Depends(get_current_user),
 ) -> dict:
+    # 非学生数据（KC 名/rubric），但仍要求登录：/mcp 已公网，统一"须登录"闸门。
     return await tool_get_kc_info(db, req.kc_id)
 
 
 @router.post("/CheckMastery")
 async def mcp_check_mastery(
-    req: CheckMasteryReq, db: AsyncSession = Depends(get_db)
+    req: CheckMasteryReq,
+    db: AsyncSession = Depends(get_db),
+    current_user: User = Depends(get_current_user),
 ) -> dict:
+    await _ensure_student_access(db, current_user, req.student_id)
     return await tool_check_mastery(db, req.student_id, req.kc_id)
 
 
 @router.post("/GetReviewQueue")
 async def mcp_get_review_queue(
-    req: GetReviewQueueReq, db: AsyncSession = Depends(get_db)
+    req: GetReviewQueueReq,
+    db: AsyncSession = Depends(get_db),
+    current_user: User = Depends(get_current_user),
 ) -> dict:
+    await _ensure_student_access(db, current_user, req.student_id)
     return await tool_get_review_queue(db, req.student_id, req.kc_ids, req.now)
 
 
 @router.post("/RequestQuestion")
 async def mcp_request_question(
-    req: RequestQuestionReq, db: AsyncSession = Depends(get_db)
+    req: RequestQuestionReq,
+    db: AsyncSession = Depends(get_db),
+    current_user: User = Depends(get_current_user),
 ) -> dict:
+    _ensure_student_self(current_user, req.student_id)
     r = await tool_request_question(db, req.student_id, req.kc_id)
     await db.commit()
     return r
@@ -540,8 +563,11 @@ async def mcp_request_question(
 
 @router.post("/PoseQuestion")
 async def mcp_pose_question(
-    req: PoseQuestionReq, db: AsyncSession = Depends(get_db)
+    req: PoseQuestionReq,
+    db: AsyncSession = Depends(get_db),
+    current_user: User = Depends(get_current_user),
 ) -> dict:
+    _ensure_student_self(current_user, req.student_id)
     r = await tool_pose_question(
         db,
         student_id=req.student_id,
@@ -557,8 +583,11 @@ async def mcp_pose_question(
 
 @router.post("/SubmitAnswer")
 async def mcp_submit_answer(
-    req: SubmitAnswerReq, db: AsyncSession = Depends(get_db)
+    req: SubmitAnswerReq,
+    db: AsyncSession = Depends(get_db),
+    current_user: User = Depends(get_current_user),
 ) -> dict:
+    _ensure_student_self(current_user, req.student_id)
     try:
         r = await tool_submit_answer(
             db,
@@ -579,8 +608,11 @@ async def mcp_submit_answer(
 
 @router.post("/ReportResult")
 async def mcp_report_result(
-    req: ReportResultReq, db: AsyncSession = Depends(get_db)
+    req: ReportResultReq,
+    db: AsyncSession = Depends(get_db),
+    current_user: User = Depends(get_current_user),
 ) -> dict:
+    _ensure_student_self(current_user, req.student_id)
     try:
         r = await tool_report_result(
             db,

@@ -12,6 +12,7 @@ const SECRET = "LEAKCANARY_SECRET_9x";
 const KC = "renjiao-math-g10-a-ku-二次函数的零点";
 
 let studentId = "";
+let authToken = ""; // 一套登录：真 JWT，e2e 把它塞进 localStorage(mneme_token) 复用会话
 
 function dexec(py: string): string {
   const b64 = Buffer.from(py, "utf-8").toString("base64");
@@ -22,22 +23,29 @@ function dexec(py: string): string {
 }
 
 test.beforeAll(() => {
+  // 建学生 + 投毒金丝雀题（expected=SECRET，只存服务端）+ 铸一枚真 JWT（与 mneme
+  // 登录同一 create_access_token / sub 结构）。studio 现按会话取 student，/mcp 需鉴权。
   const py = [
     "import asyncio, uuid",
     "from obase.db import SessionLocal",
     "from services.models import User, UserRole",
     "from services import gate_store",
+    "from obase.auth import create_access_token",
     "async def main():",
     "    sid = uuid.uuid4(); qid = 'q-'+uuid.uuid4().hex",
     "    async with SessionLocal() as db:",
     "        db.add(User(id=sid, phone='t'+sid.hex[:10], role=UserRole.student)); await db.flush()",
     `        await gate_store.pose_question(db, question_id=qid, student_id=sid, kc_id='${KC}', prompt='解 x^2-5x+6=0（首轮金丝雀）', expected='${SECRET}', qtype='solve')`,
     "        await db.commit()",
-    "    print(str(sid))",
+    "    tok = create_access_token({'sub': str(sid), 'role': 'student'})",
+    "    print('SID:'+str(sid)); print('TOK:'+tok)",
     "asyncio.run(main())",
   ].join("\n");
-  studentId = dexec(py).split("\n").pop() || "";
+  const out = dexec(py);
+  studentId = (out.match(/SID:(\S+)/) || [])[1] || "";
+  authToken = (out.match(/TOK:(\S+)/) || [])[1] || "";
   expect(studentId).toBeTruthy();
+  expect(authToken).toBeTruthy();
 });
 
 test.afterAll(() => {
@@ -69,7 +77,16 @@ test("人在环连续作答（多轮 UI 链路），expected 不泄漏于 networ
     }
   });
 
-  await page.goto(`/studio/learn?student=${studentId}&kcs=${encodeURIComponent(KC)}`);
+  // 一套登录：进页面前把 mneme 会话塞进 localStorage（同源，键与 mneme-web 对齐）。
+  // student 不再走 ?student=（学生取自会话）；仅用 ?kcs= 指定金丝雀 KC 路径。
+  await page.addInitScript(
+    ([sid, tok]) => {
+      localStorage.setItem("mneme_token", tok);
+      localStorage.setItem("mneme_user", JSON.stringify({ id: sid, name: "e2e" }));
+    },
+    [studentId, authToken]
+  );
+  await page.goto(`/studio/learn?kcs=${encodeURIComponent(KC)}`);
 
   // 连续 3 轮：题目呈现 → 真实 UI 事件作答 → 提交 → 自动续下一题（不刷新）
   for (let round = 0; round < 3; round++) {

@@ -7,13 +7,53 @@
 const API_BASE =
   process.env.NEXT_PUBLIC_API_BASE?.replace(/\/$/, "") || "http://localhost:8000";
 
+// ── 一套登录：复用 mneme-web 的会话（同源 localStorage）──────────────────────
+// studio 与 mneme-web 同源(sxueji.com)，localStorage 按 origin 共享、跨路径可读。
+// 键名与 mneme-web/src/lib/auth-store.ts 对齐：mneme_token(JWT) / mneme_user(档案)。
+// studio **不做第二套登录**：无 token → 跳 mneme-web 的 /login（basePath 之外，故用
+// window.location 而非 next router）。
+const TOKEN_KEY = "mneme_token";
+const USER_KEY = "mneme_user";
+
+export function getToken(): string | null {
+  if (typeof window === "undefined") return null;
+  return localStorage.getItem(TOKEN_KEY);
+}
+
+/** 当前登录学生 id（取自 mneme_user；未登录返回 null，不回退任何 mock id）。 */
+export function getStudentId(): string | null {
+  if (typeof window === "undefined") return null;
+  const raw = localStorage.getItem(USER_KEY);
+  if (!raw) return null;
+  try {
+    return (JSON.parse(raw) as { id?: string }).id ?? null;
+  } catch {
+    return null;
+  }
+}
+
+/** 跳转到 mneme-web 登录页（同源、basePath 之外）。登录后回跳 studio。 */
+export function redirectToLogin(): void {
+  if (typeof window === "undefined") return;
+  const next = encodeURIComponent(window.location.pathname + window.location.search);
+  window.location.href = `/login?next=${next}`;
+}
+
 async function call<T>(tool: string, payload: unknown): Promise<T> {
+  const token = getToken();
   const res = await fetch(`${API_BASE}/mcp/${tool}`, {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
+    headers: {
+      "Content-Type": "application/json",
+      ...(token ? { Authorization: `Bearer ${token}` } : {}),
+    },
     body: JSON.stringify(payload),
   });
   if (!res.ok) {
+    // token 缺失/过期 → 回 mneme-web 登录（一套登录，不弹 studio 自己的登录）。
+    if (res.status === 401 && typeof window !== "undefined") {
+      redirectToLogin();
+    }
     const detail = await res.text();
     throw new McpError(res.status, detail);
   }
