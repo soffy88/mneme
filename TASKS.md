@@ -1795,5 +1795,8 @@ studio 镜像重建、mneme-api-1 重启后已在 sxueji.com 上线。
   实测：GOOD passed score=1.0（5.8s）、WEAK 判否（3.0s），质量不变；生产 HTTP 概念题
   提交端到端 7.6s（原 ~50s）。5 单测绿、ruff+mypy 过。
 
-- [ ] **AA.6 S3-C 真人 pilot（Wiki + 孩子实操）** 待跑
-  经 sxueji.com/studio/learn 走 P1–P5，W8–W12 真人转绿。CC 不代跑。
+- [x] **AA.6 studio 功能验收** ✅ 用户 2026-07-17 直接判**验证通过**（未跑完整真人 pilot）。
+  一套登录 + 定性/定量判分 + 数学渲染 + 出题自足 + 判分/出题提速 + 坏 pending 自愈，
+  平台侧均已生产实测在线。W8–W12（原挂"真人转绿"）随此验收关闭。
+  📌 如实：这是用户对功能的直接验收，非 Wiki+孩子的完整 S3-C 真人 pilot；如日后要真人
+  跑一轮，走 sxueji.com/studio/learn 即可。
