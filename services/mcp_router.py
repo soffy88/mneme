@@ -39,7 +39,7 @@ from mneme_core.oskill.quiz_generator import quiz_generator
 from mneme_core.service.verdict_guard import GuardRejection, enforce
 
 from obase.db import get_db
-from services import gate_store
+from services import gate_store, persona_store
 from services.auth_deps import (
     _ensure_student_access,
     _ensure_student_self,
@@ -195,6 +195,30 @@ async def tool_get_kc_info(db: AsyncSession, kc_id: str) -> dict:
         "gate_type": gate_type,
         "prerequisites": row.prerequisites or [],
         "rubric": rubric,
+    }
+
+
+async def tool_list_personas(db: AsyncSession) -> dict:
+    """列出可选人格模板（不含 body，供 chat 前端选择器用）。"""
+    return {"personas": await persona_store.list_personas(db)}
+
+
+async def tool_get_persona(db: AsyncSession, slug: str) -> dict:
+    """取单个人格模板 + 渲染好的 system prompt 块（供 chat/tutor loop 拼进上下文）。
+
+    不存在 → 回落默认人格（DEFAULT_PERSONA_SLUG），不报错——人格缺失不该打断对话。
+    """
+    persona = await persona_store.get_persona(db, slug)
+    if persona is None:
+        persona = await persona_store.get_persona(
+            db, persona_store.DEFAULT_PERSONA_SLUG
+        )
+    if persona is None:
+        return {"error": "no persona templates available"}
+    return {
+        "slug": persona["slug"],
+        "name": persona["name"],
+        "prompt_block": persona_store.render_for_prompt(persona),
     }
 
 
@@ -633,6 +657,14 @@ class GetKCInfoReq(BaseModel):
     kc_id: str
 
 
+class ListPersonasReq(BaseModel):
+    pass
+
+
+class GetPersonaReq(BaseModel):
+    slug: str
+
+
 class GetReviewQueueReq(BaseModel):
     student_id: uuid.UUID
     kc_ids: list[str]
@@ -721,6 +753,25 @@ async def mcp_get_kc_info(
 ) -> dict:
     # 非学生数据（KC 名/rubric），但仍要求登录：/mcp 已公网，统一"须登录"闸门。
     return await tool_get_kc_info(db, req.kc_id)
+
+
+@router.post("/ListPersonas")
+async def mcp_list_personas(
+    req: ListPersonasReq,
+    db: AsyncSession = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+) -> dict:
+    # 非学生数据（人格模板是全局固定预设），但仍要求登录：/mcp 已公网，统一"须登录"闸门。
+    return await tool_list_personas(db)
+
+
+@router.post("/GetPersona")
+async def mcp_get_persona(
+    req: GetPersonaReq,
+    db: AsyncSession = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+) -> dict:
+    return await tool_get_persona(db, req.slug)
 
 
 @router.post("/CheckMastery")
