@@ -203,6 +203,7 @@ async def _llm_generate_question(kc_name: str) -> Optional[dict]:
             ],
             max_tokens=512,
             response_format="json",
+            enable_thinking=False,  # 出题无需思维链；避免 qwen3.x 思考模型拖慢出题(AA.8 同理)
         )
         data = _json.loads(out.get("content", "{}"))
         if data.get("prompt") and data.get("answer"):
