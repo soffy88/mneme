@@ -1,10 +1,14 @@
 """tutor_loop — W2a S2 引擎装配（架构 A，FC-6 合规，无 oservi 改动）。
 
 用 oservi 真引擎 ``oservi.agentic_loop.AgenticLoop``（on_demand 多步 ReAct ``.session()``），
-经其**实例** ``.assemble()`` 注入 llm_caller + 8 callable：
-  · 7 MCP 工具（NextObjective / GetKCInfo / CheckMastery / GetReviewQueue /
-    PoseQuestion / SubmitAnswer / ReportResult）经 **HTTP** ``/mcp/*`` 触达；
+经其**实例** ``.assemble()`` 注入 llm_caller + 10 callable：
+  · 9 MCP 工具（NextObjective / GetKCInfo / CheckMastery / GetReviewQueue /
+    PoseQuestion / SubmitAnswer / ReportResult / RecallMemory / RememberEpisode，
+    C5 起加 Recall/Remember）经 **HTTP** ``/mcp/*`` 触达；
   · t_assess_explanation：本地跑 mneme-core ``qualitative_verifier``（注入 verifier_llm）。
+
+Recall/RememberEpisode（C5）：memory 是呈现层上下文，不进门控判据——两个工具只读写
+`agent.*` schema，与 kc_mastery/gate.* 无关，不影响任何过门判定。
 
 **agent 进程零 mneme-DB**：本模块无任何 DB import，工具全走 HTTP（FC-5）。
 
@@ -169,6 +173,24 @@ def build_tools(
             "evidence": verdict.to_evidence(),
         }
 
+    async def recall_memory(inp: dict) -> Any:
+        """C5：召回呈现层记忆上下文（不影响门控/判分）。"""
+        return await _call(
+            "RecallMemory", {"student_id": student_id, "topic": inp.get("topic")}
+        )
+
+    async def remember_episode(inp: dict) -> Any:
+        """C5：记一条 episodic 记忆（只增不改）。"""
+        return await _call(
+            "RememberEpisode",
+            {
+                "student_id": student_id,
+                "kind": inp["kind"],
+                "content": inp["content"],
+                "session_id": inp.get("session_id"),
+            },
+        )
+
     def _spec(fn, name, desc, props, required, readonly=False) -> ToolSpec:
         return ToolSpec(
             name=name,
@@ -254,6 +276,25 @@ def build_tools(
             "对开放自我解释按 rubric 定性评判 + evidence_spans 锚定",
             {"kc_id": {"type": "string"}, "explanation": {"type": "string"}},
             ["kc_id", "explanation"],
+        ),
+        _spec(
+            recall_memory,
+            "RecallMemory",
+            "召回该学生的呈现层记忆背景（不影响门控/判分，仅供对话参考）",
+            {"topic": {"type": "string"}},
+            [],
+            readonly=True,
+        ),
+        _spec(
+            remember_episode,
+            "RememberEpisode",
+            "记一条本轮对话的记忆（只增不改，供后续沉淀摘要用）",
+            {
+                "kind": {"type": "string"},
+                "content": {"type": "object"},
+                "session_id": {"type": "string"},
+            },
+            ["kind", "content"],
         ),
     ]
 

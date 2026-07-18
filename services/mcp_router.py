@@ -39,7 +39,7 @@ from mneme_core.oskill.quiz_generator import quiz_generator
 from mneme_core.service.verdict_guard import GuardRejection, enforce
 
 from obase.db import get_db
-from services import gate_store, persona_store
+from services import gate_store, memory, persona_store
 from services.auth_deps import (
     _ensure_student_access,
     _ensure_student_self,
@@ -220,6 +220,31 @@ async def tool_get_persona(db: AsyncSession, slug: str) -> dict:
         "name": persona["name"],
         "prompt_block": persona_store.render_for_prompt(persona),
     }
+
+
+async def tool_recall_memory(
+    db: AsyncSession, student_id: uuid.UUID, topic: Optional[str] = None
+) -> dict:
+    """C5：召回呈现层记忆上下文（agent.semantic_memory），供 loop 拼进对话背景。
+
+    红线：memory 是呈现层上下文，不进门控判据——本工具只读 agent.* schema，
+    与 kc_mastery/gate.* 完全无关，返回值不影响任何过门判定。
+    """
+    return await memory.recall(db, student_id, topic=topic)
+
+
+async def tool_remember_episode(
+    db: AsyncSession,
+    student_id: uuid.UUID,
+    *,
+    kind: str,
+    content: dict,
+    session_id: Optional[str] = None,
+) -> dict:
+    """C5：写一条 episodic 记忆（只增不改），供 loop 记录"这轮聊了什么"。"""
+    return await memory.append_episode(
+        db, student_id, kind=kind, content=content, session_id=session_id
+    )
 
 
 async def tool_check_mastery(
@@ -665,6 +690,18 @@ class GetPersonaReq(BaseModel):
     slug: str
 
 
+class RecallMemoryReq(BaseModel):
+    student_id: uuid.UUID
+    topic: Optional[str] = None
+
+
+class RememberEpisodeReq(BaseModel):
+    student_id: uuid.UUID
+    kind: str
+    content: dict
+    session_id: Optional[str] = None
+
+
 class GetReviewQueueReq(BaseModel):
     student_id: uuid.UUID
     kc_ids: list[str]
@@ -772,6 +809,32 @@ async def mcp_get_persona(
     current_user: User = Depends(get_current_user),
 ) -> dict:
     return await tool_get_persona(db, req.slug)
+
+
+@router.post("/RecallMemory")
+async def mcp_recall_memory(
+    req: RecallMemoryReq,
+    db: AsyncSession = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+) -> dict:
+    await _ensure_student_access(db, current_user, req.student_id)
+    return await tool_recall_memory(db, req.student_id, req.topic)
+
+
+@router.post("/RememberEpisode")
+async def mcp_remember_episode(
+    req: RememberEpisodeReq,
+    db: AsyncSession = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+) -> dict:
+    _ensure_student_self(current_user, req.student_id)
+    return await tool_remember_episode(
+        db,
+        req.student_id,
+        kind=req.kind,
+        content=req.content,
+        session_id=req.session_id,
+    )
 
 
 @router.post("/CheckMastery")

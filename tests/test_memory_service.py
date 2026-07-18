@@ -14,7 +14,15 @@ import pytest
 from sqlalchemy import text
 
 from obase.db import SessionLocal
-from services.memory import audit, dedup, merge, update
+from services.memory import (
+    append_episode,
+    audit,
+    cleanup_expired_working_memory,
+    dedup,
+    merge,
+    recall,
+    update,
+)
 
 
 async def _insert_episodic(db, *, student_id, session_id, kind, content, created_at):
@@ -282,3 +290,200 @@ async def test_update_overwrites_content():
             .first()
         )
         assert row["content"] == {"summary": "v2"}
+
+
+# —— C5 follow-ups：append_episode / recall / TTL 清理 / merge 接 LLM ——
+
+
+@pytest.mark.asyncio
+async def test_append_episode_creates_row_and_returns_id():
+    async with SessionLocal() as db:
+        sid = uuid.uuid4()
+        result = await append_episode(
+            db, sid, kind="tutor_turn", content={"note": "a"}, session_id="s1"
+        )
+        assert result["kind"] == "tutor_turn"
+        assert result["id"]
+
+        row = (
+            (
+                await db.execute(
+                    text(
+                        "SELECT kind, content, session_id FROM agent.episodic_memory "
+                        "WHERE id = CAST(:id AS uuid)"
+                    ),
+                    {"id": result["id"]},
+                )
+            )
+            .mappings()
+            .first()
+        )
+        assert row["kind"] == "tutor_turn"
+        assert row["content"] == {"note": "a"}
+        assert row["session_id"] == "s1"
+
+
+@pytest.mark.asyncio
+async def test_recall_by_topic_and_default_recent():
+    async with SessionLocal() as db:
+        sid = uuid.uuid4()
+        await update(db, sid, topic="algebra", content={"summary": "s1"})
+        await update(db, sid, topic="geometry", content={"summary": "s2"})
+
+        by_topic = await recall(db, sid, topic="algebra")
+        assert by_topic["memories"] == [
+            {"topic": "algebra", "content": {"summary": "s1"}}
+        ]
+
+        recent = await recall(db, sid)
+        assert {m["topic"] for m in recent["memories"]} == {"algebra", "geometry"}
+
+
+@pytest.mark.asyncio
+async def test_recall_unknown_topic_returns_empty():
+    async with SessionLocal() as db:
+        result = await recall(db, uuid.uuid4(), topic="no-such-topic")
+        assert result["memories"] == []
+
+
+@pytest.mark.asyncio
+async def test_cleanup_expired_working_memory_deletes_only_expired():
+    async with SessionLocal() as db:
+        sid = uuid.uuid4()
+        now = datetime.now(timezone.utc)
+        await db.execute(
+            text(
+                "INSERT INTO agent.working_memory "
+                "(student_id, session_id, content, expires_at) "
+                "VALUES (CAST(:sid AS uuid), 's1', CAST(:c AS jsonb), :expires)"
+            ),
+            {
+                "sid": str(sid),
+                "c": json.dumps({"expired": True}),
+                "expires": now - timedelta(minutes=1),
+            },
+        )
+        await db.execute(
+            text(
+                "INSERT INTO agent.working_memory "
+                "(student_id, session_id, content, expires_at) "
+                "VALUES (CAST(:sid AS uuid), 's1', CAST(:c AS jsonb), :expires)"
+            ),
+            {
+                "sid": str(sid),
+                "c": json.dumps({"expired": False}),
+                "expires": now + timedelta(hours=1),
+            },
+        )
+
+        result = await cleanup_expired_working_memory(db)
+        assert result["deleted_count"] >= 1
+
+        remaining = (
+            (
+                await db.execute(
+                    text(
+                        "SELECT content FROM agent.working_memory "
+                        "WHERE student_id = CAST(:sid AS uuid)"
+                    ),
+                    {"sid": str(sid)},
+                )
+            )
+            .mappings()
+            .all()
+        )
+        assert [r["content"] for r in remaining] == [{"expired": False}]
+
+
+@pytest.mark.asyncio
+async def test_merge_without_llm_has_no_summary_field_backward_compatible():
+    async with SessionLocal() as db:
+        sid = uuid.uuid4()
+        ep = await append_episode(db, sid, kind="tutor_turn", content={"note": "a"})
+        result = await merge(
+            db, sid, topic="algebra", episodic_ids=[uuid.UUID(ep["id"])]
+        )
+        assert result["summary"] is None
+
+        row = (
+            (
+                await db.execute(
+                    text(
+                        "SELECT content FROM agent.semantic_memory "
+                        "WHERE student_id = CAST(:sid AS uuid) AND topic = 'algebra'"
+                    ),
+                    {"sid": str(sid)},
+                )
+            )
+            .mappings()
+            .first()
+        )
+        assert "summary" not in row["content"]
+
+
+@pytest.mark.asyncio
+async def test_merge_with_llm_generates_and_updates_summary():
+    calls: list[str] = []
+
+    async def fake_llm(prompt: str) -> str:
+        calls.append(prompt)
+        return f"摘要版本{len(calls)}"
+
+    async with SessionLocal() as db:
+        sid = uuid.uuid4()
+        ep1 = await append_episode(
+            db, sid, kind="tutor_turn", content={"note": "第一次"}
+        )
+        r1 = await merge(
+            db, sid, topic="algebra", episodic_ids=[uuid.UUID(ep1["id"])], llm=fake_llm
+        )
+        assert r1["summary"] == "摘要版本1"
+        assert "（无）" in calls[0]  # 首次合并，无既有摘要
+
+        ep2 = await append_episode(
+            db, sid, kind="tutor_turn", content={"note": "第二次"}
+        )
+        r2 = await merge(
+            db, sid, topic="algebra", episodic_ids=[uuid.UUID(ep2["id"])], llm=fake_llm
+        )
+        assert r2["summary"] == "摘要版本2"
+        assert "摘要版本1" in calls[1]  # 第二次合并，prompt 里带上一版摘要
+
+
+@pytest.mark.asyncio
+async def test_merge_with_llm_failure_does_not_block_merge():
+    async def broken_llm(prompt: str) -> str:
+        del prompt
+        raise RuntimeError("network down")
+
+    async with SessionLocal() as db:
+        sid = uuid.uuid4()
+        ep = await append_episode(db, sid, kind="tutor_turn", content={"note": "a"})
+        result = await merge(
+            db, sid, topic="algebra", episodic_ids=[uuid.UUID(ep["id"])], llm=broken_llm
+        )
+        assert result["matched_count"] == 1  # 机械合并仍成功
+        assert result["summary"] is None  # 只是没有摘要
+
+
+@pytest.mark.asyncio
+async def test_merge_with_llm_no_new_rows_skips_llm_call():
+    calls: list[str] = []
+
+    async def fake_llm(prompt: str) -> str:
+        calls.append(prompt)
+        return "不该被调用"
+
+    async with SessionLocal() as db:
+        sid = uuid.uuid4()
+        ep = await append_episode(db, sid, kind="tutor_turn", content={"note": "a"})
+        await merge(
+            db, sid, topic="algebra", episodic_ids=[uuid.UUID(ep["id"])], llm=fake_llm
+        )
+        calls.clear()
+        # 重复传同一个已合并过的 id：无新增行，不该再调 LLM
+        result = await merge(
+            db, sid, topic="algebra", episodic_ids=[uuid.UUID(ep["id"])], llm=fake_llm
+        )
+        assert calls == []
+        assert result["summary"] == "不该被调用"  # 保留上一轮的摘要，未被清空

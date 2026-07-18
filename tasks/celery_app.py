@@ -17,6 +17,7 @@ celery_app = Celery(
         "tasks.evaluation_tasks",
         "tasks.alert_tasks",
         "tasks.purge_tasks",
+        "tasks.memory_tasks",
     ],
 )
 celery_app.conf.update(
@@ -51,6 +52,12 @@ celery_app.conf.update(
         "daily-purge-deleted-users": {
             "task": "tasks.purge_deleted_users",
             "schedule": crontab(hour=4, minute=30),
+        },
+        # 每日 04:00 清理过期的 agent.working_memory（C5：working-memory 短期上下文
+        # 只按 expires_at 惰性判断可读性，仍需定期物理清理，避免无限增长）。
+        "daily-cleanup-expired-working-memory": {
+            "task": "tasks.cleanup_expired_working_memory",
+            "schedule": crontab(hour=4, minute=0),
         },
     },
 )
