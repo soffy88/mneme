@@ -264,9 +264,18 @@ from fastapi.middleware.cors import CORSMiddleware
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[
-        "https://mneme.uex.hk",
+        "https://sxueji.com",
+        "https://mneme.kanpan.co",
         "http://localhost:3000",
         "http://localhost:3001",
+        "http://localhost:3002",
+        "http://localhost:3003",
+        "http://localhost:3004",
+        "http://localhost:3005",
+        "http://localhost:3006",
+        "http://localhost:3007",
+        "http://localhost:3008",
+        "http://localhost:3009",
         "http://localhost:5173",
     ],
     allow_credentials=True,
@@ -1646,6 +1655,11 @@ async def get_parent_overview(
         )
     else:
         headline = "刚开始建立学习档案，做几道题就能看到进步"
+
+    from oprim.learner_profile_summary import get_latest_learner_profile
+
+    learner_profile = await get_latest_learner_profile(db, student_id)
+
     return {
         # 进步优先：headline + 掌握/坚持在前
         "headline": headline,
@@ -1655,6 +1669,7 @@ async def get_parent_overview(
         # 需关注项在后（不是首屏主角）
         "weak_kc_count": len(weak_kc),
         "recent_sessions": len(recent_sessions),
+        "learner_profile": learner_profile,
     }
 
 
@@ -1801,6 +1816,7 @@ async def list_question_bank(
     subject: Optional[str] = Query(None),
     needs_image: Optional[bool] = Query(None),
     ku_id: Optional[str] = Query(None),
+    student_id: Optional[UUID] = Query(None),
     limit: int = Query(50, le=200),
     offset: int = Query(0),
     db: AsyncSession = Depends(get_db),
@@ -1822,12 +1838,24 @@ async def list_question_bank(
     total_stmt = select(func.count()).select_from(stmt.subquery())
     total = (await db.execute(total_stmt)).scalar_one()
 
+    # ── 难度自适应排序 (ZPD Band) ──
+    from services.learner_model import get_mastery, get_zpd_band
+
+    order_clause = WrongQuestion.created_at
+    if student_id and ku_id:
+        mastery_info = await get_mastery(db, student_id, ku_id)
+        p = mastery_info.get("p")
+        if p is not None:
+            zpd = get_zpd_band(p)
+            target = (zpd["difficulty_min"] + zpd["difficulty_max"]) / 2.0
+            # 使用 Postgres ABS 计算与目标难度的距离。未校准的题目 (item_difficulty IS NULL) 当作距离很远
+            # 按距离升序排列，越接近 target 的题越排在前面
+            order_clause = func.coalesce(
+                func.abs(WrongQuestion.item_difficulty - target), 999.0
+            ).asc()
+
     rows = (
-        (
-            await db.execute(
-                stmt.order_by(WrongQuestion.created_at).offset(offset).limit(limit)
-            )
-        )
+        (await db.execute(stmt.order_by(order_clause).offset(offset).limit(limit)))
         .scalars()
         .all()
     )
@@ -1890,6 +1918,18 @@ async def post_practice_generate(
         ku_name = ku.name or ku_id
         ku_description = ku.description or ""
     sid = student_id or uuid.uuid4()
+
+    # ── 难度自适应出题 ──
+    # 如果指定了学生，查其该题知识点的掌握度来覆写 difficulty
+    if student_id:
+        from services.learner_model import get_mastery, get_zpd_band
+
+        mastery_info = await get_mastery(db, student_id, ku_id)
+        p = mastery_info.get("p")
+        if p is not None:
+            zpd = get_zpd_band(p)
+            difficulty = (zpd["difficulty_min"] + zpd["difficulty_max"]) / 2.0
+
     result = await practice_workflow(
         config=PracticeConfig(
             kc_id=ku_id,
@@ -2890,6 +2930,29 @@ async def post_instant_solve(
         # 不把内部异常原文回给客户端（可能泄露栈/连接串/内核细节），只记服务端日志。
         logger.error("instant-solve failed for %s: %s", current_user.id, e)
         raise HTTPException(status_code=500, detail="随手拍解析失败，请稍后重试")
+
+
+class DeepSolveReq(BaseModel):
+    problem_text: str
+
+
+@app.post("/v1/deep-solve")
+async def post_deep_solve(
+    req: DeepSolveReq,
+    current_user: User = Depends(get_current_user),
+):
+    """
+    POST /v1/deep-solve
+    深度解题多步推理：分析题目、提取考点、给出路线图。
+    """
+    from services.instant_solve_service import handle_deep_solve
+
+    try:
+        result = await handle_deep_solve(req.problem_text)
+        return {"ok": True, "data": result}
+    except Exception as e:
+        logger.error("deep-solve failed for %s: %s", current_user.id, e)
+        raise HTTPException(status_code=500, detail="深度推理解析失败，请稍后重试")
 
 
 # ===== §Review Due Variants =====
@@ -3995,6 +4058,84 @@ def _rn_dict(rn: ReadingNote) -> dict:
         "created_at": rn.created_at.isoformat(),
         "updated_at": rn.updated_at.isoformat(),
     }
+
+
+# ── 教材 RAG 问答（DeepTutor 增强） ────────────────────────────────────────
+
+from services.textbook_qa_service import (
+    index_textbook_file,
+    start_textbook_qa_session,
+    textbook_qa_stream,
+)
+from fastapi.responses import StreamingResponse
+
+
+@app.post("/v1/textbook-kb/index/{file_id}")
+async def index_textbook_for_rag(
+    file_id: str,
+    current_user: User = Depends(get_current_user),
+    db: AsyncSession = Depends(get_db),
+):
+    """(管理员/测试用) 触发教材建库。"""
+    tf = (
+        await db.execute(select(TextbookFile).where(TextbookFile.id == file_id))
+    ).scalar_one_or_none()
+    if not tf:
+        raise HTTPException(status_code=404, detail="文件不存在")
+
+    # 获取源文件
+    from services.storage import get_file
+
+    storage_prefix = os.environ.get("STORAGE_LOCAL_DIR", "/tmp/mneme_storage")
+    file_path = os.path.join(storage_prefix, tf.storage_path)
+
+    if not os.path.exists(file_path):
+        raise HTTPException(status_code=404, detail="文件实体不存在")
+
+    with open(file_path, "rb") as f:
+        file_data = f.read()
+
+    return await index_textbook_file(
+        db, file_id=file_id, file_data=file_data, file_type=tf.file_type
+    )
+
+
+class TextbookQARequest(BaseModel):
+    file_id: str
+    question: str
+
+
+@app.post("/v1/textbook-files/{file_id}/qa")
+async def start_textbook_qa(
+    file_id: str,
+    req: TextbookQARequest,
+    current_user: User = Depends(get_current_user),
+    db: AsyncSession = Depends(get_db),
+):
+    # 鉴权
+    tf = (
+        await db.execute(select(TextbookFile).where(TextbookFile.id == file_id))
+    ).scalar_one_or_none()
+    if not tf:
+        raise HTTPException(status_code=404)
+
+    return await start_textbook_qa_session(
+        db, file_id=file_id, student_id=current_user.id, first_question=req.question
+    )
+
+
+@app.post("/v1/textbook-files/qa/{session_id}/message")
+async def continue_textbook_qa(
+    session_id: uuid.UUID,
+    req: dict = Body(...),
+    current_user: User = Depends(get_current_user),
+    db: AsyncSession = Depends(get_db),
+):
+    student_message = req.get("message", "")
+    return StreamingResponse(
+        textbook_qa_stream(db, session_id=session_id, student_message=student_message),
+        media_type="text/event-stream",
+    )
 
 
 # ── 前端静态文件（SPA，最后挂载） ─────────────────────────────────────────
