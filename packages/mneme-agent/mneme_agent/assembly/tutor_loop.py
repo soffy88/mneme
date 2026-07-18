@@ -1,14 +1,16 @@
 """tutor_loop — W2a S2 引擎装配（架构 A，FC-6 合规，无 oservi 改动）。
 
 用 oservi 真引擎 ``oservi.agentic_loop.AgenticLoop``（on_demand 多步 ReAct ``.session()``），
-经其**实例** ``.assemble()`` 注入 llm_caller + 10 callable：
-  · 9 MCP 工具（NextObjective / GetKCInfo / CheckMastery / GetReviewQueue /
-    PoseQuestion / SubmitAnswer / ReportResult / RecallMemory / RememberEpisode，
-    C5 起加 Recall/Remember）经 **HTTP** ``/mcp/*`` 触达；
+经其**实例** ``.assemble()`` 注入 llm_caller + 11 callable：
+  · 10 MCP 工具（NextObjective / GetKCInfo / CheckMastery / GetReviewQueue /
+    PoseQuestion / SubmitAnswer / ReportResult / RecallMemory / RememberEpisode /
+    SearchKnowledgeBase，C5 起加 Recall/Remember、C4 起加 SearchKnowledgeBase）
+    经 **HTTP** ``/mcp/*`` 触达；
   · t_assess_explanation：本地跑 mneme-core ``qualitative_verifier``（注入 verifier_llm）。
 
-Recall/RememberEpisode（C5）：memory 是呈现层上下文，不进门控判据——两个工具只读写
-`agent.*` schema，与 kc_mastery/gate.* 无关，不影响任何过门判定。
+Recall/RememberEpisode（C5）/SearchKnowledgeBase（C4）：memory/RAG 都是呈现层上下文，
+不进门控判据——三个工具只读写 `agent.*` schema 或代理 Stratum 检索，与
+kc_mastery/gate.* 无关，不影响任何过门判定。
 
 **agent 进程零 mneme-DB**：本模块无任何 DB import，工具全走 HTTP（FC-5）。
 
@@ -191,6 +193,13 @@ def build_tools(
             },
         )
 
+    async def search_knowledge_base(inp: dict) -> Any:
+        """C4：检索 Stratum 知识库素材（呈现层，不影响门控/判分）。"""
+        return await _call(
+            "SearchKnowledgeBase",
+            {"query": inp["query"], "top_k": inp.get("top_k", 5)},
+        )
+
     def _spec(fn, name, desc, props, required, readonly=False) -> ToolSpec:
         return ToolSpec(
             name=name,
@@ -295,6 +304,18 @@ def build_tools(
                 "session_id": {"type": "string"},
             },
             ["kind", "content"],
+        ),
+        _spec(
+            search_knowledge_base,
+            "SearchKnowledgeBase",
+            "检索 Stratum 知识库素材（呈现层参考，不影响门控/判分；Stratum 不可用时"
+            "返回空列表）",
+            {
+                "query": {"type": "string"},
+                "top_k": {"type": "integer"},
+            },
+            ["query"],
+            readonly=True,
         ),
     ]
 

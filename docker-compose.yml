@@ -61,6 +61,9 @@ services:
     ports:
       - "8000:8000"
     environment:
+      # ②-0 打包：mneme-core（Phase1 门控内核 7 元素之家）加入 import 路径。
+      # 现经 PYTHONPATH 验证整条链；稳定后再固化为 Dockerfile pip install（与 obase/oprim 平价）。
+      PYTHONPATH: /app:/app/packages/mneme-core
       DATABASE_URL: postgresql+asyncpg://postgres:postgres@db:5432/mneme
       REDIS_URL: redis://redis:6379/0
       MINIO_ENDPOINT: minio:9000
@@ -91,6 +94,12 @@ services:
       QWEN_BASE_URL: ${QWEN_BASE_URL:-}
       QWEN_MODEL: ${QWEN_MODEL:-qwen-plus}
       QWEN_VL_MODEL: ${QWEN_VL_MODEL:-qwen-vl-max}
+      # Stratum 检索接入（C4/W2C）：专用 service 账号（非用户个人账号），HTTP 走
+      # docker network（mneme-api-1 已 connect stratum-net）。未配则 rag_client
+      # 静默返回空列表，不阻断对话（呈现层素材，缺失不该打断）。
+      STRATUM_BASE_URL: ${STRATUM_BASE_URL:-}
+      STRATUM_SERVICE_EMAIL: ${STRATUM_SERVICE_EMAIL:-}
+      STRATUM_SERVICE_PASSWORD: ${STRATUM_SERVICE_PASSWORD:-}
     extra_hosts:
       - "host.docker.internal:host-gateway"
     volumes:
@@ -98,6 +107,7 @@ services:
     networks:
       - default
       - helios-net
+      - stratum-net
     healthcheck:
       # /health 现在真打 DB（SELECT 1），不再是恒 ok 的静态桩——能反映真实就绪度。
       test: ["CMD", "python3", "-c", "import urllib.request,sys; sys.exit(0 if urllib.request.urlopen('http://localhost:8000/health').status==200 else 1)"]
@@ -120,7 +130,7 @@ services:
     restart: always
     command: celery -A tasks.celery_app worker --loglevel=info --concurrency=2
     environment:
-      PYTHONPATH: /app
+      PYTHONPATH: /app:/app/packages/mneme-core
       DATABASE_URL: postgresql+asyncpg://postgres:postgres@db:5432/mneme
       REDIS_URL: redis://redis:6379/0
       MINIO_ENDPOINT: minio:9000
@@ -158,7 +168,7 @@ services:
     restart: always
     command: celery -A tasks.celery_app beat --loglevel=info --schedule=/tmp/celerybeat-schedule
     environment:
-      PYTHONPATH: /app
+      PYTHONPATH: /app:/app/packages/mneme-core
       DATABASE_URL: postgresql+asyncpg://postgres:postgres@db:5432/mneme
       REDIS_URL: redis://redis:6379/0
       MINIO_ENDPOINT: minio:9000
@@ -178,6 +188,10 @@ services:
 networks:
   default:
   helios-net:
+    external: true
+  # C4/W2C：Stratum 检索接入。stratum-net 由 Stratum 自己的 docker compose 建，这里
+  # 只声明为外部网络供 api 服务加入——不改 Stratum 的 compose、不重复建网络。
+  stratum-net:
     external: true
 
 # 外部命名卷：数据显式持久化，且 **`docker compose down -v` 也删不掉**（外部卷不受 compose 管理）。

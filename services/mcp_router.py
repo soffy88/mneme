@@ -39,7 +39,7 @@ from mneme_core.oskill.quiz_generator import quiz_generator
 from mneme_core.service.verdict_guard import GuardRejection, enforce
 
 from obase.db import get_db
-from services import gate_store, memory, persona_store
+from services import gate_store, memory, persona_store, rag_client
 from services.auth_deps import (
     _ensure_student_access,
     _ensure_student_self,
@@ -245,6 +245,15 @@ async def tool_remember_episode(
     return await memory.append_episode(
         db, student_id, kind=kind, content=content, session_id=session_id
     )
+
+
+async def tool_search_knowledge_base(query: str, top_k: int = 5) -> dict:
+    """C4：检索 Stratum 知识库素材，供 loop 拼进对话背景（呈现层，不进门控判据）。
+
+    不需要 db——不碰 mneme 任何表，纯代理转发给 rag_client（Stratum 侧才有状态）。
+    Stratum 不可用（无凭据/网络失败）→ results 为空列表，不报错，不阻断对话。
+    """
+    return {"results": await rag_client.search(query, top_k=top_k)}
 
 
 async def tool_check_mastery(
@@ -702,6 +711,11 @@ class RememberEpisodeReq(BaseModel):
     session_id: Optional[str] = None
 
 
+class SearchKnowledgeBaseReq(BaseModel):
+    query: str
+    top_k: int = 5
+
+
 class GetReviewQueueReq(BaseModel):
     student_id: uuid.UUID
     kc_ids: list[str]
@@ -835,6 +849,15 @@ async def mcp_remember_episode(
         content=req.content,
         session_id=req.session_id,
     )
+
+
+@router.post("/SearchKnowledgeBase")
+async def mcp_search_knowledge_base(
+    req: SearchKnowledgeBaseReq,
+    current_user: User = Depends(get_current_user),
+) -> dict:
+    # 非学生数据（共享知识库检索）——不碰 db，只要求登录（同 ListPersonas 惯例）。
+    return await tool_search_knowledge_base(req.query, req.top_k)
 
 
 @router.post("/CheckMastery")
