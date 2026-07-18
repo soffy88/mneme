@@ -2,7 +2,10 @@
 
 由 harness 以剥离 DB 凭据的 env（+ PGAPPNAME=mneme-agent 标记）spawn。本进程无任何 DB
 import——只 build_tutor_loop（oservi + mneme_core 纯库）+ 复用 e2e 的 scripted caller。
-argv: <student_id> <api_base> <kc_ids_csv>；exit 0 iff session status=="completed"。
+argv: <student_id> <api_base> <kc_ids_csv> <auth_token>；exit 0 iff session status=="completed"。
+
+auth_token 由 harness（有 DB、已建 pilot 学生）现铸后经 argv 转发——跟真实场景一致
+（学生自己的 token 转发给 agent，agent 不自己铸造凭据）；AA.1 起 /mcp/* 要求 JWT。
 """
 
 import asyncio
@@ -17,7 +20,12 @@ import test_tutor_loop_e2e as T  # noqa: E402  复用 scripted caller / verifier
 
 
 def main() -> None:
-    student_id, api_base, kcs_csv = sys.argv[1], sys.argv[2], sys.argv[3]
+    student_id, api_base, kcs_csv, auth_token = (
+        sys.argv[1],
+        sys.argv[2],
+        sys.argv[3],
+        sys.argv[4],
+    )
     kc_ids = kcs_csv.split(",")
     loop = build_tutor_loop(
         api_base=api_base,
@@ -25,6 +33,7 @@ def main() -> None:
         kc_ids=kc_ids,
         llm_caller=T._make_caller(),
         verifier_llm=T._make_verifier_llm(),
+        auth_token=auth_token,
         max_iterations=150,
     )
     r = asyncio.run(loop.session(task="帮我把这三条 KC 学到过门"))

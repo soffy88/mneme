@@ -206,6 +206,8 @@ async def test_engine_driven_three_stakes_reach_complete():
     from obase.db import SessionLocal
     from services.models import User, UserRole
 
+    from obase.auth import create_access_token
+
     sid = uuid.uuid4()
     async with SessionLocal() as db:  # harness 建 pilot（agent 零 DB）
         db.add(User(id=sid, phone=f"t{sid.hex[:10]}", role=UserRole.student))
@@ -217,6 +219,8 @@ async def test_engine_driven_three_stakes_reach_complete():
             kc_ids=KC_IDS,
             llm_caller=_make_caller(),
             verifier_llm=_make_verifier_llm(),
+            # AA.1 起 /mcp/* 要求 JWT；harness 现铸该学生自己的 token 转发给工具调用。
+            auth_token=create_access_token({"sub": str(sid)}),
             max_iterations=150,
         )
         result = await loop.session(task="帮我把这三条 KC 学到过门")

@@ -63,6 +63,8 @@ async def _agent_backends() -> int:
 
 @pytest.mark.asyncio
 async def test_agent_process_zero_db_connection():
+    from obase.auth import create_access_token
+
     sid = uuid.uuid4()
     async with SessionLocal() as db:  # harness 建 pilot
         db.add(User(id=sid, phone=f"t{sid.hex[:10]}", role=UserRole.student))
@@ -70,8 +72,11 @@ async def test_agent_process_zero_db_connection():
     try:
         env = {k: v for k, v in os.environ.items() if k not in _STRIP}
         env["PGAPPNAME"] = "mneme-agent"  # 若 agent 真连库，会以此 app_name 现形
+        # AA.1 起 /mcp/* 要求 JWT；harness（有 DB）现铸该学生自己的 token 经 argv 转发
+        # 给零 DB 的 subprocess——跟真实场景一致（学生自己的 token 转发，agent 不铸造）。
+        token = create_access_token({"sub": str(sid)})
         proc = subprocess.Popen(
-            [sys.executable, RUNNER, str(sid), API_BASE, ",".join(KC_IDS)],
+            [sys.executable, RUNNER, str(sid), API_BASE, ",".join(KC_IDS), token],
             env=env,
             stdout=subprocess.PIPE,
             stderr=subprocess.PIPE,

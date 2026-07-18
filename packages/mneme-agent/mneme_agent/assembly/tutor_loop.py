@@ -39,21 +39,32 @@ LoopLLM = Callable[..., Awaitable[dict]]
 # ── HTTP 工具客户端（零 DB，纯 HTTP，同步调用包进线程）──────────────────────
 
 
-def _post_sync(url: str, payload: dict) -> dict:
+def _post_sync(url: str, payload: dict, auth_token: Optional[str] = None) -> dict:
+    headers = {"Content-Type": "application/json"}
+    if auth_token:
+        headers["Authorization"] = f"Bearer {auth_token}"
     req = urllib.request.Request(
         url,
         data=json.dumps(payload, ensure_ascii=False).encode("utf-8"),
-        headers={"Content-Type": "application/json"},
+        headers=headers,
         method="POST",
     )
     with urllib.request.urlopen(req, timeout=30) as r:
         return json.loads(r.read().decode("utf-8"))
 
 
-async def _mcp(api_base: str, tool: str, payload: dict) -> dict:
-    """POST {api_base}/mcp/{tool}；422（guard 三拒）等经异常体返回给 LLM 观察。"""
+async def _mcp(
+    api_base: str, tool: str, payload: dict, *, auth_token: Optional[str] = None
+) -> dict:
+    """POST {api_base}/mcp/{tool}；422（guard 三拒）等经异常体返回给 LLM 观察。
+
+    auth_token：/mcp/* 自 AA.1 起每端点要求 JWT（关 IDOR）；不带 token 一律 401。
+    调用方（build_tools）把发起这轮会话的学生自己的 token 绑进闭包传下来。
+    """
     try:
-        return await asyncio.to_thread(_post_sync, f"{api_base}/mcp/{tool}", payload)
+        return await asyncio.to_thread(
+            _post_sync, f"{api_base}/mcp/{tool}", payload, auth_token
+        )
     except urllib.error.HTTPError as e:  # noqa: PERF203
         body = e.read().decode("utf-8", "replace")
         return {"error": f"HTTP {e.code}", "detail": body}
@@ -68,30 +79,35 @@ def build_tools(
     student_id: str,
     kc_ids: list[str],
     verifier_llm: Optional[VerifierLLM] = None,
+    auth_token: Optional[str] = None,
 ) -> list[ToolSpec]:
-    """构造 8 个 ToolSpec。student_id/kc_ids/api_base 绑进闭包（会话上下文，不由 LLM 提供）。"""
+    """构造 8 个 ToolSpec。student_id/kc_ids/api_base/auth_token 绑进闭包（会话
+    上下文，不由 LLM 提供）。auth_token：/mcp/* 自 AA.1 起每端点要求 JWT，这里
+    传发起本轮会话的学生自己的 token（同一份，不单独铸造）。"""
+
+    async def _call(tool: str, payload: dict) -> Any:
+        return await _mcp(api_base, tool, payload, auth_token=auth_token)
 
     async def next_objective(inp: dict) -> Any:
-        return await _mcp(
-            api_base, "NextObjective", {"student_id": student_id, "kc_ids": kc_ids}
+        return await _call(
+            "NextObjective", {"student_id": student_id, "kc_ids": kc_ids}
         )
 
     async def get_kc_info(inp: dict) -> Any:
-        return await _mcp(api_base, "GetKCInfo", {"kc_id": inp["kc_id"]})
+        return await _call("GetKCInfo", {"kc_id": inp["kc_id"]})
 
     async def check_mastery(inp: dict) -> Any:
-        return await _mcp(
-            api_base, "CheckMastery", {"student_id": student_id, "kc_id": inp["kc_id"]}
+        return await _call(
+            "CheckMastery", {"student_id": student_id, "kc_id": inp["kc_id"]}
         )
 
     async def get_review_queue(inp: dict) -> Any:
-        return await _mcp(
-            api_base, "GetReviewQueue", {"student_id": student_id, "kc_ids": kc_ids}
+        return await _call(
+            "GetReviewQueue", {"student_id": student_id, "kc_ids": kc_ids}
         )
 
     async def pose_question(inp: dict) -> Any:
-        return await _mcp(
-            api_base,
+        return await _call(
             "PoseQuestion",
             {
                 "student_id": student_id,
@@ -104,8 +120,7 @@ def build_tools(
         )
 
     async def submit_answer(inp: dict) -> Any:
-        return await _mcp(
-            api_base,
+        return await _call(
             "SubmitAnswer",
             {
                 "student_id": student_id,
@@ -115,8 +130,7 @@ def build_tools(
         )
 
     async def report_result(inp: dict) -> Any:
-        return await _mcp(
-            api_base,
+        return await _call(
             "ReportResult",
             {
                 "student_id": student_id,
@@ -133,7 +147,7 @@ def build_tools(
         """本地定性评判：GetKCInfo 取 rubric → qualitative_verifier(注入 verifier_llm) → verdict。"""
         if verifier_llm is None:
             return {"error": "verifier_llm 未注入，无法定性评判"}
-        info = await _mcp(api_base, "GetKCInfo", {"kc_id": inp["kc_id"]})
+        info = await _call("GetKCInfo", {"kc_id": inp["kc_id"]})
         rubric_dict = info.get("rubric")
         if not rubric_dict:
             return {
@@ -251,15 +265,24 @@ def build_tutor_loop(
     kc_ids: list[str],
     llm_caller: LoopLLM,
     verifier_llm: Optional[VerifierLLM] = None,
+    auth_token: Optional[str] = None,
     max_iterations: int = 40,
     budget_usd: float = 5.0,
 ) -> AgenticLoop:
     """装配 on_demand tutor 引擎：真 oservi AgenticLoop + 实例 .assemble() 注入点校验。
 
+    auth_token：/mcp/* 自 AA.1 起每端点要求 JWT（关 IDOR），不带 token 工具调用一律
+    401。传发起本轮会话的学生自己的 token（调用方在鉴权时已拿到，这里只转发，不
+    单独铸造）。
+
     Returns 已装配、可 ``await loop.session(task=...)`` 的引擎。缺必填注入点 → ManifestValidationError。
     """
     tools = build_tools(
-        api_base, student_id=student_id, kc_ids=kc_ids, verifier_llm=verifier_llm
+        api_base,
+        student_id=student_id,
+        kc_ids=kc_ids,
+        verifier_llm=verifier_llm,
+        auth_token=auth_token,
     )
     from pathlib import Path
 

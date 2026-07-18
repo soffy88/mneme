@@ -246,6 +246,19 @@ except ImportError as _mcp_import_err:  # pragma: no cover
         "MCP 工具面未挂载（mneme-core 不可用）: %s", _mcp_import_err
     )
 
+# C1（W2C）chat 工作区。依赖 mneme-core + mneme-agent + oservi；未装时优雅降级
+# ——只是 /v1/chat/* 不可用，不拖垮整个 API（同 /mcp/* 的降级惯例）。
+try:
+    from services.chat_router import router as _chat_router
+
+    app.include_router(_chat_router)
+except ImportError as _chat_import_err:  # pragma: no cover
+    import logging as _logging
+
+    _logging.getLogger(__name__).warning(
+        "chat 工作区未挂载（mneme-agent/oservi 不可用）: %s", _chat_import_err
+    )
+
 from fastapi.middleware.cors import CORSMiddleware
 
 app.add_middleware(
