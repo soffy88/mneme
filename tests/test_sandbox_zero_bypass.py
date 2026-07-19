@@ -21,39 +21,18 @@ from __future__ import annotations
 
 from pathlib import Path
 
+from obase.sandbox_selfcheck import (
+    AST_VALIDATED_ENTRY_POINTS,
+    EXPECTED_KERNELS,
+    NUMERIC_ONLY_KERNELS,
+    STRING_EVAL_KERNELS,
+)
+
 VENDOR_OPRIM = Path(__file__).resolve().parent.parent / "vendor" / "oprim"
 
-EXPECTED_KERNELS = {
-    "solve_conic.py",
-    "solve_derivative.py",
-    "solve_function.py",
-    "solve_geometry3d.py",
-    "solve_probability.py",
-    "solve_sequence.py",
-    "solve_trig.py",
-}
-
-# 纯数值 dataclass in/out，没有表达式字符串可做 AST 校验——真正风险是病态
-# 数值量级导致的 DoS（超大 n/k、超大内存分配），不是代码注入。走 run_isolated()
-# 复用 fork+timeout+内存上限，不做字符串 eval。
-NUMERIC_ONLY_KERNELS = {
-    "solve_geometry3d.py",
-    "solve_probability.py",
-    "solve_sequence.py",
-}
-
-# 接受调用方提供的表达式字符串，真正的代码注入风险面。必须走 SymPyRuntime
-# 有 AST 白名单校验的入口，不能绕过直接调 sp.sympify()/eval。
-STRING_EVAL_KERNELS = EXPECTED_KERNELS - NUMERIC_ONLY_KERNELS
-
-AST_VALIDATED_ENTRY_POINTS = (
-    ".evaluate(",
-    ".solve_equation(",
-    ".differentiate(",
-    ".integrate_expr(",
-    ".simplify_expr(",
-    ".to_latex(",
-)
+# 常量单源于 obase.sandbox_selfcheck（该模块同时供容器启动时的生产自检
+# check_or_die() 使用，见 tests/test_sandbox_selfcheck.py）——这里不再各自
+# 维护一份副本，防止两处定义漂移。
 
 
 def test_exactly_seven_solve_kernels_exist():

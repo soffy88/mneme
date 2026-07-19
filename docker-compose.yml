@@ -57,7 +57,11 @@ services:
     # 部署纪律（2026-07-09 事故修复）：启动先 alembic upgrade head 再起服务。
     # 之前迁移和重启全靠手动，导致"改了库、容器不重启、旧ORM引用已删列、每个
     # 请求都500"的26小时静默故障。现在迁移随启动执行，迁移失败则不对外提供服务。
-    command: sh -c "alembic upgrade head && uvicorn services.main:app --host 0.0.0.0 --port 8000"
+    # 部署纪律 2（W4 S0 事故修复，2026-07-19）：sandbox_selfcheck 同理——S0
+    # 沙箱加固 push 后，PYTHONPATH 一直不含 vendor/，生产装的是站点包里
+    # 未加固的旧内核，没有任何东西在生产验证过加固真的生效。现在自检随启动
+    # 执行，自检不过（vendor 未生效/装了旧副本/内核绕过沙箱）则不对外提供服务。
+    command: sh -c "python -m obase.sandbox_selfcheck && alembic upgrade head && uvicorn services.main:app --host 0.0.0.0 --port 8000"
     ports:
       - "8000:8000"
     environment:
@@ -135,7 +139,9 @@ services:
       context: ..
       dockerfile: mneme/Dockerfile
     restart: always
-    command: celery -A tasks.celery_app worker --loglevel=info --concurrency=2
+    # 部署纪律 2（同 api 服务同名注释）：worker 也直接调 oprim solve_* 内核
+    # （tasks.paper_tasks 等），同样需要自检把关，不能只在 api 侧检查一次。
+    command: sh -c "python -m obase.sandbox_selfcheck && celery -A tasks.celery_app worker --loglevel=info --concurrency=2"
     environment:
       PYTHONPATH: /app/vendor:/app:/app/packages/mneme-core
       DATABASE_URL: postgresql+asyncpg://postgres:postgres@db:5432/mneme
@@ -177,7 +183,9 @@ services:
   beat:
     image: mneme-worker          # 复用 worker 镜像（同代码，经 .:/app 挂载），免单独构建
     restart: always
-    command: celery -A tasks.celery_app beat --loglevel=info --schedule=/tmp/celerybeat-schedule
+    # 部署纪律 2（同 api/worker）：beat 本身不直接调 solve_* 内核，但共用同一
+    # PYTHONPATH/镜像，自检成本极低，统一加上不留死角。
+    command: sh -c "python -m obase.sandbox_selfcheck && celery -A tasks.celery_app beat --loglevel=info --schedule=/tmp/celerybeat-schedule"
     environment:
       PYTHONPATH: /app/vendor:/app:/app/packages/mneme-core
       DATABASE_URL: postgresql+asyncpg://postgres:postgres@db:5432/mneme

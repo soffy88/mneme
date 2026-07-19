@@ -96,28 +96,109 @@ factory` 潜伏 12 小时、`pymupdf4llm` 镜像未 rebuild），这是第三次
 
 ---
 
-## 回归状态（2026-07-19，Solve 模式收口时）
+## 事后加固 1：生产自检（防"vendor 从不生效"这类坑再次悄悄发生）
 
-- 根仓 `pytest`：746 过（S0 收口时基线 727 + 本次新增 19：
-  `test_solve_dispatch.py` 12 + `test_solve_problem_omodul.py` 5 +
-  `test_mcp_solve_problem_tool.py` 2）/ 4 败（同一 4 个既有失败，
-  `test_daily_plan.py`×3 + `test_dod_e2e.py`×1，S0 前后交叉验证一致）/
+前一节记录的"vendor 从不生效"事故，根因就是**没有任何东西在生产环境验证过
+S0 加固真的生效**——测试环境（pytest 的 vendor-first pythonpath）一直是绿的，
+掩盖了生产环境根本没生效这件事。这是一个纯粹的"验证盲区"问题，只补代码不
+补验证机制，同一类坑还会以别的形式再发生一次。
+
+**新增 `vendor/obase/sandbox_selfcheck.py`**：把 S0-1"零绕过"结构断言 +
+"沙箱确实是加固版本、不是旧副本"的能力/来源检查，包成一份单源定义：
+
+- `_check_resolves_to_vendor_not_site_packages()`：直接检查
+  `obase.sympy_runtime` 的真实解析路径，含"site-packages"字样就判定失败——
+  这正是这次事故的直接症状，最有效的一道检测。
+- `_check_hardened_version_loaded()`：检查 `SymPyRuntime` 是否有
+  `run_isolated` 方法——防止"vendor 生效了，但恰好是 S0 之前的旧版本"这种
+  更隐蔽的假阳性（比如未来有人在 vendor 里做了一次不完整的回退）。
+- `_check_zero_bypass()`：S0-1 的 7 内核零绕过检查本体，从
+  `tests/test_sandbox_zero_bypass.py` 抽出来，两处现在共用同一份
+  `EXPECTED_KERNELS`/`NUMERIC_ONLY_KERNELS`/`STRING_EVAL_KERNELS` 定义
+  （单源，不再各自维护一份副本）。
+- `check_or_die()`：任何一项不过直接抛异常，供容器启动时调用。
+
+**接进容器启动命令**（`docker-compose.yml`，`api`/`worker`/`beat` 三个容器），
+同 2026-07-09 那次"迁移失败则不对外提供服务"的处置原则完全一致：
+
+```
+command: sh -c "python -m obase.sandbox_selfcheck && alembic upgrade head && uvicorn ..."
+```
+
+自检不过，容器直接启动失败，不会带着未加固/装错版本的沙箱对外提供服务——
+不再可能只在 pytest 里验证过、生产里从没验证过。
+
+**验证自检本身有牙齿，不是摆设**（`tests/test_sandbox_selfcheck.py`，7 个
+测试）：分别用 mock/临时目录复现了这次事故本身遇到的三类真实故障——
+`obase.sympy_runtime` 解析到 site-packages、加载到没有 `run_isolated` 的
+旧版本、内核本身绕过沙箱（数值内核缺 `run_isolated`/字符串内核残留裸
+`sympify`/内核清单本身对不上）——确认每一类都会被正确拦下来，不是只在
+"当前环境凑巧是好的"这一种情况下显得有用。同时实际重启了
+`api`/`worker`/`beat` 三个容器，日志确认自检输出（"S0 沙箱加固自检通过：
+vendor/ 生效，7 内核零绕过"）真的排在 alembic/uvicorn/celery 之前执行，
+容器 `/health` 确认健康，重启前后完整 e2e 套件（7/7）交叉验证零回归。
+
+---
+
+## 事后加固 2：回填验证——裸奔窗口有没有被利用
+
+**问题**：从 S0 push（`b1b433d`，2026-07-19 11:29）到 PYTHONPATH 修复
+（同日 ~12:00 前后，同一会话内）之间，生产是否有真实流量打到那 7 个
+（原本以为已加固、实际仍是站点包旧副本的）内核？
+
+**能确认的**：
+
+- 该"裸奔"状态本身**不是这次改动引入的新窗口**——`docker-compose.yml`
+  自己的既有注释（"现经 PYTHONPATH 验证整条链；稳定后再固化为 Dockerfile
+  pip install"）说明 vendor 从未在生产生效这件事，从这次改动之前就一直
+  成立，S0 push 前后风险水平没有变化，只是 S0 push 之后我曾经**误以为**
+  它已经生效。
+- 数据库里全部 56 个 `users` 记录，手机号字段全部匹配本会话历次
+  e2e/回归测试脚本生成的模式（`t<hex>` 或形如 `137.../139...` 的合成号码），
+  创建时间全部落在 2026-07-03～2026-07-19（本开发会话的活跃时间跨度内），
+  没有任何一条像是真实外部注册——与"Mneme 至今零真实学习者"这一既有事实
+  一致。
+- Redis 里 `/v1/solve` 的限流 key（scope="solve"）当前查询为空——但这项
+  本身**不构成证据**：限流计数器有 TTL（60s 窗口），不管过去有没有真实
+  被打过，现在查都会是空，这条线索不能证明也不能证伪。
+
+**不能确认的（诚实说明这个证据缺口）**：
+
+- 容器级 HTTP 访问日志无法回溯——本次为切 PYTHONPATH 对 `api`/`worker`/
+  `beat` 做了两次 `docker compose up -d`（配置变更触发 Recreate），旧容器
+  实例连同其 `json-file` 日志已被移除，**无法直接查到那个具体窗口期内
+  `/v1/solve` 端点收到过什么请求**。这是一个真实的证据缺口，不是"查过了
+  确认没事"，而是"这条证据链本身已经不存在了"。
+
+**结论（给出评估，不隐瞒缺口）**：综合"零真实学习者"这一贯穿全会话的
+既有事实、窗口本身很短（同一天、同一次会话内的一到两小时）、且没有任何
+外部渠道曾经宣传/引流到这个环境——真实外部流量在这个窗口命中的概率
+判断为极低。但这不是一个能用日志证明的"零流量"断言，只是在证据缺失情况下
+给出的合理评估，如实告知：证明材料在容器重建时已经不可挽回地丢失了。
+
+**经验记录**：以后任何"改 PYTHONPATH/换部署路径"级别的操作，重启前应先
+导出一份容器日志快照（`docker compose logs <service> > snapshot.log`），
+避免这类事后取证缺口再次出现——这次没有提前做这一步。
+
+---
+
+## 回归状态（2026-07-19，Solve 模式 + 生产自检收口时）
+
+- 根仓 `pytest`：753 过（Solve 收口时基线 746 + 本次新增 7：
+  `test_sandbox_selfcheck.py`）/ 4 败（同一 4 个既有失败，
+  `test_daily_plan.py`×3 + `test_dod_e2e.py`×1，S0/Solve 前后交叉验证一致）/
   3 跳。
-- `packages/mneme-core`：127 过（S0 收口时基线 114 + 本次新增 13：
-  `test_plan_solve_task.py` 9 + `test_narrate_solve_steps.py` 4）。
+- `packages/mneme-core`：127 过，无变化（新增测试在根仓 tests/，不在
+  mneme-core）。
 - `packages/mneme-agent`：14 过，无变化。
-- 三套合计：887（746+127+14）。
-- ruff：真实受检范围（`services/`/`tasks/`/`tests/` 里非 exclude 部分）
-  零新增问题，既有 6 处（`tasks/partner_tasks.py`、
-  `services/textbook_qa_service.py`、`packages/mneme-agent/.../mcp_client.py`、
-  `tests/test_mcp_write_path.py`）均为交接自会话更早阶段的既有问题，
-  与本次改动无关。
-- `apps/mneme-studio`：`next build` TypeScript 严格模式通过；7 个
-  Playwright e2e 全过（5 既有 + 2 新增 solve.spec.ts，其中新增测试对着
-  **真实 LLM provider**（非 mock）跑，含一次真实"无法求解"优雅降级验证）。
-- 生产容器：`mneme-api-1`/`worker`/`beat` 已切换 PYTHONPATH 并重启，
-  `/health` 确认健康，`import oprim/oskill/omodul/obase` 确认解析到
-  `vendor/`。
+- 三套合计：894（753+127+14）。
+- ruff：真实受检范围零新增问题，既有 6 处与本次改动无关（同前）。
+- `apps/mneme-studio`：`next build` 通过；7 个 Playwright e2e 全过——
+  两次分别在"切 PYTHONPATH 后"和"接入自检命令重启后"各跑了一遍全量 e2e，
+  确认两次生产级容器操作都没有引入回归。
+- 生产容器：`mneme-api-1`/`worker`/`beat` 已切换 PYTHONPATH + 接入
+  `sandbox_selfcheck` 启动检查，两次重启，`/health` 均确认健康，启动日志
+  确认自检输出排在 alembic/uvicorn/celery 之前正确执行。
 
 ---
 
