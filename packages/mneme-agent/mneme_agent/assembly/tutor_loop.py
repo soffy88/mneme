@@ -1,15 +1,17 @@
 """tutor_loop — W2a S2 引擎装配（架构 A，FC-6 合规，无 oservi 改动）。
 
 用 oservi 真引擎 ``oservi.agentic_loop.AgenticLoop``（on_demand 多步 ReAct ``.session()``），
-经其**实例** ``.assemble()`` 注入 llm_caller + 11 callable：
-  · 10 MCP 工具（NextObjective / GetKCInfo / CheckMastery / GetReviewQueue /
+经其**实例** ``.assemble()`` 注入 llm_caller + 12 callable：
+  · 11 MCP 工具（NextObjective / GetKCInfo / CheckMastery / GetReviewQueue /
     PoseQuestion / SubmitAnswer / ReportResult / RecallMemory / RememberEpisode /
-    SearchKnowledgeBase，C5 起加 Recall/Remember、C4 起加 SearchKnowledgeBase）
+    SearchKnowledgeBase / SearchTextbookKnowledge，C5 起加 Recall/Remember、
+    C4 起加 SearchKnowledgeBase、W3 A4 起加 SearchTextbookKnowledge）
     经 **HTTP** ``/mcp/*`` 触达；
   · t_assess_explanation：本地跑 mneme-core ``qualitative_verifier``（注入 verifier_llm）。
 
-Recall/RememberEpisode（C5）/SearchKnowledgeBase（C4）：memory/RAG 都是呈现层上下文，
-不进门控判据——三个工具只读写 `agent.*` schema 或代理 Stratum 检索，与
+Recall/RememberEpisode（C5）/SearchKnowledgeBase（C4）/SearchTextbookKnowledge（W3 A4）：
+memory/RAG/Knowledge Hub 都是呈现层上下文，不进门控判据——四个工具只读写
+`agent.*` schema、代理 Stratum 检索、或查询 Mneme 自建教材语料，与
 kc_mastery/gate.* 无关，不影响任何过门判定。
 
 **agent 进程零 mneme-DB**：本模块无任何 DB import，工具全走 HTTP（FC-5）。
@@ -200,6 +202,20 @@ def build_tools(
             {"query": inp["query"], "top_k": inp.get("top_k", 5)},
         )
 
+    async def search_textbook_knowledge(inp: dict) -> Any:
+        """W3 A4：检索 Mneme 自建 Knowledge Hub（教材 chunk，带出处，呈现层，不影响
+        门控/判分）。kc_id 与 query 二选一；结果永远带 score + provenance="inferred"，
+        不只返回第一名——调用方自行判断是否够可信，本工具不代为决定。
+        """
+        return await _call(
+            "SearchTextbookKnowledge",
+            {
+                "kc_id": inp.get("kc_id"),
+                "query": inp.get("query"),
+                "top_k": inp.get("top_k", 3),
+            },
+        )
+
     def _spec(fn, name, desc, props, required, readonly=False) -> ToolSpec:
         return ToolSpec(
             name=name,
@@ -315,6 +331,19 @@ def build_tools(
                 "top_k": {"type": "integer"},
             },
             ["query"],
+            readonly=True,
+        ),
+        _spec(
+            search_textbook_knowledge,
+            "SearchTextbookKnowledge",
+            "检索 Mneme 自建 Knowledge Hub 教材内容（带出处：pdf_id/页码/字符区间；"
+            "kc_id 或 query 二选一；结果为推断挂接/语义检索，带 score，非权威）",
+            {
+                "kc_id": {"type": "string"},
+                "query": {"type": "string"},
+                "top_k": {"type": "integer"},
+            },
+            [],
             readonly=True,
         ),
     ]

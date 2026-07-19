@@ -39,7 +39,7 @@ from mneme_core.oskill.quiz_generator import quiz_generator
 from mneme_core.service.verdict_guard import GuardRejection, enforce
 
 from obase.db import get_db
-from services import gate_store, memory, persona_store, rag_client
+from services import gate_store, knowledge_hub_search, memory, persona_store, rag_client
 from services.auth_deps import (
     _ensure_student_access,
     _ensure_student_self,
@@ -254,6 +254,23 @@ async def tool_search_knowledge_base(query: str, top_k: int = 5) -> dict:
     Stratum 不可用（无凭据/网络失败）→ results 为空列表，不报错，不阻断对话。
     """
     return {"results": await rag_client.search(query, top_k=top_k)}
+
+
+async def tool_search_textbook_knowledge(
+    db: AsyncSession,
+    *,
+    kc_id: Optional[str] = None,
+    query: Optional[str] = None,
+    top_k: int = 3,
+) -> dict:
+    """W3 A4：检索 Mneme 自建 Knowledge Hub（教材 chunk，带出处），供 loop/Book Engine
+    拼进对话背景或引文（呈现层，不进门控判据）。与上面的 Stratum 版
+    `tool_search_knowledge_base` 并存、互不依赖——见 knowledge_hub_search 模块顶部
+    FC-6/命名冲突说明。
+    """
+    return await knowledge_hub_search.search_knowledge_base(
+        db, kc_id=kc_id, query=query, top_k=top_k
+    )
 
 
 async def tool_check_mastery(
@@ -716,6 +733,12 @@ class SearchKnowledgeBaseReq(BaseModel):
     top_k: int = 5
 
 
+class SearchTextbookKnowledgeReq(BaseModel):
+    kc_id: Optional[str] = None
+    query: Optional[str] = None
+    top_k: int = 3
+
+
 class GetReviewQueueReq(BaseModel):
     student_id: uuid.UUID
     kc_ids: list[str]
@@ -858,6 +881,18 @@ async def mcp_search_knowledge_base(
 ) -> dict:
     # 非学生数据（共享知识库检索）——不碰 db，只要求登录（同 ListPersonas 惯例）。
     return await tool_search_knowledge_base(req.query, req.top_k)
+
+
+@router.post("/SearchTextbookKnowledge")
+async def mcp_search_textbook_knowledge(
+    req: SearchTextbookKnowledgeReq,
+    db: AsyncSession = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+) -> dict:
+    # 非学生数据（教材内容检索，Mneme 自建 Knowledge Hub）——只要求登录。
+    return await tool_search_textbook_knowledge(
+        db, kc_id=req.kc_id, query=req.query, top_k=req.top_k
+    )
 
 
 @router.post("/CheckMastery")

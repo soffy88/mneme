@@ -53,7 +53,9 @@ def test_build_tools_includes_memory_tools():
     )
     names = {t.name for t in tools}
     assert {"RecallMemory", "RememberEpisode"}.issubset(names)
-    assert len(tools) == 11  # 8 既有 + 2（C5）+ 1（C4 SearchKnowledgeBase）
+    assert (
+        len(tools) == 12
+    )  # 8 既有 + 2（C5）+ 1（C4 SearchKnowledgeBase）+ 1（W3 A4 SearchTextbookKnowledge）
 
     recall = _tool(tools, "RecallMemory")
     assert recall.readonly is True
