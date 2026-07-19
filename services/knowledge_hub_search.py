@@ -63,6 +63,7 @@ def _row_to_result(
     book_name: Optional[str],
     score: float,
     rank: int,
+    verified: bool = False,
 ) -> dict:
     return {
         "chunk_id": chunk_id,
@@ -76,25 +77,44 @@ def _row_to_result(
         "rank": rank,
         # 硬编码，不是从数据推导——防止未来有人"优化"成看分数动态判断权威性。
         "provenance": "inferred",
+        # R4（Part B spec）：ku_chunk_matches.verified 人工确认过才 True；
+        # free_text 路径不经 KU 挂接，恒为 False（没有对应的人工校订机制）。
+        "verified": verified,
     }
 
 
-async def _search_by_kc_id(db: AsyncSession, kc_id: str, top_k: int) -> list[dict]:
-    """走 A3 预计算的 ku_chunk_matches（无需实时 embed，确定性、快）。"""
+def citation_state(result: dict) -> str:
+    """R3/R4 三态标注（Part B spec §1）：verified=True -> "verified"（已核对
+    出处），否则 "inferred_unverified"（推断出处·未经人工核对）——分数高低
+    不改变这个判断，0.732 也可能是错的，分数不是可信度证明（A3/A4 已定论）。
+    """
+    return "verified" if result.get("verified") else "inferred_unverified"
+
+
+async def _search_by_kc_id(
+    db: AsyncSession, kc_id: str, top_k: int, min_score: float
+) -> list[dict]:
+    """走 A3 预计算的 ku_chunk_matches（无需实时 embed，确定性、快）。
+
+    min_score 在 SQL 里过滤（R1：垃圾兜底，不是质量门——见模块顶部说明），
+    rank 仍按数据库里原始 rank 呈现（过滤后可能不连续，如实反映"这是原始
+    候选里的第几名"，不重新编号造成"这是完整 top-N"的错觉）。
+    """
     rows = (
         await db.execute(
             sa_text("""
         SELECT tc.id, tc.file_id, tc.page_number, tc.char_start, tc.char_end,
-               tc.content, t.subject, t.grade, t.book_name, kcm.score, kcm.rank
+               tc.content, t.subject, t.grade, t.book_name, kcm.score, kcm.rank,
+               kcm.verified
         FROM ku_chunk_matches kcm
         JOIN textbook_chunks tc ON tc.id = kcm.chunk_id
         JOIN textbook_files tf ON tf.id = tc.file_id
         LEFT JOIN textbooks t ON t.id = tf.textbook_id
-        WHERE kcm.ku_id = :kc_id
+        WHERE kcm.ku_id = :kc_id AND kcm.score >= :min_score
         ORDER BY kcm.rank
         LIMIT :top_k
     """),
-            {"kc_id": kc_id, "top_k": top_k},
+            {"kc_id": kc_id, "top_k": top_k, "min_score": min_score},
         )
     ).fetchall()
 
@@ -111,12 +131,15 @@ async def _search_by_kc_id(db: AsyncSession, kc_id: str, top_k: int) -> list[dic
             book_name=r.book_name,
             score=r.score,
             rank=r.rank,
+            verified=bool(r.verified),
         )
         for r in rows
     ]
 
 
-async def _search_by_free_text(db: AsyncSession, query: str, top_k: int) -> list[dict]:
+async def _search_by_free_text(
+    db: AsyncSession, query: str, top_k: int, min_score: float
+) -> list[dict]:
     """实时 embed query + 语料库全量 numpy cosine（复用 embed_chunks.embed_text，
     与 chunk 入库时同一模型——否则向量空间不一致，相似度没有意义）。
     """
@@ -141,7 +164,7 @@ async def _search_by_free_text(db: AsyncSession, query: str, top_k: int) -> list
     ).fetchall()
 
     scored = sorted(
-        ((r, _cosine(query_vec, r.embedding)) for r in rows),
+        ((r, s) for r in rows if (s := _cosine(query_vec, r.embedding)) >= min_score),
         key=lambda x: x[1],
         reverse=True,
     )
@@ -159,6 +182,7 @@ async def _search_by_free_text(db: AsyncSession, query: str, top_k: int) -> list
             book_name=r.book_name,
             score=score,
             rank=rank,
+            verified=False,  # free_text 不经 KU 挂接，没有对应的人工校订机制
         )
         for rank, (r, score) in enumerate(scored[:top_k], 1)
     ]
@@ -170,23 +194,29 @@ async def search_knowledge_base(
     kc_id: Optional[str] = None,
     query: Optional[str] = None,
     top_k: int = 3,
+    min_score: float = 0.0,
 ) -> dict:
     """Knowledge Hub 检索主入口。
 
     kc_id 与 query 二选一（不可同时为空，同时给出时 kc_id 优先——复用 A3
     预计算结果，确定性更好、无需实时 embed 调用）。
 
+    min_score：默认 0.0（不过滤，A4 聊天场景的既有行为不变）。Book Engine
+    引用教材内容必须传 R1 阈值（Part B spec §1 R1：0.60，"垃圾兜底非质量门"，
+    见 outputs/W3-PENDING-ITEMS.md）——过滤在这里做一次，调用方不用各自记住
+    阈值数字。
+
     返回 {"query_type": "kc_id"|"free_text", "results": [...]}；results 永远是
     列表（找不到内容/embedding 不可用时为空列表，不抛异常——呈现层素材缺失
-    不该打断调用方）。
+    不该打断调用方）。每条结果带 "verified" 字段（R3/R4，见 citation_state()）。
     """
     if not kc_id and not query:
         return {"query_type": None, "results": []}
 
     if kc_id:
-        results = await _search_by_kc_id(db, kc_id, top_k)
+        results = await _search_by_kc_id(db, kc_id, top_k, min_score)
         return {"query_type": "kc_id", "results": results}
 
     assert query is not None
-    results = await _search_by_free_text(db, query, top_k)
+    results = await _search_by_free_text(db, query, top_k, min_score)
     return {"query_type": "free_text", "results": results}
