@@ -76,12 +76,16 @@ function BlockView({ block }: { block: BookBlock }) {
 
   // quiz / flash_cards / guided：编译期只有 kc_ids scope，具体题目/卡片/下一步
   // 是 per-student 实时数据，交给既有 /studio/learn（不在阅读器里重新实现）。
+  // 交接必须带上这块实际覆盖的 kc_ids——不然点进去的是 /studio/learn 的默认
+  // 路径，不是这块讲的知识点，"从书连到学习循环"这句话就是假的（B-8）。
   const label = { quiz: "配套练习题", flash_cards: "记忆卡", guided: "下一步学习指引" }[block.block_type];
+  const kcIds = Array.isArray(p.kc_ids) ? (p.kc_ids as string[]) : [];
+  const learnHref = kcIds.length > 0 ? `/studio/learn?kcs=${encodeURIComponent(kcIds.join(","))}` : "/studio/learn";
   return (
     <OCard data-testid={`block-${block.block_type}`}>
       <div className="p-3 flex items-center justify-between text-sm">
         <span>📚 本节配有{label}，请前往「学习」页练习</span>
-        <a href="/studio/learn">
+        <a href={learnHref} data-testid={`${block.block_type}-learn-link`}>
           <OButton size="sm">去学习</OButton>
         </a>
       </div>
