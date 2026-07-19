@@ -17,10 +17,10 @@ from obase.sympy_runtime import SymPyRuntime
 
 from oprim.types import SolveResult, SolveStep
 
+_runtime = SymPyRuntime()
 
-TaskType = Literal[
-    "solve", "simplify", "evaluate", "period", "identity", "auto"
-]
+
+TaskType = Literal["solve", "simplify", "evaluate", "period", "identity", "auto"]
 
 
 @dataclass(frozen=True)
@@ -30,8 +30,8 @@ class TrigSolveInput:
     expression: str
     variable: str = "x"
     task: TaskType = "auto"
-    angle_degrees: float | None = None   # for "evaluate"
-    rhs: str = "0"                        # RHS when task="solve" (expr = rhs)
+    angle_degrees: float | None = None  # for "evaluate"
+    rhs: str = "0"  # RHS when task="solve" (expr = rhs)
     timeout: float = 5.0
 
 
@@ -63,7 +63,21 @@ def solve_trig(inp: TrigSolveInput) -> SolveResult:
         import sympy as sp
 
         x = sp.Symbol(inp.variable)
-        f = sp.sympify(inp.expression)
+        parsed = _runtime.evaluate(
+            inp.expression,
+            {inp.variable: inp.variable},
+            timeout=inp.timeout,
+            simplify_result=False,
+        )
+        if not parsed.success or parsed.value is None:
+            return SolveResult(
+                solvable=False,
+                answer="",
+                steps=steps,
+                error=parsed.error or "Failed to parse expression",
+                raw_expression=inp.expression,
+            )
+        f = parsed.value
 
         steps.append(
             SolveStep(
@@ -75,7 +89,21 @@ def solve_trig(inp: TrigSolveInput) -> SolveResult:
         )
 
         if task == "solve":
-            rhs = sp.sympify(inp.rhs)
+            parsed_rhs = _runtime.evaluate(
+                inp.rhs,
+                {inp.variable: inp.variable},
+                timeout=inp.timeout,
+                simplify_result=False,
+            )
+            if not parsed_rhs.success or parsed_rhs.value is None:
+                return SolveResult(
+                    solvable=False,
+                    answer="",
+                    steps=steps,
+                    error=parsed_rhs.error or "Failed to parse rhs",
+                    raw_expression=inp.expression,
+                )
+            rhs = parsed_rhs.value
             eq = sp.Eq(f, rhs)
             solutions = sp.solve(eq, x)
             steps.append(

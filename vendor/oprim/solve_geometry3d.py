@@ -13,12 +13,21 @@ import math
 from dataclasses import dataclass, field
 from typing import Literal
 
+from obase.sympy_runtime import SymPyRuntime
 from oprim.types import SolveResult, SolveStep
+
+_runtime = SymPyRuntime()
 
 Point3D = tuple[float, float, float]
 TaskType = Literal[
-    "distance", "midpoint", "sphere", "cylinder", "cone",
-    "plane_equation", "angle_planes", "auto"
+    "distance",
+    "midpoint",
+    "sphere",
+    "cylinder",
+    "cone",
+    "plane_equation",
+    "angle_planes",
+    "auto",
 ]
 
 
@@ -31,25 +40,25 @@ class Geometry3DInput:
     p2: Point3D | None = None
     radius: float | None = None
     height: float | None = None
-    normal1: Point3D | None = None   # plane 1 normal vector
-    normal2: Point3D | None = None   # plane 2 normal vector
+    normal1: Point3D | None = None  # plane 1 normal vector
+    normal2: Point3D | None = None  # plane 2 normal vector
     timeout: float = 5.0
 
 
 def _dot(a: Point3D, b: Point3D) -> float:
-    return a[0]*b[0] + a[1]*b[1] + a[2]*b[2]
+    return a[0] * b[0] + a[1] * b[1] + a[2] * b[2]
 
 
 def _cross(a: Point3D, b: Point3D) -> Point3D:
     return (
-        a[1]*b[2] - a[2]*b[1],
-        a[2]*b[0] - a[0]*b[2],
-        a[0]*b[1] - a[1]*b[0],
+        a[1] * b[2] - a[2] * b[1],
+        a[2] * b[0] - a[0] * b[2],
+        a[0] * b[1] - a[1] * b[0],
     )
 
 
 def _norm(a: Point3D) -> float:
-    return math.sqrt(a[0]**2 + a[1]**2 + a[2]**2)
+    return math.sqrt(a[0] ** 2 + a[1] ** 2 + a[2] ** 2)
 
 
 def solve_geometry3d(inp: Geometry3DInput) -> SolveResult:
@@ -63,9 +72,9 @@ def solve_geometry3d(inp: Geometry3DInput) -> SolveResult:
     -------
     SolveResult
     """
-    steps: list[SolveStep] = []
 
-    try:
+    def _compute() -> tuple[list[SolveStep], str]:
+        steps: list[SolveStep] = []
         if inp.task == "distance":
             if inp.p1 is None or inp.p2 is None:
                 raise ValueError("distance task requires p1 and p2")
@@ -80,7 +89,7 @@ def solve_geometry3d(inp: Geometry3DInput) -> SolveResult:
                     result=f"Δx={dx}, Δy={dy}, Δz={dz}",
                 )
             )
-            dist = math.sqrt(dx*dx + dy*dy + dz*dz)
+            dist = math.sqrt(dx * dx + dy * dy + dz * dz)
             steps.append(
                 SolveStep(
                     step_number=2,
@@ -155,7 +164,9 @@ def solve_geometry3d(inp: Geometry3DInput) -> SolveResult:
                     result=f"{total:.6g}",
                 )
             )
-            answer = f"V = {volume:.6g}; lateral_A = {lateral:.6g}; total_A = {total:.6g}"
+            answer = (
+                f"V = {volume:.6g}; lateral_A = {lateral:.6g}; total_A = {total:.6g}"
+            )
 
         elif inp.task == "cone":
             if inp.radius is None or inp.height is None:
@@ -220,13 +231,12 @@ def solve_geometry3d(inp: Geometry3DInput) -> SolveResult:
             answer = f"angle = {angle_deg:.4g}° ({angle_rad:.6g} rad)"
 
         else:
-            return SolveResult(
-                solvable=False,
-                answer="",
-                steps=steps,
-                error=f"Unknown task: {inp.task}",
-            )
+            raise ValueError(f"Unknown task: {inp.task}")
 
+        return steps, answer
+
+    try:
+        steps, answer = _runtime.run_isolated(_compute, timeout=inp.timeout)
         return SolveResult(
             solvable=True,
             answer=answer,
@@ -234,11 +244,10 @@ def solve_geometry3d(inp: Geometry3DInput) -> SolveResult:
             method="kernel",
             confidence=1.0,
         )
-
     except Exception as exc:
         return SolveResult(
             solvable=False,
             answer="",
-            steps=steps,
+            steps=[],
             error=str(exc),
         )

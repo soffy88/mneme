@@ -37,8 +37,10 @@ def test_pathological_high_degree_polynomial_gets_killed_via_real_solver():
     """端到端：通过 solve_function（真实求解主链路，非孤立测沙箱工具）喂一个
     80次高次多项式求零点——sympy 通用求解器对这种输入基本必然抛不出解析解，
     会一直churn。断言：(1) 调用在有界时间内返回，不是挂起；(2) solvable=False
-    优雅降级，不是抛未捕获异常/500；(3) error 信息里能看到是被超时机制杀的，
-    不是别的原因失败。"""
+    优雅降级，不是抛未捕获异常/500；(3) error 信息里能看到是被沙箱两道墙之一
+    （超时或内存上限，S0 加固后 max_memory_bytes 真正 enforce 了）杀的，不是
+    别的原因失败——两道墙哪道先触发取决于具体病态输入的资源消耗模式，都是
+    同一条红线（病态输入必须被杀）的体现，不是只认超时。"""
     from oprim.solve_function import FunctionSolveInput, solve_function
 
     start = time.monotonic()
@@ -53,8 +55,9 @@ def test_pathological_high_degree_polynomial_gets_killed_via_real_solver():
     elapsed = time.monotonic() - start
     assert elapsed < 5.0  # 有界时间内返回，没有挂起等它跑完
     assert result.solvable is False
-    assert "timeout" in (result.error or "").lower()
+    error_lower = (result.error or "").lower()
+    assert "timeout" in error_lower or "memory limit" in error_lower
     print(
-        f"  80次多项式求零点在 {elapsed:.2f}s 内被超时机制杀掉并优雅降级"
-        f"（solvable=False），不是挂起或500 ✓"
+        f"  80次多项式求零点在 {elapsed:.2f}s 内被沙箱杀掉并优雅降级"
+        f"（solvable=False, error={result.error!r}），不是挂起或500 ✓"
     )

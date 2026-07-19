@@ -38,6 +38,22 @@ class SymPyEvalError(SymPyRuntimeError):
     """Raised when expression evaluation fails."""
 
 
+def _read_rss_bytes(pid: int) -> int | None:
+    """Read a process's current resident set size from /proc, in bytes.
+
+    Returns ``None`` on non-Linux platforms or if the process has already
+    exited (both are treated as "can't measure", not "zero usage").
+    """
+    try:
+        with open(f"/proc/{pid}/status", encoding="utf-8") as f:
+            for line in f:
+                if line.startswith("VmRSS:"):
+                    return int(line.split()[1]) * 1024
+    except (FileNotFoundError, ProcessLookupError, ValueError, OSError):
+        return None
+    return None
+
+
 @dataclass(frozen=True)
 class RuntimeConfig:
     """Configuration for the sympy sandbox runtime."""
@@ -143,9 +159,7 @@ class _SafeVisitor(ast.NodeVisitor):
 
     def visit_Name(self, node: ast.Name) -> None:
         if node.id in self._config.forbidden_names:
-            raise SymPyRestrictedError(
-                f"Name '{node.id}' is forbidden in sandbox"
-            )
+            raise SymPyRestrictedError(f"Name '{node.id}' is forbidden in sandbox")
         self.generic_visit(node)
 
     def visit_Attribute(self, node: ast.Attribute) -> None:
@@ -171,14 +185,10 @@ class _SafeVisitor(ast.NodeVisitor):
         )
 
     def visit_For(self, node: ast.For) -> None:
-        raise SymPyRestrictedError(
-            "For loops are not allowed in sandbox expressions"
-        )
+        raise SymPyRestrictedError("For loops are not allowed in sandbox expressions")
 
     def visit_While(self, node: ast.While) -> None:
-        raise SymPyRestrictedError(
-            "While loops are not allowed in sandbox expressions"
-        )
+        raise SymPyRestrictedError("While loops are not allowed in sandbox expressions")
 
     def visit_With(self, node: ast.With) -> None:
         raise SymPyRestrictedError(
@@ -250,7 +260,9 @@ class SymPyRuntime:
 
         return tree
 
-    def _make_namespace(self, variables: dict[str, Any] | None = None) -> dict[str, Any]:
+    def _make_namespace(
+        self, variables: dict[str, Any] | None = None
+    ) -> dict[str, Any]:
         """Build the safe namespace for evaluation."""
         sp = self._sympy_module
         ns: dict[str, Any] = {
@@ -365,9 +377,7 @@ class SymPyRuntime:
         """
         import time as _time
 
-        effective = (
-            timeout if timeout is not None else self._config.timeout_seconds
-        )
+        effective = timeout if timeout is not None else self._config.timeout_seconds
 
         try:
             ctx = mp.get_context("fork")
@@ -375,23 +385,41 @@ class SymPyRuntime:
             return self._run_with_alarm(func, effective)
 
         result_q: Any = ctx.Queue()
+        max_memory_bytes = self._config.max_memory_bytes
 
         def _worker() -> None:
             try:
-                result_q.put(("ok", func()))
+                status, payload = "ok", func()
             except BaseException as exc:  # noqa: BLE001 - propagate to parent
-                try:
-                    result_q.put(("err", exc))
-                except Exception:
-                    result_q.put(
-                        ("err", SymPyRuntimeError(f"{type(exc).__name__}: {exc}"))
-                    )
+                status, payload = "err", exc
+
+            try:
+                result_q.put((status, payload))
+            except Exception:
+                result_q.put(
+                    ("err", SymPyRuntimeError(f"{type(payload).__name__}: {payload}"))
+                )
 
         proc = ctx.Process(target=_worker, daemon=True)
         proc.start()
 
+        # Memory is bounded by polling the *resident* (physical) growth of
+        # the child from the parent side, not an in-child rlimit. This
+        # process is forked from a long-lived host (e.g. the API server),
+        # so the child inherits the parent's full virtual address space
+        # (VmSize) immediately on fork — a real production process easily
+        # sits at 1GB+ VSZ before any sympy code runs. RLIMIT_AS counts
+        # *virtual* address space, so any fixed ceiling below that baseline
+        # would make every single call fail immediately, not just
+        # pathological ones. Resident memory (VmRSS) growth relative to the
+        # child's own post-fork baseline is what actually reflects a
+        # computation blowing up, independent of however big the host
+        # process happens to be.
+        baseline_rss = _read_rss_bytes(proc.pid) if max_memory_bytes else None
+
         deadline = _time.monotonic() + effective
         payload: tuple[str, Any] | None = None
+        memory_exceeded = False
         while True:
             remaining = deadline - _time.monotonic()
             if remaining <= 0:
@@ -402,6 +430,22 @@ class SymPyRuntime:
             except _queue.Empty:
                 if not proc.is_alive():
                     break
+                if max_memory_bytes and baseline_rss is not None:
+                    rss = _read_rss_bytes(proc.pid)
+                    if rss is not None and (rss - baseline_rss) > max_memory_bytes:
+                        memory_exceeded = True
+                        break
+
+        if memory_exceeded:
+            proc.terminate()
+            proc.join(0.5)
+            if proc.is_alive():
+                proc.kill()
+                proc.join()
+            raise SymPyMemoryError(
+                f"Execution exceeded memory limit of {max_memory_bytes} bytes "
+                f"(process killed)"
+            )
 
         if payload is None:
             # Either the deadline passed while the child was still running, or
@@ -416,6 +460,12 @@ class SymPyRuntime:
                     f"Execution exceeded timeout of {effective}s (process killed)"
                 )
             proc.join()
+            exitcode = proc.exitcode
+            if exitcode is not None and exitcode < 0:
+                raise SymPyMemoryError(
+                    f"Execution subprocess was killed by signal {-exitcode} "
+                    f"(likely exceeded memory limit of {max_memory_bytes} bytes)"
+                )
             raise SymPyRuntimeError(
                 "SymPy computation subprocess terminated without a result"
             )
@@ -443,9 +493,7 @@ class SymPyRuntime:
             return func()
 
         def _handler(signum: int, frame: Any) -> None:
-            raise SymPyTimeoutError(
-                f"Execution exceeded timeout of {effective}s"
-            )
+            raise SymPyTimeoutError(f"Execution exceeded timeout of {effective}s")
 
         old_handler = _signal.signal(_signal.SIGALRM, _handler)
         _signal.setitimer(_signal.ITIMER_REAL, effective)
@@ -454,6 +502,20 @@ class SymPyRuntime:
         finally:
             _signal.setitimer(_signal.ITIMER_REAL, 0)
             _signal.signal(_signal.SIGALRM, old_handler)
+
+    def run_isolated(
+        self, func: Callable[[], Any], *, timeout: float | None = None
+    ) -> Any:
+        """Run a plain Python callable under the same fork+timeout+memory-limit
+        sandbox as expression evaluation (S0).
+
+        For oprim kernels that compute with plain Python/math rather than a
+        SymPy expression string (so there is nothing to AST-validate), but
+        still need the timeout/memory DoS guarantees the sandbox provides
+        against pathological numeric inputs (e.g. huge combinatorial n/k).
+        Exceptions raised by ``func`` propagate to the caller unchanged.
+        """
+        return self._run_with_timeout(func, timeout)
 
     def evaluate(
         self,
@@ -742,7 +804,8 @@ class SymPyRuntime:
 
             # Auto-create symbols for common single-letter names
             import re
-            for name in set(re.findall(r'\b([a-zA-Z])\b', expression)):
+
+            for name in set(re.findall(r"\b([a-zA-Z])\b", expression)):
                 if name not in ns and len(name) == 1:
                     ns[name] = sp.Symbol(name)
 
@@ -802,7 +865,8 @@ class SymPyRuntime:
 
             # Auto-create symbols for common single-letter names
             import re
-            for name in set(re.findall(r'\b([a-zA-Z])\b', expression)):
+
+            for name in set(re.findall(r"\b([a-zA-Z])\b", expression)):
                 if name not in ns and len(name) == 1:
                     ns[name] = sp.Symbol(name)
 
@@ -869,6 +933,11 @@ def solve(
 ) -> EvalResult:
     """Convenience function using the default runtime."""
     return get_runtime().solve_equation(equation, variable, timeout=timeout)
+
+
+def run_isolated(func: Callable[[], Any], *, timeout: float | None = None) -> Any:
+    """Convenience function using the default runtime."""
+    return get_runtime().run_isolated(func, timeout=timeout)
 
 
 def diff(

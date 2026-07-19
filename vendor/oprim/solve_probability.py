@@ -13,12 +13,21 @@ import math
 from dataclasses import dataclass, field
 from typing import Literal
 
+from obase.sympy_runtime import SymPyRuntime
 from oprim.types import SolveResult, SolveStep
+
+_runtime = SymPyRuntime()
 
 
 TaskType = Literal[
-    "combinations", "permutations", "basic", "conditional",
-    "bayes", "binomial", "expected_value", "auto"
+    "combinations",
+    "permutations",
+    "basic",
+    "conditional",
+    "bayes",
+    "binomial",
+    "expected_value",
+    "auto",
 ]
 
 
@@ -27,13 +36,13 @@ class ProbabilitySolveInput:
     """Input for a probability problem."""
 
     task: TaskType = "auto"
-    n: int | None = None               # total items / trials
-    k: int | None = None               # chosen items / successes
-    p_a: float | None = None           # P(A)
-    p_b: float | None = None           # P(B)
-    p_a_given_b: float | None = None   # P(A|B)
-    p_b_given_a: float | None = None   # P(B|A)
-    p_success: float | None = None     # p per trial (binomial)
+    n: int | None = None  # total items / trials
+    k: int | None = None  # chosen items / successes
+    p_a: float | None = None  # P(A)
+    p_b: float | None = None  # P(B)
+    p_a_given_b: float | None = None  # P(A|B)
+    p_b_given_a: float | None = None  # P(B|A)
+    p_success: float | None = None  # p per trial (binomial)
     values: list[float] | None = None  # for expected value
     probabilities: list[float] | None = None  # for expected value
     timeout: float = 5.0
@@ -50,8 +59,6 @@ def solve_probability(inp: ProbabilitySolveInput) -> SolveResult:
     -------
     SolveResult
     """
-    steps: list[SolveStep] = []
-
     task = inp.task
     if task == "auto":
         if inp.n is not None and inp.k is not None and inp.p_success is None:
@@ -63,7 +70,8 @@ def solve_probability(inp: ProbabilitySolveInput) -> SolveResult:
         else:
             task = "combinations"
 
-    try:
+    def _compute() -> tuple[list[SolveStep], str]:
+        steps: list[SolveStep] = []
         if task == "combinations":
             if inp.n is None or inp.k is None:
                 raise ValueError("combinations task requires n and k")
@@ -120,7 +128,7 @@ def solve_probability(inp: ProbabilitySolveInput) -> SolveResult:
             answer = (
                 f"P(A∩B) = {p_a_and_b:.6g}; "
                 f"P(A∪B) = {p_a_or_b:.6g}; "
-                f"P(Ā) = {1-p_a:.6g}"
+                f"P(Ā) = {1 - p_a:.6g}"
             )
 
         elif task == "conditional":
@@ -173,14 +181,14 @@ def solve_probability(inp: ProbabilitySolveInput) -> SolveResult:
                 raise ValueError("binomial task requires n, k, p_success")
             n, k = int(inp.n), int(inp.k)
             p = inp.p_success
-            prob = math.comb(n, k) * (p**k) * ((1-p)**(n-k))
+            prob = math.comb(n, k) * (p**k) * ((1 - p) ** (n - k))
             mean = n * p
             var = n * p * (1 - p)
             steps.append(
                 SolveStep(
                     step_number=1,
                     description=f"Binomial: P(X={k}) = C({n},{k})·p^k·(1-p)^(n-k)",
-                    expression=f"C({n},{k})·{p}^{k}·{1-p}^{n-k}",
+                    expression=f"C({n},{k})·{p}^{k}·{1 - p}^{n - k}",
                     result=f"{prob:.6g}",
                 )
             )
@@ -196,7 +204,9 @@ def solve_probability(inp: ProbabilitySolveInput) -> SolveResult:
 
         elif task == "expected_value":
             if inp.values is None or inp.probabilities is None:
-                raise ValueError("expected_value task requires values and probabilities")
+                raise ValueError(
+                    "expected_value task requires values and probabilities"
+                )
             if len(inp.values) != len(inp.probabilities):
                 raise ValueError("values and probabilities must have same length")
             total_p = sum(inp.probabilities)
@@ -224,13 +234,12 @@ def solve_probability(inp: ProbabilitySolveInput) -> SolveResult:
             answer = f"E[X] = {ev:.6g}; Var[X] = {var:.6g}"
 
         else:
-            return SolveResult(
-                solvable=False,
-                answer="",
-                steps=steps,
-                error=f"Unknown task: {task}",
-            )
+            raise ValueError(f"Unknown task: {task}")
 
+        return steps, answer
+
+    try:
+        steps, answer = _runtime.run_isolated(_compute, timeout=inp.timeout)
         return SolveResult(
             solvable=True,
             answer=answer,
@@ -243,6 +252,6 @@ def solve_probability(inp: ProbabilitySolveInput) -> SolveResult:
         return SolveResult(
             solvable=False,
             answer="",
-            steps=steps,
+            steps=[],
             error=str(exc),
         )

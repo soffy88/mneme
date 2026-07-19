@@ -16,10 +16,11 @@ from obase.sympy_runtime import SymPyRuntime
 
 from oprim.types import SolveResult, SolveStep
 
+_runtime = SymPyRuntime()
+
 
 TaskType = Literal[
-    "derivative", "critical_points", "extrema", "inflection",
-    "tangent_line", "auto"
+    "derivative", "critical_points", "extrema", "inflection", "tangent_line", "auto"
 ]
 
 
@@ -31,7 +32,7 @@ class DerivativeSolveInput:
     variable: str = "x"
     order: int = 1
     task: TaskType = "auto"
-    point: float | None = None   # for "tangent_line"
+    point: float | None = None  # for "tangent_line"
     timeout: float = 5.0
 
 
@@ -65,8 +66,23 @@ def solve_derivative(inp: DerivativeSolveInput) -> SolveResult:
 
     try:
         import sympy as sp
+
         x = sp.Symbol(inp.variable)
-        f = sp.sympify(inp.expression)
+        parsed = _runtime.evaluate(
+            inp.expression,
+            {inp.variable: inp.variable},
+            timeout=inp.timeout,
+            simplify_result=False,
+        )
+        if not parsed.success or parsed.value is None:
+            return SolveResult(
+                solvable=False,
+                answer="",
+                steps=steps,
+                error=parsed.error or "Failed to parse expression",
+                raw_expression=inp.expression,
+            )
+        f = parsed.value
 
         steps.append(
             SolveStep(
@@ -137,7 +153,9 @@ def solve_derivative(inp: DerivativeSolveInput) -> SolveResult:
                     else:
                         cls = "saddle_or_inflection"
                     f_val = float(f.subs(x, cp).evalf())
-                    classifications.append(f"x={cp}: {cls} (f={f_val:.4g}, f''={val2_n:.4g})")
+                    classifications.append(
+                        f"x={cp}: {cls} (f={f_val:.4g}, f''={val2_n:.4g})"
+                    )
                 except Exception:
                     classifications.append(f"x={cp}: classification failed")
             steps.append(
@@ -148,7 +166,9 @@ def solve_derivative(inp: DerivativeSolveInput) -> SolveResult:
                     result="; ".join(classifications),
                 )
             )
-            answer = "; ".join(classifications) if classifications else "no critical points"
+            answer = (
+                "; ".join(classifications) if classifications else "no critical points"
+            )
             latex_str = sp.latex(sp.simplify(df2))
 
         elif task == "inflection":

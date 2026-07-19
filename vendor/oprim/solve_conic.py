@@ -17,8 +17,12 @@ from obase.sympy_runtime import SymPyRuntime, SymPyRuntimeError
 
 from oprim.types import SolveResult, SolveStep
 
+_runtime = SymPyRuntime()
 
-ConicType = Literal["circle", "ellipse", "parabola", "hyperbola", "degenerate", "unknown"]
+
+ConicType = Literal[
+    "circle", "ellipse", "parabola", "hyperbola", "degenerate", "unknown"
+]
 
 
 @dataclass(frozen=True)
@@ -129,13 +133,37 @@ def _extract_hyperbola_params(coeffs: dict) -> ConicParams:
     )
 
 
-def _parse_coefficients(expr_str: str) -> dict[str, float]:
-    """Extract polynomial coefficients from expression string via SymPy."""
+def _normalize_caret_power(expr_str: str) -> str:
+    """SymPyRuntime evaluates via plain Python ast.parse/eval, where ``^`` is
+    bitwise XOR — unlike sympy's own auto-parser, which converts ``^`` to
+    power. solve_conic's accepted input format uses caret notation (e.g.
+    "x^2 + y^2 = 25", see existing test_new_routes.py::test_solve_conic), so
+    it must be normalized to ``**`` before going through the AST-validated
+    sandbox, or caret expressions would silently misparse."""
+    return expr_str.replace("^", "**")
+
+
+def _parse_coefficients(expr_str: str, *, timeout: float) -> dict[str, float]:
+    """Extract polynomial coefficients from expression string via SymPy.
+
+    Routes the untrusted expression string through SymPyRuntime's AST
+    whitelist + fork/timeout/memory-limited sandbox before doing any further
+    (unsandboxed but now-safe, since it operates on an already-materialized
+    SymPy object rather than a raw string) polynomial manipulation.
+    """
     try:
         import sympy as sp
+
         x, y = sp.symbols("x y")
-        expr = sp.sympify(expr_str)
-        poly = sp.Poly(sp.expand(expr), x, y)
+        eval_result = _runtime.evaluate(
+            _normalize_caret_power(expr_str),
+            {"x": "x", "y": "y"},
+            timeout=timeout,
+            simplify_result=False,
+        )
+        if not eval_result.success or eval_result.value is None:
+            return {}
+        poly = sp.Poly(sp.expand(eval_result.value), x, y)
         monoms = poly.as_dict()
         result: dict[str, float] = {}
         for (px, py), coef in monoms.items():
@@ -178,8 +206,6 @@ def solve_conic(expression: str, *, timeout: float = 5.0) -> SolveResult:
     steps: list[SolveStep] = []
 
     try:
-        import sympy as sp
-
         # Normalise: handle "lhs = rhs" format
         if "=" in expression:
             lhs_str, rhs_str = expression.split("=", 1)
@@ -196,7 +222,7 @@ def solve_conic(expression: str, *, timeout: float = 5.0) -> SolveResult:
             )
         )
 
-        coeffs = _parse_coefficients(expr_str)
+        coeffs = _parse_coefficients(expr_str, timeout=timeout)
         if not coeffs:
             return SolveResult(
                 solvable=False,
@@ -256,14 +282,16 @@ def solve_conic(expression: str, *, timeout: float = 5.0) -> SolveResult:
                     f"center={params.center}, "
                     f"radii={params.radii}, "
                     f"e={params.eccentricity}"
-                ) if params.center else params.standard_form,
+                )
+                if params.center
+                else params.standard_form,
             )
         )
 
-        import sympy as sp
-        x_sym, y_sym = sp.symbols("x y")
-        expr_sym = sp.sympify(expr_str)
-        latex_str = sp.latex(expr_sym) + " = 0"
+        latex_result = _runtime.to_latex(
+            _normalize_caret_power(expr_str), timeout=timeout
+        )
+        latex_str = (latex_result.value if latex_result.success else expr_str) + " = 0"
 
         answer_parts = [conic_type]
         if params.center:

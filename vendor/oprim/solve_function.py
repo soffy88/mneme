@@ -18,8 +18,15 @@ from oprim.types import SolveResult, SolveStep
 
 
 TaskType = Literal[
-    "zeros", "evaluate", "domain", "monotonicity", "parity",
-    "compose", "inverse", "simplify", "auto"
+    "zeros",
+    "evaluate",
+    "domain",
+    "monotonicity",
+    "parity",
+    "compose",
+    "inverse",
+    "simplify",
+    "auto",
 ]
 
 
@@ -27,22 +34,26 @@ TaskType = Literal[
 class FunctionSolveInput:
     """Input specification for a function problem."""
 
-    expression: str          # f(x) expression, e.g. "x**2 - 4"
+    expression: str  # f(x) expression, e.g. "x**2 - 4"
     variable: str = "x"
     task: TaskType = "auto"
-    point: float | None = None          # for "evaluate"
-    g_expression: str | None = None     # for "compose"
+    point: float | None = None  # for "evaluate"
+    g_expression: str | None = None  # for "compose"
     timeout: float = 5.0
 
 
-def _find_zeros(expr_str: str, var: str, rt: SymPyRuntime, timeout: float) -> tuple[str, str]:
+def _find_zeros(
+    expr_str: str, var: str, rt: SymPyRuntime, timeout: float
+) -> tuple[str, str]:
     result = rt.solve_equation(expr_str, var, timeout=timeout)
     if result.success:
         return result.result_str, f"solve({expr_str}, {var})"
     return "could not solve", expr_str
 
 
-def _evaluate_at(expr_str: str, var: str, point: float, rt: SymPyRuntime, timeout: float) -> tuple[str, str]:
+def _evaluate_at(
+    expr_str: str, var: str, point: float, rt: SymPyRuntime, timeout: float
+) -> tuple[str, str]:
     result = rt.evaluate(f"({expr_str}).subs({var}, {point})", timeout=timeout)
     if result.success:
         return result.result_str, f"f({point})"
@@ -53,12 +64,20 @@ def _evaluate_at(expr_str: str, var: str, point: float, rt: SymPyRuntime, timeou
     return "evaluation failed", expr_str
 
 
-def _check_parity(expr_str: str, var: str, rt: SymPyRuntime, timeout: float) -> tuple[str, str]:
+def _check_parity(
+    expr_str: str, var: str, rt: SymPyRuntime, timeout: float
+) -> tuple[str, str]:
     """Check if function is even, odd, or neither."""
     try:
         import sympy as sp
+
         x = sp.Symbol(var)
-        f = sp.sympify(expr_str)
+        parsed = rt.evaluate(
+            expr_str, {var: var}, timeout=timeout, simplify_result=False
+        )
+        if not parsed.success or parsed.value is None:
+            return "unknown", parsed.error or "parse failed"
+        f = parsed.value
         f_neg = f.subs(x, -x)
         diff_even = sp.simplify(f_neg - f)
         diff_odd = sp.simplify(f_neg + f)
@@ -115,7 +134,9 @@ def solve_function(inp: FunctionSolveInput) -> SolveResult:
         )
 
         if task == "evaluate" and inp.point is not None:
-            val, formula = _evaluate_at(inp.expression, inp.variable, inp.point, rt, inp.timeout)
+            val, formula = _evaluate_at(
+                inp.expression, inp.variable, inp.point, rt, inp.timeout
+            )
             steps.append(
                 SolveStep(
                     step_number=2,
@@ -127,7 +148,9 @@ def solve_function(inp: FunctionSolveInput) -> SolveResult:
             answer = f"f({inp.point}) = {val}"
 
         elif task == "zeros":
-            zeros_str, formula = _find_zeros(inp.expression, inp.variable, rt, inp.timeout)
+            zeros_str, formula = _find_zeros(
+                inp.expression, inp.variable, rt, inp.timeout
+            )
             steps.append(
                 SolveStep(
                     step_number=2,
@@ -139,7 +162,9 @@ def solve_function(inp: FunctionSolveInput) -> SolveResult:
             answer = f"zeros: {zeros_str}"
 
         elif task == "parity":
-            parity, detail = _check_parity(inp.expression, inp.variable, rt, inp.timeout)
+            parity, detail = _check_parity(
+                inp.expression, inp.variable, rt, inp.timeout
+            )
             steps.append(
                 SolveStep(
                     step_number=2,
@@ -165,12 +190,28 @@ def solve_function(inp: FunctionSolveInput) -> SolveResult:
         elif task == "compose" and inp.g_expression:
             try:
                 import sympy as sp
+
                 x = sp.Symbol(inp.variable)
-                f = sp.sympify(inp.expression)
-                g = sp.sympify(inp.g_expression)
-                fog = f.subs(x, g)
-                simplified = sp.simplify(fog)
-                result_str = str(simplified)
+                parsed_f = rt.evaluate(
+                    inp.expression,
+                    {inp.variable: inp.variable},
+                    timeout=inp.timeout,
+                    simplify_result=False,
+                )
+                parsed_g = rt.evaluate(
+                    inp.g_expression,
+                    {inp.variable: inp.variable},
+                    timeout=inp.timeout,
+                    simplify_result=False,
+                )
+                if not parsed_f.success or parsed_f.value is None:
+                    result_str = f"error: {parsed_f.error}"
+                elif not parsed_g.success or parsed_g.value is None:
+                    result_str = f"error: {parsed_g.error}"
+                else:
+                    fog = parsed_f.value.subs(x, parsed_g.value)
+                    simplified = sp.simplify(fog)
+                    result_str = str(simplified)
             except Exception as e:
                 result_str = f"error: {e}"
             steps.append(
@@ -186,11 +227,20 @@ def solve_function(inp: FunctionSolveInput) -> SolveResult:
         elif task == "monotonicity":
             try:
                 import sympy as sp
+
                 x = sp.Symbol(inp.variable)
-                f = sp.sympify(inp.expression)
-                df = sp.diff(f, x)
-                critical = sp.solve(df, x)
-                result_str = f"f'(x) = {df}; critical points: {critical}"
+                parsed = rt.evaluate(
+                    inp.expression,
+                    {inp.variable: inp.variable},
+                    timeout=inp.timeout,
+                    simplify_result=False,
+                )
+                if not parsed.success or parsed.value is None:
+                    result_str = str(parsed.error)
+                else:
+                    df = sp.diff(parsed.value, x)
+                    critical = sp.solve(df, x)
+                    result_str = f"f'(x) = {df}; critical points: {critical}"
             except Exception as e:
                 result_str = str(e)
             steps.append(
@@ -206,11 +256,20 @@ def solve_function(inp: FunctionSolveInput) -> SolveResult:
         elif task == "inverse":
             try:
                 import sympy as sp
+
                 x = sp.Symbol(inp.variable)
                 y = sp.Symbol("y")
-                f = sp.sympify(inp.expression)
-                inv = sp.solve(f - y, x)
-                result_str = str(inv)
+                parsed = rt.evaluate(
+                    inp.expression,
+                    {inp.variable: inp.variable},
+                    timeout=inp.timeout,
+                    simplify_result=False,
+                )
+                if not parsed.success or parsed.value is None:
+                    result_str = str(parsed.error)
+                else:
+                    inv = sp.solve(parsed.value - y, x)
+                    result_str = str(inv)
             except Exception as e:
                 result_str = str(e)
             steps.append(
