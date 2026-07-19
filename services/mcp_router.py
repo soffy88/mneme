@@ -46,7 +46,13 @@ from services.auth_deps import (
     get_current_user,
 )
 from services.math_grade import grade_math
-from services.models import KnowledgeCluster, KnowledgeUnit, User, WrongQuestion
+from services.models import (
+    KnowledgeCluster,
+    KnowledgeUnit,
+    Textbook,
+    User,
+    WrongQuestion,
+)
 from services.progress_assembler import build_learning_progress
 
 router = APIRouter(prefix="/mcp", tags=["mcp"])
@@ -514,8 +520,33 @@ def _choice_prompt(prompt: str, qtype: str, profiler: Optional[dict]) -> str:
     return f"{prompt}\n\n{opts}" if opts else prompt
 
 
-async def _llm_generate_question(kc_name: str) -> Optional[dict]:
-    """题库无题时 LLM(qwen)兜底：出一道题 + 标准答案。失败→None。expected 不外传。"""
+# G1.."G12" -> 中文学段/年级，供 LLM 出题 prompt 使用。之前 _llm_generate_question
+# 只传 kc_name、硬编码"适合中学生"——一年级 KC「1-5的认识」实测生成过研究生
+# 集合论/皮亚诺公理级别的题（W3 B-8 补测撞见，见 outputs/W3-PENDING-ITEMS.md）。
+_GRADE_ZH = {
+    "G1": "小学一年级",
+    "G2": "小学二年级",
+    "G3": "小学三年级",
+    "G4": "小学四年级",
+    "G5": "小学五年级",
+    "G6": "小学六年级",
+    "G7": "初一",
+    "G8": "初二",
+    "G9": "初三",
+    "G10": "高一",
+    "G11": "高二",
+    "G12": "高三",
+}
+
+
+async def _llm_generate_question(
+    kc_name: str, *, grade: Optional[str] = None
+) -> Optional[dict]:
+    """题库无题时 LLM(qwen)兜底：出一道题 + 标准答案。失败→None。expected 不外传。
+
+    grade（如 "G1"）来自 Textbook.grade，供出题 prompt 用——没有这个信号时
+    LLM 只看到知识点名字，难度完全靠猜，曾经出过严重偏离学段的题。
+    """
     import json as _json
     import os
 
@@ -528,13 +559,17 @@ async def _llm_generate_question(kc_name: str) -> Optional[dict]:
         caller = QwenTextCaller(
             api_key=key, model=os.environ.get("QWEN_MODEL", "qwen-plus")
         )
+        level_desc = _GRADE_ZH.get(grade or "", "") or "中小学"
         out = await caller(
             messages=[
                 {
                     "role": "user",
                     "content": (
-                        f"为知识点『{kc_name}』出一道适合中学生的题，返回严格 JSON："
-                        '{"prompt":"题干","answer":"标准答案","qtype":"solve"}。只输出 JSON。'
+                        f"为{level_desc}学生的知识点『{kc_name}』出一道适合该学段"
+                        f"难度的题——必须严格匹配这个学段的认知水平，不能用更高"
+                        f"学段（如大学/竞赛）的概念或术语。返回严格 JSON："
+                        '{"prompt":"题干","answer":"标准答案","qtype":"solve"}。'
+                        "只输出 JSON。"
                     ),
                 }
             ],
@@ -571,10 +606,20 @@ async def tool_request_question(
             "source": "pending",
         }
 
+    # 同一次查询顺带拿 Textbook.grade——LLM 兜底出题（_llm_generate_question）
+    # 之前只传 kc_name，没有年级信号，实测出过"一年级 KC 生成研究生集合论题"
+    # 的真事故（W3 B-8 补测撞见，见 outputs/W3-PENDING-ITEMS.md）。
+    # outerjoin（非 join）：textbook_id 万一是脏数据/对不上真实 Textbook 行，
+    # 也不能让 kc_name 本身跟着查不出来（那是原有行为，只是 grade 会是 None）。
     name_row = (
-        await db.execute(select(KnowledgeUnit.name).where(KnowledgeUnit.id == kc_id))
+        await db.execute(
+            select(KnowledgeUnit.name, Textbook.grade)
+            .outerjoin(Textbook, Textbook.id == KnowledgeUnit.textbook_id)
+            .where(KnowledgeUnit.id == kc_id)
+        )
     ).first()
     kc_name = name_row[0] if name_row else kc_id
+    kc_grade = name_row[1] if name_row else None
     qid = f"q-{uuid.uuid4().hex}"
     gate_type = await gate_store.resolve_gate_type(db, kc_id)
 
@@ -635,7 +680,7 @@ async def tool_request_question(
         prompt = _choice_prompt(prompt, qtype, bank[2])
         source = "bank"
     else:
-        gen = await _llm_generate_question(kc_name)
+        gen = await _llm_generate_question(kc_name, grade=kc_grade)
         if gen is None:
             return {"error": "该知识点暂无可用题目", "kc_id": kc_id}
         prompt, expected, qtype = gen["prompt"], gen["expected"], gen["qtype"]

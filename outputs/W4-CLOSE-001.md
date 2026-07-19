@@ -102,13 +102,15 @@ JSON 而给非数学问题编造占位内核（system prompt 加"留空不编造
 ship-gate、image rebuild 债、人工校订未开始等——均与 W4 无关，未在本轮
 触碰。
 
-**继承自 W3、spec §7 点名"W4 或补丁轮处理"、本轮实际未处理**：
+**继承自 W3、spec §7 点名"W4 或补丁轮处理"，2026-07-19 补丁轮已修**：
 `_llm_generate_question`（既有 W2C 兜底出题逻辑）不传年级上下文的 bug
-（一年级 KC 生成研究生集合论题）。**如实说明：本轮 W4 三个模块（S0/Solve/
-Visualize）都没有触碰这个函数**——精力全部投入在 spec 明确列出的三个
-模块本身（且 S0/Visualize 都比预期多花了工夫在修复过程中新发现的绕过点
-上）。这条不能算"做了"，需要单独一轮补丁处理，不要因为 W4 收口而误认为
-它已经被顺带修了。
+（一年级 KC 生成研究生集合论题）。W4 三个模块（S0/Solve/Visualize）收口
+时确实没有触碰这个函数——收口后作为独立补丁轮处理：`tool_request_
+question` 的取名查询改联表拿 `Textbook.grade`，传给
+`_llm_generate_question(kc_name, grade=...)`，prompt 用真实学段替换硬编码
+"适合中学生"。真实 qwen provider 验证：G1 KC 现在生成"数一数几个苹果"
+这种真实符合学段的题，不再是集合论。详见
+`outputs/W3-PENDING-ITEMS.md`。
 
 **本轮新增，已处理但记录取证缺口**：S0 push 到 PYTHONPATH 修复之间，
 生产是否有真实流量打到未加固内核——容器级访问日志已因重启丢失，无法
