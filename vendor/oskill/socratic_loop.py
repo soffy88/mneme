@@ -102,9 +102,9 @@ async def process_socratic_turn(
     if textbook_id:
         try:
             from oprim.retrieve_chunks import retrieve_chunks, format_chunks_as_context
-            from obase.db import async_session_factory
+            from obase.db import SessionLocal
 
-            async with async_session_factory() as db:
+            async with SessionLocal() as db:
                 chunks = await retrieve_chunks(
                     db,
                     file_id=textbook_id,

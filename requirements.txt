@@ -24,3 +24,5 @@ structlog>=24.0
 minio>=7.2
 psycopg2-binary>=2.9
 openai>=1.0
+pymupdf4llm
+pypdf>=4.0

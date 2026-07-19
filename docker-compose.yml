@@ -94,6 +94,10 @@ services:
       QWEN_BASE_URL: ${QWEN_BASE_URL:-}
       QWEN_MODEL: ${QWEN_MODEL:-qwen-plus}
       QWEN_VL_MODEL: ${QWEN_VL_MODEL:-qwen-vl-max}
+      # Knowledge Hub 自建检索（W3 Part A）：本地 Ollama embedding（qwen3-embedding），
+      # OPENAI_API_KEY 未配时 embed_chunks.py 自动 fallback 到这条路径
+      OLLAMA_BASE_URL: ${OLLAMA_BASE_URL:-http://host.docker.internal:11434}
+      OLLAMA_EMBED_MODEL: ${OLLAMA_EMBED_MODEL:-nomic-embed-text}
       # Stratum 检索接入（C4/W2C）：专用 service 账号（非用户个人账号），HTTP 走
       # docker network（mneme-api-1 已 connect stratum-net）。未配则 rag_client
       # 静默返回空列表，不阻断对话（呈现层素材，缺失不该打断）。
@@ -145,6 +149,10 @@ services:
       QWEN_BASE_URL: ${QWEN_BASE_URL:-}
       QWEN_MODEL: ${QWEN_MODEL:-qwen-plus}
       QWEN_VL_MODEL: ${QWEN_VL_MODEL:-qwen-vl-max}
+      # Knowledge Hub 自建检索（W3 Part A）：textbook_tasks.py 的索引任务在 worker 里跑，
+      # 同样需要 embedding provider 配置（见 api 服务同名注释）
+      OLLAMA_BASE_URL: ${OLLAMA_BASE_URL:-http://host.docker.internal:11434}
+      OLLAMA_EMBED_MODEL: ${OLLAMA_EMBED_MODEL:-nomic-embed-text}
     extra_hosts:
       - "host.docker.internal:host-gateway"
     volumes:

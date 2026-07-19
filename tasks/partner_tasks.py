@@ -9,7 +9,7 @@ from datetime import datetime, timedelta, timezone
 from sqlalchemy import select, func
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from obase.db import async_session_factory
+from obase.db import SessionLocal
 from services.models import User, WrongQuestion
 from services.email.factory import get_email_provider
 
@@ -20,7 +20,7 @@ async def _check_and_notify_students() -> None:
     now = datetime.now(timezone.utc)
     email_provider = get_email_provider()
 
-    async with async_session_factory() as db:
+    async with SessionLocal() as db:
         # 获取所有绑定了邮箱的学生
         students = (
             (
