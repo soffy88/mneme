@@ -311,6 +311,30 @@ async def tool_get_book(db: AsyncSession, book_id: str) -> dict:
     }
 
 
+async def tool_solve_problem(problem_text: str) -> dict:
+    """W4 Solve：自然语言题目 -> 内核真实求解 + LLM 讲解（services/solve_service.py）。
+
+    非学生数据/无 DB 依赖——纯计算 + LLM，失败（题意理解失败/内核不可解）
+    转成 {"solvable": False, "error": ...}，不向前端抛 500（同 tool_get_book
+    "呈现层缺失不该打断前端"的处置原则）。
+    """
+    from services.solve_service import handle_solve_problem
+
+    try:
+        return await handle_solve_problem(problem_text)
+    except Exception as exc:
+        return {
+            "kernel": "",
+            "task": "",
+            "restated_problem": "",
+            "solvable": False,
+            "answer": "",
+            "steps": [],
+            "error": str(exc),
+            "narration": "",
+        }
+
+
 async def tool_list_personas(db: AsyncSession) -> dict:
     """列出可选人格模板（不含 body，供 chat 前端选择器用）。"""
     return {"personas": await persona_store.list_personas(db)}
@@ -829,6 +853,10 @@ class GetBookReq(BaseModel):
     book_id: str
 
 
+class SolveProblemReq(BaseModel):
+    problem_text: str
+
+
 class ListPersonasReq(BaseModel):
     pass
 
@@ -967,6 +995,15 @@ async def mcp_get_book(
     current_user: User = Depends(get_current_user),
 ) -> dict:
     return await tool_get_book(db, req.book_id)
+
+
+@router.post("/SolveProblem")
+async def mcp_solve_problem(
+    req: SolveProblemReq,
+    current_user: User = Depends(get_current_user),
+) -> dict:
+    # 无 DB 依赖（纯计算 + LLM），仍要求登录：/mcp 已公网，统一"须登录"闸门。
+    return await tool_solve_problem(req.problem_text)
 
 
 @router.post("/ListPersonas")

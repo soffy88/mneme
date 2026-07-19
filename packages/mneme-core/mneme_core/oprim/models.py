@@ -333,3 +333,96 @@ class BlockSpec:
 
     type: BookBlockType
     params: dict = field(default_factory=dict)
+
+
+# ── Solve 模式（W4 §2）───────────────────────────────────────────────────────
+#
+# 单源注册表：7 个确定性求解内核各自支持的真实 task（只列已实现的分支——
+# solve_function 的 TaskType Literal 里还声明了 "domain"、solve_geometry3d
+# 声明了 "plane_equation"，但两者内核本体都没有实现对应分支，选中会直接报
+# "Unknown task"，故不列入，防止 LLM 被引导去选一个必然失败的 task）。
+# plan_solve_task（题意理解）与 vendor/oskill/solve_dispatch（实际调度）都读
+# 这一份定义，不各自维护一份副本。
+
+SOLVE_KERNEL_TASKS: dict[str, tuple[str, ...]] = {
+    "function": (
+        "zeros",
+        "evaluate",
+        "parity",
+        "simplify",
+        "compose",
+        "monotonicity",
+        "inverse",
+    ),
+    "conic": (),  # 无 task 参数，只有 expression
+    "derivative": (
+        "derivative",
+        "critical_points",
+        "extrema",
+        "inflection",
+        "tangent_line",
+    ),
+    "trig": ("solve", "simplify", "evaluate", "period", "identity"),
+    "sequence": ("nth_term", "sum", "type_check"),
+    "geometry3d": (
+        "distance",
+        "midpoint",
+        "sphere",
+        "cylinder",
+        "cone",
+        "angle_planes",
+    ),
+    "probability": (
+        "combinations",
+        "permutations",
+        "basic",
+        "conditional",
+        "bayes",
+        "binomial",
+        "expected_value",
+    ),
+}
+
+SOLVE_KERNEL_PARAM_HINTS: dict[str, str] = {
+    "function": (
+        "expression(str), variable(str,默认x), point(float,evaluate用), "
+        "g_expression(str,compose用)"
+    ),
+    "conic": "expression(str，如 'x^2+y^2=25' 或 'x**2+y**2=25')",
+    "derivative": (
+        "expression(str), variable(str,默认x), order(int,默认1), "
+        "point(float,tangent_line用)"
+    ),
+    "trig": (
+        "expression(str), variable(str,默认x), angle_degrees(float,evaluate用), "
+        "rhs(str,solve用，默认'0')"
+    ),
+    "sequence": "terms(数字列表，至少2项), n(int,nth_term用), count(int,sum用)",
+    "geometry3d": (
+        "p1/p2(三元组[x,y,z],distance/midpoint用), "
+        "radius/height(float,sphere/cylinder/cone用), "
+        "normal1/normal2(三元组[x,y,z],angle_planes用)"
+    ),
+    "probability": (
+        "n/k(int,组合排列/二项分布用), p_a/p_b(float,basic用), "
+        "p_a_given_b/p_b_given_a(float,条件概率/贝叶斯用), "
+        "p_success(float,二项分布用), values/probabilities(数字列表,期望值用)"
+    ),
+}
+
+
+@dataclass
+class SolveTaskPlan:
+    """plan_solve_task 输出：把自然语言题目映射到确定性内核的调用计划。
+
+    kernel/task 只能是 SOLVE_KERNEL_TASKS 里真实存在的值——校验在
+    plan_solve_task 里做，这里只是数据容器。error 非空表示题意理解失败/
+    校验不过，调用方不应该拿 kernel/task/params 去调度（大概率是空/无效值）。
+    """
+
+    kernel: str = ""
+    task: str = ""
+    params: dict = field(default_factory=dict)
+    restated_problem: str = ""
+    error: str = ""
+    params: dict = field(default_factory=dict)

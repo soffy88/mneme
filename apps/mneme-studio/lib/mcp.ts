@@ -192,6 +192,27 @@ export interface BookSummary {
   book_name?: string;
 }
 
+// ── W4 Solve：自然语言题目 -> 内核真实求解 + LLM 讲解 ─────────────────────
+// answer/steps 是 7 个确定性内核（S0 加固后全经沙箱）的真实输出；narration
+// 是 LLM 纯附加的自然语言讲解，绝不会替换/覆盖 answer/steps（SV-2/SV-4）。
+export interface SolveStep {
+  step_number: number;
+  description: string;
+  expression: string;
+  result: string;
+}
+
+export interface SolveProblemResult {
+  kernel: string;
+  task: string;
+  restated_problem: string;
+  solvable: boolean;
+  answer: string;
+  steps: SolveStep[];
+  error: string;
+  narration: string;
+}
+
 // ── 读工具 + 提交（无 PoseQuestion）─────────────────────────────────────────
 export const mcp = {
   // 按学生档案拉学习路径（有内容的 KC、按章节序）。studio 加载时取代写死的默认 KC。
@@ -236,4 +257,8 @@ export const mcp = {
   listBooks: () => call<{ books: BookSummary[] }>("ListBooks", {}),
 
   getBook: (bookId: string) => call<{ book: BookDetail | null }>("GetBook", { book_id: bookId }),
+
+  // W4 Solve：非学生数据，不传 student_id。
+  solveProblem: (problemText: string) =>
+    call<SolveProblemResult>("SolveProblem", { problem_text: problemText }),
 };

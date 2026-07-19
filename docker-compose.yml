@@ -63,7 +63,10 @@ services:
     environment:
       # ②-0 打包：mneme-core（Phase1 门控内核 7 元素之家）加入 import 路径。
       # 现经 PYTHONPATH 验证整条链；稳定后再固化为 Dockerfile pip install（与 obase/oprim 平价）。
-      PYTHONPATH: /app:/app/packages/mneme-core
+      # W4 S0：/app/vendor 加进最前面，让 oprim/oskill/omodul/obase 优先解析到
+      # 本仓 vendor/ 副本（S0 沙箱加固 + Solve 模式所在），不再落到站点包
+      # (site-packages) 里未加固的旧副本——这两者此前一直是两份不同代码。
+      PYTHONPATH: /app/vendor:/app:/app/packages/mneme-core
       DATABASE_URL: postgresql+asyncpg://postgres:postgres@db:5432/mneme
       REDIS_URL: redis://redis:6379/0
       MINIO_ENDPOINT: minio:9000
@@ -134,7 +137,7 @@ services:
     restart: always
     command: celery -A tasks.celery_app worker --loglevel=info --concurrency=2
     environment:
-      PYTHONPATH: /app:/app/packages/mneme-core
+      PYTHONPATH: /app/vendor:/app:/app/packages/mneme-core
       DATABASE_URL: postgresql+asyncpg://postgres:postgres@db:5432/mneme
       REDIS_URL: redis://redis:6379/0
       MINIO_ENDPOINT: minio:9000
@@ -176,7 +179,7 @@ services:
     restart: always
     command: celery -A tasks.celery_app beat --loglevel=info --schedule=/tmp/celerybeat-schedule
     environment:
-      PYTHONPATH: /app:/app/packages/mneme-core
+      PYTHONPATH: /app/vendor:/app:/app/packages/mneme-core
       DATABASE_URL: postgresql+asyncpg://postgres:postgres@db:5432/mneme
       REDIS_URL: redis://redis:6379/0
       MINIO_ENDPOINT: minio:9000

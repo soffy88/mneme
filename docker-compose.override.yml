@@ -7,4 +7,4 @@ services:
       - .:/app
       - /data/soffy/projects/platform/3O/oservi:/opt/oservi_pkg:ro
     environment:
-      PYTHONPATH: /app:/app/packages/mneme-core:/app/packages/mneme-agent:/opt/oservi_pkg
+      PYTHONPATH: /app/vendor:/app:/app/packages/mneme-core:/app/packages/mneme-agent:/opt/oservi_pkg
