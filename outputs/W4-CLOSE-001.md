@@ -121,6 +121,25 @@ question` 的取名查询改联表拿 `Textbook.grade`，传给
 更多项（避免解析 `solve_sequence.answer` 字符串的脆弱实现）；mermaid 的
 FC-6 候选主库判定留待未来重新评估。
 
+**🔴 本轮新增，W5 前必须处理，不能再靠"发现一个补一个"**：
+"未沙箱化 sympify/eval/exec 处理外部输入" 是**跨命名空间的模式性漏洞**，
+不是 solve_* 或 kernel_to_* 这几个文件独有——本轮实际发现顺序就是证据：
+S0 一开始只知道 2 个绕过（geometry3d/probability），结构性测试挖出
+solve_conic/derivative/trig/sequence 4 个更多，之后 solve_function 自己
+7 个任务分支里还有 4 个绕过没被同一轮扫到，Visualize 阶段又在
+kernel_to_plot2d/kernel_to_three 这两个不在 `solve_*` 命名下的文件里发现
+同一个模式。每次都是"接一个新模式才顺带扫到"，不是主动查过全仓。
+
+**处置**：W5 开工前，对全仓（含 `vendor/`、`packages/mneme-core/`、
+`scripts/`、`tasks/`）做一次 `sympify(`/`eval(`/`exec(`/`compile(` 的全量
+grep，逐个确认调用点是否处理外部（用户/LLM）输入、是否经过沙箱
+（`obase.sympy_runtime.SymPyRuntime` 的 AST 校验入口或
+`run_isolated()`）。不要等下一个新模式（Animator/Research/Notebook/
+Co-Writer 任何一个）接线时再顺带撞见——那还是"发现一个补一个"，不是根治。
+`obase/sandbox_selfcheck.py` 目前只覆盖已知的 `EXPECTED_KERNELS` +
+`VISUALIZATION_KERNELS` 两组白名单，这次全仓 grep 的结果应该反过来验证/
+扩充这份白名单是否已经穷尽，而不是继续假设"没被点名的文件都是安全的"。
+
 ---
 
 **W4 全部三个模块（S0/Solve/Visualize）收口。**
