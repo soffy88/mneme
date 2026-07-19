@@ -1,4 +1,38 @@
-# W3 挂起项（Part A 进行中，随时更新）
+# W3 挂起项（Part A + Part B 均已交付，随时更新）
+
+## 🔴 ship-gate（spec §6 写死，Part B B5 全绿≠ship-ready，不得因为这条移除）
+
+Part B（Book Engine：B1 ideation/spine/page_plan → B2 block 生成器 → B3
+book_compile 四支柱 → B4 /studio/book 阅读器）已全部实现，B5 验收
+（B-1 到 B-15）已逐条核对，13 条完全通过、1 条（B-8）范围内如实缩小、
+细节见下方"B5 验收记录"。**但 Part B 全绿 = 引擎结构完成，不等于 ship-ready**：
+
+活书引用教材靠 KU→chunk 挂接，~87% 命中率（A3 抽验：13 exact+4 relevant，
+2 partial+1 miss；见 A3 词汇碰撞条目），即约 13% 的引用存在错配风险，
+honesty 三态标注（R3/R4）只是让这个风险对读者可见，不是消除它。ship 给
+真实学生前必须先做到：KU→chunk 挂接精度从 ~87% 提到可接受水平（全语料
+人工校订，见 scripts/export_ku_chunk_review.py 已生成待审清单 / 或替换
+纯 embedding 挂接方法）。此条不因 B5 验收通过而勾掉。
+
+## B5 验收记录（2026-07-19）
+
+| # | 项 | 结论 |
+|---|---|---|
+| B-1 | 端到端编译 | ✅ 真实编译 3 本书（G8×2/G1×1），真 qwen，0 block 错误 |
+| B-2 | 内容溯源 Knowledge Hub，非纯 LLM 编造/非 Stratum | ✅ 所有引用可追溯真实 chunk_id/pdf_id；代码零处引用 rag_client |
+| B-3 | 出处可点开 pdf/page/span | ✅ 真实浏览器 e2e 确认 |
+| B-4 | R1 分数<0.60 不出现 | ✅ 多层测试 + 真实书最低分 0.6065/0.6924/0.6969 |
+| B-5 | R3 默认"推断未核对" | ✅ |
+| B-6 | R4 人工校订后显示"已核对" | ✅ 真实浏览器 e2e（手动模拟一条 verified 挂接，验完已还原） |
+| B-7 | 三态 UI 阅读器可见 | ✅ |
+| B-8 | quiz 块经既有判分护栏，掌握度回流 | ⚠️ **范围内缩小，如实记录**：quiz/flash_cards/guided 块编译期只存 kc_ids scope（B2 架构决定——这三种是 per-student 实时数据，不能编译期固化），阅读器只给"去学习"入口链接，不在 Book Engine 里重新实现选题/判分。既有 `/studio/learn` 判分链路本身零改动、仍受 S1 CI 门约束，但**没有一条 Book-Engine-专属的端到端测试**证明"从书里点进去、答题、掌握度回流"——因为这条路径就是既有 `/studio/learn`，Book Engine 没有新建判分入口，也没有验证过"点击衔接"这一步本身 |
+| B-9 | 四支柱齐，cost 非零 | ✅ 真实开销 $0.57～$0.83/本 |
+| B-10 | async 并发 cost/trail 正确 | ✅ 专门测试覆盖，且过程中真的抓到两个实现 bug（cost 从未被记账、trail 未按 step_no 排序） |
+| B-11 | decision_trail 记录每处引用分数+三态 | ✅ |
+| B-12 | FC-5 零 DB | ✅ package.json 无 DB 驱动依赖 + 容器无 DB 环境变量 + pg_stat_activity 确认零连接 |
+| B-13 | FC-6 归属书面记录 | ✅ 每个新元素 docstring 里都有 |
+| B-14 | 测试计数审计 | ✅ 828（700+14+114），4 个既有失败贯穿全程未变 |
+| B-15 | 门控不受 Book/检索影响 | ✅ 每个新模块都有 is_mastered 前后夹检索的直接证明 |
 
 ## 🔴 image rebuild 债 —— PDF 解析能力只在运行容器里，镜像没有
 
