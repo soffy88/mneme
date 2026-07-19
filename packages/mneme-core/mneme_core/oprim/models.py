@@ -425,4 +425,48 @@ class SolveTaskPlan:
     params: dict = field(default_factory=dict)
     restated_problem: str = ""
     error: str = ""
+
+
+# ── Visualize 模式（W4 §3）───────────────────────────────────────────────────
+#
+# 单源注册表：4 种渲染类型（去 Manim）。svg_plot/three/chart 都由既有确定性
+# 内核（kernel_to_plot2d/kernel_to_three，均经 S0 加固）产出真实数据——LLM
+# 只选类型+填参数，不参与数值计算（VZ-4）。mermaid 是唯一的例外：结构性/
+# 概念性图示（如解题步骤流程图），本质上是 LLM 直接撰写的声明式文本内容
+# （同 Solve 模式 narration 的"纯 LLM 内容，诚实标注"处置原则一致），不是从
+# 数值内核派生的数据——这是设计如此，不是遗漏或伪装成内核数据。
+# visualize_dispatch（vendor/oskill）与 plan_visualize_task（mneme-core）都
+# 读这一份定义。
+
+VISUALIZE_RENDER_TYPES: dict[str, str] = {
+    "svg_plot": (
+        "expression(str，如 'x**2-4'), variable(str,默认x), "
+        "x_range(数字二元组,可选,默认[-10,10])"
+    ),
+    "three": (
+        "expression(str，二元函数，如 'x**2+y**2'), x_var/y_var(str,默认x/y), "
+        "x_range/y_range(数字二元组,可选,默认[-5,5])"
+    ),
+    "chart": (
+        "mode('function'|'sequence')；mode=function 时给 expression(str)+"
+        "variable(str,默认x)；mode=sequence 时给 terms(数字列表,至少2项)+"
+        "task('nth_term'|'sum'|'type_check')+n/count(int,对应task用)"
+    ),
+    "mermaid": (
+        "diagram_source(str，完整合法的 mermaid 语法文本，如 "
+        "'flowchart TD\\nA[开始]-->B[...]'）——由 LLM 直接撰写，不经数值内核"
+    ),
+}
+
+
+@dataclass
+class VisualizeTaskPlan:
+    """plan_visualize_task 输出：把自然语言的数学概念/数据描述映射到渲染
+    计划。render_type 只能是 VISUALIZE_RENDER_TYPES 里真实存在的值——校验
+    在 plan_visualize_task 里做。error 非空表示理解失败/校验不过。
+    """
+
+    render_type: str = ""
     params: dict = field(default_factory=dict)
+    restated_concept: str = ""
+    error: str = ""

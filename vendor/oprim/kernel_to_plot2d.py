@@ -13,14 +13,21 @@ import math
 from dataclasses import dataclass
 from typing import Callable
 
+from obase.sympy_runtime import SymPyRuntime
 from oprim.types import Plot2DData, SolveResult
+
+_runtime = SymPyRuntime()
+
+# LLM/调用方可以请求任意 num_points——不设上限的话，采样点数本身就是一个
+# 数值 DoS 面（S0 同一类风险，只是这次是"点数"而不是"组合数 n/k"）。
+_MAX_NUM_POINTS = 500
 
 
 @dataclass(frozen=True)
 class Plot2DRequest:
     """Parameters for generating a 2D plot from a SolveResult."""
 
-    expression: str                # f(x) or conic equation
+    expression: str  # f(x) or conic equation
     variable: str = "x"
     x_range: tuple[float, float] = (-10.0, 10.0)
     y_range: tuple[float, float] = (-10.0, 10.0)
@@ -28,23 +35,9 @@ class Plot2DRequest:
     title: str = ""
     x_label: str = "x"
     y_label: str = "y"
-    mark_zeros: bool = True         # annotate zero crossings
-    mark_extrema: bool = False      # annotate extrema
+    mark_zeros: bool = True  # annotate zero crossings
+    mark_extrema: bool = False  # annotate extrema
     solve_result: SolveResult | None = None
-
-
-def _safe_eval_at(expr_str: str, var: str, x_val: float) -> float | None:
-    """Evaluate expression at a point; return None on error."""
-    try:
-        import sympy as sp
-        sym = sp.Symbol(var)
-        f = sp.sympify(expr_str)
-        val = float(f.subs(sym, x_val).evalf())
-        if math.isfinite(val):
-            return val
-        return None
-    except Exception:
-        return None
 
 
 def _sample_function(
@@ -53,18 +46,58 @@ def _sample_function(
     x_range: tuple[float, float],
     num_points: int,
 ) -> tuple[list[float], list[float]]:
-    """Sample f(x) over x_range at num_points."""
+    """Sample f(x) over x_range at num_points.
+
+    S0 加固：expr_str 是调用方（Visualize 模式下可能是 LLM）提供的字符串，
+    加固前直接对它跑裸 sympy 解析，零 AST 校验、零 fork/timeout/内存
+    上限——同 S0 修过的 solve_conic/derivative/trig/function 那一类真代码
+    注入风险面。这里先用 SymPyRuntime.evaluate() 做一次 AST 校验+沙箱化
+    解析（只解析一次，不是每个采样点都重新解析——重新解析会导致每次采样
+    都 fork 一次进程，200 个点等于 200 次 fork，代价太大)，解析出的已验证
+    表达式对象再拿去做实际的多点数值求值；这个求值循环本身也包一层
+    run_isolated（fork+timeout+内存上限），防止病态表达式在 evalf() 阶段
+    卡死或吃爆内存。
+
+    注意：SymPyRuntime.evaluate() 对 AST 白名单拦截（SymPyRestrictedError）/
+    超时（SymPyTimeoutError）/内存超限（SymPyMemoryError）是直接抛异常，
+    不是包进 EvalResult(success=False)（同 solve_conic 等内核的既有调用
+    约定一致，见 obase/sympy_runtime.py 里 `except (SymPyRuntimeError,
+    SymPyTimeoutError): raise` 那段）——这里必须显式 catch，否则恶意/
+    病态表达式会导致本函数抛未捕获异常，而不是优雅降级返回空数据。
+    """
+    try:
+        parsed = _runtime.evaluate(expr_str, {var: var}, simplify_result=False)
+    except Exception:
+        return [], []
+    if not parsed.success or parsed.value is None:
+        return [], []
+
+    expr = parsed.value
+    capped_points = min(num_points, _MAX_NUM_POINTS)
     x_min, x_max = x_range
-    xs: list[float] = []
-    ys: list[float] = []
-    step = (x_max - x_min) / max(num_points - 1, 1)
-    for i in range(num_points):
-        xv = x_min + i * step
-        yv = _safe_eval_at(expr_str, var, xv)
-        if yv is not None:
-            xs.append(xv)
-            ys.append(yv)
-    return xs, ys
+    step = (x_max - x_min) / max(capped_points - 1, 1)
+
+    def _compute() -> tuple[list[float], list[float]]:
+        import sympy as sp
+
+        sym = sp.Symbol(var)
+        xs: list[float] = []
+        ys: list[float] = []
+        for i in range(capped_points):
+            xv = x_min + i * step
+            try:
+                val = float(expr.subs(sym, xv).evalf())
+            except Exception:
+                continue
+            if math.isfinite(val):
+                xs.append(xv)
+                ys.append(val)
+        return xs, ys
+
+    try:
+        return _runtime.run_isolated(_compute)
+    except Exception:
+        return [], []
 
 
 def _find_zero_crossings(

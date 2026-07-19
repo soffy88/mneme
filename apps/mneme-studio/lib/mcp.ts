@@ -213,6 +213,32 @@ export interface SolveProblemResult {
   narration: string;
 }
 
+// ── W4 Visualize：数学概念/数据 -> 真实渲染数据（去 Manim）─────────────────
+// data_source 如实标注来源：svg_plot/three/chart 三种类型来自真实内核
+// （kernel_to_plot2d/kernel_to_three/solve_sequence，均经 S0 加固沙箱）；
+// mermaid 类型是 LLM 直接撰写的声明式图示文本，data_source="llm_authored"，
+// 不伪装成内核数据（VZ-4）。
+export type VisualizeRenderType = "svg_plot" | "three" | "chart" | "mermaid" | "";
+
+export interface VisualizeConceptResult {
+  render_type: VisualizeRenderType;
+  restated_concept: string;
+  success: boolean;
+  error?: string;
+  data_source?: string;
+  // svg_plot
+  svg?: string;
+  title?: string;
+  // three（客户端用 react-three-fiber 渲染成点云，首次真实投用）
+  points?: { x: number[]; y: number[]; z: number[] };
+  // chart（react-chartjs-2）
+  chart_type?: "line" | "bar";
+  labels?: string[];
+  datasets?: { label: string; data: number[] }[];
+  // mermaid（客户端用 mermaid.js 渲染）
+  diagram_source?: string;
+}
+
 // ── 读工具 + 提交（无 PoseQuestion）─────────────────────────────────────────
 export const mcp = {
   // 按学生档案拉学习路径（有内容的 KC、按章节序）。studio 加载时取代写死的默认 KC。
@@ -261,4 +287,8 @@ export const mcp = {
   // W4 Solve：非学生数据，不传 student_id。
   solveProblem: (problemText: string) =>
     call<SolveProblemResult>("SolveProblem", { problem_text: problemText }),
+
+  // W4 Visualize：非学生数据，不传 student_id。
+  visualizeConcept: (conceptText: string) =>
+    call<VisualizeConceptResult>("VisualizeConcept", { concept_text: conceptText }),
 };

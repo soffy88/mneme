@@ -11,9 +11,12 @@
     "@helios/blocks": "file:vendor/helios-blocks-4.6.0.tgz",
     "@react-three/drei": "10.7.7",
     "@react-three/fiber": "9.6.1",
+    "chart.js": "^4.5.1",
     "katex": "0.16.11",
+    "mermaid": "^11.16.0",
     "next": "16.2.10",
     "react": "19.2.4",
+    "react-chartjs-2": "^5.3.1",
     "react-dom": "19.2.4",
     "three": "0.170.0"
   },

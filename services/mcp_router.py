@@ -335,6 +335,27 @@ async def tool_solve_problem(problem_text: str) -> dict:
         }
 
 
+async def tool_visualize_concept(concept_text: str) -> dict:
+    """W4 Visualize：数学概念/数据描述 -> 真实渲染数据
+    （services/visualize_service.py）。
+
+    非学生数据/无 DB 依赖——纯计算 + LLM，失败（概念理解失败/渲染数据
+    产出失败）转成 {"success": False, "error": ...}，不向前端抛 500（同
+    tool_solve_problem 的处置原则）。
+    """
+    from services.visualize_service import handle_visualize_concept
+
+    try:
+        return await handle_visualize_concept(concept_text)
+    except Exception as exc:
+        return {
+            "render_type": "",
+            "restated_concept": "",
+            "success": False,
+            "error": str(exc),
+        }
+
+
 async def tool_list_personas(db: AsyncSession) -> dict:
     """列出可选人格模板（不含 body，供 chat 前端选择器用）。"""
     return {"personas": await persona_store.list_personas(db)}
@@ -857,6 +878,10 @@ class SolveProblemReq(BaseModel):
     problem_text: str
 
 
+class VisualizeConceptReq(BaseModel):
+    concept_text: str
+
+
 class ListPersonasReq(BaseModel):
     pass
 
@@ -1004,6 +1029,15 @@ async def mcp_solve_problem(
 ) -> dict:
     # 无 DB 依赖（纯计算 + LLM），仍要求登录：/mcp 已公网，统一"须登录"闸门。
     return await tool_solve_problem(req.problem_text)
+
+
+@router.post("/VisualizeConcept")
+async def mcp_visualize_concept(
+    req: VisualizeConceptReq,
+    current_user: User = Depends(get_current_user),
+) -> dict:
+    # 无 DB 依赖（纯计算 + LLM），仍要求登录：/mcp 已公网，统一"须登录"闸门。
+    return await tool_visualize_concept(req.concept_text)
 
 
 @router.post("/ListPersonas")

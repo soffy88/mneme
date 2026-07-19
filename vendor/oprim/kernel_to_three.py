@@ -12,19 +12,26 @@ from __future__ import annotations
 import math
 from dataclasses import dataclass
 
+from obase.sympy_runtime import SymPyRuntime
 from oprim.types import Three3DData, SolveResult
+
+_runtime = SymPyRuntime()
+
+# grid_points² 次求值——比 2D 的点数更敏感（50 就是 2500 次），同样需要
+# 上限防数值 DoS。
+_MAX_GRID_POINTS = 40
 
 
 @dataclass(frozen=True)
 class Plot3DRequest:
     """Parameters for generating 3D data from an expression."""
 
-    expression: str               # z = f(x, y) expression string
+    expression: str  # z = f(x, y) expression string
     x_var: str = "x"
     y_var: str = "y"
     x_range: tuple[float, float] = (-5.0, 5.0)
     y_range: tuple[float, float] = (-5.0, 5.0)
-    grid_points: int = 20         # points per axis (grid_points² total)
+    grid_points: int = 20  # points per axis (grid_points² total)
     title: str = ""
     x_label: str = "x"
     y_label: str = "y"
@@ -32,26 +39,19 @@ class Plot3DRequest:
     solve_result: SolveResult | None = None
 
 
-def _safe_eval_z(expr_str: str, x_var: str, y_var: str, xv: float, yv: float) -> float | None:
-    """Evaluate z=f(x,y) at a point; return None on error."""
-    try:
-        import sympy as sp
-        sx = sp.Symbol(x_var)
-        sy = sp.Symbol(y_var)
-        f = sp.sympify(expr_str)
-        val = float(f.subs({sx: xv, sy: yv}).evalf())
-        if math.isfinite(val):
-            return val
-        return None
-    except Exception:
-        return None
-
-
 def kernel_to_three(request: Plot3DRequest) -> Three3DData:
     """Convert a 2-variable expression to Three3DData (surface mesh).
 
     Samples z = f(x, y) on a regular grid and returns all (x, y, z) triples
     as flat lists (suitable for Three.js BufferGeometry or similar).
+
+    S0 加固：request.expression 是调用方（Visualize 模式下可能是 LLM）提供
+    的字符串，加固前直接对它跑裸 sympy 解析——同 kernel_to_plot2d 的
+    _sample_function 一样，先用 SymPyRuntime.evaluate() 做一次 AST 校验+
+    沙箱化解析（只解析一次，不是 grid_points² 次都重新解析），已验证的
+    表达式对象再拿去做网格求值，整个求值循环包一层 run_isolated
+    （fork+timeout+内存上限）。grid_points 额外做上限裁剪（平方增长，比
+    2D 的点数更敏感）。
 
     Parameters
     ----------
@@ -64,24 +64,53 @@ def kernel_to_three(request: Plot3DRequest) -> Three3DData:
     """
     x_min, x_max = request.x_range
     y_min, y_max = request.y_range
-    n = request.grid_points
+    n = min(request.grid_points, _MAX_GRID_POINTS)
 
-    xs: list[float] = []
-    ys: list[float] = []
-    zs: list[float] = []
+    # SymPyRuntime.evaluate() 对 AST 拦截/超时/内存超限是直接抛异常，不是
+    # success=False（同 kernel_to_plot2d._sample_function 的注释），必须
+    # 显式 catch，否则恶意/病态表达式会让本函数抛未捕获异常。
+    try:
+        parsed = _runtime.evaluate(
+            request.expression,
+            {request.x_var: request.x_var, request.y_var: request.y_var},
+            simplify_result=False,
+        )
+    except Exception:
+        parsed = None
 
-    x_step = (x_max - x_min) / max(n - 1, 1)
-    y_step = (y_max - y_min) / max(n - 1, 1)
+    if parsed is None or not parsed.success or parsed.value is None:
+        xs, ys, zs = [], [], []
+    else:
+        expr = parsed.value
+        x_step = (x_max - x_min) / max(n - 1, 1)
+        y_step = (y_max - y_min) / max(n - 1, 1)
 
-    for i in range(n):
-        xv = x_min + i * x_step
-        for j in range(n):
-            yv = y_min + j * y_step
-            zv = _safe_eval_z(request.expression, request.x_var, request.y_var, xv, yv)
-            if zv is not None:
-                xs.append(xv)
-                ys.append(yv)
-                zs.append(zv)
+        def _compute() -> tuple[list[float], list[float], list[float]]:
+            import sympy as sp
+
+            sx = sp.Symbol(request.x_var)
+            sy = sp.Symbol(request.y_var)
+            xs_: list[float] = []
+            ys_: list[float] = []
+            zs_: list[float] = []
+            for i in range(n):
+                xv = x_min + i * x_step
+                for j in range(n):
+                    yv = y_min + j * y_step
+                    try:
+                        zv = float(expr.subs({sx: xv, sy: yv}).evalf())
+                    except Exception:
+                        continue
+                    if math.isfinite(zv):
+                        xs_.append(xv)
+                        ys_.append(yv)
+                        zs_.append(zv)
+            return xs_, ys_, zs_
+
+        try:
+            xs, ys, zs = _runtime.run_isolated(_compute)
+        except Exception:
+            xs, ys, zs = [], [], []
 
     z_min = min(zs) if zs else -10.0
     z_max = max(zs) if zs else 10.0

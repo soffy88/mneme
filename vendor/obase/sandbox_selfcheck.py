@@ -56,6 +56,15 @@ AST_VALIDATED_ENTRY_POINTS = (
     ".to_latex(",
 )
 
+# W4 Visualize 追加：kernel_to_plot2d.py/kernel_to_three.py 同样接受调用方
+# （Visualize 模式下是 LLM）提供的表达式字符串，加固前也直接跑裸
+# sp.sympify()——同一类风险面，发现于给 Visualize 接线的过程中。不算进
+# EXPECTED_KERNELS（那是 solve_* 内核专属清单），单独一组检查。
+VISUALIZATION_KERNELS = {
+    "kernel_to_plot2d.py",
+    "kernel_to_three.py",
+}
+
 
 def _oprim_source_dir() -> Path:
     """当前实际解析到的 oprim 包目录——不硬编码 vendor 路径，就用运行时
@@ -120,6 +129,17 @@ def _check_zero_bypass() -> list[str]:
         source = (oprim_dir / name).read_text(encoding="utf-8")
         if not any(e in source for e in AST_VALIDATED_ENTRY_POINTS):
             errors.append(f"{name} 没有调用任何 AST 校验入口（字符串求值内核绕过沙箱）")
+        if "sp.sympify(" in source or "sympy.sympify(" in source:
+            errors.append(f"{name} 残留裸 sympify() 调用（绕过 AST 白名单）")
+
+    for name in sorted(VISUALIZATION_KERNELS):
+        path = oprim_dir / name
+        if not path.exists():
+            errors.append(f"{name} 不存在——可视化内核清单对不上，本自检需要同步更新")
+            continue
+        source = path.read_text(encoding="utf-8")
+        if not any(e in source for e in AST_VALIDATED_ENTRY_POINTS):
+            errors.append(f"{name} 没有调用任何 AST 校验入口（可视化内核绕过沙箱）")
         if "sp.sympify(" in source or "sympy.sympify(" in source:
             errors.append(f"{name} 残留裸 sympify() 调用（绕过 AST 白名单）")
 
