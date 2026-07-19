@@ -47,3 +47,25 @@ async def handle_instant_solve(
         "recognized_text": findings.get("recognized_text"),
         "options": metacog.get("options", []),
     }
+
+async def handle_deep_solve(problem_text: str) -> dict:
+    """深度研究 (Deep Solve): 执行多步推理解题路线图。"""
+    from vendor.omodul.deep_solve_workflow import deep_solve_workflow, DeepSolveConfig, DeepSolveInput
+    caller = ProviderRegistry.get().llm() if ProviderRegistry._instance else None
+
+    config = DeepSolveConfig()
+    input_data = DeepSolveInput(problem_text=problem_text)
+
+    result = await deep_solve_workflow(
+        config=config, input_data=input_data, caller=caller
+    )
+
+    if result["status"] == "failed":
+        raise ValueError(result.get("error", "Deep solve failed"))
+
+    findings = result.get("findings", {})
+    return {
+        "analysis": findings.get("analysis", {}),
+        "method_template": findings.get("method_template", ""),
+        "roadmap": findings.get("roadmap", "")
+    }

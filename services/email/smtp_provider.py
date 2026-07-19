@@ -52,6 +52,18 @@ class SMTPEmailProvider(EmailProvider):
                 server.login(self._user, self._password)
             server.sendmail(self._from, [email], msg.as_string())
 
+    def _send_notification_sync(self, email: str, title: str, content: str) -> None:
+        msg = MIMEText(content, "plain", "utf-8")
+        msg["Subject"] = title
+        msg["From"] = self._from
+        msg["To"] = email
+        with smtplib.SMTP(self._host, self._port, timeout=20) as server:
+            if self._use_tls:
+                server.starttls()
+            if self._user and self._password:
+                server.login(self._user, self._password)
+            server.sendmail(self._from, [email], msg.as_string())
+
     async def send_code(self, email: str, code: str) -> bool:
         try:
             await asyncio.to_thread(self._send_sync, email, code)
@@ -59,4 +71,13 @@ class SMTPEmailProvider(EmailProvider):
             return True
         except Exception as e:  # noqa: BLE001 — 发信失败不抛，返回 False 交上层处理
             logger.error(f"[SMTPEmail] send failed to={_mask_email(email)}: {e}")
+            return False
+
+    async def send_notification(self, email: str, title: str, content: str) -> bool:
+        try:
+            await asyncio.to_thread(self._send_notification_sync, email, title, content)
+            logger.info(f"[SMTPEmail] notification sent to={_mask_email(email)} via={self._host}")
+            return True
+        except Exception as e:
+            logger.error(f"[SMTPEmail] notification failed to={_mask_email(email)}: {e}")
             return False

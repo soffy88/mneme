@@ -38,6 +38,8 @@ class SocraticInput(BaseModel):
     # 只处理 student_messages 的新消息（O(1)，且模型看到真实而非重算的历史）。
     conversation_history: list[dict] = []
     user_id: str = ""
+    learner_profile: str = ""
+    textbook_id: str = ""
 
 
 async def socratic_session_workflow(
@@ -118,6 +120,8 @@ async def socratic_session_workflow(
                 kc_ids=[input_data.kc_id] if input_data.kc_id else [],
                 model=config.model,
                 hint_level=effective_hint,
+                learner_profile=input_data.learner_profile or None,
+                textbook_id=input_data.textbook_id,
             )
             turns.append({
                 "turn": out.turn_number,

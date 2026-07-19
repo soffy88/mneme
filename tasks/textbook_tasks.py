@@ -49,6 +49,16 @@ async def _run(file_id: str) -> dict:
                 cluster_id=f"{tf.textbook_id}-auto",
                 pipeline_result=pipeline_result,
             )
+            
+            # 建立 RAG 向量索引
+            from services.textbook_qa_service import index_textbook_file
+            await index_textbook_file(
+                db,
+                file_id=file_id,
+                file_data=data,
+                file_type=tf.file_type
+            )
+            
             await db.commit()
             return {"status": "ok", "file_id": file_id, **result}
     except Exception as exc:  # 任务不应 crash worker

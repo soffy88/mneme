@@ -73,7 +73,7 @@
 
 ### 5. 前端 mneme-web（善学记，线上真版）
 
-API 客户端真实（`api-client.ts` 真 `fetch`，`.env.production` 指 `mneme-api.uex.hk` 且 `USE_MOCK=false`）；mock 仅 dev 便利、非生产后门；JWT 鉴权、401 清 token、SSE 流式正确。
+API 客户端真实（`api-client.ts` 真 `fetch`，`.env.production` 指 `api.sxueji.com` 且 `USE_MOCK=false`）；mock 仅 dev 便利、非生产后门；JWT 鉴权、401 清 token、SSE 流式正确。
 
 | 核心学习面 | 判定 | 出处 |
 |------------|------|------|

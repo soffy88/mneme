@@ -63,13 +63,20 @@ async def ingest_pipeline_candidates(
 
 
 def extract_text_from_pdf_bytes(data: bytes) -> str:
-    """尽力从 PDF 字节提取文本（pypdf 可用时）。无解析器则返回空串（不抛）。"""
+    """尽力从 PDF 字节提取文本（优先 pymupdf4llm，降级 pypdf）。无解析器则返回空串（不抛）。"""
     try:
-        import io
-
-        from pypdf import PdfReader  # type: ignore
-        reader = PdfReader(io.BytesIO(data))
-        return "\n".join((p.extract_text() or "") for p in reader.pages)
+        import pymupdf4llm
+        import fitz
+        doc = fitz.open(stream=data, filetype="pdf")
+        return pymupdf4llm.to_markdown(doc)
+    except ImportError:
+        try:
+            import io
+            from pypdf import PdfReader  # type: ignore
+            reader = PdfReader(io.BytesIO(data))
+            return "\n".join((p.extract_text() or "") for p in reader.pages)
+        except Exception:
+            return ""
     except Exception:
         return ""
 

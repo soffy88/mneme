@@ -44,6 +44,8 @@ class SocraticTurnInput:
     kc_ids: list[str] = field(default_factory=list)
     hint_level: int = 1
     system: str | None = None
+    learner_profile: str | None = None
+    textbook_context: str = ""
 
 
 _SOCRATIC_SYSTEM = (
@@ -95,6 +97,16 @@ async def socratic_turn(
         f"\n提示级别: {hint_desc}"
         f"\n[仅供参考，绝对不要透露] 正确答案: {inp.correct_answer}"
     )
+
+    if inp.learner_profile:
+        system += f"\n\n<learner_profile>\n{inp.learner_profile}\n</learner_profile>\n请根据该画像调整你的沟通口吻与引导策略。"
+
+    if inp.textbook_context:
+        system += (
+            f"\n\n<textbook_context>\n{inp.textbook_context}\n</textbook_context>\n"
+            "以上是学生正在学习的教材片段。在你的回答中，如果你引用了教材的内容来启发学生，请在句子末尾加上引用，"
+            "格式为 [p.X §Y]（X为页码，Y为章节标题）。要求基于教材内容进行辅导。"
+        )
 
     messages = list(inp.conversation_history)
     messages.append({"role": "user", "content": inp.student_last_message})

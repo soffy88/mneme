@@ -74,6 +74,8 @@ async def process_socratic_turn(
     kc_ids: list[str] | None = None,
     model: str = "claude-sonnet-4-6",
     hint_level: int = 1,
+    learner_profile: str | None = None,
+    textbook_id: str = "",
 ) -> SocraticTurnOutput:
     """Process one student turn in the Socratic loop.
 
@@ -95,6 +97,26 @@ async def process_socratic_turn(
     """
     from oprim.socratic_turn import socratic_turn, SocraticTurnInput
 
+    # RAG Retrieval
+    textbook_context = ""
+    if textbook_id:
+        try:
+            from oprim.retrieve_chunks import retrieve_chunks, format_chunks_as_context
+            from obase.db import async_session_factory
+
+            async with async_session_factory() as db:
+                chunks = await retrieve_chunks(
+                    db,
+                    file_id=textbook_id,
+                    query=student_message,
+                    top_k=3,
+                    kc_ids=kc_ids,
+                )
+                if chunks:
+                    textbook_context = format_chunks_as_context(chunks)
+        except Exception as e:
+            logger.error(f"Failed to retrieve textbook chunks for socratic_loop: {e}")
+
     state.messages.append({"role": "user", "content": student_message})
     state.turn_count += 1
 
@@ -105,6 +127,8 @@ async def process_socratic_turn(
         conversation_history=state.messages[:-1],  # history before this turn
         kc_ids=kc_ids or [],
         hint_level=hint_level,
+        learner_profile=learner_profile,
+        textbook_context=textbook_context,
     )
 
     result = await socratic_turn(inp, caller=caller, model=model)
@@ -120,7 +144,8 @@ async def process_socratic_turn(
     # 仅当答案去空白后 >=2 字符才做归一化比对，避免单字符答案在归一化后
     # 因过短而对无关文本产生大量假阳性。
     answer_leaked = bool(_answer) and (
-        _answer in text or (len(_answer_norm) >= 2 and _answer_norm in "".join(text.split()))
+        _answer in text
+        or (len(_answer_norm) >= 2 and _answer_norm in "".join(text.split()))
     )
     if answer_leaked:
         state.violation_count += 1

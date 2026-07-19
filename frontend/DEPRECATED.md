@@ -4,7 +4,7 @@
 
 本 `frontend/`（Vite + React）是遗留旧版，**不在任何部署路径**：
 - 不在 docker-compose，无生产 Dockerfile，无 Cloudflare 路由；
-- 线上 `mneme.uex.hk` 指向 `mneme-web`（`.env.production` → `mneme-api.uex.hk`）。
+- 线上 `sxueji.com` 指向 `mneme-web`（`.env.production` → `api.sxueji.com`）。
 
 ## 为什么留这个文件
 

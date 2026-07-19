@@ -45,6 +45,7 @@ async def start_session(
         return {"error": "question not found"}
 
     kc_id = ""
+    textbook_id = ""
     mastery_row = None
     if wq.knowledge_points:
         kc_ids = (
@@ -54,6 +55,12 @@ async def start_session(
         )
         if kc_ids:
             kc_id = kc_ids[0]
+            
+            from services.models import KnowledgeUnit
+            ku = (await db.execute(select(KnowledgeUnit).where(KnowledgeUnit.id == kc_id))).scalar_one_or_none()
+            if ku and getattr(ku, "textbook_id", None):
+                textbook_id = str(ku.textbook_id)
+
             mastery_row = (
                 await db.execute(
                     select(KCMastery).where(
@@ -123,6 +130,9 @@ async def start_session(
         except Exception:
             pass  # fallback to default if metacog fails
 
+    from oprim.learner_profile_summary import get_latest_learner_profile
+    learner_profile = await get_latest_learner_profile(db, student_id)
+
     result = await socratic_session_workflow(
         config=SocraticConfig(mode=mode, max_turns=20),
         input_data=SocraticInput(
@@ -132,6 +142,8 @@ async def start_session(
             profiler_result={},
             student_messages=[],
             user_id=anon_ref(student_id),
+            learner_profile=learner_profile,
+            textbook_id=textbook_id,
         ),
         output_dir=Path(f"/tmp/mneme/socratic/{session_id}"),
         on_step=None,
@@ -182,6 +194,13 @@ async def socratic_message_stream(
         if kcs:
             kc_id = kcs[0]
 
+    textbook_id = ""
+    if kc_id:
+        from services.models import KnowledgeUnit
+        ku = (await db.execute(select(KnowledgeUnit).where(KnowledgeUnit.id == kc_id))).scalar_one_or_none()
+        if ku and getattr(ku, "textbook_id", None):
+            textbook_id = str(ku.textbook_id)
+
     messages = list(session.messages or [])
 
     # H.3: verify_step deterministic intercept before Socratic reply
@@ -200,6 +219,9 @@ async def socratic_message_stream(
             for m in messages
         ]
 
+        from oprim.learner_profile_summary import get_latest_learner_profile
+        learner_profile = await get_latest_learner_profile(db, session.student_id)
+
         result = await socratic_session_workflow(
             config=SocraticConfig(
                 mode=session.mode.value if session.mode else "mixed",
@@ -213,6 +235,8 @@ async def socratic_message_stream(
                 student_messages=[student_message],
                 conversation_history=history,
                 user_id=anon_ref(session.student_id),
+                learner_profile=learner_profile,
+                textbook_id=textbook_id,
             ),
             output_dir=Path(f"/tmp/mneme/socratic/{session_id}"),
             on_step=None,
