@@ -131,6 +131,67 @@ export interface PosedQuestion {
   error?: string;
 }
 
+// ── Book Engine（W3 Part B B4）：教材引用三态 —— 分数<0.60 后端已经不返回，
+// 前端只需要区分 verified / inferred_unverified 两态，展示成人话，不是给
+// 工程师看的技术标签。──────────────────────────────────────────────────────
+export type CitationState = "verified" | "inferred_unverified";
+
+export interface BookCitation {
+  chunk_id: string;
+  pdf_id: string;
+  page_number: number | null;
+  char_start: number | null;
+  char_end: number | null;
+  content: string;
+  score: number;
+  citation_state: CitationState;
+  textbook_meta?: { subject?: string; grade?: string; book_name?: string };
+}
+
+export type BookBlockType = "text" | "callout" | "figure" | "quiz" | "flash_cards" | "guided";
+
+export interface BookBlock {
+  block_id: string;
+  block_type: BookBlockType;
+  payload: Record<string, unknown>;
+  citations: BookCitation[];
+  status: string;
+}
+
+export interface BookChapter {
+  chapter_id: string;
+  title: string;
+  content_type: string;
+  learning_objectives: string[];
+  summary: string | null;
+  blocks: BookBlock[];
+}
+
+export interface BookDetail {
+  book_id: string;
+  textbook_id: string;
+  title: string;
+  description: string | null;
+  scope: string | null;
+  target_level: string | null;
+  status: string;
+  subject?: string;
+  grade?: string;
+  book_name?: string;
+  chapters: BookChapter[];
+}
+
+export interface BookSummary {
+  book_id: string;
+  textbook_id: string;
+  title: string;
+  description: string | null;
+  status: string;
+  subject?: string;
+  grade?: string;
+  book_name?: string;
+}
+
 // ── 读工具 + 提交（无 PoseQuestion）─────────────────────────────────────────
 export const mcp = {
   // 按学生档案拉学习路径（有内容的 KC、按章节序）。studio 加载时取代写死的默认 KC。
@@ -170,4 +231,9 @@ export const mcp = {
       student_id: args.studentId, kc_id: args.kcId, question_id: args.questionId,
       is_correct: args.isCorrect, verdict_source: "llm_verified", evidence: args.evidence,
     }),
+
+  // W3 Part B B4：活书阅读器。非学生数据，不传 student_id。
+  listBooks: () => call<{ books: BookSummary[] }>("ListBooks", {}),
+
+  getBook: (bookId: string) => call<{ book: BookDetail | null }>("GetBook", { book_id: bookId }),
 };

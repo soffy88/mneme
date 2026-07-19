@@ -198,6 +198,119 @@ async def tool_get_kc_info(db: AsyncSession, kc_id: str) -> dict:
     }
 
 
+async def tool_list_books(db: AsyncSession) -> dict:
+    """W3 B4：列出已编译完成的活书（供 /studio/book 阅读器选书用）。
+
+    非学生数据（书是全体学生共享内容），不含引用细节——列表页只需要标题/
+    教材元信息，避免把整本书的 citations 都传下来。
+    """
+    rows = (
+        await db.execute(
+            text("""
+        SELECT b.id, b.textbook_id, b.title, b.description, b.status,
+               t.subject, t.grade, t.book_name
+        FROM books b
+        LEFT JOIN textbooks t ON t.id = b.textbook_id
+        WHERE b.status IN ('ready', 'partial')
+        ORDER BY b.created_at DESC
+    """)
+        )
+    ).fetchall()
+    return {
+        "books": [
+            {
+                "book_id": r.id,
+                "textbook_id": r.textbook_id,
+                "title": r.title,
+                "description": r.description,
+                "status": r.status,
+                "subject": r.subject,
+                "grade": r.grade,
+                "book_name": r.book_name,
+            }
+            for r in rows
+        ]
+    }
+
+
+async def tool_get_book(db: AsyncSession, book_id: str) -> dict:
+    """W3 B4：一次性取整本书（章节 + 块 + 每处引用的三态标注），供阅读器渲染。
+
+    非学生数据，只读——不存在 -> book=None，不报错（呈现层缺失不该打断前端）。
+    """
+    book_row = (
+        await db.execute(
+            text("""
+        SELECT b.id, b.textbook_id, b.title, b.description, b.scope,
+               b.target_level, b.status, t.subject, t.grade, t.book_name
+        FROM books b
+        LEFT JOIN textbooks t ON t.id = b.textbook_id
+        WHERE b.id = :book_id
+    """),
+            {"book_id": book_id},
+        )
+    ).fetchone()
+    if book_row is None:
+        return {"book": None}
+
+    chapter_rows = (
+        await db.execute(
+            text("""
+        SELECT id, title, content_type, display_order, learning_objectives, summary
+        FROM book_chapters WHERE book_id = :book_id ORDER BY display_order
+    """),
+            {"book_id": book_id},
+        )
+    ).fetchall()
+
+    chapters = []
+    for ch in chapter_rows:
+        block_rows = (
+            await db.execute(
+                text("""
+            SELECT id, block_type, display_order, payload, citations, status
+            FROM book_blocks WHERE chapter_id = :chapter_id ORDER BY display_order
+        """),
+                {"chapter_id": ch.id},
+            )
+        ).fetchall()
+        chapters.append(
+            {
+                "chapter_id": ch.id,
+                "title": ch.title,
+                "content_type": ch.content_type,
+                "learning_objectives": ch.learning_objectives or [],
+                "summary": ch.summary,
+                "blocks": [
+                    {
+                        "block_id": b.id,
+                        "block_type": b.block_type,
+                        "payload": b.payload or {},
+                        "citations": b.citations or [],
+                        "status": b.status,
+                    }
+                    for b in block_rows
+                ],
+            }
+        )
+
+    return {
+        "book": {
+            "book_id": book_row.id,
+            "textbook_id": book_row.textbook_id,
+            "title": book_row.title,
+            "description": book_row.description,
+            "scope": book_row.scope,
+            "target_level": book_row.target_level,
+            "status": book_row.status,
+            "subject": book_row.subject,
+            "grade": book_row.grade,
+            "book_name": book_row.book_name,
+            "chapters": chapters,
+        }
+    }
+
+
 async def tool_list_personas(db: AsyncSession) -> dict:
     """列出可选人格模板（不含 body，供 chat 前端选择器用）。"""
     return {"personas": await persona_store.list_personas(db)}
@@ -708,6 +821,14 @@ class GetKCInfoReq(BaseModel):
     kc_id: str
 
 
+class ListBooksReq(BaseModel):
+    pass
+
+
+class GetBookReq(BaseModel):
+    book_id: str
+
+
 class ListPersonasReq(BaseModel):
     pass
 
@@ -827,6 +948,25 @@ async def mcp_get_kc_info(
 ) -> dict:
     # 非学生数据（KC 名/rubric），但仍要求登录：/mcp 已公网，统一"须登录"闸门。
     return await tool_get_kc_info(db, req.kc_id)
+
+
+@router.post("/ListBooks")
+async def mcp_list_books(
+    req: ListBooksReq,
+    db: AsyncSession = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+) -> dict:
+    # 非学生数据（书是全体学生共享内容），仍要求登录：/mcp 已公网，统一"须登录"闸门。
+    return await tool_list_books(db)
+
+
+@router.post("/GetBook")
+async def mcp_get_book(
+    req: GetBookReq,
+    db: AsyncSession = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+) -> dict:
+    return await tool_get_book(db, req.book_id)
 
 
 @router.post("/ListPersonas")
