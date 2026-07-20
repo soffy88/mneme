@@ -7,7 +7,6 @@ import logging
 from datetime import datetime, timedelta, timezone
 
 from sqlalchemy import select, func
-from sqlalchemy.ext.asyncio import AsyncSession
 
 from obase.db import SessionLocal
 from services.models import User, WrongQuestion
@@ -35,11 +34,17 @@ async def _check_and_notify_students() -> None:
         )
 
         for student in students:
+            # 查询已过滤 email 非空非空串（见上面 select），这里断言仅为帮
+            # mypy 收窄 Optional[str] → str，不改变运行时行为。
+            assert student.email
             # 1. 检查连续未登录 (3天)
-            last_login = student.last_login or student.created_at
-            if (now - last_login) > timedelta(days=3):
+            # 注：User 模型没有 last_login 字段，全仓没有任何登录时间戳追踪机制
+            # （不是重命名问题，是从未实现）——这里退化为"距注册已过 3 天"，
+            # 不是真正的"距上次登录"。真正的登录时间戳需要新增列
+            # + migration + 在登录路径写入，超出本次崩溃修复范围。
+            if (now - student.created_at) > timedelta(days=3):
                 title = "【善学记】家教助理提醒：你已经好几天没来学习啦"
-                content = f"你好，{student.username or '同学'}：\n\n助理发现你已经连续3天没有登录善学记了。学习需要持之以恒，快来看看为你准备的今日计划吧！"
+                content = f"你好，{student.name or '同学'}：\n\n助理发现你已经连续3天没有登录善学记了。学习需要持之以恒，快来看看为你准备的今日计划吧！"
                 await email_provider.send_notification(student.email, title, content)
                 continue  # 一天最多一条提醒，避免轰炸
 
@@ -58,14 +63,14 @@ async def _check_and_notify_students() -> None:
 
             if due_count > 10:
                 title = "【善学记】家教助理提醒：有待复习的错题"
-                content = f"你好，{student.username or '同学'}：\n\n根据记忆曲线，你有 {due_count} 道错题到了最佳的复习时间。趁热打铁，花几分钟清空复习队列，让短期记忆转化为长期记忆吧！"
+                content = f"你好，{student.name or '同学'}：\n\n根据记忆曲线，你有 {due_count} 道错题到了最佳的复习时间。趁热打铁，花几分钟清空复习队列，让短期记忆转化为长期记忆吧！"
                 await email_provider.send_notification(student.email, title, content)
                 continue
 
             # 3. 如果需要，可以添加 P(L) 下降的检查等
 
 
-from tasks.celery_app import celery_app
+from tasks.celery_app import celery_app  # noqa: E402 循环 import：celery_app 反向 import 本模块注册任务
 
 
 @celery_app.task(name="tasks.partner_push")
