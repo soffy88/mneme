@@ -6,19 +6,20 @@ derivative/trig/function 是同一类真实漏洞——直接对调用方（Visu
 是 LLM）提供的表达式字符串跑裸 sympy 解析，零 AST 白名单、零 fork/timeout/
 内存上限。S0 的范围只覆盖了 7 个 solve_* 内核，没有覆盖这两个——因为它们不
 在"solve_*"命名下，之前的沙箱盘点没扫到。这条测试补上这个缺口，同时防止
-未来任何新的可视化内核再犯同样的错（obase/sandbox_selfcheck.py 的
-VISUALIZATION_KERNELS 现在覆盖这两个文件，生产启动自检也会拦）。
+未来任何新的可视化内核再犯同样的错。
+
+S0-W5 更新：原先的结构性检查依赖 obase/sandbox_selfcheck.py 里专属维护的
+VISUALIZATION_KERNELS 清单（字符串匹配），现改为全仓 AST 拒绝清单扫描
+（obase.sandbox_ast_audit.scan_repo()）覆盖——不再需要专属清单，任何裸调用
+危险符号的文件都会被抓到，不局限于这两个可视化内核。
 """
 
 from __future__ import annotations
 
 import time
-from pathlib import Path
 
 from oprim.kernel_to_plot2d import Plot2DRequest, kernel_to_plot2d
 from oprim.kernel_to_three import Plot3DRequest, kernel_to_three
-
-VENDOR_OPRIM = Path(__file__).resolve().parent.parent / "vendor" / "oprim"
 
 MALICIOUS_EXPRESSION = "__import__('os').system('id')"
 
@@ -80,18 +81,13 @@ def test_three_grid_points_is_capped_against_dos():
 
 
 def test_no_bypass_structural_check():
-    """同 S0-1 的结构性零绕过断言，覆盖这两个可视化内核——单源常量见
-    obase.sandbox_selfcheck.VISUALIZATION_KERNELS。"""
-    from obase.sandbox_selfcheck import (
-        AST_VALIDATED_ENTRY_POINTS,
-        VISUALIZATION_KERNELS,
-    )
+    """同 S0-1 的结构性零绕过断言，覆盖这两个可视化内核——现由全仓 AST 拒绝
+    清单扫描（obase.sandbox_ast_audit.scan_repo()）覆盖，不再维护专属的
+    VISUALIZATION_KERNELS 清单。"""
+    from obase.sandbox_ast_audit import scan_repo
 
-    for name in sorted(VISUALIZATION_KERNELS):
-        source = (VENDOR_OPRIM / name).read_text(encoding="utf-8")
-        assert any(e in source for e in AST_VALIDATED_ENTRY_POINTS), (
-            f"{name} 没有调用任何 AST 校验入口"
-        )
-        assert "sp.sympify(" not in source and "sympy.sympify(" not in source, (
-            f"{name} 残留裸 sympify() 调用"
-        )
+    findings = scan_repo()
+    offending = [
+        f for f in findings if "kernel_to_plot2d.py" in f or "kernel_to_three.py" in f
+    ]
+    assert not offending, f"可视化内核出现裸调用危险符号：{offending}"

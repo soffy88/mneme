@@ -32,6 +32,9 @@ from services.anon import anon_ref
 
 from oskill.metacog_scaffold import metacog_scaffold, MetacogScaffoldInput
 from obase.provider_registry import ProviderRegistry
+from obase.sympy_runtime import SymPyRuntime
+
+_runtime = SymPyRuntime()
 
 
 async def start_session(
@@ -55,9 +58,12 @@ async def start_session(
         )
         if kc_ids:
             kc_id = kc_ids[0]
-            
+
             from services.models import KnowledgeUnit
-            ku = (await db.execute(select(KnowledgeUnit).where(KnowledgeUnit.id == kc_id))).scalar_one_or_none()
+
+            ku = (
+                await db.execute(select(KnowledgeUnit).where(KnowledgeUnit.id == kc_id))
+            ).scalar_one_or_none()
             if ku and getattr(ku, "textbook_id", None):
                 textbook_id = str(ku.textbook_id)
 
@@ -131,6 +137,7 @@ async def start_session(
             pass  # fallback to default if metacog fails
 
     from oprim.learner_profile_summary import get_latest_learner_profile
+
     learner_profile = await get_latest_learner_profile(db, student_id)
 
     result = await socratic_session_workflow(
@@ -197,7 +204,10 @@ async def socratic_message_stream(
     textbook_id = ""
     if kc_id:
         from services.models import KnowledgeUnit
-        ku = (await db.execute(select(KnowledgeUnit).where(KnowledgeUnit.id == kc_id))).scalar_one_or_none()
+
+        ku = (
+            await db.execute(select(KnowledgeUnit).where(KnowledgeUnit.id == kc_id))
+        ).scalar_one_or_none()
         if ku and getattr(ku, "textbook_id", None):
             textbook_id = str(ku.textbook_id)
 
@@ -220,6 +230,7 @@ async def socratic_message_stream(
         ]
 
         from oprim.learner_profile_summary import get_latest_learner_profile
+
         learner_profile = await get_latest_learner_profile(db, session.student_id)
 
         result = await socratic_session_workflow(
@@ -280,12 +291,21 @@ _SUPERS = {
 _SUPER_RE = _re.compile("[" + "".join(_SUPERS) + "]+")
 # 等式分隔：标点 + 中文推导连接词
 _EQ_SPLIT = _re.compile(r"[,;，；]|所以|因此|于是|=>|⟹|→|得到|得|则|故")
+# 隐式乘法（"2x"/"2 pi" -> "2*x"/"2*pi"）：数字与紧随其后的字母之间插入 *，
+# 中间可以有空白也可以没有，绝不会误伤函数调用。S0-W5 改走沙箱化的
+# obase.sympy_runtime（纯 Python ast.parse，不支持 sympy 自己 parse_expr() 的
+# implicit_multiplication_application 变换，那个变换在 token 流层面同时处理
+# 无空白/有空白两种形式）后，需要在归一化阶段自己补上——最初只处理了无空白
+# 形式（本函数文档字符串举的「2x=6 ⟹ x=3」这个例子依赖它），全量回归测试
+# （math_grade 的 test_pi_and_sqrt）抓到"2 pi"这种带空格形式被漏解析。
+_IMPLICIT_MULT_RE = _re.compile(r"(?<=[0-9])\s*(?=[A-Za-z])")
 
 
 def _normalize_arith(s: str) -> str:
-    """归一为 sympy 可解析：× ÷ · → * /，^ → **，上标 → **n，去千分位逗号/空格。"""
+    """归一为 sympy 可解析：× ÷ · → * /，^ → **，上标 → **n，去千分位逗号/空格，
+    数字紧跟字母处补隐式乘号（2x -> 2*x）。"""
     s = _SUPER_RE.sub(lambda m: "**" + "".join(_SUPERS[c] for c in m.group()), s)
-    return (
+    s = (
         s.replace("×", "*")
         .replace("·", "*")
         .replace("÷", "/")
@@ -294,6 +314,7 @@ def _normalize_arith(s: str) -> str:
         .replace("，", "")
         .strip()
     )
+    return _IMPLICIT_MULT_RE.sub("*", s)
 
 
 def _verify_assignments(message: str) -> Optional[str]:
@@ -316,19 +337,18 @@ def _verify_assignments(message: str) -> Optional[str]:
             eqs.append((lhs, rhs))
     if len(eqs) < 2:
         return None
-    try:
-        import sympy as sp
-        from sympy.parsing.sympy_parser import (
-            parse_expr,
-            standard_transformations,
-            implicit_multiplication_application,
-        )
-    except Exception:
-        return None
-    trans = standard_transformations + (implicit_multiplication_application,)
+    import sympy as sp
 
+    # S0-W5：message 是真实学生聊天消息，外部输入。之前直接用
+    # sympy.parsing.sympy_parser.parse_expr()（同 sp.sympify() 一类风险，
+    # 零 AST 白名单/timeout/内存上限），这里改走沙箱化的
+    # obase.sympy_runtime.evaluate_auto()（自动声明表达式里出现的单字母
+    # 自由变量为 Symbol，隐式乘法在 _normalize_arith 里已经补好）。
     def _p(s: str):
-        return parse_expr(_normalize_arith(s), transformations=trans)
+        result = _runtime.evaluate_auto(_normalize_arith(s), simplify_result=False)
+        if not result.success or result.value is None:
+            raise ValueError(result.error or f"Failed to parse: {s!r}")
+        return result.value
 
     parsed: list[Optional[tuple]] = []
     for lhs, rhs in eqs:

@@ -93,45 +93,22 @@ def test_detects_numeric_kernel_bypassing_sandbox():
     assert any("solve_sequence.py" in f and "run_isolated" in f for f in findings)
 
 
-def test_detects_string_eval_kernel_with_raw_sympify():
-    """复现 solve_conic 加固前的真实状态：有表达式字符串的内核直接跑裸
-    sp.sympify()，零 AST 校验——即使它同时也 import 了 SymPyRuntime（半
-    成品迁移状态最容易漏网的那种）。"""
-    from obase.sandbox_selfcheck import _check_zero_bypass
+def test_repo_wide_ast_audit_is_wired_into_collect_findings():
+    """S0-W5：_check_zero_bypass() 不再检测"字符串求值内核是否绕过"（原
+    STRING_EVAL_KERNELS/AST_VALIDATED_ENTRY_POINTS 逻辑已删除，见
+    tests/test_sandbox_ast_audit.py 里对该风险的专属覆盖）——但
+    collect_findings() 必须真的把 sandbox_ast_audit.scan_repo() 的结果
+    折进去，不能"删了旧检查却忘了接新检查"，用 mock 验证接线本身，不依赖
+    当前仓库状态是否干净。"""
+    from obase.sandbox_selfcheck import collect_findings
 
-    with tempfile.TemporaryDirectory() as tmpdir:
-        tmp_path = Path(tmpdir)
-        for name in EXPECTED_KERNELS:
-            if name == "solve_conic.py":
-                content = (
-                    "from obase.sympy_runtime import SymPyRuntime\n"
-                    "import sympy as sp\n"
-                    "_runtime = SymPyRuntime()\n"
-                    "sp.sympify(expr_str)\n"
-                )
-            elif name in {
-                "solve_geometry3d.py",
-                "solve_probability.py",
-                "solve_sequence.py",
-            }:
-                content = (
-                    "from obase.sympy_runtime import SymPyRuntime\n"
-                    "_runtime = SymPyRuntime()\n"
-                    "_runtime.run_isolated(lambda: 1)\n"
-                )
-            else:
-                content = (
-                    "from obase.sympy_runtime import SymPyRuntime\n"
-                    "_runtime = SymPyRuntime()\n"
-                    "_runtime.evaluate('x')\n"
-                )
-            (tmp_path / name).write_text(content, encoding="utf-8")
+    with patch(
+        "obase.sandbox_ast_audit.scan_repo",
+        return_value=["fake/path.py:1 裸调用 sympy.sympify()——未经沙箱"],
+    ):
+        findings = collect_findings()
 
-        with patch("obase.sandbox_selfcheck._oprim_source_dir", return_value=tmp_path):
-            findings = _check_zero_bypass()
-
-    assert any("solve_conic.py" in f and "sympify" in f for f in findings)
-    assert any("solve_conic.py" in f and "AST" in f for f in findings)
+    assert any("fake/path.py" in f for f in findings)
 
 
 def test_missing_kernel_file_is_detected():

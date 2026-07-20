@@ -12,10 +12,10 @@ from __future__ import annotations
 import ast
 import multiprocessing as mp
 import queue as _queue
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from typing import Any, Callable
 
-from pydantic import BaseModel, ConfigDict
+from pydantic import ConfigDict
 
 
 class SymPyRuntimeError(Exception):
@@ -503,6 +503,46 @@ class SymPyRuntime:
             _signal.setitimer(_signal.ITIMER_REAL, 0)
             _signal.signal(_signal.SIGALRM, old_handler)
 
+    @staticmethod
+    def _auto_symbol_names(expression: str) -> set[str]:
+        """Single-letter free-variable name detection — shared by
+        simplify_expr()/to_latex()/evaluate_auto() (previously duplicated
+        inline in each, now one implementation)."""
+        import re
+
+        return set(re.findall(r"\b([a-zA-Z])\b", expression))
+
+    def evaluate_auto(
+        self,
+        expression: str,
+        variables: dict[str, Any] | None = None,
+        *,
+        timeout: float | None = None,
+        simplify_result: bool = True,
+    ) -> EvalResult:
+        """Evaluate a SymPy expression safely, auto-declaring any
+        single-letter free variable found in the string as a symbol (same
+        auto-detection already used by simplify_expr()/to_latex()), merged
+        with any explicitly pre-declared ``variables`` (which take
+        precedence — e.g. a caller that already knows its primary variable
+        still gets auto-detection for any *other* letters the expression
+        turns out to reference).
+
+        For callers that don't know all their variable names in advance —
+        e.g. parsing an arbitrary external-input expression/equation
+        (S0-W5: verify_step/grade_question/compute_feedback/
+        socratic_service/paper_grading all needed exactly this and were,
+        before this fix, calling raw sp.sympify()/parse_expr() directly
+        instead).
+        """
+        merged = dict(variables or {})
+        for name in self._auto_symbol_names(expression):
+            if name not in merged:
+                merged[name] = name
+        return self.evaluate(
+            expression, merged, timeout=timeout, simplify_result=simplify_result
+        )
+
     def run_isolated(
         self, func: Callable[[], Any], *, timeout: float | None = None
     ) -> Any:
@@ -557,6 +597,18 @@ class SymPyRuntime:
                 return eval(code, {"__builtins__": {}}, ns)
 
             raw_value = self._run_with_timeout(_compute, timeout)
+
+            # A bare-literal expression (e.g. "3", "2.5") evaluates via
+            # plain Python eval() to a native int/float, not a sympy object
+            # — unlike sp.sympify(), which always promotes literals to
+            # sympy.Integer/Float. Coerce here so callers can reliably use
+            # sympy attributes (.is_number/.is_Symbol/.free_symbols/etc) on
+            # *any* successful result, not just ones that happened to
+            # reference a symbol/function. Safe: this sympifies an
+            # already-computed native Python number, not a string — no
+            # parsing/eval of untrusted input happens in this call.
+            if isinstance(raw_value, (int, float, complex)):
+                raw_value = sp.sympify(raw_value)
 
             # Simplify if requested
             if simplify_result and hasattr(raw_value, "simplify"):
@@ -802,11 +854,8 @@ class SymPyRuntime:
             tree = self._validate_ast(expression)
             ns = self._make_namespace()
 
-            # Auto-create symbols for common single-letter names
-            import re
-
-            for name in set(re.findall(r"\b([a-zA-Z])\b", expression)):
-                if name not in ns and len(name) == 1:
+            for name in self._auto_symbol_names(expression):
+                if name not in ns:
                     ns[name] = sp.Symbol(name)
 
             def _compute() -> Any:
@@ -863,11 +912,8 @@ class SymPyRuntime:
             tree = self._validate_ast(expression)
             ns = self._make_namespace()
 
-            # Auto-create symbols for common single-letter names
-            import re
-
-            for name in set(re.findall(r"\b([a-zA-Z])\b", expression)):
-                if name not in ns and len(name) == 1:
+            for name in self._auto_symbol_names(expression):
+                if name not in ns:
                     ns[name] = sp.Symbol(name)
 
             def _compute() -> Any:

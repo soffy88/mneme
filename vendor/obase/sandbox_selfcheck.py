@@ -9,10 +9,23 @@
 
 这个模块把 S0-1"零绕过"结构断言 + "沙箱确实是加固版本、不是旧副本"的
 能力/来源检查，包成一份单源定义——tests/test_sandbox_zero_bypass.py 和
-本模块共用同一份 EXPECTED_KERNELS/NUMERIC_ONLY_KERNELS/STRING_EVAL_KERNELS
-定义，不各自维护一份副本——同时提供 check_or_die()，供容器启动时调用一次
-（同 docker-compose.yml 里 "alembic upgrade head && uvicorn ..." 那条
+本模块共用同一份 EXPECTED_KERNELS/NUMERIC_ONLY_KERNELS 定义，不各自维护
+一份副本——同时提供 check_or_die()，供容器启动时调用一次（同
+docker-compose.yml 里 "alembic upgrade head && uvicorn ..." 那条
 "检查不过就不对外提供服务"的处置原则）。
+
+S0-W5 架构调整（第 4 次同类洞后，2026-07）：原先"字符串求值内核必须调用
+AST_VALIDATED_ENTRY_POINTS / 不得残留 sp.sympify("的检查（原
+STRING_EVAL_KERNELS/AST_VALIDATED_ENTRY_POINTS/VISUALIZATION_KERNELS 三个
+常量，已删除）是允许清单模式——只挑着测"已知在 solve_*/可视化清单里"的
+文件，且用字符串匹配天然漏 parse_expr()/别名导入两类变体，这正是
+verify_step/grade_question/compute_feedback/socratic_service/
+paper_grading/math_grade 六处真实漏洞逃过前几轮检测的根本原因之一。现改用
+obase.sandbox_ast_audit.scan_repo()：拒绝清单模式，AST 解析（含 import 别名
+追踪），扫描全仓第一方代码而非"记得列在清单里"的文件——见
+_check_repo_wide_ast_audit()。NUMERIC_ONLY_KERNELS 的 run_isolated 检查
+保留：纯数值内核没有表达式字符串、没有危险符号调用可抓，AST 拒绝清单结构上
+抓不到"该包 run_isolated 但没包"这类风险，只能继续用专属检查。
 """
 
 from __future__ import annotations
@@ -41,28 +54,6 @@ NUMERIC_ONLY_KERNELS = {
     "solve_geometry3d.py",
     "solve_probability.py",
     "solve_sequence.py",
-}
-
-# 接受调用方提供的表达式字符串，真正的代码注入风险面，必须走 SymPyRuntime
-# 有 AST 白名单校验的入口。
-STRING_EVAL_KERNELS = EXPECTED_KERNELS - NUMERIC_ONLY_KERNELS
-
-AST_VALIDATED_ENTRY_POINTS = (
-    ".evaluate(",
-    ".solve_equation(",
-    ".differentiate(",
-    ".integrate_expr(",
-    ".simplify_expr(",
-    ".to_latex(",
-)
-
-# W4 Visualize 追加：kernel_to_plot2d.py/kernel_to_three.py 同样接受调用方
-# （Visualize 模式下是 LLM）提供的表达式字符串，加固前也直接跑裸
-# sp.sympify()——同一类风险面，发现于给 Visualize 接线的过程中。不算进
-# EXPECTED_KERNELS（那是 solve_* 内核专属清单），单独一组检查。
-VISUALIZATION_KERNELS = {
-    "kernel_to_plot2d.py",
-    "kernel_to_three.py",
 }
 
 
@@ -106,9 +97,12 @@ def _check_resolves_to_vendor_not_site_packages() -> list[str]:
 
 
 def _check_zero_bypass() -> list[str]:
-    """S0-1：7 个 solve_* 内核全部要么走 run_isolated（纯数值），要么走
-    AST 校验入口（有表达式字符串），且不残留裸 sympify——同
+    """S0-1：solve_* 内核清单没有漂移，且纯数值内核都走 run_isolated——同
     tests/test_sandbox_zero_bypass.py 的检查逻辑，单源。
+
+    字符串求值内核"是否绕过沙箱"不再由本函数判断（原 STRING_EVAL_KERNELS/
+    AST_VALIDATED_ENTRY_POINTS 逻辑已删除，见模块顶部说明）——那类风险现由
+    _check_repo_wide_ast_audit() 覆盖，且覆盖面是全仓而不只是这 7 个文件。
     """
     errors: list[str] = []
     oprim_dir = _oprim_source_dir()
@@ -125,25 +119,19 @@ def _check_zero_bypass() -> list[str]:
         if "run_isolated" not in source:
             errors.append(f"{name} 没有调用 run_isolated（纯数值内核绕过沙箱）")
 
-    for name in sorted(STRING_EVAL_KERNELS & found):
-        source = (oprim_dir / name).read_text(encoding="utf-8")
-        if not any(e in source for e in AST_VALIDATED_ENTRY_POINTS):
-            errors.append(f"{name} 没有调用任何 AST 校验入口（字符串求值内核绕过沙箱）")
-        if "sp.sympify(" in source or "sympy.sympify(" in source:
-            errors.append(f"{name} 残留裸 sympify() 调用（绕过 AST 白名单）")
-
-    for name in sorted(VISUALIZATION_KERNELS):
-        path = oprim_dir / name
-        if not path.exists():
-            errors.append(f"{name} 不存在——可视化内核清单对不上，本自检需要同步更新")
-            continue
-        source = path.read_text(encoding="utf-8")
-        if not any(e in source for e in AST_VALIDATED_ENTRY_POINTS):
-            errors.append(f"{name} 没有调用任何 AST 校验入口（可视化内核绕过沙箱）")
-        if "sp.sympify(" in source or "sympy.sympify(" in source:
-            errors.append(f"{name} 残留裸 sympify() 调用（绕过 AST 白名单）")
-
     return errors
+
+
+def _check_repo_wide_ast_audit() -> list[str]:
+    """S0-W5：AST 级全仓扫描——任何第一方代码裸调用 sympy.sympify/
+    sympy.parsing.sympy_parser.parse_expr/eval/exec/compile/__import__（除
+    obase.sympy_runtime 自身实现）都会被抓到，不依赖维护一份"哪些文件该
+    测"的清单，也不依赖字符串匹配（会漏别名导入/parse_expr 等变体）。见
+    obase.sandbox_ast_audit.scan_repo()。
+    """
+    from obase.sandbox_ast_audit import scan_repo
+
+    return scan_repo()
 
 
 def collect_findings() -> list[str]:
@@ -155,6 +143,7 @@ def collect_findings() -> list[str]:
     findings += _check_hardened_version_loaded()
     findings += _check_resolves_to_vendor_not_site_packages()
     findings += _check_zero_bypass()
+    findings += _check_repo_wide_ast_audit()
     return findings
 
 
@@ -173,4 +162,4 @@ def check_or_die() -> None:
 
 if __name__ == "__main__":
     check_or_die()
-    print("S0 沙箱加固自检通过：vendor/ 生效，7 内核零绕过。")
+    print("S0 沙箱加固自检通过：vendor/ 生效，全仓 AST 扫描零绕过。")

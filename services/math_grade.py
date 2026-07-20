@@ -12,6 +12,10 @@ from __future__ import annotations
 import re
 import unicodedata
 
+from obase.sympy_runtime import SymPyRuntime
+
+_runtime = SymPyRuntime()
+
 # 多根/多解分隔：逗号（含中文顿号）、分号、"或"、"and"
 _SPLIT = re.compile(r"[,，;；、]|\bor\b|\band\b|或")
 # 变量赋值前缀，如 "x=" / "x =" / "x1="
@@ -52,14 +56,26 @@ def _delatex(text: str) -> str:
     return text.replace("\\", "")  # 残余反斜杠去掉（\sin→sin 等），宁可当普通符号
 
 
+# 隐式乘法（"2x"/"2 pi" -> "2*x"/"2*pi"）：数字与紧随其后的字母之间插入 *，
+# 中间可以有空白（"2 pi"）也可以没有（"2x"）——绝不会误伤函数调用（sin/cos/
+# sqrt 等函数名前面不会紧跟数字）。S0-W5 改走沙箱化的 obase.sympy_runtime
+# （纯 Python ast.parse，不支持 sympy 自己 parse_expr() 的
+# implicit_multiplication_application 变换，那个变换在 token 流层面同时处理
+# 无空白和有空白两种形式）后，需要在归一化阶段自己补上这条——最初只处理了
+# 无空白形式，"2 pi"（LaTeX \pi 去反斜杠后常见的带空格形式）被漏了，
+# 全量回归测试 test_pi_and_sqrt 抓到。
+_IMPLICIT_MULT_RE = re.compile(r"(?<=[0-9])\s*(?=[A-Za-z])")
+
+
 def _norm_ops(text: str) -> str:
-    """把常见书写归一为 sympy 可解析：LaTeX、× ÷ · ^ 上标、千分位、全半角、首尾标点。"""
+    """把常见书写归一为 sympy 可解析：LaTeX、× ÷ · ^ 上标、千分位、全半角、首尾标点、
+    数字紧跟字母处补隐式乘号（2x -> 2*x）。"""
     text = unicodedata.normalize("NFKC", text)
     text = _delatex(text).strip().strip(_STRIP_EDGE)
     text = text.replace("×", "*").replace("·", "*").replace("÷", "/")
     text = text.replace("^", "**")
     text = re.sub(r"(?<=\d),(?=\d{3}\b)", "", text)  # 去千分位逗号 1,000→1000
-    return text
+    return _IMPLICIT_MULT_RE.sub("*", text)
 
 
 def _normalise_plain(text: str) -> str:
@@ -96,15 +112,18 @@ def _split_top_level(text: str) -> list[str]:
 
 
 def _to_exprs(raw: str):
-    """把一段作答解析成一组 sympy 表达式（多根→集合）。任一失败→None。"""
-    import sympy as sp
-    from sympy.parsing.sympy_parser import (
-        implicit_multiplication_application,
-        parse_expr,
-        standard_transformations,
-    )
+    """把一段作答解析成一组 sympy 表达式（多根→集合）。任一失败→None。
 
-    transforms = standard_transformations + (implicit_multiplication_application,)
+    S0-W5：raw 是学生提交的真实作答文本——本模块是 SubmitAnswer 判分主
+    链路，全仓真实调用量最大的外部输入入口之一。之前直接用
+    sympy.parsing.sympy_parser.parse_expr()，零 AST 白名单/timeout/内存
+    上限，同 S0 修过的 solve_* 内核一类风险（AST 全仓扫描才抓到这个点，
+    此前 5 个已知发现都是字符串 grep 找到的，这个是纯字符串匹配漏掉、靠
+    AST 扫描才揪出来的第 6 个）。改走沙箱化的
+    obase.sympy_runtime.evaluate_auto()。
+    """
+    import sympy as sp
+
     parts = [p for p in _split_top_level(_norm_ops(raw)) if p.strip()]
     if not parts:
         return None
@@ -112,7 +131,10 @@ def _to_exprs(raw: str):
     for p in parts:
         p = _ASSIGN.sub("", p.strip())  # 去 "x=" 前缀
         try:
-            val = parse_expr(p, transformations=transforms)
+            result = _runtime.evaluate_auto(p, simplify_result=False)
+            if not result.success or result.value is None:
+                return None
+            val = result.value
             if isinstance(
                 val, list
             ):  # 方括号区间/列表如 [-1,1] 解出裸 list，非 sympy 对象

@@ -10,10 +10,12 @@ from __future__ import annotations
 
 import math
 import re
-from dataclasses import dataclass, field
-from typing import Any, Optional
+from dataclasses import dataclass
 
+from obase.sympy_runtime import SymPyRuntime
 from oprim.types import GradeResult, SolveResult
+
+_runtime = SymPyRuntime()
 
 
 @dataclass(frozen=True)
@@ -215,6 +217,7 @@ def grade_answer(
 # Internal helpers
 # ---------------------------------------------------------------------------
 
+
 def _normalise(s: str, case_sensitive: bool, strip_whitespace: bool) -> str:
     """Normalise a string for comparison."""
     result = s.strip() if strip_whitespace else s
@@ -232,7 +235,7 @@ def _has_invalid_format(s: str) -> bool:
     if not stripped:
         return False  # empty is handled separately
     # If it's purely non-alphanumeric garbage
-    if re.match(r'^[^a-zA-Z0-9]+$', stripped):
+    if re.match(r"^[^a-zA-Z0-9]+$", stripped):
         return True
     return False
 
@@ -254,29 +257,42 @@ def _try_parse_number(s: str) -> float | None:
                     return num / den
             except (ValueError, TypeError):
                 pass
-    # Try expressions like "sqrt(2)" — approximate
+    # Try expressions like "sqrt(2)" — approximate (S0-W5: s is the real
+    # student answer, external input — was a raw sympy.sympify(), same bug
+    # class S0 fixed in the 7 solve_* kernels).
     try:
-        import sympy
-        expr = sympy.sympify(s)
-        if expr.is_number:
-            return float(expr.evalf())
+        result = _runtime.evaluate_auto(s, simplify_result=False)
+        if result.success and result.value is not None and result.value.is_number:
+            return float(result.value.evalf())
     except Exception:
         pass
     return None
 
 
-def _numeric_close(a: float, b: float, rel_tol: float = 1e-6, abs_tol: float = 1e-8) -> bool:
+def _numeric_close(
+    a: float, b: float, rel_tol: float = 1e-6, abs_tol: float = 1e-8
+) -> bool:
     """Check if two numbers are approximately equal."""
     return math.isclose(a, b, rel_tol=rel_tol, abs_tol=abs_tol)
 
 
 def _symbolic_equivalent(s: str, e: str) -> bool:
-    """Check if two expression strings are symbolically equivalent."""
+    """Check if two expression strings are symbolically equivalent.
+
+    S0-W5: s/e are the real student answer / expected answer — external
+    input, was raw sympy.sympify(), same bug class S0 fixed in the 7
+    solve_* kernels.
+    """
     try:
         import sympy
-        expr_s = sympy.sympify(s)
-        expr_e = sympy.sympify(e)
-        diff = sympy.simplify(expr_s - expr_e)
+
+        result_s = _runtime.evaluate_auto(s, simplify_result=False)
+        result_e = _runtime.evaluate_auto(e, simplify_result=False)
+        if not (result_s.success and result_e.success):
+            return False
+        if result_s.value is None or result_e.value is None:
+            return False
+        diff = sympy.simplify(result_s.value - result_e.value)
         return diff == 0
     except Exception:
         return False

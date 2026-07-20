@@ -9,12 +9,14 @@ Version: oprim v3.5.0
 from __future__ import annotations
 
 import json
-import math
 import re
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from typing import Any
 
+from obase.sympy_runtime import SymPyRuntime
 from oprim.types import GradeResult, SolveResult
+
+_runtime = SymPyRuntime()
 
 
 @dataclass
@@ -72,12 +74,23 @@ def _compare_answer(student: str, expected: str) -> bool:
     except ValueError:
         pass
 
-    # Try sympy equivalence
+    # Try sympy equivalence (S0-W5: norm_s/norm_e are the real student
+    # answer / kernel-or-explicit expected answer — external input. Was a
+    # raw sp.sympify(), same bug class S0 fixed in the 7 solve_* kernels.
+    # Routed through evaluate_auto() (AST-validated sandbox, auto-declares
+    # any free variable letters an algebraic-form answer might contain).
     try:
         import sympy as sp
-        s_sym = sp.sympify(norm_s)
-        e_sym = sp.sympify(norm_e)
-        return sp.simplify(s_sym - e_sym) == 0
+
+        s_result = _runtime.evaluate_auto(norm_s, simplify_result=False)
+        e_result = _runtime.evaluate_auto(norm_e, simplify_result=False)
+        if (
+            s_result.success
+            and e_result.success
+            and s_result.value is not None
+            and e_result.value is not None
+        ):
+            return sp.simplify(s_result.value - e_result.value) == 0
     except Exception:
         pass
 
@@ -86,7 +99,7 @@ def _compare_answer(student: str, expected: str) -> bool:
 
 _GRADE_SYSTEM = (
     "You are a math teacher grading a student's answer. "
-    "Respond with JSON: {\"is_correct\": bool, \"score\": float 0-1, \"feedback\": str}. "
+    'Respond with JSON: {"is_correct": bool, "score": float 0-1, "feedback": str}. '
     "Be concise and educational. Score 1.0 = fully correct, 0.5 = partially correct, 0 = wrong."
 )
 

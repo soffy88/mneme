@@ -30,10 +30,13 @@ from oprim.llm_oprims import (
     GradeResult,
     ProfilerResult,
 )
+from obase.sympy_runtime import SymPyRuntime
 from oprim.verify_step import StepVerifyInput, verify_step
 from oskill.solve_and_visualize import SolveAndVisualizeInput, solve_and_visualize
 from services.models import WrongQuestion, ErrorType
 from data.guangdong_math_kc import KC_LIST
+
+_runtime = SymPyRuntime()
 
 
 # ── T.6 学生解题步骤链确定性校验 ────────────────────────────────────────────
@@ -52,12 +55,21 @@ _SUPERS = {
     "⁹": "9",
 }
 _SUPER_RE = re.compile("[" + "".join(_SUPERS) + "]+")
+# 隐式乘法（"2x"/"2 pi" -> "2*x"/"2*pi"）：数字与紧随其后的字母之间插入 *，
+# 中间可以有空白也可以没有，绝不会误伤函数调用。S0-W5 改走沙箱化的
+# obase.sympy_runtime（纯 Python ast.parse，不支持 sympy 自己 parse_expr() 的
+# implicit_multiplication_application 变换，那个变换在 token 流层面同时处理
+# 无空白/有空白两种形式）后，需要在归一化阶段自己补上——最初只处理了无空白
+# 形式，全量回归测试（math_grade 的 test_pi_and_sqrt）抓到"2 pi"这种带空格
+# 形式被漏解析。
+_IMPLICIT_MULT_RE = re.compile(r"(?<=[0-9])\s*(?=[A-Za-z])")
 
 
 def _normalize_math(s: str) -> str:
-    """步骤文本归一为 sympy 可解析：× ÷ · → * /，^ → **，上标 → **n，去逗号。"""
+    """步骤文本归一为 sympy 可解析：× ÷ · → * /，^ → **，上标 → **n，去逗号，
+    数字紧跟字母处补隐式乘号（2x -> 2*x）。"""
     s = _SUPER_RE.sub(lambda m: "**" + "".join(_SUPERS[c] for c in m.group()), s)
-    return (
+    s = (
         s.replace("×", "*")
         .replace("·", "*")
         .replace("÷", "/")
@@ -66,27 +78,35 @@ def _normalize_math(s: str) -> str:
         .replace("，", "")
         .strip()
     )
+    return _IMPLICIT_MULT_RE.sub("*", s)
 
 
 def _parse_step_equation(step: str) -> Optional[tuple[Any, Any]]:
-    """把单个步骤解析为 (lhs, rhs) sympy 表达式；非"恰一个等号"或解析失败 → None。"""
+    """把单个步骤解析为 (lhs, rhs) sympy 表达式；非"恰一个等号"或解析失败 → None。
+
+    S0-W5：step 是 OCR 识别的学生手写步骤文本，外部输入（且是 5 个发现里
+    外部输入面最宽的一个——恶意图片即可触达）。之前直接用
+    sympy.parsing.sympy_parser.parse_expr()，零 AST 白名单/timeout/内存
+    上限，同 S0 修过的 solve_* 内核一类风险。改走沙箱化的
+    obase.sympy_runtime.evaluate_auto()。
+    """
     if step.count("=") != 1:
         return None
     lhs_s, rhs_s = (x.strip() for x in step.split("="))
     if not lhs_s or not rhs_s:
         return None
     try:
-        from sympy.parsing.sympy_parser import (
-            parse_expr,
-            standard_transformations,
-            implicit_multiplication_application,
+        lhs_result = _runtime.evaluate_auto(
+            _normalize_math(lhs_s), simplify_result=False
         )
-
-        trans = standard_transformations + (implicit_multiplication_application,)
-        return (
-            parse_expr(_normalize_math(lhs_s), transformations=trans),
-            parse_expr(_normalize_math(rhs_s), transformations=trans),
+        rhs_result = _runtime.evaluate_auto(
+            _normalize_math(rhs_s), simplify_result=False
         )
+        if not (lhs_result.success and rhs_result.success):
+            return None
+        if lhs_result.value is None or rhs_result.value is None:
+            return None
+        return (lhs_result.value, rhs_result.value)
     except Exception:
         return None
 

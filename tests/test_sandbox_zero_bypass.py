@@ -15,18 +15,18 @@ Python 数值运算，风险等级接近 geometry3d/probability）。
 的半成品迁移状态）。这条测试是结构性断言：不针对某个内核的具体行为，而是
 防未来再有新 solve_* 内核（或者半成品迁移）被悄悄漏网——import 一个符号不
 代表真的调用了它，测试必须验证"真的调用"而不是"提到过"。
+
+S0-W5 更新：原本这里还有两条针对 solve_* 字符串求值内核的检查（是否调用
+AST 校验入口、是否残留裸 sympify()），字符串匹配天然漏 parse_expr()/别名
+导入两类变体——已删除，功能由全仓 AST 拒绝清单扫描取代，见
+tests/test_sandbox_ast_audit.py（覆盖全仓第一方代码，不只是这 7 个文件）。
 """
 
 from __future__ import annotations
 
 from pathlib import Path
 
-from obase.sandbox_selfcheck import (
-    AST_VALIDATED_ENTRY_POINTS,
-    EXPECTED_KERNELS,
-    NUMERIC_ONLY_KERNELS,
-    STRING_EVAL_KERNELS,
-)
+from obase.sandbox_selfcheck import EXPECTED_KERNELS, NUMERIC_ONLY_KERNELS
 
 VENDOR_OPRIM = Path(__file__).resolve().parent.parent / "vendor" / "oprim"
 
@@ -56,34 +56,3 @@ def test_numeric_only_kernels_use_run_isolated():
         if "run_isolated" not in source:
             missing.append(name)
     assert not missing, f"以下纯数值内核没有调用 run_isolated()：{missing}"
-
-
-def test_string_eval_kernels_actually_call_ast_validated_entry_points():
-    """有表达式字符串的内核必须真的调用 SymPyRuntime 的 AST 校验入口——不能
-    只是 import 了类名却从没调用任何方法（这正是加固前 solve_conic/
-    solve_derivative/solve_trig 的真实状态：import 了 SymPyRuntime，但直接
-    对调用方字符串跑裸 sp.sympify()，零校验）。"""
-    missing: list[str] = []
-    for name in sorted(STRING_EVAL_KERNELS):
-        source = (VENDOR_OPRIM / name).read_text(encoding="utf-8")
-        if not any(entry in source for entry in AST_VALIDATED_ENTRY_POINTS):
-            missing.append(name)
-    assert not missing, (
-        f"以下内核有表达式字符串但没有调用任何 AST 校验入口，"
-        f"可能在用 sp.sympify()/其他方式绕过白名单直接 eval：{missing}"
-    )
-
-
-def test_no_kernel_calls_raw_sympify_on_caller_string():
-    """更进一步的负向断言：字符串求值内核不应再出现 ``sp.sympify(`` /
-    ``sympy.sympify(`` 这种绕过 AST 校验的裸调用残留（加固前 solve_conic 有
-    2 处、solve_derivative 有 1 处、solve_trig 有 2 处，都是直接对调用方
-    表达式字符串跑裸 sympify，零沙箱）。数值内核不受此限——它们本来就没有
-    表达式字符串，`sp` 都不一定被引用。"""
-    offenders: dict[str, int] = {}
-    for name in sorted(STRING_EVAL_KERNELS):
-        source = (VENDOR_OPRIM / name).read_text(encoding="utf-8")
-        count = source.count("sp.sympify(") + source.count("sympy.sympify(")
-        if count:
-            offenders[name] = count
-    assert not offenders, f"以下内核仍有裸 sympify() 调用，绕过 AST 校验：{offenders}"

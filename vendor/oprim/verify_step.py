@@ -10,10 +10,12 @@ Version: oprim v3.4.0
 
 from __future__ import annotations
 
-import math
 from dataclasses import dataclass, field
 
+from obase.sympy_runtime import SymPyRuntime
 from oprim.types import SolveResult, SolveStep, StepCheckResult
+
+_runtime = SymPyRuntime()
 
 
 @dataclass(frozen=True)
@@ -56,6 +58,7 @@ class StepVerifyInput:
 def _make_symbols(variable: str, extras: list[str]):
     """Create a sympy symbols namespace dict."""
     import sympy as sp
+
     ns = {}
     all_vars = [variable] + [v for v in extras if v != variable]
     for name in all_vars:
@@ -64,14 +67,29 @@ def _make_symbols(variable: str, extras: list[str]):
 
 
 def _sympify_with_ns(expr_str: str, ns: dict):
-    """Parse expression string using local symbol namespace."""
-    import sympy as sp
-    return sp.sympify(expr_str, locals=ns)
+    """Parse expression string using local symbol namespace.
+
+    S0-W5: this file verifies real student chat messages / OCR'd
+    handwritten steps — expr_str is external input. Previously routed
+    through a raw ``sp.sympify(expr_str, locals=ns)`` with zero AST
+    validation/timeout/memory bound (the same class of bug S0 fixed in the
+    7 solve_* kernels). Now goes through SymPyRuntime.evaluate_auto(),
+    which combines the explicitly-declared ``ns`` (variable + extras) with
+    auto-detection of any *other* single-letter free symbol the string
+    happens to reference (students' steps often use more letters than just
+    the declared "primary variable") — matching sympify()'s own
+    auto-symbol-creation behavior that this function relied on before.
+    """
+    result = _runtime.evaluate_auto(expr_str, ns, simplify_result=False)
+    if not result.success or result.value is None:
+        raise ValueError(result.error or f"Failed to parse expression: {expr_str!r}")
+    return result.value
 
 
 def _check_equivalence(expr_a_str: str, expr_b_str: str, ns: dict) -> tuple[bool, str]:
     """Check if two expressions are symbolically equivalent."""
     import sympy as sp
+
     try:
         a = _sympify_with_ns(expr_a_str, ns)
         b = _sympify_with_ns(expr_b_str, ns)
