@@ -46,6 +46,7 @@ from services.auth_deps import (
     get_current_user,
 )
 from services.math_grade import grade_math
+from services.partner_channels import CHANNEL_REGISTRY
 from services.models import (
     KnowledgeCluster,
     KnowledgeUnit,
@@ -1255,3 +1256,144 @@ async def mcp_report_result(
     except Exception as e:
         await db.rollback()
         raise HTTPException(status_code=500, detail=str(e))
+
+
+class BindPartnerChannelReq(BaseModel):
+    student_id: uuid.UUID
+    channel: str
+    target: str  # 群 webhook URL
+
+
+async def tool_bind_partner_channel(
+    db: AsyncSession, student_id: uuid.UUID, channel: str, target: str
+) -> dict:
+    """绑定/更新学生的 Partner 推送渠道目标（群 webhook URL，W5 A1/A4）。
+
+    渠道必须在注册表里且已激活（W5 v1 只有 wecom/feishu）——未激活渠道直接
+    拒绝，不写入用不了的绑定。
+    """
+    meta = CHANNEL_REGISTRY.get(channel)
+    if meta is None or not meta.active:
+        raise HTTPException(status_code=400, detail=f"channel {channel!r} 不可用")
+
+    await db.execute(
+        text(
+            "INSERT INTO agent.partner_channel_bindings "
+            "(student_id, channel, target, enabled) "
+            "VALUES (:sid, :ch, :target, true) "
+            "ON CONFLICT (student_id, channel) "
+            "DO UPDATE SET target = :target, enabled = true"
+        ),
+        {"sid": student_id, "ch": channel, "target": target},
+    )
+    return {"student_id": str(student_id), "channel": channel, "bound": True}
+
+
+@router.post("/BindPartnerChannel")
+async def mcp_bind_partner_channel(
+    req: BindPartnerChannelReq,
+    db: AsyncSession = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+) -> dict:
+    _ensure_student_self(current_user, req.student_id)
+
+    from obase.audit_log import log_usage
+    from obase.user_grants import is_tool_authorized
+
+    if not await is_tool_authorized(
+        db, req.student_id, "BindPartnerChannel", actor=current_user
+    ):
+        raise HTTPException(status_code=403, detail="未获授权使用 Partners 渠道绑定")
+
+    r = await tool_bind_partner_channel(db, req.student_id, req.channel, req.target)
+    await log_usage(
+        db,
+        actor=current_user,
+        action="bind_partner_channel",
+        resource_type="partner_channel",
+        resource_id=req.channel,
+    )
+    await db.commit()
+    return r
+
+
+class GetUserGrantReq(BaseModel):
+    student_id: uuid.UUID
+
+
+@router.post("/GetUserGrant")
+async def mcp_get_user_grant(
+    req: GetUserGrantReq,
+    db: AsyncSession = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+) -> dict:
+    """查看某学生的工具/模型授权——admin 可查任何人，非 admin 只能查自己/自己
+    绑定的孩子（W5 Part B MB-1：per-user 隔离）。"""
+    from obase.admin_identity import is_admin
+    from obase.user_grants import get_grant
+
+    if not is_admin(current_user):
+        await _ensure_student_access(db, current_user, req.student_id)
+    return await get_grant(db, req.student_id)
+
+
+class SetUserGrantReq(BaseModel):
+    student_id: uuid.UUID
+    enabled_tools: Optional[list[str]] = None
+    allowed_models: Optional[list[str]] = None
+
+
+@router.post("/SetUserGrant")
+async def mcp_set_user_grant(
+    req: SetUserGrantReq,
+    db: AsyncSession = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+) -> dict:
+    """设置某学生的工具/模型授权——只有 admin 能调用（W5 Part B MB-2）。"""
+    from obase.audit_log import log_admin_action
+    from obase.user_grants import GrantNotAuthorizedError, set_grant
+
+    try:
+        r = await set_grant(
+            db,
+            admin_user=current_user,
+            student_id=req.student_id,
+            enabled_tools=req.enabled_tools,
+            allowed_models=req.allowed_models,
+        )
+    except GrantNotAuthorizedError as e:
+        raise HTTPException(status_code=403, detail=str(e))
+
+    await log_admin_action(
+        db,
+        admin_user=current_user,
+        action="set_user_grant",
+        target_student_id=req.student_id,
+        extra={
+            "enabled_tools": req.enabled_tools,
+            "allowed_models": req.allowed_models,
+        },
+    )
+    await db.commit()
+    return r
+
+
+class GetAuditLogReq(BaseModel):
+    student_id: uuid.UUID
+    limit: int = 100
+
+
+@router.post("/GetAuditLog")
+async def mcp_get_audit_log(
+    req: GetAuditLogReq,
+    db: AsyncSession = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+) -> dict:
+    """查看某学生的操作审计——admin 可查任何人，非 admin 只能查自己/自己绑定
+    的孩子（W5 Part B MB-1：per-user 隔离）。"""
+    from obase.admin_identity import is_admin
+    from obase.audit_log import get_audit_log
+
+    if not is_admin(current_user):
+        await _ensure_student_access(db, current_user, req.student_id)
+    return {"entries": await get_audit_log(db, req.student_id, limit=req.limit)}

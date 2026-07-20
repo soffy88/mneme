@@ -19,6 +19,7 @@ celery_app = Celery(
         "tasks.purge_tasks",
         "tasks.partner_tasks",
         "tasks.memory_tasks",
+        "tasks.partner_heartbeat",
     ],
 )
 celery_app.conf.update(
@@ -64,6 +65,13 @@ celery_app.conf.update(
         "daily-cleanup-expired-working-memory": {
             "task": "tasks.cleanup_expired_working_memory",
             "schedule": crontab(hour=4, minute=0),
+        },
+        # W5 A3：Partner 心跳，每 30 分钟检查一次真实 FSRS 到期信号并按渠道推送
+        # （on_interval 语义——不依赖 oservi 装到 worker/beat 镜像里，见 W5 决策：
+        # oservi 目前只是本机 dev 挂载，非正式生产依赖）。
+        "partner-heartbeat": {
+            "task": "tasks.partner_heartbeat",
+            "schedule": crontab(minute="*/30"),
         },
     },
 )

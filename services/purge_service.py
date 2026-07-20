@@ -51,6 +51,15 @@ _STUDENT_TABLES: list[tuple[str, str]] = [
     ("agent.working_memory", "student_id"),
     ("agent.episodic_memory", "student_id"),
     ("agent.semantic_memory", "student_id"),
+    # W5 Partners schema（同一 agent schema，无 FK，可任意序删）：两表皆带
+    # student_id（未成年 PII 关联），FC-2：新表同 PR 入清单。
+    ("agent.partner_channel_bindings", "student_id"),
+    ("agent.partner_push_log", "student_id"),
+    # W5 Part B 多用户 schema（同一 agent schema，无 FK，可任意序删）：两表皆带
+    # student_id（未成年 PII 关联，即便是 admin 账号本质仍是 users 表同一行），
+    # FC-2：新表同 PR 入清单。
+    ("agent.user_grants", "student_id"),
+    ("agent.audit_log", "student_id"),
 ]
 
 
