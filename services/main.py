@@ -4136,27 +4136,3 @@ async def continue_textbook_qa(
         textbook_qa_stream(db, session_id=session_id, student_message=student_message),
         media_type="text/event-stream",
     )
-
-
-# ── 前端静态文件（SPA，最后挂载） ─────────────────────────────────────────
-from fastapi.staticfiles import StaticFiles
-from fastapi.responses import FileResponse
-
-_FRONTEND_DIST = Path(__file__).parent.parent / "frontend" / "dist"
-if _FRONTEND_DIST.exists():
-    # 构建产物（哈希文件名）走 StaticFiles；其余任意路径回退 index.html 支持 SPA 客户端路由
-    app.mount(
-        "/assets", StaticFiles(directory=_FRONTEND_DIST / "assets"), name="assets"
-    )
-
-    @app.get("/{full_path:path}", include_in_schema=False)
-    async def spa_fallback(full_path: str):
-        # 未匹配的 API 路径仍返回 404，不要吞掉
-        if full_path.startswith(
-            ("v1/", "v1", "health", "docs", "redoc", "openapi.json")
-        ):
-            raise HTTPException(status_code=404, detail="Not Found")
-        candidate = _FRONTEND_DIST / full_path
-        if full_path and candidate.is_file():
-            return FileResponse(candidate)
-        return FileResponse(_FRONTEND_DIST / "index.html")

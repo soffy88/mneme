@@ -1,9 +1,9 @@
 # TASKS · Mneme 服务层装配看板
 
-> ⚠️ **前端验收门（2026-07-03 审计止血）**：真前端 = `mneme-web` 仓（Next.js）。
-> 本仓 `frontend/`（Vite）**已废弃**（见 `frontend/DEPRECATED.md`），R.1–R.17 误建于此、
-> 已被 mneme-web 重做。**任何前端验收一律用 `cd mneme-web && npx tsc --noEmit && npm run build`，
-> 禁用 `vite build` 作为验收标准。**
+> ⚠️ **前端验收门（2026-07-03 审计止血；2026-07-22 旧目录移除）**：真前端 = `mneme-web` 仓（Next.js）。
+> 本仓旧 `frontend/`（Vite）已于 2026-07-22 **整目录移除**（快照见 tag `archive/frontend-legacy`；
+> R.1–R.17 误建于此、已被 mneme-web 重做）。**任何前端验收一律用
+> `cd mneme-web && npx tsc --noEmit && npm run build`。**
 
 > **权威设计** = `MNEME_MASTER_DESIGN.md` ｜ **工程约定** = `CLAUDE.md`
 > **范式规范** = `3O Paradigm SPEC v3.0`
@@ -2379,3 +2379,18 @@ CI 常驻的判分准确率回归门，堵死"构造桩题掩盖真实数据判�
   - **ship-gate 四条**（真人 pilot / KU→chunk 精度 / Z 回测 / 测试=生产 CI
     收敛）**依然存在，不因 W5 完成而消除**——W1–W5 全绿 ≠ ship-ready，这是
     spec §8 自己写明的，此处重申不是我方新增判断。
+
+- [x] **前端合二为一：收敛到 mneme-web + 下线旧 `frontend/`**（2026-07-22）
+  缺口核对（三项）：JOL 自测=真缺口→已在 mneme-web 补 `/subjects/math/selftest`
+  （predict→attempt→done 校准反馈页，curve 页加入口，`InteractionReq` 补
+  `predicted_confidence` 可选字段，后端 `/v1/interaction` 本就支持，零后端改动）；
+  数学纵向仪表盘=已覆盖（6 数据块散落 /mastery、/curve、/home，无功能缺失）；
+  名篇背诵=旧版本身仅浏览列表（"建设中"），mneme-web poetry 页已 1:1 覆盖。
+  下线动作：删除 `services/main.py` 的 `frontend/dist` SPA 兜底（此前
+  api.sxueji.com 任意未匹配路径实际在吐旧 SPA HTML——隐患已是现实）；
+  父目录 `.dockerignore` 改为整目录排除 `mneme/frontend/**`；`git rm -r frontend/`
+  （快照 tag `archive/frontend-legacy`）；CLAUDE.md/TASKS.md 头注同步更新。
+  验收：mneme-web `tsc --noEmit`+`next build` 全绿（selftest 路由已出现在构建清单）；
+  本仓 `ruff check .` 4 处既有/`mypy` 1 处既有（均 TASKS 已记录，非本次引入）+
+  全量 pytest 回归。⚠️ 待办：重启 `mneme-api-1` 后兜底代码才真正下线（需确认时机），
+  重启后可再清磁盘残留 `frontend/dist`、`frontend/node_modules`。
