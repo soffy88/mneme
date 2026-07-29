@@ -2,8 +2,6 @@
 
 from __future__ import annotations
 
-import pytest
-
 from vendor.oprim.midi_parse import (
     MidiEvent,
     MidiFeature,

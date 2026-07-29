@@ -2,9 +2,6 @@
 
 from __future__ import annotations
 
-import asyncio
-import time
-
 import pytest
 
 from vendor.oprim.vlm_scene import (
@@ -23,7 +20,6 @@ from services.aria_director import (
     AriaPerception,
     _heuristic,
     _perception_nudge,
-    direct,
 )
 
 

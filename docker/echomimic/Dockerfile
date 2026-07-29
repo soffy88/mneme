@@ -47,9 +47,8 @@ RUN git clone --depth 1 https://github.com/Badmao/EchoMimicV2.git /app/echomimic
     && cd /app/echomimic && pip install --no-cache-dir -r requirements.txt
 
 # 复制侧车代码
+COPY --chmod=755 entrypoint.sh /app/entrypoint.sh
 COPY server.py /app/server.py
-COPY entrypoint.sh /app/entrypoint.sh
-RUN chmod +x /app/entrypoint.sh
 
 # 参考图像目录（挂载卷）
 RUN mkdir -p /app/ref /app/output /app/cache

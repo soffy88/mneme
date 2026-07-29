@@ -23,7 +23,7 @@ from services.aria_media import (
     runtime_features,
     synthesize_tts,
 )
-from vendor.oprim.midi_parse import MidiFeature, parse_note_sequence
+from vendor.oprim.midi_parse import parse_note_sequence
 from vendor.oskill.hand_choreo import choreograph_hands
 
 
