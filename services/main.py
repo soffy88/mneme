@@ -2321,6 +2321,80 @@ async def get_user_daily_plan_prefs(
     return await get_daily_plan_prefs(db, student_id)
 
 
+# ===== 康奈尔笔记进度云同步（Phase C；自报进度 ≠ BKT） =====
+
+from services.cornell_merge import CornellMergeError  # noqa: E402
+from services.cornell_service import (  # noqa: E402
+    delete_progress as cornell_delete_progress,
+    get_progress as cornell_get_progress,
+    list_progress as cornell_list_progress,
+    put_progress as cornell_put_progress,
+)
+
+
+class CornellProgressPut(BaseModel):
+    """客户端上传的进度 State（mastered/collapsed/selfTest/…）。"""
+
+    state: dict
+
+
+@app.get("/v1/cornell/{student_id}/progress")
+async def list_cornell_progress(
+    student_id: UUID,
+    _auth: User = Depends(require_student_access),
+    db: AsyncSession = Depends(get_db),
+):
+    """列出该学生全部康奈尔课题云端进度摘要。"""
+    items = await cornell_list_progress(db, student_id)
+    return {"items": items}
+
+
+@app.get("/v1/cornell/{student_id}/progress/{topic_id}")
+async def get_cornell_progress(
+    student_id: UUID,
+    topic_id: str,
+    _auth: User = Depends(require_student_access),
+    db: AsyncSession = Depends(get_db),
+):
+    """拉取单课题进度；无记录时 404。"""
+    row = await cornell_get_progress(db, student_id, topic_id)
+    if row is None:
+        raise HTTPException(status_code=404, detail="no cloud progress for topic")
+    return row
+
+
+@app.put("/v1/cornell/{student_id}/progress/{topic_id}")
+async def put_cornell_progress(
+    student_id: UUID,
+    topic_id: str,
+    body: CornellProgressPut,
+    current_user: User = Depends(get_current_user),
+    db: AsyncSession = Depends(get_db),
+):
+    """合并写入云端进度（并集）。仅学生本人。不写 kc_mastery。"""
+    _ensure_student_self(current_user, student_id)
+    try:
+        result = await cornell_put_progress(db, student_id, topic_id, body.state)
+    except CornellMergeError as e:
+        raise HTTPException(status_code=422, detail=str(e)) from e
+    await db.commit()
+    return result
+
+
+@app.delete("/v1/cornell/{student_id}/progress/{topic_id}")
+async def delete_cornell_progress(
+    student_id: UUID,
+    topic_id: str,
+    current_user: User = Depends(get_current_user),
+    db: AsyncSession = Depends(get_db),
+):
+    """删除云端进度（本地 localStorage 不动）。仅学生本人。"""
+    _ensure_student_self(current_user, student_id)
+    existed = await cornell_delete_progress(db, student_id, topic_id)
+    await db.commit()
+    return {"deleted": existed, "topic_id": topic_id}
+
+
 @app.post("/v1/users/{student_id}/daily-plan-prefs")
 async def post_user_daily_plan_prefs(
     student_id: UUID,
@@ -2893,12 +2967,247 @@ async def post_quick_question(
 async def health_check(db: AsyncSession = Depends(get_db)):
     """GET /health — 就绪探针：真的打一次 DB（SELECT 1），不是恒返回 ok 的静态桩。
     静态桩在今天那次"迁移后容器不重启、每个请求都 500"的26小时故障里全程报健康，
-    毫无价值。DB 不通 → 503，可供容器 healthcheck / 负载均衡摘流。"""
+    毫无价值。DB 不通 → 503，可供容器 healthcheck / 负载均衡摘流。
+
+    附带 providers 摘要（类型名 + 是否 mock，无密钥）——Y.4 防静默假批改可观测。
+    """
     try:
         await db.execute(text("SELECT 1"))
     except Exception:
         raise HTTPException(status_code=503, detail="db unavailable")
-    return {"status": "ok", "version": "0.1.0", "service": "mneme-api"}
+    providers: dict = {}
+    try:
+        from services.providers.setup import provider_status
+
+        providers = provider_status()
+    except Exception as e:  # noqa: BLE001 — health 不得因 provider 探测失败变 503
+        providers = {"error": type(e).__name__}
+    return {
+        "status": "ok",
+        "version": "0.1.0",
+        "service": "mneme-api",
+        "providers": providers,
+    }
+
+
+@app.get("/health/providers")
+async def health_providers():
+    """GET /health/providers — LLM/VLM 是否 mock（pilot / 运维一眼可见）。不探网、不耗 token。"""
+    from services.providers.setup import provider_status
+
+    return provider_status()
+
+
+# ===== Aria 数字人 Director（NIM 指挥层语义；不渲染 3D）=====
+
+from services.aria_director import (  # noqa: E402
+    AriaDirectorInput,
+    AriaDirectorState,
+    direct as aria_direct,
+)
+
+
+class AriaActReq(BaseModel):
+    student_id: UUID
+    event: str = "tick"  # tick | wake | user_message
+    message: Optional[str] = None
+    history: list[dict] = []
+    state: Optional[dict] = None
+
+
+@app.post("/v1/aria/act")
+async def post_aria_act(
+    body: AriaActReq,
+    current_user: User = Depends(get_current_user),
+):
+    """POST /v1/aria/act — Aria 自主行动一步（Director / Agent 层）。
+
+    对齐 ACE/NIM 里的 Intelligence：返回 action + utterance，由前端/NIM 运行时执行。
+    不写掌握度。仅学生本人。
+    """
+    _ensure_student_self(current_user, body.student_id)
+    raw_state = dict(body.state or {})
+    # P1: 自动注入场景感知（前端未传时从缓存取）
+    raw_state = _inject_perception_into_state(raw_state)
+    st = AriaDirectorState(**raw_state)
+    event = body.event if body.event in ("tick", "wake", "user_message") else "tick"
+    out = await aria_direct(
+        AriaDirectorInput(
+            event=event,  # type: ignore[arg-type]
+            message=body.message,
+            history=body.history or [],
+            state=st,
+        )
+    )
+    return out.model_dump()
+
+
+@app.get("/v1/aria/runtime")
+async def get_aria_runtime():
+    """GET /v1/aria/runtime — 数字人运行时配置（影院层 / 口型 / NIM）。
+
+    前端主视觉为写真 CinemaLayer；可选 GPU lipsync / NIM。无密钥泄露。
+    """
+    from services.aria_media import runtime_features
+
+    nim_base = (os.environ.get("ARIA_NIM_BASE_URL") or "").rstrip("/")
+    lip_base = (os.environ.get("ARIA_LIPSYNC_BASE_URL") or "").rstrip("/")
+    feats = runtime_features()
+    feats["perception"] = True  # P1 always available (text mode; VLM if registered)
+    return {
+        "backend": "nim" if nim_base else ("lipsync_gpu" if lip_base else "cinema"),
+        "nim_base_url": nim_base or None,
+        "lipsync_base_url": lip_base or None,
+        "features": feats,
+        "note": (
+            "cinema = photoreal stills + GSAP keys + CSS viseme; "
+            "set ARIA_LIPSYNC_BASE_URL for LivePortrait/EchoMimic video; "
+            "ARIA_NIM_BASE_URL for Audio2Face NIM; "
+            "P1 perception via POST /v1/aria/perception."
+        ),
+    }
+
+
+# ── P1: Perception ─────────────────────────────────────────────────────────────
+
+class AriaPerceptionReq(BaseModel):
+    student_id: UUID
+    room_key: str = "default"
+    text_description: str = ""
+    image_b64: Optional[str] = None
+    hint: str = ""
+
+
+@app.post("/v1/aria/perception")
+async def post_aria_perception(
+    body: AriaPerceptionReq,
+    current_user: User = Depends(get_current_user),
+):
+    """POST /v1/aria/perception — P1: 更新 Aria 的场景感知。
+
+    接受文本描述或图片 base64，返回结构化感知。
+    """
+    _ensure_student_self(current_user, body.student_id)
+    from services.aria_perception import get_perception_manager
+
+    mgr = get_perception_manager()
+    if body.image_b64:
+        result = await mgr.update_from_image(
+            room_key=body.room_key,
+            image_b64=body.image_b64,
+            hint=body.hint,
+            fallback_text=body.text_description,
+        )
+    else:
+        result = await mgr.update_from_text(
+            room_key=body.room_key,
+            text_description=body.text_description,
+        )
+    return {"status": "ok", "perception": result}
+
+
+@app.get("/v1/aria/perception")
+async def get_aria_perception(
+    student_id: UUID,
+    room_key: str = "default",
+    current_user: User = Depends(get_current_user),
+):
+    """GET /v1/aria/perception — 获取当前缓存的场景感知。"""
+    _ensure_student_self(current_user, student_id)
+    from services.aria_perception import get_perception_manager
+
+    mgr = get_perception_manager()
+    cached = mgr.get(room_key=room_key)
+    if cached is None:
+        return {"perception": None, "brief": ""}
+    from vendor.oprim.vlm_scene import AriaScenePerception
+
+    p = AriaScenePerception(**cached)
+    return {"perception": cached, "brief": p.to_director_brief()}
+
+
+# ── P1: Perception auto-inject into Director ──────────────────────────────────
+
+
+def _inject_perception_into_state(state_dict: dict) -> dict:
+    """P1: 自动从缓存注入 perception 到 Director state（如前端未传）。"""
+    if state_dict.get("perception"):
+        return state_dict  # 前端已传，不覆盖
+    from services.aria_perception import get_perception_manager
+
+    mgr = get_perception_manager()
+    room_key = state_dict.get("room_key", "default")
+    cached = mgr.get(room_key=room_key)
+    if cached:
+        state_dict["perception"] = cached
+    return state_dict
+
+
+class AriaLipsyncReq(BaseModel):
+    student_id: UUID
+    text: str
+    emotion: str = "warm"
+    still_hint: Optional[str] = None
+
+
+@app.post("/v1/aria/lipsync")
+async def post_aria_lipsync(
+    body: AriaLipsyncReq,
+    current_user: User = Depends(get_current_user),
+):
+    """POST /v1/aria/lipsync — Phase 2 口型规划。
+
+    有 ARIA_LIPSYNC_BASE_URL 时转发 GPU 侧车；否则 viseme_css。
+    不写掌握度。仅学生本人。
+    """
+    from services.aria_media import LipsyncInput, lipsync as aria_lipsync
+
+    _ensure_student_self(current_user, body.student_id)
+    if not (body.text or "").strip():
+        raise HTTPException(status_code=400, detail="text required")
+    out = await aria_lipsync(
+        LipsyncInput(
+            text=body.text.strip(),
+            emotion=body.emotion or "warm",
+            still_hint=body.still_hint,
+        )
+    )
+    return out.model_dump()
+
+
+@app.get("/v1/aria/media-plan")
+async def get_aria_media_plan(action: str = "play_piano"):
+    """GET /v1/aria/media-plan — 按 action 返回静图池/clip 规划（可匿名探活）。"""
+    from services.aria_media import plan_media
+
+    return plan_media(action).model_dump()
+
+
+class AriaTtsReq(BaseModel):
+    student_id: UUID
+    text: str
+    voice: Optional[str] = None
+
+
+@app.post("/v1/aria/tts")
+async def post_aria_tts(
+    body: AriaTtsReq,
+    current_user: User = Depends(get_current_user),
+):
+    """POST /v1/aria/tts — 英文 TTS（edge-tts AriaNeural）。
+
+    成功返回 audio_b64 (mp3)；失败 ok=false，前端 Web Speech 兜底。
+    不写掌握度。仅学生本人。
+    """
+    from services.aria_media import TtsInput, synthesize_tts
+
+    _ensure_student_self(current_user, body.student_id)
+    if not (body.text or "").strip():
+        raise HTTPException(status_code=400, detail="text required")
+    out = await synthesize_tts(
+        TtsInput(text=body.text.strip(), voice=body.voice)
+    )
+    return out.model_dump()
 
 
 # ===== §Instant Solve =====

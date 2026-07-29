@@ -2394,3 +2394,119 @@ CI 常驻的判分准确率回归门，堵死"构造桩题掩盖真实数据判�
   本仓 `ruff check .` 4 处既有/`mypy` 1 处既有（均 TASKS 已记录，非本次引入）+
   全量 pytest 回归。⚠️ 待办：重启 `mneme-api-1` 后兜底代码才真正下线（需确认时机），
   重启后可再清磁盘残留 `frontend/dist`、`frontend/node_modules`。
+
+- [x] **交互式康奈尔笔记 Phase B**（2026-07-28）
+  Master 附录契约：概念检索笔记 / M-C 对齐；自报 ✓ ≠ `kc_mastery`；localStorage
+  key `cornell_{topicId}_v{version}`；导入并集合并。
+  本仓：`data/cornell_topics/pythagoras/content.json` + `services/cornell_merge.py`
+  （纯合并）+ `tests/test_cornell_content.py`（schema/merge/红线 AST，5 过）。
+  前端 mneme-web：`CornellPlayer` + `/subjects/math/cornell` / `[topicId]`；
+  数学学科入口卡片；勾股定理 10 问 5 模块；导出/导入/重置/自测/提示/高亮/折叠。
+  验收：`pytest tests/test_cornell_content.py --no-cov` 5 过；
+  `tsc --noEmit` + `next build` 全绿（cornell 路由在构建清单）。
+
+- [x] **康奈尔笔记云同步 Phase C**（2026-07-28）
+  表 `cornell_progress`（migration `e8f9a0b1c2d3`，已 upgrade head）；
+  `services/cornell_service.py` 读/并集写/删；purge 入清单；
+  API：`GET/PUT/DELETE /v1/cornell/{student_id}/progress[/{topic_id}]`
+  （读 require_student_access，写/删 student self）；Master 附录补云同步契约。
+  前端：`lib/cornell/cloud.ts` + 同步弹窗（拉/推/自动推送/删云端）；
+  登录打开课题时自动 pull 并集合并；autoPush 防抖 800ms。
+  验收：`pytest tests/test_cornell_*.py --no-cov` 10 过；
+  `test_every_student_table_is_in_purge_list` 绿；mneme-web `tsc --noEmit` 绿。
+  ⚠️ 活 API 无 --reload，新路由需重启 `mneme-api-1` 后对外生效（migration 已落库）。
+
+- [x] **全仓可信试用包 A→C：Y.4 复检 + pilot 清单**（2026-07-28）
+  **Y.4 复检结论（环境已变，旧 TASK 部分过时）**：
+  - Y.4-a 文本 LLM：**已通** — `MNEME_LLM=qwen` + MaaS，`QwenTextCaller/qwen3.7-plus` 实测返回「好」
+  - Y.4-b OCR/VLM：**已通** — `QwenVLCaller/qwen-vl-max` 实测 JPEG 识别主色（非法 1×1 图会 400，正常图 OK）
+  - Y.4-c SMS：仍 mock（预期；注册闸门勿公网开）
+  - Y.4-d MNEME_ENV=demo（非 prod）
+  **加固**：`services/providers/setup.py` — `MNEME_LLM=qwen` 缺 key 时默认拒绝静默 mock
+  （`MNEME_ALLOW_MOCK_LLM=1` 或 pytest 可放行）；`provider_status()`；
+  `/health` 附 `providers`；`GET /health/providers`。
+  **Pilot**：`scripts/pilot_smoke.py`（LLM+VLM+practice/submit+cornell+health）全绿；
+  `outputs/PILOT_CHECKLIST.md` 真人 20 分钟清单；
+  `tests/test_provider_setup_y4.py` 3 过。api 已重启使 health 生效。
+  **下一步（人）**：按 PILOT_CHECKLIST 跑真人；卡点只修 P0。镜像 pymupdf 债仍挂。
+
+- [x] **mneme-web 生产发布：康奈尔前后端对接上线**（2026-07-28）
+  问题：源码+API 已接，生产 web 镜像停在 07-20 → cornell 404。
+  动作：`mneme-web` `docker compose build` + `up -d`（读 `.env.production` →
+  `api.sxueji.com`）；清单见 `mneme-web/DEPLOY_CORNELL.md`。
+  验收：本地 `:3300` 与 `https://sxueji.com/subjects/math/cornell` **200**；
+  数学页含「康奈尔笔记」；topic `pythagoras` 200。云同步打已上线 API。
+
+- [x] **专项练习：CMM 真题→人教 KU 匹配（G7–G9 批处理）**（2026-07-28 完成）
+  **诊断**：公共题 23575；仅 `cmm-math-*` 占位曾 **15465**；人教 KU 存在且≥5 题主题 ~573。
+  **脚本加固** `match_questions_to_ku.py`：默认 `qwen3-8b`；邻域 grade±1；
+  候选 12 条适配 Ollama context≈2048；id-only 补 name。
+  **dry-run G8×20**：18/20=90%。
+  **写库结果**（日志 `outputs/ku_match/g7_g9_20260728_150201.log`，ALL_DONE 18:29）：
+  G7 971/1161 (83%) · G8 845/924 (91%) · G9 1203/1295 (92%)；
+  qwen3-8b 共 3380 条 meta；成功挂 RENJIAO ~3019，失败留 cmm ~361。
+  G7–G9 pending=0。UX 空态文案源码已改（生产需再发 web）。
+  ⚠️ 高中 G10–12 本轮不做。
+
+- [x] **首页 Piano Awakening 数字人 Aria Phase 1–4（可交付层）**（2026-07-29）
+  首页主视觉 Aria：`AriaStage` 演奏/过渡/对话；静图 `public/aria/*.jpg`；
+  Web Speech ASR+TTS；`/v1/chat/turn` + 本地兜底；CSS thinking orb。
+  **① BGM**：`pianoAmbience.ts` Web Audio 免版权琶音，三曲切换+淡出。
+  **② 视频槽**：`MediaLayer` 优先 `playing.mp4`/`conversation.mp4`，无则 Ken Burns 静图。
+  **③ 口型近似**：TTS 时下半脸柔光脉冲（非 EchoMimic；可换 MuseTalk 轨）。
+  **④ 唤醒**：`wakeTimeline` master cues（hands_leave→head_up→eye_contact→smile，~2.5s）。
+  今日目标收入「学习中心」。`tsc --noEmit` 绿。生产需 rebuild mneme-web。
+  真 EchoMimic/HyperFrames GPU 生成留素材流水线（见 `public/aria/README.md`）。
+
+- [x] **Aria AI Director（NIM 指挥语义）**（2026-07-29）
+  用户诉求：数字人由 AI 指挥、可自主弹琴/对话——非循环视频。
+  后端：`POST /v1/aria/act`（LLM 输出 action+utterance）、`GET /v1/aria/runtime`；
+  `services/aria_director.py`。前端：Director tick 自主行动、姿态切换、
+  `DigitalHumanView` + `nimAdapter`（`ARIA_NIM_BASE_URL` 接真 Audio2Face）。
+  文档：`docs/ARIA_NIM_DIGITAL_HUMAN.md`。当前 `backend=mock_scene`（3080 未部署 NIM 容器）。
+  已 rebuild api+web。
+
+- [x] **Aria 3D 可走动数字人**（2026-07-29）
+  R3F 房间 + 程序化人形：走→琴凳坐下弹琴（键动画+BGM）/ 走→镜头前对话；
+  Director 指挥姿态。`three` `@react-three/fiber` `@react-three/drei`。
+  非照片级 Metahuman/Audio2Face；可换 VRM。生产已 rebuild。
+- [x] **Aria Hybrid B：3D 身体 + 照片真人脸**（2026-07-29）
+  默认 `AriaWorld`：程序化身体可走/坐/弹/聊 + `face-front`/`face-play` 真人脸贴图与简易口型；
+  右上角可切「全景照片」回退；R3F `dynamic(ssr:false)`。文档 `docs/ARIA_NIM_DIGITAL_HUMAN.md`。
+- [x] **Aria VRM 身体（Hybrid B 下一步）**（2026-07-29）
+  `@pixiv/three-vrm` + `public/aria/aria.vrm`（CC0 Olivia）；`AriaVRM` 走/坐/弹/聊骨骼驱动 + 头骨照片脸；
+  失败回退 `AriaHumanoid`。Dockerfile：`package-lock` + `npm ci --ignore-scripts`（避 canvas 编译卡死）。
+- [x] **Aria Phase 1+2 影院层 + 口型**（2026-07-29）
+  默认 `AriaCinemaLayer`：写真双层交叉淡入 + GSAP 琴键；说话 `POST /v1/aria/lipsync`
+ （无 `ARIA_LIPSYNC_BASE_URL` → `viseme_css`）；`GET /v1/aria/media-plan`；
+  `services/aria_media.py` + tests；生产 web/api 已上线。3D 不进默认。
+- [x] **Aria Phase 3 clip 池 + edge-tts**（2026-07-29）
+  `public/aria/clips/playing_00..02.jpg` 轮播；可选 `playing_loop.mp4`；
+  `POST /v1/aria/tts`（edge-tts AriaNeural，失败 Web Speech）；runtime `clip_pool`+`tts_edge`；
+  tests 5 passed。
+- [x] **Aria Ken Burns film loop 上线**（2026-07-29）
+  ffmpeg 三机位 still → `playing_loop.mp4`（8s）+ `conversation_breathe.mp4`；
+  影院层优先播 mp4（角标 film loop / live）；tests 6 passed；生产 200。
+- [x] **Aria 独立数字人图层**（2026-07-29）
+  用户要求：房间不动、人像独立。撤销默认整图晃动；
+  `AriaDigitalHuman`：`room_*` 固定 + `person_*.png` 抠像 GSAP 动画；
+  Director 切弹琴/对话姿；口型/TTS 仍接。生产 `Digital Human` 角标。
+- [x] **Director LLM 调位置/手部**（2026-07-29）
+  `layout`+`hands` 进 `/v1/aria/act`；预设坐凳/对话位；用户「往左/放大/手快一点」可纠；
+  前端 GSAP 套用；tests 9 passed。
+
+### 🎯 Aria 完整数字人路线图（2026-07-29 规划；详见 `docs/ARIA_FULL_IMPLEMENTATION_PLAN.md`）
+
+- [x] **Aria P1 感知层（VLM Perception）**（2026-07-29）
+  `vendor/oprim/vlm_scene.py`（文本解析 + VLM 调用）+ `services/aria_perception.py`
+  （LRU 缓存 16 条/10min TTL）；Director `AriaPerception` 模型 + `_perception_nudge`
+  感知引导 action（钢琴→弹琴、乐谱→弹琴、放松氛围→对话）；
+  `POST /v1/aria/perception` + `GET /v1/aria/perception` 端点；
+  /v1/aria/act 自动注入缓存感知；tests 34 passed（总 Aria 43 passed）。
+- [ ] **Aria P2 手势增强（MIDI Sync + SVG Hands）**
+  `oprim/midi_parse.py` + `oskill/hand_choreo.py`；`AriaHands.tsx` SVG 骨骼叠加；
+  Web Audio analyser 实时音高触发；验收：弹琴手指与音符同步。工期 ~1 周。
+- [ ] **Aria P3 EchoMimic V2 侧车**
+  `docker/echomimic/` 独立容器；`oprim/echo_drive.py`；预渲染缓存池；
+  前端 `<video>` 替换 person PNG；降级到 P2 模拟；验收：真实半身视频驱动。
+  工期 ~3-4 周；硬件：云 GPU 按需（方案 C 混合）。
