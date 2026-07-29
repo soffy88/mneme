@@ -91,12 +91,29 @@ def _load_pipeline():
 
     logger.info("Loading EchoMimic V2 pipeline...")
     try:
-        if ECHOMIMIC_DIR.exists() and (ECHOMIMIC_DIR / "inference.py").exists():
+        if ECHOMIMIC_DIR.exists() and (ECHOMIMIC_DIR / "infer.py").exists():
             sys.path.insert(0, str(ECHOMIMIC_DIR))
-            # 实际加载 EchoMimic V2 推理管线
-            # 此处根据 EchoMimic V2 的实际 API 调整
-            _pipeline = {"loaded": True, "device": DEVICE, "model": "EchoMimicV2"}
-            logger.info("Pipeline loaded from %s", ECHOMIMIC_DIR)
+            # Check ALL required pretrained weights
+            weights_dir = ECHOMIMIC_DIR / "pretrained_weights"
+            required = [
+                "denoising_unet.pth",
+                "reference_unet.pth",
+                "motion_module.pth",
+                "pose_encoder.pth",
+            ]
+            # Also check base model dirs
+            required_dirs = ["sd-image-variations-diffusers", "sd-vae-ft-mse", "audio_processor"]
+            missing_files = [f for f in required if not (weights_dir / f).exists()]
+            missing_dirs = [d for d in required_dirs if not (weights_dir / d).exists()]
+            if not missing_files and not missing_dirs:
+                _pipeline = {"loaded": True, "device": DEVICE, "model": "EchoMimicV2"}
+                logger.info("Pipeline loaded: %s (all weights found)", ECHOMIMIC_DIR)
+            else:
+                logger.warning(
+                    "EchoMimic weights incomplete — missing files: %s, dirs: %s — stub mode",
+                    missing_files, missing_dirs,
+                )
+                _pipeline = {"loaded": True, "device": DEVICE, "model": "stub"}
         else:
             # 无 EchoMimic repo 时进入 stub 模式（开发/测试用）
             logger.warning("EchoMimic repo not found at %s — stub mode", ECHOMIMIC_DIR)
@@ -147,37 +164,81 @@ def _generate_video(
         return _generate_stub_video(audio_path, ref_path, output_path)
 
     # === EchoMimic V2 实际调用 ===
+    # infer.py expects: --ref_images_dir + --refimg_name, --audio_dir + --audio_name
+    # Output goes to: outputs/{model_flag}-seed{seed}/{ref_flag}/{pose_name}/
     try:
+        import shutil
         import subprocess
+        import glob
+
+        # Prepare temp directories for EchoMimic's directory-based API
+        tmp_audio_dir = str(OUTPUT_DIR / "_tmp_audio")
+        tmp_ref_dir = str(OUTPUT_DIR / "_tmp_ref")
+        Path(tmp_audio_dir).mkdir(exist_ok=True)
+        Path(tmp_ref_dir).mkdir(exist_ok=True)
+
+        audio_name = Path(audio_path).name
+        # infer.py requires refimg_name with ≥2 path components (e.g. "sub/image.jpg")
+        ref_subdir = "aria"
+        ref_name = f"{ref_subdir}/{Path(ref_path).name}"
+        (Path(tmp_ref_dir) / ref_subdir).mkdir(exist_ok=True)
+        shutil.copy2(audio_path, str(Path(tmp_audio_dir) / audio_name))
+        shutil.copy2(ref_path, str(Path(tmp_ref_dir) / ref_name))
+
+        # Use built-in demo pose (01 = generic idle standing, 14s)
+        pose_dir = ECHOMIMIC_DIR / "assets" / "halfbody_demo" / "pose"
+        pose_name = "01"
+
+        # Build command matching infer.py's actual argparse
         cmd = [
             sys.executable,
-            str(ECHOMIMIC_DIR / "inference.py"),
-            "--audio_path", audio_path,
-            "--ref_image_path", ref_path,
-            "--output_path", output_path,
+            "infer.py",
+            "--audio_dir", tmp_audio_dir,
+            "--audio_name", audio_name,
+            "--ref_images_dir", tmp_ref_dir,
+            "--refimg_name", ref_name,
+            "--pose_dir", str(pose_dir),
+            "--pose_name", pose_name,
             "--device", DEVICE,
+            "-L", "36",  # frames (1.5s at 24fps, fits RTX 3080 10GB)
+            "-W", "768",
+            "-H", "768",
+            "--steps", "6",  # fast inference
+            "--cfg", "1.0",  # no classifier-free guidance
         ]
-        if HALF_BODY:
-            cmd.append("--half_body")
-        if hand_pose:
-            hp_path = output_path + ".handpose.json"
-            Path(hp_path).write_text(json.dumps(hand_pose))
-            cmd.extend(["--hand_pose", hp_path])
 
-        logger.info("Running: %s", " ".join(cmd))
+        logger.info("Running EchoMimic: %s", " ".join(cmd))
+        env = dict(os.environ)
+        ffmpeg_static = ECHOMIMIC_DIR / "ffmpeg-4.4-amd64-static"
+        if ffmpeg_static.exists():
+            env["FFMPEG_PATH"] = str(ffmpeg_static)
+            env["PATH"] = f"{ffmpeg_static}:{env.get('PATH', '')}"
+        env["PYTORCH_CUDA_ALLOC_CONF"] = "expandable_segments:True"
+
         result = subprocess.run(
-            cmd, capture_output=True, text=True, timeout=120,
-            cwd=str(ECHOMIMIC_DIR),
+            cmd, capture_output=True, text=True, timeout=300,
+            cwd=str(ECHOMIMIC_DIR), env=env,
         )
         if result.returncode != 0:
-            logger.error("EchoMimic failed: %s", result.stderr[:500])
+            logger.error("EchoMimic failed (rc=%d): %s", result.returncode, result.stderr[:500])
             return False
-        return Path(output_path).exists()
+
+        # Find the output video (pattern: outputs/*/…/*.mp4)
+        outputs = sorted(glob.glob(str(ECHOMIMIC_DIR / "outputs" / "**" / "*.mp4"), recursive=True),
+                         key=os.path.getmtime, reverse=True)
+        if not outputs:
+            logger.error("EchoMimic: no output video found")
+            return False
+
+        shutil.copy2(outputs[0], output_path)
+        logger.info("EchoMimic output: %s -> %s", outputs[0], output_path)
+        return True
+
     except subprocess.TimeoutExpired:
-        logger.error("EchoMimic timed out (>120s)")
+        logger.error("EchoMimic timed out (>300s)")
         return False
     except Exception as e:
-        logger.error("EchoMimic error: %s", e)
+        logger.error("EchoMimic error: %s", e, exc_info=True)
         return False
 
 

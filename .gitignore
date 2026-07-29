@@ -17,3 +17,12 @@ books/
 frontend/node_modules/
 frontend/dist/
 frontend/.env.local
+
+# EchoMimic V2 - large model files
+.echo/echomimic_repo/pretrained_weights/
+.echo/echomimic_repo/ffmpeg-4.4-amd64-static/
+.echo/echomimic_repo/outputs/
+.echo/output/
+.echo/cache/
+.venv-echo/
+
