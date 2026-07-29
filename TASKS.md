@@ -2495,6 +2495,17 @@ CI 常驻的判分准确率回归门，堵死"构造桩题掩盖真实数据判�
   `layout`+`hands` 进 `/v1/aria/act`；预设坐凳/对话位；用户「往左/放大/手快一点」可纠；
   前端 GSAP 套用；tests 9 passed。
 
+- [x] **Aria 侧车部署 + E2E 验证**（2026-07-29）
+  宿主机 native 部署（非 Docker）：`.venv-echo/` (Python 3.11 + torch 2.5.1+cu121
+  + RTX 3080 CUDA)；`.echo/server.py` 本地适配版 FastAPI 侧车；
+  `scripts/start_echo_sidecar.sh` 启动/停止/状态管理；
+  `.env` 配置 `ECHO_BASE_URL=http://host.docker.internal:8081`；
+  API 容器 `extra_hosts: host.docker.internal` 路由到宿主机；
+  smoke test: edge-tts → /generate → 37ms stub video → cache hit；
+  bugfix: request_echo_drive() 传递 base_url 参数（修复 monkeypatch 测试）；
+  runtime: echo_drive=True, tts_edge=True, perception=True, hand_choreo=True；
+  110 tests passed。
+
 - [x] **Aria P1–P3 E2E 集成**（2026-07-29）
   AriaStage 全链路串通：挂载时 POST /v1/aria/perception 上传房间感知；
   play_piano 时探测预烘焙缓存 `/aria/echo_cache/coaching.mp4`；
