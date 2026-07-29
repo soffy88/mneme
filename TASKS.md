@@ -2495,6 +2495,15 @@ CI 常驻的判分准确率回归门，堵死"构造桩题掩盖真实数据判�
   `layout`+`hands` 进 `/v1/aria/act`；预设坐凳/对话位；用户「往左/放大/手快一点」可纠；
   前端 GSAP 套用；tests 9 passed。
 
+- [x] **Aria P1–P3 E2E 集成**（2026-07-29）
+  AriaStage 全链路串通：挂载时 POST /v1/aria/perception 上传房间感知；
+  play_piano 时探测预烘焙缓存 `/aria/echo_cache/coaching.mp4`；
+  speakAria: TTS 成功后并行触发 requestEchoDrive（runtime.features.echo_drive 门控）；
+  runtime.features 新增 perception/hand_choreo/echo_drive/echo_degrade_to_p2；
+  AriaRuntimeConfig TS 类型同步扩展；
+  tests/test_aria_e2e_pipeline.py: 7 tests（Director→perception→choreo→TTS→echo 降级）；
+  总 Aria tests: 110 passed。
+
 ### 🎯 Aria 完整数字人路线图（2026-07-29 规划；详见 `docs/ARIA_FULL_IMPLEMENTATION_PLAN.md`）
 
 - [x] **Aria P1 感知层（VLM Perception）**（2026-07-29）
