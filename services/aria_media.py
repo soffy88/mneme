@@ -315,6 +315,7 @@ async def request_echo_drive(inp: EchoDriveInput) -> EchoDriveOutput:
             audio_b64=inp.audio_b64,
             hand_pose=inp.hand_pose,
             emotion=inp.emotion,
+            base_url=echo_url,
         )
         return EchoDriveOutput(
             ok=result.ok,
