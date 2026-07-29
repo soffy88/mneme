@@ -2514,7 +2514,18 @@ CI 常驻的判分准确率回归门，堵死"构造桩题掩盖真实数据判�
   `hand-sync.ts` 客户端实时 choreoFromNote（NoteBuffer 8音 pattern 检测）；
   `pianoAmbience.ts` 新增 `onNote` 回调 → AriaStage 实时更新 handChoreo；
   tests 86 passed（P1 34 + P2 43 + 原有 9）。
-- [ ] **Aria P3 EchoMimic V2 侧车**
-  `docker/echomimic/` 独立容器；`oprim/echo_drive.py`；预渲染缓存池；
-  前端 `<video>` 替换 person PNG；降级到 P2 模拟；验收：真实半身视频驱动。
-  工期 ~3-4 周；硬件：云 GPU 按需（方案 C 混合）。
+- [x] **Aria P3 EchoMimic V2 侧车**（2026-07-29）
+  `docker/echomimic/`：Dockerfile（nvidia/cuda:12.1 + PyTorch 2.1）+
+  FastAPI server.py（POST /generate + /health + /status）+ entrypoint.sh
+  （模型预下载）；docker-compose `echomimic` service（profile=gpu，
+  nvidia GPU 分配，独立 output/cache 卷）；
+  `vendor/oprim/echo_drive.py`：echo_drive() 单次调用 + 缓存键计算 +
+  健康检查 + 优雅降级（unreachable→None）；
+  `services/aria_media.py`：EchoDriveInput/Output 模型 + request_echo_drive()
+  服务入口 + runtime_features 新增 echo_drive/echo_degrade_to_p2；
+  `services/main.py`：POST /v1/aria/echo-drive 端点；
+  `scripts/prebake_echo.sh`：预渲染缓存脚本（5 条预设 TTS→EchoMimic→mp4）；
+  前端：aria-media.ts requestEchoDrive() 客户端；
+  AriaDigitalHuman echoVideoUrl prop（video 优先于 PNG）；
+  AriaStage echoVideoUrl state；角标显示 `echo` 标识；
+  tests 103 passed（P1 34 + P2 43 + P3 17 + 原有 9）。

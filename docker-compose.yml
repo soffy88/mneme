@@ -111,6 +111,8 @@ services:
       STRATUM_BASE_URL: ${STRATUM_BASE_URL:-}
       STRATUM_SERVICE_EMAIL: ${STRATUM_SERVICE_EMAIL:-}
       STRATUM_SERVICE_PASSWORD: ${STRATUM_SERVICE_PASSWORD:-}
+      # P3: EchoMimic V2 侧车（音频→半身视频）
+      ECHO_BASE_URL: ${ECHO_BASE_URL:-http://echomimic:8080}
     extra_hosts:
       - "host.docker.internal:host-gateway"
     volumes:
@@ -180,6 +182,41 @@ services:
   # Celery beat：定时调度器（此前缺失 → 数据飞轮/FSRS 优化/AUC 评估/家长预警全休眠）。
   # 4 个 schedule 见 tasks/celery_app.py：每日3:30 BKT 校准 / 周一4:00 FSRS 优化 /
   # 周一5:00 护城河 AUC 评估 / 每日20:00 家长预警。
+  # P3: EchoMimic V2 数字人驱动侧车（GPU 容器）
+  # 按需启动：docker compose --profile gpu up echomimic
+  # 或常驻：docker compose up echomimic
+  echomimic:
+    build:
+      context: docker/echomimic
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    profiles: ["gpu"]  # 默认不启动，需要 GPU 时 --profile gpu
+    ports:
+      - "8081:8080"
+    environment:
+      ECHO_DEVICE: ${ECHO_DEVICE:-cuda}
+      ECHO_HALF_BODY: ${ECHO_HALF_BODY:-1}
+      ECHO_REF_IMAGE: /app/ref/aria_ref.jpg
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+    volumes:
+      - ./public/aria/dh/person_play.png:/app/ref/aria_ref.jpg:ro
+      - mneme_echo_output:/app/output
+      - mneme_echo_cache:/app/cache
+    networks:
+      - default
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 120s  # 模型加载慢
+
   beat:
     image: mneme-worker          # 复用 worker 镜像（同代码，经 .:/app 挂载），免单独构建
     restart: always
@@ -230,3 +267,6 @@ volumes:
   mneme_redis_data:
     external: true
     name: mneme_mneme_redis_data
+  # P3: EchoMimic 侧车输出/缓存（非外部卷，compose down -v 可清除）
+  mneme_echo_output:
+  mneme_echo_cache:

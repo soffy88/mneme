@@ -3210,6 +3210,43 @@ async def post_aria_tts(
     return out.model_dump()
 
 
+# ── P3: EchoMimic Drive ──────────────────────────────────────────────────────
+
+
+class AriaEchoDriveReq(BaseModel):
+    student_id: UUID
+    audio_b64: str
+    hand_pose: Optional[dict] = None
+    emotion: str = "neutral"
+    action: str = "play_piano"
+
+
+@app.post("/v1/aria/echo-drive")
+async def post_aria_echo_drive(
+    body: AriaEchoDriveReq,
+    current_user: User = Depends(get_current_user),
+):
+    """POST /v1/aria/echo-drive — P3: EchoMimic V2 半身驱动视频生成。
+
+    音频 + 可选手部姿态 → 半身驱动视频 base64。
+    侧车不可用时 degrade=true，前端回退 P2 模拟。
+    """
+    from services.aria_media import EchoDriveInput, request_echo_drive
+
+    _ensure_student_self(current_user, body.student_id)
+    if not body.audio_b64 or len(body.audio_b64) < 100:
+        raise HTTPException(status_code=400, detail="audio_b64 required (min 100 chars)")
+    out = await request_echo_drive(
+        EchoDriveInput(
+            audio_b64=body.audio_b64,
+            hand_pose=body.hand_pose,
+            emotion=body.emotion,
+            action=body.action,
+        )
+    )
+    return out.model_dump()
+
+
 # ===== §Instant Solve =====
 
 from fastapi import Form
