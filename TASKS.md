@@ -2503,9 +2503,17 @@ CI 常驻的判分准确率回归门，堵死"构造桩题掩盖真实数据判�
   感知引导 action（钢琴→弹琴、乐谱→弹琴、放松氛围→对话）；
   `POST /v1/aria/perception` + `GET /v1/aria/perception` 端点；
   /v1/aria/act 自动注入缓存感知；tests 34 passed（总 Aria 43 passed）。
-- [ ] **Aria P2 手势增强（MIDI Sync + SVG Hands）**
-  `oprim/midi_parse.py` + `oskill/hand_choreo.py`；`AriaHands.tsx` SVG 骨骼叠加；
-  Web Audio analyser 实时音高触发；验收：弹琴手指与音符同步。工期 ~1 周。
+- [x] **Aria P2 手势增强（MIDI Sync + SVG Hands）**（2026-07-29）
+  `vendor/oprim/midi_parse.py`：MIDI 事件解析 + 音型分类（chord/arpeggio/scale/bass/melody）
+  + 键盘定位（88键归一化）+ 手区判定；
+  `vendor/oskill/hand_choreo.py`：特征→GSAP 参数（左右手 x/y/rotation/scale +
+  finger_spread + wrist_bounce + attack_intensity + transition_ms）；
+  `services/aria_director.py`：`hand_choreo` 字段加入 AriaDirectorOutput，
+  `_default_hand_choreo()` 按 action 生成 melody/gesture/idle 参数；
+  前端：`AriaHands.tsx` SVG 手部叠加（掌心+5指+光晕），GSAP 弹跳/位置动画；
+  `hand-sync.ts` 客户端实时 choreoFromNote（NoteBuffer 8音 pattern 检测）；
+  `pianoAmbience.ts` 新增 `onNote` 回调 → AriaStage 实时更新 handChoreo；
+  tests 86 passed（P1 34 + P2 43 + 原有 9）。
 - [ ] **Aria P3 EchoMimic V2 侧车**
   `docker/echomimic/` 独立容器；`oprim/echo_drive.py`；预渲染缓存池；
   前端 `<video>` 替换 person PNG；降级到 P2 模拟；验收：真实半身视频驱动。

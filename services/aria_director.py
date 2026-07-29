@@ -224,6 +224,8 @@ class AriaDirectorOutput(BaseModel):
     hands: AriaHands = Field(default_factory=AriaHands)
     # P1: 回传感知给前端（debug + 对话素材）
     perception_brief: str = ""
+    # P2: 手部编排参数（GSAP 动画用；从 midi_parse + hand_choreo 生成）
+    hand_choreo: dict[str, Any] | None = None
 
 
 def _clamp_layout(lay: AriaLayout) -> AriaLayout:
@@ -333,12 +335,46 @@ def _nudge_hands_from_text(msg: str, hands: AriaHands) -> tuple[AriaHands, bool]
     return _clamp_hands(hands), changed
 
 
+def _default_hand_choreo(action: str) -> dict[str, Any] | None:
+    """P2: 根据 action 生成默认 hand_choreo。"""
+    if action in ("play_piano", "return_to_piano"):
+        from vendor.oskill.hand_choreo import choreograph_hands
+        from vendor.oprim.midi_parse import MidiFeature
+
+        # 默认旋律特征
+        feature = MidiFeature(
+            pattern="melody",
+            hand_zone="both",
+            note_count=4,
+            avg_pitch=64.0,
+            pitch_range=12,
+            density=1.5,
+        )
+        return choreograph_hands(feature).to_dict()
+    elif action == "speak":
+        from vendor.oskill.hand_choreo import gesture_hands
+
+        return gesture_hands(intensity=0.4).to_dict()
+    elif action == "think":
+        from vendor.oskill.hand_choreo import idle_hands
+
+        return idle_hands().to_dict()
+    else:
+        from vendor.oskill.hand_choreo import idle_hands
+
+        return idle_hands().to_dict()
+
+
 def _with_stage(action: str, base: AriaDirectorOutput | None = None) -> AriaDirectorOutput:
     lay, hands = _preset_for(action)
+    choreo = _default_hand_choreo(action)
     if base is None:
-        return AriaDirectorOutput(action=action, layout=lay, hands=hands)  # type: ignore[arg-type]
+        return AriaDirectorOutput(
+            action=action, layout=lay, hands=hands, hand_choreo=choreo  # type: ignore[arg-type]
+        )
     base.layout = lay
     base.hands = hands
+    base.hand_choreo = choreo
     return base
 
 
@@ -421,6 +457,7 @@ def _heuristic(inp: AriaDirectorInput) -> AriaDirectorOutput:
                 layout=lay2,
                 hands=hands2,
                 perception_brief=perc_brief,
+                hand_choreo=_default_hand_choreo(act),
             )
 
         ml = msg.lower()
@@ -587,6 +624,7 @@ async def direct(inp: AriaDirectorInput) -> AriaDirectorOutput:
             hands, _ = _nudge_hands_from_text(inp.message, hands)
 
         perc_brief = inp.state.perception.brief() if inp.state.perception else ""
+        choreo = _default_hand_choreo(action)
         return AriaDirectorOutput(
             action=action,  # type: ignore[arg-type]
             utterance=utterance,
@@ -597,6 +635,7 @@ async def direct(inp: AriaDirectorInput) -> AriaDirectorOutput:
             layout=layout,
             hands=hands,
             perception_brief=perc_brief,
+            hand_choreo=choreo,
         )
     except Exception as e:  # noqa: BLE001
         h = _heuristic(inp)
