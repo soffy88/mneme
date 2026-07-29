@@ -13,7 +13,7 @@
 # 端口: 8080 (FastAPI)
 # GPU: 需要 NVIDIA GPU + nvidia-container-toolkit
 
-FROM nvidia/cuda:12.1.1-cudnn8-runtime-ubuntu22.04 AS base
+FROM nvidia/cuda:13.0.0-cudnn-runtime-ubuntu22.04 AS base
 
 ENV DEBIAN_FRONTEND=noninteractive \
     PYTHONUNBUFFERED=1 \
