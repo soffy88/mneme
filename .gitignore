@@ -26,3 +26,5 @@ frontend/.env.local
 .echo/cache/
 .venv-echo/
 
+# Added by code-review-graph
+.code-review-graph/

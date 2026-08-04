@@ -34,6 +34,27 @@ async def test_mock_provider_returns_true():
     assert await prov.send_code("kid@example.com", "123456") is True
 
 
+@pytest.mark.asyncio
+async def test_mock_provider_fail_closed_in_prod(monkeypatch):
+    """C2/C5：生产误配 EMAIL_PROVIDER=mock 必须 fail-closed——不发验证码日志。"""
+    monkeypatch.setenv("MNEME_ENV", "prod")
+    prov = MockEmailProvider()
+    assert await prov.send_code("kid@example.com", "123456") is False
+
+
+@pytest.mark.asyncio
+async def test_mock_notification_allowed_in_dev():
+    prov = MockEmailProvider()
+    assert await prov.send_notification("kid@example.com", "t", "c") is True
+
+
+@pytest.mark.asyncio
+async def test_mock_notification_fail_closed_in_prod(monkeypatch):
+    monkeypatch.setenv("MNEME_ENV", "prod")
+    prov = MockEmailProvider()
+    assert await prov.send_notification("kid@example.com", "t", "c") is False
+
+
 def test_mask_email():
     assert _mask_email("student@qq.com") == "s***@qq.com"
     assert _mask_email("not-an-email") == "***"
