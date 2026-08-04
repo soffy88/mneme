@@ -71,7 +71,7 @@ exclude_lines = [
 line-length = 88
 target-version = "py312"
 # vendor/ 是 3O 内核的 vendored 副本（上游有自己的 CI），不在本仓 lint 范围。
-exclude = ["main.py", "test_engine.py", "mnt", ".venv", "vendor"]
+exclude = ["main.py", "test_engine.py", "mnt", ".venv", "vendor", "scratch"]
 
 [tool.ruff.lint.per-file-ignores]
 # scripts/ 是一次性数据管线脚本（抽取/合并/导入/审计），不进运行时主库。

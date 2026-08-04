@@ -136,9 +136,14 @@ async def ku_seed(db: AsyncSession):
     await db.commit()
 
 
-def _fsrs_card(overdue_days: int) -> dict:
-    """Create a FSRS card dict that is overdue by N days."""
-    due = datetime.now(timezone.utc) - timedelta(days=overdue_days)
+def _fsrs_card(overdue_days: int, *, now: datetime = _DAYTIME) -> dict:
+    """Create a FSRS card overdue by N days relative to plan `now`.
+
+    Must anchor to the same fixed clock as `build_daily_plan(..., now=_DAYTIME)`.
+    Using datetime.now() here makes due land *after* _DAYTIME once wall-clock
+    passes the fixture date — P1 review tasks silently vanish (due_compute False).
+    """
+    due = now - timedelta(days=overdue_days)
     return {
         "due": due.isoformat(),
         "stability": 1.0,
@@ -152,9 +157,9 @@ def _fsrs_card(overdue_days: int) -> dict:
     }
 
 
-def _fsrs_future_card(days_ahead: int) -> dict:
-    """Create a FSRS card dict that is NOT yet due."""
-    due = datetime.now(timezone.utc) + timedelta(days=days_ahead)
+def _fsrs_future_card(days_ahead: int, *, now: datetime = _DAYTIME) -> dict:
+    """Create a FSRS card that is NOT yet due relative to plan `now`."""
+    due = now + timedelta(days=days_ahead)
     return {
         "due": due.isoformat(),
         "stability": 10.0,
@@ -164,7 +169,7 @@ def _fsrs_future_card(days_ahead: int) -> dict:
         "reps": 3,
         "lapses": 0,
         "state": 2,
-        "last_review": datetime.now(timezone.utc).isoformat(),
+        "last_review": now.isoformat(),
     }
 
 

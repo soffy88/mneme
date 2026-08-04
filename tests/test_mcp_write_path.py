@@ -12,7 +12,7 @@ import pytest
 
 pytest.importorskip("mneme_core")
 
-from sqlalchemy import func, select  # noqa: E402
+from sqlalchemy import select  # noqa: E402
 
 from obase.db import SessionLocal  # noqa: E402
 from services import gate_store  # noqa: E402
