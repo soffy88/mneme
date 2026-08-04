@@ -19,12 +19,18 @@ frontend/dist/
 frontend/.env.local
 
 # EchoMimic V2 - large model files
-.echo/echomimic_repo/pretrained_weights/
-.echo/echomimic_repo/ffmpeg-4.4-amd64-static/
-.echo/echomimic_repo/outputs/
+.echo/echomimic_repo/
+.echo/server.log
+.echo/server.pid
 .echo/output/
 .echo/cache/
 .venv-echo/
+
+# Fay 大脑 vendored 运行时（含 ffmpeg/OVR 二进制，不入库）
+docker/fay/
+
+# scratch / 一次性探索
+scratch/
 
 # Added by code-review-graph
 .code-review-graph/

@@ -1,92 +1,94 @@
-from obase.provider_registry import ProviderRegistry
-from pydantic import BaseModel, Field
+import asyncio
+import json
+import os
+import re
+import shutil
+import uuid
+from contextlib import asynccontextmanager
+from datetime import UTC, date, datetime, timedelta
+from pathlib import Path
+from typing import Optional
+from uuid import UUID
+
 from fastapi import (
-    FastAPI,
+    Body,
     Depends,
-    HTTPException,
-    Query,
-    UploadFile,
+    FastAPI,
     File,
     Form,
-    Response,
+    HTTPException,
+    Query,
     Request,
-    Body,
+    Response,
+    UploadFile,
+    WebSocket,
 )
 from fastapi.responses import StreamingResponse
-from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy import func, select, update, or_, text
-from uuid import UUID
-import uuid
-from typing import Optional
-from datetime import datetime, date, timezone, timedelta
-from contextlib import asynccontextmanager
-from pathlib import Path
-import asyncio
-import shutil
-import os
-import json
-import re
-
-from obase.db import get_db, SessionLocal
-from services.logging_config import configure_logging, logger
+from obase.db import SessionLocal, get_db
 from obase.prior_provider import PriorProvider
+from obase.provider_registry import ProviderRegistry
+from omodul.auth import LoginInput, RegisterStudentInput, SendCodeInput
 from omodul.cognitive import InteractionInput
-from oprim.prereq_graph import topo_sort_by_prereq
-from oprim.chinese_track import chinese_track as _chinese_track
-from services.learner_model import MASTERED as _MASTERED
+from omodul.paper import PaperConfig, PaperUploadInput, upload_paper_workflow
 from oprim.calibration import brier_calibration
-from omodul.auth import SendCodeInput, RegisterStudentInput, LoginInput
-import services.auth_service as auth_service
-from services.sms import get_sms_provider
-from services.email import get_email_provider
-from omodul.paper import upload_paper_workflow, PaperConfig, PaperUploadInput
+from oprim.chinese_track import chinese_track as _chinese_track
+from oprim.prereq_graph import topo_sort_by_prereq
+from pydantic import BaseModel, Field
+from sqlalchemy import func, or_, select, text, update
+from sqlalchemy.ext.asyncio import AsyncSession
+
+from data.guangdong_math_kc import KC_LIST, get_kc
+from services import auth_service
+from services.alert_service import get_student_alerts, run_alert_checks
+
+# ===== §8 认证依赖 =====
+# 单源：定义在 services/auth_deps.py，此处 re-export 供本模块 Depends() 与既有
+# `from services.main import get_current_user` 等调用点继续沿用（对象同一，
+# 依赖覆盖 dependency_overrides 仍生效）。/mcp router 也从 auth_deps 直接 import。
+from services.auth_deps import (
+    _ensure_student_access,
+    _ensure_student_self,
+    get_current_user,
+    require_student_access,
+)
 from services.cognitive_service import (
     mastery_overview,
     process_interaction,
     review_queue,
 )
-from services.alert_service import get_student_alerts, run_alert_checks
+from services.email import get_email_provider
+from services.learner_model import MASTERED as _MASTERED
+from services.logging_config import configure_logging, logger
 from services.mission_service import complete_mission, get_or_create_mission
+from services.models import (
+    DailyMission,
+    EffortfulGain,
+    EvaluationRun,
+    Highlight,
+    InteractionEvent,
+    KCMastery,
+    KnowledgeCluster,
+    KnowledgeUnit,
+    MasterySnapshot,
+    Paper,
+    ParentStudent,
+    ReadingNote,
+    SocraticSession,
+    Textbook,
+    TextbookFile,
+    User,
+    UserRole,
+    WrongQuestion,
+)
+from services.seed import seed_bkt_priors
+from services.sms import get_sms_provider
 from services.socratic_service import (
     end_session,
     escape_session,
     socratic_message_stream,
     start_session,
 )
-from services.seed import seed_bkt_priors
-from services.models import (
-    DailyMission,
-    EffortfulGain,
-    EvaluationRun,
-    InteractionEvent,
-    KCMastery,
-    MasterySnapshot,
-    Paper,
-    ParentStudent,
-    SocraticSession,
-    User,
-    UserRole,
-    WrongQuestion,
-    TextbookFile,
-    Highlight,
-    ReadingNote,
-    Textbook,
-    KnowledgeCluster,
-    KnowledgeUnit,
-)
-from services.storage import upload_file, download_file, content_type_for
-from data.guangdong_math_kc import KC_LIST, get_kc
-
-# ===== §8 认证依赖 =====
-# 单源：定义在 services/auth_deps.py，此处 re-export 供本模块 Depends() 与既有
-# `from services.main import get_current_user` 等调用点继续沿用（对象同一，
-# 依赖覆盖 dependency_overrides 仍生效）。/mcp router 也从 auth_deps 直接 import。
-from services.auth_deps import (  # noqa: E402
-    _ensure_student_access,
-    _ensure_student_self,
-    get_current_user,
-    require_student_access,
-)
+from services.storage import content_type_for, download_file, upload_file
 
 
 async def _ensure_session_owner(
@@ -111,6 +113,7 @@ def _assert_prod_safety() -> None:
     真实验证通道 = aliyun 短信 或 SMTP 邮箱（二选一即可，注册已转邮箱）。
     demo/dev 环境放行（mock 是无验证通道时的演示机制）。"""
     import os as _os
+
     from obase.config import settings as _s
 
     if _os.environ.get("MNEME_ENV", "dev").lower() != "prod":
@@ -150,9 +153,9 @@ async def lifespan(app: FastAPI):
 
     # Initialize obase infrastructure tables
     from obase.config import settings
-    from obase.persistence.pool import PgPool
     from obase.error_tag_store import ensure_error_tag_table
     from obase.interaction_history import ensure_interaction_history_table
+    from obase.persistence.pool import PgPool
 
     dsn = settings.DATABASE_URL.replace("+asyncpg", "")
     pool = await PgPool.get_or_create(dsn=dsn)
@@ -375,6 +378,7 @@ async def post_login(payload: LoginInput, db: AsyncSession = Depends(get_db)):
 # ===== §8b 邮箱注册/登录（新主标识；手机号端点完整保留向后兼容）=====
 
 import re as _re_email
+
 from pydantic import field_validator
 
 # 轻量邮箱格式校验（不引 email-validator 依赖，避免重建镜像/改 Master）。
@@ -401,14 +405,14 @@ class RegisterStudentEmailReq(BaseModel):
     name: str
     birth_date: date
     grade: str
-    guardian_email: Optional[str] = None
+    guardian_email: str | None = None
     guardian_consent: bool = False
 
     _v = field_validator("email")(lambda cls, v: _validate_email(v))
 
     @field_validator("guardian_email")
     @classmethod
-    def _v_guardian(cls, v: Optional[str]) -> Optional[str]:
+    def _v_guardian(cls, v: str | None) -> str | None:
         return _validate_email(v) if v else v
 
 
@@ -629,7 +633,7 @@ async def post_mastery_gate_check(
 @app.get("/v1/mastery/{student_id}")
 async def get_mastery(
     student_id: UUID,
-    now: Optional[datetime] = None,
+    now: datetime | None = None,
     _auth: User = Depends(require_student_access),
     db: AsyncSession = Depends(get_db),
 ):
@@ -663,7 +667,7 @@ async def get_mastery(
 @app.get("/v1/review-queue/{student_id}")
 async def get_review_queue(
     student_id: UUID,
-    now: Optional[datetime] = None,
+    now: datetime | None = None,
     _auth: User = Depends(require_student_access),
     db: AsyncSession = Depends(get_db),
 ):
@@ -776,10 +780,10 @@ _MASTERY_RANK = {"red": 0, "yellow": 1, "unknown": 2, "green": 3}
 
 @app.get("/v1/knowledge-points")
 async def list_knowledge_points(
-    subject: Optional[str] = Query(None),
-    textbook_id: Optional[str] = Query(None),
-    cluster_id: Optional[str] = Query(None),
-    student_id: Optional[UUID] = Query(None),
+    subject: str | None = Query(None),
+    textbook_id: str | None = Query(None),
+    cluster_id: str | None = Query(None),
+    student_id: UUID | None = Query(None),
     sort: str = Query("chapter"),
     current_user: User = Depends(get_current_user),
     db: AsyncSession = Depends(get_db),
@@ -892,7 +896,7 @@ async def list_knowledge_points(
 @app.get("/v1/knowledge-points/{ku_id}")
 async def get_knowledge_point(
     ku_id: str,
-    student_id: Optional[UUID] = Query(None),
+    student_id: UUID | None = Query(None),
     low_bandwidth: bool = Query(
         False, description="U.23：跳过 rich_content（讲透内容，通常最大的字段）"
     ),
@@ -1088,8 +1092,8 @@ async def get_paper(
 @app.get("/v1/papers")
 async def list_papers(
     student_id: UUID = Query(...),
-    from_date: Optional[date] = Query(None),
-    to_date: Optional[date] = Query(None),
+    from_date: date | None = Query(None),
+    to_date: date | None = Query(None),
     _auth: User = Depends(require_student_access),
     db: AsyncSession = Depends(get_db),
 ):
@@ -1211,8 +1215,8 @@ async def post_complete_mission(
 @app.get("/v1/daily-plan/{student_id}")
 async def get_daily_plan(
     student_id: UUID,
-    subject: Optional[str] = Query(None),
-    budget_minutes: Optional[int] = Query(
+    subject: str | None = Query(None),
+    budget_minutes: int | None = Query(
         None, description="U.20 会话预算：不传则不裁剪（保持既有行为）"
     ),
     _auth: User = Depends(require_student_access),
@@ -1318,7 +1322,7 @@ async def get_weekly_digest(
 @app.get("/v1/parent/report/{student_id}")
 async def get_parent_report(
     student_id: UUID,
-    date: Optional[date] = Query(None),
+    date: date | None = Query(None),
     _auth: User = Depends(require_student_access),
     db: AsyncSession = Depends(get_db),
 ):
@@ -1429,9 +1433,9 @@ async def get_teaching_policy(
     情境 context: system_taught(系统同构新知) / own_homework(自带原题) / writing(写作) / stuck(卡壳)。
     前端据此决定"给完整样例"还是"苏格拉底提问"。红线：own_homework/writing 恒不给。
     教学引擎 feature-flag(TEACHING_ENGINE_ENABLED) 关闭时保守回退 never。"""
-    import os as _os
 
     from oprim.answer_policy import answer_policy
+
     from services.learner_model import get_mastery, get_stage
 
     m = await get_mastery(db, student_id, ku_id)
@@ -1465,6 +1469,7 @@ async def post_placement_estimate(
     """L3 自适应定位：从一批 (难度, 对错) 响应估学生能力 θ(Rasch)+ SE + ZPD 难度带 +
     建议下一题难度。冷启动/入学定位用；θ 也可喂 learner_model.get_zpd_band。纯计算不落库。"""
     from oprim.ability import estimate_ability, next_item_difficulty
+
     from services.learner_model import get_zpd_band
 
     est = estimate_ability([(r.difficulty, r.is_correct) for r in body.responses])
@@ -1508,7 +1513,7 @@ async def post_placement_next(
 @app.get("/v1/misconception/{ku_id}")
 async def get_misconception(
     ku_id: str,
-    distractor: Optional[str] = Query(None),
+    distractor: str | None = Query(None),
     _auth: User = Depends(get_current_user),
     db: AsyncSession = Depends(get_db),
 ):
@@ -1711,7 +1716,7 @@ async def post_solve(
 # ===== §H.2 讲解页 =====
 
 
-def _trim_plot_data(plot_data: Optional[dict], low_bandwidth: bool) -> Optional[dict]:
+def _trim_plot_data(plot_data: dict | None, low_bandwidth: bool) -> dict | None:
     """U.23 低带宽模式：去掉 svg（通常最大的字段），保留 steps 等文本内容。"""
     if not low_bandwidth or not plot_data:
         return plot_data
@@ -1750,12 +1755,13 @@ async def get_lesson(
         }
     if not wq:
         raise HTTPException(status_code=404, detail="Question not found")
+    import hashlib as _hashlib
+
     from omodul.generate_lesson_page import (
         LessonPageConfig,
         LessonPageInput,
         generate_lesson_page,
     )
-    import hashlib as _hashlib
 
     kc_id = (
         next(iter(wq.knowledge_points.keys()), "")
@@ -1813,10 +1819,10 @@ async def get_lesson(
 
 @app.get("/v1/question-bank")
 async def list_question_bank(
-    subject: Optional[str] = Query(None),
-    needs_image: Optional[bool] = Query(None),
-    ku_id: Optional[str] = Query(None),
-    student_id: Optional[UUID] = Query(None),
+    subject: str | None = Query(None),
+    needs_image: bool | None = Query(None),
+    ku_id: str | None = Query(None),
+    student_id: UUID | None = Query(None),
     limit: int = Query(50, le=200),
     offset: int = Query(0),
     db: AsyncSession = Depends(get_db),
@@ -1888,7 +1894,7 @@ async def post_practice_generate(
     count: int = Query(3),
     difficulty: float = Query(0.5),
     question_type: str = Query("solve"),
-    student_id: Optional[UUID] = Query(None),
+    student_id: UUID | None = Query(None),
     current_user: User = Depends(get_current_user),
     db: AsyncSession = Depends(get_db),
 ):
@@ -1994,7 +2000,7 @@ async def get_achievements(
     db: AsyncSession = Depends(get_db),
 ):
     """学生成就/徽章（从真实数据算）——驱动"愿意用"的动机钩子。多档位，含下一档进度。"""
-    now = datetime.now(timezone.utc)
+    now = datetime.now(UTC)
     rows = (
         await db.execute(
             select(InteractionEvent.occurred_at).where(
@@ -2202,7 +2208,7 @@ async def get_learner_model(
 
 
 class ExamDateReq(BaseModel):
-    exam_date: Optional[date] = None  # None 清除
+    exam_date: date | None = None  # None 清除
 
 
 @app.post("/v1/users/{student_id}/exam-date")
@@ -2259,10 +2265,10 @@ from services.accessibility_service import (
 
 
 class AccessibilityPrefsReq(BaseModel):
-    font_size: Optional[str] = None
-    line_height: Optional[str] = None
-    color_scheme: Optional[str] = None
-    low_bandwidth: Optional[bool] = None
+    font_size: str | None = None
+    line_height: str | None = None
+    color_scheme: str | None = None
+    low_bandwidth: bool | None = None
 
 
 @app.get("/v1/users/{student_id}/accessibility")
@@ -2302,11 +2308,11 @@ from services.daily_plan_prefs_service import (
 
 
 class DailyPlanPrefsReq(BaseModel):
-    budget_minutes: Optional[int] = None
-    late_night_hour: Optional[int] = None
-    late_night_minute: Optional[int] = None
-    weak_max_items: Optional[int] = None
-    new_max_items: Optional[int] = None
+    budget_minutes: int | None = None
+    late_night_hour: int | None = None
+    late_night_minute: int | None = None
+    weak_max_items: int | None = None
+    new_max_items: int | None = None
 
 
 @app.get("/v1/users/{student_id}/daily-plan-prefs")
@@ -2323,11 +2329,17 @@ async def get_user_daily_plan_prefs(
 
 # ===== 康奈尔笔记进度云同步（Phase C；自报进度 ≠ BKT） =====
 
-from services.cornell_merge import CornellMergeError  # noqa: E402
-from services.cornell_service import (  # noqa: E402
+from services.cornell_merge import CornellMergeError
+from services.cornell_service import (
     delete_progress as cornell_delete_progress,
+)
+from services.cornell_service import (
     get_progress as cornell_get_progress,
+)
+from services.cornell_service import (
     list_progress as cornell_list_progress,
+)
+from services.cornell_service import (
     put_progress as cornell_put_progress,
 )
 
@@ -2424,10 +2436,10 @@ from services.textbook_bindings_service import (
 
 
 class TextbookBindingsReq(BaseModel):
-    math: Optional[str] = None
-    physics: Optional[str] = None
-    chinese: Optional[str] = None
-    english: Optional[str] = None
+    math: str | None = None
+    physics: str | None = None
+    chinese: str | None = None
+    english: str | None = None
 
 
 @app.get("/v1/users/{student_id}/textbook-bindings")
@@ -2566,18 +2578,18 @@ class PracticeSubmitReq(BaseModel):
     question_id: UUID  # 公共题库行（student_id IS NULL）
     student_id: UUID
     student_answer: str = ""
-    is_correct: Optional[bool] = (
+    is_correct: bool | None = (
         None  # None=先让后端自动判；自由作答判不了时再带自评二次提交
     )
     ku_id: str  # 对应知识单元 ID
     interleaved: bool = False  # 该题是否来自交错(混合KC)复习；True 才训练识别维度 p_recognition (M-G §4.5)
-    predicted_confidence: Optional[float] = Field(
+    predicted_confidence: float | None = Field(
         default=None, ge=0.0, le=1.0
     )  # JOL：作答前自评把握，供校准(努力错觉)分析
-    self_explanation: Optional[str] = Field(
+    self_explanation: str | None = Field(
         default=None, max_length=2000
     )  # 自我解释(Chi 效应,教育理念 04)：学生"为什么这么做"，纯采集
-    student_steps: Optional[list[str]] = Field(
+    student_steps: list[str] | None = Field(
         default=None
     )  # 解题步骤(教育理念 07·刻意练习)：答错时确定性定位首个错步
 
@@ -2633,7 +2645,7 @@ async def post_practice_submit(
         }
 
     # 3. 答错则写学生错题记录
-    student_wq_id: Optional[UUID] = None
+    student_wq_id: UUID | None = None
     if not is_correct:
         student_wq = WrongQuestion(
             id=uuid.uuid4(),
@@ -2890,7 +2902,7 @@ async def post_delete_request(
     ).scalar_one_or_none()
     if not user:
         raise HTTPException(status_code=404, detail="Student not found")
-    now = datetime.now(timezone.utc)
+    now = datetime.now(UTC)
     await db.execute(update(User).where(User.id == student_id).values(deleted_at=now))
     await db.commit()
     return {"ok": True, "deleted_at": now.isoformat(), "student_id": str(student_id)}
@@ -2940,7 +2952,7 @@ async def post_run_alert_checks(
 @app.post("/v1/papers/quick")
 async def post_quick_question(
     student_id: UUID = Query(...),
-    kc_hint: Optional[str] = Query(None),
+    kc_hint: str | None = Query(None),
     file: UploadFile = File(...),
     _auth: User = Depends(require_student_access),
     db: AsyncSession = Depends(get_db),
@@ -3000,9 +3012,11 @@ async def health_providers():
 
 # ===== Aria 数字人 Director（NIM 指挥层语义；不渲染 3D）=====
 
-from services.aria_director import (  # noqa: E402
+from services.aria_director import (
     AriaDirectorInput,
     AriaDirectorState,
+)
+from services.aria_director import (
     direct as aria_direct,
 )
 
@@ -3010,9 +3024,9 @@ from services.aria_director import (  # noqa: E402
 class AriaActReq(BaseModel):
     student_id: UUID
     event: str = "tick"  # tick | wake | user_message
-    message: Optional[str] = None
+    message: str | None = None
     history: list[dict] = []
-    state: Optional[dict] = None
+    state: dict | None = None
 
 
 @app.post("/v1/aria/act")
@@ -3074,7 +3088,7 @@ class AriaPerceptionReq(BaseModel):
     student_id: UUID
     room_key: str = "default"
     text_description: str = ""
-    image_b64: Optional[str] = None
+    image_b64: str | None = None
     hint: str = ""
 
 
@@ -3147,7 +3161,7 @@ class AriaLipsyncReq(BaseModel):
     student_id: UUID
     text: str
     emotion: str = "warm"
-    still_hint: Optional[str] = None
+    still_hint: str | None = None
 
 
 @app.post("/v1/aria/lipsync")
@@ -3160,7 +3174,8 @@ async def post_aria_lipsync(
     有 ARIA_LIPSYNC_BASE_URL 时转发 GPU 侧车；否则 viseme_css。
     不写掌握度。仅学生本人。
     """
-    from services.aria_media import LipsyncInput, lipsync as aria_lipsync
+    from services.aria_media import LipsyncInput
+    from services.aria_media import lipsync as aria_lipsync
 
     _ensure_student_self(current_user, body.student_id)
     if not (body.text or "").strip():
@@ -3186,7 +3201,7 @@ async def get_aria_media_plan(action: str = "play_piano"):
 class AriaTtsReq(BaseModel):
     student_id: UUID
     text: str
-    voice: Optional[str] = None
+    voice: str | None = None
 
 
 @app.post("/v1/aria/tts")
@@ -3210,13 +3225,96 @@ async def post_aria_tts(
     return out.model_dump()
 
 
+# ── Phase 3: Aria Brain WebSocket ────────────────────────────────────────────
+
+
+@app.websocket("/v1/aria/ws")
+async def aria_brain_ws(websocket: WebSocket):
+    """WebSocket: Aria 自主行为大脑。
+
+    前端连接后，Brain 自主推送行为指令（action/utterance/emotion）。
+    前端发送事件（user_spoke/user_entered/action_done）驱动交互。
+
+    协议：
+      前端 → 后端: {"type": "event", "kind": "user_spoke", "text": "..."}
+      后端 → 前端: {"action": "play_piano", "utterance": "...", "emotion": "...", "hold_ms": 3000}
+    """
+    from services.aria_brain import AriaBrain
+
+    await websocket.accept()
+
+    # Auth: first message must be {"type": "auth", "token": "..."}
+    try:
+        raw = await asyncio.wait_for(websocket.receive_text(), timeout=10)
+        msg = json.loads(raw)
+        if msg.get("type") != "auth":
+            await websocket.send_json({"error": "auth_required"})
+            await websocket.close()
+            return
+        token = msg.get("token", "")
+        user = await _resolve_token(token)
+        if not user:
+            await websocket.send_json({"error": "invalid_token"})
+            await websocket.close()
+            return
+    except (TimeoutError, json.JSONDecodeError):
+        await websocket.close()
+        return
+
+    student_id = str(user.id)
+
+    async def send_fn(cmd: dict) -> None:
+        try:
+            await websocket.send_json(cmd)
+        except Exception:
+            pass
+
+    brain = AriaBrain(student_id=student_id, send_fn=send_fn)
+    await brain.start()
+    await websocket.send_json({"type": "connected", "student_id": student_id})
+
+    try:
+        while True:
+            raw = await websocket.receive_text()
+            try:
+                msg = json.loads(raw)
+            except json.JSONDecodeError:
+                continue
+            kind = msg.get("kind", msg.get("type", ""))
+            text = msg.get("text", msg.get("message", ""))
+            if kind:
+                await brain.push_event(kind, text)
+    except Exception:
+        pass
+    finally:
+        await brain.stop()
+
+
+async def _resolve_token(token: str) -> Optional["User"]:
+    """Resolve a JWT token to a User (for WebSocket auth)."""
+    from obase.auth import decode_access_token
+
+    try:
+        payload = decode_access_token(token)
+        if not payload:
+            return None
+        uid = payload.get("sub")
+        if not uid:
+            return None
+        async with SessionLocal() as session:
+            result = await session.execute(select(User).where(User.id == UUID(uid)))
+            return result.scalar_one_or_none()
+    except Exception:
+        return None
+
+
 # ── P3: EchoMimic Drive ──────────────────────────────────────────────────────
 
 
 class AriaEchoDriveReq(BaseModel):
     student_id: UUID
     audio_b64: str
-    hand_pose: Optional[dict] = None
+    hand_pose: dict | None = None
     emotion: str = "neutral"
     action: str = "play_piano"
 
@@ -3247,16 +3345,42 @@ async def post_aria_echo_drive(
     return out.model_dump()
 
 
+# ── P3: 预烘焙 EchoMimic 缓存视频 ─────────────────────────────────────────────
+
+
+@app.get("/v1/aria/echo-cache/{filename}")
+async def get_aria_echo_cache(filename: str):
+    """GET /v1/aria/echo-cache/{filename} — 提供预烘焙 EchoMimic 视频（可匿名）。
+
+    用于首页 Aria 数字人 idle 循环视频。路径仅允许 .mp4 文件。
+    """
+    from pathlib import Path as _Path
+
+    from fastapi.responses import FileResponse
+
+    if not filename.endswith(".mp4"):
+        raise HTTPException(status_code=400, detail="only .mp4 files")
+    cache_dir = _Path(__file__).resolve().parent.parent / ".echo" / "cache"
+    fpath = cache_dir / filename
+    if not fpath.is_file():
+        raise HTTPException(status_code=404, detail="not found")
+    return FileResponse(
+        str(fpath),
+        media_type="video/mp4",
+        headers={"Cache-Control": "public, max-age=3600"},
+    )
+
+
 # ===== §Instant Solve =====
 
-from fastapi import Form
-from services.instant_solve_service import handle_instant_solve, get_pg_pool
 import base64
+
+from services.instant_solve_service import get_pg_pool, handle_instant_solve
 
 
 @app.post("/v1/instant-solve")
 async def post_instant_solve(
-    kc_hint: Optional[str] = Form(None),
+    kc_hint: str | None = Form(None),
     image: UploadFile = File(...),
     current_user: User = Depends(get_current_user),
 ):
@@ -3418,15 +3542,14 @@ async def post_quiz_submit(
 # ===== §Error Journal =====
 
 from obase.error_tag_store import get_error_distribution
-from services.cognitive_service import PgStore
 
 
 @app.get("/v1/error-journal/{student_id}")
 async def get_error_journal(
     student_id: UUID,
-    ku_id: Optional[str] = Query(None),
-    error_type: Optional[str] = Query(None),
-    subject: Optional[str] = Query(None),
+    ku_id: str | None = Query(None),
+    error_type: str | None = Query(None),
+    subject: str | None = Query(None),
     limit: int = Query(20),
     offset: int = Query(0),
     db: AsyncSession = Depends(get_db),
@@ -3515,7 +3638,7 @@ async def get_error_journal(
 
 # ===== §Essay Guide =====
 
-from oskill import essay_guide, EssayGuideInput
+from oskill import EssayGuideInput, essay_guide
 
 
 class EssayGuideRequest(BaseModel):
@@ -3553,16 +3676,15 @@ async def post_essay_guide(
 
 # ===== §English Speaking Practice =====
 
-from services.speaking_service import handle_speaking_practice
-from services.instant_solve_service import get_pg_pool
 from services.models import SpeakingSession
+from services.speaking_service import handle_speaking_practice
 
 
 class SpeakingPracticeRequest(BaseModel):
     topic: str
     target_sentences: str
     grade: str
-    ku_id: Optional[str] = None  # T.10：从知识点入口进入时传，供归因更新掌握度
+    ku_id: str | None = None  # T.10：从知识点入口进入时传，供归因更新掌握度
 
 
 @app.post("/v1/speaking/practice")
@@ -3639,16 +3761,16 @@ async def get_speaking_history(
 # ===== §M.4 受力分析引导（物理）=====
 
 from services.physics_service import (
-    start_force_analysis,
-    force_analysis_message_stream,
     end_force_analysis_session,
+    force_analysis_message_stream,
+    start_force_analysis,
 )
 
 
 @app.post("/v1/physics/force-analysis/start")
 async def post_force_analysis_start(
     question_text: str = Query(...),
-    ku_id: Optional[str] = Query(
+    ku_id: str | None = Query(
         None, description="T.10：从知识点入口进入时传，供结束时归因更新掌握度"
     ),
     current_user: User = Depends(get_current_user),
@@ -3749,9 +3871,9 @@ async def post_concept_diagnosis_submit(
 # ===== §M.5 阅读理解引导（英语/语文）=====
 
 from services.reading_guide_service import (
-    start_reading_guide,
-    reading_guide_message_stream,
     end_reading_guide_session,
+    reading_guide_message_stream,
+    start_reading_guide,
 )
 
 
@@ -3759,7 +3881,7 @@ class ReadingGuideStartReq(BaseModel):
     article_text: str
     question: str
     subject: str = "chinese"
-    ku_id: Optional[str] = None  # T.10：从知识点入口进入时传
+    ku_id: str | None = None  # T.10：从知识点入口进入时传
 
 
 @app.post("/v1/reading/guide/start")
@@ -3819,8 +3941,8 @@ async def post_reading_guide_end(
 
 # ===== §M.5b 英语习得型范式：词汇 FSRS + 分级泛读（U.19）=====
 
-from services.vocab_service import get_due_vocab_reviews, submit_vocab_review
 from services.graded_reading_service import select_graded_passage
+from services.vocab_service import get_due_vocab_reviews, submit_vocab_review
 
 
 @app.get("/v1/vocab/due")
@@ -3877,6 +3999,8 @@ async def get_graded_passage(
 
 # ===== §教材阅读器 — 文件/高亮/笔记 =====
 
+MAX_UPLOAD_BYTES = 50 * 1024 * 1024  # 上传大小上限：50MB（C3 限流）
+
 
 def _new_file_id() -> str:
     return str(uuid.uuid4())
@@ -3892,7 +4016,7 @@ def _new_str_id() -> str:
 @app.post("/v1/textbook-files/upload", status_code=201)
 async def upload_textbook_file(
     file: UploadFile = File(...),
-    textbook_id: Optional[str] = Form(None),
+    textbook_id: str | None = Form(None),
     current_user: User = Depends(get_current_user),
     db: AsyncSession = Depends(get_db),
 ):
@@ -3907,9 +4031,17 @@ async def upload_textbook_file(
         raise HTTPException(status_code=400, detail="仅支持 PDF 或 EPUB 文件")
 
     data = await file.read()
+    if len(data) > MAX_UPLOAD_BYTES:
+        raise HTTPException(
+            status_code=413,
+            detail=f"文件过大（上限 {MAX_UPLOAD_BYTES // (1024 * 1024)}MB）",
+        )
     file_id = _new_file_id()
-    # 平台预置：textbook_id 有值、owner 为空；学生自传：owner 有值
-    is_platform = textbook_id is not None and current_user.role == UserRole.parent
+    # 平台预置：textbook_id 有值且当前用户是 ADMIN_USER_IDS 白名单内 admin；
+    #   学生自传：owner 有值。非 admin 传 textbook_id 视为自传（防越权注平台库）。
+    from obase.admin_identity import is_admin
+
+    is_platform = textbook_id is not None and is_admin(current_user)
     owner_id = None if is_platform else current_user.id
     storage_path = (
         f"{'platform' if is_platform else str(current_user.id)}/{file_id}.{ext}"
@@ -3984,7 +4116,7 @@ async def get_textbook_file_meta(
 
 @app.get("/v1/textbook-files")
 async def list_textbook_files(
-    textbook_id: Optional[str] = Query(None),
+    textbook_id: str | None = Query(None),
     current_user: User = Depends(get_current_user),
     db: AsyncSession = Depends(get_db),
 ):
@@ -3999,7 +4131,7 @@ async def list_textbook_files(
             .where(
                 or_(
                     (TextbookFile.textbook_id == textbook_id)
-                    & (TextbookFile.owner_student_id == None),  # noqa: E711
+                    & (TextbookFile.owner_student_id == None),
                     (TextbookFile.textbook_id == textbook_id)
                     & (TextbookFile.owner_student_id == current_user.id),
                 )
@@ -4070,7 +4202,7 @@ async def list_library_textbooks(
         select(TextbookFile, Textbook)
         .join(Textbook, TextbookFile.textbook_id == Textbook.id)
         .where(
-            TextbookFile.owner_student_id == None,  # noqa: E711
+            TextbookFile.owner_student_id == None,
             ~Textbook.id.like("tb-lp-%"),
             Textbook.book_name != "练习教材",
         )
@@ -4155,13 +4287,13 @@ class HighlightCreate(BaseModel):
     file_id: str
     color: str = "yellow"
     text: str
-    note: Optional[str] = None
+    note: str | None = None
     location_json: dict = {}
 
 
 class HighlightPatch(BaseModel):
-    color: Optional[str] = None
-    note: Optional[str] = None
+    color: str | None = None
+    note: str | None = None
 
 
 @app.post("/v1/highlights", status_code=201)
@@ -4201,7 +4333,7 @@ async def create_highlight(
 
 @app.get("/v1/highlights")
 async def list_highlights(
-    file_id: Optional[str] = Query(None),
+    file_id: str | None = Query(None),
     current_user: User = Depends(get_current_user),
     db: AsyncSession = Depends(get_db),
 ):
@@ -4234,7 +4366,7 @@ async def patch_highlight(
         hl.color = body.color
     if body.note is not None:
         hl.note = body.note
-    hl.updated_at = datetime.now(timezone.utc)
+    hl.updated_at = datetime.now(UTC)
     await db.commit()
     await db.refresh(hl)
     return _hl_dict(hl)
@@ -4283,15 +4415,15 @@ def _hl_dict(hl: Highlight) -> dict:
 
 
 class ReadingNoteCreate(BaseModel):
-    file_id: Optional[str] = None
-    title: Optional[str] = None
-    content: Optional[str] = None
-    highlight_id: Optional[str] = None
+    file_id: str | None = None
+    title: str | None = None
+    content: str | None = None
+    highlight_id: str | None = None
 
 
 class ReadingNotePatch(BaseModel):
-    title: Optional[str] = None
-    content: Optional[str] = None
+    title: str | None = None
+    content: str | None = None
 
 
 @app.post("/v1/reading-notes", status_code=201)
@@ -4328,13 +4460,13 @@ async def create_reading_note(
 
 @app.get("/v1/reading-notes")
 async def list_reading_notes(
-    file_id: Optional[str] = Query(None),
+    file_id: str | None = Query(None),
     current_user: User = Depends(get_current_user),
     db: AsyncSession = Depends(get_db),
 ):
     stmt = select(ReadingNote).where(
         ReadingNote.student_id == current_user.id,
-        ReadingNote.deleted_at == None,  # noqa: E711
+        ReadingNote.deleted_at == None,
     )
     if file_id:
         stmt = stmt.where(ReadingNote.file_id == file_id)
@@ -4355,7 +4487,7 @@ async def patch_reading_note(
             select(ReadingNote).where(
                 ReadingNote.id == note_id,
                 ReadingNote.student_id == current_user.id,
-                ReadingNote.deleted_at == None,  # noqa: E711
+                ReadingNote.deleted_at == None,
             )
         )
     ).scalar_one_or_none()
@@ -4366,7 +4498,7 @@ async def patch_reading_note(
         rn.title = body.title
     if body.content is not None:
         rn.content = body.content
-    rn.updated_at = datetime.now(timezone.utc)
+    rn.updated_at = datetime.now(UTC)
     await db.commit()
     await db.refresh(rn)
     return _rn_dict(rn)
@@ -4383,13 +4515,13 @@ async def delete_reading_note(
             select(ReadingNote).where(
                 ReadingNote.id == note_id,
                 ReadingNote.student_id == current_user.id,
-                ReadingNote.deleted_at == None,  # noqa: E711
+                ReadingNote.deleted_at == None,
             )
         )
     ).scalar_one_or_none()
     if not rn:
         raise HTTPException(status_code=404, detail="笔记不存在")
-    rn.deleted_at = datetime.now(timezone.utc)
+    rn.deleted_at = datetime.now(UTC)
     await db.commit()
 
 
@@ -4413,7 +4545,6 @@ from services.textbook_qa_service import (
     start_textbook_qa_session,
     textbook_qa_stream,
 )
-from fastapi.responses import StreamingResponse
 
 
 @app.post("/v1/textbook-kb/index/{file_id}")
@@ -4430,7 +4561,6 @@ async def index_textbook_for_rag(
         raise HTTPException(status_code=404, detail="文件不存在")
 
     # 获取源文件
-    from services.storage import get_file
 
     storage_prefix = os.environ.get("STORAGE_LOCAL_DIR", "/tmp/mneme_storage")
     file_path = os.path.join(storage_prefix, tf.storage_path)

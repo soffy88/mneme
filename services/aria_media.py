@@ -11,8 +11,6 @@ from __future__ import annotations
 
 import base64
 import os
-import tempfile
-from pathlib import Path
 from typing import Any, Literal
 
 import httpx
@@ -61,6 +59,14 @@ class TtsInput(BaseModel):
     voice: str | None = None
 
 
+class VisemeCue(BaseModel):
+    """Single viseme cue: mouth shape at a point in time."""
+
+    t: float = Field(..., description="offset in seconds from audio start")
+    d: float = Field(..., description="duration in seconds")
+    v: str = Field(..., description="viseme id: aa|ih|ou|ee|oh|sil")
+
+
 class TtsOutput(BaseModel):
     ok: bool = True
     audio_b64: str | None = None
@@ -68,6 +74,7 @@ class TtsOutput(BaseModel):
     backend: str = "none"
     voice: str | None = None
     note: str = ""
+    visemes: list[VisemeCue] = Field(default_factory=list)
 
 
 def _clip_mp4_url() -> str | None:
@@ -197,8 +204,57 @@ async def lipsync(inp: LipsyncInput) -> LipsyncOutput:
         )
 
 
+def _word_to_viseme(word: str) -> str:
+    """Heuristic English word → dominant VRM viseme (aa/ih/ou/ee/oh)."""
+    w = word.lower().strip(".,!?;:'\"-")
+    if not w:
+        return "sil"
+    # Check dominant vowel pattern
+    if any(c in w for c in "ou") and not any(c in w for c in "ei"):
+        return "ou"
+    if "oo" in w or w.endswith("u"):
+        return "ou"
+    if any(c in w for c in "ee") or w.endswith("e") or "i" in w:
+        return "ee"
+    if "a" in w:
+        return "aa"
+    return "ih"
+
+
+_TICKS_PER_SEC = 10_000_000  # edge-tts offsets are in 100ns ticks
+
+
+def _build_viseme_timeline(
+    boundaries: list[dict[str, Any]],
+) -> list[VisemeCue]:
+    """Convert edge-tts WordBoundary events to viseme cues.
+
+    Each word gets: onset (ih, 30ms) → vowel (viseme, word_dur-60ms) → offset (sil, 30ms).
+    Offsets from edge-tts are in 100-nanosecond ticks; we convert to seconds.
+    """
+    cues: list[VisemeCue] = []
+    for wb in boundaries:
+        offset = float(wb.get("offset", 0)) / _TICKS_PER_SEC
+        dur = float(wb.get("duration", 1_000_000)) / _TICKS_PER_SEC
+        text = str(wb.get("text", ""))
+        vis = _word_to_viseme(text)
+        # onset: brief closed→open transition
+        onset_d = min(0.03, dur * 0.2)
+        cues.append(VisemeCue(t=round(offset, 4), d=round(onset_d, 4), v="ih"))
+        # main vowel shape
+        main_d = max(0.02, dur - 0.06)
+        cues.append(VisemeCue(t=round(offset + onset_d, 4), d=round(main_d, 4), v=vis))
+        # offset: brief closure
+        cues.append(VisemeCue(t=round(offset + dur - 0.03, 4), d=0.03, v="sil"))
+    return cues
+
+
 async def synthesize_tts(inp: TtsInput) -> TtsOutput:
-    """英文 TTS：edge-tts AriaNeural；不可用则 ok=false 前端 Web Speech。"""
+    """英文 TTS：edge-tts AriaNeural streaming + viseme timeline。
+
+    使用 stream() 收集音频分片和 WordBoundary 事件，
+    返回 audio_b64 + visemes（前端驱动 VRM 口型 blendshape）。
+    """
     text = inp.text.strip()
     voice = (inp.voice or os.environ.get("ARIA_TTS_VOICE") or "en-US-AriaNeural").strip()
     try:
@@ -210,22 +266,36 @@ async def synthesize_tts(inp: TtsInput) -> TtsOutput:
             note="pip install edge-tts; frontend will use Web Speech",
         )
 
-    tmp: str | None = None
     try:
-        fd, tmp = tempfile.mkstemp(suffix=".mp3")
-        os.close(fd)
-        communicate = edge_tts.Communicate(text, voice, rate="-5%")
-        await communicate.save(tmp)
-        raw = Path(tmp).read_bytes()
+        communicate = edge_tts.Communicate(
+            text, voice, rate="-5%", boundary="WordBoundary"
+        )
+        audio_chunks: list[bytes] = []
+        boundaries: list[dict[str, Any]] = []
+
+        async for chunk in communicate.stream():
+            if chunk["type"] == "audio":
+                audio_chunks.append(chunk["data"])
+            elif chunk["type"] == "WordBoundary":
+                boundaries.append({
+                    "offset": chunk.get("offset", 0),
+                    "duration": chunk.get("duration", 0.1),
+                    "text": chunk.get("text", ""),
+                })
+
+        raw = b"".join(audio_chunks)
         if len(raw) < 64:
             return TtsOutput(ok=False, backend="edge_tts_empty", note="empty audio")
+
+        visemes = _build_viseme_timeline(boundaries)
         return TtsOutput(
             ok=True,
             audio_b64=base64.b64encode(raw).decode("ascii"),
             mime="audio/mpeg",
             backend="edge_tts",
             voice=voice,
-            note="Microsoft Edge Read Aloud (en-US Aria)",
+            visemes=visemes,
+            note=f"edge-tts stream + {len(visemes)} viseme cues",
         )
     except Exception as e:  # noqa: BLE001
         return TtsOutput(
@@ -234,17 +304,9 @@ async def synthesize_tts(inp: TtsInput) -> TtsOutput:
             voice=voice,
             note=f"{type(e).__name__}: {e}",
         )
-    finally:
-        if tmp:
-            try:
-                os.unlink(tmp)
-            except OSError:
-                pass
 
 
 def runtime_features() -> dict[str, Any]:
-    lip = bool((os.environ.get("ARIA_LIPSYNC_BASE_URL") or "").strip())
-    nim = bool((os.environ.get("ARIA_NIM_BASE_URL") or "").strip())
     echo = bool((os.environ.get("ECHO_BASE_URL") or "").strip())
     try:
         import edge_tts  # noqa: F401
@@ -254,19 +316,9 @@ def runtime_features() -> dict[str, Any]:
         tts_ok = False
     return {
         "director": True,
-        "cinema_layer": True,
-        "gsap_keys": True,
-        "clip_pool": True,
-        "lipsync_viseme": True,
-        "lipsync_gpu": lip,
-        "tts_edge": tts_ok,
-        "audio2face": nim,
         "autonomous_tick": True,
-        # P1
+        "tts_edge": tts_ok,
         "perception": True,
-        # P2
-        "hand_choreo": True,
-        # P3
         "echo_drive": echo,
         "echo_degrade_to_p2": True,
     }
