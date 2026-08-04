@@ -4,10 +4,11 @@ services:
     restart: always
     environment:
       POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?需在 .env 设置 POSTGRES_PASSWORD}
       POSTGRES_DB: mneme
     ports:
-      - "5433:5432"
+      # C4：仅本机可连，不暴露公网（生产在 127.0.0.1 上经 api 容器走内部网络）
+      - "127.0.0.1:5433:5432"
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U postgres"]
       interval: 5s
@@ -22,7 +23,7 @@ services:
     # 开启 AOF 持久化，重启不丢队列/验证码/缓存
     command: redis-server --appendonly yes
     ports:
-      - "6380:6379"
+      - "127.0.0.1:6380:6379"
     healthcheck:
       test: ["CMD", "redis-cli", "ping"]
       interval: 5s
@@ -35,11 +36,11 @@ services:
     image: minio/minio
     restart: always
     ports:
-      - "9002:9000"
-      - "9003:9001"
+      - "127.0.0.1:9002:9000"
+      - "127.0.0.1:9003:9001"
     environment:
-      MINIO_ROOT_USER: minioadmin
-      MINIO_ROOT_PASSWORD: minioadmin
+      MINIO_ROOT_USER: ${MINIO_ROOT_USER:-minioadmin}
+      MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD:?需在 .env 设置 MINIO_ROOT_PASSWORD}
     command: server /data --console-address ":9001"
     volumes:
       - mneme_minio_data:/data
@@ -63,7 +64,7 @@ services:
     # 执行，自检不过（vendor 未生效/装了旧副本/内核绕过沙箱）则不对外提供服务。
     command: sh -c "python -m obase.sandbox_selfcheck && alembic upgrade head && uvicorn services.main:app --host 0.0.0.0 --port 8000"
     ports:
-      - "8000:8000"
+      - "127.0.0.1:8000:8000"
     environment:
       # ②-0 打包：mneme-core（Phase1 门控内核 7 元素之家）加入 import 路径。
       # 现经 PYTHONPATH 验证整条链；稳定后再固化为 Dockerfile pip install（与 obase/oprim 平价）。
@@ -71,11 +72,11 @@ services:
       # 本仓 vendor/ 副本（S0 沙箱加固 + Solve 模式所在），不再落到站点包
       # (site-packages) 里未加固的旧副本——这两者此前一直是两份不同代码。
       PYTHONPATH: /app/vendor:/app:/app/packages/mneme-core
-      DATABASE_URL: postgresql+asyncpg://postgres:postgres@db:5432/mneme
+      DATABASE_URL: postgresql+asyncpg://postgres:${POSTGRES_PASSWORD}@db:5432/mneme
       REDIS_URL: redis://redis:6379/0
       MINIO_ENDPOINT: minio:9000
-      MINIO_ACCESS_KEY: minioadmin
-      MINIO_SECRET_KEY: minioadmin
+      MINIO_ACCESS_KEY: ${MINIO_ACCESS_KEY:-minioadmin}
+      MINIO_SECRET_KEY: ${MINIO_SECRET_KEY:?需在 .env 设置 MINIO_SECRET_KEY}
       MINIO_BUCKET: mneme
       DEEPSEEK_API_KEY: ${DEEPSEEK_API_KEY}
       SMS_PROVIDER: mock
@@ -146,11 +147,11 @@ services:
     command: sh -c "python -m obase.sandbox_selfcheck && celery -A tasks.celery_app worker --loglevel=info --concurrency=2"
     environment:
       PYTHONPATH: /app/vendor:/app:/app/packages/mneme-core
-      DATABASE_URL: postgresql+asyncpg://postgres:postgres@db:5432/mneme
+      DATABASE_URL: postgresql+asyncpg://postgres:${POSTGRES_PASSWORD}@db:5432/mneme
       REDIS_URL: redis://redis:6379/0
       MINIO_ENDPOINT: minio:9000
-      MINIO_ACCESS_KEY: minioadmin
-      MINIO_SECRET_KEY: minioadmin
+      MINIO_ACCESS_KEY: ${MINIO_ACCESS_KEY:-minioadmin}
+      MINIO_SECRET_KEY: ${MINIO_SECRET_KEY:?需在 .env 设置 MINIO_SECRET_KEY}
       MINIO_BUCKET: mneme
       DEEPSEEK_API_KEY: ${DEEPSEEK_API_KEY}
       SMS_PROVIDER: mock
@@ -192,7 +193,7 @@ services:
     restart: unless-stopped
     profiles: ["gpu"]  # 默认不启动，需要 GPU 时 --profile gpu
     ports:
-      - "8081:8080"
+      - "127.0.0.1:8081:8080"
     environment:
       ECHO_DEVICE: ${ECHO_DEVICE:-cuda}
       ECHO_HALF_BODY: ${ECHO_HALF_BODY:-1}
@@ -225,11 +226,11 @@ services:
     command: sh -c "python -m obase.sandbox_selfcheck && celery -A tasks.celery_app beat --loglevel=info --schedule=/tmp/celerybeat-schedule"
     environment:
       PYTHONPATH: /app/vendor:/app:/app/packages/mneme-core
-      DATABASE_URL: postgresql+asyncpg://postgres:postgres@db:5432/mneme
+      DATABASE_URL: postgresql+asyncpg://postgres:${POSTGRES_PASSWORD}@db:5432/mneme
       REDIS_URL: redis://redis:6379/0
       MINIO_ENDPOINT: minio:9000
-      MINIO_ACCESS_KEY: minioadmin
-      MINIO_SECRET_KEY: minioadmin
+      MINIO_ACCESS_KEY: ${MINIO_ACCESS_KEY:-minioadmin}
+      MINIO_SECRET_KEY: ${MINIO_SECRET_KEY:?需在 .env 设置 MINIO_SECRET_KEY}
       MINIO_BUCKET: mneme
       SMS_PROVIDER: mock
     depends_on:
@@ -237,6 +238,26 @@ services:
         condition: service_healthy
     volumes:
       - .:/app
+    networks:
+      - default
+      - helios-net
+
+  # Fay 数字人大脑（Phase 3 升级：替代自写 aria_brain，Fay 框架驱动）
+  fay:
+    build:
+      context: ./docker/fay
+      dockerfile: Dockerfile
+    container_name: mneme-fay
+    restart: unless-stopped
+    environment:
+      DASHSCOPE_API_KEY: ${DASHSCOPE_API_KEY:-}
+      QWEN_BASE_URL: ${QWEN_BASE_URL:-}
+      QWEN_MODEL: ${QWEN_MODEL:-qwen3.7-plus}
+      PYTHONUNBUFFERED: "1"
+    ports:
+      - "127.0.0.1:5001:5000"     # Flask GUI/管理（主机 5001 避免冲突）
+      - "127.0.0.1:10002:10002"   # WebSocket → 数字人渲染器
+      - "127.0.0.1:10003:10003"   # WebSocket → Web 管理面板
     networks:
       - default
       - helios-net

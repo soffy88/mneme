@@ -15,7 +15,6 @@ import os
 import random
 import uuid
 from datetime import date
-from typing import Optional
 
 import redis.asyncio as aioredis
 from obase.auth import create_access_token
@@ -29,10 +28,21 @@ logger = logging.getLogger(__name__)
 CODE_TTL = 300  # 验证码有效期：5分钟
 RATE_TTL = 60  # 防刷窗口：60秒
 MOCK_CODE = "123456"
+MAX_VERIFY_ATTEMPTS = 5  # 验证码连续输错次数上限
+VERIFY_LOCKOUT_SECONDS = 900  # 超限后锁定时长：15分钟
 
 
 def _is_mock() -> bool:
     return os.environ.get("SMS_PROVIDER", "mock").lower() != "aliyun"
+
+
+def _mock_bypass_allowed() -> bool:
+    """mock 万能码旁路仅在非生产环境可用（MNEME_ENV != prod）。
+
+    生产即使 SMS_PROVIDER 误配为 mock，万能码 123456 也不得放行——
+    否则任何人可登录任何已知账号（C2 修复：demo/dev 保留演示机制，
+    生产必须走真实验证通道，main._assert_prod_safety 同时把关）。"""
+    return os.environ.get("MNEME_ENV", "dev").lower() != "prod"
 
 
 def _mask_phone(phone: str) -> str:
@@ -94,22 +104,44 @@ async def send_code(phone: str, provider) -> dict:
 # ── 验证码校验 ────────────────────────────────────────────────────────────────
 
 
+async def _check_lockout(r, lock_key: str) -> bool:
+    """是否已被暴力尝试锁死。"""
+    return await r.get(lock_key) is not None
+
+
+async def _register_failure(r, attempt_key: str, lock_key: str) -> None:
+    """验证码连续输错：计数，超限即锁定至验证码过期（C2 防暴力破解）。"""
+    attempts = await r.incr(attempt_key)
+    await r.expire(attempt_key, CODE_TTL)
+    if attempts >= MAX_VERIFY_ATTEMPTS:
+        await r.setex(lock_key, VERIFY_LOCKOUT_SECONDS, "1")
+        await r.delete(attempt_key)
+        logger.warning(f"验证码连续输错 {MAX_VERIFY_ATTEMPTS} 次，已锁定验证码通道")
+
+
 async def verify_code(phone: str, code: str) -> bool:
     """从 Redis 校验验证码，成功则消费（删除）。
-    mock 模式下 MOCK_CODE 直接通过，无需先调 send-code。
+    mock 万能码旁路——仅 demo/dev 环境可用（C2：生产 MNEME_ENV=prod 拒放行）。
+    连续输错 MAX_VERIFY_ATTEMPTS 次 → 锁定 VERIFY_LOCKOUT_SECONDS 秒（防暴力破解）。
     """
-    # mock 万能码旁路——仅限非 aliyun 模式，生产环境此分支永远不走
-    if _is_mock() and code == MOCK_CODE:
-        return True
-
     r = _redis()
     try:
+        lock_key = f"sms:lock:{phone}"
+        if await _check_lockout(r, lock_key):
+            return False
+
+        # mock 万能码旁路——仅限非 aliyun 模式且非生产环境
+        if _is_mock() and _mock_bypass_allowed() and code == MOCK_CODE:
+            return True
+
         stored = await r.get(f"sms:code:{phone}")
         if not stored:
             return False
         if stored == code:
             await r.delete(f"sms:code:{phone}")
+            await r.delete(f"sms:attempt:{phone}")
             return True
+        await _register_failure(r, f"sms:attempt:{phone}", lock_key)
         return False
     finally:
         await r.aclose()
@@ -125,9 +157,9 @@ async def register_student(
     name: str,
     birth_date: date,
     grade: str,
-    guardian_phone: Optional[str] = None,
+    guardian_phone: str | None = None,
     guardian_consent: bool = False,
-    ip_address: Optional[str] = None,
+    ip_address: str | None = None,
 ) -> dict:
     """
     注册学生：
@@ -291,17 +323,27 @@ async def send_email_code(email: str, provider) -> dict:
 
 
 async def verify_email_code(email: str, code: str) -> bool:
-    """从 Redis 校验邮箱验证码，成功则消费。mock 模式 MOCK_CODE 旁路（生产 smtp 关闭）。"""
-    if _is_email_mock() and code == MOCK_CODE:
-        return True
+    """从 Redis 校验邮箱验证码，成功则消费。
+    mock 模式 MOCK_CODE 旁路——仅 demo/dev 可用（C2：生产 MNEME_ENV=prod 拒放行）。
+    连续输错 MAX_VERIFY_ATTEMPTS 次 → 锁定 VERIFY_LOCKOUT_SECONDS 秒（防暴力破解）。
+    """
     r = _redis()
     try:
+        lock_key = f"email:lock:{email}"
+        if await _check_lockout(r, lock_key):
+            return False
+
+        if _is_email_mock() and _mock_bypass_allowed() and code == MOCK_CODE:
+            return True
+
         stored = await r.get(f"email:code:{email}")
         if not stored:
             return False
         if stored == code:
             await r.delete(f"email:code:{email}")
+            await r.delete(f"email:attempt:{email}")
             return True
+        await _register_failure(r, f"email:attempt:{email}", lock_key)
         return False
     finally:
         await r.aclose()
@@ -314,9 +356,9 @@ async def register_student_email(
     name: str,
     birth_date: date,
     grade: str,
-    guardian_email: Optional[str] = None,
+    guardian_email: str | None = None,
     guardian_consent: bool = False,
-    ip_address: Optional[str] = None,
+    ip_address: str | None = None,
 ) -> dict:
     """邮箱注册学生：验证码校验 + 合规红线(<14须监护同意) + 邮箱唯一 + 写库 + JWT。
     与手机号版同构，仅标识换成 email、监护联系方式换成 guardian_email。"""

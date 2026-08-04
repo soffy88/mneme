@@ -10,6 +10,7 @@
 from __future__ import annotations
 
 import logging
+
 from services.sms.base import SMSProvider
 
 logger = logging.getLogger(__name__)
@@ -48,6 +49,7 @@ class AliyunSMSProvider(SMSProvider):
         # )
         # resp = client.send_sms(req)
         # return resp.body.code == "OK"
-        raise NotImplementedError(
-            "阿里云短信需完成报备后启用。当前请使用 SMS_PROVIDER=mock。"
-        )
+        # 未报备时不抛异常（会 500 化整条发送链路），改为返回失败，
+        # 由 auth_service 统一按发送失败处理（ok:False → 提示稍后重试）。
+        logger.warning("阿里云短信未启用（需完成签名/模板报备），发送失败")
+        return False
