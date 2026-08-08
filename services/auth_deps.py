@@ -21,7 +21,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from obase.auth import decode_access_token
 from obase.db import get_db
-from services.models import ParentStudent, User
+from services.models import ParentStudent, SocraticSession, User
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="v1/auth/login", auto_error=False)
 
@@ -91,3 +91,20 @@ def _ensure_student_self(current_user: User, student_id: Optional[UUID]) -> None
     家长只读，不可替孩子写认知数据（否则污染 BKT/FSRS 档案）。"""
     if student_id is not None and current_user.id != student_id:
         raise HTTPException(status_code=403, detail="仅学生本人可执行该操作")
+
+
+async def _ensure_session_owner(
+    db: AsyncSession, current_user: User, session_id: UUID
+) -> SocraticSession:
+    """会话续写鉴权：苏格拉底/物理受力/阅读引导共用 SocraticSession，
+    仅会话归属学生本人可继续（防会话劫持）。"""
+    session = (
+        await db.execute(
+            select(SocraticSession).where(SocraticSession.id == session_id)
+        )
+    ).scalar_one_or_none()
+    if not session:
+        raise HTTPException(status_code=404, detail="Session not found")
+    if session.student_id is not None and session.student_id != current_user.id:
+        raise HTTPException(status_code=403, detail="无权访问该会话")
+    return session

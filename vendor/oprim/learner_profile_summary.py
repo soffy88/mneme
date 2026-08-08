@@ -83,17 +83,27 @@ async def generate_learner_profile(
 3. 如果数据很少，只需简单概括。
 """
 
-    # 3. Call LLM
-    from services.textbook_qa_service import _get_caller
-
+    # 3. Call LLM（经 ProviderRegistry，禁止 oprim → services 反向依赖）
     try:
-        caller = _get_caller()
+        from obase.provider_registry import ProviderRegistry
+
+        caller = (
+            ProviderRegistry.get().llm() if ProviderRegistry._instance else None
+        )
+        if caller is None:
+            raise RuntimeError("no LLM provider registered")
         result = await caller(
             messages=[{"role": "user", "content": prompt}],
             system="你是一位资深的教学教研专家。请生成学生的学习画像摘要，不要寒暄，直接输出摘要正文。",
             max_tokens=150,
         )
-        profile_text = result.get("content", "").strip()
+        # 兼容 dict / 对象两种 caller 返回形态
+        if isinstance(result, dict):
+            profile_text = (result.get("content") or "").strip()
+        else:
+            profile_text = str(getattr(result, "content", result) or "").strip()
+        if not profile_text:
+            raise RuntimeError("empty LLM profile")
     except Exception as e:
         logger.warning("generate_learner_profile LLM error: %s", e)
         profile_text = f"学生有 {len(strong)} 个强项知识点，{len(weak)} 个薄弱知识点。"

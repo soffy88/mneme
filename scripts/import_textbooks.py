@@ -4,6 +4,9 @@
 运行方式（在 api 容器内，books 目录需挂载到 /books）：
   docker compose exec -v ~/books:/books api python scripts/import_textbooks.py
 幂等：同 textbook_id + filename 已存在则跳过。
+
+可选离线 PDF 源（仅记档、未自动拉取）：
+  https://github.com/TapXWorld/ChinaTextbook
 """
 
 from __future__ import annotations

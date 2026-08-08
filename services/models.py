@@ -20,6 +20,9 @@ from sqlalchemy import (
 from sqlalchemy.dialects.postgresql import JSONB, UUID
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
 
+# 单源在 obase（3O 可 import，无需反向依赖 services）
+from obase.domain_enums import ErrorType as ErrorType
+
 
 class Base(DeclarativeBase):
     pass
@@ -35,14 +38,6 @@ class PaperStatus(str, enum.Enum):
     processing = "processing"
     done = "done"
     failed = "failed"
-
-
-class ErrorType(str, enum.Enum):
-    conceptual = "conceptual"
-    transfer = "transfer"
-    careless = "careless"
-    logic_break = "logic_break"
-    dontknow = "dontknow"
 
 
 class StorageTier(str, enum.Enum):

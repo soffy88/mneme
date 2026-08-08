@@ -87,8 +87,12 @@ def _mock_storage():
             raise FileNotFoundError(path)
         return _store[path]
 
-    upload_patch = patch("services.main.upload_file", side_effect=fake_upload)
-    download_patch = patch("services.main.download_file", side_effect=fake_download)
+    upload_patch = patch(
+        "services.routers.textbook.upload_file", side_effect=fake_upload
+    )
+    download_patch = patch(
+        "services.routers.textbook.download_file", side_effect=fake_download
+    )
     return upload_patch, download_patch
 
 
@@ -214,16 +218,13 @@ async def test_download_platform_file_accessible_by_all(client, student_a, stude
     ))
     await db.commit()
 
-    up, dl = _mock_storage()
-    # 预存内容到 mock store
-    with up, dl:
-        # 直接 inject content into the mock's store via upload
-        import services.main as main_mod
-        with patch.object(main_mod, "download_file", side_effect=lambda p: content):
-            dl_resp = await client.get(
-                f"/v1/textbook-files/{file_id}/content",
-                headers={"Authorization": f"Bearer {_token(student_b)}"},
-            )
+    with patch(
+        "services.routers.textbook.download_file", side_effect=lambda p: content
+    ):
+        dl_resp = await client.get(
+            f"/v1/textbook-files/{file_id}/content",
+            headers={"Authorization": f"Bearer {_token(student_b)}"},
+        )
     assert dl_resp.status_code == 200
 
     # cleanup
@@ -234,7 +235,7 @@ async def test_download_platform_file_accessible_by_all(client, student_a, stude
 @pytest.mark.asyncio
 async def test_upload_oversize_rejected(client, student_a):
     """C3：超过 50MB 的文件被拒 413（限流防滥用）。"""
-    from services.main import MAX_UPLOAD_BYTES
+    from services.routers.textbook import MAX_UPLOAD_BYTES
 
     up, dl = _mock_storage()
     with up, dl:

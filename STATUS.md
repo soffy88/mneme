@@ -60,13 +60,23 @@ MaaS 专属部署 OpenAI 兼容端点）/ Docker Compose / pytest。
 | CLI | `cli/mneme_cli.py`（文档见 `SKILL.md`） |
 | 康奈尔笔记 | `services/cornell_service.py` + `data/cornell_topics/` |
 | Aria 数字人 | `services/aria_director.py` / `services/aria_media.py` / `services/aria_perception.py` |
+| 教材 PDF **离线源**（未接入流水线） | [TapXWorld/ChinaTextbook](https://github.com/TapXWorld/ChinaTextbook) — 小初高/大学 PDF 聚合；>50MB 分片需 tools 合并；**勿整仓 submodule**；入库仍走 `scripts/import_textbooks.py` + 本地/挂载 books |
 
 ## 当前状态
 
 - **测试**：~906 passed（本机缺 mneme_core 包时 19 个 mcp/omodul 文件收集失败、28 个既有环境失败，均非本次引入）/ 11 skipped
 - **覆盖率**：88.5%（pyproject.toml 已配 greenlet concurrency）
 - **代码审查图（CRG）**：code-review-graph 已接入 opencode（`opencode.jsonc` MCP + 全局 crg-plugin 钩子），
-  `.code-review-graph/` 已入 .gitignore；审查风险分 0.85→0.75，17 个无测试覆盖的变更函数已关闭
+  `.code-review-graph/` 已入 .gitignore；**本地 CRG 已取消默认忽略 `**/vendor/**`**（mneme vendor=3O 内核），
+  项目 `.code-review-graphignore` 排除 studio node_modules / fay / PDF；全量图 ~9.8k 节点
+- **P0–P3 加固（2026-08-07）**：
+  1. `PgStore.get_or_create` 对 `(student_id,kc)` **SELECT FOR UPDATE**（并发掌握度不丢更新）
+  2. vendor 裁剪金融子树 + `EDU_BOUNDARY.md` + `test_vendor_edu_boundary`
+  3. `ErrorType` 下沉 `obase.domain_enums`；learner_profile 改 ProviderRegistry（断 oprim→services）
+  4. 双 BKT 写路径守卫 `test_mastery_write_path_guards`
+  5. lifespan 强制 `sandbox_selfcheck.check_or_die`（`MNEME_SKIP_SANDBOX_SELFCHECK=1` 可跳）
+  6. `cognitive_update` 纯单测 + 并发写路径测试
+  7. main 拆出 `services/routers/{health,cornell}`；CLAUDE 服务层措辞对齐现实
 - **LLM**：阿里云 MaaS 专属部署（`QWEN_BASE_URL`/`QWEN_API_KEY` 在 .env），已实测通
 - **注册**：邮箱（Z.2），SMS 仍 mock，注册闸门 `REGISTRATION_OPEN=0`
 - **环境**：`MNEME_ENV=demo`（非 prod）

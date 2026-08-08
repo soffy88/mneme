@@ -21,7 +21,7 @@ async def test_essay_guide_never_rewrites():
     
     try:
         # We patch essay_guide directly to avoid all the LLM complexity
-        with patch("services.main.essay_guide", return_value=mock_res):
+        with patch("services.routers.subjects.essay_guide", return_value=mock_res):
             async with AsyncClient(transport=ASGITransport(app=app), base_url="http://test") as ac:
                 response = await ac.post("/v1/essay/guide", json=payload)
                 

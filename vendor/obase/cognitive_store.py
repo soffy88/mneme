@@ -122,19 +122,58 @@ class PgStore:
     async def get_or_create(
         self, student_id: UUID, kc_id: str, question_type: str = "solve"
     ) -> tuple[KCState, dict]:
-        stmt = select(KCMastery).where(
-            KCMastery.student_id == student_id, KCMastery.knowledge_point == kc_id
-        )
-        result = await self.session.execute(stmt)
-        row = result.scalar_one_or_none()
+        """读取（或创建）KC 掌握度行，并对该行加 ``FOR UPDATE`` 行锁。
 
-        if row:
+        锁持有到当前事务 commit/rollback，覆盖调用方
+        ``get_or_create → cognitive_update → save`` 整段，避免同一
+        (student_id, knowledge_point) 并发提交时丢失 BKT/FSRS 更新。
+
+        新建行走 unique(student_id, knowledge_point) + savepoint：
+        两事务同时 miss 时，一方 INSERT 成功，另一方 IntegrityError 后
+        再 ``SELECT … FOR UPDATE`` 读到对方已提交/本事务已见的行。
+        """
+        from sqlalchemy.exc import IntegrityError
+
+        lock_stmt = (
+            select(KCMastery)
+            .where(
+                KCMastery.student_id == student_id,
+                KCMastery.knowledge_point == kc_id,
+            )
+            .with_for_update()
+        )
+        row = (await self.session.execute(lock_stmt)).scalar_one_or_none()
+        if row is not None:
             return self._row_to_entry(row)
-        else:
-            prior = await PriorProvider.get_prior(self.session, kc_id, question_type)
-            state = new_state_from_prior(kc_id=kc_id, prior=prior)
-            card = fsrs_new_card()
-            return state, card
+
+        prior = await PriorProvider.get_prior(self.session, kc_id, question_type)
+        state = new_state_from_prior(kc_id=kc_id, prior=prior)
+        card = fsrs_new_card()
+        try:
+            async with self.session.begin_nested():
+                await self.session.execute(
+                    insert(KCMastery).values(
+                        student_id=student_id,
+                        knowledge_point=kc_id,
+                        p_init=state.p_init,
+                        p_transit=state.p_transit,
+                        p_guess=state.p_guess,
+                        p_slip=state.p_slip,
+                        p_mastery=state.p_mastery,
+                        long_term_mastery=state.long_term_mastery,
+                        p_recognition=state.p_recognition,
+                        p_recognition_init=state.p_recognition_init,
+                        fsrs_card_json=card,
+                        last_interaction_at=None,
+                        n_attempts=0,
+                    )
+                )
+        except IntegrityError:
+            # 并发会话已插入同一 (student, kc)；回退到加锁读取。
+            pass
+
+        row = (await self.session.execute(lock_stmt)).scalar_one()
+        return self._row_to_entry(row)
 
     async def get_all_states(self, student_id: UUID) -> Dict[str, tuple[KCState, dict]]:
         stmt = select(KCMastery).where(KCMastery.student_id == student_id)
