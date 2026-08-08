@@ -133,7 +133,7 @@ async def test_self_check_pass_delivers_and_caches(client, student, db):
 
 
 def test_trim_plot_data_low_bandwidth_strips_svg_keeps_steps():
-    from services.main import _trim_plot_data
+    from services.routers.practice import _trim_plot_data
 
     plot = {"svg": "<svg>...</svg>", "steps": ["step1"], "answer": "x=2"}
     trimmed = _trim_plot_data(plot, low_bandwidth=True)
@@ -142,13 +142,13 @@ def test_trim_plot_data_low_bandwidth_strips_svg_keeps_steps():
 
 
 def test_trim_plot_data_passthrough_when_not_low_bandwidth():
-    from services.main import _trim_plot_data
+    from services.routers.practice import _trim_plot_data
 
     plot = {"svg": "<svg>...</svg>", "steps": ["step1"]}
     assert _trim_plot_data(plot, low_bandwidth=False) == plot
 
 
 def test_trim_plot_data_none_passthrough():
-    from services.main import _trim_plot_data
+    from services.routers.practice import _trim_plot_data
 
     assert _trim_plot_data(None, low_bandwidth=True) is None
