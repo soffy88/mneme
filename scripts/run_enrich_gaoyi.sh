@@ -11,6 +11,19 @@ export LANG=C.UTF-8 LC_ALL=C.UTF-8
 export PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 cd /data/soffy/projects/mneme || exit 1
 
+# 口令走 .env，不硬编码明文（C4 配套：compose 已改为 ${POSTGRES_PASSWORD} 注入）。
+# 若 .env 未配，回退旧值会重建明文依赖——这里强制要求存在。
+if [ ! -f .env ]; then
+  echo "$(date '+%F %T') 缺少 .env，无法取数据库口令" >&2
+  exit 1
+fi
+# shellcheck disable=SC1091
+set -a
+# shellcheck disable=SC1091
+. ./.env
+set +a
+: "${POSTGRES_PASSWORD:?需在 .env 设置 POSTGRES_PASSWORD}"
+
 # Ollama 未启动则跳过
 if ! /usr/bin/curl -sf -o /dev/null http://localhost:11434/api/tags; then
   echo "$(date '+%F %T') Ollama 未运行，跳过本次"
@@ -26,7 +39,7 @@ echo "=== $(date '+%F %T') 开始 高一 enrich ==="
   -e LLM_API_KEY=ollama \
   -e LLM_WORKERS=4 \
   -e LLM_MAX_TOKENS=2000 \
-  -e DATABASE_URL_SYNC=postgresql://postgres:postgres@db:5432/mneme \
+  -e DATABASE_URL_SYNC="postgresql://postgres:${POSTGRES_PASSWORD}@db:5432/mneme" \
   api python3 scripts/enrich_ku_content.py --subject math --grades 高一
 EXIT_CODE=$?
 echo "=== $(date '+%F %T') 结束（退出码 ${EXIT_CODE}）==="

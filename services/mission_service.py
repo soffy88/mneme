@@ -79,7 +79,12 @@ async def get_or_create_mission(
     )
     if not wrong_count:
         # 全新用户，走 cold_start_single
-        caller = ProviderRegistry.get().llm() if ProviderRegistry._instance else None
+        caller = None
+        if ProviderRegistry._instance:
+            try:
+                caller = ProviderRegistry.get().llm()
+            except Exception:
+                caller = None
         try:
             cs_res = await cold_start_single(
                 ColdStartInput(

@@ -852,4 +852,92 @@ LLM 语义摘要、working memory 物理过期清理 cron。
 
 ---
 
+## 附录 · 交互式康奈尔笔记（Phase B，2026-07-28）
+
+把传统康奈尔笔记升级为**概念检索笔记**：线索栏提问 → 闭卷回忆 → 对照笔记 → 自报进度。
+对齐主线 2 / **M-C 检索练习**（先遮后揭），服务「学概念 / 自测线索」场景，与练习判题、
+FSRS 复习分流。
+
+### 产品定位
+
+| 能力 | 说明 |
+|------|------|
+| 交互 | 问题→模块高亮、自测遮笔记、提示、折叠、自报 ✓ |
+| 本地持久 | 浏览器 `localStorage`，key = `cornell_{topicId}_v{version}` |
+| 跨设备 | 导出/导入 JSON（并集合并）；云端同步 **Phase C 预留** |
+| 入口 | 前端 `mneme-web`：`/subjects/math/cornell`、`/subjects/math/cornell/[topicId]` |
+
+### 红线（MUST）
+
+1. **自报「已掌握」≠ 系统掌握度。** `cornell` 进度只允许改本地/未来 `cornell_progress`
+   表的 `state` JSON；**禁止**调用 `process_interaction` / 写入 `kc_mastery.p_mastery`。
+   真掌握度唯一路径仍是作答 → 判题 → BKT/FSRS。
+2. **M-C**：自测模式默认隐藏笔记栏；不得提供「一键标记全部掌握且跳过回忆」。
+3. **答案分级**：系统教研同构课题可展示完整样例与公式；学生自带作业题不得做成
+   可抄标准答案康奈尔页。
+4. **合规**：若建云端进度表，同 PR 入 `purge_service._STUDENT_TABLES`；表列用真实
+   `student_id`。
+
+### 内容契约 `content.json`
+
+```
+data/cornell_topics/{topicId}/content.json
+```
+
+必填字段：`topicId`, `version`, `subject`, `title`, `cues[]`, `modules[]`, `summary`,
+`oneLiner`。可选：`grade`, `kuIds[]`, `kcIds[]`, `subjectLabel`。
+
+- `cues[i].id` / `cues[i].mod` → 掌握键与模块映射（`mod` 对应 `modules[j].id`）
+- `modules[j]`：正文可含 `$...$` LaTeX；宜含公式/表格/简图至少一类非纯文字
+- 与 `knowledge_units` 通过 `kuIds` 关联（可空，后续补齐）
+
+### 进度 State
+
+```json
+{
+  "topicId": "pythagoras",
+  "version": 1,
+  "mastered": { "q1": true },
+  "collapsed": { "m2": true },
+  "selfTest": false,
+  "showAnswers": false,
+  "updatedAt": "2026-07-28T10:00:00.000Z"
+}
+```
+
+导入合并：`mastered`/`collapsed` 键级并集（任一端 true→true）；`selfTest`/
+`showAnswers` 取 `updatedAt` 较新一端；`topicId` 不一致则拒绝。
+
+### 3O / 分层
+
+| 部分 | 归属 |
+|------|------|
+| 交互 UI + localStorage | **前端**（3O 不覆盖 UI） |
+| 课题内容包 | **数据** `data/cornell_topics/`（非算法） |
+| 合并算法 | 纯函数（`services/cornell_merge.py`，前后端可共用逻辑） |
+| 云同步 API / 表 | **Phase C**：服务层 + migration；非 omodul |
+| 静态 PNG/PDF 印刷 | **Phase C 可选** oprim 单次渲染 |
+
+### 云同步（Phase C，2026-07-28）
+
+| 项 | 契约 |
+|----|------|
+| 表 | `cornell_progress(student_id, topic_id PK, version, state JSONB, updated_at)` |
+| 读 | `GET /v1/cornell/{student_id}/progress` · `GET .../progress/{topic_id}` |
+| 写 | `PUT /v1/cornell/{student_id}/progress/{topic_id}` body=`{state}` → **并集合并**后落库 |
+| 删 | `DELETE .../progress/{topic_id}` 仅清云端行 |
+| 鉴权 | 读：`require_student_access`；写/删：`_ensure_student_self` |
+| 合并 | `services/cornell_merge.merge_cornell_state`（与本地导入同策略） |
+| purge | `cornell_progress` 入 `_STUDENT_TABLES`（FC-2） |
+| 红线 | 仍禁止写 `kc_mastery` / 调 `process_interaction` |
+
+前端：登录后可拉/推；失败降级 localStorage；可选 autoPush。
+
+### 明确不做（后续）
+
+多课题统一进度中心、暗色模式、从 KU 自动 LLM 生成 content、
+把康奈尔 ✓ 喂进 daily_plan 门控、印刷 oprim。
+
+---
+
 **Mneme 主设计文档结束。本文档为唯一权威，其余历史文档仅作演进参考。**

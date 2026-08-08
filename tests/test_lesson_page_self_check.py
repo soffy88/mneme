@@ -12,12 +12,12 @@ import uuid
 
 import pytest
 from httpx import ASGITransport, AsyncClient
+from obase.config import settings
 from sqlalchemy import delete
 from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_async_engine
 
-from obase.config import settings
 from services.main import app
-from services.models import WrongQuestion, User, UserRole
+from services.models import User, UserRole, WrongQuestion
 
 
 @pytest.fixture(autouse=True)
@@ -127,3 +127,28 @@ async def test_self_check_pass_delivers_and_caches(client, student, db):
         await db.execute(delete(LessonPage).where(LessonPage.question_id == qid))
         await db.execute(delete(WrongQuestion).where(WrongQuestion.id == qid))
         await db.commit()
+
+
+# ── U.23 低带宽：_trim_plot_data 去 svg 保 steps ──────────────────────────────
+
+
+def test_trim_plot_data_low_bandwidth_strips_svg_keeps_steps():
+    from services.routers.practice import _trim_plot_data
+
+    plot = {"svg": "<svg>...</svg>", "steps": ["step1"], "answer": "x=2"}
+    trimmed = _trim_plot_data(plot, low_bandwidth=True)
+    assert trimmed == {"steps": ["step1"], "answer": "x=2"}
+    assert "svg" not in trimmed
+
+
+def test_trim_plot_data_passthrough_when_not_low_bandwidth():
+    from services.routers.practice import _trim_plot_data
+
+    plot = {"svg": "<svg>...</svg>", "steps": ["step1"]}
+    assert _trim_plot_data(plot, low_bandwidth=False) == plot
+
+
+def test_trim_plot_data_none_passthrough():
+    from services.routers.practice import _trim_plot_data
+
+    assert _trim_plot_data(None, low_bandwidth=True) is None

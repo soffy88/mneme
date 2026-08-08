@@ -20,6 +20,9 @@ from sqlalchemy import (
 from sqlalchemy.dialects.postgresql import JSONB, UUID
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
 
+# 单源在 obase（3O 可 import，无需反向依赖 services）
+from obase.domain_enums import ErrorType as ErrorType
+
 
 class Base(DeclarativeBase):
     pass
@@ -35,14 +38,6 @@ class PaperStatus(str, enum.Enum):
     processing = "processing"
     done = "done"
     failed = "failed"
-
-
-class ErrorType(str, enum.Enum):
-    conceptual = "conceptual"
-    transfer = "transfer"
-    careless = "careless"
-    logic_break = "logic_break"
-    dontknow = "dontknow"
 
 
 class StorageTier(str, enum.Enum):
@@ -454,6 +449,24 @@ class LessonPage(Base):
     report_path: Mapped[Optional[str]] = mapped_column(Text)
     created_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True), server_default=text("now()")
+    )
+
+
+class CornellProgress(Base):
+    """康奈尔笔记云端进度（自报 checklist，≠ kc_mastery）。"""
+
+    __tablename__ = "cornell_progress"
+
+    student_id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True), ForeignKey("users.id"), primary_key=True
+    )
+    topic_id: Mapped[str] = mapped_column(String(64), primary_key=True)
+    version: Mapped[int] = mapped_column(Integer, server_default="1", nullable=False)
+    state: Mapped[dict] = mapped_column(
+        JSONB, server_default=text("'{}'::jsonb"), nullable=False
+    )
+    updated_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), server_default=text("now()"), nullable=False
     )
 
 

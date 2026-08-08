@@ -19,12 +19,10 @@ import logging
 import os
 import uuid
 from datetime import datetime, timezone
-from typing import AsyncGenerator, Optional
+from typing import AsyncGenerator
 
 from sqlalchemy import text as sa_text, update
 from sqlalchemy.ext.asyncio import AsyncSession
-
-from services.anon import anon_ref
 
 logger = logging.getLogger(__name__)
 

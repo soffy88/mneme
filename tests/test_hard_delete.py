@@ -3,9 +3,10 @@
 from __future__ import annotations
 
 import uuid
-from datetime import datetime, timedelta, timezone
+from datetime import UTC, datetime, timedelta
 
 import pytest
+from obase.config import settings
 from sqlalchemy import delete, select, text
 from sqlalchemy.ext.asyncio import (
     AsyncSession,
@@ -14,7 +15,6 @@ from sqlalchemy.ext.asyncio import (
 )
 from sqlalchemy.pool import NullPool
 
-from obase.config import settings
 from services.models import User, UserRole, WrongQuestion
 from services.purge_service import purge_deleted_users
 
@@ -35,7 +35,7 @@ async def _mk_user(db, *, deleted_days_ago: int | None) -> uuid.UUID:
     deleted_at = (
         None
         if deleted_days_ago is None
-        else datetime.now(timezone.utc) - timedelta(days=deleted_days_ago)
+        else datetime.now(UTC) - timedelta(days=deleted_days_ago)
     )
     db.add(
         User(
@@ -169,6 +169,86 @@ async def test_purge_removes_timed_quiz_and_textbook_file(db):
 
 
 @pytest.mark.asyncio
+async def test_purge_removes_fk_reference_chain(db):
+    """回归（C1）：lesson_pages→wrong_questions、socratic_sessions→wrong_questions、
+    reading_notes→highlights→textbook_files 的 FK 链必须按先子后父顺序删。
+    此前 lesson_pages 不在清单、socratic_sessions 排在 wrong_questions 之后，
+    删除被 FK 卡死导致整批回滚，PII 永不物理删除。"""
+    from services.models import (
+        Highlight,
+        LessonPage,
+        ReadingNote,
+        SocraticSession,
+        TextbookFile,
+    )
+
+    sid = await _mk_user(db, deleted_days_ago=40)
+    wq = uuid.uuid4()
+    try:
+        db.add(
+            WrongQuestion(
+                id=wq,
+                student_id=sid,
+                question_text="q",
+                correct_answer="a",
+                subject="math",
+                knowledge_points={"KC": "x"},
+            )
+        )
+        tf_id = f"tf-{uuid.uuid4().hex[:10]}"
+        db.add(
+            TextbookFile(
+                id=tf_id,
+                owner_student_id=sid,
+                filename="x.pdf",
+                file_type="pdf",
+                storage_path="papers/x.pdf",
+            )
+        )
+        await db.flush()
+        db.add(LessonPage(id=uuid.uuid4(), question_id=wq))
+        db.add(
+            SocraticSession(
+                id=uuid.uuid4(),
+                student_id=sid,
+                question_id=wq,
+                mode="deep",
+            )
+        )
+        hl = Highlight(
+            id=f"hl-{uuid.uuid4().hex[:10]}",
+            student_id=sid,
+            file_id=tf_id,
+            highlighted_text="t",
+        )
+        db.add(hl)
+        db.add(ReadingNote(id=f"rn-{uuid.uuid4().hex[:10]}", student_id=sid, highlight_id=hl.id))
+        await db.flush()
+
+        result = await purge_deleted_users(db, grace_days=30)
+        await db.commit()
+        assert str(sid) in result["ids"]
+        assert (await db.execute(select(User).where(User.id == sid))).scalar_one_or_none() is None
+        assert (
+            await db.execute(select(WrongQuestion).where(WrongQuestion.student_id == sid))
+        ).scalars().all() == []
+        assert (
+            await db.execute(select(LessonPage).where(LessonPage.question_id == wq))
+        ).scalars().all() == []
+        assert (
+            await db.execute(select(SocraticSession).where(SocraticSession.student_id == sid))
+        ).scalars().all() == []
+    finally:
+        await db.execute(delete(LessonPage).where(LessonPage.question_id == wq))
+        await db.execute(delete(SocraticSession).where(SocraticSession.student_id == sid))
+        await db.execute(
+            delete(ReadingNote).where(ReadingNote.student_id == sid)
+        )
+        await db.execute(delete(Highlight).where(Highlight.student_id == sid))
+        await _cleanup(db, sid)
+
+
+@pytest.mark.asyncio
 async def test_every_student_table_is_in_purge_list(db):
     """守卫测试：**任何** schema 里带 student_id/owner_student_id 列的表，都必须在
     purge 清单里。防"新增带未成年PII的表却忘了加进删除清单"的 schema 漂移——上一次
@@ -178,7 +258,7 @@ async def test_every_student_table_is_in_purge_list(db):
     schema 加带 student_id 的表，只要漏入 purge 清单，本守卫立即失败自曝。无豁免白名单
     （parent_student 除外——它由 purge 里 parent/student 双向单独处理）。名字规范化与
     _STUDENT_TABLES 一致：public 表用裸名，其余 schema 用 `schema.table`。"""
-    from services.purge_service import _STUDENT_TABLES
+    from services.purge_service import _PARENT_TABLES, _STUDENT_TABLES
 
     rows = (
         await db.execute(
@@ -199,9 +279,14 @@ async def test_every_student_table_is_in_purge_list(db):
         # public 裸名、其余 schema 限定名——与 _STUDENT_TABLES 的写法对齐。
         return table if schema == "public" else f"{schema}.{table}"
 
+    # parent_student / parent_alerts 由 purge 的 _PARENT_TABLES 单独双向
+    # （student_id OR parent_id）处理，豁免主清单；其 student_id 覆盖仍算数。
+    covered = {(t, c) for t, c in _STUDENT_TABLES}
+    for t in _PARENT_TABLES:
+        for c in ("student_id", "owner_student_id"):
+            covered.add((t, c))
     # parent_student 的 student_id 由 purge 单独处理（parent/student 双向），豁免。
     db_tables = {(_key(s, t), c) for s, t, c in rows if _key(s, t) != "parent_student"}
-    covered = {(t, c) for t, c in _STUDENT_TABLES}
     missing = db_tables - covered
     assert not missing, (
         f"以下带未成年PII的表不在 purge 清单，删除后数据会残留（合规红线）：{sorted(missing)}"
@@ -256,7 +341,7 @@ async def test_purge_removes_gate_tables(db):
             cnt = (
                 await db.execute(
                     text(
-                        f"SELECT count(*) FROM {tbl} "  # noqa: S608 表名来自内部常量
+                        f"SELECT count(*) FROM {tbl} "
                         "WHERE student_id = CAST(:s AS uuid)"
                     ),
                     {"s": str(sid)},
@@ -271,8 +356,31 @@ async def test_purge_removes_gate_tables(db):
         ):
             await db.execute(
                 text(
-                    f"DELETE FROM {tbl} WHERE student_id = CAST(:s AS uuid)"  # noqa: S608
+                    f"DELETE FROM {tbl} WHERE student_id = CAST(:s AS uuid)"
                 ),
                 {"s": str(sid)},
             )
         await _cleanup(db, sid)
+
+
+@pytest.mark.asyncio
+async def test_table_exists_true_for_real_table(db):
+    from services.purge_service import _table_exists
+
+    assert await _table_exists(db, "users") is True
+
+
+@pytest.mark.asyncio
+async def test_table_exists_false_for_missing_table(db):
+    """运行时表缺失时必须返回 False（跳过删除），而不是抛 UndefinedTableError。"""
+    from services.purge_service import _table_exists
+
+    assert await _table_exists(db, "no_such_table_xyz") is False
+
+
+@pytest.mark.asyncio
+async def test_table_exists_schema_qualified(db):
+    from services.purge_service import _table_exists
+
+    assert await _table_exists(db, "public.users") is True
+    assert await _table_exists(db, "public.no_such_table_xyz") is False

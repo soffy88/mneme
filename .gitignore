@@ -19,10 +19,28 @@ frontend/dist/
 frontend/.env.local
 
 # EchoMimic V2 - large model files
-.echo/echomimic_repo/pretrained_weights/
-.echo/echomimic_repo/ffmpeg-4.4-amd64-static/
-.echo/echomimic_repo/outputs/
+.echo/echomimic_repo/
+.echo/server.log
+.echo/server.pid
 .echo/output/
 .echo/cache/
 .venv-echo/
 
+# Fay 大脑 vendored 运行时（含 ffmpeg/OVR 二进制，不入库）
+docker/fay/
+
+# scratch / 一次性探索
+scratch/
+
+# cron 运行时日志（不入库，历史误跟踪已 git rm --cached）
+scripts/enrich_gaoyi_cron.log
+
+# 康奈尔笔记：策划内容（README + 具名主题如 pythagoras/）入库；
+# c<id>-<slug> 是运行时生成的主题残留（多为旧金融项目遗留），不入库
+data/cornell_topics/c*/
+
+# outputs/ 下策划报告（*.md）入库，ku_match 是运行时匹配产物，不入库
+outputs/ku_match/
+
+# Added by code-review-graph
+.code-review-graph/
