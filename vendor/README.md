@@ -12,6 +12,10 @@ vendored 进来：
 - `oprim / oskill / omodul` ← 各自 `feat/edu-audit-fixes` 分支（含 edu-audit 改动）
 - `obase` ← `main`（mneme 未改动 obase）
 
+> **2026-08 教育边界**：历史上整仓 dump 带入了大量量化/交易代码。已裁剪
+> 明显非 edu 子树；刷新时请对照 `EDU_BOUNDARY.md` + `scripts/vendor_edu_closure.py`，
+> **禁止再整仓 archive**。`tests/test_vendor_edu_boundary.py` 守卫运行时 import。
+
 ## 怎么生效（vendor 优先）
 
 - 测试：`pyproject.toml` 的 `[tool.pytest.ini_options] pythonpath = ["vendor", "."]`
