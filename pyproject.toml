@@ -43,7 +43,10 @@ asyncio_mode = "auto"
 testpaths = ["tests"]
 # vendor 优先：用 mneme 自带的内核副本（含 edu-audit 改动），不受共享 platform/3O
 # 被切分支影响。见 vendor/README。
-pythonpath = ["vendor", "."]
+# packages/mneme-core：私有内核（mneme_core.*），未 pip 安装也未进 vendor，必须显式
+# 上 path，否则 main→routers 拆分后 practice 路由硬导入 mneme_core 会让 services.main
+# 整体导入失败、conftest 崩溃、全量测试 0 收集。
+pythonpath = ["vendor", "packages/mneme-core", "packages/mneme-agent", "."]
 addopts = "--cov=services --cov-report=term-missing"
 markers = [
     "moat: moat_eval CI 守卫（重测试，默认跳过，MOAT=1 时才运行）",
