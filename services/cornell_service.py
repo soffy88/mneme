@@ -114,8 +114,12 @@ async def put_progress(
         local.setdefault("version", row.version)
         merged = merge_cornell_state(local, incoming)
 
+    # updatedAt 语义：取 local/incoming 较新一端（merge_cornell_state 已保证），
+    # 不用服务器时间覆盖——否则 merge 的 "较新一端生效" 契约失效，
+    # 客户端更新的 selfTest/showAnswers 会被旧端吞掉（test_cornell_cloud 实证）。
+    # 行级 updated_at（DB 列）仍用服务器时间，仅用于列表排序。
+    merged.setdefault("updatedAt", datetime.now(timezone.utc).isoformat().replace("+00:00", "Z"))
     now = datetime.now(timezone.utc)
-    merged["updatedAt"] = now.isoformat().replace("+00:00", "Z")
     version = int(merged.get("version") or 1)
 
     if row is None:

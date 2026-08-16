@@ -25,10 +25,30 @@ from collections import Counter
 from pathlib import Path
 
 PDF_DIR = Path(os.environ.get("PDF_DIR", str(Path(__file__).parent.parent / "curriculum_standards")))
-_MNEME_PW = os.environ.get("POSTGRES_PASSWORD", "WmFJJAEtVFknjCDwNmi9bu45cK3mwi4")
+
+
+def _load_dotenv_password() -> str:
+    """从仓库 .env 读 POSTGRES_PASSWORD；无则返回空（连接会因缺口令失败）。
+
+    禁止把真实口令硬编码进脚本（C4 结论：口令只走 .env，见 0a3ba80）。
+    """
+    env_file = Path(__file__).parent.parent / ".env"
+    try:
+        for line in env_file.read_text().splitlines():
+            line = line.strip()
+            if line.startswith("POSTGRES_PASSWORD="):
+                return line.split("=", 1)[1]
+    except OSError:
+        pass
+    return ""
+
+
+_MNEME_PW = os.environ.get("POSTGRES_PASSWORD", _load_dotenv_password())
 DB_URL = os.environ.get(
     "DATABASE_URL",
-    f"postgresql+asyncpg://postgres:{_MNEME_PW}@localhost:5433/mneme",
+    f"postgresql+asyncpg://postgres:{_MNEME_PW}@localhost:5433/mneme"
+    if _MNEME_PW
+    else "",
 )
 DS_KEY = os.environ.get("DEEPSEEK_API_KEY", "")
 # LLM 端点: 缺省用 hevi 已验证的 opencode (deepseek-v4-flash, P0 实证稳定)。
@@ -150,21 +170,22 @@ def split_into_lessons(pages: dict[int, str]) -> list[tuple[int, str, str]]:
     """
     lesson_starts: dict[int, int] = {}
     lesson_titles: dict[int, str] = {}
-    prev_pg = 0
     for pg in sorted(pages):
         text = pages[pg]
         lines = [l.strip() for l in text.split("\n") if l.strip()]
         if not lines:
             continue
         # 标题行："第1课  中国境内早期人类的代表——北京人"（页眉行可能带页码数字）
-        m = re.match(r"^第(\d+)课\s+(.+)$", lines[0])
-        if m:
+        # 目录页同形但标题后带点线（"…………"），跳过；全角序号（第１课）也跳过。
+        m = re.match(r"^第([0-9]+)课\s+(.+)$", lines[0])
+        if m and "…" not in m.group(2) and "..." not in m.group(2):
             num, title = int(m.group(1)), m.group(2)
-            title = re.sub(r"\d+$", "", title).strip()      # 去掉行尾页码
-            if num not in lesson_starts or pg > prev_pg:
+            title = re.sub(r"\d+$", "", title).strip()  # 去掉行尾页码
+            # 贪心：同一课号只取首次出现的页（教材双页展开时页眉每跨页重复，
+            # 取末次会把正文起点推到本课最后一跨页，吞掉大半正文）。
+            if num not in lesson_starts:
                 lesson_starts[num] = pg
                 lesson_titles[num] = title
-                prev_pg = pg
 
     if not lesson_starts:
         return []
@@ -300,8 +321,8 @@ async def process_book(book: dict, client: httpx.Client, dry_run: bool, limit: i
         return
 
     all_kus: list[dict] = []
-    if from_lesson := _FROM_LESSON:  # noqa: F821 - 经闭包注入
-        lessons = [l for l in lessons if l[0] >= from_lesson]
+    if _FROM_LESSON:
+        lessons = [l for l in lessons if l[0] >= _FROM_LESSON]
     if limit:
         lessons = lessons[:limit]
     for order, title, body in lessons:

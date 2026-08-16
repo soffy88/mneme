@@ -35,15 +35,19 @@ def test_fringe_uses_gate_threshold():
 
 
 def test_call_sites_migrated_to_single_source():
-    """守卫：main.py 掌握色/fringe 委托 learner_model；daily_plan 用 GATE。
+    """守卫：routers 掌握色/fringe/_MASTERED 委托 learner_model；daily_plan 用 GATE。
 
     2026-07-04 审计发现的漂移（各自硬编码 0.5/0.4/0.6，未从 learner_model 导入，
-    容易和权威阈值悄悄脱节）已修复，这里补守卫防止再犯。
+    容易和权威阈值悄悄脱节）已修复。main 拆 routers 后守卫改扫 services/routers。
     """
-    main_src = open("services/main.py", encoding="utf-8").read()
-    assert "from services.learner_model import mastery_color" in main_src
-    assert "from services.learner_model import fringe" in main_src
-    assert "_MASTERED" in main_src
+    from pathlib import Path
+
+    router_src = "\n".join(
+        p.read_text(encoding="utf-8") for p in Path("services/routers").glob("*.py")
+    )
+    assert "from services.learner_model import mastery_color" in router_src
+    assert "from services.learner_model import fringe" in router_src
+    assert "_MASTERED" in router_src
     dp_src = open("services/daily_plan_service.py", encoding="utf-8").read()
     assert "GATE as MASTERY_THRESHOLD" in dp_src
 

@@ -11,6 +11,8 @@ import uuid
 
 import pytest
 
+pytest.importorskip("oservi")
+
 from obase.db import SessionLocal
 from services.chat_router import tool_chat_turn
 from services.mcp_router import tool_get_path

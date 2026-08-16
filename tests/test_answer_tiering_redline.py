@@ -21,6 +21,7 @@ from services.mcp_router import (  # noqa: E402
     tool_get_kc_info,
     tool_next_objective,
     tool_pose_question,
+    tool_report_result,
     tool_request_question,
     tool_submit_answer,
 )
@@ -263,6 +264,6 @@ class TestAnswerTieringEnforcementPoints:
         for name in all_funcs:
             if name.startswith("get_") and name != "get_pending" and name != "get_active_pending":
                 # 其它 get_* 不应读 expected
-                fn_src = inspect.getsource(getattr(gate_store, name))
+                _fn_src = inspect.getsource(getattr(gate_store, name))
                 # 允许内部有 expected 变量，但不应 SELECT expected 列
-                pass  # 运行时测试在上面已覆盖
+                assert "SELECT expected" not in _fn_src.upper()

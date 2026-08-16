@@ -1,11 +1,14 @@
 """试卷 / 单题快录（自 main 拆出）。"""
 from __future__ import annotations
 
+import os
+import shutil
 import uuid
 from datetime import date
+from pathlib import Path
 from uuid import UUID
 
-from fastapi import APIRouter, Depends, File, Form, HTTPException, Query, UploadFile
+from fastapi import APIRouter, Depends, File, HTTPException, Query, UploadFile
 from obase.db import get_db
 from omodul.paper import PaperConfig, PaperUploadInput, upload_paper_workflow
 from sqlalchemy import select
@@ -13,12 +16,11 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from services.auth_deps import (
     _ensure_student_access,
-    _ensure_student_self,
     get_current_user,
     require_student_access,
 )
+from services.logging_config import logger
 from services.models import Paper, User, WrongQuestion
-from services.storage import content_type_for, upload_file
 
 router = APIRouter(tags=["papers"])
 

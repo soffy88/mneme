@@ -1,33 +1,31 @@
 """学习洞察 / 校准 / 摸底 / 护城河指标（自 main 拆出）。"""
 from __future__ import annotations
 
-from datetime import date, datetime, timedelta
+from datetime import date
 from uuid import UUID
 
-from fastapi import APIRouter, Depends, HTTPException, Query
+from fastapi import APIRouter, Depends, Query
 from obase.db import get_db
 from oprim.calibration import brier_calibration
 from pydantic import BaseModel, Field
-from sqlalchemy import func, select
+from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from services.auth_deps import get_current_user, require_student_access
 from services.cognitive_service import (
-    mastery_overview,
     weakness_roots,
     weekly_digest,
 )
-from services.feature_flags import PEDAGOGY_EXAM_AWARE, pedagogy_enabled
 from services.models import (
     EffortfulGain,
     EvaluationRun,
     InteractionEvent,
-    KCMastery,
+    KnowledgeUnit,
+    Textbook,
     User,
     WrongQuestion,
 )
-from services.placement_service import cat_next, estimate_ability
-from services import experiment_service
+from services.placement_service import cat_next
 
 router = APIRouter(tags=["insights"])
 
@@ -94,7 +92,6 @@ async def get_weak_roots(
     """GET /v1/weak-roots/{student_id} — 前置图谱归因。
     对薄弱知识点上溯前置链，找出"先补根再补叶"的薄弱/未练前置。
     """
-    from services.cognitive_service import weakness_roots
 
     return {"roots": await weakness_roots(db, student_id)}
 
@@ -106,7 +103,6 @@ async def get_weekly_digest(
     db: AsyncSession = Depends(get_db),
 ):
     """GET /v1/weekly-digest/{student_id} — 留存引擎：连续天数 + 本周成长摘要。"""
-    from services.cognitive_service import weekly_digest
 
     return await weekly_digest(db, student_id)
 
@@ -292,7 +288,6 @@ async def post_placement_next(
 ):
     """L3 自适应定位会话(CAT,无状态)：交累积 (难度,对错) → 估 θ,SE<阈值或达上限即停,
     否则返回难度就近 θ 的下一题 KU。客户端累积 responses/served_ku_ids 逐轮调用。"""
-    from services.placement_service import cat_next
 
     return await cat_next(
         db,

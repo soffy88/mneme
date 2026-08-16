@@ -23,7 +23,7 @@ class BaseCognitiveStore(Protocol):
     """认知状态存储协议。"""
 
     async def get_or_create(
-        self, student_id: UUID, kc_id: str, question_type: str = "solve"
+        self, student_id: UUID, kc_id: str, question_type: str = "solve", for_update: bool = False
     ) -> tuple[KCState, dict]:
         """获取或创建认知状态和 FSRS 卡片。"""
         ...
@@ -65,7 +65,7 @@ class InMemoryStore:
         return f"{student_id}::{kc_id}"
 
     async def get_or_create(
-        self, student_id: UUID, kc_id: str, question_type: str = "solve"
+        self, student_id: UUID, kc_id: str, question_type: str = "solve", for_update: bool = False
     ) -> tuple[KCState, dict]:
         k = self._key(student_id, kc_id)
         if k not in self._states:
@@ -120,13 +120,17 @@ class PgStore:
         self.session = session
 
     async def get_or_create(
-        self, student_id: UUID, kc_id: str, question_type: str = "solve"
+        self, student_id: UUID, kc_id: str, question_type: str = "solve", for_update: bool = False
     ) -> tuple[KCState, dict]:
-        """读取（或创建）KC 掌握度行，并对该行加 ``FOR UPDATE`` 行锁。
+        """读取（或创建）KC 掌握度行。
 
-        锁持有到当前事务 commit/rollback，覆盖调用方
+        for_update=True（写路径：process_interaction/analyze_paper）时对该行加
+        ``FOR UPDATE`` 行锁，锁持有到当前事务 commit/rollback，覆盖调用方
         ``get_or_create → cognitive_update → save`` 整段，避免同一
         (student_id, knowledge_point) 并发提交时丢失 BKT/FSRS 更新。
+
+        读路径（mastery_overview / review_queue / 测试复用会话）必须保持
+        for_update=False：无锁读，不阻塞后续同会话操作。
 
         新建行走 unique(student_id, knowledge_point) + savepoint：
         两事务同时 miss 时，一方 INSERT 成功，另一方 IntegrityError 后
@@ -134,15 +138,13 @@ class PgStore:
         """
         from sqlalchemy.exc import IntegrityError
 
-        lock_stmt = (
-            select(KCMastery)
-            .where(
-                KCMastery.student_id == student_id,
-                KCMastery.knowledge_point == kc_id,
-            )
-            .with_for_update()
+        stmt = select(KCMastery).where(
+            KCMastery.student_id == student_id,
+            KCMastery.knowledge_point == kc_id,
         )
-        row = (await self.session.execute(lock_stmt)).scalar_one_or_none()
+        if for_update:
+            stmt = stmt.with_for_update()
+        row = (await self.session.execute(stmt)).scalar_one_or_none()
         if row is not None:
             return self._row_to_entry(row)
 
@@ -172,7 +174,7 @@ class PgStore:
             # 并发会话已插入同一 (student, kc)；回退到加锁读取。
             pass
 
-        row = (await self.session.execute(lock_stmt)).scalar_one()
+        row = (await self.session.execute(stmt)).scalar_one()
         return self._row_to_entry(row)
 
     async def get_all_states(self, student_id: UUID) -> Dict[str, tuple[KCState, dict]]:

@@ -1,7 +1,7 @@
 """认知状态 / 掌握度 / 知识单元（自 main 拆出）。"""
 from __future__ import annotations
 
-from datetime import datetime, timedelta
+from datetime import datetime
 from uuid import UUID
 
 from fastapi import APIRouter, Depends, HTTPException, Query
@@ -15,15 +15,14 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from data.guangdong_math_kc import KC_LIST, get_kc
 from services.auth_deps import (
+    _ensure_student_access,
     _ensure_student_self,
     get_current_user,
     require_student_access,
 )
 from services.cognitive_service import mastery_overview, process_interaction
 from services.feature_flags import PEDAGOGY_FRINGE, pedagogy_enabled
-from services.learner_model import MASTERED as _MASTERED
 from services.models import (
-    InteractionEvent,
     KCMastery,
     KnowledgeCluster,
     KnowledgeUnit,
@@ -322,7 +321,6 @@ async def list_knowledge_points(
     all_ku_ids = [ku.id for ku, _, _ in rows]
     file_map = await _textbook_file_map(db, all_tb_ids)
     mastery_map = await _mastery_map(db, student_id, all_ku_ids) if student_id else {}
-    from services.feature_flags import PEDAGOGY_FRINGE, pedagogy_enabled
 
     fringe_enabled = pedagogy_enabled(
         PEDAGOGY_FRINGE

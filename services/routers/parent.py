@@ -2,30 +2,28 @@
 from __future__ import annotations
 
 import json
-from datetime import UTC, datetime, timedelta
+from datetime import UTC, datetime
 from uuid import UUID
 
 from fastapi import APIRouter, Depends, HTTPException, Query
 from fastapi.responses import StreamingResponse
 from obase.db import get_db
-from sqlalchemy import func, select, update
+from sqlalchemy import select, update
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from services.alert_service import get_student_alerts, run_alert_checks
 from services.auth_deps import (
-    _ensure_student_self,
     get_current_user,
     require_student_access,
 )
-from services.cognitive_service import mastery_overview, weekly_digest
 from services.models import (
     InteractionEvent,
     KCMastery,
     ParentStudent,
     SocraticSession,
     User,
+    UserRole,
 )
-from services.purge_service import request_delete_and_purge_now
 
 router = APIRouter(tags=["parent"])
 

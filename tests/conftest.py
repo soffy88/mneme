@@ -16,6 +16,13 @@ import os as _os
 # 测试环境放开注册闸门（生产/部署默认关，见 main._require_registration_open）
 _os.environ.setdefault("REGISTRATION_OPEN", "1")
 
+# 必须在 import obase.db / services.main 之前钉测试库。
+# 默认 Settings.DATABASE_URL 仍是 postgres:postgres@…/mneme：C4 后口令错，
+# 且库名是活库。见 tests/db_guard.py。
+from tests.db_guard import install_pytest_database_url
+
+install_pytest_database_url()
+
 import uuid
 
 import pytest

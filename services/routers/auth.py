@@ -9,7 +9,6 @@ from __future__ import annotations
 import os
 import re as _re_email
 from datetime import date
-from uuid import UUID
 
 from fastapi import APIRouter, Depends, HTTPException, Query, Request
 from obase.db import get_db

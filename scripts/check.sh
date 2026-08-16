@@ -70,6 +70,32 @@ resolve_test_db_url() {
 echo -e "\n${GREEN}==> Running Ruff...${NC}"
 "${RUN[@]}" ruff check .
 
+echo -e "\n${GREEN}==> vendor edu closure (runtime 不得 import 金融 3O 路径)...${NC}"
+if [ "$MODE" = "venv" ]; then
+    .venv/bin/python scripts/vendor_edu_closure.py --check
+else
+    docker compose exec -T api python scripts/vendor_edu_closure.py --check
+fi
+
+# 纯单测 / AST 红线：不依赖真 DB 业务数据，约数十秒。全量 pytest 仍走 mneme_test。
+echo -e "\n${GREEN}==> Smoke (red-line AST / sandbox / db_guard)...${NC}"
+SMOKE_FILES=(
+    tests/test_db_guard.py
+    tests/test_partner_no_self_judged_mastery.py
+    tests/test_vendor_edu_boundary.py
+    tests/test_sandbox_selfcheck.py
+    tests/test_sandbox_ast_audit.py
+    tests/test_sandbox_zero_bypass.py
+    tests/test_mastery_write_path_guards.py
+    tests/test_kernel_contract.py
+    tests/test_cognitive_store_lock.py
+)
+if [ "$MODE" = "venv" ]; then
+    "${RUN[@]}" pytest --no-cov -q "${SMOKE_FILES[@]}"
+else
+    docker compose exec -T api python -m pytest --no-cov -q "${SMOKE_FILES[@]}"
+fi
+
 echo -e "\n${GREEN}==> Running MyPy...${NC}"
 "${RUN[@]}" mypy --explicit-package-bases .
 

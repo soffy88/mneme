@@ -1,13 +1,13 @@
 """成就 / 联赛 / 学习者模型 / 用户设置 / 情感 / 纵向模式（自 main 拆出）。"""
 from __future__ import annotations
 
-from datetime import date, datetime, timedelta
+from datetime import UTC, date, datetime, timedelta
 from uuid import UUID
 
 from fastapi import APIRouter, Depends, HTTPException, Query
 from obase.db import get_db
 from pydantic import BaseModel
-from sqlalchemy import func, select
+from sqlalchemy import func, select, update
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from services.accessibility_service import (
@@ -16,7 +16,6 @@ from services.accessibility_service import (
     set_accessibility_prefs,
 )
 from services.auth_deps import (
-    _ensure_student_self,
     get_current_user,
     require_student_access,
 )
@@ -27,7 +26,13 @@ from services.feature_flags import (
     pedagogy_enabled,
 )
 from services.learner_model import MASTERED as _MASTERED
-from services.models import InteractionEvent, KCMastery, KnowledgeUnit, User
+from services.models import (
+    EffortfulGain,
+    InteractionEvent,
+    KCMastery,
+    User,
+    UserRole,
+)
 
 router = APIRouter(tags=["progress"])
 
@@ -124,7 +129,6 @@ async def get_league(
     """匿名同年级联赛（SDT 归属）：仅返回本人在同年级中的百分位/段位/队列人数，
     不含任何他人身份或分数（合规：未成年不暴露真实排名/PII）。
     U.24 教学机制 feature-flag（PEDAGOGY_LEAGUE_ENABLED=0 急停）。"""
-    from services.feature_flags import PEDAGOGY_LEAGUE, pedagogy_enabled
 
     if not pedagogy_enabled(PEDAGOGY_LEAGUE):
         raise HTTPException(status_code=404, detail="Feature disabled")
@@ -183,7 +187,6 @@ async def get_learner_model(
     返回长期掌握 P(L)、此刻可提取性 R、有效掌握、错因画像(粗心 vs 没学会)、下次复习。
     "协商挑战"（我觉得我会了→做一题验证）复用现有 practice/submit，本端点只做透明读。
     U.24 教学机制 feature-flag（PEDAGOGY_OLM_ENABLED=0 急停）。"""
-    from services.feature_flags import PEDAGOGY_OLM, pedagogy_enabled
 
     if not pedagogy_enabled(PEDAGOGY_OLM):
         raise HTTPException(status_code=404, detail="Feature disabled")
@@ -295,11 +298,6 @@ async def set_privacy(
 
 # ===== §U.23 UDL 无障碍 =====
 
-from services.accessibility_service import (
-    get_accessibility_prefs,
-    read_aloud_ku,
-    set_accessibility_prefs,
-)
 
 
 class AccessibilityPrefsReq(BaseModel):
@@ -362,7 +360,6 @@ async def get_affect(
     """情感感知（教育理念 08）：从近 12 次作答的**行为信号**估计情感态(挫败/脱离/心流/中性)
     + 自适应建议。启发式，无生物特征采集。
     U.24 教学机制 feature-flag（PEDAGOGY_AFFECT_ENABLED=0 急停）。"""
-    from services.feature_flags import PEDAGOGY_AFFECT, pedagogy_enabled
 
     if not pedagogy_enabled(PEDAGOGY_AFFECT):
         raise HTTPException(status_code=404, detail="Feature disabled")

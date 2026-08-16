@@ -3,7 +3,6 @@ from __future__ import annotations
 
 import base64
 import uuid
-from datetime import datetime, timedelta
 from pathlib import Path
 from uuid import UUID
 
@@ -18,31 +17,34 @@ from fastapi import (
 )
 from obase.db import get_db
 from pydantic import BaseModel, Field
-from sqlalchemy import func, or_, select
+from sqlalchemy import func, select, text
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from services.auth_deps import (
     _ensure_student_access,
     _ensure_student_self,
     get_current_user,
-    require_student_access,
 )
 from data.guangdong_math_kc import get_kc
 from services.cognitive_service import process_interaction
 from services.feature_flags import PEDAGOGY_FINE_FEEDBACK, pedagogy_enabled
 from services.instant_solve_service import get_pg_pool, handle_instant_solve
 from services.logging_config import logger
-from services.math_grade import grade_math
 from services.models import (
-    KnowledgeCluster,
     KnowledgeUnit,
     Textbook,
     User,
     WrongQuestion,
 )
-from services.solve_service import solve_problem
 
 router = APIRouter(tags=["practice"])
+
+
+def _mastery_color(p: float | None) -> str:
+    # L1 单源：委托 learner_model.mastery_color（阈值统一在那里）
+    from services.learner_model import mastery_color
+
+    return mastery_color(p)
 
 # ===== §H.1 求解接口 =====
 
@@ -463,7 +465,6 @@ async def post_practice_submit(
 
     # 刻意练习细颗粒反馈（教育理念 07）：答错且带步骤时，确定性定位首个错步（非整题重来）
     # U.24 教学机制 feature-flag（PEDAGOGY_FINE_FEEDBACK_ENABLED=0 急停）
-    from services.feature_flags import PEDAGOGY_FINE_FEEDBACK, pedagogy_enabled
 
     step_analysis = None
     if (
@@ -516,9 +517,7 @@ async def post_practice_submit(
 
 # ===== §Instant Solve =====
 
-import base64
 
-from services.instant_solve_service import get_pg_pool, handle_instant_solve
 
 
 @router.post("/v1/instant-solve")

@@ -1,7 +1,6 @@
 """每日任务 / 学科计划 / 计划偏好（自 main 拆出）。"""
 from __future__ import annotations
 
-from datetime import date
 from uuid import UUID
 
 from fastapi import APIRouter, Depends, HTTPException, Query
@@ -81,7 +80,6 @@ async def get_daily_plan(
 
     优先级：P1 FSRS到期 > P2 错题 > P3 薄弱 > P4 新知识点
     """
-    from services.daily_plan_service import build_daily_plan
 
     return await build_daily_plan(
         db, student_id, subject=subject, budget_minutes=budget_minutes
@@ -91,10 +89,6 @@ async def get_daily_plan(
 
 # ===== §V.2 每日计划参数可见+可配置 =====
 
-from services.daily_plan_prefs_service import (
-    get_daily_plan_prefs,
-    set_daily_plan_prefs,
-)
 
 
 class DailyPlanPrefsReq(BaseModel):

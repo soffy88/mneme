@@ -6,17 +6,19 @@ from uuid import UUID
 from fastapi import APIRouter, Depends, HTTPException, Query
 from fastapi.responses import StreamingResponse
 from obase.db import get_db
-from pydantic import BaseModel, Field
+from pydantic import BaseModel
+from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from services.auth_deps import (
     _ensure_session_owner,
+    _ensure_student_access,
     _ensure_student_self,
     get_current_user,
-    require_student_access,
 )
 from obase.provider_registry import ProviderRegistry
-from services.models import User
+from services.instant_solve_service import get_pg_pool
+from services.models import User, UserRole
 
 router = APIRouter(tags=["subjects"])
 
@@ -191,7 +193,6 @@ async def post_force_analysis_message(
         async for chunk in force_analysis_message_stream(db, session_id, message):
             yield chunk
 
-    from fastapi.responses import StreamingResponse
 
     return StreamingResponse(event_stream(), media_type="text/event-stream")
 
@@ -303,7 +304,6 @@ async def post_reading_guide_message(
         async for chunk in reading_guide_message_stream(db, session_id, message):
             yield chunk
 
-    from fastapi.responses import StreamingResponse
 
     return StreamingResponse(event_stream(), media_type="text/event-stream")
 

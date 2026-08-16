@@ -156,8 +156,10 @@ async def process_interaction_workflow(
     now = input_data.now or datetime.now(timezone.utc)
 
     # 1. 获取当前状态 (传题型以获取正确的先验)
+    #    写路径：加 FOR UPDATE 行锁，防止并发同 (student, kc) 丢更新。
     state, card_dict = await store.get_or_create(
-        input_data.student_id, input_data.ku_id, input_data.question_type
+        input_data.student_id, input_data.ku_id, input_data.question_type,
+        for_update=True,
     )
 
     # 2. 调用认知更新算法 (oskill)
