@@ -361,7 +361,7 @@ async def request_echo_drive(inp: EchoDriveInput) -> EchoDriveOutput:
         )
 
     try:
-        from vendor.oprim.echo_drive import echo_drive
+        from oprim.echo_drive import echo_drive
 
         result = await echo_drive(
             audio_b64=inp.audio_b64,

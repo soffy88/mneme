@@ -218,9 +218,11 @@ async def get_learner_model(
         p_slip=row.p_slip,
         p_mastery=pm,
         p_recognition=row.p_recognition,
-        p_recognition_init=row.p_recognition_init,
+        p_recognition_init=row.p_recognition_init or 0.20,
         long_term_mastery=row.long_term_mastery,
-        last_interaction_ts=row.last_interaction_at,
+        last_interaction_ts=(
+            row.last_interaction_at.timestamp() if row.last_interaction_at else None
+        ),
         n_attempts=row.n_attempts or 0,
     )
     careless_w, dontknow_w = bkt_error_weights(state=state)

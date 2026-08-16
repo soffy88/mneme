@@ -98,7 +98,7 @@ async def get_mastery_curve(
         "ku_name": (kc.name if kc else ((_kcd.get("name") if _kcd else None) or ku_id)),
         "points": [
             {
-                "month": r.snapshot_month.isoformat(),
+                "month": r.snapshot_month.isoformat() if r.snapshot_month else None,
                 "mastery": round(r.long_term_mastery, 4) if r.long_term_mastery else 0,
                 "dominant_error_type": r.dominant_error_type,
             }
@@ -243,7 +243,7 @@ async def _textbook_file_map(
 
 async def _mastery_map(
     db: AsyncSession, student_id: UUID, ku_ids: list[str]
-) -> dict[str, float]:
+) -> dict[str, float | None]:
     """返回 {ku_id: p_mastery}，只查询该学生。"""
     if not ku_ids or not student_id:
         return {}

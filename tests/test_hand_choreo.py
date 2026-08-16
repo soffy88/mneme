@@ -2,8 +2,8 @@
 
 from __future__ import annotations
 
-from vendor.oprim.midi_parse import MidiFeature
-from vendor.oskill.hand_choreo import (
+from oprim.midi_parse import MidiFeature
+from oskill.hand_choreo import (
     HandChoreoParams,
     choreograph_hands,
     gesture_hands,

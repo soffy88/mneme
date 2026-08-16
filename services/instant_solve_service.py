@@ -50,7 +50,7 @@ async def handle_instant_solve(
 
 async def handle_deep_solve(problem_text: str) -> dict:
     """深度研究 (Deep Solve): 执行多步推理解题路线图。"""
-    from vendor.omodul.deep_solve_workflow import deep_solve_workflow, DeepSolveConfig, DeepSolveInput
+    from omodul.deep_solve_workflow import deep_solve_workflow, DeepSolveConfig, DeepSolveInput
     caller = ProviderRegistry.get().llm() if ProviderRegistry._instance else None
 
     config = DeepSolveConfig()

@@ -19,7 +19,7 @@ from services.aria_media import (
     request_echo_drive,
     runtime_features,
 )
-from vendor.oprim.echo_drive import (
+from oprim.echo_drive import (
     EchoDriveResult,
     echo_available,
     echo_drive,

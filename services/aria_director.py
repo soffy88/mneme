@@ -269,9 +269,9 @@ async def direct(inp: AriaDirectorInput) -> AriaDirectorOutput:
             api_key=key, model=os.environ.get("QWEN_MODEL", "qwen-plus")
         )
         hist_txt = ""
-        for h in (inp.history or [])[-8:]:
-            role = h.get("role", "user")
-            content = h.get("content", "")
+        for hist_item in (inp.history or [])[-8:]:
+            role = hist_item.get("role", "user")
+            content = hist_item.get("content", "")
             hist_txt += f"{role}: {content}\n"
 
         perception_line = ""

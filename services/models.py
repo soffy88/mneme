@@ -242,6 +242,8 @@ class WrongQuestion(Base):
     step_analysis: Mapped[Optional[dict]] = mapped_column(
         JSONB
     )  # T.6 步骤链批改：{student_steps, step_verdicts, first_wrong_step(0-based|null)}
+    # ZPD 难度自适应排序用（迁移 8ad19eb4ab90）：未校准(NULL)时按 999.0 距离兜底
+    item_difficulty: Mapped[Optional[float]] = mapped_column(Float, nullable=True)
 
 
 # ===== 认知状态（内核落库）=====

@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import pytest
 
-from vendor.oprim.vlm_scene import (
+from oprim.vlm_scene import (
     AriaScenePerception,
     parse_text_scene,
     _parse_vlm_response,

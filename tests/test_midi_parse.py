@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from vendor.oprim.midi_parse import (
+from oprim.midi_parse import (
     MidiEvent,
     MidiFeature,
     midi_to_keyboard_position,

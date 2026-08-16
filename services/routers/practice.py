@@ -19,6 +19,7 @@ from obase.db import get_db
 from pydantic import BaseModel, Field
 from sqlalchemy import func, select, text
 from sqlalchemy.ext.asyncio import AsyncSession
+from typing import Any
 
 from services.auth_deps import (
     _ensure_student_access,
@@ -215,7 +216,7 @@ async def list_question_bank(
     # ── 难度自适应排序 (ZPD Band) ──
     from services.learner_model import get_mastery, get_zpd_band
 
-    order_clause = WrongQuestion.created_at
+    order_clause: Any = WrongQuestion.created_at
     if student_id and ku_id:
         mastery_info = await get_mastery(db, student_id, ku_id)
         p = mastery_info.get("p")
@@ -223,10 +224,13 @@ async def list_question_bank(
             zpd = get_zpd_band(p)
             target = (zpd["difficulty_min"] + zpd["difficulty_max"]) / 2.0
             # 使用 Postgres ABS 计算与目标难度的距离。未校准的题目 (item_difficulty IS NULL) 当作距离很远
-            # 按距离升序排列，越接近 target 的题越排在前面
-            order_clause = func.coalesce(
-                func.abs(WrongQuestion.item_difficulty - target), 999.0
-            ).asc()
+            # 按距离升序排列，越接近 target 的题越排在前面。
+            # 列随迁移 8ad19eb4ab90 上线；迁移未应用时 getattr 返回 None，跳过排序分支。
+            item_difficulty = getattr(WrongQuestion, "item_difficulty", None)
+            if item_difficulty is not None:
+                order_clause = func.coalesce(
+                    func.abs(item_difficulty - target), 999.0
+                ).asc()
 
     rows = (
         (await db.execute(stmt.order_by(order_clause).offset(offset).limit(limit)))

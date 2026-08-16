@@ -130,7 +130,7 @@ async def start_textbook_qa_session(
     session = SocraticSession(
         id=session_id,
         student_id=student_id,
-        mode=SocraticMode.textbook_qa
+        mode=SocraticMode.textbook_qa  # type: ignore[attr-defined]
         if hasattr(SocraticMode, "textbook_qa")
         else SocraticMode.reading_guide,
         messages={
@@ -194,6 +194,9 @@ async def textbook_qa_stream(
     # 获取学习者 L2 画像
     from oprim.learner_profile_summary import get_latest_learner_profile
 
+    if row.student_id is None:
+        yield f"data: {json.dumps({'error': 'session has no student'}, ensure_ascii=False)}\n\n"
+        return
     learner_profile = await get_latest_learner_profile(db, row.student_id)
 
     # 构建对话历史（只传 role/content，不传内部字段）

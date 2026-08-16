@@ -64,8 +64,9 @@ MaaS 专属部署 OpenAI 兼容端点）/ Docker Compose / pytest。
 
 ## 当前状态
 
-- **测试**（2026-08-16，宿主 pytest → `mneme_test`，约 3 min）：1095 passed / 29 failed / 6 skipped / 2 errors。其中 L1 单源自检已改扫 `services/routers` 并复跑通过，余 28 fail + 2 error 为环境/数据（ollama embed、CLI vs 活服务、book compile、knowledge hub、MCP rubric、placement CAT、echo/hand、s1 grading），本包不追。`check.sh` smoke 44 passed。
-- **覆盖率**：83.02%（services，greenlet concurrency；`fail_under=60`）
+- **测试**（2026-08-16，宿主 pytest → `mneme_test`，约 3 min）：1100 passed / 26 failed / 4 skipped / 2 errors。失败全为环境/数据（ollama embed、CLI vs 活服务、book compile、knowledge hub、MCP rubric、provider 顺序、echo/hand、s1 grading、error_journal 运行时表、mcp_request_question 缺种子题）——已用 stash 对照 HEAD~1 验证**零回归**（HEAD~1 为 1099/27/4/2，失败集完全一致）。`check.sh` smoke 44 passed。
+- **覆盖率**：83%（services，greenlet concurrency；`fail_under=60`）
+- **mypy**：第一方代码 0 错误（docker/scratch 外部/实验目录排除；旧“vendor 双重模块名”已随 vendor.* import 统一为 oprim.* 消解）
 - **代码审查图（CRG）**：code-review-graph 已接入 opencode（`opencode.jsonc` MCP + 全局 crg-plugin 钩子），
   `.code-review-graph/` 已入 .gitignore；**本地 CRG 已取消默认忽略 `**/vendor/**`**（mneme vendor=3O 内核），
   项目 `.code-review-graphignore` 排除 studio node_modules / fay / PDF；全量图 ~9.8k 节点
@@ -81,8 +82,11 @@ MaaS 专属部署 OpenAI 兼容端点）/ Docker Compose / pytest。
 - **注册**：邮箱（Z.2），SMS 仍 mock，注册闸门 `REGISTRATION_OPEN=0`
 - **环境**：`MNEME_ENV=demo`（非 prod）
 - **Ruff**：默认缺陷集 E4/E7/E9/F = 0（`[tool.ruff.lint] select` 钉死，防版本漂移扩成上千条风格规则）
-- **Git**：分支 `chore/test-pythonpath-fix`；质量可复现包已提交（db_guard 钉 `mneme_test` + ruff 清零 + smoke/edu-closure）
+- **Git**：分支 `chore/test-pythonpath-fix`；质量可复现包已提交（db_guard 钉 `mneme_test` + ruff 清零 + smoke/edu-closure）；第二轮 vendor 裁剪 + mypy 清零待提交
 - **容器**：api + worker + beat + db + redis + minio；echomimic 侧车宿主机 native（profile=gpu）
+- **待应用迁移**：`8ad19eb4ab90`（wrong_questions.item_difficulty，nullable 补列）已应用
+  到 mneme_test；活库 `mneme` 待 api 容器下次重启时 alembic 自动应用（代码已 getattr
+  防御，重启前不会 500）
 - **前端**：mneme-web 独立仓库，旧 `frontend/` 已删（tag `archive/frontend-legacy`）
 
 ## 红线（违反 = task 未完成）
@@ -100,8 +104,7 @@ MaaS 专属部署 OpenAI 兼容端点）/ Docker Compose / pytest。
 
 ## 已知技术债 / 遗留
 
-- 全量 28 fail + 2 error（环境/数据，见「当前状态」）；旧账「daily_plan FSRS×3 + dod_e2e」在 `mneme_test` 上已过
-- mypy 1 处既有违规（vendor/omodul 双重模块名）；ruff 默认集已清零
+- 全量 26 fail + 2 error（环境/数据，见「当前状态」；已与 HEAD~1 对照确认零回归）
 - 变式题 `_VARIANT_SYSTEM` prompt 硬编码 "math question generator"，物理/语文未调优
 - 英语 `knowledge_units` 为空（走独立词汇 FSRS 体系 U.19）
 - Stratum 语料库为空（C4 通路已通，内容填充未做）
@@ -125,6 +128,17 @@ MaaS 专属部署 OpenAI 兼容端点）/ Docker Compose / pytest。
 
 ## ✅ 近期完成（倒序，仅列最近一批）
 
+- **vendor 第二轮裁剪 + mypy 清零**（2026-08-16）：删 113 个未引用金融/量化/支付文件
+  （alipay/stripe/okx/stat_arb/macro_*/risk_*/llm_agent 多空/ohlcv_store/price_store/
+  crypto 交易族/backtest 族 + autoheal_cycle/backup_app_data/generative_video_pipeline），
+  `vendor_edu_closure.py --check` 升级为**文件存在性守卫**（防整仓 dump 回流，白名单仅
+  合法密码学/DB 事务设施）；`vendor.oprim.*` 历史导入风格统一为 `oprim.*`（消解 mypy
+  双重模块名）；mypy 第一方 15 处真实类型错误清零（aria 循环变量遮蔽、KCState
+  datetime→unix ts、mastery_map 泛型等）；**修复真实运行时 bug**：question-bank ZPD 排序
+  引用不存在的 `WrongQuestion.item_difficulty`（迁移 8ad19eb4ab90 补列 + getattr 防御）；
+  check.sh 加 ruff/mypy 缓存目录不可写回退；清理 mneme_test 历史污染行（JSON 'null'
+  fsrs_card_json、test-* fixture KU）后 daily_plan/retention/review 恢复确定性。
+  对照 HEAD~1 全量验证零回归。
 - **质量数字可复现**（2026-08-16）：宿主 pytest 经 `tests/db_guard.py` 钉 `mneme_test` + `.env` 现口令（fail-closed，禁打活库 `mneme`）；ruff 钉 E4/E7/E9/F 并清零；`check.sh` 加 smoke（44）+ `vendor_edu_closure --check`；L1 单源自检改扫 routers；`PgStore.get_or_create(for_update=)` 写路径显式加锁。全量 1095/29/6/2、cov 83%。未写 `DATABASE_URL` 进 `.env`（compose 活库用 `/mneme`）。oservi/chat 见「需人决策」。
 - **CRG 审查闭环**（2026-08-04）：接入 code-review-graph（opencode MCP + 插件 + AGENTS.md 指引），
   修复高/中风险缺口 —— 新增 89 个测试（prod 禁 mock 旁路红线 19 测 / SMS+Email fail-closed /

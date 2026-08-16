@@ -9,7 +9,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 SCAN_ROOTS = ("services", "tasks", "cli", "packages")
 IMPORT_RE = re.compile(
-    r"^\s*(?:from|import)\s+((?:oprim|oskill|omodul|obase)(?:\.[\w]+)*)",
+    r"^\s*(?:from|import)\s+(?:(?:vendor)\.)?((?:oprim|oskill|omodul|obase)(?:\.[\w]+)*)",
     re.M,
 )
 FINANCE_KEYS = (

@@ -50,6 +50,8 @@ async def _process_paper_async(paper_id: str) -> dict:
         paper = (await db.execute(select(Paper).where(Paper.id == pid))).scalar_one_or_none()
         if not paper:
             return {"status": "failed", "error": "paper not found"}
+        if paper.student_id is None:
+            return {"status": "failed", "error": "paper has no student"}
 
         object_names = list((paper.image_urls or {}).values())
         if not object_names:

@@ -8,9 +8,10 @@ from __future__ import annotations
 
 import uuid
 from datetime import datetime, timezone
-from typing import Any
+from typing import Any, cast
 
 from sqlalchemy import delete, select
+from sqlalchemy.engine import CursorResult
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from services.cornell_merge import CornellMergeError, merge_cornell_state
@@ -151,4 +152,4 @@ async def delete_progress(
         )
     )
     await db.flush()
-    return (result.rowcount or 0) > 0
+    return (cast(CursorResult, result).rowcount or 0) > 0

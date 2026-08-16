@@ -209,17 +209,21 @@ class AriaBrain:
     async def _director_call(self, event: str, message: str) -> dict[str, Any] | None:
         """Call the Director LLM for a behavioral decision."""
         try:
-            from services.aria_director import AriaDirectorInput, direct
+            from services.aria_director import AriaDirectorInput, AriaDirectorState, direct
 
             inp = AriaDirectorInput(
                 event=event,  # type: ignore[arg-type]
                 message=message or None,
                 history=self._history[-10:],
-                state={
-                    "mode": "playing" if self.state == BrainState.PLAYING else "conversation",
-                    "last_action": self.state.value,
-                    "emotion": self._emotion,
-                },
+                state=AriaDirectorState(
+                    mode=(
+                        "playing"
+                        if self.state == BrainState.PLAYING
+                        else "conversation"
+                    ),
+                    last_action=self.state.value,
+                    emotion=self._emotion,
+                ),
             )
             out = await direct(inp)
             self._emotion = out.emotion

@@ -115,7 +115,7 @@ check_untyped_defs = false
 #   第一方代码做类型解析（否则 mypy 解析到 site-packages 里镜像构建时装入的旧版内核，
 #   报出与运行时不符的 "Unexpected keyword argument"）。
 # alembic/versions/: 一次性数据迁移脚本（多为自动生成/数据管线），与 scripts/ 同类。
-exclude = "(main\\.py|test_engine\\.py|test_proxy\\.py|tasks/paper_tasks\\.py|mnt/.*|\\.venv/.*|data/.*|tests/.*|scripts/.*|vendor/.*|alembic/versions/.*)"
+exclude = "(main\\.py|test_engine\\.py|test_proxy\\.py|tasks/paper_tasks\\.py|mnt/.*|\\.venv/.*|data/.*|tests/.*|scripts/.*|vendor/.*|alembic/versions/.*|docker/.*|scratch/.*)"
 # 让 oprim/oskill/omodul/obase 解析到 vendor 副本（与运行时 sys.path 注入一致）。
 mypy_path = "vendor"
 

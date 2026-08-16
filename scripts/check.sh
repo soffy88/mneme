@@ -16,9 +16,22 @@ set -e
 GREEN='\033[0;32m'
 RED='\033[0;31m'
 NC='\033[0m' # No Color
+YELLOW='\033[0;33m'
 
 REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$REPO_ROOT"
+
+# ruff 缓存目录可能被 root 创建过（历史权限噪音），不可写时回退到临时目录，
+# 保证 ruff 步骤在任何环境下都能跑（缓存只是加速，不影响结果）。
+if [ -d "$REPO_ROOT/.ruff_cache" ] && [ ! -w "$REPO_ROOT/.ruff_cache" ]; then
+    export RUFF_CACHE_DIR="$(mktemp -d /tmp/ruff-cache-XXXXXX)"
+    echo -e "${YELLOW}==> .ruff_cache 不可写，ruff 缓存回退到 $RUFF_CACHE_DIR${NC}"
+fi
+# mypy 缓存同理（root 占用的 .mypy_cache 会让 mypy 直接 INTERNAL ERROR）。
+if [ -d "$REPO_ROOT/.mypy_cache" ] && [ ! -w "$REPO_ROOT/.mypy_cache" ]; then
+    export MYPY_CACHE_DIR="$(mktemp -d /tmp/mypy-cache-XXXXXX)"
+    echo -e "${YELLOW}==> .mypy_cache 不可写，mypy 缓存回退到 $MYPY_CACHE_DIR${NC}"
+fi
 
 # 选择执行环境
 if [ -x ".venv/bin/python" ]; then
