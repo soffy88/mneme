@@ -173,7 +173,7 @@ async def get_mastery(
                     kid = it.get("ku_id")
                     name = nm.get(kid)
                     if not name:  # 回退广东 KC 字典(GDMATH-* 等老命名)
-                        kc = get_kc(kid)
+                        kc = get_kc(kid) if kid else None
                         name = (kc.get("name") if kc else None) or kid
                     it["ku_name"] = name
         return items

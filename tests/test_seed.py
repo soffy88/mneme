@@ -15,6 +15,30 @@ from services.models import BKTPrior
 from services.seed import seed_bkt_priors
 
 EXPECTED_ROWS = sum(len(kc.get("question_types", ["solve"])) for kc in KC_LIST)
+# 当前 KC 集 × 题型的精确 (kc_id, question_type) 对：seed 是 upsert 不删旧行，
+# KC 字典换代后同名 KC 的旧题型行合法残留（生产同行为），行数断言必须
+# 限定在当前 (kc_id, question_type) 对集合内。
+_CURRENT_KC_QTYPE_PAIRS = {
+    (kc["kc_id"], qt)
+    for kc in KC_LIST
+    for qt in kc.get("question_types", ["solve"])
+}
+
+
+async def _count_current_kc_rows(db_session: AsyncSession) -> int:
+    from sqlalchemy import tuple_
+
+    return (
+        await db_session.execute(
+            select(func.count())
+            .select_from(BKTPrior)
+            .where(
+                tuple_(BKTPrior.knowledge_point, BKTPrior.question_type).in_(
+                    list(_CURRENT_KC_QTYPE_PAIRS)
+                )
+            )
+        )
+    ).scalar_one()
 
 
 @pytest.fixture(scope="function")
@@ -32,9 +56,9 @@ async def test_seed_row_count(db_session):
     await seed_bkt_priors(db_session)
     await db_session.commit()
 
-    count = (await db_session.execute(select(func.count()).select_from(BKTPrior))).scalar_one()
+    count = await _count_current_kc_rows(db_session)
     assert count == EXPECTED_ROWS, (
-        f"bkt_priors 应有 {EXPECTED_ROWS} 行 (29 KC × 题型展开)，实际 {count}"
+        f"bkt_priors 应有 {EXPECTED_ROWS} 行 ({len(KC_LIST)} KC × 题型展开)，实际 {count}"
     )
     print(f"  bkt_priors 行数正确: {count} = {len(KC_LIST)} KC × 题型 ✓")
 
@@ -47,9 +71,9 @@ async def test_seed_idempotent(db_session):
     await seed_bkt_priors(db_session)
     await db_session.commit()
 
-    count = (await db_session.execute(select(func.count()).select_from(BKTPrior))).scalar_one()
+    count = await _count_current_kc_rows(db_session)
     assert count == EXPECTED_ROWS, (
-        f"重复 seed 后行数应仍为 {EXPECTED_ROWS}，实际 {count}"
+        f"重复 seed 后行数应仍为 {EXPECTED_ROWS} ({len(KC_LIST)} KC)，实际 {count}"
     )
     print(f"  幂等验证通过: 两次 seed 后仍 {count} 行 ✓")
 

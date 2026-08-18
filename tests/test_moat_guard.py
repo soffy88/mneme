@@ -9,6 +9,9 @@ exp1 快速档（100 学生 × 20 学习日，约 4-5k 交互，单 seed ~1s）�
   或走质量门：MOAT=1 bash scripts/check.sh
 - 快速档规模选取依据：30 个 seed 扫描 min AUC=0.654 / mean=0.677（与全量档
   200×25 的 0.677 一致）；固定守卫 seed 42/7/2026 → 0.675/0.683/0.673。
+  KC v2 迁移（29→62）后 common.py KC_POOL 改为跨模块等距采样（前 12 个会全
+  挤在集合/逻辑基础模块，世界构成单一化压低 AUC），重扫 30 seeds：
+  min=0.670 / mean=0.691；守卫 seed 42/7/2026 → 0.689/0.676/0.686。门 0.65 不变。
 """
 
 from __future__ import annotations
