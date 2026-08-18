@@ -2549,3 +2549,28 @@ CI 常驻的判分准确率回归门，堵死"构造桩题掩盖真实数据判�
   AriaDigitalHuman echoVideoUrl prop（video 优先于 PNG）；
   AriaStage echoVideoUrl state；角标显示 `echo` 标识；
   tests 103 passed（P1 34 + P2 43 + P3 17 + 原有 9）。
+
+## GH · 对标标杆差距清偿（2026-08-17，源自 outputs/GAP-REVIEW-20260817.md）
+
+> 背景：代码级对标审查确认白盒双内核为真优势，但所有对标指标（AUC 0.80 /
+> Cohen's d 0.35 等）零真实数据支撑。本 Epic 先清偿"不需要真实学生就能推进"
+> 的三项，真实 pilot 相关项挂起等人决策。
+
+- [x] **GH-1 ASSISTments 外部 AUC 对标**：用 ASSISTments 2009-2010 skill-builder
+  公开数据集回放 `oskill.cognitive_update`（与 exp1 同路径），报外部真实数据
+  AUC/log-loss，对照合成基线与 0.77 目标。产出 `scripts/moat_eval/exp5_external_auc.py`
+  + 数据落 `data/external/`（不入主库、不涉未成年人——公开匿名化研究数据）+ 测试。
+  首跑：generic overall AUC=0.650（warm 0.673），calibrated 0.707（warm 0.710）；
+  达文献 BKT 细粒度水平，0.77+ 需 DKT 级序列建模（GH-3）。
+- [x] **GH-2 recognition 维度独立验证**（exp6）：纯模拟实验验证 M-G 识别维度
+  在"混合情境需识别 KC"设定下的判别增益，moat_eval 家族补上唯一没被测过的维度。
+  产出 `scripts/moat_eval/exp6_recognition.py` + `tests/test_recognition_guard.py`
+  （快速档默认跑，MOAT=1 全量档）。首跑 7 seeds 全过：AUC 增益 +0.012~+0.063，
+  惰性知识捕获（交错型 p_recognition 更高、迁移错误率更低）成立。
+- [ ] **GH-3 DKT 影子评估管道预建**：不训练模型，只建"真实作答序列 → 内核回放
+  vs 序列基线（如 per-KC 移动平均）"的对比脚手架，为真实数据到位后的 DKT 影子
+  模型（Master §4.7 Phase 3）铺路。
+- [ ] **GH-4 chat 断链修复**（⚠️ 需人决策：A 补 IDaemon_Bus+挂载需重启活 api /
+  B chat 去 oservi 化 / C 接受仅 dev）——见 STATUS.md「需人决策」。
+- [ ] **GH-5 真人 pilot 启动**（⚠️ 需人决策/运营）：FSRS 拟合 400 间隔复习对门槛、
+  FIRe A/B、RCT、0.77 AUC 验证全部以此为前提。

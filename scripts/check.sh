@@ -125,13 +125,15 @@ else
 fi
 
 if [ "${MOAT:-0}" = "1" ]; then
-    echo -e "\n${GREEN}==> Running Moat Guard (MOAT=1, kernel synthetic AUC gate)...${NC}"
+    echo -e "\n${GREEN}==> Running Moat Guards (MOAT=1, exp1/exp6 回归门)...${NC}"
     # 单独跑守卫文件：--no-cov 关闭覆盖率（fail_under 针对全量套件，不适用单文件）。
+    # test_moat_guard=exp1 合成 AUC；test_recognition_guard=exp6 识别维度（GH-2）。
+    # test_external_auc（GH-1）依赖本地 data/external（不入主库），不进门、手动跑。
     [ -z "${TEST_DB_URL:-}" ] && resolve_test_db_url   # SKIP_PYTEST=1 时也要解析
     if [ "$MODE" = "venv" ]; then
-        MOAT=1 DATABASE_URL="$TEST_DB_URL" .venv/bin/python -m pytest tests/test_moat_guard.py -q --no-cov
+        MOAT=1 DATABASE_URL="$TEST_DB_URL" .venv/bin/python -m pytest tests/test_moat_guard.py tests/test_recognition_guard.py -q --no-cov
     else
-        docker compose exec -T -e MOAT=1 -e DATABASE_URL="$TEST_DB_URL" api python -m pytest tests/test_moat_guard.py -q --no-cov
+        docker compose exec -T -e MOAT=1 -e DATABASE_URL="$TEST_DB_URL" api python -m pytest tests/test_moat_guard.py tests/test_recognition_guard.py -q --no-cov
     fi
 fi
 

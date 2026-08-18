@@ -28,6 +28,12 @@ docker compose exec -T -e MOAT_TRUTH=fsrs api python scripts/moat_eval/exp3_sche
 # 实验 4：FIRe-lite 接线决策（纯模拟，不碰任何库；~4min）
 docker compose exec -T -w /app/scripts/moat_eval api python exp4_fire.py
 
+# 实验 5：ASSISTments 真实数据外部 AUC 对标（GH-1，纯回放不碰库；~1min）
+docker compose exec -T api python scripts/moat_eval/exp5_external_auc.py
+
+# 实验 6：recognition 识别维度独立验证（GH-2，纯模拟不碰库；~2s）
+docker compose exec -T api python scripts/moat_eval/exp6_recognition.py
+
 # 收尾：丢弃隔离库
 docker compose exec -T db psql -U postgres -c "DROP DATABASE mneme_moat_eval;"
 ```
@@ -52,6 +58,20 @@ docker compose exec -T db psql -U postgres -c "DROP DATABASE mneme_moat_eval;"
   对抗世界保留率损失 4.8pp（>2pp）→ **未达 Master §4.8 接线门槛，FIRe 默认关**
   （env `FIRE_ENABLED=1` 才开）。κ 上限 κ0·0.97≈0.49 决定了单次顺延 ≤ 半个自然
   间隔，机制本身保守，负结果诚实保留。
+- **exp5_external_auc.py**（GH-1，2026-08-17）：ASSISTments 2009-2010 skill-builder
+  公开真实数据（`data/external/`，DKVMN 预处理版，4029 生 / 325k 事件 / 110 skill）
+  回放生产算法路径。无时间戳 → R 恒 1（纯 BKT 退化，文献标准口径）。
+  **首跑结果**：generic 冷启动 overall AUC=0.650（warm 0.673）；
+  calibrated（train 矩估计先验→test 评估，无泄漏）overall AUC=0.707（warm 0.710）。
+  结论：内核达文献 BKT 细粒度水平（0.65–0.72），校准飞轮在真实数据上有效（+5.7pp）；
+  0.77+ 需 DKT 级序列建模（见 GH-3）。
+- **exp6_recognition.py**（GH-2，2026-08-18）：moat_eval 家族唯一没被测过的
+  recognition 维度（M-G §4.5）独立验证。显式双维度真值世界（mastery/recog 分离，
+  动力学与内核刻意不同源）：专项型 vs 交错型学生对照，训练期后纯混合迁移测试。
+  **首跑结果（7 seeds × 150 生，全部通过）**：带识别预测 AUC 增益 +0.012~+0.063
+  （seed42: 0.590→0.649），logloss 0.808→0.677；内核终态 p_recognition 交错型
+  0.282 > 专项型 0.234，迁移错误率专项型 0.633 > 交错型 0.558——判别增益、
+  惰性知识捕获、校准改善三断言成立。
 
 ## CI 守卫（T.4）
 
