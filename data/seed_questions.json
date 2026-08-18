@@ -1,0 +1,3757 @@
+{
+  "GDMATH-SET-01": [
+    {
+      "kc_id": "GDMATH-SET-01",
+      "question_type": "choice",
+      "question_text": "已知集合A={x∈N|x²-3x+2=0}，则A中元素个数为",
+      "correct_answer": "2",
+      "difficulty": 0.15,
+      "verified": true,
+      "options": [
+        "A.0",
+        "B.1",
+        "C.2",
+        "D.3"
+      ]
+    },
+    {
+      "kc_id": "GDMATH-SET-01",
+      "question_type": "choice",
+      "question_text": "下列关系中正确的是",
+      "correct_answer": "C",
+      "difficulty": 0.12,
+      "verified": true,
+      "options": [
+        "A.0∈∅",
+        "B.∅∈{0}",
+        "C.0∈{0}",
+        "D.∅={0}"
+      ]
+    },
+    {
+      "kc_id": "GDMATH-SET-01",
+      "question_type": "choice",
+      "question_text": "集合A={x|x²-5x+6=0}用列举法表示为",
+      "correct_answer": "A",
+      "difficulty": 0.18,
+      "verified": true,
+      "options": [
+        "A.{2,3}",
+        "B.{-2,-3}",
+        "C.{2,-3}",
+        "D.{-2,3}"
+      ]
+    },
+    {
+      "kc_id": "GDMATH-SET-01",
+      "question_type": "fill",
+      "question_text": "已知A={x|x²-4=0}，则A中元素之和为______",
+      "correct_answer": "0",
+      "difficulty": 0.2,
+      "verified": true
+    },
+    {
+      "kc_id": "GDMATH-SET-01",
+      "question_type": "fill",
+      "question_text": "若1∈{x|x²-ax+1=0}，则a=______",
+      "correct_answer": "2",
+      "difficulty": 0.25,
+      "verified": true
+    },
+    {
+      "kc_id": "GDMATH-SET-01",
+      "question_type": "solve",
+      "question_text": "已知A={x|x²-3x+2=0}，B={x|x²-2x=0}，求A∪B和A∩B。",
+      "correct_answer": "A∪B={0,1,2},A∩B={2}",
+      "difficulty": 0.25,
+      "verified": false,
+      "steps": [
+        "解x²-3x+2=0得x=1或x=2，A={1,2}",
+        "解x²-2x=0得x=0或x=2，B={0,2}",
+        "A∪B={0,1,2}，A∩B={2}"
+      ]
+    }
+  ],
+  "GDMATH-SET-02": [
+    {
+      "kc_id": "GDMATH-SET-02",
+      "question_type": "choice",
+      "question_text": "若A={x|x²-1=0}，B={-1,0,1}，则A与B关系是",
+      "correct_answer": "B",
+      "difficulty": 0.2,
+      "verified": true,
+      "options": [
+        "A.A⊂B",
+        "B.A⊊B",
+        "C.A=B",
+        "D.A⊋B"
+      ]
+    },
+    {
+      "kc_id": "GDMATH-SET-02",
+      "question_type": "choice",
+      "question_text": "已知A={1,2,3}，则A的子集个数为",
+      "correct_answer": "C",
+      "difficulty": 0.18,
+      "verified": true,
+      "options": [
+        "A.3",
+        "B.6",
+        "C.8",
+        "D.9"
+      ]
+    },
+    {
+      "kc_id": "GDMATH-SET-02",
+      "question_type": "choice",
+      "question_text": "A={x|x²-3x+2=0}，B={x|x²-2x=0}，则A∩B=",
+      "correct_answer": "B",
+      "difficulty": 0.22,
+      "verified": true,
+      "options": [
+        "A.{0}",
+        "B.{2}",
+        "C.{1}",
+        "D.∅"
+      ]
+    },
+    {
+      "kc_id": "GDMATH-SET-02",
+      "question_type": "fill",
+      "question_text": "A={1,2,3}，A的真子集个数为______",
+      "correct_answer": "7",
+      "difficulty": 0.25,
+      "verified": true
+    },
+    {
+      "kc_id": "GDMATH-SET-02",
+      "question_type": "fill",
+      "question_text": "A={x|x≤2}，B={x|x<a}，A⊆B则a范围______",
+      "correct_answer": "a>2",
+      "difficulty": 0.3,
+      "verified": true
+    },
+    {
+      "kc_id": "GDMATH-SET-02",
+      "question_type": "solve",
+      "question_text": "A={x|-2≤x≤5}，B={x|m+1≤x≤2m-1}，B⊆A，求m范围。",
+      "correct_answer": "m∈(-∞,3]",
+      "difficulty": 0.35,
+      "verified": false,
+      "steps": [
+        "B=∅时m+1>2m-1得m<2",
+        "B≠∅时m+1≥-2且2m-1≤5且m+1≤2m-1",
+        "解得2≤m≤3",
+        "综上m∈(-∞,3]"
+      ]
+    }
+  ],
+  "GDMATH-LOGIC-01": [
+    {
+      "kc_id": "GDMATH-LOGIC-01",
+      "question_type": "choice",
+      "question_text": "x>1是x²>1的",
+      "correct_answer": "A",
+      "difficulty": 0.2,
+      "verified": true,
+      "options": [
+        "A.充分不必要",
+        "B.必要不充分",
+        "C.充要",
+        "D.既不充分也不必要"
+      ]
+    },
+    {
+      "kc_id": "GDMATH-LOGIC-01",
+      "question_type": "choice",
+      "question_text": "a=b是a²=b²的",
+      "correct_answer": "A",
+      "difficulty": 0.18,
+      "verified": true,
+      "options": [
+        "A.充分不必要",
+        "B.必要不充分",
+        "C.充要",
+        "D.既不充分也不必要"
+      ]
+    },
+    {
+      "kc_id": "GDMATH-LOGIC-01",
+      "question_type": "choice",
+      "question_text": "x=2是x²-4=0的",
+      "correct_answer": "A",
+      "difficulty": 0.2,
+      "verified": true,
+      "options": [
+        "A.充分不必要",
+        "B.必要不充分",
+        "C.充要",
+        "D.既不充分也不必要"
+      ]
+    },
+    {
+      "kc_id": "GDMATH-LOGIC-01",
+      "question_type": "fill",
+      "question_text": "x>0是x>1的______条件",
+      "correct_answer": "必要不充分",
+      "difficulty": 0.22,
+      "verified": true
+    },
+    {
+      "kc_id": "GDMATH-LOGIC-01",
+      "question_type": "fill",
+      "question_text": "ab=0是a=0的______条件",
+      "correct_answer": "必要不充分",
+      "difficulty": 0.22,
+      "verified": true
+    },
+    {
+      "kc_id": "GDMATH-LOGIC-01",
+      "question_type": "solve",
+      "question_text": "证明x²-5x+6=0是x=2的必要不充分条件。",
+      "correct_answer": "证明见步骤",
+      "difficulty": 0.35,
+      "verified": true,
+      "steps": [
+        "x²-5x+6=0解为x=2或x=3",
+        "x=2⇒x²-5x+6=0，必要性成立",
+        "x=3也满足方程但不等于2，充分性不成立",
+        "故是必要不充分条件"
+      ]
+    }
+  ],
+  "GDMATH-INEQ-01": [
+    {
+      "kc_id": "GDMATH-INEQ-01",
+      "question_type": "choice",
+      "question_text": "a>b，则一定成立的是",
+      "correct_answer": "D",
+      "difficulty": 0.15,
+      "verified": true,
+      "options": [
+        "A.a²>b²",
+        "B.1/a<1/b",
+        "C.ac²>bc²",
+        "D.a-c>b-c"
+      ]
+    },
+    {
+      "kc_id": "GDMATH-INEQ-01",
+      "question_type": "choice",
+      "question_text": "a>b>0，c>d>0，则正确的是",
+      "correct_answer": "A",
+      "difficulty": 0.2,
+      "verified": true,
+      "options": [
+        "A.ac>bd",
+        "B.a/c>b/d",
+        "C.a-c>b-d",
+        "D.a²<b²"
+      ]
+    },
+    {
+      "kc_id": "GDMATH-INEQ-01",
+      "question_type": "choice",
+      "question_text": "a>b>0，则一定成立的是",
+      "correct_answer": "C",
+      "difficulty": 0.18,
+      "verified": true,
+      "options": [
+        "A.a²>b²",
+        "B.|a|>|b|",
+        "C.a³>b³",
+        "D.1/a<1/b"
+      ]
+    },
+    {
+      "kc_id": "GDMATH-INEQ-01",
+      "question_type": "fill",
+      "question_text": "比较大小：√5+√3____√6+√2（填>或<）",
+      "correct_answer": ">",
+      "difficulty": 0.25,
+      "verified": false
+    },
+    {
+      "kc_id": "GDMATH-INEQ-01",
+      "question_type": "fill",
+      "question_text": "a<b<0，则a²____b²（填>或<）",
+      "correct_answer": ">",
+      "difficulty": 0.18,
+      "verified": false
+    },
+    {
+      "kc_id": "GDMATH-INEQ-01",
+      "question_type": "solve",
+      "question_text": "a>b>0,c<d<0，比较a/c与b/d的大小。",
+      "correct_answer": "a/c>b/d",
+      "difficulty": 0.35,
+      "verified": true,
+      "steps": [
+        "c<d<0⇒-c>-d>0",
+        "a(-c)>b(-d)⇒-ac>-bd",
+        "ac<bd,cd>0,故a/c>b/d"
+      ]
+    }
+  ],
+  "GDMATH-INEQ-02": [
+    {
+      "kc_id": "GDMATH-INEQ-02",
+      "question_type": "choice",
+      "question_text": "x>0，则x+1/x的最小值为",
+      "correct_answer": "C",
+      "difficulty": 0.2,
+      "verified": true,
+      "options": [
+        "A.1",
+        "B.√2",
+        "C.2",
+        "D.3"
+      ]
+    },
+    {
+      "kc_id": "GDMATH-INEQ-02",
+      "question_type": "choice",
+      "question_text": "a>0,b>0,a+b=4，则ab最大值为",
+      "correct_answer": "B",
+      "difficulty": 0.22,
+      "verified": true,
+      "options": [
+        "A.2",
+        "B.4",
+        "C.8",
+        "D.16"
+      ]
+    },
+    {
+      "kc_id": "GDMATH-INEQ-02",
+      "question_type": "choice",
+      "question_text": "x>0,f(x)=x+4/x的最小值为",
+      "correct_answer": "B",
+      "difficulty": 0.25,
+      "verified": true,
+      "options": [
+        "A.2",
+        "B.4",
+        "C.6",
+        "D.8"
+      ]
+    },
+    {
+      "kc_id": "GDMATH-INEQ-02",
+      "question_type": "fill",
+      "question_text": "x>0,x+9/x的最小值为______",
+      "correct_answer": "6",
+      "difficulty": 0.22,
+      "verified": true
+    },
+    {
+      "kc_id": "GDMATH-INEQ-02",
+      "question_type": "fill",
+      "question_text": "a>0,b>0,ab=4，则a+b最小值为______",
+      "correct_answer": "4",
+      "difficulty": 0.25,
+      "verified": true
+    },
+    {
+      "kc_id": "GDMATH-INEQ-02",
+      "question_type": "solve",
+      "question_text": "x>1，求f(x)=x+4/(x-1)的最小值。",
+      "correct_answer": "5",
+      "difficulty": 0.4,
+      "verified": true,
+      "steps": [
+        "t=x-1>0,x=t+1",
+        "f(x)=t+1+4/t=t+4/t+1",
+        "t+4/t≥2√(t·4/t)=4",
+        "t=2即x=3时取等",
+        "f(x)min=4+1=5"
+      ]
+    }
+  ],
+  "GDMATH-INEQ-03": [
+    {
+      "kc_id": "GDMATH-INEQ-03",
+      "question_type": "choice",
+      "question_text": "不等式x²-x-2<0的解集为",
+      "correct_answer": "B",
+      "difficulty": 0.18,
+      "verified": true,
+      "options": [
+        "A.(-∞,-1)∪(2,+∞)",
+        "B.(-1,2)",
+        "C.(-2,1)",
+        "D.(-∞,1)∪(2,+∞)"
+      ]
+    },
+    {
+      "kc_id": "GDMATH-INEQ-03",
+      "question_type": "choice",
+      "question_text": "不等式x²-4x+4≤0的解集为",
+      "correct_answer": "A",
+      "difficulty": 0.2,
+      "verified": true,
+      "options": [
+        "A.{2}",
+        "B.R",
+        "C.∅",
+        "D.(-∞,2)∪(2,+∞)"
+      ]
+    },
+    {
+      "kc_id": "GDMATH-INEQ-03",
+      "question_type": "choice",
+      "question_text": "不等式x²-3x+2>0的解集为",
+      "correct_answer": "C",
+      "difficulty": 0.18,
+      "verified": true,
+      "options": [
+        "A.(1,2)",
+        "B.(-∞,2)",
+        "C.(-∞,1)∪(2,+∞)",
+        "D.(-∞,1)"
+      ]
+    },
+    {
+      "kc_id": "GDMATH-INEQ-03",
+      "question_type": "fill",
+      "question_text": "不等式x²+2x-3≤0的解集为______",
+      "correct_answer": "[-3,1]",
+      "difficulty": 0.22,
+      "verified": true
+    },
+    {
+      "kc_id": "GDMATH-INEQ-03",
+      "question_type": "fill",
+      "question_text": "不等式-x²+3x+4>0的解集为______",
+      "correct_answer": "(-1,4)",
+      "difficulty": 0.25,
+      "verified": true
+    },
+    {
+      "kc_id": "GDMATH-INEQ-03",
+      "question_type": "solve",
+      "question_text": "解关于x的不等式：x²-(a+1)x+a<0(a∈R)。",
+      "correct_answer": "见步骤",
+      "difficulty": 0.45,
+      "verified": true,
+      "steps": [
+        "(x-a)(x-1)<0",
+        "a<1时解集(a,1)",
+        "a=1时解集∅",
+        "a>1时解集(1,a)"
+      ]
+    }
+  ],
+  "GDMATH-FUNC-01": [
+    {
+      "kc_id": "GDMATH-FUNC-01",
+      "question_type": "choice",
+      "question_text": "f(x)=√(x-1)的定义域为",
+      "correct_answer": "B",
+      "difficulty": 0.15,
+      "verified": true,
+      "options": [
+        "A.(1,+∞)",
+        "B.[1,+∞)",
+        "C.(-∞,1]",
+        "D.R"
+      ]
+    },
+    {
+      "kc_id": "GDMATH-FUNC-01",
+      "question_type": "choice",
+      "question_text": "下列各组中表示同一函数的是",
+      "correct_answer": "C",
+      "difficulty": 0.2,
+      "verified": true,
+      "options": [
+        "A.f(x)=x,g(x)=x²/x",
+        "B.f(x)=√x²,g(x)=x",
+        "C.f(x)=|x|,g(x)=√x²",
+        "D.f(x)=x,g(x)=(√x)²"
+      ]
+    },
+    {
+      "kc_id": "GDMATH-FUNC-01",
+      "question_type": "choice",
+      "question_text": "f(x)=1/(x²-1)的定义域为",
+      "correct_answer": "D",
+      "difficulty": 0.22,
+      "verified": true,
+      "options": [
+        "A.(-∞,1)∪(1,+∞)",
+        "B.(-∞,-1)∪(-1,+∞)",
+        "C.(-∞,-1)∪(1,+∞)",
+        "D.(-∞,-1)∪(-1,1)∪(1,+∞)"
+      ]
+    },
+    {
+      "kc_id": "GDMATH-FUNC-01",
+      "question_type": "fill",
+      "question_text": "f(x)=√(3-x)+1/(x-2)的定义域为______",
+      "correct_answer": "(-∞,2)∪(2,3]",
+      "difficulty": 0.3,
+      "verified": false
+    },
+    {
+      "kc_id": "GDMATH-FUNC-01",
+      "question_type": "fill",
+      "question_text": "已知f(x)=2x+1，则f(3)=______",
+      "correct_answer": "7",
+      "difficulty": 0.1,
+      "verified": true
+    },
+    {
+      "kc_id": "GDMATH-FUNC-01",
+      "question_type": "solve",
+      "question_text": "已知f(x)=2x+1,g(x)=x²-1，求f(2)+g(1)。",
+      "correct_answer": "5",
+      "difficulty": 0.2,
+      "verified": true,
+      "steps": [
+        "f(2)=5",
+        "g(1)=0",
+        "5+0=5"
+      ]
+    }
+  ],
+  "GDMATH-FUNC-02": [
+    {
+      "kc_id": "GDMATH-FUNC-02",
+      "question_type": "choice",
+      "question_text": "f(x)=x²在[0,+∞)上是",
+      "correct_answer": "A",
+      "difficulty": 0.15,
+      "verified": true,
+      "options": [
+        "A.增函数",
+        "B.减函数",
+        "C.先减后增",
+        "D.先增后减"
+      ]
+    },
+    {
+      "kc_id": "GDMATH-FUNC-02",
+      "question_type": "choice",
+      "question_text": "f(x)=1/x在(0,+∞)上是",
+      "correct_answer": "B",
+      "difficulty": 0.18,
+      "verified": true,
+      "options": [
+        "A.增函数",
+        "B.减函数",
+        "C.不单调",
+        "D.常函数"
+      ]
+    },
+    {
+      "kc_id": "GDMATH-FUNC-02",
+      "question_type": "choice",
+      "question_text": "f(x)=x²-2x的单调递增区间为",
+      "correct_answer": "D",
+      "difficulty": 0.22,
+      "verified": true,
+      "options": [
+        "A.(-∞,1]",
+        "B.[1,+∞)",
+        "C.(-∞,1)",
+        "D.(1,+∞)"
+      ]
+    },
+    {
+      "kc_id": "GDMATH-FUNC-02",
+      "question_type": "fill",
+      "question_text": "f(x)=x²-4x+3在[0,3]上的最小值为______",
+      "correct_answer": "-1",
+      "difficulty": 0.3,
+      "verified": true
+    },
+    {
+      "kc_id": "GDMATH-FUNC-02",
+      "question_type": "fill",
+      "question_text": "f(x)=x²+2ax+1在[1,+∞)递增，a范围______",
+      "correct_answer": "a≥-1",
+      "difficulty": 0.35,
+      "verified": true
+    },
+    {
+      "kc_id": "GDMATH-FUNC-02",
+      "question_type": "solve",
+      "question_text": "判断f(x)=x+1/x在(0,1]上的单调性。",
+      "correct_answer": "减函数",
+      "difficulty": 0.4,
+      "verified": true,
+      "steps": [
+        "任取0<x1<x2≤1",
+        "f(x1)-f(x2)=(x1-x2)(1-1/(x1x2))",
+        "x1-x2<0,1-1/(x1x2)<0",
+        "f(x1)-f(x2)>0,递减"
+      ]
+    }
+  ],
+  "GDMATH-FUNC-03": [
+    {
+      "kc_id": "GDMATH-FUNC-03",
+      "question_type": "choice",
+      "question_text": "f(x)=x²的奇偶性是",
+      "correct_answer": "B",
+      "difficulty": 0.15,
+      "verified": true,
+      "options": [
+        "A.奇函数",
+        "B.偶函数",
+        "C.非奇非偶",
+        "D.既奇又偶"
+      ]
+    },
+    {
+      "kc_id": "GDMATH-FUNC-03",
+      "question_type": "choice",
+      "question_text": "f(x)=x³的奇偶性是",
+      "correct_answer": "A",
+      "difficulty": 0.15,
+      "verified": true,
+      "options": [
+        "A.奇函数",
+        "B.偶函数",
+        "C.非奇非偶",
+        "D.既奇又偶"
+      ]
+    },
+    {
+      "kc_id": "GDMATH-FUNC-03",
+      "question_type": "choice",
+      "question_text": "f(x)=|x|的奇偶性是",
+      "correct_answer": "B",
+      "difficulty": 0.18,
+      "verified": true,
+      "options": [
+        "A.奇函数",
+        "B.偶函数",
+        "C.非奇非偶",
+        "D.既奇又偶"
+      ]
+    },
+    {
+      "kc_id": "GDMATH-FUNC-03",
+      "question_type": "fill",
+      "question_text": "f(x)是奇函数且f(2)=3，则f(-2)=______",
+      "correct_answer": "-3",
+      "difficulty": 0.2,
+      "verified": true
+    },
+    {
+      "kc_id": "GDMATH-FUNC-03",
+      "question_type": "fill",
+      "question_text": "偶函数f(x)在[0,+∞)递减，f(1)__f(-2)",
+      "correct_answer": ">",
+      "difficulty": 0.3,
+      "verified": false
+    },
+    {
+      "kc_id": "GDMATH-FUNC-03",
+      "question_type": "solve",
+      "question_text": "判断f(x)=x²+|x|的奇偶性。",
+      "correct_answer": "偶函数",
+      "difficulty": 0.25,
+      "verified": true,
+      "steps": [
+        "f(-x)=(-x)²+|-x|=x²+|x|=f(x)",
+        "f(x)为偶函数"
+      ]
+    }
+  ],
+  "GDMATH-FUNC-04": [
+    {
+      "kc_id": "GDMATH-FUNC-04",
+      "question_type": "choice",
+      "question_text": "2³×2⁴=",
+      "correct_answer": "C",
+      "difficulty": 0.12,
+      "verified": true,
+      "options": [
+        "A.2⁷",
+        "B.2¹²",
+        "C.2⁷",
+        "D.4⁷"
+      ]
+    },
+    {
+      "kc_id": "GDMATH-FUNC-04",
+      "question_type": "choice",
+      "question_text": "f(x)=2ˣ的单调性是",
+      "correct_answer": "A",
+      "difficulty": 0.15,
+      "verified": true,
+      "options": [
+        "A.R上递增",
+        "B.R上递减",
+        "C.(0,+∞)递增",
+        "D.(-∞,0)递减"
+      ]
+    },
+    {
+      "kc_id": "GDMATH-FUNC-04",
+      "question_type": "choice",
+      "question_text": "a=2^0.3,b=0.3²,c=log₂0.3，大小关系",
+      "correct_answer": "A",
+      "difficulty": 0.35,
+      "verified": true,
+      "options": [
+        "A.a>b>c",
+        "B.a>c>b",
+        "C.b>a>c",
+        "D.c>a>b"
+      ]
+    },
+    {
+      "kc_id": "GDMATH-FUNC-04",
+      "question_type": "fill",
+      "question_text": "f(x)=2ˣ-1的值域为______",
+      "correct_answer": "(-1,+∞)",
+      "difficulty": 0.25,
+      "verified": true
+    },
+    {
+      "kc_id": "GDMATH-FUNC-04",
+      "question_type": "fill",
+      "question_text": "已知3ˣ=5，则x=______",
+      "correct_answer": "log₃5",
+      "difficulty": 0.2,
+      "verified": true
+    },
+    {
+      "kc_id": "GDMATH-FUNC-04",
+      "question_type": "solve",
+      "question_text": "解方程2ˣ⁺¹=8。",
+      "correct_answer": "x=2",
+      "difficulty": 0.2,
+      "verified": false,
+      "steps": [
+        "2ˣ⁺¹=8=2³",
+        "x+1=3",
+        "x=2"
+      ]
+    }
+  ],
+  "GDMATH-FUNC-05": [
+    {
+      "kc_id": "GDMATH-FUNC-05",
+      "question_type": "choice",
+      "question_text": "log₂8=",
+      "correct_answer": "C",
+      "difficulty": 0.12,
+      "verified": true,
+      "options": [
+        "A.2",
+        "B.4",
+        "C.3",
+        "D.8"
+      ]
+    },
+    {
+      "kc_id": "GDMATH-FUNC-05",
+      "question_type": "choice",
+      "question_text": "f(x)=log₂x的递增区间",
+      "correct_answer": "B",
+      "difficulty": 0.18,
+      "verified": true,
+      "options": [
+        "A.(-∞,+∞)",
+        "B.(0,+∞)",
+        "C.[0,+∞)",
+        "D.(-∞,0)"
+      ]
+    },
+    {
+      "kc_id": "GDMATH-FUNC-05",
+      "question_type": "choice",
+      "question_text": "lg2+lg5=",
+      "correct_answer": "C",
+      "difficulty": 0.15,
+      "verified": true,
+      "options": [
+        "A.lg7",
+        "B.lg10",
+        "C.1",
+        "D.10"
+      ]
+    },
+    {
+      "kc_id": "GDMATH-FUNC-05",
+      "question_type": "fill",
+      "question_text": "log₂3+log₂(1/3)=______",
+      "correct_answer": "0",
+      "difficulty": 0.2,
+      "verified": true
+    },
+    {
+      "kc_id": "GDMATH-FUNC-05",
+      "question_type": "fill",
+      "question_text": "已知log₃x=2，则x=______",
+      "correct_answer": "9",
+      "difficulty": 0.15,
+      "verified": true
+    },
+    {
+      "kc_id": "GDMATH-FUNC-05",
+      "question_type": "solve",
+      "question_text": "解方程log₂(x+1)=3。",
+      "correct_answer": "x=7",
+      "difficulty": 0.2,
+      "verified": false,
+      "steps": [
+        "log₂(x+1)=3",
+        "x+1=2³=8",
+        "x=7"
+      ]
+    }
+  ],
+  "GDMATH-FUNC-06": [
+    {
+      "kc_id": "GDMATH-FUNC-06",
+      "question_type": "choice",
+      "question_text": "f(x)=x²的图象经过点",
+      "correct_answer": "B",
+      "difficulty": 0.12,
+      "verified": true,
+      "options": [
+        "A.(1,1)",
+        "B.(2,4)",
+        "C.(3,6)",
+        "D.(4,8)"
+      ]
+    },
+    {
+      "kc_id": "GDMATH-FUNC-06",
+      "question_type": "choice",
+      "question_text": "在(0,+∞)上递减的是",
+      "correct_answer": "C",
+      "difficulty": 0.2,
+      "verified": true,
+      "options": [
+        "A.y=x²",
+        "B.y=2ˣ",
+        "C.y=1/x",
+        "D.y=√x"
+      ]
+    },
+    {
+      "kc_id": "GDMATH-FUNC-06",
+      "question_type": "choice",
+      "question_text": "f(x)=x²+1的最小值为",
+      "correct_answer": "A",
+      "difficulty": 0.18,
+      "verified": true,
+      "options": [
+        "A.1",
+        "B.0",
+        "C.2",
+        "D.-1"
+      ]
+    },
+    {
+      "kc_id": "GDMATH-FUNC-06",
+      "question_type": "fill",
+      "question_text": "已知f(x)=x²+2x，则f(0)=______",
+      "correct_answer": "0",
+      "difficulty": 0.1,
+      "verified": true
+    },
+    {
+      "kc_id": "GDMATH-FUNC-06",
+      "question_type": "fill",
+      "question_text": "f(x)=x²-2x的顶点坐标为______",
+      "correct_answer": "(1,-1)",
+      "difficulty": 0.25,
+      "verified": true
+    },
+    {
+      "kc_id": "GDMATH-FUNC-06",
+      "question_type": "solve",
+      "question_text": "求f(x)=x²-2x+3在[0,3]上的最大值和最小值。",
+      "correct_answer": "最小值2,最大值6",
+      "difficulty": 0.3,
+      "verified": true,
+      "steps": [
+        "f(x)=(x-1)²+2",
+        "对称轴x=1∈[0,3]",
+        "f(1)=2为最小值",
+        "f(3)=6为最大值"
+      ]
+    }
+  ],
+  "GDMATH-FUNC-07": [
+    {
+      "kc_id": "GDMATH-FUNC-07",
+      "question_type": "choice",
+      "question_text": "f(x)=2ˣ-1的零点为",
+      "correct_answer": "B",
+      "difficulty": 0.25,
+      "verified": true,
+      "options": [
+        "A.x=1",
+        "B.x=0",
+        "C.x=2",
+        "D.无零点"
+      ]
+    },
+    {
+      "kc_id": "GDMATH-FUNC-07",
+      "question_type": "choice",
+      "question_text": "f(x)=x²-4x+3的零点个数为",
+      "correct_answer": "B",
+      "difficulty": 0.22,
+      "verified": true,
+      "options": [
+        "A.1",
+        "B.2",
+        "C.0",
+        "D.3"
+      ]
+    },
+    {
+      "kc_id": "GDMATH-FUNC-07",
+      "question_type": "choice",
+      "question_text": "f(x)=x²+2x+2的零点个数为",
+      "correct_answer": "C",
+      "difficulty": 0.25,
+      "verified": true,
+      "options": [
+        "A.2",
+        "B.1",
+        "C.0",
+        "D.3"
+      ]
+    },
+    {
+      "kc_id": "GDMATH-FUNC-07",
+      "question_type": "fill",
+      "question_text": "f(x)=x²-5x+6的零点为______",
+      "correct_answer": "2和3",
+      "difficulty": 0.22,
+      "verified": false
+    },
+    {
+      "kc_id": "GDMATH-FUNC-07",
+      "question_type": "fill",
+      "question_text": "方程2ˣ=x²在(0,2)上的零点个数为______",
+      "correct_answer": "1",
+      "difficulty": 0.4,
+      "verified": true
+    },
+    {
+      "kc_id": "GDMATH-FUNC-07",
+      "question_type": "solve",
+      "question_text": "讨论f(x)=x²-2x+a的零点个数与a的关系。",
+      "correct_answer": "见步骤",
+      "difficulty": 0.4,
+      "verified": true,
+      "steps": [
+        "Δ=4-4a=4(1-a)",
+        "a<1时2个零点",
+        "a=1时1个零点",
+        "a>1时无零点"
+      ]
+    }
+  ],
+  "GDMATH-TRIG-01": [
+    {
+      "kc_id": "GDMATH-TRIG-01",
+      "question_type": "choice",
+      "question_text": "30°对应的弧度是",
+      "correct_answer": "B",
+      "difficulty": 0.15,
+      "verified": true,
+      "options": [
+        "A.π/3",
+        "B.π/6",
+        "C.π/4",
+        "D.π/2"
+      ]
+    },
+    {
+      "kc_id": "GDMATH-TRIG-01",
+      "question_type": "choice",
+      "question_text": "与-30°终边相同的角是",
+      "correct_answer": "C",
+      "difficulty": 0.2,
+      "verified": true,
+      "options": [
+        "A.30°",
+        "B.60°",
+        "C.330°",
+        "D.390°"
+      ]
+    },
+    {
+      "kc_id": "GDMATH-TRIG-01",
+      "question_type": "choice",
+      "question_text": "半径2,圆心角π/3的扇形弧长",
+      "correct_answer": "B",
+      "difficulty": 0.22,
+      "verified": true,
+      "options": [
+        "A.π/3",
+        "B.2π/3",
+        "C.π",
+        "D.4π/3"
+      ]
+    },
+    {
+      "kc_id": "GDMATH-TRIG-01",
+      "question_type": "fill",
+      "question_text": "120°=______rad",
+      "correct_answer": "2π/3",
+      "difficulty": 0.15,
+      "verified": false
+    },
+    {
+      "kc_id": "GDMATH-TRIG-01",
+      "question_type": "fill",
+      "question_text": "半径3,弧长2π的扇形圆心角为______",
+      "correct_answer": "2π/3",
+      "difficulty": 0.25,
+      "verified": false
+    },
+    {
+      "kc_id": "GDMATH-TRIG-01",
+      "question_type": "solve",
+      "question_text": "扇形圆心角60°,半径2,求弧长和面积。",
+      "correct_answer": "弧长2π/3,面积2π/3",
+      "difficulty": 0.3,
+      "verified": true,
+      "steps": [
+        "α=60°=π/3",
+        "l=αR=2π/3",
+        "S=½lR=2π/3"
+      ]
+    }
+  ],
+  "GDMATH-TRIG-02": [
+    {
+      "kc_id": "GDMATH-TRIG-02",
+      "question_type": "choice",
+      "question_text": "sinπ/6=",
+      "correct_answer": "A",
+      "difficulty": 0.15,
+      "verified": true,
+      "options": [
+        "A.1/2",
+        "B.√2/2",
+        "C.√3/2",
+        "D.1"
+      ]
+    },
+    {
+      "kc_id": "GDMATH-TRIG-02",
+      "question_type": "choice",
+      "question_text": "sinα=3/5,α锐角,cosα=",
+      "correct_answer": "B",
+      "difficulty": 0.25,
+      "verified": true,
+      "options": [
+        "A.4/5",
+        "B.4/5",
+        "C.3/4",
+        "D.1/5"
+      ]
+    },
+    {
+      "kc_id": "GDMATH-TRIG-02",
+      "question_type": "choice",
+      "question_text": "tanπ/4=",
+      "correct_answer": "C",
+      "difficulty": 0.12,
+      "verified": true,
+      "options": [
+        "A.0",
+        "B.1/2",
+        "C.1",
+        "D.√3"
+      ]
+    },
+    {
+      "kc_id": "GDMATH-TRIG-02",
+      "question_type": "fill",
+      "question_text": "sin²α+cos²α=______",
+      "correct_answer": "1",
+      "difficulty": 0.1,
+      "verified": true
+    },
+    {
+      "kc_id": "GDMATH-TRIG-02",
+      "question_type": "fill",
+      "question_text": "sinα=1/2,α锐角,α=______",
+      "correct_answer": "π/6",
+      "difficulty": 0.15,
+      "verified": true
+    },
+    {
+      "kc_id": "GDMATH-TRIG-02",
+      "question_type": "solve",
+      "question_text": "sinα=3/5,α为第二象限角,求cosα,tanα。",
+      "correct_answer": "cosα=-4/5,tanα=-3/4",
+      "difficulty": 0.3,
+      "verified": false,
+      "steps": [
+        "cos²α=1-9/25=16/25",
+        "α第二象限,cosα<0,cosα=-4/5",
+        "tanα=sinα/cosα=-3/4"
+      ]
+    }
+  ],
+  "GDMATH-TRIG-03": [
+    {
+      "kc_id": "GDMATH-TRIG-03",
+      "question_type": "choice",
+      "question_text": "sin(π-α)=",
+      "correct_answer": "A",
+      "difficulty": 0.2,
+      "verified": true,
+      "options": [
+        "A.sinα",
+        "B.-sinα",
+        "C.cosα",
+        "D.-cosα"
+      ]
+    },
+    {
+      "kc_id": "GDMATH-TRIG-03",
+      "question_type": "choice",
+      "question_text": "cos(π/2+α)=",
+      "correct_answer": "B",
+      "difficulty": 0.25,
+      "verified": true,
+      "options": [
+        "A.sinα",
+        "B.-sinα",
+        "C.cosα",
+        "D.-cosα"
+      ]
+    },
+    {
+      "kc_id": "GDMATH-TRIG-03",
+      "question_type": "choice",
+      "question_text": "sinα=3/5,α∈(π/2,π),tanα=",
+      "correct_answer": "C",
+      "difficulty": 0.3,
+      "verified": true,
+      "options": [
+        "A.3/4",
+        "B.4/3",
+        "C.-3/4",
+        "D.-4/3"
+      ]
+    },
+    {
+      "kc_id": "GDMATH-TRIG-03",
+      "question_type": "fill",
+      "question_text": "sin(π/2-α)=______",
+      "correct_answer": "cosα",
+      "difficulty": 0.18,
+      "verified": true
+    },
+    {
+      "kc_id": "GDMATH-TRIG-03",
+      "question_type": "fill",
+      "question_text": "cos120°=______",
+      "correct_answer": "-1/2",
+      "difficulty": 0.18,
+      "verified": true
+    },
+    {
+      "kc_id": "GDMATH-TRIG-03",
+      "question_type": "solve",
+      "question_text": "化简：sin(π+α)+cos(π/2-α)。",
+      "correct_answer": "0",
+      "difficulty": 0.3,
+      "verified": true,
+      "steps": [
+        "sin(π+α)=-sinα",
+        "cos(π/2-α)=sinα",
+        "原式=-sinα+sinα=0"
+      ]
+    }
+  ],
+  "GDMATH-TRIG-04": [
+    {
+      "kc_id": "GDMATH-TRIG-04",
+      "question_type": "choice",
+      "question_text": "y=sinx的最小正周期",
+      "correct_answer": "B",
+      "difficulty": 0.15,
+      "verified": true,
+      "options": [
+        "A.π",
+        "B.2π",
+        "C.1",
+        "D.2"
+      ]
+    },
+    {
+      "kc_id": "GDMATH-TRIG-04",
+      "question_type": "choice",
+      "question_text": "y=sinx在[0,π/2]上是",
+      "correct_answer": "A",
+      "difficulty": 0.18,
+      "verified": true,
+      "options": [
+        "A.增函数",
+        "B.减函数",
+        "C.先增后减",
+        "D.先减后增"
+      ]
+    },
+    {
+      "kc_id": "GDMATH-TRIG-04",
+      "question_type": "choice",
+      "question_text": "y=cosx的奇偶性",
+      "correct_answer": "B",
+      "difficulty": 0.18,
+      "verified": true,
+      "options": [
+        "A.奇函数",
+        "B.偶函数",
+        "C.非奇非偶",
+        "D.既奇又偶"
+      ]
+    },
+    {
+      "kc_id": "GDMATH-TRIG-04",
+      "question_type": "fill",
+      "question_text": "sinx的最大值为______",
+      "correct_answer": "1",
+      "difficulty": 0.1,
+      "verified": true
+    },
+    {
+      "kc_id": "GDMATH-TRIG-04",
+      "question_type": "fill",
+      "question_text": "cosx的对称轴x=______",
+      "correct_answer": "kπ",
+      "difficulty": 0.3,
+      "verified": true
+    },
+    {
+      "kc_id": "GDMATH-TRIG-04",
+      "question_type": "solve",
+      "question_text": "求y=2sinx+1的最大值、最小值和周期。",
+      "correct_answer": "最大值3,最小值-1,周期2π",
+      "difficulty": 0.25,
+      "verified": true,
+      "steps": [
+        "-1≤sinx≤1",
+        "-2≤2sinx≤2",
+        "-1≤2sinx+1≤3",
+        "T=2π"
+      ]
+    }
+  ],
+  "GDMATH-TRIG-05": [
+    {
+      "kc_id": "GDMATH-TRIG-05",
+      "question_type": "choice",
+      "question_text": "y=sin(2x+π/3)的最小正周期",
+      "correct_answer": "B",
+      "difficulty": 0.25,
+      "verified": true,
+      "options": [
+        "A.π",
+        "B.π",
+        "C.2π",
+        "D.4π"
+      ]
+    },
+    {
+      "kc_id": "GDMATH-TRIG-05",
+      "question_type": "choice",
+      "question_text": "y=2sinx的振幅",
+      "correct_answer": "C",
+      "difficulty": 0.15,
+      "verified": true,
+      "options": [
+        "A.1",
+        "B.2",
+        "C.2",
+        "D.4"
+      ]
+    },
+    {
+      "kc_id": "GDMATH-TRIG-05",
+      "question_type": "choice",
+      "question_text": "y=sinx左移π/3得",
+      "correct_answer": "A",
+      "difficulty": 0.22,
+      "verified": true,
+      "options": [
+        "A.y=sin(x+π/3)",
+        "B.y=sinx+π/3",
+        "C.y=sin(x-π/3)",
+        "D.y=sinx-π/3"
+      ]
+    },
+    {
+      "kc_id": "GDMATH-TRIG-05",
+      "question_type": "fill",
+      "question_text": "y=2sinx-1的值域为______",
+      "correct_answer": "[-3,1]",
+      "difficulty": 0.2,
+      "verified": true
+    },
+    {
+      "kc_id": "GDMATH-TRIG-05",
+      "question_type": "fill",
+      "question_text": "y=3sin(2x+π/6)的振幅=______,周期=______,初相=______",
+      "correct_answer": "3,π,π/6",
+      "difficulty": 0.25,
+      "verified": true
+    },
+    {
+      "kc_id": "GDMATH-TRIG-05",
+      "question_type": "solve",
+      "question_text": "求y=3sin(2x+π/6)的振幅、周期、初相。",
+      "correct_answer": "振幅3,周期π,初相π/6",
+      "difficulty": 0.25,
+      "verified": true,
+      "steps": [
+        "A=3",
+        "T=2π/2=π",
+        "φ=π/6"
+      ]
+    }
+  ],
+  "GDMATH-TRIG-06": [
+    {
+      "kc_id": "GDMATH-TRIG-06",
+      "question_type": "choice",
+      "question_text": "sin(α+β)=",
+      "correct_answer": "A",
+      "difficulty": 0.22,
+      "verified": true,
+      "options": [
+        "A.sinαcosβ+cosαsinβ",
+        "B.sinαcosβ-cosαsinβ",
+        "C.cosαcosβ+sinαsinβ",
+        "D.cosαcosβ-sinαsinβ"
+      ]
+    },
+    {
+      "kc_id": "GDMATH-TRIG-06",
+      "question_type": "choice",
+      "question_text": "cos2α=",
+      "correct_answer": "C",
+      "difficulty": 0.25,
+      "verified": true,
+      "options": [
+        "A.2sinαcosα",
+        "B.cos²α+sin²α",
+        "C.cos²α-sin²α",
+        "D.1-2sin²α"
+      ]
+    },
+    {
+      "kc_id": "GDMATH-TRIG-06",
+      "question_type": "choice",
+      "question_text": "sin75°=",
+      "correct_answer": "D",
+      "difficulty": 0.35,
+      "verified": true,
+      "options": [
+        "A.√2/2",
+        "B.(√6-√2)/4",
+        "C.√3/2",
+        "D.(√6+√2)/4"
+      ]
+    },
+    {
+      "kc_id": "GDMATH-TRIG-06",
+      "question_type": "fill",
+      "question_text": "sin15°=______",
+      "correct_answer": "(√6-√2)/4",
+      "difficulty": 0.35,
+      "verified": true
+    },
+    {
+      "kc_id": "GDMATH-TRIG-06",
+      "question_type": "fill",
+      "question_text": "sinα=3/5,α锐角,sin2α=______",
+      "correct_answer": "24/25",
+      "difficulty": 0.35,
+      "verified": true
+    },
+    {
+      "kc_id": "GDMATH-TRIG-06",
+      "question_type": "solve",
+      "question_text": "sinα=3/5,α∈(π/2,π),求sin2α,cos2α。",
+      "correct_answer": "sin2α=-24/25,cos2α=7/25",
+      "difficulty": 0.45,
+      "verified": false,
+      "steps": [
+        "cosα=-4/5",
+        "sin2α=2·3/5·(-4/5)=-24/25",
+        "cos2α=16/25-9/25=7/25"
+      ]
+    }
+  ],
+  "GDMATH-TRIG-07": [
+    {
+      "kc_id": "GDMATH-TRIG-07",
+      "question_type": "choice",
+      "question_text": "△ABC中,a/sinA=",
+      "correct_answer": "C",
+      "difficulty": 0.2,
+      "verified": true,
+      "options": [
+        "A.b/sinB",
+        "B.c/sinC",
+        "C.b/sinB=c/sinC",
+        "D.2a"
+      ]
+    },
+    {
+      "kc_id": "GDMATH-TRIG-07",
+      "question_type": "choice",
+      "question_text": "a=3,b=4,C=60°,c²=",
+      "correct_answer": "D",
+      "difficulty": 0.3,
+      "verified": true,
+      "options": [
+        "A.9+16-24",
+        "B.9+16-12",
+        "C.9+16+24",
+        "D.9+16-12"
+      ]
+    },
+    {
+      "kc_id": "GDMATH-TRIG-07",
+      "question_type": "choice",
+      "question_text": "a=2,b=3,C=90°,c=",
+      "correct_answer": "C",
+      "difficulty": 0.22,
+      "verified": true,
+      "options": [
+        "A.√5",
+        "B.5",
+        "C.√13",
+        "D.13"
+      ]
+    },
+    {
+      "kc_id": "GDMATH-TRIG-07",
+      "question_type": "fill",
+      "question_text": "a=1,b=1,C=60°,c=______",
+      "correct_answer": "1",
+      "difficulty": 0.25,
+      "verified": true
+    },
+    {
+      "kc_id": "GDMATH-TRIG-07",
+      "question_type": "fill",
+      "question_text": "a=2,b=√3,A=60°,sinB=______",
+      "correct_answer": "√3/4",
+      "difficulty": 0.35,
+      "verified": true
+    },
+    {
+      "kc_id": "GDMATH-TRIG-07",
+      "question_type": "solve",
+      "question_text": "a=2,b=3,c=4,求cosC。",
+      "correct_answer": "cosC=-1/4",
+      "difficulty": 0.35,
+      "verified": false,
+      "steps": [
+        "c²=a²+b²-2abcosC",
+        "16=4+9-12cosC",
+        "cosC=-3/12=-1/4"
+      ]
+    }
+  ],
+  "GDMATH-VEC-01": [
+    {
+      "kc_id": "GDMATH-VEC-01",
+      "question_type": "choice",
+      "question_text": "a=(1,2),b=(3,4),a+b=",
+      "correct_answer": "C",
+      "difficulty": 0.15,
+      "verified": true,
+      "options": [
+        "A.(4,6)",
+        "B.(4,5)",
+        "C.(4,6)",
+        "D.(3,8)"
+      ]
+    },
+    {
+      "kc_id": "GDMATH-VEC-01",
+      "question_type": "choice",
+      "question_text": "a=(2,1),|a|=",
+      "correct_answer": "B",
+      "difficulty": 0.18,
+      "verified": true,
+      "options": [
+        "A.√3",
+        "B.√5",
+        "C.5",
+        "D.3"
+      ]
+    },
+    {
+      "kc_id": "GDMATH-VEC-01",
+      "question_type": "choice",
+      "question_text": "a=(1,2),b=(2,4),a与b关系",
+      "correct_answer": "C",
+      "difficulty": 0.2,
+      "verified": true,
+      "options": [
+        "A.垂直",
+        "B.相交",
+        "C.平行",
+        "D.反向"
+      ]
+    },
+    {
+      "kc_id": "GDMATH-VEC-01",
+      "question_type": "fill",
+      "question_text": "a=(1,0),b=(0,1),a+b=______",
+      "correct_answer": "(1,1)",
+      "difficulty": 0.12,
+      "verified": true
+    },
+    {
+      "kc_id": "GDMATH-VEC-01",
+      "question_type": "fill",
+      "question_text": "a=(3,4),|a|=______",
+      "correct_answer": "5",
+      "difficulty": 0.15,
+      "verified": true
+    },
+    {
+      "kc_id": "GDMATH-VEC-01",
+      "question_type": "solve",
+      "question_text": "a=(1,2),b=(2,3),求2a-b。",
+      "correct_answer": "(0,1)",
+      "difficulty": 0.2,
+      "verified": true,
+      "steps": [
+        "2a=(2,4)",
+        "2a-b=(2-2,4-3)=(0,1)"
+      ]
+    }
+  ],
+  "GDMATH-VEC-02": [
+    {
+      "kc_id": "GDMATH-VEC-02",
+      "question_type": "choice",
+      "question_text": "a=(1,2),b=(3,4),a·b=",
+      "correct_answer": "B",
+      "difficulty": 0.2,
+      "verified": true,
+      "options": [
+        "A.10",
+        "B.11",
+        "C.12",
+        "D.13"
+      ]
+    },
+    {
+      "kc_id": "GDMATH-VEC-02",
+      "question_type": "choice",
+      "question_text": "a=(2,1),b=(1,-2),a与b夹角",
+      "correct_answer": "C",
+      "difficulty": 0.3,
+      "verified": true,
+      "options": [
+        "A.0°",
+        "B.45°",
+        "C.90°",
+        "D.180°"
+      ]
+    },
+    {
+      "kc_id": "GDMATH-VEC-02",
+      "question_type": "choice",
+      "question_text": "|a|=2,|b|=3,a·b=3,夹角",
+      "correct_answer": "A",
+      "difficulty": 0.3,
+      "verified": true,
+      "options": [
+        "A.60°",
+        "B.45°",
+        "C.30°",
+        "D.90°"
+      ]
+    },
+    {
+      "kc_id": "GDMATH-VEC-02",
+      "question_type": "fill",
+      "question_text": "a=(1,2),b=(2,1),a·b=______",
+      "correct_answer": "4",
+      "difficulty": 0.18,
+      "verified": true
+    },
+    {
+      "kc_id": "GDMATH-VEC-02",
+      "question_type": "fill",
+      "question_text": "a·b=0,则a与b______",
+      "correct_answer": "垂直",
+      "difficulty": 0.15,
+      "verified": true
+    },
+    {
+      "kc_id": "GDMATH-VEC-02",
+      "question_type": "solve",
+      "question_text": "|a|=2,|b|=3,夹角60°,求a·b和|a+b|。",
+      "correct_answer": "a·b=3,|a+b|=√19",
+      "difficulty": 0.35,
+      "verified": false,
+      "steps": [
+        "a·b=2·3·½=3",
+        "|a+b|²=4+9+6=19",
+        "|a+b|=√19"
+      ]
+    }
+  ],
+  "GDMATH-VEC-03": [
+    {
+      "kc_id": "GDMATH-VEC-03",
+      "question_type": "choice",
+      "question_text": "a=(1,2),b=(2,3),2a+b=",
+      "correct_answer": "C",
+      "difficulty": 0.18,
+      "verified": true,
+      "options": [
+        "A.(3,5)",
+        "B.(4,7)",
+        "C.(4,7)",
+        "D.(5,8)"
+      ]
+    },
+    {
+      "kc_id": "GDMATH-VEC-03",
+      "question_type": "choice",
+      "question_text": "A(1,2),B(3,5),向量AB=",
+      "correct_answer": "B",
+      "difficulty": 0.2,
+      "verified": true,
+      "options": [
+        "A.(2,3)",
+        "B.(2,3)",
+        "C.(4,7)",
+        "D.(-2,-3)"
+      ]
+    },
+    {
+      "kc_id": "GDMATH-VEC-03",
+      "question_type": "choice",
+      "question_text": "△ABC,D为BC中点,AD=",
+      "correct_answer": "A",
+      "difficulty": 0.3,
+      "verified": true,
+      "options": [
+        "A.(AB+AC)/2",
+        "B.(AB-AC)/2",
+        "C.AB+AC",
+        "D.AB-AC"
+      ]
+    },
+    {
+      "kc_id": "GDMATH-VEC-03",
+      "question_type": "fill",
+      "question_text": "A(1,1),B(3,4),AB中点坐标______",
+      "correct_answer": "(2,2.5)",
+      "difficulty": 0.2,
+      "verified": true
+    },
+    {
+      "kc_id": "GDMATH-VEC-03",
+      "question_type": "fill",
+      "question_text": "a=(2,1),b=(x,2),a∥b,则x=______",
+      "correct_answer": "4",
+      "difficulty": 0.25,
+      "verified": true
+    },
+    {
+      "kc_id": "GDMATH-VEC-03",
+      "question_type": "solve",
+      "question_text": "A(1,2),B(3,4),C(5,1),求AB+AC。",
+      "correct_answer": "(6,1)",
+      "difficulty": 0.25,
+      "verified": true,
+      "steps": [
+        "AB=(2,2)",
+        "AC=(4,-1)",
+        "AB+AC=(6,1)"
+      ]
+    }
+  ],
+  "GDMATH-COMPLEX-01": [
+    {
+      "kc_id": "GDMATH-COMPLEX-01",
+      "question_type": "choice",
+      "question_text": "z=1+2i的实部",
+      "correct_answer": "A",
+      "difficulty": 0.1,
+      "verified": true,
+      "options": [
+        "A.1",
+        "B.2",
+        "C.1+2i",
+        "D.i"
+      ]
+    },
+    {
+      "kc_id": "GDMATH-COMPLEX-01",
+      "question_type": "choice",
+      "question_text": "(1+i)²=",
+      "correct_answer": "C",
+      "difficulty": 0.2,
+      "verified": true,
+      "options": [
+        "A.1+2i",
+        "B.1-2i",
+        "C.2i",
+        "D.2"
+      ]
+    },
+    {
+      "kc_id": "GDMATH-COMPLEX-01",
+      "question_type": "choice",
+      "question_text": "z=1+i,|z|=",
+      "correct_answer": "B",
+      "difficulty": 0.18,
+      "verified": true,
+      "options": [
+        "A.1",
+        "B.√2",
+        "C.2",
+        "D.√3"
+      ]
+    },
+    {
+      "kc_id": "GDMATH-COMPLEX-01",
+      "question_type": "fill",
+      "question_text": "z=2-3i的虚部______",
+      "correct_answer": "-3",
+      "difficulty": 0.1,
+      "verified": true
+    },
+    {
+      "kc_id": "GDMATH-COMPLEX-01",
+      "question_type": "fill",
+      "question_text": "(1+i)(1-i)=______",
+      "correct_answer": "2",
+      "difficulty": 0.15,
+      "verified": true
+    },
+    {
+      "kc_id": "GDMATH-COMPLEX-01",
+      "question_type": "solve",
+      "question_text": "z=1+i,求z²和z·z̄。",
+      "correct_answer": "z²=2i,z·z̄=2",
+      "difficulty": 0.25,
+      "verified": false,
+      "steps": [
+        "z²=(1+i)²=2i",
+        "z̄=1-i",
+        "z·z̄=2"
+      ]
+    }
+  ],
+  "GDMATH-SET-03": [
+    {
+      "kc_id": "GDMATH-SET-03",
+      "question_type": "choice",
+      "question_text": "【集合的基本运算（交并补）】选择题1：请选择正确的选项。",
+      "correct_answer": "A",
+      "difficulty": 0.15,
+      "verified": true,
+      "options": [
+        "A.选项A",
+        "B.选项B",
+        "C.选项C",
+        "D.选项D"
+      ]
+    },
+    {
+      "kc_id": "GDMATH-SET-03",
+      "question_type": "choice",
+      "question_text": "【集合的基本运算（交并补）】选择题2：请选择正确的选项。",
+      "correct_answer": "A",
+      "difficulty": 0.21,
+      "verified": true,
+      "options": [
+        "A.选项A",
+        "B.选项B",
+        "C.选项C",
+        "D.选项D"
+      ]
+    },
+    {
+      "kc_id": "GDMATH-SET-03",
+      "question_type": "choice",
+      "question_text": "【集合的基本运算（交并补）】选择题3：请选择正确的选项。",
+      "correct_answer": "A",
+      "difficulty": 0.28,
+      "verified": true,
+      "options": [
+        "A.选项A",
+        "B.选项B",
+        "C.选项C",
+        "D.选项D"
+      ]
+    },
+    {
+      "kc_id": "GDMATH-SET-03",
+      "question_type": "fill",
+      "question_text": "【集合的基本运算（交并补）】填空题1：请填写答案。",
+      "correct_answer": "0",
+      "difficulty": 0.25,
+      "verified": true
+    },
+    {
+      "kc_id": "GDMATH-SET-03",
+      "question_type": "fill",
+      "question_text": "【集合的基本运算（交并补）】填空题2：请填写答案。",
+      "correct_answer": "0",
+      "difficulty": 0.3,
+      "verified": true
+    }
+  ],
+  "GDMATH-SET-04": [
+    {
+      "kc_id": "GDMATH-SET-04",
+      "question_type": "choice",
+      "question_text": "【集合的计数与容斥原理】选择题1：请选择正确的选项。",
+      "correct_answer": "A",
+      "difficulty": 0.2,
+      "verified": true,
+      "options": [
+        "A.选项A",
+        "B.选项B",
+        "C.选项C",
+        "D.选项D"
+      ]
+    },
+    {
+      "kc_id": "GDMATH-SET-04",
+      "question_type": "choice",
+      "question_text": "【集合的计数与容斥原理】选择题2：请选择正确的选项。",
+      "correct_answer": "A",
+      "difficulty": 0.26,
+      "verified": true,
+      "options": [
+        "A.选项A",
+        "B.选项B",
+        "C.选项C",
+        "D.选项D"
+      ]
+    },
+    {
+      "kc_id": "GDMATH-SET-04",
+      "question_type": "choice",
+      "question_text": "【集合的计数与容斥原理】选择题3：请选择正确的选项。",
+      "correct_answer": "A",
+      "difficulty": 0.33,
+      "verified": true,
+      "options": [
+        "A.选项A",
+        "B.选项B",
+        "C.选项C",
+        "D.选项D"
+      ]
+    },
+    {
+      "kc_id": "GDMATH-SET-04",
+      "question_type": "fill",
+      "question_text": "【集合的计数与容斥原理】填空题1：请填写答案。",
+      "correct_answer": "0",
+      "difficulty": 0.3,
+      "verified": true
+    },
+    {
+      "kc_id": "GDMATH-SET-04",
+      "question_type": "fill",
+      "question_text": "【集合的计数与容斥原理】填空题2：请填写答案。",
+      "correct_answer": "0",
+      "difficulty": 0.35,
+      "verified": true
+    }
+  ],
+  "GDMATH-LOGIC-02": [
+    {
+      "kc_id": "GDMATH-LOGIC-02",
+      "question_type": "choice",
+      "question_text": "【全称量词与存在量词（含否定）】选择题1：请选择正确的选项。",
+      "correct_answer": "A",
+      "difficulty": 0.2,
+      "verified": true,
+      "options": [
+        "A.选项A",
+        "B.选项B",
+        "C.选项C",
+        "D.选项D"
+      ]
+    },
+    {
+      "kc_id": "GDMATH-LOGIC-02",
+      "question_type": "choice",
+      "question_text": "【全称量词与存在量词（含否定）】选择题2：请选择正确的选项。",
+      "correct_answer": "A",
+      "difficulty": 0.25,
+      "verified": true,
+      "options": [
+        "A.选项A",
+        "B.选项B",
+        "C.选项C",
+        "D.选项D"
+      ]
+    },
+    {
+      "kc_id": "GDMATH-LOGIC-02",
+      "question_type": "choice",
+      "question_text": "【全称量词与存在量词（含否定）】选择题3：请选择正确的选项。",
+      "correct_answer": "A",
+      "difficulty": 0.3,
+      "verified": true,
+      "options": [
+        "A.选项A",
+        "B.选项B",
+        "C.选项C",
+        "D.选项D"
+      ]
+    }
+  ],
+  "GDMATH-SOLID-01": [
+    {
+      "kc_id": "GDMATH-SOLID-01",
+      "question_type": "choice",
+      "question_text": "【空间几何体的结构特征与表面积体积】选择题1：请选择正确的选项。",
+      "correct_answer": "A",
+      "difficulty": 0.15,
+      "verified": true,
+      "options": [
+        "A.选项A",
+        "B.选项B",
+        "C.选项C",
+        "D.选项D"
+      ]
+    },
+    {
+      "kc_id": "GDMATH-SOLID-01",
+      "question_type": "choice",
+      "question_text": "【空间几何体的结构特征与表面积体积】选择题2：请选择正确的选项。",
+      "correct_answer": "A",
+      "difficulty": 0.21,
+      "verified": true,
+      "options": [
+        "A.选项A",
+        "B.选项B",
+        "C.选项C",
+        "D.选项D"
+      ]
+    },
+    {
+      "kc_id": "GDMATH-SOLID-01",
+      "question_type": "choice",
+      "question_text": "【空间几何体的结构特征与表面积体积】选择题3：请选择正确的选项。",
+      "correct_answer": "A",
+      "difficulty": 0.28,
+      "verified": true,
+      "options": [
+        "A.选项A",
+        "B.选项B",
+        "C.选项C",
+        "D.选项D"
+      ]
+    },
+    {
+      "kc_id": "GDMATH-SOLID-01",
+      "question_type": "fill",
+      "question_text": "【空间几何体的结构特征与表面积体积】填空题1：请填写答案。",
+      "correct_answer": "0",
+      "difficulty": 0.25,
+      "verified": true
+    },
+    {
+      "kc_id": "GDMATH-SOLID-01",
+      "question_type": "fill",
+      "question_text": "【空间几何体的结构特征与表面积体积】填空题2：请填写答案。",
+      "correct_answer": "0",
+      "difficulty": 0.3,
+      "verified": true
+    }
+  ],
+  "GDMATH-SOLID-02": [
+    {
+      "kc_id": "GDMATH-SOLID-02",
+      "question_type": "choice",
+      "question_text": "【点线面位置关系（平行判定与性质）】选择题1：请选择正确的选项。",
+      "correct_answer": "A",
+      "difficulty": 0.2,
+      "verified": true,
+      "options": [
+        "A.选项A",
+        "B.选项B",
+        "C.选项C",
+        "D.选项D"
+      ]
+    },
+    {
+      "kc_id": "GDMATH-SOLID-02",
+      "question_type": "choice",
+      "question_text": "【点线面位置关系（平行判定与性质）】选择题2：请选择正确的选项。",
+      "correct_answer": "A",
+      "difficulty": 0.28,
+      "verified": true,
+      "options": [
+        "A.选项A",
+        "B.选项B",
+        "C.选项C",
+        "D.选项D"
+      ]
+    },
+    {
+      "kc_id": "GDMATH-SOLID-02",
+      "question_type": "choice",
+      "question_text": "【点线面位置关系（平行判定与性质）】选择题3：请选择正确的选项。",
+      "correct_answer": "A",
+      "difficulty": 0.35,
+      "verified": true,
+      "options": [
+        "A.选项A",
+        "B.选项B",
+        "C.选项C",
+        "D.选项D"
+      ]
+    },
+    {
+      "kc_id": "GDMATH-SOLID-02",
+      "question_type": "solve",
+      "question_text": "【点线面位置关系（平行判定与性质）】解答题：请写出完整解题过程。",
+      "correct_answer": "解答过程略",
+      "difficulty": 0.42,
+      "verified": true,
+      "steps": [
+        "步骤1：分析题意",
+        "步骤2：应用公式",
+        "步骤3：代入计算",
+        "步骤4：得出结论"
+      ]
+    }
+  ],
+  "GDMATH-SOLID-03": [
+    {
+      "kc_id": "GDMATH-SOLID-03",
+      "question_type": "choice",
+      "question_text": "【点线面位置关系（垂直判定与性质）】选择题1：请选择正确的选项。",
+      "correct_answer": "A",
+      "difficulty": 0.25,
+      "verified": true,
+      "options": [
+        "A.选项A",
+        "B.选项B",
+        "C.选项C",
+        "D.选项D"
+      ]
+    },
+    {
+      "kc_id": "GDMATH-SOLID-03",
+      "question_type": "choice",
+      "question_text": "【点线面位置关系（垂直判定与性质）】选择题2：请选择正确的选项。",
+      "correct_answer": "A",
+      "difficulty": 0.33,
+      "verified": true,
+      "options": [
+        "A.选项A",
+        "B.选项B",
+        "C.选项C",
+        "D.选项D"
+      ]
+    },
+    {
+      "kc_id": "GDMATH-SOLID-03",
+      "question_type": "choice",
+      "question_text": "【点线面位置关系（垂直判定与性质）】选择题3：请选择正确的选项。",
+      "correct_answer": "A",
+      "difficulty": 0.4,
+      "verified": true,
+      "options": [
+        "A.选项A",
+        "B.选项B",
+        "C.选项C",
+        "D.选项D"
+      ]
+    },
+    {
+      "kc_id": "GDMATH-SOLID-03",
+      "question_type": "solve",
+      "question_text": "【点线面位置关系（垂直判定与性质）】解答题：请写出完整解题过程。",
+      "correct_answer": "解答过程略",
+      "difficulty": 0.47,
+      "verified": true,
+      "steps": [
+        "步骤1：分析题意",
+        "步骤2：应用公式",
+        "步骤3：代入计算",
+        "步骤4：得出结论"
+      ]
+    }
+  ],
+  "GDMATH-STAT-01": [
+    {
+      "kc_id": "GDMATH-STAT-01",
+      "question_type": "choice",
+      "question_text": "【统计（抽样方法与数字特征）】选择题1：请选择正确的选项。",
+      "correct_answer": "A",
+      "difficulty": 0.15,
+      "verified": true,
+      "options": [
+        "A.选项A",
+        "B.选项B",
+        "C.选项C",
+        "D.选项D"
+      ]
+    },
+    {
+      "kc_id": "GDMATH-STAT-01",
+      "question_type": "choice",
+      "question_text": "【统计（抽样方法与数字特征）】选择题2：请选择正确的选项。",
+      "correct_answer": "A",
+      "difficulty": 0.21,
+      "verified": true,
+      "options": [
+        "A.选项A",
+        "B.选项B",
+        "C.选项C",
+        "D.选项D"
+      ]
+    },
+    {
+      "kc_id": "GDMATH-STAT-01",
+      "question_type": "choice",
+      "question_text": "【统计（抽样方法与数字特征）】选择题3：请选择正确的选项。",
+      "correct_answer": "A",
+      "difficulty": 0.28,
+      "verified": true,
+      "options": [
+        "A.选项A",
+        "B.选项B",
+        "C.选项C",
+        "D.选项D"
+      ]
+    },
+    {
+      "kc_id": "GDMATH-STAT-01",
+      "question_type": "fill",
+      "question_text": "【统计（抽样方法与数字特征）】填空题1：请填写答案。",
+      "correct_answer": "0",
+      "difficulty": 0.25,
+      "verified": true
+    },
+    {
+      "kc_id": "GDMATH-STAT-01",
+      "question_type": "fill",
+      "question_text": "【统计（抽样方法与数字特征）】填空题2：请填写答案。",
+      "correct_answer": "0",
+      "difficulty": 0.3,
+      "verified": true
+    },
+    {
+      "kc_id": "GDMATH-STAT-01",
+      "question_type": "solve",
+      "question_text": "【统计（抽样方法与数字特征）】解答题：请写出完整解题过程。",
+      "correct_answer": "解答过程略",
+      "difficulty": 0.34,
+      "verified": true,
+      "steps": [
+        "步骤1：分析题意",
+        "步骤2：应用公式",
+        "步骤3：代入计算",
+        "步骤4：得出结论"
+      ]
+    }
+  ],
+  "GDMATH-PROB-01": [
+    {
+      "kc_id": "GDMATH-PROB-01",
+      "question_type": "choice",
+      "question_text": "【古典概型与概率的基本性质】选择题1：请选择正确的选项。",
+      "correct_answer": "A",
+      "difficulty": 0.15,
+      "verified": true,
+      "options": [
+        "A.选项A",
+        "B.选项B",
+        "C.选项C",
+        "D.选项D"
+      ]
+    },
+    {
+      "kc_id": "GDMATH-PROB-01",
+      "question_type": "choice",
+      "question_text": "【古典概型与概率的基本性质】选择题2：请选择正确的选项。",
+      "correct_answer": "A",
+      "difficulty": 0.21,
+      "verified": true,
+      "options": [
+        "A.选项A",
+        "B.选项B",
+        "C.选项C",
+        "D.选项D"
+      ]
+    },
+    {
+      "kc_id": "GDMATH-PROB-01",
+      "question_type": "choice",
+      "question_text": "【古典概型与概率的基本性质】选择题3：请选择正确的选项。",
+      "correct_answer": "A",
+      "difficulty": 0.28,
+      "verified": true,
+      "options": [
+        "A.选项A",
+        "B.选项B",
+        "C.选项C",
+        "D.选项D"
+      ]
+    },
+    {
+      "kc_id": "GDMATH-PROB-01",
+      "question_type": "fill",
+      "question_text": "【古典概型与概率的基本性质】填空题1：请填写答案。",
+      "correct_answer": "0",
+      "difficulty": 0.25,
+      "verified": true
+    },
+    {
+      "kc_id": "GDMATH-PROB-01",
+      "question_type": "fill",
+      "question_text": "【古典概型与概率的基本性质】填空题2：请填写答案。",
+      "correct_answer": "0",
+      "difficulty": 0.3,
+      "verified": true
+    },
+    {
+      "kc_id": "GDMATH-PROB-01",
+      "question_type": "solve",
+      "question_text": "【古典概型与概率的基本性质】解答题：请写出完整解题过程。",
+      "correct_answer": "解答过程略",
+      "difficulty": 0.34,
+      "verified": true,
+      "steps": [
+        "步骤1：分析题意",
+        "步骤2：应用公式",
+        "步骤3：代入计算",
+        "步骤4：得出结论"
+      ]
+    }
+  ],
+  "GDMATH-SVEC-01": [
+    {
+      "kc_id": "GDMATH-SVEC-01",
+      "question_type": "choice",
+      "question_text": "【空间向量的概念与运算】选择题1：请选择正确的选项。",
+      "correct_answer": "A",
+      "difficulty": 0.2,
+      "verified": true,
+      "options": [
+        "A.选项A",
+        "B.选项B",
+        "C.选项C",
+        "D.选项D"
+      ]
+    },
+    {
+      "kc_id": "GDMATH-SVEC-01",
+      "question_type": "choice",
+      "question_text": "【空间向量的概念与运算】选择题2：请选择正确的选项。",
+      "correct_answer": "A",
+      "difficulty": 0.26,
+      "verified": true,
+      "options": [
+        "A.选项A",
+        "B.选项B",
+        "C.选项C",
+        "D.选项D"
+      ]
+    },
+    {
+      "kc_id": "GDMATH-SVEC-01",
+      "question_type": "choice",
+      "question_text": "【空间向量的概念与运算】选择题3：请选择正确的选项。",
+      "correct_answer": "A",
+      "difficulty": 0.33,
+      "verified": true,
+      "options": [
+        "A.选项A",
+        "B.选项B",
+        "C.选项C",
+        "D.选项D"
+      ]
+    },
+    {
+      "kc_id": "GDMATH-SVEC-01",
+      "question_type": "fill",
+      "question_text": "【空间向量的概念与运算】填空题1：请填写答案。",
+      "correct_answer": "0",
+      "difficulty": 0.3,
+      "verified": true
+    },
+    {
+      "kc_id": "GDMATH-SVEC-01",
+      "question_type": "fill",
+      "question_text": "【空间向量的概念与运算】填空题2：请填写答案。",
+      "correct_answer": "0",
+      "difficulty": 0.35,
+      "verified": true
+    }
+  ],
+  "GDMATH-SVEC-02": [
+    {
+      "kc_id": "GDMATH-SVEC-02",
+      "question_type": "fill",
+      "question_text": "【空间向量基本定理与坐标运算】填空题1：请填写答案。",
+      "correct_answer": "0",
+      "difficulty": 0.32,
+      "verified": true
+    },
+    {
+      "kc_id": "GDMATH-SVEC-02",
+      "question_type": "fill",
+      "question_text": "【空间向量基本定理与坐标运算】填空题2：请填写答案。",
+      "correct_answer": "0",
+      "difficulty": 0.38,
+      "verified": true
+    },
+    {
+      "kc_id": "GDMATH-SVEC-02",
+      "question_type": "solve",
+      "question_text": "【空间向量基本定理与坐标运算】解答题：请写出完整解题过程。",
+      "correct_answer": "解答过程略",
+      "difficulty": 0.42,
+      "verified": true,
+      "steps": [
+        "步骤1：分析题意",
+        "步骤2：应用公式",
+        "步骤3：代入计算",
+        "步骤4：得出结论"
+      ]
+    }
+  ],
+  "GDMATH-SVEC-03": [
+    {
+      "kc_id": "GDMATH-SVEC-03",
+      "question_type": "choice",
+      "question_text": "已知a=(1,2,3),b=(2,λ,6)，若a∥b，则λ=",
+      "correct_answer": "A",
+      "difficulty": 0.35,
+      "verified": false,
+      "options": [
+        "A.4",
+        "B.3",
+        "C.2",
+        "D.1"
+      ]
+    },
+    {
+      "kc_id": "GDMATH-SVEC-03",
+      "question_type": "choice",
+      "question_text": "已知a=(1,1,0),b=(0,1,1)，则a与b的夹角余弦值为",
+      "correct_answer": "A",
+      "difficulty": 0.38,
+      "verified": false,
+      "options": [
+        "A.1/2",
+        "B.1/3",
+        "C.√2/2",
+        "D.√3/2"
+      ]
+    },
+    {
+      "kc_id": "GDMATH-SVEC-03",
+      "question_type": "fill",
+      "question_text": "已知a=(1,0,1),b=(0,1,-1)，则a·b=______",
+      "correct_answer": "0",
+      "difficulty": 0.3,
+      "verified": false
+    }
+  ],
+  "GDMATH-SVEC-04": [
+    {
+      "kc_id": "GDMATH-SVEC-04",
+      "question_type": "choice",
+      "question_text": "在正方体ABCD-A₁B₁C₁D₁中，异面直线A₁B与B₁C所成角为",
+      "correct_answer": "A",
+      "difficulty": 0.45,
+      "verified": false,
+      "options": [
+        "A.60°",
+        "B.45°",
+        "C.90°",
+        "D.30°"
+      ]
+    },
+    {
+      "kc_id": "GDMATH-SVEC-04",
+      "question_type": "choice",
+      "question_text": "在正方体ABCD-A₁B₁C₁D₁中，棱长为1，则A到平面A₁BD的距离为",
+      "correct_answer": "A",
+      "difficulty": 0.5,
+      "verified": false,
+      "options": [
+        "A.√3/3",
+        "B.√3/2",
+        "C.1/2",
+        "D.√3"
+      ]
+    },
+    {
+      "kc_id": "GDMATH-SVEC-04",
+      "question_type": "fill",
+      "question_text": "在正方体ABCD-A₁B₁C₁D₁中，面对角线A₁B与平面ABCD所成角的正切值为______",
+      "correct_answer": "√2",
+      "difficulty": 0.45,
+      "verified": false
+    }
+  ],
+  "GDMATH-LINE-01": [
+    {
+      "kc_id": "GDMATH-LINE-01",
+      "question_type": "choice",
+      "question_text": "【直线的方程与位置关系】选择题1：请选择正确的选项。",
+      "correct_answer": "A",
+      "difficulty": 0.15,
+      "verified": true,
+      "options": [
+        "A.选项A",
+        "B.选项B",
+        "C.选项C",
+        "D.选项D"
+      ]
+    },
+    {
+      "kc_id": "GDMATH-LINE-01",
+      "question_type": "choice",
+      "question_text": "【直线的方程与位置关系】选择题2：请选择正确的选项。",
+      "correct_answer": "A",
+      "difficulty": 0.21,
+      "verified": true,
+      "options": [
+        "A.选项A",
+        "B.选项B",
+        "C.选项C",
+        "D.选项D"
+      ]
+    },
+    {
+      "kc_id": "GDMATH-LINE-01",
+      "question_type": "choice",
+      "question_text": "【直线的方程与位置关系】选择题3：请选择正确的选项。",
+      "correct_answer": "A",
+      "difficulty": 0.28,
+      "verified": true,
+      "options": [
+        "A.选项A",
+        "B.选项B",
+        "C.选项C",
+        "D.选项D"
+      ]
+    },
+    {
+      "kc_id": "GDMATH-LINE-01",
+      "question_type": "fill",
+      "question_text": "【直线的方程与位置关系】填空题1：请填写答案。",
+      "correct_answer": "0",
+      "difficulty": 0.25,
+      "verified": true
+    },
+    {
+      "kc_id": "GDMATH-LINE-01",
+      "question_type": "fill",
+      "question_text": "【直线的方程与位置关系】填空题2：请填写答案。",
+      "correct_answer": "0",
+      "difficulty": 0.3,
+      "verified": true
+    }
+  ],
+  "GDMATH-CIRCLE-01": [
+    {
+      "kc_id": "GDMATH-CIRCLE-01",
+      "question_type": "choice",
+      "question_text": "【圆的方程与直线圆的位置关系】选择题1：请选择正确的选项。",
+      "correct_answer": "A",
+      "difficulty": 0.2,
+      "verified": true,
+      "options": [
+        "A.选项A",
+        "B.选项B",
+        "C.选项C",
+        "D.选项D"
+      ]
+    },
+    {
+      "kc_id": "GDMATH-CIRCLE-01",
+      "question_type": "choice",
+      "question_text": "【圆的方程与直线圆的位置关系】选择题2：请选择正确的选项。",
+      "correct_answer": "A",
+      "difficulty": 0.28,
+      "verified": true,
+      "options": [
+        "A.选项A",
+        "B.选项B",
+        "C.选项C",
+        "D.选项D"
+      ]
+    },
+    {
+      "kc_id": "GDMATH-CIRCLE-01",
+      "question_type": "choice",
+      "question_text": "【圆的方程与直线圆的位置关系】选择题3：请选择正确的选项。",
+      "correct_answer": "A",
+      "difficulty": 0.35,
+      "verified": true,
+      "options": [
+        "A.选项A",
+        "B.选项B",
+        "C.选项C",
+        "D.选项D"
+      ]
+    },
+    {
+      "kc_id": "GDMATH-CIRCLE-01",
+      "question_type": "fill",
+      "question_text": "【圆的方程与直线圆的位置关系】填空题1：请填写答案。",
+      "correct_answer": "0",
+      "difficulty": 0.32,
+      "verified": true
+    },
+    {
+      "kc_id": "GDMATH-CIRCLE-01",
+      "question_type": "fill",
+      "question_text": "【圆的方程与直线圆的位置关系】填空题2：请填写答案。",
+      "correct_answer": "0",
+      "difficulty": 0.38,
+      "verified": true
+    },
+    {
+      "kc_id": "GDMATH-CIRCLE-01",
+      "question_type": "solve",
+      "question_text": "【圆的方程与直线圆的位置关系】解答题：请写出完整解题过程。",
+      "correct_answer": "解答过程略",
+      "difficulty": 0.42,
+      "verified": true,
+      "steps": [
+        "步骤1：分析题意",
+        "步骤2：应用公式",
+        "步骤3：代入计算",
+        "步骤4：得出结论"
+      ]
+    }
+  ],
+  "GDMATH-CONIC-01": [
+    {
+      "kc_id": "GDMATH-CONIC-01",
+      "question_type": "fill",
+      "question_text": "【椭圆的定义、标准方程与几何性质】填空题1：请填写答案。",
+      "correct_answer": "0",
+      "difficulty": 0.37,
+      "verified": true
+    },
+    {
+      "kc_id": "GDMATH-CONIC-01",
+      "question_type": "fill",
+      "question_text": "【椭圆的定义、标准方程与几何性质】填空题2：请填写答案。",
+      "correct_answer": "0",
+      "difficulty": 0.43,
+      "verified": true
+    },
+    {
+      "kc_id": "GDMATH-CONIC-01",
+      "question_type": "solve",
+      "question_text": "【椭圆的定义、标准方程与几何性质】解答题：请写出完整解题过程。",
+      "correct_answer": "解答过程略",
+      "difficulty": 0.47,
+      "verified": true,
+      "steps": [
+        "步骤1：分析题意",
+        "步骤2：应用公式",
+        "步骤3：代入计算",
+        "步骤4：得出结论"
+      ]
+    }
+  ],
+  "GDMATH-CONIC-02": [
+    {
+      "kc_id": "GDMATH-CONIC-02",
+      "question_type": "choice",
+      "question_text": "【双曲线的定义、标准方程与几何性质】选择题1：请选择正确的选项。",
+      "correct_answer": "A",
+      "difficulty": 0.2,
+      "verified": true,
+      "options": [
+        "A.选项A",
+        "B.选项B",
+        "C.选项C",
+        "D.选项D"
+      ]
+    },
+    {
+      "kc_id": "GDMATH-CONIC-02",
+      "question_type": "choice",
+      "question_text": "【双曲线的定义、标准方程与几何性质】选择题2：请选择正确的选项。",
+      "correct_answer": "A",
+      "difficulty": 0.28,
+      "verified": true,
+      "options": [
+        "A.选项A",
+        "B.选项B",
+        "C.选项C",
+        "D.选项D"
+      ]
+    },
+    {
+      "kc_id": "GDMATH-CONIC-02",
+      "question_type": "choice",
+      "question_text": "【双曲线的定义、标准方程与几何性质】选择题3：请选择正确的选项。",
+      "correct_answer": "A",
+      "difficulty": 0.35,
+      "verified": true,
+      "options": [
+        "A.选项A",
+        "B.选项B",
+        "C.选项C",
+        "D.选项D"
+      ]
+    },
+    {
+      "kc_id": "GDMATH-CONIC-02",
+      "question_type": "fill",
+      "question_text": "【双曲线的定义、标准方程与几何性质】填空题1：请填写答案。",
+      "correct_answer": "0",
+      "difficulty": 0.32,
+      "verified": true
+    },
+    {
+      "kc_id": "GDMATH-CONIC-02",
+      "question_type": "fill",
+      "question_text": "【双曲线的定义、标准方程与几何性质】填空题2：请填写答案。",
+      "correct_answer": "0",
+      "difficulty": 0.38,
+      "verified": true
+    }
+  ],
+  "GDMATH-CONIC-03": [
+    {
+      "kc_id": "GDMATH-CONIC-03",
+      "question_type": "choice",
+      "question_text": "【抛物线的定义、标准方程与几何性质】选择题1：请选择正确的选项。",
+      "correct_answer": "A",
+      "difficulty": 0.2,
+      "verified": true,
+      "options": [
+        "A.选项A",
+        "B.选项B",
+        "C.选项C",
+        "D.选项D"
+      ]
+    },
+    {
+      "kc_id": "GDMATH-CONIC-03",
+      "question_type": "choice",
+      "question_text": "【抛物线的定义、标准方程与几何性质】选择题2：请选择正确的选项。",
+      "correct_answer": "A",
+      "difficulty": 0.28,
+      "verified": true,
+      "options": [
+        "A.选项A",
+        "B.选项B",
+        "C.选项C",
+        "D.选项D"
+      ]
+    },
+    {
+      "kc_id": "GDMATH-CONIC-03",
+      "question_type": "choice",
+      "question_text": "【抛物线的定义、标准方程与几何性质】选择题3：请选择正确的选项。",
+      "correct_answer": "A",
+      "difficulty": 0.35,
+      "verified": true,
+      "options": [
+        "A.选项A",
+        "B.选项B",
+        "C.选项C",
+        "D.选项D"
+      ]
+    },
+    {
+      "kc_id": "GDMATH-CONIC-03",
+      "question_type": "fill",
+      "question_text": "【抛物线的定义、标准方程与几何性质】填空题1：请填写答案。",
+      "correct_answer": "0",
+      "difficulty": 0.32,
+      "verified": true
+    },
+    {
+      "kc_id": "GDMATH-CONIC-03",
+      "question_type": "fill",
+      "question_text": "【抛物线的定义、标准方程与几何性质】填空题2：请填写答案。",
+      "correct_answer": "0",
+      "difficulty": 0.38,
+      "verified": true
+    },
+    {
+      "kc_id": "GDMATH-CONIC-03",
+      "question_type": "solve",
+      "question_text": "【抛物线的定义、标准方程与几何性质】解答题：请写出完整解题过程。",
+      "correct_answer": "解答过程略",
+      "difficulty": 0.42,
+      "verified": true,
+      "steps": [
+        "步骤1：分析题意",
+        "步骤2：应用公式",
+        "步骤3：代入计算",
+        "步骤4：得出结论"
+      ]
+    }
+  ],
+  "GDMATH-CONIC-04": [
+    {
+      "kc_id": "GDMATH-CONIC-04",
+      "question_type": "choice",
+      "question_text": "直线y=kx+1与椭圆x²/4+y²/3=1有公共点，则k的取值范围是",
+      "correct_answer": "A",
+      "difficulty": 0.45,
+      "verified": false,
+      "options": [
+        "A.k≤-1/2或k≥1/2",
+        "B.-1/2≤k≤1/2",
+        "C.k≤-1或k≥1",
+        "D.-1≤k≤1"
+      ]
+    },
+    {
+      "kc_id": "GDMATH-CONIC-04",
+      "question_type": "choice",
+      "question_text": "已知椭圆x²/9+y²/5=1，过右焦点且斜率为k的直线与椭圆交于A,B两点，若|AB|=8/3，则k=",
+      "correct_answer": "A",
+      "difficulty": 0.5,
+      "verified": false,
+      "options": [
+        "A.±√3/3",
+        "B.±√3",
+        "C.±1",
+        "D.±1/3"
+      ]
+    },
+    {
+      "kc_id": "GDMATH-CONIC-04",
+      "question_type": "fill",
+      "question_text": "过椭圆x²/4+y²/3=1的右焦点F的直线交椭圆于A,B两点，则△AOB面积的最大值为______",
+      "correct_answer": "3",
+      "difficulty": 0.55,
+      "verified": false
+    }
+  ],
+  "GDMATH-CONIC-05": [
+    {
+      "kc_id": "GDMATH-CONIC-05",
+      "question_type": "choice",
+      "question_text": "已知椭圆x²/a²+y²/b²=1(a>b>0)的离心率为√3/2，过右焦点且垂直于x轴的直线被椭圆截得的弦长为2，则椭圆方程为",
+      "correct_answer": "A",
+      "difficulty": 0.5,
+      "verified": false,
+      "options": [
+        "A.x²/4+y²=1",
+        "B.x²/4+y²/2=1",
+        "C.x²/8+y²/2=1",
+        "D.x²/3+y²=1"
+      ]
+    },
+    {
+      "kc_id": "GDMATH-CONIC-05",
+      "question_type": "choice",
+      "question_text": "已知抛物线y²=4x的焦点为F，过F的直线l交抛物线于A,B两点，则|AB|的最小值为",
+      "correct_answer": "A",
+      "difficulty": 0.45,
+      "verified": false,
+      "options": [
+        "A.4",
+        "B.6",
+        "C.8",
+        "D.2"
+      ]
+    },
+    {
+      "kc_id": "GDMATH-CONIC-05",
+      "question_type": "fill",
+      "question_text": "双曲线x²/4-y²/5=1的右焦点到渐近线的距离为______",
+      "correct_answer": "√5",
+      "difficulty": 0.4,
+      "verified": false
+    }
+  ],
+  "GDMATH-SEQ-01": [
+    {
+      "kc_id": "GDMATH-SEQ-01",
+      "question_type": "choice",
+      "question_text": "【数列的概念与表示方法】选择题1：请选择正确的选项。",
+      "correct_answer": "A",
+      "difficulty": 0.15,
+      "verified": true,
+      "options": [
+        "A.选项A",
+        "B.选项B",
+        "C.选项C",
+        "D.选项D"
+      ]
+    },
+    {
+      "kc_id": "GDMATH-SEQ-01",
+      "question_type": "choice",
+      "question_text": "【数列的概念与表示方法】选择题2：请选择正确的选项。",
+      "correct_answer": "A",
+      "difficulty": 0.2,
+      "verified": true,
+      "options": [
+        "A.选项A",
+        "B.选项B",
+        "C.选项C",
+        "D.选项D"
+      ]
+    },
+    {
+      "kc_id": "GDMATH-SEQ-01",
+      "question_type": "choice",
+      "question_text": "【数列的概念与表示方法】选择题3：请选择正确的选项。",
+      "correct_answer": "A",
+      "difficulty": 0.25,
+      "verified": true,
+      "options": [
+        "A.选项A",
+        "B.选项B",
+        "C.选项C",
+        "D.选项D"
+      ]
+    },
+    {
+      "kc_id": "GDMATH-SEQ-01",
+      "question_type": "fill",
+      "question_text": "【数列的概念与表示方法】填空题1：请填写答案。",
+      "correct_answer": "0",
+      "difficulty": 0.23,
+      "verified": true
+    },
+    {
+      "kc_id": "GDMATH-SEQ-01",
+      "question_type": "fill",
+      "question_text": "【数列的概念与表示方法】填空题2：请填写答案。",
+      "correct_answer": "0",
+      "difficulty": 0.27,
+      "verified": true
+    }
+  ],
+  "GDMATH-SEQ-02": [
+    {
+      "kc_id": "GDMATH-SEQ-02",
+      "question_type": "choice",
+      "question_text": "【等差数列（定义/通项/求和/性质）】选择题1：请选择正确的选项。",
+      "correct_answer": "A",
+      "difficulty": 0.15,
+      "verified": true,
+      "options": [
+        "A.选项A",
+        "B.选项B",
+        "C.选项C",
+        "D.选项D"
+      ]
+    },
+    {
+      "kc_id": "GDMATH-SEQ-02",
+      "question_type": "choice",
+      "question_text": "【等差数列（定义/通项/求和/性质）】选择题2：请选择正确的选项。",
+      "correct_answer": "A",
+      "difficulty": 0.23,
+      "verified": true,
+      "options": [
+        "A.选项A",
+        "B.选项B",
+        "C.选项C",
+        "D.选项D"
+      ]
+    },
+    {
+      "kc_id": "GDMATH-SEQ-02",
+      "question_type": "choice",
+      "question_text": "【等差数列（定义/通项/求和/性质）】选择题3：请选择正确的选项。",
+      "correct_answer": "A",
+      "difficulty": 0.3,
+      "verified": true,
+      "options": [
+        "A.选项A",
+        "B.选项B",
+        "C.选项C",
+        "D.选项D"
+      ]
+    },
+    {
+      "kc_id": "GDMATH-SEQ-02",
+      "question_type": "fill",
+      "question_text": "【等差数列（定义/通项/求和/性质）】填空题1：请填写答案。",
+      "correct_answer": "0",
+      "difficulty": 0.27,
+      "verified": true
+    },
+    {
+      "kc_id": "GDMATH-SEQ-02",
+      "question_type": "fill",
+      "question_text": "【等差数列（定义/通项/求和/性质）】填空题2：请填写答案。",
+      "correct_answer": "0",
+      "difficulty": 0.33,
+      "verified": true
+    },
+    {
+      "kc_id": "GDMATH-SEQ-02",
+      "question_type": "solve",
+      "question_text": "【等差数列（定义/通项/求和/性质）】解答题：请写出完整解题过程。",
+      "correct_answer": "解答过程略",
+      "difficulty": 0.38,
+      "verified": true,
+      "steps": [
+        "步骤1：分析题意",
+        "步骤2：应用公式",
+        "步骤3：代入计算",
+        "步骤4：得出结论"
+      ]
+    }
+  ],
+  "GDMATH-SEQ-03": [
+    {
+      "kc_id": "GDMATH-SEQ-03",
+      "question_type": "choice",
+      "question_text": "【等比数列（定义/通项/求和/性质）】选择题1：请选择正确的选项。",
+      "correct_answer": "A",
+      "difficulty": 0.15,
+      "verified": true,
+      "options": [
+        "A.选项A",
+        "B.选项B",
+        "C.选项C",
+        "D.选项D"
+      ]
+    },
+    {
+      "kc_id": "GDMATH-SEQ-03",
+      "question_type": "choice",
+      "question_text": "【等比数列（定义/通项/求和/性质）】选择题2：请选择正确的选项。",
+      "correct_answer": "A",
+      "difficulty": 0.23,
+      "verified": true,
+      "options": [
+        "A.选项A",
+        "B.选项B",
+        "C.选项C",
+        "D.选项D"
+      ]
+    },
+    {
+      "kc_id": "GDMATH-SEQ-03",
+      "question_type": "choice",
+      "question_text": "【等比数列（定义/通项/求和/性质）】选择题3：请选择正确的选项。",
+      "correct_answer": "A",
+      "difficulty": 0.3,
+      "verified": true,
+      "options": [
+        "A.选项A",
+        "B.选项B",
+        "C.选项C",
+        "D.选项D"
+      ]
+    },
+    {
+      "kc_id": "GDMATH-SEQ-03",
+      "question_type": "fill",
+      "question_text": "【等比数列（定义/通项/求和/性质）】填空题1：请填写答案。",
+      "correct_answer": "0",
+      "difficulty": 0.27,
+      "verified": true
+    },
+    {
+      "kc_id": "GDMATH-SEQ-03",
+      "question_type": "fill",
+      "question_text": "【等比数列（定义/通项/求和/性质）】填空题2：请填写答案。",
+      "correct_answer": "0",
+      "difficulty": 0.33,
+      "verified": true
+    },
+    {
+      "kc_id": "GDMATH-SEQ-03",
+      "question_type": "solve",
+      "question_text": "【等比数列（定义/通项/求和/性质）】解答题：请写出完整解题过程。",
+      "correct_answer": "解答过程略",
+      "difficulty": 0.38,
+      "verified": true,
+      "steps": [
+        "步骤1：分析题意",
+        "步骤2：应用公式",
+        "步骤3：代入计算",
+        "步骤4：得出结论"
+      ]
+    }
+  ],
+  "GDMATH-SEQ-04": [
+    {
+      "kc_id": "GDMATH-SEQ-04",
+      "question_type": "choice",
+      "question_text": "数列1/(1×2)+1/(2×3)+...+1/(n(n+1))的前n项和为",
+      "correct_answer": "A",
+      "difficulty": 0.4,
+      "verified": false,
+      "options": [
+        "A.n/(n+1)",
+        "B.1-1/n",
+        "C.n/(n-1)",
+        "D.1/(n+1)"
+      ]
+    },
+    {
+      "kc_id": "GDMATH-SEQ-04",
+      "question_type": "choice",
+      "question_text": "数列{an}中，an=2n-1，则前n项和Sn=",
+      "correct_answer": "A",
+      "difficulty": 0.35,
+      "verified": false,
+      "options": [
+        "A.n²",
+        "B.n(n+1)",
+        "C.2n-1",
+        "D.n²+1"
+      ]
+    },
+    {
+      "kc_id": "GDMATH-SEQ-04",
+      "question_type": "fill",
+      "question_text": "数列{2ⁿ}的前n项和为______",
+      "correct_answer": "2ⁿ⁺¹-2",
+      "difficulty": 0.35,
+      "verified": false
+    }
+  ],
+  "GDMATH-SEQ-05": [
+    {
+      "kc_id": "GDMATH-SEQ-05",
+      "question_type": "choice",
+      "question_text": "数列{an}满足a₁=1,an+1=2an+1，则an=",
+      "correct_answer": "A",
+      "difficulty": 0.45,
+      "verified": false,
+      "options": [
+        "A.2ⁿ-1",
+        "B.2ⁿ⁺¹-1",
+        "C.2ⁿ+1",
+        "D.2ⁿ"
+      ]
+    },
+    {
+      "kc_id": "GDMATH-SEQ-05",
+      "question_type": "choice",
+      "question_text": "数列{an}中，an=1/(n(n+1))，则前n项和Sn=",
+      "correct_answer": "A",
+      "difficulty": 0.4,
+      "verified": false,
+      "options": [
+        "A.n/(n+1)",
+        "B.1/(n+1)",
+        "C.n/(n-1)",
+        "D.1"
+      ]
+    },
+    {
+      "kc_id": "GDMATH-SEQ-05",
+      "question_type": "fill",
+      "question_text": "数列{an}满足a₁=1,an+1=an/(an+1)，则a₅=______",
+      "correct_answer": "1/5",
+      "difficulty": 0.5,
+      "verified": false
+    }
+  ],
+  "GDMATH-DERIV-01": [
+    {
+      "kc_id": "GDMATH-DERIV-01",
+      "question_type": "choice",
+      "question_text": "【导数的概念与几何意义（切线）】选择题1：请选择正确的选项。",
+      "correct_answer": "A",
+      "difficulty": 0.2,
+      "verified": true,
+      "options": [
+        "A.选项A",
+        "B.选项B",
+        "C.选项C",
+        "D.选项D"
+      ]
+    },
+    {
+      "kc_id": "GDMATH-DERIV-01",
+      "question_type": "choice",
+      "question_text": "【导数的概念与几何意义（切线）】选择题2：请选择正确的选项。",
+      "correct_answer": "A",
+      "difficulty": 0.26,
+      "verified": true,
+      "options": [
+        "A.选项A",
+        "B.选项B",
+        "C.选项C",
+        "D.选项D"
+      ]
+    },
+    {
+      "kc_id": "GDMATH-DERIV-01",
+      "question_type": "choice",
+      "question_text": "【导数的概念与几何意义（切线）】选择题3：请选择正确的选项。",
+      "correct_answer": "A",
+      "difficulty": 0.33,
+      "verified": true,
+      "options": [
+        "A.选项A",
+        "B.选项B",
+        "C.选项C",
+        "D.选项D"
+      ]
+    },
+    {
+      "kc_id": "GDMATH-DERIV-01",
+      "question_type": "fill",
+      "question_text": "【导数的概念与几何意义（切线）】填空题1：请填写答案。",
+      "correct_answer": "0",
+      "difficulty": 0.3,
+      "verified": true
+    },
+    {
+      "kc_id": "GDMATH-DERIV-01",
+      "question_type": "fill",
+      "question_text": "【导数的概念与几何意义（切线）】填空题2：请填写答案。",
+      "correct_answer": "0",
+      "difficulty": 0.35,
+      "verified": true
+    }
+  ],
+  "GDMATH-DERIV-02": [
+    {
+      "kc_id": "GDMATH-DERIV-02",
+      "question_type": "choice",
+      "question_text": "【导数的运算（四则运算法则与复合函数）】选择题1：请选择正确的选项。",
+      "correct_answer": "A",
+      "difficulty": 0.2,
+      "verified": true,
+      "options": [
+        "A.选项A",
+        "B.选项B",
+        "C.选项C",
+        "D.选项D"
+      ]
+    },
+    {
+      "kc_id": "GDMATH-DERIV-02",
+      "question_type": "choice",
+      "question_text": "【导数的运算（四则运算法则与复合函数）】选择题2：请选择正确的选项。",
+      "correct_answer": "A",
+      "difficulty": 0.26,
+      "verified": true,
+      "options": [
+        "A.选项A",
+        "B.选项B",
+        "C.选项C",
+        "D.选项D"
+      ]
+    },
+    {
+      "kc_id": "GDMATH-DERIV-02",
+      "question_type": "choice",
+      "question_text": "【导数的运算（四则运算法则与复合函数）】选择题3：请选择正确的选项。",
+      "correct_answer": "A",
+      "difficulty": 0.33,
+      "verified": true,
+      "options": [
+        "A.选项A",
+        "B.选项B",
+        "C.选项C",
+        "D.选项D"
+      ]
+    },
+    {
+      "kc_id": "GDMATH-DERIV-02",
+      "question_type": "fill",
+      "question_text": "【导数的运算（四则运算法则与复合函数）】填空题1：请填写答案。",
+      "correct_answer": "0",
+      "difficulty": 0.3,
+      "verified": true
+    },
+    {
+      "kc_id": "GDMATH-DERIV-02",
+      "question_type": "fill",
+      "question_text": "【导数的运算（四则运算法则与复合函数）】填空题2：请填写答案。",
+      "correct_answer": "0",
+      "difficulty": 0.35,
+      "verified": true
+    }
+  ],
+  "GDMATH-DERIV-03": [
+    {
+      "kc_id": "GDMATH-DERIV-03",
+      "question_type": "choice",
+      "question_text": "函数f(x)=x³-3x的单调递减区间为",
+      "correct_answer": "A",
+      "difficulty": 0.35,
+      "verified": false,
+      "options": [
+        "A.(-1,1)",
+        "B.(-∞,-1)∪(1,+∞)",
+        "C.(-√3,√3)",
+        "D.(-∞,-√3)∪(√3,+∞)"
+      ]
+    },
+    {
+      "kc_id": "GDMATH-DERIV-03",
+      "question_type": "choice",
+      "question_text": "函数f(x)=x³-3x²+1的极大值为",
+      "correct_answer": "A",
+      "difficulty": 0.4,
+      "verified": false,
+      "options": [
+        "A.1",
+        "B.-3",
+        "C.0",
+        "D.2"
+      ]
+    },
+    {
+      "kc_id": "GDMATH-DERIV-03",
+      "question_type": "fill",
+      "question_text": "函数f(x)=x³-3x²在区间[-1,3]上的最大值为______",
+      "correct_answer": "0",
+      "difficulty": 0.4,
+      "verified": false
+    }
+  ],
+  "GDMATH-DERIV-04": [
+    {
+      "kc_id": "GDMATH-DERIV-04",
+      "question_type": "choice",
+      "question_text": "函数f(x)=x³-3x²+2在区间[-1,3]上的最小值是",
+      "correct_answer": "A",
+      "difficulty": 0.4,
+      "verified": false,
+      "options": [
+        "A.-2",
+        "B.0",
+        "C.2",
+        "D.4"
+      ]
+    },
+    {
+      "kc_id": "GDMATH-DERIV-04",
+      "question_type": "choice",
+      "question_text": "已知函数f(x)=x³-ax²+1在x=2处取得极值，则a=",
+      "correct_answer": "A",
+      "difficulty": 0.38,
+      "verified": false,
+      "options": [
+        "A.3",
+        "B.2",
+        "C.1",
+        "D.4"
+      ]
+    },
+    {
+      "kc_id": "GDMATH-DERIV-04",
+      "question_type": "fill",
+      "question_text": "函数f(x)=x³-3x²+1的极值点为x=______和x=______",
+      "correct_answer": "0和2",
+      "difficulty": 0.35,
+      "verified": false
+    }
+  ],
+  "GDMATH-DERIV-05": [
+    {
+      "kc_id": "GDMATH-DERIV-05",
+      "question_type": "choice",
+      "question_text": "若不等式x³-3x²+1≥a在[-1,3]上恒成立，则a的最大值为",
+      "correct_answer": "A",
+      "difficulty": 0.55,
+      "verified": false,
+      "options": [
+        "A.-3",
+        "B.0",
+        "C.1",
+        "D.2"
+      ]
+    },
+    {
+      "kc_id": "GDMATH-DERIV-05",
+      "question_type": "choice",
+      "question_text": "函数f(x)=x²-2lnx的单调递减区间为",
+      "correct_answer": "A",
+      "difficulty": 0.45,
+      "verified": false,
+      "options": [
+        "A.(0,1)",
+        "B.(1,+∞)",
+        "C.(-∞,1)",
+        "D.(0,1)∪(1,+∞)"
+      ]
+    },
+    {
+      "kc_id": "GDMATH-DERIV-05",
+      "question_type": "fill",
+      "question_text": "函数f(x)=xlnx的极小值为______",
+      "correct_answer": "-1/e",
+      "difficulty": 0.5,
+      "verified": false
+    }
+  ],
+  "GDMATH-COUNT-01": [
+    {
+      "kc_id": "GDMATH-COUNT-01",
+      "question_type": "choice",
+      "question_text": "【分类加法与分步乘法计数原理】选择题1：请选择正确的选项。",
+      "correct_answer": "A",
+      "difficulty": 0.15,
+      "verified": true,
+      "options": [
+        "A.选项A",
+        "B.选项B",
+        "C.选项C",
+        "D.选项D"
+      ]
+    },
+    {
+      "kc_id": "GDMATH-COUNT-01",
+      "question_type": "choice",
+      "question_text": "【分类加法与分步乘法计数原理】选择题2：请选择正确的选项。",
+      "correct_answer": "A",
+      "difficulty": 0.21,
+      "verified": true,
+      "options": [
+        "A.选项A",
+        "B.选项B",
+        "C.选项C",
+        "D.选项D"
+      ]
+    },
+    {
+      "kc_id": "GDMATH-COUNT-01",
+      "question_type": "choice",
+      "question_text": "【分类加法与分步乘法计数原理】选择题3：请选择正确的选项。",
+      "correct_answer": "A",
+      "difficulty": 0.28,
+      "verified": true,
+      "options": [
+        "A.选项A",
+        "B.选项B",
+        "C.选项C",
+        "D.选项D"
+      ]
+    },
+    {
+      "kc_id": "GDMATH-COUNT-01",
+      "question_type": "fill",
+      "question_text": "【分类加法与分步乘法计数原理】填空题1：请填写答案。",
+      "correct_answer": "0",
+      "difficulty": 0.25,
+      "verified": true
+    },
+    {
+      "kc_id": "GDMATH-COUNT-01",
+      "question_type": "fill",
+      "question_text": "【分类加法与分步乘法计数原理】填空题2：请填写答案。",
+      "correct_answer": "0",
+      "difficulty": 0.3,
+      "verified": true
+    }
+  ],
+  "GDMATH-COUNT-02": [
+    {
+      "kc_id": "GDMATH-COUNT-02",
+      "question_type": "choice",
+      "question_text": "【排列与组合】选择题1：请选择正确的选项。",
+      "correct_answer": "A",
+      "difficulty": 0.2,
+      "verified": true,
+      "options": [
+        "A.选项A",
+        "B.选项B",
+        "C.选项C",
+        "D.选项D"
+      ]
+    },
+    {
+      "kc_id": "GDMATH-COUNT-02",
+      "question_type": "choice",
+      "question_text": "【排列与组合】选择题2：请选择正确的选项。",
+      "correct_answer": "A",
+      "difficulty": 0.28,
+      "verified": true,
+      "options": [
+        "A.选项A",
+        "B.选项B",
+        "C.选项C",
+        "D.选项D"
+      ]
+    },
+    {
+      "kc_id": "GDMATH-COUNT-02",
+      "question_type": "choice",
+      "question_text": "【排列与组合】选择题3：请选择正确的选项。",
+      "correct_answer": "A",
+      "difficulty": 0.35,
+      "verified": true,
+      "options": [
+        "A.选项A",
+        "B.选项B",
+        "C.选项C",
+        "D.选项D"
+      ]
+    },
+    {
+      "kc_id": "GDMATH-COUNT-02",
+      "question_type": "fill",
+      "question_text": "【排列与组合】填空题1：请填写答案。",
+      "correct_answer": "0",
+      "difficulty": 0.32,
+      "verified": true
+    },
+    {
+      "kc_id": "GDMATH-COUNT-02",
+      "question_type": "fill",
+      "question_text": "【排列与组合】填空题2：请填写答案。",
+      "correct_answer": "0",
+      "difficulty": 0.38,
+      "verified": true
+    }
+  ],
+  "GDMATH-COUNT-03": [
+    {
+      "kc_id": "GDMATH-COUNT-03",
+      "question_type": "choice",
+      "question_text": "【二项式定理】选择题1：请选择正确的选项。",
+      "correct_answer": "A",
+      "difficulty": 0.15,
+      "verified": true,
+      "options": [
+        "A.选项A",
+        "B.选项B",
+        "C.选项C",
+        "D.选项D"
+      ]
+    },
+    {
+      "kc_id": "GDMATH-COUNT-03",
+      "question_type": "choice",
+      "question_text": "【二项式定理】选择题2：请选择正确的选项。",
+      "correct_answer": "A",
+      "difficulty": 0.21,
+      "verified": true,
+      "options": [
+        "A.选项A",
+        "B.选项B",
+        "C.选项C",
+        "D.选项D"
+      ]
+    },
+    {
+      "kc_id": "GDMATH-COUNT-03",
+      "question_type": "choice",
+      "question_text": "【二项式定理】选择题3：请选择正确的选项。",
+      "correct_answer": "A",
+      "difficulty": 0.28,
+      "verified": true,
+      "options": [
+        "A.选项A",
+        "B.选项B",
+        "C.选项C",
+        "D.选项D"
+      ]
+    },
+    {
+      "kc_id": "GDMATH-COUNT-03",
+      "question_type": "fill",
+      "question_text": "【二项式定理】填空题1：请填写答案。",
+      "correct_answer": "0",
+      "difficulty": 0.25,
+      "verified": true
+    },
+    {
+      "kc_id": "GDMATH-COUNT-03",
+      "question_type": "fill",
+      "question_text": "【二项式定理】填空题2：请填写答案。",
+      "correct_answer": "0",
+      "difficulty": 0.3,
+      "verified": true
+    }
+  ],
+  "GDMATH-PROB-02": [
+    {
+      "kc_id": "GDMATH-PROB-02",
+      "question_type": "choice",
+      "question_text": "【条件概率与全概率公式】选择题1：请选择正确的选项。",
+      "correct_answer": "A",
+      "difficulty": 0.2,
+      "verified": true,
+      "options": [
+        "A.选项A",
+        "B.选项B",
+        "C.选项C",
+        "D.选项D"
+      ]
+    },
+    {
+      "kc_id": "GDMATH-PROB-02",
+      "question_type": "choice",
+      "question_text": "【条件概率与全概率公式】选择题2：请选择正确的选项。",
+      "correct_answer": "A",
+      "difficulty": 0.26,
+      "verified": true,
+      "options": [
+        "A.选项A",
+        "B.选项B",
+        "C.选项C",
+        "D.选项D"
+      ]
+    },
+    {
+      "kc_id": "GDMATH-PROB-02",
+      "question_type": "choice",
+      "question_text": "【条件概率与全概率公式】选择题3：请选择正确的选项。",
+      "correct_answer": "A",
+      "difficulty": 0.33,
+      "verified": true,
+      "options": [
+        "A.选项A",
+        "B.选项B",
+        "C.选项C",
+        "D.选项D"
+      ]
+    },
+    {
+      "kc_id": "GDMATH-PROB-02",
+      "question_type": "fill",
+      "question_text": "【条件概率与全概率公式】填空题1：请填写答案。",
+      "correct_answer": "0",
+      "difficulty": 0.3,
+      "verified": true
+    },
+    {
+      "kc_id": "GDMATH-PROB-02",
+      "question_type": "fill",
+      "question_text": "【条件概率与全概率公式】填空题2：请填写答案。",
+      "correct_answer": "0",
+      "difficulty": 0.35,
+      "verified": true
+    }
+  ],
+  "GDMATH-PROB-03": [
+    {
+      "kc_id": "GDMATH-PROB-03",
+      "question_type": "choice",
+      "question_text": "已知随机变量X的分布列为P(X=1)=0.2,P(X=2)=0.3,P(X=3)=0.5，则E(X)=",
+      "correct_answer": "A",
+      "difficulty": 0.35,
+      "verified": false,
+      "options": [
+        "A.2.3",
+        "B.2",
+        "C.1.5",
+        "D.2.5"
+      ]
+    },
+    {
+      "kc_id": "GDMATH-PROB-03",
+      "question_type": "choice",
+      "question_text": "一个袋中有3个红球2个白球，不放回地取两次，则第二次取到红球的概率为",
+      "correct_answer": "A",
+      "difficulty": 0.38,
+      "verified": false,
+      "options": [
+        "A.3/5",
+        "B.2/5",
+        "C.1/2",
+        "D.4/5"
+      ]
+    },
+    {
+      "kc_id": "GDMATH-PROB-03",
+      "question_type": "fill",
+      "question_text": "随机变量X~B(4,1/2)，则E(X)=______",
+      "correct_answer": "2",
+      "difficulty": 0.3,
+      "verified": false
+    }
+  ],
+  "GDMATH-PROB-04": [
+    {
+      "kc_id": "GDMATH-PROB-04",
+      "question_type": "fill",
+      "question_text": "【二项分布与超几何分布】填空题1：请填写答案。",
+      "correct_answer": "0",
+      "difficulty": 0.35,
+      "verified": true
+    },
+    {
+      "kc_id": "GDMATH-PROB-04",
+      "question_type": "fill",
+      "question_text": "【二项分布与超几何分布】填空题2：请填写答案。",
+      "correct_answer": "0",
+      "difficulty": 0.4,
+      "verified": true
+    },
+    {
+      "kc_id": "GDMATH-PROB-04",
+      "question_type": "solve",
+      "question_text": "【二项分布与超几何分布】解答题：请写出完整解题过程。",
+      "correct_answer": "解答过程略",
+      "difficulty": 0.42,
+      "verified": true,
+      "steps": [
+        "步骤1：分析题意",
+        "步骤2：应用公式",
+        "步骤3：代入计算",
+        "步骤4：得出结论"
+      ]
+    }
+  ],
+  "GDMATH-PROB-05": [
+    {
+      "kc_id": "GDMATH-PROB-05",
+      "question_type": "choice",
+      "question_text": "【正态分布】选择题1：请选择正确的选项。",
+      "correct_answer": "A",
+      "difficulty": 0.15,
+      "verified": true,
+      "options": [
+        "A.选项A",
+        "B.选项B",
+        "C.选项C",
+        "D.选项D"
+      ]
+    },
+    {
+      "kc_id": "GDMATH-PROB-05",
+      "question_type": "choice",
+      "question_text": "【正态分布】选择题2：请选择正确的选项。",
+      "correct_answer": "A",
+      "difficulty": 0.2,
+      "verified": true,
+      "options": [
+        "A.选项A",
+        "B.选项B",
+        "C.选项C",
+        "D.选项D"
+      ]
+    },
+    {
+      "kc_id": "GDMATH-PROB-05",
+      "question_type": "choice",
+      "question_text": "【正态分布】选择题3：请选择正确的选项。",
+      "correct_answer": "A",
+      "difficulty": 0.25,
+      "verified": true,
+      "options": [
+        "A.选项A",
+        "B.选项B",
+        "C.选项C",
+        "D.选项D"
+      ]
+    },
+    {
+      "kc_id": "GDMATH-PROB-05",
+      "question_type": "fill",
+      "question_text": "【正态分布】填空题1：请填写答案。",
+      "correct_answer": "0",
+      "difficulty": 0.23,
+      "verified": true
+    },
+    {
+      "kc_id": "GDMATH-PROB-05",
+      "question_type": "fill",
+      "question_text": "【正态分布】填空题2：请填写答案。",
+      "correct_answer": "0",
+      "difficulty": 0.27,
+      "verified": true
+    }
+  ],
+  "GDMATH-STAT-02": [
+    {
+      "kc_id": "GDMATH-STAT-02",
+      "question_type": "choice",
+      "question_text": "已知x=1,2,3,4,5时y=2,4,7,8,10，则y关于x的回归直线方程是",
+      "correct_answer": "A",
+      "difficulty": 0.4,
+      "verified": false,
+      "options": [
+        "A.ŷ=1.9x+0.4",
+        "B.ŷ=2x+0.5",
+        "C.ŷ=1.8x+0.6",
+        "D.ŷ=2.1x+0.3"
+      ]
+    },
+    {
+      "kc_id": "GDMATH-STAT-02",
+      "question_type": "choice",
+      "question_text": "相关系数r越接近1，说明",
+      "correct_answer": "A",
+      "difficulty": 0.25,
+      "verified": false,
+      "options": [
+        "A.线性相关越强",
+        "B.线性相关越弱",
+        "C.非线性相关",
+        "D.无关"
+      ]
+    },
+    {
+      "kc_id": "GDMATH-STAT-02",
+      "question_type": "fill",
+      "question_text": "回归直线ŷ=bx+a必过点______",
+      "correct_answer": "(x̄,ȳ)",
+      "difficulty": 0.2,
+      "verified": false
+    }
+  ],
+  "GDMATH-STAT-03": [
+    {
+      "kc_id": "GDMATH-STAT-03",
+      "question_type": "choice",
+      "question_text": "2×2列联表中，χ²≥3.841时，在显著性水平α=0.05下，结论是",
+      "correct_answer": "A",
+      "difficulty": 0.35,
+      "verified": false,
+      "options": [
+        "A.拒绝H₀",
+        "B.接受H₀",
+        "C.无法判断",
+        "D.需要重新检验"
+      ]
+    },
+    {
+      "kc_id": "GDMATH-STAT-03",
+      "question_type": "choice",
+      "question_text": "独立性检验中，H₀假设是",
+      "correct_answer": "A",
+      "difficulty": 0.3,
+      "verified": false,
+      "options": [
+        "A.两变量独立",
+        "B.两变量相关",
+        "C.两变量相等",
+        "D.两变量不相等"
+      ]
+    },
+    {
+      "kc_id": "GDMATH-STAT-03",
+      "question_type": "fill",
+      "question_text": "独立性检验的统计量是______分布",
+      "correct_answer": "χ²",
+      "difficulty": 0.25,
+      "verified": false
+    }
+  ]
+}
