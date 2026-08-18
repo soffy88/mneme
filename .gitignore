@@ -42,5 +42,9 @@ data/cornell_topics/c*/
 # outputs/ 下策划报告（*.md）入库，ku_match 是运行时匹配产物，不入库
 outputs/ku_match/
 
+# GH-1 外部对标数据（ASSISTments 公开匿名化研究数据）：本地存放不入主库，
+# 见 scripts/moat_eval/exp5_external_auc.py 数据说明
+data/external/
+
 # Added by code-review-graph
 .code-review-graph/
