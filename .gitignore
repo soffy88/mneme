@@ -46,5 +46,8 @@ outputs/ku_match/
 # 见 scripts/moat_eval/exp5_external_auc.py 数据说明
 data/external/
 
+# KU 内容核验报告：verify_ku_content.py 运行时生成物，不入库
+data/ku_verification_report.json
+
 # Added by code-review-graph
 .code-review-graph/
