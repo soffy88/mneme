@@ -351,7 +351,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX1-ku-n维向量的运算与距离",
@@ -396,7 +396,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX1-ku-一般式与点斜式的互化",
@@ -441,7 +441,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX1-ku-一般式方程中系数的几何意义",
@@ -485,7 +485,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX1-ku-两圆相交时公共弦所在直线的方程",
@@ -530,7 +530,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX1-ku-两条平行直线间的距离公式",
@@ -574,7 +574,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX1-ku-两条直线垂直的斜率关系",
@@ -618,7 +618,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX1-ku-两条直线平行的斜率关系",
@@ -662,7 +662,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX1-ku-两条直线的交点坐标",
@@ -706,7 +706,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX1-ku-两点间的距离公式",
@@ -750,7 +750,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX1-ku-二次函数图象是抛物线",
@@ -794,7 +794,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX1-ku-以焦点弦为直径的圆与准线相切",
@@ -841,7 +841,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX1-ku-共面向量的概念",
@@ -885,7 +885,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX1-ku-利用信息技术研究圆锥曲线",
@@ -929,7 +929,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX1-ku-利用坐标法解决实际几何问题",
@@ -974,7 +974,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX1-ku-利用坐标法证明抛物线几何性质",
@@ -1021,7 +1021,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX1-ku-动点轨迹方程-利用几何关系消参法",
@@ -1067,7 +1067,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX1-ku-动点轨迹方程-斜率之和为定值",
@@ -1112,7 +1112,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX1-ku-动点轨迹方程的求法-直接法",
@@ -1156,7 +1156,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX1-ku-单位正交基底与正交分解",
@@ -1200,7 +1200,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX1-ku-参数变化对曲线形状的影响",
@@ -1246,7 +1246,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX1-ku-参数方程与点斜式的关系",
@@ -1291,7 +1291,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX1-ku-双曲线与直线的交点",
@@ -1335,7 +1335,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX1-ku-双曲线光学性质-从一个焦点发出的光线经双曲线反射后反向延长线过另一焦点",
@@ -1380,7 +1380,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX1-ku-双曲线定义的应用-与圆外切圆心轨迹",
@@ -1425,7 +1425,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX1-ku-双曲线定义的应用-轨迹问题",
@@ -1469,7 +1469,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX1-ku-双曲线标准方程的求法-待定系数法",
@@ -1514,7 +1514,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX1-ku-双曲线的定义",
@@ -1558,7 +1558,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX1-ku-双曲线的对称性",
@@ -1602,7 +1602,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX1-ku-双曲线的弦长公式",
@@ -1647,7 +1647,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX1-ku-双曲线的标准方程-焦点在x轴",
@@ -1693,7 +1693,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX1-ku-双曲线的标准方程-焦点在y轴",
@@ -1737,7 +1737,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX1-ku-双曲线的渐近线",
@@ -1781,7 +1781,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX1-ku-双曲线的离心率",
@@ -1825,7 +1825,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX1-ku-双曲线的范围",
@@ -1869,7 +1869,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX1-ku-双曲线的顶点与实轴虚轴",
@@ -1913,7 +1913,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX1-ku-反射式望远镜中的圆锥曲线方程",
@@ -1959,7 +1959,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX1-ku-向量法求角度",
@@ -2006,7 +2006,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX1-ku-向量法求距离",
@@ -2051,7 +2051,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX1-ku-向量法证明垂直关系",
@@ -2097,7 +2097,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX1-ku-向量法证明平行关系",
@@ -2142,7 +2142,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX1-ku-含参数方程表示的曲线形状",
@@ -2188,7 +2188,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX1-ku-圆与圆的位置关系的代数判断方法",
@@ -2232,7 +2232,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX1-ku-圆与圆的位置关系的几何判断方法",
@@ -2276,7 +2276,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX1-ku-圆的一般方程",
@@ -2321,7 +2321,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX1-ku-圆的一般方程的条件",
@@ -2365,7 +2365,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX1-ku-圆的标准方程",
@@ -2409,7 +2409,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX1-ku-圆锥曲线光学性质的应用",
@@ -2455,7 +2455,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX1-ku-圆锥曲线的几何性质-范围-对称性-顶点-离心率",
@@ -2501,7 +2501,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX1-ku-圆锥曲线的定义",
@@ -2544,7 +2544,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX1-ku-圆锥曲线的统一性",
@@ -2590,7 +2590,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX1-ku-坐标法研究圆锥曲线的统一过程",
@@ -2636,7 +2636,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX1-ku-坐标法解决几何问题的三步曲",
@@ -2681,7 +2681,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX1-ku-坐标法证明几何问题",
@@ -2726,7 +2726,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX1-ku-平面与平面垂直的向量条件",
@@ -2770,7 +2770,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX1-ku-平面与平面夹角的向量公式",
@@ -2815,7 +2815,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX1-ku-平面与平面平行的向量条件",
@@ -2859,7 +2859,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX1-ku-平面的法向量",
@@ -2903,7 +2903,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX1-ku-平面的法向量定义",
@@ -2947,7 +2947,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX1-ku-异面直线所成角的向量公式",
@@ -2992,7 +2992,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX1-ku-待定系数法求圆的一般方程",
@@ -3037,7 +3037,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX1-ku-待定系数法求圆的标准方程",
@@ -3082,7 +3082,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX1-ku-抛物拱方程",
@@ -3126,7 +3126,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX1-ku-抛物线上的点到焦点距离公式",
@@ -3171,7 +3171,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX1-ku-抛物线上的点到直线距离最短问题",
@@ -3216,7 +3216,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX1-ku-抛物线中垂直弦的性质",
@@ -3261,7 +3261,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX1-ku-抛物线光学性质-焦点发出的光线经抛物线反射后平行于对称轴",
@@ -3306,7 +3306,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX1-ku-抛物线在实际问题中的应用-隧道限高",
@@ -3351,7 +3351,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX1-ku-抛物线标准方程的求法",
@@ -3395,7 +3395,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX1-ku-抛物线标准方程的求解-给定条件",
@@ -3441,7 +3441,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX1-ku-抛物线焦点弦性质-pq-2---bc---oq",
@@ -3486,7 +3486,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX1-ku-抛物线焦点弦性质-焦点弦与准线关系",
@@ -3533,7 +3533,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX1-ku-抛物线焦点弦性质-焦点弦端点与顶点连线交准线于一点-该点与另一端点连线平行于对称",
@@ -3579,7 +3579,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX1-ku-抛物线焦点弦的性质",
@@ -3624,7 +3624,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX1-ku-抛物线的四种标准形式",
@@ -3668,7 +3668,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX1-ku-抛物线的定义",
@@ -3713,7 +3713,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX1-ku-抛物线的对称性",
@@ -3757,7 +3757,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX1-ku-抛物线的标准方程-y-2-2px",
@@ -3801,7 +3801,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX1-ku-抛物线的离心率",
@@ -3845,7 +3845,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX1-ku-抛物线的范围",
@@ -3889,7 +3889,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX1-ku-抛物线的顶点",
@@ -3933,7 +3933,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX1-ku-斜率之积为定值的轨迹",
@@ -3978,7 +3978,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX1-ku-斜率公式-两点式",
@@ -4022,7 +4022,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX1-ku-曲线与方程的关系",
@@ -4066,7 +4066,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX1-ku-椭圆中焦点三角形面积计算",
@@ -4112,7 +4112,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX1-ku-椭圆光学性质-从一个焦点发出的光线经椭圆反射后过另一焦点",
@@ -4157,7 +4157,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX1-ku-椭圆定义的应用-求标准方程",
@@ -4202,7 +4202,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX1-ku-椭圆方程求解-利用几何条件",
@@ -4247,7 +4247,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX1-ku-椭圆标准方程的应用-卫星轨道",
@@ -4293,7 +4293,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX1-ku-椭圆的光学性质应用",
@@ -4338,7 +4338,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX1-ku-椭圆的几何性质-对称性",
@@ -4382,7 +4382,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX1-ku-椭圆的几何性质-离心率",
@@ -4426,7 +4426,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX1-ku-椭圆的几何性质-范围",
@@ -4470,7 +4470,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX1-ku-椭圆的几何性质-顶点",
@@ -4515,7 +4515,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX1-ku-椭圆的定义",
@@ -4559,7 +4559,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX1-ku-椭圆的标准方程-焦点在x轴",
@@ -4605,7 +4605,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX1-ku-椭圆的标准方程-焦点在y轴",
@@ -4649,7 +4649,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX1-ku-椭圆的第二定义-准线",
@@ -4694,7 +4694,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX1-ku-求平面的法向量-坐标法",
@@ -4738,7 +4738,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX1-ku-点与圆的位置关系",
@@ -4782,7 +4782,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX1-ku-点到平面的距离公式-向量法",
@@ -4827,7 +4827,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX1-ku-点到直线的距离公式",
@@ -4872,7 +4872,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX1-ku-点到直线的距离公式-向量法",
@@ -4917,7 +4917,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX1-ku-点到直线距离的向量法推导",
@@ -4962,7 +4962,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX1-ku-点的位置向量",
@@ -5004,7 +5004,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX1-ku-用向量法证明面面垂直判定定理",
@@ -5049,7 +5049,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX1-ku-用向量法证明面面平行判定定理",
@@ -5094,7 +5094,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX1-ku-用向量表示点-直线-平面",
@@ -5139,7 +5139,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX1-ku-用坐标法求异面直线所成角",
@@ -5184,7 +5184,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX1-ku-用坐标法求线段长度",
@@ -5229,7 +5229,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX1-ku-用坐标法证明垂直",
@@ -5275,7 +5275,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX1-ku-用基底表示向量并求异面直线所成角",
@@ -5320,7 +5320,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX1-ku-用基底表示向量并证明垂直",
@@ -5365,7 +5365,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX1-ku-用基底表示向量并证明平行",
@@ -5410,7 +5410,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX1-ku-用方程组判断两直线的位置关系",
@@ -5454,7 +5454,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX1-ku-用空间向量解决立体几何问题的三步曲",
@@ -5496,7 +5496,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX1-ku-直线与双曲线无公共点的条件",
@@ -5542,7 +5542,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX1-ku-直线与圆的位置关系-代数法",
@@ -5588,7 +5588,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX1-ku-直线与圆的位置关系-几何法",
@@ -5633,7 +5633,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX1-ku-直线与圆的位置关系的代数判断方法",
@@ -5678,7 +5678,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX1-ku-直线与圆的位置关系的几何判断方法",
@@ -5723,7 +5723,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX1-ku-直线与圆相交的弦长公式",
@@ -5768,7 +5768,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX1-ku-直线与圆锥曲线位置关系的判断",
@@ -5814,7 +5814,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX1-ku-直线与平面垂直的向量条件",
@@ -5859,7 +5859,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX1-ku-直线与平面平行的向量条件",
@@ -5904,7 +5904,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX1-ku-直线与平面所成角的向量公式",
@@ -5949,7 +5949,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX1-ku-直线与抛物线相交弦长计算",
@@ -5996,7 +5996,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX1-ku-直线与椭圆的位置关系",
@@ -6042,7 +6042,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX1-ku-直线与直线垂直的向量条件",
@@ -6086,7 +6086,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX1-ku-直线与直线平行的向量条件",
@@ -6130,7 +6130,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX1-ku-直线的一般式方程",
@@ -6174,7 +6174,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX1-ku-直线的两点式方程",
@@ -6218,7 +6218,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX1-ku-直线的倾斜角",
@@ -6260,7 +6260,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX1-ku-直线的参数方程",
@@ -6305,7 +6305,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX1-ku-直线的向量表示",
@@ -6350,7 +6350,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX1-ku-直线的截距式方程",
@@ -6394,7 +6394,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX1-ku-直线的斜截式方程",
@@ -6438,7 +6438,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX1-ku-直线的斜率",
@@ -6482,7 +6482,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX1-ku-直线的方向向量",
@@ -6526,7 +6526,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX1-ku-直线的方向向量与斜率的关系",
@@ -6570,7 +6570,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX1-ku-直线的点斜式方程",
@@ -6614,7 +6614,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX1-ku-相关点法求轨迹方程",
@@ -6659,7 +6659,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX1-ku-空间两点间的距离公式",
@@ -6703,7 +6703,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX1-ku-空间向量共线的充要条件",
@@ -6748,7 +6748,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX1-ku-空间向量共面的充要条件",
@@ -6793,7 +6793,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX1-ku-空间向量基本定理",
@@ -6838,7 +6838,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX1-ku-空间向量平行与垂直的坐标条件",
@@ -6882,7 +6882,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX1-ku-空间向量数量积的运算律",
@@ -6926,7 +6926,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX1-ku-空间向量的共线向量与平行向量",
@@ -6970,7 +6970,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX1-ku-空间向量的坐标表示",
@@ -7015,7 +7015,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX1-ku-空间向量的夹角",
@@ -7059,7 +7059,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX1-ku-空间向量的投影向量",
@@ -7103,7 +7103,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX1-ku-空间向量的数量积",
@@ -7148,7 +7148,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX1-ku-空间向量的概念",
@@ -7192,7 +7192,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX1-ku-空间向量的模与夹角公式",
@@ -7236,7 +7236,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX1-ku-空间向量的相关概念-零向量-单位向量-相反向量-相等向量",
@@ -7281,7 +7281,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX1-ku-空间向量的线性运算",
@@ -7325,7 +7325,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX1-ku-空间向量的线性运算-加法-减法-数乘",
@@ -7370,7 +7370,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX1-ku-空间向量线性运算的运算律",
@@ -7414,7 +7414,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX1-ku-空间向量运算的坐标表示",
@@ -7459,7 +7459,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX1-ku-空间基底与基向量",
@@ -7503,7 +7503,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX1-ku-空间平面的向量表示式-由两相交直线确定",
@@ -7548,7 +7548,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX1-ku-空间点的坐标",
@@ -7593,7 +7593,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX1-ku-空间直线的向量表示式",
@@ -7637,7 +7637,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX1-ku-空间直角坐标系",
@@ -7682,7 +7682,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX1-ku-立体几何中的综合法-向量法-坐标法",
@@ -7728,7 +7728,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX1-ku-等轴双曲线",
@@ -7772,7 +7772,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX1-ku-解析几何的形成与发展",
@@ -7814,7 +7814,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX1-ku-轨迹方程的求法-代入法",
@@ -7859,7 +7859,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX1-ku-过圆外一点的切线方程",
@@ -7904,7 +7904,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     }
   ]
 }

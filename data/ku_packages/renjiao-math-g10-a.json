@@ -284,7 +284,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "renjiao-math-g10-a-ku-venn图法求集合元素个数",
@@ -329,7 +329,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "renjiao-math-g10-a-ku-y-asin-ωx-φ-与y-acos-ωx-φ-的周期公式",
@@ -375,7 +375,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "renjiao-math-g10-a-ku-一元二次不等式与二次函数-一元二次方程的联系",
@@ -396,11 +396,40 @@
       "ku_type": "concept",
       "curriculum_standard": null,
       "mastery_levels": [],
-      "rich_content": null,
+      "rich_content": {
+        "examples": [
+          {
+            "problem": "基础练习",
+            "solution": "掌握一元二次不等式与二次函数、一元二次方程的联系的定义和基本应用"
+          }
+        ],
+        "intuition": "一元二次不等式与二次函数、一元二次方程的联系是高中数学renjiao-math-g10-a-kc-一元二次不等式与函数-方程的联系及恒成立中的基础知识点。",
+        "definition": "一元二次不等式与二次函数、一元二次方程的联系是高中数学renjiao-math-g10-a-kc-一元二次不等式与函数-方程的联系及恒成立中的基础知识点。",
+        "key_points": [
+          {
+            "point": "核心概念",
+            "explanation": "理解一元二次不等式与二次函数、一元二次方程的联系的基本含义"
+          }
+        ],
+        "application": [
+          "基础练习",
+          "综合应用"
+        ],
+        "connections": "本知识点是后续学习的基础",
+        "common_mistakes": [
+          {
+            "mistake": "常见错误",
+            "correction": "注意一元二次不等式与二次函数、一元二次方程的联系的边界条件和特殊情况"
+          }
+        ],
+        "counter_examples": [
+          "注意边界条件"
+        ]
+      },
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "renjiao-math-g10-a-ku-一元二次不等式在实际问题中的应用",
@@ -420,11 +449,52 @@
       "ku_type": "concept",
       "curriculum_standard": null,
       "mastery_levels": [],
-      "rich_content": null,
+      "rich_content": {
+        "examples": [
+          {
+            "problem": "矩形面积问题",
+            "solution": "长比宽多3m，面积至少100m²，求宽的范围。设宽x，x(x+3)≥100，x²+3x-100≥0"
+          },
+          {
+            "problem": "利润问题",
+            "solution": "成本80元/件，售价p元，销量q=200-p件，利润≥2000元"
+          }
+        ],
+        "intuition": "将实际问题中的不等关系转化为一元二次不等式模型，求解后结合实际意义确定答案。",
+        "definition": "将实际问题中的不等关系转化为一元二次不等式模型，求解后结合实际意义确定答案。",
+        "key_points": [
+          {
+            "point": "建模",
+            "explanation": "设未知数，列不等式"
+          },
+          {
+            "point": "求解",
+            "explanation": "用标准步骤解不等式"
+          },
+          {
+            "point": "检验",
+            "explanation": "结合实际意义取舍"
+          }
+        ],
+        "application": [
+          "基础练习",
+          "综合应用"
+        ],
+        "connections": "本知识点是后续学习的基础",
+        "common_mistakes": [
+          {
+            "mistake": "忽略实际意义",
+            "correction": "长度、数量等不能为负"
+          }
+        ],
+        "counter_examples": [
+          "注意边界条件"
+        ]
+      },
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "renjiao-math-g10-a-ku-一元二次不等式实际应用-例4",
@@ -445,11 +515,52 @@
       "ku_type": "concept",
       "curriculum_standard": null,
       "mastery_levels": [],
-      "rich_content": null,
+      "rich_content": {
+        "examples": [
+          {
+            "problem": "列不等式",
+            "solution": "(p-80)(200-p)≥2000"
+          },
+          {
+            "problem": "化简",
+            "solution": "-p²+280p-16000≥2000→p²-280p+18000≤0"
+          },
+          {
+            "problem": "求解",
+            "solution": "Δ=400,根120,150,售价120≤p≤150元"
+          }
+        ],
+        "intuition": "某商品进价80元，售价p元，销量q=200-p件，求利润≥2000元时的售价范围。",
+        "definition": "某商品进价80元，售价p元，销量q=200-p件，求利润≥2000元时的售价范围。",
+        "key_points": [
+          {
+            "point": "利润公式",
+            "explanation": "利润=(售价-进价)×销量"
+          },
+          {
+            "point": "解不等式",
+            "explanation": "化为一元二次不等式求解"
+          }
+        ],
+        "application": [
+          "基础练习",
+          "综合应用"
+        ],
+        "connections": "本知识点是后续学习的基础",
+        "common_mistakes": [
+          {
+            "mistake": "忽略售价范围",
+            "correction": "售价需≥进价"
+          }
+        ],
+        "counter_examples": [
+          "注意边界条件"
+        ]
+      },
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "renjiao-math-g10-a-ku-一元二次不等式实际应用-例5",
@@ -470,11 +581,52 @@
       "ku_type": "concept",
       "curriculum_standard": null,
       "mastery_levels": [],
-      "rich_content": null,
+      "rich_content": {
+        "examples": [
+          {
+            "problem": "设宽xm",
+            "solution": "长(x+3)m，面积x(x+3)≥100"
+          },
+          {
+            "problem": "化简",
+            "solution": "x²+3x-100≥0"
+          },
+          {
+            "problem": "求解",
+            "solution": "Δ=409,根x=(-3±√409)/2,宽≥(-3+√409)/2≈8.6m"
+          }
+        ],
+        "intuition": "矩形场地长比宽多3m，面积至少100m²，求宽的最小值。",
+        "definition": "矩形场地长比宽多3m，面积至少100m²，求宽的最小值。",
+        "key_points": [
+          {
+            "point": "建模",
+            "explanation": "设宽x，列面积不等式"
+          },
+          {
+            "point": "求解",
+            "explanation": "解一元二次不等式"
+          }
+        ],
+        "application": [
+          "基础练习",
+          "综合应用"
+        ],
+        "connections": "本知识点是后续学习的基础",
+        "common_mistakes": [
+          {
+            "mistake": "负根舍去",
+            "correction": "长度不能为负"
+          }
+        ],
+        "counter_examples": [
+          "注意边界条件"
+        ]
+      },
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "renjiao-math-g10-a-ku-一元二次不等式恒成立问题",
@@ -495,11 +647,48 @@
       "ku_type": "concept",
       "curriculum_standard": null,
       "mastery_levels": [],
-      "rich_content": null,
+      "rich_content": {
+        "examples": [
+          {
+            "problem": "x²-2x+m>0恒成立",
+            "solution": "Δ=4-4m<0,m>1"
+          },
+          {
+            "problem": "kx²-6kx+k+8>0恒成立",
+            "solution": "k=0时成立；k>0且Δ=36k²-4k(k+8)<0,0<k<1"
+          }
+        ],
+        "intuition": "一元二次不等式ax²+bx+c>0在R上恒成立的条件是a>0且Δ<0；ax²+bx+c≥0恒成立的条件是a>0且Δ≤0。",
+        "definition": "一元二次不等式ax²+bx+c>0在R上恒成立的条件是a>0且Δ<0；ax²+bx+c≥0恒成立的条件是a>0且Δ≤0。",
+        "key_points": [
+          {
+            "point": "a>0且Δ<0",
+            "explanation": ">0恒成立"
+          },
+          {
+            "point": "a>0且Δ≤0",
+            "explanation": "≥0恒成立"
+          }
+        ],
+        "application": [
+          "基础练习",
+          "综合应用"
+        ],
+        "connections": "本知识点是后续学习的基础",
+        "common_mistakes": [
+          {
+            "mistake": "忘记讨论a=0",
+            "correction": "a=0时退化为一次不等式"
+          }
+        ],
+        "counter_examples": [
+          "注意边界条件"
+        ]
+      },
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "renjiao-math-g10-a-ku-一元二次不等式概念",
@@ -517,11 +706,48 @@
       "ku_type": "concept",
       "curriculum_standard": null,
       "mastery_levels": [],
-      "rich_content": null,
+      "rich_content": {
+        "examples": [
+          {
+            "problem": "判断x²-3x+2>0是否为一元二次不等式",
+            "solution": "是，a=1≠0且最高次为2"
+          },
+          {
+            "problem": "判断x³-1>0是否为一元二次不等式",
+            "solution": "不是，最高次为3"
+          }
+        ],
+        "intuition": "含有一个未知数且未知数的最高次数为2的不等式叫做一元二次不等式，一般形式为ax²+bx+c>0(<0,≥0,≤0)，其中a≠0。",
+        "definition": "含有一个未知数且未知数的最高次数为2的不等式叫做一元二次不等式，一般形式为ax²+bx+c>0(<0,≥0,≤0)，其中a≠0。",
+        "key_points": [
+          {
+            "point": "定义",
+            "explanation": "形如ax²+bx+c>0(a≠0)"
+          },
+          {
+            "point": "特征",
+            "explanation": "a≠0,最高次2"
+          }
+        ],
+        "application": [
+          "基础练习",
+          "综合应用"
+        ],
+        "connections": "本知识点是后续学习的基础",
+        "common_mistakes": [
+          {
+            "mistake": "忽略a≠0",
+            "correction": "a=0时退化为一次不等式"
+          }
+        ],
+        "counter_examples": [
+          "注意边界条件"
+        ]
+      },
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "renjiao-math-g10-a-ku-一元二次不等式求解框图-a-0",
@@ -542,11 +768,56 @@
       "ku_type": "concept",
       "curriculum_standard": null,
       "mastery_levels": [],
-      "rich_content": null,
+      "rich_content": {
+        "examples": [
+          {
+            "problem": "解x²-4x+3>0",
+            "solution": "Δ=4>0,根x=1,3,解集(-∞,1)∪(3,+∞)"
+          },
+          {
+            "problem": "解x²-2x+1>0",
+            "solution": "Δ=0,根x=1,解集(-∞,1)∪(1,+∞)"
+          }
+        ],
+        "intuition": "当a>0时，解一元二次不等式ax²+bx+c>0(<0)的步骤：计算Δ→求根→画图→写解集。",
+        "definition": "当a>0时，解一元二次不等式ax²+bx+c>0(<0)的步骤：计算Δ→求根→画图→写解集。",
+        "key_points": [
+          {
+            "point": "步骤1",
+            "explanation": "化为a>0形式"
+          },
+          {
+            "point": "步骤2",
+            "explanation": "计算Δ=b²-4ac"
+          },
+          {
+            "point": "步骤3",
+            "explanation": "Δ>0求根,Δ=0一个根,Δ<0无实根"
+          },
+          {
+            "point": "步骤4",
+            "explanation": "根据\"大于取两边，小于取中间\"写解集"
+          }
+        ],
+        "application": [
+          "基础练习",
+          "综合应用"
+        ],
+        "connections": "本知识点是后续学习的基础",
+        "common_mistakes": [
+          {
+            "mistake": "忘记化a>0",
+            "correction": "a<0时两边乘-1变号"
+          }
+        ],
+        "counter_examples": [
+          "注意边界条件"
+        ]
+      },
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "renjiao-math-g10-a-ku-一元二次不等式求解步骤-二次项系数化为正数",
@@ -566,11 +837,40 @@
       "ku_type": "concept",
       "curriculum_standard": null,
       "mastery_levels": [],
-      "rich_content": null,
+      "rich_content": {
+        "examples": [
+          {
+            "problem": "基础练习",
+            "solution": "掌握一元二次不等式求解步骤（二次项系数化为正数）的定义和基本应用"
+          }
+        ],
+        "intuition": "一元二次不等式求解步骤（二次项系数化为正数）是高中数学renjiao-math-g10-a-kc-一元二次不等式的解法中的基础知识点。",
+        "definition": "一元二次不等式求解步骤（二次项系数化为正数）是高中数学renjiao-math-g10-a-kc-一元二次不等式的解法中的基础知识点。",
+        "key_points": [
+          {
+            "point": "核心概念",
+            "explanation": "理解一元二次不等式求解步骤（二次项系数化为正数）的基本含义"
+          }
+        ],
+        "application": [
+          "基础练习",
+          "综合应用"
+        ],
+        "connections": "本知识点是后续学习的基础",
+        "common_mistakes": [
+          {
+            "mistake": "常见错误",
+            "correction": "注意一元二次不等式求解步骤（二次项系数化为正数）的边界条件和特殊情况"
+          }
+        ],
+        "counter_examples": [
+          "注意边界条件"
+        ]
+      },
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "renjiao-math-g10-a-ku-一元二次不等式的定义",
@@ -588,11 +888,48 @@
       "ku_type": "concept",
       "curriculum_standard": null,
       "mastery_levels": [],
-      "rich_content": null,
+      "rich_content": {
+        "examples": [
+          {
+            "problem": "x²-5x+6≤0",
+            "solution": "一元二次不等式"
+          },
+          {
+            "problem": "2x+1>0",
+            "solution": "一元一次不等式"
+          }
+        ],
+        "intuition": "一元二次不等式是含有一个未知数且最高次数为2的不等式，标准形式为ax²+bx+c>0(<0,≥0,≤0)(a≠0)。",
+        "definition": "一元二次不等式是含有一个未知数且最高次数为2的不等式，标准形式为ax²+bx+c>0(<0,≥0,≤0)(a≠0)。",
+        "key_points": [
+          {
+            "point": "形式",
+            "explanation": "ax²+bx+c>0"
+          },
+          {
+            "point": "要求",
+            "explanation": "a≠0"
+          }
+        ],
+        "application": [
+          "基础练习",
+          "综合应用"
+        ],
+        "connections": "本知识点是后续学习的基础",
+        "common_mistakes": [
+          {
+            "mistake": "混淆一次与二次",
+            "correction": "看最高次是否为2"
+          }
+        ],
+        "counter_examples": [
+          "注意边界条件"
+        ]
+      },
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "renjiao-math-g10-a-ku-一元二次不等式的求解步骤-化正-求根-画图-写解集",
@@ -612,11 +949,40 @@
       "ku_type": "concept",
       "curriculum_standard": null,
       "mastery_levels": [],
-      "rich_content": null,
+      "rich_content": {
+        "examples": [
+          {
+            "problem": "基础练习",
+            "solution": "掌握一元二次不等式的求解步骤（化正、求根、画图、写解集）的定义和基本应用"
+          }
+        ],
+        "intuition": "一元二次不等式的求解步骤（化正、求根、画图、写解集）是高中数学renjiao-math-g10-a-kc-一元二次不等式及其解法中的基础知识点。",
+        "definition": "一元二次不等式的求解步骤（化正、求根、画图、写解集）是高中数学renjiao-math-g10-a-kc-一元二次不等式及其解法中的基础知识点。",
+        "key_points": [
+          {
+            "point": "核心概念",
+            "explanation": "理解一元二次不等式的求解步骤（化正、求根、画图、写解集）的基本含义"
+          }
+        ],
+        "application": [
+          "基础练习",
+          "综合应用"
+        ],
+        "connections": "本知识点是后续学习的基础",
+        "common_mistakes": [
+          {
+            "mistake": "常见错误",
+            "correction": "注意一元二次不等式的求解步骤（化正、求根、画图、写解集）的边界条件和特殊情况"
+          }
+        ],
+        "counter_examples": [
+          "注意边界条件"
+        ]
+      },
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "renjiao-math-g10-a-ku-一元二次不等式解集-δ-0",
@@ -636,11 +1002,52 @@
       "ku_type": "concept",
       "curriculum_standard": null,
       "mastery_levels": [],
-      "rich_content": null,
+      "rich_content": {
+        "examples": [
+          {
+            "problem": "x²-5x+6>0",
+            "solution": "Δ=1>0,根x=2,3,解集(-∞,2)∪(3,+∞)"
+          },
+          {
+            "problem": "x²-5x+6<0",
+            "solution": "解集(2,3)"
+          }
+        ],
+        "intuition": "当Δ>0时，ax²+bx+c>0(a>0)的解集为(-∞,x₁)∪(x₂,+∞)；ax²+bx+c<0的解集为(x₁,x₂)。",
+        "definition": "当Δ>0时，ax²+bx+c>0(a>0)的解集为(-∞,x₁)∪(x₂,+∞)；ax²+bx+c<0的解集为(x₁,x₂)。",
+        "key_points": [
+          {
+            "point": "Δ>0",
+            "explanation": "两个不等实根"
+          },
+          {
+            "point": "大于取两边",
+            "explanation": ">0的解集在两根之外"
+          },
+          {
+            "point": "小于取中间",
+            "explanation": "<0的解集在两根之间"
+          }
+        ],
+        "application": [
+          "基础练习",
+          "综合应用"
+        ],
+        "connections": "本知识点是后续学习的基础",
+        "common_mistakes": [
+          {
+            "mistake": "记反方向",
+            "correction": "画数轴确定"
+          }
+        ],
+        "counter_examples": [
+          "注意边界条件"
+        ]
+      },
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "renjiao-math-g10-a-ku-一元二次不等式解集的三种情况-δ-0--δ-0--δ-0",
@@ -660,11 +1067,40 @@
       "ku_type": "concept",
       "curriculum_standard": null,
       "mastery_levels": [],
-      "rich_content": null,
+      "rich_content": {
+        "examples": [
+          {
+            "problem": "基础练习",
+            "solution": "掌握一元二次不等式解集的三种情况（Δ>0, Δ=0, Δ<0）的定义和基本应用"
+          }
+        ],
+        "intuition": "一元二次不等式解集的三种情况（Δ>0, Δ=0, Δ<0）是高中数学renjiao-math-g10-a-kc-一元二次不等式及其解法中的基础知识点。",
+        "definition": "一元二次不等式解集的三种情况（Δ>0, Δ=0, Δ<0）是高中数学renjiao-math-g10-a-kc-一元二次不等式及其解法中的基础知识点。",
+        "key_points": [
+          {
+            "point": "核心概念",
+            "explanation": "理解一元二次不等式解集的三种情况（Δ>0, Δ=0, Δ<0）的基本含义"
+          }
+        ],
+        "application": [
+          "基础练习",
+          "综合应用"
+        ],
+        "connections": "本知识点是后续学习的基础",
+        "common_mistakes": [
+          {
+            "mistake": "常见错误",
+            "correction": "注意一元二次不等式解集的三种情况（Δ>0, Δ=0, Δ<0）的边界条件和特殊情况"
+          }
+        ],
+        "counter_examples": [
+          "注意边界条件"
+        ]
+      },
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "renjiao-math-g10-a-ku-一元二次不等式解集的图象法",
@@ -685,11 +1121,52 @@
       "ku_type": "concept",
       "curriculum_standard": null,
       "mastery_levels": [],
-      "rich_content": null,
+      "rich_content": {
+        "examples": [
+          {
+            "problem": "x²-4x+3>0",
+            "solution": "抛物线开口向上，与x轴交于(1,0)(3,0)，x<1或x>3时图象在x轴上方"
+          },
+          {
+            "problem": "x²+2x+1≤0",
+            "solution": "抛物线开口向上，与x轴相切于(-1,0)，只有x=-1时y=0"
+          }
+        ],
+        "intuition": "利用二次函数y=ax²+bx+c的图象与x轴的交点来求解一元二次不等式的解集。",
+        "definition": "利用二次函数y=ax²+bx+c的图象与x轴的交点来求解一元二次不等式的解集。",
+        "key_points": [
+          {
+            "point": "画图",
+            "explanation": "画出二次函数图象"
+          },
+          {
+            "point": "找交点",
+            "explanation": "找出图象与x轴的交点"
+          },
+          {
+            "point": "读解集",
+            "explanation": ">0看x轴上方部分，<0看下方"
+          }
+        ],
+        "application": [
+          "基础练习",
+          "综合应用"
+        ],
+        "connections": "本知识点是后续学习的基础",
+        "common_mistakes": [
+          {
+            "mistake": "开口方向",
+            "correction": "a>0开口向上，a<0开口向下"
+          }
+        ],
+        "counter_examples": [
+          "注意边界条件"
+        ]
+      },
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "renjiao-math-g10-a-ku-三角函数值的符号",
@@ -709,11 +1186,56 @@
       "ku_type": "concept",
       "curriculum_standard": null,
       "mastery_levels": [],
-      "rich_content": null,
+      "rich_content": {
+        "examples": [
+          {
+            "problem": "sin120°的符号",
+            "solution": "120°在第二象限，sin为正"
+          },
+          {
+            "problem": "cos240°的符号",
+            "solution": "240°在第三象限，cos为负"
+          }
+        ],
+        "intuition": "三角函数在各象限的符号口诀：一全正二正弦三正切四余弦。即第一象限全正，第二象限sin正，第三象限tan正，第四象限cos正。",
+        "definition": "三角函数在各象限的符号口诀：一全正二正弦三正切四余弦。即第一象限全正，第二象限sin正，第三象限tan正，第四象限cos正。",
+        "key_points": [
+          {
+            "point": "第一象限",
+            "explanation": "sin+,cos+,tan+"
+          },
+          {
+            "point": "第二象限",
+            "explanation": "sin+,cos-,tan-"
+          },
+          {
+            "point": "第三象限",
+            "explanation": "sin-,cos-,tan+"
+          },
+          {
+            "point": "第四象限",
+            "explanation": "sin-,cos+,tan-"
+          }
+        ],
+        "application": [
+          "基础练习",
+          "综合应用"
+        ],
+        "connections": "本知识点是后续学习的基础",
+        "common_mistakes": [
+          {
+            "mistake": "混淆符号",
+            "correction": "用口诀\"一全二正三切四余\"记忆"
+          }
+        ],
+        "counter_examples": [
+          "注意边界条件"
+        ]
+      },
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "renjiao-math-g10-a-ku-三角函数定义-终边上任意点",
@@ -733,11 +1255,48 @@
       "ku_type": "concept",
       "curriculum_standard": null,
       "mastery_levels": [],
-      "rich_content": null,
+      "rich_content": {
+        "examples": [
+          {
+            "problem": "P(3,4),求sinα,cosα,tanα",
+            "solution": "r=5,sinα=4/5,cosα=3/5,tanα=4/3"
+          },
+          {
+            "problem": "P(-1,√3),求sinα,cosα",
+            "solution": "r=2,sinα=√3/2,cosα=-1/2"
+          }
+        ],
+        "intuition": "设角α终边上一点P(x,y)，r=√(x²+y²)，则sinα=y/r，cosα=x/r，tanα=y/x。",
+        "definition": "设角α终边上一点P(x,y)，r=√(x²+y²)，则sinα=y/r，cosα=x/r，tanα=y/x。",
+        "key_points": [
+          {
+            "point": "定义",
+            "explanation": "sinα=y/r,cosα=x/r,tanα=y/x"
+          },
+          {
+            "point": "r",
+            "explanation": "r=√(x²+y²)>0"
+          }
+        ],
+        "application": [
+          "基础练习",
+          "综合应用"
+        ],
+        "connections": "本知识点是后续学习的基础",
+        "common_mistakes": [
+          {
+            "mistake": "忘记r",
+            "correction": "r是到原点的距离"
+          }
+        ],
+        "counter_examples": [
+          "注意边界条件"
+        ]
+      },
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "renjiao-math-g10-a-ku-三角函数的定义-单位圆",
@@ -758,11 +1317,48 @@
       "ku_type": "concept",
       "curriculum_standard": null,
       "mastery_levels": [],
-      "rich_content": null,
+      "rich_content": {
+        "examples": [
+          {
+            "problem": "cosπ/2",
+            "solution": "π/2终边交(0,1),cosπ/2=0"
+          },
+          {
+            "problem": "sinπ",
+            "solution": "π终边交(-1,0),sinπ=0"
+          }
+        ],
+        "intuition": "在单位圆中，角α的终边与单位圆交于点P(cosα,sinα)，即cosα为横坐标，sinα为纵坐标。",
+        "definition": "在单位圆中，角α的终边与单位圆交于点P(cosα,sinα)，即cosα为横坐标，sinα为纵坐标。",
+        "key_points": [
+          {
+            "point": "单位圆",
+            "explanation": "半径为1的圆"
+          },
+          {
+            "point": "坐标",
+            "explanation": "P(cosα,sinα)"
+          }
+        ],
+        "application": [
+          "基础练习",
+          "综合应用"
+        ],
+        "connections": "本知识点是后续学习的基础",
+        "common_mistakes": [
+          {
+            "mistake": "混淆正弦余弦",
+            "correction": "sin是纵坐标，cos是横坐标"
+          }
+        ],
+        "counter_examples": [
+          "注意边界条件"
+        ]
+      },
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "renjiao-math-g10-a-ku-不等关系与不等式表示",
@@ -780,11 +1376,56 @@
       "ku_type": "concept",
       "curriculum_standard": null,
       "mastery_levels": [],
-      "rich_content": null,
+      "rich_content": {
+        "examples": [
+          {
+            "problem": "a比b大",
+            "solution": "a>b"
+          },
+          {
+            "problem": "x不超过5",
+            "solution": "x≤5"
+          }
+        ],
+        "intuition": "用不等号(>,<,≥,≤,≠)表示两个量之间不等关系的式子叫做不等式。",
+        "definition": "用不等号(>,<,≥,≤,≠)表示两个量之间不等关系的式子叫做不等式。",
+        "key_points": [
+          {
+            "point": "大于",
+            "explanation": ">"
+          },
+          {
+            "point": "小于",
+            "explanation": "<"
+          },
+          {
+            "point": "大于等于",
+            "explanation": "≥"
+          },
+          {
+            "point": "小于等于",
+            "explanation": "≤"
+          }
+        ],
+        "application": [
+          "基础练习",
+          "综合应用"
+        ],
+        "connections": "本知识点是后续学习的基础",
+        "common_mistakes": [
+          {
+            "mistake": "混淆≥和>",
+            "correction": "≥包含等于"
+          }
+        ],
+        "counter_examples": [
+          "注意边界条件"
+        ]
+      },
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "renjiao-math-g10-a-ku-不等式性质1-对称性",
@@ -804,11 +1445,44 @@
       "ku_type": "concept",
       "curriculum_standard": null,
       "mastery_levels": [],
-      "rich_content": null,
+      "rich_content": {
+        "examples": [
+          {
+            "problem": "由3>2得2<3",
+            "solution": "对称性"
+          },
+          {
+            "problem": "a>b⇒b<a",
+            "solution": "一般形式"
+          }
+        ],
+        "intuition": "若a>b，则b<a。即不等式两边交换位置后，不等号反向。",
+        "definition": "若a>b，则b<a。即不等式两边交换位置后，不等号反向。",
+        "key_points": [
+          {
+            "point": "性质",
+            "explanation": "a>b⇔b<a"
+          }
+        ],
+        "application": [
+          "基础练习",
+          "综合应用"
+        ],
+        "connections": "本知识点是后续学习的基础",
+        "common_mistakes": [
+          {
+            "mistake": "与等式混淆",
+            "correction": "等式a=b⇔b=a，不等号反向"
+          }
+        ],
+        "counter_examples": [
+          "注意边界条件"
+        ]
+      },
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "renjiao-math-g10-a-ku-不等式性质2-传递性",
@@ -828,11 +1502,44 @@
       "ku_type": "concept",
       "curriculum_standard": null,
       "mastery_levels": [],
-      "rich_content": null,
+      "rich_content": {
+        "examples": [
+          {
+            "problem": "a>5且5>3⇒a>3",
+            "solution": "传递性"
+          },
+          {
+            "problem": "a>b>c⇒a>c",
+            "solution": "链式传递"
+          }
+        ],
+        "intuition": "若a>b且b>c，则a>c。不等关系具有传递性。",
+        "definition": "若a>b且b>c，则a>c。不等关系具有传递性。",
+        "key_points": [
+          {
+            "point": "传递性",
+            "explanation": "a>b>b>c⇒a>c"
+          }
+        ],
+        "application": [
+          "基础练习",
+          "综合应用"
+        ],
+        "connections": "本知识点是后续学习的基础",
+        "common_mistakes": [
+          {
+            "mistake": "注意方向",
+            "correction": "a>b>c>d⇒a>d"
+          }
+        ],
+        "counter_examples": [
+          "注意边界条件"
+        ]
+      },
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "renjiao-math-g10-a-ku-不等式性质3-加法保序性",
@@ -852,11 +1559,44 @@
       "ku_type": "concept",
       "curriculum_standard": null,
       "mastery_levels": [],
-      "rich_content": null,
+      "rich_content": {
+        "examples": [
+          {
+            "problem": "x-3>0⇒x>3",
+            "solution": "两边加3"
+          },
+          {
+            "problem": "a>b⇒a+1>b+1",
+            "solution": "同加1"
+          }
+        ],
+        "intuition": "若a>b，则a+c>b+c。不等式两边同加一个数，不等号方向不变。",
+        "definition": "若a>b，则a+c>b+c。不等式两边同加一个数，不等号方向不变。",
+        "key_points": [
+          {
+            "point": "加法保序",
+            "explanation": "a>b⇒a+c>b+c"
+          }
+        ],
+        "application": [
+          "基础练习",
+          "综合应用"
+        ],
+        "connections": "本知识点是后续学习的基础",
+        "common_mistakes": [
+          {
+            "mistake": "减法同样",
+            "correction": "a>b⇒a-c>b-c"
+          }
+        ],
+        "counter_examples": [
+          "注意边界条件"
+        ]
+      },
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "renjiao-math-g10-a-ku-不等式性质4-乘法保序性",
@@ -876,11 +1616,40 @@
       "ku_type": "concept",
       "curriculum_standard": null,
       "mastery_levels": [],
-      "rich_content": null,
+      "rich_content": {
+        "examples": [
+          {
+            "problem": "基础练习",
+            "solution": "掌握不等式性质4（乘法保序性）的定义和基本应用"
+          }
+        ],
+        "intuition": "不等式性质4（乘法保序性）是高中数学renjiao-math-g10-a-kc-不等式的基本性质中的基础知识点。",
+        "definition": "不等式性质4（乘法保序性）是高中数学renjiao-math-g10-a-kc-不等式的基本性质中的基础知识点。",
+        "key_points": [
+          {
+            "point": "核心概念",
+            "explanation": "理解不等式性质4（乘法保序性）的基本含义"
+          }
+        ],
+        "application": [
+          "基础练习",
+          "综合应用"
+        ],
+        "connections": "本知识点是后续学习的基础",
+        "common_mistakes": [
+          {
+            "mistake": "常见错误",
+            "correction": "注意不等式性质4（乘法保序性）的边界条件和特殊情况"
+          }
+        ],
+        "counter_examples": [
+          "注意边界条件"
+        ]
+      },
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "renjiao-math-g10-a-ku-不等式性质5-同向可加性",
@@ -901,11 +1670,40 @@
       "ku_type": "concept",
       "curriculum_standard": null,
       "mastery_levels": [],
-      "rich_content": null,
+      "rich_content": {
+        "examples": [
+          {
+            "problem": "基础练习",
+            "solution": "掌握不等式性质5（同向可加性）的定义和基本应用"
+          }
+        ],
+        "intuition": "不等式性质5（同向可加性）是高中数学renjiao-math-g10-a-kc-不等式的基本性质中的基础知识点。",
+        "definition": "不等式性质5（同向可加性）是高中数学renjiao-math-g10-a-kc-不等式的基本性质中的基础知识点。",
+        "key_points": [
+          {
+            "point": "核心概念",
+            "explanation": "理解不等式性质5（同向可加性）的基本含义"
+          }
+        ],
+        "application": [
+          "基础练习",
+          "综合应用"
+        ],
+        "connections": "本知识点是后续学习的基础",
+        "common_mistakes": [
+          {
+            "mistake": "常见错误",
+            "correction": "注意不等式性质5（同向可加性）的边界条件和特殊情况"
+          }
+        ],
+        "counter_examples": [
+          "注意边界条件"
+        ]
+      },
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "renjiao-math-g10-a-ku-不等式性质6-同向正数可乘性",
@@ -926,11 +1724,40 @@
       "ku_type": "concept",
       "curriculum_standard": null,
       "mastery_levels": [],
-      "rich_content": null,
+      "rich_content": {
+        "examples": [
+          {
+            "problem": "基础练习",
+            "solution": "掌握不等式性质6（同向正数可乘性）的定义和基本应用"
+          }
+        ],
+        "intuition": "不等式性质6（同向正数可乘性）是高中数学renjiao-math-g10-a-kc-不等式的基本性质中的基础知识点。",
+        "definition": "不等式性质6（同向正数可乘性）是高中数学renjiao-math-g10-a-kc-不等式的基本性质中的基础知识点。",
+        "key_points": [
+          {
+            "point": "核心概念",
+            "explanation": "理解不等式性质6（同向正数可乘性）的基本含义"
+          }
+        ],
+        "application": [
+          "基础练习",
+          "综合应用"
+        ],
+        "connections": "本知识点是后续学习的基础",
+        "common_mistakes": [
+          {
+            "mistake": "常见错误",
+            "correction": "注意不等式性质6（同向正数可乘性）的边界条件和特殊情况"
+          }
+        ],
+        "counter_examples": [
+          "注意边界条件"
+        ]
+      },
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "renjiao-math-g10-a-ku-不等式性质7-乘方性",
@@ -950,11 +1777,40 @@
       "ku_type": "concept",
       "curriculum_standard": null,
       "mastery_levels": [],
-      "rich_content": null,
+      "rich_content": {
+        "examples": [
+          {
+            "problem": "基础练习",
+            "solution": "掌握不等式性质7（乘方性）的定义和基本应用"
+          }
+        ],
+        "intuition": "不等式性质7（乘方性）是高中数学renjiao-math-g10-a-kc-不等式的基本性质中的基础知识点。",
+        "definition": "不等式性质7（乘方性）是高中数学renjiao-math-g10-a-kc-不等式的基本性质中的基础知识点。",
+        "key_points": [
+          {
+            "point": "核心概念",
+            "explanation": "理解不等式性质7（乘方性）的基本含义"
+          }
+        ],
+        "application": [
+          "基础练习",
+          "综合应用"
+        ],
+        "connections": "本知识点是后续学习的基础",
+        "common_mistakes": [
+          {
+            "mistake": "常见错误",
+            "correction": "注意不等式性质7（乘方性）的边界条件和特殊情况"
+          }
+        ],
+        "counter_examples": [
+          "注意边界条件"
+        ]
+      },
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "renjiao-math-g10-a-ku-不等式性质7-正数乘方性",
@@ -975,11 +1831,40 @@
       "ku_type": "concept",
       "curriculum_standard": null,
       "mastery_levels": [],
-      "rich_content": null,
+      "rich_content": {
+        "examples": [
+          {
+            "problem": "基础练习",
+            "solution": "掌握不等式性质7（正数乘方性）的定义和基本应用"
+          }
+        ],
+        "intuition": "不等式性质7（正数乘方性）是高中数学renjiao-math-g10-a-kc-不等式的基本性质中的基础知识点。",
+        "definition": "不等式性质7（正数乘方性）是高中数学renjiao-math-g10-a-kc-不等式的基本性质中的基础知识点。",
+        "key_points": [
+          {
+            "point": "核心概念",
+            "explanation": "理解不等式性质7（正数乘方性）的基本含义"
+          }
+        ],
+        "application": [
+          "基础练习",
+          "综合应用"
+        ],
+        "connections": "本知识点是后续学习的基础",
+        "common_mistakes": [
+          {
+            "mistake": "常见错误",
+            "correction": "注意不等式性质7（正数乘方性）的边界条件和特殊情况"
+          }
+        ],
+        "counter_examples": [
+          "注意边界条件"
+        ]
+      },
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "renjiao-math-g10-a-ku-两角和的余弦公式-c-α-β",
@@ -999,11 +1884,40 @@
       "ku_type": "concept",
       "curriculum_standard": null,
       "mastery_levels": [],
-      "rich_content": null,
+      "rich_content": {
+        "examples": [
+          {
+            "problem": "基础练习",
+            "solution": "掌握两角和的余弦公式 C(α+β)的定义和基本应用"
+          }
+        ],
+        "intuition": "两角和的余弦公式 C(α+β)是高中数学renjiao-math-g10-a-kc-两角和与差公式中的基础知识点。",
+        "definition": "两角和的余弦公式 C(α+β)是高中数学renjiao-math-g10-a-kc-两角和与差公式中的基础知识点。",
+        "key_points": [
+          {
+            "point": "核心概念",
+            "explanation": "理解两角和的余弦公式 C(α+β)的基本含义"
+          }
+        ],
+        "application": [
+          "基础练习",
+          "综合应用"
+        ],
+        "connections": "本知识点是后续学习的基础",
+        "common_mistakes": [
+          {
+            "mistake": "常见错误",
+            "correction": "注意两角和的余弦公式 C(α+β)的边界条件和特殊情况"
+          }
+        ],
+        "counter_examples": [
+          "注意边界条件"
+        ]
+      },
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "renjiao-math-g10-a-ku-两角和的正切公式-t-α-β",
@@ -1024,11 +1938,40 @@
       "ku_type": "concept",
       "curriculum_standard": null,
       "mastery_levels": [],
-      "rich_content": null,
+      "rich_content": {
+        "examples": [
+          {
+            "problem": "基础练习",
+            "solution": "掌握两角和的正切公式 T(α+β)的定义和基本应用"
+          }
+        ],
+        "intuition": "两角和的正切公式 T(α+β)是高中数学renjiao-math-g10-a-kc-两角和与差公式中的基础知识点。",
+        "definition": "两角和的正切公式 T(α+β)是高中数学renjiao-math-g10-a-kc-两角和与差公式中的基础知识点。",
+        "key_points": [
+          {
+            "point": "核心概念",
+            "explanation": "理解两角和的正切公式 T(α+β)的基本含义"
+          }
+        ],
+        "application": [
+          "基础练习",
+          "综合应用"
+        ],
+        "connections": "本知识点是后续学习的基础",
+        "common_mistakes": [
+          {
+            "mistake": "常见错误",
+            "correction": "注意两角和的正切公式 T(α+β)的边界条件和特殊情况"
+          }
+        ],
+        "counter_examples": [
+          "注意边界条件"
+        ]
+      },
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "renjiao-math-g10-a-ku-两角和的正弦公式-s-α-β",
@@ -1049,11 +1992,40 @@
       "ku_type": "concept",
       "curriculum_standard": null,
       "mastery_levels": [],
-      "rich_content": null,
+      "rich_content": {
+        "examples": [
+          {
+            "problem": "基础练习",
+            "solution": "掌握两角和的正弦公式 S(α+β)的定义和基本应用"
+          }
+        ],
+        "intuition": "两角和的正弦公式 S(α+β)是高中数学renjiao-math-g10-a-kc-两角和与差公式中的基础知识点。",
+        "definition": "两角和的正弦公式 S(α+β)是高中数学renjiao-math-g10-a-kc-两角和与差公式中的基础知识点。",
+        "key_points": [
+          {
+            "point": "核心概念",
+            "explanation": "理解两角和的正弦公式 S(α+β)的基本含义"
+          }
+        ],
+        "application": [
+          "基础练习",
+          "综合应用"
+        ],
+        "connections": "本知识点是后续学习的基础",
+        "common_mistakes": [
+          {
+            "mistake": "常见错误",
+            "correction": "注意两角和的正弦公式 S(α+β)的边界条件和特殊情况"
+          }
+        ],
+        "counter_examples": [
+          "注意边界条件"
+        ]
+      },
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "renjiao-math-g10-a-ku-两角差的余弦公式",
@@ -1074,11 +2046,40 @@
       "ku_type": "concept",
       "curriculum_standard": null,
       "mastery_levels": [],
-      "rich_content": null,
+      "rich_content": {
+        "examples": [
+          {
+            "problem": "基础练习",
+            "solution": "掌握两角差的余弦公式的定义和基本应用"
+          }
+        ],
+        "intuition": "两角差的余弦公式是高中数学renjiao-math-g10-a-kc-两角差的余弦公式中的基础知识点。",
+        "definition": "两角差的余弦公式是高中数学renjiao-math-g10-a-kc-两角差的余弦公式中的基础知识点。",
+        "key_points": [
+          {
+            "point": "核心概念",
+            "explanation": "理解两角差的余弦公式的基本含义"
+          }
+        ],
+        "application": [
+          "基础练习",
+          "综合应用"
+        ],
+        "connections": "本知识点是后续学习的基础",
+        "common_mistakes": [
+          {
+            "mistake": "常见错误",
+            "correction": "注意两角差的余弦公式的边界条件和特殊情况"
+          }
+        ],
+        "counter_examples": [
+          "注意边界条件"
+        ]
+      },
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "renjiao-math-g10-a-ku-两角差的余弦公式-c-α-β",
@@ -1099,11 +2100,40 @@
       "ku_type": "concept",
       "curriculum_standard": null,
       "mastery_levels": [],
-      "rich_content": null,
+      "rich_content": {
+        "examples": [
+          {
+            "problem": "基础练习",
+            "solution": "掌握两角差的余弦公式 C(α-β)的定义和基本应用"
+          }
+        ],
+        "intuition": "两角差的余弦公式 C(α-β)是高中数学renjiao-math-g10-a-kc-两角和与差公式中的基础知识点。",
+        "definition": "两角差的余弦公式 C(α-β)是高中数学renjiao-math-g10-a-kc-两角和与差公式中的基础知识点。",
+        "key_points": [
+          {
+            "point": "核心概念",
+            "explanation": "理解两角差的余弦公式 C(α-β)的基本含义"
+          }
+        ],
+        "application": [
+          "基础练习",
+          "综合应用"
+        ],
+        "connections": "本知识点是后续学习的基础",
+        "common_mistakes": [
+          {
+            "mistake": "常见错误",
+            "correction": "注意两角差的余弦公式 C(α-β)的边界条件和特殊情况"
+          }
+        ],
+        "counter_examples": [
+          "注意边界条件"
+        ]
+      },
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "renjiao-math-g10-a-ku-两角差的正切公式-t-α-β",
@@ -1123,11 +2153,40 @@
       "ku_type": "concept",
       "curriculum_standard": null,
       "mastery_levels": [],
-      "rich_content": null,
+      "rich_content": {
+        "examples": [
+          {
+            "problem": "基础练习",
+            "solution": "掌握两角差的正切公式 T(α-β)的定义和基本应用"
+          }
+        ],
+        "intuition": "两角差的正切公式 T(α-β)是高中数学renjiao-math-g10-a-kc-两角和与差公式中的基础知识点。",
+        "definition": "两角差的正切公式 T(α-β)是高中数学renjiao-math-g10-a-kc-两角和与差公式中的基础知识点。",
+        "key_points": [
+          {
+            "point": "核心概念",
+            "explanation": "理解两角差的正切公式 T(α-β)的基本含义"
+          }
+        ],
+        "application": [
+          "基础练习",
+          "综合应用"
+        ],
+        "connections": "本知识点是后续学习的基础",
+        "common_mistakes": [
+          {
+            "mistake": "常见错误",
+            "correction": "注意两角差的正切公式 T(α-β)的边界条件和特殊情况"
+          }
+        ],
+        "counter_examples": [
+          "注意边界条件"
+        ]
+      },
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "renjiao-math-g10-a-ku-两角差的正弦公式-s-α-β",
@@ -1147,11 +2206,40 @@
       "ku_type": "concept",
       "curriculum_standard": null,
       "mastery_levels": [],
-      "rich_content": null,
+      "rich_content": {
+        "examples": [
+          {
+            "problem": "基础练习",
+            "solution": "掌握两角差的正弦公式 S(α-β)的定义和基本应用"
+          }
+        ],
+        "intuition": "两角差的正弦公式 S(α-β)是高中数学renjiao-math-g10-a-kc-两角和与差公式中的基础知识点。",
+        "definition": "两角差的正弦公式 S(α-β)是高中数学renjiao-math-g10-a-kc-两角和与差公式中的基础知识点。",
+        "key_points": [
+          {
+            "point": "核心概念",
+            "explanation": "理解两角差的正弦公式 S(α-β)的基本含义"
+          }
+        ],
+        "application": [
+          "基础练习",
+          "综合应用"
+        ],
+        "connections": "本知识点是后续学习的基础",
+        "common_mistakes": [
+          {
+            "mistake": "常见错误",
+            "correction": "注意两角差的正弦公式 S(α-β)的边界条件和特殊情况"
+          }
+        ],
+        "counter_examples": [
+          "注意边界条件"
+        ]
+      },
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "renjiao-math-g10-a-ku-二倍角的余弦公式-c2α",
@@ -1171,11 +2259,40 @@
       "ku_type": "concept",
       "curriculum_standard": null,
       "mastery_levels": [],
-      "rich_content": null,
+      "rich_content": {
+        "examples": [
+          {
+            "problem": "基础练习",
+            "solution": "掌握二倍角的余弦公式 C2α的定义和基本应用"
+          }
+        ],
+        "intuition": "二倍角的余弦公式 C2α是高中数学renjiao-math-g10-a-kc-倍角与半角公式中的基础知识点。",
+        "definition": "二倍角的余弦公式 C2α是高中数学renjiao-math-g10-a-kc-倍角与半角公式中的基础知识点。",
+        "key_points": [
+          {
+            "point": "核心概念",
+            "explanation": "理解二倍角的余弦公式 C2α的基本含义"
+          }
+        ],
+        "application": [
+          "基础练习",
+          "综合应用"
+        ],
+        "connections": "本知识点是后续学习的基础",
+        "common_mistakes": [
+          {
+            "mistake": "常见错误",
+            "correction": "注意二倍角的余弦公式 C2α的边界条件和特殊情况"
+          }
+        ],
+        "counter_examples": [
+          "注意边界条件"
+        ]
+      },
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "renjiao-math-g10-a-ku-二倍角的正切公式-t2α",
@@ -1195,11 +2312,40 @@
       "ku_type": "concept",
       "curriculum_standard": null,
       "mastery_levels": [],
-      "rich_content": null,
+      "rich_content": {
+        "examples": [
+          {
+            "problem": "基础练习",
+            "solution": "掌握二倍角的正切公式 T2α的定义和基本应用"
+          }
+        ],
+        "intuition": "二倍角的正切公式 T2α是高中数学renjiao-math-g10-a-kc-倍角与半角公式中的基础知识点。",
+        "definition": "二倍角的正切公式 T2α是高中数学renjiao-math-g10-a-kc-倍角与半角公式中的基础知识点。",
+        "key_points": [
+          {
+            "point": "核心概念",
+            "explanation": "理解二倍角的正切公式 T2α的基本含义"
+          }
+        ],
+        "application": [
+          "基础练习",
+          "综合应用"
+        ],
+        "connections": "本知识点是后续学习的基础",
+        "common_mistakes": [
+          {
+            "mistake": "常见错误",
+            "correction": "注意二倍角的正切公式 T2α的边界条件和特殊情况"
+          }
+        ],
+        "counter_examples": [
+          "注意边界条件"
+        ]
+      },
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "renjiao-math-g10-a-ku-二倍角的正弦公式-s2α",
@@ -1219,11 +2365,40 @@
       "ku_type": "concept",
       "curriculum_standard": null,
       "mastery_levels": [],
-      "rich_content": null,
+      "rich_content": {
+        "examples": [
+          {
+            "problem": "基础练习",
+            "solution": "掌握二倍角的正弦公式 S2α的定义和基本应用"
+          }
+        ],
+        "intuition": "二倍角的正弦公式 S2α是高中数学renjiao-math-g10-a-kc-倍角与半角公式中的基础知识点。",
+        "definition": "二倍角的正弦公式 S2α是高中数学renjiao-math-g10-a-kc-倍角与半角公式中的基础知识点。",
+        "key_points": [
+          {
+            "point": "核心概念",
+            "explanation": "理解二倍角的正弦公式 S2α的基本含义"
+          }
+        ],
+        "application": [
+          "基础练习",
+          "综合应用"
+        ],
+        "connections": "本知识点是后续学习的基础",
+        "common_mistakes": [
+          {
+            "mistake": "常见错误",
+            "correction": "注意二倍角的正弦公式 S2α的边界条件和特殊情况"
+          }
+        ],
+        "counter_examples": [
+          "注意边界条件"
+        ]
+      },
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "renjiao-math-g10-a-ku-二次函数-一元二次方程-一元二次不等式的关系",
@@ -1243,11 +2418,40 @@
       "ku_type": "concept",
       "curriculum_standard": null,
       "mastery_levels": [],
-      "rich_content": null,
+      "rich_content": {
+        "examples": [
+          {
+            "problem": "基础练习",
+            "solution": "掌握二次函数、一元二次方程、一元二次不等式的关系的定义和基本应用"
+          }
+        ],
+        "intuition": "二次函数、一元二次方程、一元二次不等式的关系是高中数学renjiao-math-g10-a-kc-一元二次不等式及其解法中的基础知识点。",
+        "definition": "二次函数、一元二次方程、一元二次不等式的关系是高中数学renjiao-math-g10-a-kc-一元二次不等式及其解法中的基础知识点。",
+        "key_points": [
+          {
+            "point": "核心概念",
+            "explanation": "理解二次函数、一元二次方程、一元二次不等式的关系的基本含义"
+          }
+        ],
+        "application": [
+          "基础练习",
+          "综合应用"
+        ],
+        "connections": "本知识点是后续学习的基础",
+        "common_mistakes": [
+          {
+            "mistake": "常见错误",
+            "correction": "注意二次函数、一元二次方程、一元二次不等式的关系的边界条件和特殊情况"
+          }
+        ],
+        "counter_examples": [
+          "注意边界条件"
+        ]
+      },
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "renjiao-math-g10-a-ku-二次函数与一元二次不等式的关系-图象法",
@@ -1267,11 +2471,40 @@
       "ku_type": "concept",
       "curriculum_standard": null,
       "mastery_levels": [],
-      "rich_content": null,
+      "rich_content": {
+        "examples": [
+          {
+            "problem": "基础练习",
+            "solution": "掌握二次函数与一元二次不等式的关系（图象法）的定义和基本应用"
+          }
+        ],
+        "intuition": "二次函数与一元二次不等式的关系（图象法）是高中数学renjiao-math-g10-a-kc-一元二次不等式及其解法中的基础知识点。",
+        "definition": "二次函数与一元二次不等式的关系（图象法）是高中数学renjiao-math-g10-a-kc-一元二次不等式及其解法中的基础知识点。",
+        "key_points": [
+          {
+            "point": "核心概念",
+            "explanation": "理解二次函数与一元二次不等式的关系（图象法）的基本含义"
+          }
+        ],
+        "application": [
+          "基础练习",
+          "综合应用"
+        ],
+        "connections": "本知识点是后续学习的基础",
+        "common_mistakes": [
+          {
+            "mistake": "常见错误",
+            "correction": "注意二次函数与一元二次不等式的关系（图象法）的边界条件和特殊情况"
+          }
+        ],
+        "counter_examples": [
+          "注意边界条件"
+        ]
+      },
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "renjiao-math-g10-a-ku-二次函数的零点",
@@ -1291,11 +2524,40 @@
       "ku_type": "concept",
       "curriculum_standard": null,
       "mastery_levels": [],
-      "rich_content": null,
+      "rich_content": {
+        "examples": [
+          {
+            "problem": "基础练习",
+            "solution": "掌握二次函数的零点的定义和基本应用"
+          }
+        ],
+        "intuition": "二次函数的零点是高中数学renjiao-math-g10-a-kc-一元二次不等式及其解法中的基础知识点。",
+        "definition": "二次函数的零点是高中数学renjiao-math-g10-a-kc-一元二次不等式及其解法中的基础知识点。",
+        "key_points": [
+          {
+            "point": "核心概念",
+            "explanation": "理解二次函数的零点的基本含义"
+          }
+        ],
+        "application": [
+          "基础练习",
+          "综合应用"
+        ],
+        "connections": "本知识点是后续学习的基础",
+        "common_mistakes": [
+          {
+            "mistake": "常见错误",
+            "correction": "注意二次函数的零点的边界条件和特殊情况"
+          }
+        ],
+        "counter_examples": [
+          "注意边界条件"
+        ]
+      },
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "renjiao-math-g10-a-ku-二次项系数为负的一元二次不等式解法",
@@ -1318,11 +2580,40 @@
       "ku_type": "concept",
       "curriculum_standard": null,
       "mastery_levels": [],
-      "rich_content": null,
+      "rich_content": {
+        "examples": [
+          {
+            "problem": "基础练习",
+            "solution": "掌握二次项系数为负的一元二次不等式解法的定义和基本应用"
+          }
+        ],
+        "intuition": "二次项系数为负的一元二次不等式解法是高中数学renjiao-math-g10-a-kc-一元二次不等式及其解法中的基础知识点。",
+        "definition": "二次项系数为负的一元二次不等式解法是高中数学renjiao-math-g10-a-kc-一元二次不等式及其解法中的基础知识点。",
+        "key_points": [
+          {
+            "point": "核心概念",
+            "explanation": "理解二次项系数为负的一元二次不等式解法的基本含义"
+          }
+        ],
+        "application": [
+          "基础练习",
+          "综合应用"
+        ],
+        "connections": "本知识点是后续学习的基础",
+        "common_mistakes": [
+          {
+            "mistake": "常见错误",
+            "correction": "注意二次项系数为负的一元二次不等式解法的边界条件和特殊情况"
+          }
+        ],
+        "counter_examples": [
+          "注意边界条件"
+        ]
+      },
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "renjiao-math-g10-a-ku-五点法画余弦函数简图",
@@ -1342,11 +2633,40 @@
       "ku_type": "concept",
       "curriculum_standard": null,
       "mastery_levels": [],
-      "rich_content": null,
+      "rich_content": {
+        "examples": [
+          {
+            "problem": "基础练习",
+            "solution": "掌握五点法画余弦函数简图的定义和基本应用"
+          }
+        ],
+        "intuition": "五点法画余弦函数简图是高中数学renjiao-math-g10-a-kc-正弦函数和余弦函数的图象中的基础知识点。",
+        "definition": "五点法画余弦函数简图是高中数学renjiao-math-g10-a-kc-正弦函数和余弦函数的图象中的基础知识点。",
+        "key_points": [
+          {
+            "point": "核心概念",
+            "explanation": "理解五点法画余弦函数简图的基本含义"
+          }
+        ],
+        "application": [
+          "基础练习",
+          "综合应用"
+        ],
+        "connections": "本知识点是后续学习的基础",
+        "common_mistakes": [
+          {
+            "mistake": "常见错误",
+            "correction": "注意五点法画余弦函数简图的边界条件和特殊情况"
+          }
+        ],
+        "counter_examples": [
+          "注意边界条件"
+        ]
+      },
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "renjiao-math-g10-a-ku-五点法画正弦函数简图",
@@ -1366,11 +2686,40 @@
       "ku_type": "concept",
       "curriculum_standard": null,
       "mastery_levels": [],
-      "rich_content": null,
+      "rich_content": {
+        "examples": [
+          {
+            "problem": "基础练习",
+            "solution": "掌握五点法画正弦函数简图的定义和基本应用"
+          }
+        ],
+        "intuition": "五点法画正弦函数简图是高中数学renjiao-math-g10-a-kc-正弦函数和余弦函数的图象中的基础知识点。",
+        "definition": "五点法画正弦函数简图是高中数学renjiao-math-g10-a-kc-正弦函数和余弦函数的图象中的基础知识点。",
+        "key_points": [
+          {
+            "point": "核心概念",
+            "explanation": "理解五点法画正弦函数简图的基本含义"
+          }
+        ],
+        "application": [
+          "基础练习",
+          "综合应用"
+        ],
+        "connections": "本知识点是后续学习的基础",
+        "common_mistakes": [
+          {
+            "mistake": "常见错误",
+            "correction": "注意五点法画正弦函数简图的边界条件和特殊情况"
+          }
+        ],
+        "counter_examples": [
+          "注意边界条件"
+        ]
+      },
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "renjiao-math-g10-a-ku-交集的定义",
@@ -1390,11 +2739,40 @@
       "ku_type": "concept",
       "curriculum_standard": null,
       "mastery_levels": [],
-      "rich_content": null,
+      "rich_content": {
+        "examples": [
+          {
+            "problem": "基础练习",
+            "solution": "掌握交集的定义的定义和基本应用"
+          }
+        ],
+        "intuition": "交集的定义是高中数学renjiao-math-g10-a-kc-集合的基本运算中的基础知识点。",
+        "definition": "交集的定义是高中数学renjiao-math-g10-a-kc-集合的基本运算中的基础知识点。",
+        "key_points": [
+          {
+            "point": "核心概念",
+            "explanation": "理解交集的定义的基本含义"
+          }
+        ],
+        "application": [
+          "基础练习",
+          "综合应用"
+        ],
+        "connections": "本知识点是后续学习的基础",
+        "common_mistakes": [
+          {
+            "mistake": "常见错误",
+            "correction": "注意交集的定义的边界条件和特殊情况"
+          }
+        ],
+        "counter_examples": [
+          "注意边界条件"
+        ]
+      },
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "renjiao-math-g10-a-ku-交集的概念",
@@ -1414,11 +2792,40 @@
       "ku_type": "concept",
       "curriculum_standard": null,
       "mastery_levels": [],
-      "rich_content": null,
+      "rich_content": {
+        "examples": [
+          {
+            "problem": "基础练习",
+            "solution": "掌握交集的概念的定义和基本应用"
+          }
+        ],
+        "intuition": "交集的概念是高中数学renjiao-math-g10-a-kc-集合的基本运算中的基础知识点。",
+        "definition": "交集的概念是高中数学renjiao-math-g10-a-kc-集合的基本运算中的基础知识点。",
+        "key_points": [
+          {
+            "point": "核心概念",
+            "explanation": "理解交集的概念的基本含义"
+          }
+        ],
+        "application": [
+          "基础练习",
+          "综合应用"
+        ],
+        "connections": "本知识点是后续学习的基础",
+        "common_mistakes": [
+          {
+            "mistake": "常见错误",
+            "correction": "注意交集的概念的边界条件和特殊情况"
+          }
+        ],
+        "counter_examples": [
+          "注意边界条件"
+        ]
+      },
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "renjiao-math-g10-a-ku-任意角的概念",
@@ -1438,11 +2845,40 @@
       "ku_type": "concept",
       "curriculum_standard": null,
       "mastery_levels": [],
-      "rich_content": null,
+      "rich_content": {
+        "examples": [
+          {
+            "problem": "基础练习",
+            "solution": "掌握任意角的概念的定义和基本应用"
+          }
+        ],
+        "intuition": "任意角的概念是高中数学renjiao-math-g10-a-kc-任意角与弧度制中的基础知识点。",
+        "definition": "任意角的概念是高中数学renjiao-math-g10-a-kc-任意角与弧度制中的基础知识点。",
+        "key_points": [
+          {
+            "point": "核心概念",
+            "explanation": "理解任意角的概念的基本含义"
+          }
+        ],
+        "application": [
+          "基础练习",
+          "综合应用"
+        ],
+        "connections": "本知识点是后续学习的基础",
+        "common_mistakes": [
+          {
+            "mistake": "常见错误",
+            "correction": "注意任意角的概念的边界条件和特殊情况"
+          }
+        ],
+        "counter_examples": [
+          "注意边界条件"
+        ]
+      },
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "renjiao-math-g10-a-ku-余弦函数单调性",
@@ -1462,11 +2898,40 @@
       "ku_type": "concept",
       "curriculum_standard": null,
       "mastery_levels": [],
-      "rich_content": null,
+      "rich_content": {
+        "examples": [
+          {
+            "problem": "基础练习",
+            "solution": "掌握余弦函数单调性的定义和基本应用"
+          }
+        ],
+        "intuition": "余弦函数单调性是高中数学renjiao-math-g10-a-kc-正弦-余弦函数的单调性与最值中的基础知识点。",
+        "definition": "余弦函数单调性是高中数学renjiao-math-g10-a-kc-正弦-余弦函数的单调性与最值中的基础知识点。",
+        "key_points": [
+          {
+            "point": "核心概念",
+            "explanation": "理解余弦函数单调性的基本含义"
+          }
+        ],
+        "application": [
+          "基础练习",
+          "综合应用"
+        ],
+        "connections": "本知识点是后续学习的基础",
+        "common_mistakes": [
+          {
+            "mistake": "常见错误",
+            "correction": "注意余弦函数单调性的边界条件和特殊情况"
+          }
+        ],
+        "counter_examples": [
+          "注意边界条件"
+        ]
+      },
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "renjiao-math-g10-a-ku-余弦函数周期性",
@@ -1486,11 +2951,40 @@
       "ku_type": "concept",
       "curriculum_standard": null,
       "mastery_levels": [],
-      "rich_content": null,
+      "rich_content": {
+        "examples": [
+          {
+            "problem": "基础练习",
+            "solution": "掌握余弦函数周期性的定义和基本应用"
+          }
+        ],
+        "intuition": "余弦函数周期性是高中数学renjiao-math-g10-a-kc-三角函数的周期性中的基础知识点。",
+        "definition": "余弦函数周期性是高中数学renjiao-math-g10-a-kc-三角函数的周期性中的基础知识点。",
+        "key_points": [
+          {
+            "point": "核心概念",
+            "explanation": "理解余弦函数周期性的基本含义"
+          }
+        ],
+        "application": [
+          "基础练习",
+          "综合应用"
+        ],
+        "connections": "本知识点是后续学习的基础",
+        "common_mistakes": [
+          {
+            "mistake": "常见错误",
+            "correction": "注意余弦函数周期性的边界条件和特殊情况"
+          }
+        ],
+        "counter_examples": [
+          "注意边界条件"
+        ]
+      },
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "renjiao-math-g10-a-ku-余弦函数奇偶性",
@@ -1510,11 +3004,40 @@
       "ku_type": "concept",
       "curriculum_standard": null,
       "mastery_levels": [],
-      "rich_content": null,
+      "rich_content": {
+        "examples": [
+          {
+            "problem": "基础练习",
+            "solution": "掌握余弦函数奇偶性的定义和基本应用"
+          }
+        ],
+        "intuition": "余弦函数奇偶性是高中数学renjiao-math-g10-a-kc-三角函数的奇偶性中的基础知识点。",
+        "definition": "余弦函数奇偶性是高中数学renjiao-math-g10-a-kc-三角函数的奇偶性中的基础知识点。",
+        "key_points": [
+          {
+            "point": "核心概念",
+            "explanation": "理解余弦函数奇偶性的基本含义"
+          }
+        ],
+        "application": [
+          "基础练习",
+          "综合应用"
+        ],
+        "connections": "本知识点是后续学习的基础",
+        "common_mistakes": [
+          {
+            "mistake": "常见错误",
+            "correction": "注意余弦函数奇偶性的边界条件和特殊情况"
+          }
+        ],
+        "counter_examples": [
+          "注意边界条件"
+        ]
+      },
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "renjiao-math-g10-a-ku-余弦函数最值",
@@ -1534,11 +3057,40 @@
       "ku_type": "concept",
       "curriculum_standard": null,
       "mastery_levels": [],
-      "rich_content": null,
+      "rich_content": {
+        "examples": [
+          {
+            "problem": "基础练习",
+            "solution": "掌握余弦函数最值的定义和基本应用"
+          }
+        ],
+        "intuition": "余弦函数最值是高中数学renjiao-math-g10-a-kc-正弦-余弦函数的单调性与最值中的基础知识点。",
+        "definition": "余弦函数最值是高中数学renjiao-math-g10-a-kc-正弦-余弦函数的单调性与最值中的基础知识点。",
+        "key_points": [
+          {
+            "point": "核心概念",
+            "explanation": "理解余弦函数最值的基本含义"
+          }
+        ],
+        "application": [
+          "基础练习",
+          "综合应用"
+        ],
+        "connections": "本知识点是后续学习的基础",
+        "common_mistakes": [
+          {
+            "mistake": "常见错误",
+            "correction": "注意余弦函数最值的边界条件和特殊情况"
+          }
+        ],
+        "counter_examples": [
+          "注意边界条件"
+        ]
+      },
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "renjiao-math-g10-a-ku-余弦函数的图象-平移法",
@@ -1559,11 +3111,40 @@
       "ku_type": "concept",
       "curriculum_standard": null,
       "mastery_levels": [],
-      "rich_content": null,
+      "rich_content": {
+        "examples": [
+          {
+            "problem": "基础练习",
+            "solution": "掌握余弦函数的图象（平移法）的定义和基本应用"
+          }
+        ],
+        "intuition": "余弦函数的图象（平移法）是高中数学renjiao-math-g10-a-kc-正弦函数和余弦函数的图象中的基础知识点。",
+        "definition": "余弦函数的图象（平移法）是高中数学renjiao-math-g10-a-kc-正弦函数和余弦函数的图象中的基础知识点。",
+        "key_points": [
+          {
+            "point": "核心概念",
+            "explanation": "理解余弦函数的图象（平移法）的基本含义"
+          }
+        ],
+        "application": [
+          "基础练习",
+          "综合应用"
+        ],
+        "connections": "本知识点是后续学习的基础",
+        "common_mistakes": [
+          {
+            "mistake": "常见错误",
+            "correction": "注意余弦函数的图象（平移法）的边界条件和特殊情况"
+          }
+        ],
+        "counter_examples": [
+          "注意边界条件"
+        ]
+      },
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "renjiao-math-g10-a-ku-作差法比较大小",
@@ -1583,11 +3164,40 @@
       "ku_type": "concept",
       "curriculum_standard": null,
       "mastery_levels": [],
-      "rich_content": null,
+      "rich_content": {
+        "examples": [
+          {
+            "problem": "基础练习",
+            "solution": "掌握作差法比较大小的定义和基本应用"
+          }
+        ],
+        "intuition": "作差法比较大小是高中数学renjiao-math-g10-a-kc-不等关系与实数大小比较中的基础知识点。",
+        "definition": "作差法比较大小是高中数学renjiao-math-g10-a-kc-不等关系与实数大小比较中的基础知识点。",
+        "key_points": [
+          {
+            "point": "核心概念",
+            "explanation": "理解作差法比较大小的基本含义"
+          }
+        ],
+        "application": [
+          "基础练习",
+          "综合应用"
+        ],
+        "connections": "本知识点是后续学习的基础",
+        "common_mistakes": [
+          {
+            "mistake": "常见错误",
+            "correction": "注意作差法比较大小的边界条件和特殊情况"
+          }
+        ],
+        "counter_examples": [
+          "注意边界条件"
+        ]
+      },
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "renjiao-math-g10-a-ku-元素与集合的关系",
@@ -1607,11 +3217,40 @@
       "ku_type": "concept",
       "curriculum_standard": null,
       "mastery_levels": [],
-      "rich_content": null,
+      "rich_content": {
+        "examples": [
+          {
+            "problem": "基础练习",
+            "solution": "掌握元素与集合的关系的定义和基本应用"
+          }
+        ],
+        "intuition": "元素与集合的关系是高中数学renjiao-math-g10-a-kc-集合的基本概念与表示中的基础知识点。",
+        "definition": "元素与集合的关系是高中数学renjiao-math-g10-a-kc-集合的基本概念与表示中的基础知识点。",
+        "key_points": [
+          {
+            "point": "核心概念",
+            "explanation": "理解元素与集合的关系的基本含义"
+          }
+        ],
+        "application": [
+          "基础练习",
+          "综合应用"
+        ],
+        "connections": "本知识点是后续学习的基础",
+        "common_mistakes": [
+          {
+            "mistake": "常见错误",
+            "correction": "注意元素与集合的关系的边界条件和特殊情况"
+          }
+        ],
+        "counter_examples": [
+          "注意边界条件"
+        ]
+      },
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "renjiao-math-g10-a-ku-元素与集合的关系-属于-不属于",
@@ -1631,11 +3270,40 @@
       "ku_type": "concept",
       "curriculum_standard": null,
       "mastery_levels": [],
-      "rich_content": null,
+      "rich_content": {
+        "examples": [
+          {
+            "problem": "基础练习",
+            "solution": "掌握元素与集合的关系（属于、不属于）的定义和基本应用"
+          }
+        ],
+        "intuition": "元素与集合的关系（属于、不属于）是高中数学renjiao-math-g10-a-kc-集合的基本概念与表示中的基础知识点。",
+        "definition": "元素与集合的关系（属于、不属于）是高中数学renjiao-math-g10-a-kc-集合的基本概念与表示中的基础知识点。",
+        "key_points": [
+          {
+            "point": "核心概念",
+            "explanation": "理解元素与集合的关系（属于、不属于）的基本含义"
+          }
+        ],
+        "application": [
+          "基础练习",
+          "综合应用"
+        ],
+        "connections": "本知识点是后续学习的基础",
+        "common_mistakes": [
+          {
+            "mistake": "常见错误",
+            "correction": "注意元素与集合的关系（属于、不属于）的边界条件和特殊情况"
+          }
+        ],
+        "counter_examples": [
+          "注意边界条件"
+        ]
+      },
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "renjiao-math-g10-a-ku-充分条件与必要条件",
@@ -1655,11 +3323,40 @@
       "ku_type": "concept",
       "curriculum_standard": null,
       "mastery_levels": [],
-      "rich_content": null,
+      "rich_content": {
+        "examples": [
+          {
+            "problem": "基础练习",
+            "solution": "掌握充分条件与必要条件的定义和基本应用"
+          }
+        ],
+        "intuition": "充分条件与必要条件是高中数学renjiao-math-g10-a-kc-命题与条件关系基础中的基础知识点。",
+        "definition": "充分条件与必要条件是高中数学renjiao-math-g10-a-kc-命题与条件关系基础中的基础知识点。",
+        "key_points": [
+          {
+            "point": "核心概念",
+            "explanation": "理解充分条件与必要条件的基本含义"
+          }
+        ],
+        "application": [
+          "基础练习",
+          "综合应用"
+        ],
+        "connections": "本知识点是后续学习的基础",
+        "common_mistakes": [
+          {
+            "mistake": "常见错误",
+            "correction": "注意充分条件与必要条件的边界条件和特殊情况"
+          }
+        ],
+        "counter_examples": [
+          "注意边界条件"
+        ]
+      },
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "renjiao-math-g10-a-ku-充分条件与必要条件定义",
@@ -1680,11 +3377,40 @@
       "ku_type": "concept",
       "curriculum_standard": null,
       "mastery_levels": [],
-      "rich_content": null,
+      "rich_content": {
+        "examples": [
+          {
+            "problem": "基础练习",
+            "solution": "掌握充分条件与必要条件定义的定义和基本应用"
+          }
+        ],
+        "intuition": "充分条件与必要条件定义是高中数学renjiao-math-g10-a-kc-充分条件与必要条件中的基础知识点。",
+        "definition": "充分条件与必要条件定义是高中数学renjiao-math-g10-a-kc-充分条件与必要条件中的基础知识点。",
+        "key_points": [
+          {
+            "point": "核心概念",
+            "explanation": "理解充分条件与必要条件定义的基本含义"
+          }
+        ],
+        "application": [
+          "基础练习",
+          "综合应用"
+        ],
+        "connections": "本知识点是后续学习的基础",
+        "common_mistakes": [
+          {
+            "mistake": "常见错误",
+            "correction": "注意充分条件与必要条件定义的边界条件和特殊情况"
+          }
+        ],
+        "counter_examples": [
+          "注意边界条件"
+        ]
+      },
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "renjiao-math-g10-a-ku-充分条件与必要条件的不唯一性",
@@ -1704,11 +3430,40 @@
       "ku_type": "concept",
       "curriculum_standard": null,
       "mastery_levels": [],
-      "rich_content": null,
+      "rich_content": {
+        "examples": [
+          {
+            "problem": "基础练习",
+            "solution": "掌握充分条件与必要条件的不唯一性的定义和基本应用"
+          }
+        ],
+        "intuition": "充分条件与必要条件的不唯一性是高中数学renjiao-math-g10-a-kc-充分条件与必要条件中的基础知识点。",
+        "definition": "充分条件与必要条件的不唯一性是高中数学renjiao-math-g10-a-kc-充分条件与必要条件中的基础知识点。",
+        "key_points": [
+          {
+            "point": "核心概念",
+            "explanation": "理解充分条件与必要条件的不唯一性的基本含义"
+          }
+        ],
+        "application": [
+          "基础练习",
+          "综合应用"
+        ],
+        "connections": "本知识点是后续学习的基础",
+        "common_mistakes": [
+          {
+            "mistake": "常见错误",
+            "correction": "注意充分条件与必要条件的不唯一性的边界条件和特殊情况"
+          }
+        ],
+        "counter_examples": [
+          "注意边界条件"
+        ]
+      },
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "renjiao-math-g10-a-ku-充分条件的判定",
@@ -1728,11 +3483,40 @@
       "ku_type": "concept",
       "curriculum_standard": null,
       "mastery_levels": [],
-      "rich_content": null,
+      "rich_content": {
+        "examples": [
+          {
+            "problem": "基础练习",
+            "solution": "掌握充分条件的判定的定义和基本应用"
+          }
+        ],
+        "intuition": "充分条件的判定是高中数学renjiao-math-g10-a-kc-充分条件与必要条件中的基础知识点。",
+        "definition": "充分条件的判定是高中数学renjiao-math-g10-a-kc-充分条件与必要条件中的基础知识点。",
+        "key_points": [
+          {
+            "point": "核心概念",
+            "explanation": "理解充分条件的判定的基本含义"
+          }
+        ],
+        "application": [
+          "基础练习",
+          "综合应用"
+        ],
+        "connections": "本知识点是后续学习的基础",
+        "common_mistakes": [
+          {
+            "mistake": "常见错误",
+            "correction": "注意充分条件的判定的边界条件和特殊情况"
+          }
+        ],
+        "counter_examples": [
+          "注意边界条件"
+        ]
+      },
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "renjiao-math-g10-a-ku-充分条件的判定与举例",
@@ -1752,11 +3536,40 @@
       "ku_type": "concept",
       "curriculum_standard": null,
       "mastery_levels": [],
-      "rich_content": null,
+      "rich_content": {
+        "examples": [
+          {
+            "problem": "基础练习",
+            "solution": "掌握充分条件的判定与举例的定义和基本应用"
+          }
+        ],
+        "intuition": "充分条件的判定与举例是高中数学renjiao-math-g10-a-kc-命题与条件关系基础中的基础知识点。",
+        "definition": "充分条件的判定与举例是高中数学renjiao-math-g10-a-kc-命题与条件关系基础中的基础知识点。",
+        "key_points": [
+          {
+            "point": "核心概念",
+            "explanation": "理解充分条件的判定与举例的基本含义"
+          }
+        ],
+        "application": [
+          "基础练习",
+          "综合应用"
+        ],
+        "connections": "本知识点是后续学习的基础",
+        "common_mistakes": [
+          {
+            "mistake": "常见错误",
+            "correction": "注意充分条件的判定与举例的边界条件和特殊情况"
+          }
+        ],
+        "counter_examples": [
+          "注意边界条件"
+        ]
+      },
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "renjiao-math-g10-a-ku-充要条件",
@@ -1776,11 +3589,40 @@
       "ku_type": "concept",
       "curriculum_standard": null,
       "mastery_levels": [],
-      "rich_content": null,
+      "rich_content": {
+        "examples": [
+          {
+            "problem": "基础练习",
+            "solution": "掌握充要条件的定义和基本应用"
+          }
+        ],
+        "intuition": "充要条件是高中数学renjiao-math-g10-a-kc-命题与条件关系基础中的基础知识点。",
+        "definition": "充要条件是高中数学renjiao-math-g10-a-kc-命题与条件关系基础中的基础知识点。",
+        "key_points": [
+          {
+            "point": "核心概念",
+            "explanation": "理解充要条件的基本含义"
+          }
+        ],
+        "application": [
+          "基础练习",
+          "综合应用"
+        ],
+        "connections": "本知识点是后续学习的基础",
+        "common_mistakes": [
+          {
+            "mistake": "常见错误",
+            "correction": "注意充要条件的边界条件和特殊情况"
+          }
+        ],
+        "counter_examples": [
+          "注意边界条件"
+        ]
+      },
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "renjiao-math-g10-a-ku-充要条件与等价定义",
@@ -1800,11 +3642,40 @@
       "ku_type": "concept",
       "curriculum_standard": null,
       "mastery_levels": [],
-      "rich_content": null,
+      "rich_content": {
+        "examples": [
+          {
+            "problem": "基础练习",
+            "solution": "掌握充要条件与等价定义的定义和基本应用"
+          }
+        ],
+        "intuition": "充要条件与等价定义是高中数学renjiao-math-g10-a-kc-充要条件及其应用中的基础知识点。",
+        "definition": "充要条件与等价定义是高中数学renjiao-math-g10-a-kc-充要条件及其应用中的基础知识点。",
+        "key_points": [
+          {
+            "point": "核心概念",
+            "explanation": "理解充要条件与等价定义的基本含义"
+          }
+        ],
+        "application": [
+          "基础练习",
+          "综合应用"
+        ],
+        "connections": "本知识点是后续学习的基础",
+        "common_mistakes": [
+          {
+            "mistake": "常见错误",
+            "correction": "注意充要条件与等价定义的边界条件和特殊情况"
+          }
+        ],
+        "counter_examples": [
+          "注意边界条件"
+        ]
+      },
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "renjiao-math-g10-a-ku-充要条件的判定",
@@ -1824,11 +3695,40 @@
       "ku_type": "concept",
       "curriculum_standard": null,
       "mastery_levels": [],
-      "rich_content": null,
+      "rich_content": {
+        "examples": [
+          {
+            "problem": "基础练习",
+            "solution": "掌握充要条件的判定的定义和基本应用"
+          }
+        ],
+        "intuition": "充要条件的判定是高中数学renjiao-math-g10-a-kc-充要条件及其应用中的基础知识点。",
+        "definition": "充要条件的判定是高中数学renjiao-math-g10-a-kc-充要条件及其应用中的基础知识点。",
+        "key_points": [
+          {
+            "point": "核心概念",
+            "explanation": "理解充要条件的判定的基本含义"
+          }
+        ],
+        "application": [
+          "基础练习",
+          "综合应用"
+        ],
+        "connections": "本知识点是后续学习的基础",
+        "common_mistakes": [
+          {
+            "mistake": "常见错误",
+            "correction": "注意充要条件的判定的边界条件和特殊情况"
+          }
+        ],
+        "counter_examples": [
+          "注意边界条件"
+        ]
+      },
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "renjiao-math-g10-a-ku-充要条件的定义",
@@ -1849,11 +3749,40 @@
       "ku_type": "concept",
       "curriculum_standard": null,
       "mastery_levels": [],
-      "rich_content": null,
+      "rich_content": {
+        "examples": [
+          {
+            "problem": "基础练习",
+            "solution": "掌握充要条件的定义的定义和基本应用"
+          }
+        ],
+        "intuition": "充要条件的定义是高中数学renjiao-math-g10-a-kc-充要条件及其应用中的基础知识点。",
+        "definition": "充要条件的定义是高中数学renjiao-math-g10-a-kc-充要条件及其应用中的基础知识点。",
+        "key_points": [
+          {
+            "point": "核心概念",
+            "explanation": "理解充要条件的定义的基本含义"
+          }
+        ],
+        "application": [
+          "基础练习",
+          "综合应用"
+        ],
+        "connections": "本知识点是后续学习的基础",
+        "common_mistakes": [
+          {
+            "mistake": "常见错误",
+            "correction": "注意充要条件的定义的边界条件和特殊情况"
+          }
+        ],
+        "counter_examples": [
+          "注意边界条件"
+        ]
+      },
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "renjiao-math-g10-a-ku-充要条件的证明-充分性与必要性",
@@ -1873,11 +3802,40 @@
       "ku_type": "concept",
       "curriculum_standard": null,
       "mastery_levels": [],
-      "rich_content": null,
+      "rich_content": {
+        "examples": [
+          {
+            "problem": "基础练习",
+            "solution": "掌握充要条件的证明（充分性与必要性）的定义和基本应用"
+          }
+        ],
+        "intuition": "充要条件的证明（充分性与必要性）是高中数学renjiao-math-g10-a-kc-命题与条件关系基础中的基础知识点。",
+        "definition": "充要条件的证明（充分性与必要性）是高中数学renjiao-math-g10-a-kc-命题与条件关系基础中的基础知识点。",
+        "key_points": [
+          {
+            "point": "核心概念",
+            "explanation": "理解充要条件的证明（充分性与必要性）的基本含义"
+          }
+        ],
+        "application": [
+          "基础练习",
+          "综合应用"
+        ],
+        "connections": "本知识点是后续学习的基础",
+        "common_mistakes": [
+          {
+            "mistake": "常见错误",
+            "correction": "注意充要条件的证明（充分性与必要性）的边界条件和特殊情况"
+          }
+        ],
+        "counter_examples": [
+          "注意边界条件"
+        ]
+      },
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "renjiao-math-g10-a-ku-全称量词与全称量词命题",
@@ -1897,11 +3855,40 @@
       "ku_type": "concept",
       "curriculum_standard": null,
       "mastery_levels": [],
-      "rich_content": null,
+      "rich_content": {
+        "examples": [
+          {
+            "problem": "基础练习",
+            "solution": "掌握全称量词与全称量词命题的定义和基本应用"
+          }
+        ],
+        "intuition": "全称量词与全称量词命题是高中数学renjiao-math-g10-a-kc-全称量词与存在量词中的基础知识点。",
+        "definition": "全称量词与全称量词命题是高中数学renjiao-math-g10-a-kc-全称量词与存在量词中的基础知识点。",
+        "key_points": [
+          {
+            "point": "核心概念",
+            "explanation": "理解全称量词与全称量词命题的基本含义"
+          }
+        ],
+        "application": [
+          "基础练习",
+          "综合应用"
+        ],
+        "connections": "本知识点是后续学习的基础",
+        "common_mistakes": [
+          {
+            "mistake": "常见错误",
+            "correction": "注意全称量词与全称量词命题的边界条件和特殊情况"
+          }
+        ],
+        "counter_examples": [
+          "注意边界条件"
+        ]
+      },
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "renjiao-math-g10-a-ku-全称量词命题的否定",
@@ -1922,11 +3909,40 @@
       "ku_type": "concept",
       "curriculum_standard": null,
       "mastery_levels": [],
-      "rich_content": null,
+      "rich_content": {
+        "examples": [
+          {
+            "problem": "基础练习",
+            "solution": "掌握全称量词命题的否定的定义和基本应用"
+          }
+        ],
+        "intuition": "全称量词命题的否定是高中数学renjiao-math-g10-a-kc-含量词命题的否定中的基础知识点。",
+        "definition": "全称量词命题的否定是高中数学renjiao-math-g10-a-kc-含量词命题的否定中的基础知识点。",
+        "key_points": [
+          {
+            "point": "核心概念",
+            "explanation": "理解全称量词命题的否定的基本含义"
+          }
+        ],
+        "application": [
+          "基础练习",
+          "综合应用"
+        ],
+        "connections": "本知识点是后续学习的基础",
+        "common_mistakes": [
+          {
+            "mistake": "常见错误",
+            "correction": "注意全称量词命题的否定的边界条件和特殊情况"
+          }
+        ],
+        "counter_examples": [
+          "注意边界条件"
+        ]
+      },
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "renjiao-math-g10-a-ku-全称量词命题真假的判定",
@@ -1946,11 +3962,40 @@
       "ku_type": "concept",
       "curriculum_standard": null,
       "mastery_levels": [],
-      "rich_content": null,
+      "rich_content": {
+        "examples": [
+          {
+            "problem": "基础练习",
+            "solution": "掌握全称量词命题真假的判定的定义和基本应用"
+          }
+        ],
+        "intuition": "全称量词命题真假的判定是高中数学renjiao-math-g10-a-kc-全称量词与存在量词中的基础知识点。",
+        "definition": "全称量词命题真假的判定是高中数学renjiao-math-g10-a-kc-全称量词与存在量词中的基础知识点。",
+        "key_points": [
+          {
+            "point": "核心概念",
+            "explanation": "理解全称量词命题真假的判定的基本含义"
+          }
+        ],
+        "application": [
+          "基础练习",
+          "综合应用"
+        ],
+        "connections": "本知识点是后续学习的基础",
+        "common_mistakes": [
+          {
+            "mistake": "常见错误",
+            "correction": "注意全称量词命题真假的判定的边界条件和特殊情况"
+          }
+        ],
+        "counter_examples": [
+          "注意边界条件"
+        ]
+      },
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "renjiao-math-g10-a-ku-全称量词命题真假的判断",
@@ -1970,11 +4015,40 @@
       "ku_type": "concept",
       "curriculum_standard": null,
       "mastery_levels": [],
-      "rich_content": null,
+      "rich_content": {
+        "examples": [
+          {
+            "problem": "基础练习",
+            "solution": "掌握全称量词命题真假的判断的定义和基本应用"
+          }
+        ],
+        "intuition": "全称量词命题真假的判断是高中数学renjiao-math-g10-a-kc-全称量词与存在量词中的基础知识点。",
+        "definition": "全称量词命题真假的判断是高中数学renjiao-math-g10-a-kc-全称量词与存在量词中的基础知识点。",
+        "key_points": [
+          {
+            "point": "核心概念",
+            "explanation": "理解全称量词命题真假的判断的基本含义"
+          }
+        ],
+        "application": [
+          "基础练习",
+          "综合应用"
+        ],
+        "connections": "本知识点是后续学习的基础",
+        "common_mistakes": [
+          {
+            "mistake": "常见错误",
+            "correction": "注意全称量词命题真假的判断的边界条件和特殊情况"
+          }
+        ],
+        "counter_examples": [
+          "注意边界条件"
+        ]
+      },
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "renjiao-math-g10-a-ku-全集",
@@ -1994,11 +4068,40 @@
       "ku_type": "concept",
       "curriculum_standard": null,
       "mastery_levels": [],
-      "rich_content": null,
+      "rich_content": {
+        "examples": [
+          {
+            "problem": "基础练习",
+            "solution": "掌握全集的定义和基本应用"
+          }
+        ],
+        "intuition": "全集是高中数学renjiao-math-g10-a-kc-集合的基本运算中的基础知识点。",
+        "definition": "全集是高中数学renjiao-math-g10-a-kc-集合的基本运算中的基础知识点。",
+        "key_points": [
+          {
+            "point": "核心概念",
+            "explanation": "理解全集的基本含义"
+          }
+        ],
+        "application": [
+          "基础练习",
+          "综合应用"
+        ],
+        "connections": "本知识点是后续学习的基础",
+        "common_mistakes": [
+          {
+            "mistake": "常见错误",
+            "correction": "注意全集的边界条件和特殊情况"
+          }
+        ],
+        "counter_examples": [
+          "注意边界条件"
+        ]
+      },
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "renjiao-math-g10-a-ku-全集与补集",
@@ -2018,11 +4121,40 @@
       "ku_type": "concept",
       "curriculum_standard": null,
       "mastery_levels": [],
-      "rich_content": null,
+      "rich_content": {
+        "examples": [
+          {
+            "problem": "基础练习",
+            "solution": "掌握全集与补集的定义和基本应用"
+          }
+        ],
+        "intuition": "全集与补集是高中数学renjiao-math-g10-a-kc-集合的基本运算中的基础知识点。",
+        "definition": "全集与补集是高中数学renjiao-math-g10-a-kc-集合的基本运算中的基础知识点。",
+        "key_points": [
+          {
+            "point": "核心概念",
+            "explanation": "理解全集与补集的基本含义"
+          }
+        ],
+        "application": [
+          "基础练习",
+          "综合应用"
+        ],
+        "connections": "本知识点是后续学习的基础",
+        "common_mistakes": [
+          {
+            "mistake": "常见错误",
+            "correction": "注意全集与补集的边界条件和特殊情况"
+          }
+        ],
+        "counter_examples": [
+          "注意边界条件"
+        ]
+      },
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "renjiao-math-g10-a-ku-公式一-诱导公式一",
@@ -2043,11 +4175,40 @@
       "ku_type": "concept",
       "curriculum_standard": null,
       "mastery_levels": [],
-      "rich_content": null,
+      "rich_content": {
+        "examples": [
+          {
+            "problem": "基础练习",
+            "solution": "掌握公式一（诱导公式一）的定义和基本应用"
+          }
+        ],
+        "intuition": "公式一（诱导公式一）是高中数学renjiao-math-g10-a-kc-三角函数的定义与基本性质中的基础知识点。",
+        "definition": "公式一（诱导公式一）是高中数学renjiao-math-g10-a-kc-三角函数的定义与基本性质中的基础知识点。",
+        "key_points": [
+          {
+            "point": "核心概念",
+            "explanation": "理解公式一（诱导公式一）的基本含义"
+          }
+        ],
+        "application": [
+          "基础练习",
+          "综合应用"
+        ],
+        "connections": "本知识点是后续学习的基础",
+        "common_mistakes": [
+          {
+            "mistake": "常见错误",
+            "correction": "注意公式一（诱导公式一）的边界条件和特殊情况"
+          }
+        ],
+        "counter_examples": [
+          "注意边界条件"
+        ]
+      },
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "renjiao-math-g10-a-ku-函数-y-asin-ωx-φ--的物理模型",
@@ -2067,11 +4228,40 @@
       "ku_type": "concept",
       "curriculum_standard": null,
       "mastery_levels": [],
-      "rich_content": null,
+      "rich_content": {
+        "examples": [
+          {
+            "problem": "基础练习",
+            "solution": "掌握函数 y=Asin(ωx+φ) 的物理模型的定义和基本应用"
+          }
+        ],
+        "intuition": "函数 y=Asin(ωx+φ) 的物理模型是高中数学renjiao-math-g10-a-kc-函数-y-asin-ωx-φ--的建模与参数影响中的基础知识点。",
+        "definition": "函数 y=Asin(ωx+φ) 的物理模型是高中数学renjiao-math-g10-a-kc-函数-y-asin-ωx-φ--的建模与参数影响中的基础知识点。",
+        "key_points": [
+          {
+            "point": "核心概念",
+            "explanation": "理解函数 y=Asin(ωx+φ) 的物理模型的基本含义"
+          }
+        ],
+        "application": [
+          "基础练习",
+          "综合应用"
+        ],
+        "connections": "本知识点是后续学习的基础",
+        "common_mistakes": [
+          {
+            "mistake": "常见错误",
+            "correction": "注意函数 y=Asin(ωx+φ) 的物理模型的边界条件和特殊情况"
+          }
+        ],
+        "counter_examples": [
+          "注意边界条件"
+        ]
+      },
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "renjiao-math-g10-a-ku-函数图象的平移与对称变换-正弦余弦",
@@ -2092,11 +4282,40 @@
       "ku_type": "concept",
       "curriculum_standard": null,
       "mastery_levels": [],
-      "rich_content": null,
+      "rich_content": {
+        "examples": [
+          {
+            "problem": "基础练习",
+            "solution": "掌握函数图象的平移与对称变换（正弦余弦）的定义和基本应用"
+          }
+        ],
+        "intuition": "函数图象的平移与对称变换（正弦余弦）是高中数学renjiao-math-g10-a-kc-正弦函数和余弦函数的图象中的基础知识点。",
+        "definition": "函数图象的平移与对称变换（正弦余弦）是高中数学renjiao-math-g10-a-kc-正弦函数和余弦函数的图象中的基础知识点。",
+        "key_points": [
+          {
+            "point": "核心概念",
+            "explanation": "理解函数图象的平移与对称变换（正弦余弦）的基本含义"
+          }
+        ],
+        "application": [
+          "基础练习",
+          "综合应用"
+        ],
+        "connections": "本知识点是后续学习的基础",
+        "common_mistakes": [
+          {
+            "mistake": "常见错误",
+            "correction": "注意函数图象的平移与对称变换（正弦余弦）的边界条件和特殊情况"
+          }
+        ],
+        "counter_examples": [
+          "注意边界条件"
+        ]
+      },
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "renjiao-math-g10-a-ku-列举法",
@@ -2116,11 +4335,40 @@
       "ku_type": "concept",
       "curriculum_standard": null,
       "mastery_levels": [],
-      "rich_content": null,
+      "rich_content": {
+        "examples": [
+          {
+            "problem": "基础练习",
+            "solution": "掌握列举法的定义和基本应用"
+          }
+        ],
+        "intuition": "列举法是高中数学renjiao-math-g10-a-kc-集合的基本概念与表示中的基础知识点。",
+        "definition": "列举法是高中数学renjiao-math-g10-a-kc-集合的基本概念与表示中的基础知识点。",
+        "key_points": [
+          {
+            "point": "核心概念",
+            "explanation": "理解列举法的基本含义"
+          }
+        ],
+        "application": [
+          "基础练习",
+          "综合应用"
+        ],
+        "connections": "本知识点是后续学习的基础",
+        "common_mistakes": [
+          {
+            "mistake": "常见错误",
+            "correction": "注意列举法的边界条件和特殊情况"
+          }
+        ],
+        "counter_examples": [
+          "注意边界条件"
+        ]
+      },
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "renjiao-math-g10-a-ku-判定定理与充分条件的关系",
@@ -2140,11 +4388,40 @@
       "ku_type": "concept",
       "curriculum_standard": null,
       "mastery_levels": [],
-      "rich_content": null,
+      "rich_content": {
+        "examples": [
+          {
+            "problem": "基础练习",
+            "solution": "掌握判定定理与充分条件的关系的定义和基本应用"
+          }
+        ],
+        "intuition": "判定定理与充分条件的关系是高中数学renjiao-math-g10-a-kc-充分条件与必要条件中的基础知识点。",
+        "definition": "判定定理与充分条件的关系是高中数学renjiao-math-g10-a-kc-充分条件与必要条件中的基础知识点。",
+        "key_points": [
+          {
+            "point": "核心概念",
+            "explanation": "理解判定定理与充分条件的关系的基本含义"
+          }
+        ],
+        "application": [
+          "基础练习",
+          "综合应用"
+        ],
+        "connections": "本知识点是后续学习的基础",
+        "common_mistakes": [
+          {
+            "mistake": "常见错误",
+            "correction": "注意判定定理与充分条件的关系的边界条件和特殊情况"
+          }
+        ],
+        "counter_examples": [
+          "注意边界条件"
+        ]
+      },
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "renjiao-math-g10-a-ku-利用同角关系求三角函数值-已知余弦求正弦正切",
@@ -2166,11 +4443,40 @@
       "ku_type": "concept",
       "curriculum_standard": null,
       "mastery_levels": [],
-      "rich_content": null,
+      "rich_content": {
+        "examples": [
+          {
+            "problem": "基础练习",
+            "solution": "掌握利用同角关系求三角函数值（已知余弦求正弦正切）的定义和基本应用"
+          }
+        ],
+        "intuition": "利用同角关系求三角函数值（已知余弦求正弦正切）是高中数学renjiao-math-g10-a-kc-同角三角函数的基本关系及其应用中的基础知识点。",
+        "definition": "利用同角关系求三角函数值（已知余弦求正弦正切）是高中数学renjiao-math-g10-a-kc-同角三角函数的基本关系及其应用中的基础知识点。",
+        "key_points": [
+          {
+            "point": "核心概念",
+            "explanation": "理解利用同角关系求三角函数值（已知余弦求正弦正切）的基本含义"
+          }
+        ],
+        "application": [
+          "基础练习",
+          "综合应用"
+        ],
+        "connections": "本知识点是后续学习的基础",
+        "common_mistakes": [
+          {
+            "mistake": "常见错误",
+            "correction": "注意利用同角关系求三角函数值（已知余弦求正弦正切）的边界条件和特殊情况"
+          }
+        ],
+        "counter_examples": [
+          "注意边界条件"
+        ]
+      },
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "renjiao-math-g10-a-ku-利用同角关系求三角函数值-已知正切求正弦余弦",
@@ -2192,11 +4498,40 @@
       "ku_type": "concept",
       "curriculum_standard": null,
       "mastery_levels": [],
-      "rich_content": null,
+      "rich_content": {
+        "examples": [
+          {
+            "problem": "基础练习",
+            "solution": "掌握利用同角关系求三角函数值（已知正切求正弦余弦）的定义和基本应用"
+          }
+        ],
+        "intuition": "利用同角关系求三角函数值（已知正切求正弦余弦）是高中数学renjiao-math-g10-a-kc-同角三角函数的基本关系及其应用中的基础知识点。",
+        "definition": "利用同角关系求三角函数值（已知正切求正弦余弦）是高中数学renjiao-math-g10-a-kc-同角三角函数的基本关系及其应用中的基础知识点。",
+        "key_points": [
+          {
+            "point": "核心概念",
+            "explanation": "理解利用同角关系求三角函数值（已知正切求正弦余弦）的基本含义"
+          }
+        ],
+        "application": [
+          "基础练习",
+          "综合应用"
+        ],
+        "connections": "本知识点是后续学习的基础",
+        "common_mistakes": [
+          {
+            "mistake": "常见错误",
+            "correction": "注意利用同角关系求三角函数值（已知正切求正弦余弦）的边界条件和特殊情况"
+          }
+        ],
+        "counter_examples": [
+          "注意边界条件"
+        ]
+      },
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "renjiao-math-g10-a-ku-利用同角关系求三角函数值-已知正弦求余弦正切",
@@ -2218,11 +4553,40 @@
       "ku_type": "concept",
       "curriculum_standard": null,
       "mastery_levels": [],
-      "rich_content": null,
+      "rich_content": {
+        "examples": [
+          {
+            "problem": "基础练习",
+            "solution": "掌握利用同角关系求三角函数值（已知正弦求余弦正切）的定义和基本应用"
+          }
+        ],
+        "intuition": "利用同角关系求三角函数值（已知正弦求余弦正切）是高中数学renjiao-math-g10-a-kc-同角三角函数的基本关系及其应用中的基础知识点。",
+        "definition": "利用同角关系求三角函数值（已知正弦求余弦正切）是高中数学renjiao-math-g10-a-kc-同角三角函数的基本关系及其应用中的基础知识点。",
+        "key_points": [
+          {
+            "point": "核心概念",
+            "explanation": "理解利用同角关系求三角函数值（已知正弦求余弦正切）的基本含义"
+          }
+        ],
+        "application": [
+          "基础练习",
+          "综合应用"
+        ],
+        "connections": "本知识点是后续学习的基础",
+        "common_mistakes": [
+          {
+            "mistake": "常见错误",
+            "correction": "注意利用同角关系求三角函数值（已知正弦求余弦正切）的边界条件和特殊情况"
+          }
+        ],
+        "counter_examples": [
+          "注意边界条件"
+        ]
+      },
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "renjiao-math-g10-a-ku-利用基本不等式求最值-和定积最大-积定和最小",
@@ -2242,11 +4606,40 @@
       "ku_type": "concept",
       "curriculum_standard": null,
       "mastery_levels": [],
-      "rich_content": null,
+      "rich_content": {
+        "examples": [
+          {
+            "problem": "基础练习",
+            "solution": "掌握利用基本不等式求最值（和定积最大，积定和最小）的定义和基本应用"
+          }
+        ],
+        "intuition": "利用基本不等式求最值（和定积最大，积定和最小）是高中数学renjiao-math-g10-a-kc-基本不等式及其应用中的基础知识点。",
+        "definition": "利用基本不等式求最值（和定积最大，积定和最小）是高中数学renjiao-math-g10-a-kc-基本不等式及其应用中的基础知识点。",
+        "key_points": [
+          {
+            "point": "核心概念",
+            "explanation": "理解利用基本不等式求最值（和定积最大，积定和最小）的基本含义"
+          }
+        ],
+        "application": [
+          "基础练习",
+          "综合应用"
+        ],
+        "connections": "本知识点是后续学习的基础",
+        "common_mistakes": [
+          {
+            "mistake": "常见错误",
+            "correction": "注意利用基本不等式求最值（和定积最大，积定和最小）的边界条件和特殊情况"
+          }
+        ],
+        "counter_examples": [
+          "注意边界条件"
+        ]
+      },
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "renjiao-math-g10-a-ku-利用诱导公式化简三角函数式",
@@ -2270,11 +4663,40 @@
       "ku_type": "concept",
       "curriculum_standard": null,
       "mastery_levels": [],
-      "rich_content": null,
+      "rich_content": {
+        "examples": [
+          {
+            "problem": "基础练习",
+            "solution": "掌握利用诱导公式化简三角函数式的定义和基本应用"
+          }
+        ],
+        "intuition": "利用诱导公式化简三角函数式是高中数学renjiao-math-g10-a-kc-诱导公式及其应用中的基础知识点。",
+        "definition": "利用诱导公式化简三角函数式是高中数学renjiao-math-g10-a-kc-诱导公式及其应用中的基础知识点。",
+        "key_points": [
+          {
+            "point": "核心概念",
+            "explanation": "理解利用诱导公式化简三角函数式的基本含义"
+          }
+        ],
+        "application": [
+          "基础练习",
+          "综合应用"
+        ],
+        "connections": "本知识点是后续学习的基础",
+        "common_mistakes": [
+          {
+            "mistake": "常见错误",
+            "correction": "注意利用诱导公式化简三角函数式的边界条件和特殊情况"
+          }
+        ],
+        "counter_examples": [
+          "注意边界条件"
+        ]
+      },
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "renjiao-math-g10-a-ku-利用诱导公式求任意角的三角函数值",
@@ -2299,11 +4721,40 @@
       "ku_type": "concept",
       "curriculum_standard": null,
       "mastery_levels": [],
-      "rich_content": null,
+      "rich_content": {
+        "examples": [
+          {
+            "problem": "基础练习",
+            "solution": "掌握利用诱导公式求任意角的三角函数值的定义和基本应用"
+          }
+        ],
+        "intuition": "利用诱导公式求任意角的三角函数值是高中数学renjiao-math-g10-a-kc-诱导公式及其应用中的基础知识点。",
+        "definition": "利用诱导公式求任意角的三角函数值是高中数学renjiao-math-g10-a-kc-诱导公式及其应用中的基础知识点。",
+        "key_points": [
+          {
+            "point": "核心概念",
+            "explanation": "理解利用诱导公式求任意角的三角函数值的基本含义"
+          }
+        ],
+        "application": [
+          "基础练习",
+          "综合应用"
+        ],
+        "connections": "本知识点是后续学习的基础",
+        "common_mistakes": [
+          {
+            "mistake": "常见错误",
+            "correction": "注意利用诱导公式求任意角的三角函数值的边界条件和特殊情况"
+          }
+        ],
+        "counter_examples": [
+          "注意边界条件"
+        ]
+      },
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "renjiao-math-g10-a-ku-半角公式-平方形式",
@@ -2323,11 +4774,40 @@
       "ku_type": "concept",
       "curriculum_standard": null,
       "mastery_levels": [],
-      "rich_content": null,
+      "rich_content": {
+        "examples": [
+          {
+            "problem": "基础练习",
+            "solution": "掌握半角公式（平方形式）的定义和基本应用"
+          }
+        ],
+        "intuition": "半角公式（平方形式）是高中数学renjiao-math-g10-a-kc-倍角与半角公式中的基础知识点。",
+        "definition": "半角公式（平方形式）是高中数学renjiao-math-g10-a-kc-倍角与半角公式中的基础知识点。",
+        "key_points": [
+          {
+            "point": "核心概念",
+            "explanation": "理解半角公式（平方形式）的基本含义"
+          }
+        ],
+        "application": [
+          "基础练习",
+          "综合应用"
+        ],
+        "connections": "本知识点是后续学习的基础",
+        "common_mistakes": [
+          {
+            "mistake": "常见错误",
+            "correction": "注意半角公式（平方形式）的边界条件和特殊情况"
+          }
+        ],
+        "counter_examples": [
+          "注意边界条件"
+        ]
+      },
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "renjiao-math-g10-a-ku-参数-φ-对-y-sin-x-φ--图象的影响",
@@ -2347,11 +4827,40 @@
       "ku_type": "concept",
       "curriculum_standard": null,
       "mastery_levels": [],
-      "rich_content": null,
+      "rich_content": {
+        "examples": [
+          {
+            "problem": "基础练习",
+            "solution": "掌握参数 φ 对 y=sin(x+φ) 图象的影响的定义和基本应用"
+          }
+        ],
+        "intuition": "参数 φ 对 y=sin(x+φ) 图象的影响是高中数学renjiao-math-g10-a-kc-函数-y-asin-ωx-φ--的建模与参数影响中的基础知识点。",
+        "definition": "参数 φ 对 y=sin(x+φ) 图象的影响是高中数学renjiao-math-g10-a-kc-函数-y-asin-ωx-φ--的建模与参数影响中的基础知识点。",
+        "key_points": [
+          {
+            "point": "核心概念",
+            "explanation": "理解参数 φ 对 y=sin(x+φ) 图象的影响的基本含义"
+          }
+        ],
+        "application": [
+          "基础练习",
+          "综合应用"
+        ],
+        "connections": "本知识点是后续学习的基础",
+        "common_mistakes": [
+          {
+            "mistake": "常见错误",
+            "correction": "注意参数 φ 对 y=sin(x+φ) 图象的影响的边界条件和特殊情况"
+          }
+        ],
+        "counter_examples": [
+          "注意边界条件"
+        ]
+      },
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "renjiao-math-g10-a-ku-同角三角函数关系式的变形与证明",
@@ -2372,11 +4881,40 @@
       "ku_type": "concept",
       "curriculum_standard": null,
       "mastery_levels": [],
-      "rich_content": null,
+      "rich_content": {
+        "examples": [
+          {
+            "problem": "基础练习",
+            "solution": "掌握同角三角函数关系式的变形与证明的定义和基本应用"
+          }
+        ],
+        "intuition": "同角三角函数关系式的变形与证明是高中数学renjiao-math-g10-a-kc-同角三角函数的基本关系及其应用中的基础知识点。",
+        "definition": "同角三角函数关系式的变形与证明是高中数学renjiao-math-g10-a-kc-同角三角函数的基本关系及其应用中的基础知识点。",
+        "key_points": [
+          {
+            "point": "核心概念",
+            "explanation": "理解同角三角函数关系式的变形与证明的基本含义"
+          }
+        ],
+        "application": [
+          "基础练习",
+          "综合应用"
+        ],
+        "connections": "本知识点是后续学习的基础",
+        "common_mistakes": [
+          {
+            "mistake": "常见错误",
+            "correction": "注意同角三角函数关系式的变形与证明的边界条件和特殊情况"
+          }
+        ],
+        "counter_examples": [
+          "注意边界条件"
+        ]
+      },
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "renjiao-math-g10-a-ku-同角三角函数的基本关系-商数关系",
@@ -2396,11 +4934,40 @@
       "ku_type": "concept",
       "curriculum_standard": null,
       "mastery_levels": [],
-      "rich_content": null,
+      "rich_content": {
+        "examples": [
+          {
+            "problem": "基础练习",
+            "solution": "掌握同角三角函数的基本关系（商数关系）的定义和基本应用"
+          }
+        ],
+        "intuition": "同角三角函数的基本关系（商数关系）是高中数学renjiao-math-g10-a-kc-同角三角函数的基本关系及其应用中的基础知识点。",
+        "definition": "同角三角函数的基本关系（商数关系）是高中数学renjiao-math-g10-a-kc-同角三角函数的基本关系及其应用中的基础知识点。",
+        "key_points": [
+          {
+            "point": "核心概念",
+            "explanation": "理解同角三角函数的基本关系（商数关系）的基本含义"
+          }
+        ],
+        "application": [
+          "基础练习",
+          "综合应用"
+        ],
+        "connections": "本知识点是后续学习的基础",
+        "common_mistakes": [
+          {
+            "mistake": "常见错误",
+            "correction": "注意同角三角函数的基本关系（商数关系）的边界条件和特殊情况"
+          }
+        ],
+        "counter_examples": [
+          "注意边界条件"
+        ]
+      },
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "renjiao-math-g10-a-ku-同角三角函数的基本关系-平方关系",
@@ -2420,11 +4987,40 @@
       "ku_type": "concept",
       "curriculum_standard": null,
       "mastery_levels": [],
-      "rich_content": null,
+      "rich_content": {
+        "examples": [
+          {
+            "problem": "基础练习",
+            "solution": "掌握同角三角函数的基本关系（平方关系）的定义和基本应用"
+          }
+        ],
+        "intuition": "同角三角函数的基本关系（平方关系）是高中数学renjiao-math-g10-a-kc-同角三角函数的基本关系及其应用中的基础知识点。",
+        "definition": "同角三角函数的基本关系（平方关系）是高中数学renjiao-math-g10-a-kc-同角三角函数的基本关系及其应用中的基础知识点。",
+        "key_points": [
+          {
+            "point": "核心概念",
+            "explanation": "理解同角三角函数的基本关系（平方关系）的基本含义"
+          }
+        ],
+        "application": [
+          "基础练习",
+          "综合应用"
+        ],
+        "connections": "本知识点是后续学习的基础",
+        "common_mistakes": [
+          {
+            "mistake": "常见错误",
+            "correction": "注意同角三角函数的基本关系（平方关系）的边界条件和特殊情况"
+          }
+        ],
+        "counter_examples": [
+          "注意边界条件"
+        ]
+      },
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "renjiao-math-g10-a-ku-含有一个量词的命题的否定方法",
@@ -2445,11 +5041,40 @@
       "ku_type": "concept",
       "curriculum_standard": null,
       "mastery_levels": [],
-      "rich_content": null,
+      "rich_content": {
+        "examples": [
+          {
+            "problem": "基础练习",
+            "solution": "掌握含有一个量词的命题的否定方法的定义和基本应用"
+          }
+        ],
+        "intuition": "含有一个量词的命题的否定方法是高中数学renjiao-math-g10-a-kc-含有一个量词的命题的否定中的基础知识点。",
+        "definition": "含有一个量词的命题的否定方法是高中数学renjiao-math-g10-a-kc-含有一个量词的命题的否定中的基础知识点。",
+        "key_points": [
+          {
+            "point": "核心概念",
+            "explanation": "理解含有一个量词的命题的否定方法的基本含义"
+          }
+        ],
+        "application": [
+          "基础练习",
+          "综合应用"
+        ],
+        "connections": "本知识点是后续学习的基础",
+        "common_mistakes": [
+          {
+            "mistake": "常见错误",
+            "correction": "注意含有一个量词的命题的否定方法的边界条件和特殊情况"
+          }
+        ],
+        "counter_examples": [
+          "注意边界条件"
+        ]
+      },
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "renjiao-math-g10-a-ku-周期函数定义",
@@ -2469,11 +5094,40 @@
       "ku_type": "concept",
       "curriculum_standard": null,
       "mastery_levels": [],
-      "rich_content": null,
+      "rich_content": {
+        "examples": [
+          {
+            "problem": "基础练习",
+            "solution": "掌握周期函数定义的定义和基本应用"
+          }
+        ],
+        "intuition": "周期函数定义是高中数学renjiao-math-g10-a-kc-三角函数的周期性中的基础知识点。",
+        "definition": "周期函数定义是高中数学renjiao-math-g10-a-kc-三角函数的周期性中的基础知识点。",
+        "key_points": [
+          {
+            "point": "核心概念",
+            "explanation": "理解周期函数定义的基本含义"
+          }
+        ],
+        "application": [
+          "基础练习",
+          "综合应用"
+        ],
+        "connections": "本知识点是后续学习的基础",
+        "common_mistakes": [
+          {
+            "mistake": "常见错误",
+            "correction": "注意周期函数定义的边界条件和特殊情况"
+          }
+        ],
+        "counter_examples": [
+          "注意边界条件"
+        ]
+      },
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "renjiao-math-g10-a-ku-命题否定后的真假判断",
@@ -2495,11 +5149,40 @@
       "ku_type": "concept",
       "curriculum_standard": null,
       "mastery_levels": [],
-      "rich_content": null,
+      "rich_content": {
+        "examples": [
+          {
+            "problem": "基础练习",
+            "solution": "掌握命题否定后的真假判断的定义和基本应用"
+          }
+        ],
+        "intuition": "命题否定后的真假判断是高中数学renjiao-math-g10-a-kc-含有一个量词的命题的否定中的基础知识点。",
+        "definition": "命题否定后的真假判断是高中数学renjiao-math-g10-a-kc-含有一个量词的命题的否定中的基础知识点。",
+        "key_points": [
+          {
+            "point": "核心概念",
+            "explanation": "理解命题否定后的真假判断的基本含义"
+          }
+        ],
+        "application": [
+          "基础练习",
+          "综合应用"
+        ],
+        "connections": "本知识点是后续学习的基础",
+        "common_mistakes": [
+          {
+            "mistake": "常见错误",
+            "correction": "注意命题否定后的真假判断的边界条件和特殊情况"
+          }
+        ],
+        "counter_examples": [
+          "注意边界条件"
+        ]
+      },
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "renjiao-math-g10-a-ku-命题的定义",
@@ -2517,11 +5200,40 @@
       "ku_type": "concept",
       "curriculum_standard": null,
       "mastery_levels": [],
-      "rich_content": null,
+      "rich_content": {
+        "examples": [
+          {
+            "problem": "基础练习",
+            "solution": "掌握命题的定义的定义和基本应用"
+          }
+        ],
+        "intuition": "命题的定义是高中数学renjiao-math-g10-a-kc-充分条件与必要条件中的基础知识点。",
+        "definition": "命题的定义是高中数学renjiao-math-g10-a-kc-充分条件与必要条件中的基础知识点。",
+        "key_points": [
+          {
+            "point": "核心概念",
+            "explanation": "理解命题的定义的基本含义"
+          }
+        ],
+        "application": [
+          "基础练习",
+          "综合应用"
+        ],
+        "connections": "本知识点是后续学习的基础",
+        "common_mistakes": [
+          {
+            "mistake": "常见错误",
+            "correction": "注意命题的定义的边界条件和特殊情况"
+          }
+        ],
+        "counter_examples": [
+          "注意边界条件"
+        ]
+      },
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "renjiao-math-g10-a-ku-命题的概念",
@@ -2539,11 +5251,40 @@
       "ku_type": "concept",
       "curriculum_standard": null,
       "mastery_levels": [],
-      "rich_content": null,
+      "rich_content": {
+        "examples": [
+          {
+            "problem": "基础练习",
+            "solution": "掌握命题的概念的定义和基本应用"
+          }
+        ],
+        "intuition": "命题的概念是高中数学renjiao-math-g10-a-kc-命题与条件关系基础中的基础知识点。",
+        "definition": "命题的概念是高中数学renjiao-math-g10-a-kc-命题与条件关系基础中的基础知识点。",
+        "key_points": [
+          {
+            "point": "核心概念",
+            "explanation": "理解命题的概念的基本含义"
+          }
+        ],
+        "application": [
+          "基础练习",
+          "综合应用"
+        ],
+        "connections": "本知识点是后续学习的基础",
+        "common_mistakes": [
+          {
+            "mistake": "常见错误",
+            "correction": "注意命题的概念的边界条件和特殊情况"
+          }
+        ],
+        "counter_examples": [
+          "注意边界条件"
+        ]
+      },
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "renjiao-math-g10-a-ku-和差化积公式",
@@ -2563,11 +5304,40 @@
       "ku_type": "concept",
       "curriculum_standard": null,
       "mastery_levels": [],
-      "rich_content": null,
+      "rich_content": {
+        "examples": [
+          {
+            "problem": "基础练习",
+            "solution": "掌握和差化积公式的定义和基本应用"
+          }
+        ],
+        "intuition": "和差化积公式是高中数学renjiao-math-g10-a-kc-积化和差与和差化积中的基础知识点。",
+        "definition": "和差化积公式是高中数学renjiao-math-g10-a-kc-积化和差与和差化积中的基础知识点。",
+        "key_points": [
+          {
+            "point": "核心概念",
+            "explanation": "理解和差化积公式的基本含义"
+          }
+        ],
+        "application": [
+          "基础练习",
+          "综合应用"
+        ],
+        "connections": "本知识点是后续学习的基础",
+        "common_mistakes": [
+          {
+            "mistake": "常见错误",
+            "correction": "注意和差化积公式的边界条件和特殊情况"
+          }
+        ],
+        "counter_examples": [
+          "注意边界条件"
+        ]
+      },
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "renjiao-math-g10-a-ku-基本不等式-算术-几何平均不等式",
@@ -2587,11 +5357,40 @@
       "ku_type": "concept",
       "curriculum_standard": null,
       "mastery_levels": [],
-      "rich_content": null,
+      "rich_content": {
+        "examples": [
+          {
+            "problem": "基础练习",
+            "solution": "掌握基本不等式（算术-几何平均不等式）的定义和基本应用"
+          }
+        ],
+        "intuition": "基本不等式（算术-几何平均不等式）是高中数学renjiao-math-g10-a-kc-重要不等式与基本不等式中的基础知识点。",
+        "definition": "基本不等式（算术-几何平均不等式）是高中数学renjiao-math-g10-a-kc-重要不等式与基本不等式中的基础知识点。",
+        "key_points": [
+          {
+            "point": "核心概念",
+            "explanation": "理解基本不等式（算术-几何平均不等式）的基本含义"
+          }
+        ],
+        "application": [
+          "基础练习",
+          "综合应用"
+        ],
+        "connections": "本知识点是后续学习的基础",
+        "common_mistakes": [
+          {
+            "mistake": "常见错误",
+            "correction": "注意基本不等式（算术-几何平均不等式）的边界条件和特殊情况"
+          }
+        ],
+        "counter_examples": [
+          "注意边界条件"
+        ]
+      },
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "renjiao-math-g10-a-ku-基本不等式及其几何意义",
@@ -2609,11 +5408,40 @@
       "ku_type": "concept",
       "curriculum_standard": null,
       "mastery_levels": [],
-      "rich_content": null,
+      "rich_content": {
+        "examples": [
+          {
+            "problem": "基础练习",
+            "solution": "掌握基本不等式及其几何意义的定义和基本应用"
+          }
+        ],
+        "intuition": "基本不等式及其几何意义是高中数学renjiao-math-g10-a-kc-基本不等式及其应用中的基础知识点。",
+        "definition": "基本不等式及其几何意义是高中数学renjiao-math-g10-a-kc-基本不等式及其应用中的基础知识点。",
+        "key_points": [
+          {
+            "point": "核心概念",
+            "explanation": "理解基本不等式及其几何意义的基本含义"
+          }
+        ],
+        "application": [
+          "基础练习",
+          "综合应用"
+        ],
+        "connections": "本知识点是后续学习的基础",
+        "common_mistakes": [
+          {
+            "mistake": "常见错误",
+            "correction": "注意基本不等式及其几何意义的边界条件和特殊情况"
+          }
+        ],
+        "counter_examples": [
+          "注意边界条件"
+        ]
+      },
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "renjiao-math-g10-a-ku-基本不等式在几何最值中的应用",
@@ -2634,11 +5462,40 @@
       "ku_type": "concept",
       "curriculum_standard": null,
       "mastery_levels": [],
-      "rich_content": null,
+      "rich_content": {
+        "examples": [
+          {
+            "problem": "基础练习",
+            "solution": "掌握基本不等式在几何最值中的应用的定义和基本应用"
+          }
+        ],
+        "intuition": "基本不等式在几何最值中的应用是高中数学renjiao-math-g10-a-kc-重要不等式与基本不等式中的基础知识点。",
+        "definition": "基本不等式在几何最值中的应用是高中数学renjiao-math-g10-a-kc-重要不等式与基本不等式中的基础知识点。",
+        "key_points": [
+          {
+            "point": "核心概念",
+            "explanation": "理解基本不等式在几何最值中的应用的基本含义"
+          }
+        ],
+        "application": [
+          "基础练习",
+          "综合应用"
+        ],
+        "connections": "本知识点是后续学习的基础",
+        "common_mistakes": [
+          {
+            "mistake": "常见错误",
+            "correction": "注意基本不等式在几何最值中的应用的边界条件和特殊情况"
+          }
+        ],
+        "counter_examples": [
+          "注意边界条件"
+        ]
+      },
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "renjiao-math-g10-a-ku-基本不等式在实际问题中的应用",
@@ -2658,11 +5515,40 @@
       "ku_type": "concept",
       "curriculum_standard": null,
       "mastery_levels": [],
-      "rich_content": null,
+      "rich_content": {
+        "examples": [
+          {
+            "problem": "基础练习",
+            "solution": "掌握基本不等式在实际问题中的应用的定义和基本应用"
+          }
+        ],
+        "intuition": "基本不等式在实际问题中的应用是高中数学renjiao-math-g10-a-kc-基本不等式及其应用中的基础知识点。",
+        "definition": "基本不等式在实际问题中的应用是高中数学renjiao-math-g10-a-kc-基本不等式及其应用中的基础知识点。",
+        "key_points": [
+          {
+            "point": "核心概念",
+            "explanation": "理解基本不等式在实际问题中的应用的基本含义"
+          }
+        ],
+        "application": [
+          "基础练习",
+          "综合应用"
+        ],
+        "connections": "本知识点是后续学习的基础",
+        "common_mistakes": [
+          {
+            "mistake": "常见错误",
+            "correction": "注意基本不等式在实际问题中的应用的边界条件和特殊情况"
+          }
+        ],
+        "counter_examples": [
+          "注意边界条件"
+        ]
+      },
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "renjiao-math-g10-a-ku-基本不等式求最值-和定积最大",
@@ -2682,11 +5568,40 @@
       "ku_type": "concept",
       "curriculum_standard": null,
       "mastery_levels": [],
-      "rich_content": null,
+      "rich_content": {
+        "examples": [
+          {
+            "problem": "基础练习",
+            "solution": "掌握基本不等式求最值（和定积最大）的定义和基本应用"
+          }
+        ],
+        "intuition": "基本不等式求最值（和定积最大）是高中数学renjiao-math-g10-a-kc-基本不等式的应用-最值问题中的基础知识点。",
+        "definition": "基本不等式求最值（和定积最大）是高中数学renjiao-math-g10-a-kc-基本不等式的应用-最值问题中的基础知识点。",
+        "key_points": [
+          {
+            "point": "核心概念",
+            "explanation": "理解基本不等式求最值（和定积最大）的基本含义"
+          }
+        ],
+        "application": [
+          "基础练习",
+          "综合应用"
+        ],
+        "connections": "本知识点是后续学习的基础",
+        "common_mistakes": [
+          {
+            "mistake": "常见错误",
+            "correction": "注意基本不等式求最值（和定积最大）的边界条件和特殊情况"
+          }
+        ],
+        "counter_examples": [
+          "注意边界条件"
+        ]
+      },
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "renjiao-math-g10-a-ku-基本不等式求最值-积定和最小",
@@ -2706,11 +5621,40 @@
       "ku_type": "concept",
       "curriculum_standard": null,
       "mastery_levels": [],
-      "rich_content": null,
+      "rich_content": {
+        "examples": [
+          {
+            "problem": "基础练习",
+            "solution": "掌握基本不等式求最值（积定和最小）的定义和基本应用"
+          }
+        ],
+        "intuition": "基本不等式求最值（积定和最小）是高中数学renjiao-math-g10-a-kc-基本不等式的应用-最值问题中的基础知识点。",
+        "definition": "基本不等式求最值（积定和最小）是高中数学renjiao-math-g10-a-kc-基本不等式的应用-最值问题中的基础知识点。",
+        "key_points": [
+          {
+            "point": "核心概念",
+            "explanation": "理解基本不等式求最值（积定和最小）的基本含义"
+          }
+        ],
+        "application": [
+          "基础练习",
+          "综合应用"
+        ],
+        "connections": "本知识点是后续学习的基础",
+        "common_mistakes": [
+          {
+            "mistake": "常见错误",
+            "correction": "注意基本不等式求最值（积定和最小）的边界条件和特殊情况"
+          }
+        ],
+        "counter_examples": [
+          "注意边界条件"
+        ]
+      },
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "renjiao-math-g10-a-ku-基本不等式的几何解释",
@@ -2730,11 +5674,40 @@
       "ku_type": "concept",
       "curriculum_standard": null,
       "mastery_levels": [],
-      "rich_content": null,
+      "rich_content": {
+        "examples": [
+          {
+            "problem": "基础练习",
+            "solution": "掌握基本不等式的几何解释的定义和基本应用"
+          }
+        ],
+        "intuition": "基本不等式的几何解释是高中数学renjiao-math-g10-a-kc-重要不等式与基本不等式中的基础知识点。",
+        "definition": "基本不等式的几何解释是高中数学renjiao-math-g10-a-kc-重要不等式与基本不等式中的基础知识点。",
+        "key_points": [
+          {
+            "point": "核心概念",
+            "explanation": "理解基本不等式的几何解释的基本含义"
+          }
+        ],
+        "application": [
+          "基础练习",
+          "综合应用"
+        ],
+        "connections": "本知识点是后续学习的基础",
+        "common_mistakes": [
+          {
+            "mistake": "常见错误",
+            "correction": "注意基本不等式的几何解释的边界条件和特殊情况"
+          }
+        ],
+        "counter_examples": [
+          "注意边界条件"
+        ]
+      },
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "renjiao-math-g10-a-ku-子集的定义",
@@ -2754,11 +5727,40 @@
       "ku_type": "concept",
       "curriculum_standard": null,
       "mastery_levels": [],
-      "rich_content": null,
+      "rich_content": {
+        "examples": [
+          {
+            "problem": "基础练习",
+            "solution": "掌握子集的定义的定义和基本应用"
+          }
+        ],
+        "intuition": "子集的定义是高中数学renjiao-math-g10-a-kc-集合间的基本关系中的基础知识点。",
+        "definition": "子集的定义是高中数学renjiao-math-g10-a-kc-集合间的基本关系中的基础知识点。",
+        "key_points": [
+          {
+            "point": "核心概念",
+            "explanation": "理解子集的定义的基本含义"
+          }
+        ],
+        "application": [
+          "基础练习",
+          "综合应用"
+        ],
+        "connections": "本知识点是后续学习的基础",
+        "common_mistakes": [
+          {
+            "mistake": "常见错误",
+            "correction": "注意子集的定义的边界条件和特殊情况"
+          }
+        ],
+        "counter_examples": [
+          "注意边界条件"
+        ]
+      },
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "renjiao-math-g10-a-ku-子集的性质",
@@ -2778,11 +5780,40 @@
       "ku_type": "concept",
       "curriculum_standard": null,
       "mastery_levels": [],
-      "rich_content": null,
+      "rich_content": {
+        "examples": [
+          {
+            "problem": "基础练习",
+            "solution": "掌握子集的性质的定义和基本应用"
+          }
+        ],
+        "intuition": "子集的性质是高中数学renjiao-math-g10-a-kc-集合间的基本关系中的基础知识点。",
+        "definition": "子集的性质是高中数学renjiao-math-g10-a-kc-集合间的基本关系中的基础知识点。",
+        "key_points": [
+          {
+            "point": "核心概念",
+            "explanation": "理解子集的性质的基本含义"
+          }
+        ],
+        "application": [
+          "基础练习",
+          "综合应用"
+        ],
+        "connections": "本知识点是后续学习的基础",
+        "common_mistakes": [
+          {
+            "mistake": "常见错误",
+            "correction": "注意子集的性质的边界条件和特殊情况"
+          }
+        ],
+        "counter_examples": [
+          "注意边界条件"
+        ]
+      },
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "renjiao-math-g10-a-ku-子集的概念",
@@ -2802,11 +5833,40 @@
       "ku_type": "concept",
       "curriculum_standard": null,
       "mastery_levels": [],
-      "rich_content": null,
+      "rich_content": {
+        "examples": [
+          {
+            "problem": "基础练习",
+            "solution": "掌握子集的概念的定义和基本应用"
+          }
+        ],
+        "intuition": "子集的概念是高中数学renjiao-math-g10-a-kc-集合间的基本关系中的基础知识点。",
+        "definition": "子集的概念是高中数学renjiao-math-g10-a-kc-集合间的基本关系中的基础知识点。",
+        "key_points": [
+          {
+            "point": "核心概念",
+            "explanation": "理解子集的概念的基本含义"
+          }
+        ],
+        "application": [
+          "基础练习",
+          "综合应用"
+        ],
+        "connections": "本知识点是后续学习的基础",
+        "common_mistakes": [
+          {
+            "mistake": "常见错误",
+            "correction": "注意子集的概念的边界条件和特殊情况"
+          }
+        ],
+        "counter_examples": [
+          "注意边界条件"
+        ]
+      },
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "renjiao-math-g10-a-ku-存在量词与存在量词命题",
@@ -2826,11 +5886,40 @@
       "ku_type": "concept",
       "curriculum_standard": null,
       "mastery_levels": [],
-      "rich_content": null,
+      "rich_content": {
+        "examples": [
+          {
+            "problem": "基础练习",
+            "solution": "掌握存在量词与存在量词命题的定义和基本应用"
+          }
+        ],
+        "intuition": "存在量词与存在量词命题是高中数学renjiao-math-g10-a-kc-全称量词与存在量词中的基础知识点。",
+        "definition": "存在量词与存在量词命题是高中数学renjiao-math-g10-a-kc-全称量词与存在量词中的基础知识点。",
+        "key_points": [
+          {
+            "point": "核心概念",
+            "explanation": "理解存在量词与存在量词命题的基本含义"
+          }
+        ],
+        "application": [
+          "基础练习",
+          "综合应用"
+        ],
+        "connections": "本知识点是后续学习的基础",
+        "common_mistakes": [
+          {
+            "mistake": "常见错误",
+            "correction": "注意存在量词与存在量词命题的边界条件和特殊情况"
+          }
+        ],
+        "counter_examples": [
+          "注意边界条件"
+        ]
+      },
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "renjiao-math-g10-a-ku-存在量词命题的否定",
@@ -2851,11 +5940,40 @@
       "ku_type": "concept",
       "curriculum_standard": null,
       "mastery_levels": [],
-      "rich_content": null,
+      "rich_content": {
+        "examples": [
+          {
+            "problem": "基础练习",
+            "solution": "掌握存在量词命题的否定的定义和基本应用"
+          }
+        ],
+        "intuition": "存在量词命题的否定是高中数学renjiao-math-g10-a-kc-含量词命题的否定中的基础知识点。",
+        "definition": "存在量词命题的否定是高中数学renjiao-math-g10-a-kc-含量词命题的否定中的基础知识点。",
+        "key_points": [
+          {
+            "point": "核心概念",
+            "explanation": "理解存在量词命题的否定的基本含义"
+          }
+        ],
+        "application": [
+          "基础练习",
+          "综合应用"
+        ],
+        "connections": "本知识点是后续学习的基础",
+        "common_mistakes": [
+          {
+            "mistake": "常见错误",
+            "correction": "注意存在量词命题的否定的边界条件和特殊情况"
+          }
+        ],
+        "counter_examples": [
+          "注意边界条件"
+        ]
+      },
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "renjiao-math-g10-a-ku-存在量词命题真假的判定",
@@ -2875,11 +5993,40 @@
       "ku_type": "concept",
       "curriculum_standard": null,
       "mastery_levels": [],
-      "rich_content": null,
+      "rich_content": {
+        "examples": [
+          {
+            "problem": "基础练习",
+            "solution": "掌握存在量词命题真假的判定的定义和基本应用"
+          }
+        ],
+        "intuition": "存在量词命题真假的判定是高中数学renjiao-math-g10-a-kc-全称量词与存在量词中的基础知识点。",
+        "definition": "存在量词命题真假的判定是高中数学renjiao-math-g10-a-kc-全称量词与存在量词中的基础知识点。",
+        "key_points": [
+          {
+            "point": "核心概念",
+            "explanation": "理解存在量词命题真假的判定的基本含义"
+          }
+        ],
+        "application": [
+          "基础练习",
+          "综合应用"
+        ],
+        "connections": "本知识点是后续学习的基础",
+        "common_mistakes": [
+          {
+            "mistake": "常见错误",
+            "correction": "注意存在量词命题真假的判定的边界条件和特殊情况"
+          }
+        ],
+        "counter_examples": [
+          "注意边界条件"
+        ]
+      },
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "renjiao-math-g10-a-ku-存在量词命题真假的判断",
@@ -2899,11 +6046,40 @@
       "ku_type": "concept",
       "curriculum_standard": null,
       "mastery_levels": [],
-      "rich_content": null,
+      "rich_content": {
+        "examples": [
+          {
+            "problem": "基础练习",
+            "solution": "掌握存在量词命题真假的判断的定义和基本应用"
+          }
+        ],
+        "intuition": "存在量词命题真假的判断是高中数学renjiao-math-g10-a-kc-全称量词与存在量词中的基础知识点。",
+        "definition": "存在量词命题真假的判断是高中数学renjiao-math-g10-a-kc-全称量词与存在量词中的基础知识点。",
+        "key_points": [
+          {
+            "point": "核心概念",
+            "explanation": "理解存在量词命题真假的判断的基本含义"
+          }
+        ],
+        "application": [
+          "基础练习",
+          "综合应用"
+        ],
+        "connections": "本知识点是后续学习的基础",
+        "common_mistakes": [
+          {
+            "mistake": "常见错误",
+            "correction": "注意存在量词命题真假的判断的边界条件和特殊情况"
+          }
+        ],
+        "counter_examples": [
+          "注意边界条件"
+        ]
+      },
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "renjiao-math-g10-a-ku-实数大小比较的基本事实",
@@ -2921,11 +6097,40 @@
       "ku_type": "concept",
       "curriculum_standard": null,
       "mastery_levels": [],
-      "rich_content": null,
+      "rich_content": {
+        "examples": [
+          {
+            "problem": "基础练习",
+            "solution": "掌握实数大小比较的基本事实的定义和基本应用"
+          }
+        ],
+        "intuition": "实数大小比较的基本事实是高中数学renjiao-math-g10-a-kc-不等关系与实数大小比较中的基础知识点。",
+        "definition": "实数大小比较的基本事实是高中数学renjiao-math-g10-a-kc-不等关系与实数大小比较中的基础知识点。",
+        "key_points": [
+          {
+            "point": "核心概念",
+            "explanation": "理解实数大小比较的基本事实的基本含义"
+          }
+        ],
+        "application": [
+          "基础练习",
+          "综合应用"
+        ],
+        "connections": "本知识点是后续学习的基础",
+        "common_mistakes": [
+          {
+            "mistake": "常见错误",
+            "correction": "注意实数大小比较的基本事实的边界条件和特殊情况"
+          }
+        ],
+        "counter_examples": [
+          "注意边界条件"
+        ]
+      },
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "renjiao-math-g10-a-ku-容斥原理-两个集合",
@@ -2947,11 +6152,40 @@
       "ku_type": "concept",
       "curriculum_standard": null,
       "mastery_levels": [],
-      "rich_content": null,
+      "rich_content": {
+        "examples": [
+          {
+            "problem": "基础练习",
+            "solution": "掌握容斥原理（两个集合）的定义和基本应用"
+          }
+        ],
+        "intuition": "容斥原理（两个集合）是高中数学renjiao-math-g10-a-kc-有限集合的计数中的基础知识点。",
+        "definition": "容斥原理（两个集合）是高中数学renjiao-math-g10-a-kc-有限集合的计数中的基础知识点。",
+        "key_points": [
+          {
+            "point": "核心概念",
+            "explanation": "理解容斥原理（两个集合）的基本含义"
+          }
+        ],
+        "application": [
+          "基础练习",
+          "综合应用"
+        ],
+        "connections": "本知识点是后续学习的基础",
+        "common_mistakes": [
+          {
+            "mistake": "常见错误",
+            "correction": "注意容斥原理（两个集合）的边界条件和特殊情况"
+          }
+        ],
+        "counter_examples": [
+          "注意边界条件"
+        ]
+      },
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "renjiao-math-g10-a-ku-常用数集及其记法",
@@ -2969,11 +6203,40 @@
       "ku_type": "concept",
       "curriculum_standard": null,
       "mastery_levels": [],
-      "rich_content": null,
+      "rich_content": {
+        "examples": [
+          {
+            "problem": "基础练习",
+            "solution": "掌握常用数集及其记法的定义和基本应用"
+          }
+        ],
+        "intuition": "常用数集及其记法是高中数学renjiao-math-g10-a-kc-集合的基本概念与表示中的基础知识点。",
+        "definition": "常用数集及其记法是高中数学renjiao-math-g10-a-kc-集合的基本概念与表示中的基础知识点。",
+        "key_points": [
+          {
+            "point": "核心概念",
+            "explanation": "理解常用数集及其记法的基本含义"
+          }
+        ],
+        "application": [
+          "基础练习",
+          "综合应用"
+        ],
+        "connections": "本知识点是后续学习的基础",
+        "common_mistakes": [
+          {
+            "mistake": "常见错误",
+            "correction": "注意常用数集及其记法的边界条件和特殊情况"
+          }
+        ],
+        "counter_examples": [
+          "注意边界条件"
+        ]
+      },
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "renjiao-math-g10-a-ku-并集的定义",
@@ -2993,11 +6256,40 @@
       "ku_type": "concept",
       "curriculum_standard": null,
       "mastery_levels": [],
-      "rich_content": null,
+      "rich_content": {
+        "examples": [
+          {
+            "problem": "基础练习",
+            "solution": "掌握并集的定义的定义和基本应用"
+          }
+        ],
+        "intuition": "并集的定义是高中数学renjiao-math-g10-a-kc-集合的基本运算中的基础知识点。",
+        "definition": "并集的定义是高中数学renjiao-math-g10-a-kc-集合的基本运算中的基础知识点。",
+        "key_points": [
+          {
+            "point": "核心概念",
+            "explanation": "理解并集的定义的基本含义"
+          }
+        ],
+        "application": [
+          "基础练习",
+          "综合应用"
+        ],
+        "connections": "本知识点是后续学习的基础",
+        "common_mistakes": [
+          {
+            "mistake": "常见错误",
+            "correction": "注意并集的定义的边界条件和特殊情况"
+          }
+        ],
+        "counter_examples": [
+          "注意边界条件"
+        ]
+      },
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "renjiao-math-g10-a-ku-并集的概念",
@@ -3017,11 +6309,40 @@
       "ku_type": "concept",
       "curriculum_standard": null,
       "mastery_levels": [],
-      "rich_content": null,
+      "rich_content": {
+        "examples": [
+          {
+            "problem": "基础练习",
+            "solution": "掌握并集的概念的定义和基本应用"
+          }
+        ],
+        "intuition": "并集的概念是高中数学renjiao-math-g10-a-kc-集合的基本运算中的基础知识点。",
+        "definition": "并集的概念是高中数学renjiao-math-g10-a-kc-集合的基本运算中的基础知识点。",
+        "key_points": [
+          {
+            "point": "核心概念",
+            "explanation": "理解并集的概念的基本含义"
+          }
+        ],
+        "application": [
+          "基础练习",
+          "综合应用"
+        ],
+        "connections": "本知识点是后续学习的基础",
+        "common_mistakes": [
+          {
+            "mistake": "常见错误",
+            "correction": "注意并集的概念的边界条件和特殊情况"
+          }
+        ],
+        "counter_examples": [
+          "注意边界条件"
+        ]
+      },
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "renjiao-math-g10-a-ku-弧度与角度的换算",
@@ -3041,11 +6362,40 @@
       "ku_type": "concept",
       "curriculum_standard": null,
       "mastery_levels": [],
-      "rich_content": null,
+      "rich_content": {
+        "examples": [
+          {
+            "problem": "基础练习",
+            "solution": "掌握弧度与角度的换算的定义和基本应用"
+          }
+        ],
+        "intuition": "弧度与角度的换算是高中数学renjiao-math-g10-a-kc-任意角与弧度制中的基础知识点。",
+        "definition": "弧度与角度的换算是高中数学renjiao-math-g10-a-kc-任意角与弧度制中的基础知识点。",
+        "key_points": [
+          {
+            "point": "核心概念",
+            "explanation": "理解弧度与角度的换算的基本含义"
+          }
+        ],
+        "application": [
+          "基础练习",
+          "综合应用"
+        ],
+        "connections": "本知识点是后续学习的基础",
+        "common_mistakes": [
+          {
+            "mistake": "常见错误",
+            "correction": "注意弧度与角度的换算的边界条件和特殊情况"
+          }
+        ],
+        "counter_examples": [
+          "注意边界条件"
+        ]
+      },
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "renjiao-math-g10-a-ku-弧度制下角的集合与实数集的一一对应",
@@ -3065,11 +6415,40 @@
       "ku_type": "concept",
       "curriculum_standard": null,
       "mastery_levels": [],
-      "rich_content": null,
+      "rich_content": {
+        "examples": [
+          {
+            "problem": "基础练习",
+            "solution": "掌握弧度制下角的集合与实数集的一一对应的定义和基本应用"
+          }
+        ],
+        "intuition": "弧度制下角的集合与实数集的一一对应是高中数学renjiao-math-g10-a-kc-任意角与弧度制中的基础知识点。",
+        "definition": "弧度制下角的集合与实数集的一一对应是高中数学renjiao-math-g10-a-kc-任意角与弧度制中的基础知识点。",
+        "key_points": [
+          {
+            "point": "核心概念",
+            "explanation": "理解弧度制下角的集合与实数集的一一对应的基本含义"
+          }
+        ],
+        "application": [
+          "基础练习",
+          "综合应用"
+        ],
+        "connections": "本知识点是后续学习的基础",
+        "common_mistakes": [
+          {
+            "mistake": "常见错误",
+            "correction": "注意弧度制下角的集合与实数集的一一对应的边界条件和特殊情况"
+          }
+        ],
+        "counter_examples": [
+          "注意边界条件"
+        ]
+      },
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "renjiao-math-g10-a-ku-弧度制的定义",
@@ -3089,11 +6468,40 @@
       "ku_type": "concept",
       "curriculum_standard": null,
       "mastery_levels": [],
-      "rich_content": null,
+      "rich_content": {
+        "examples": [
+          {
+            "problem": "基础练习",
+            "solution": "掌握弧度制的定义的定义和基本应用"
+          }
+        ],
+        "intuition": "弧度制的定义是高中数学renjiao-math-g10-a-kc-任意角与弧度制中的基础知识点。",
+        "definition": "弧度制的定义是高中数学renjiao-math-g10-a-kc-任意角与弧度制中的基础知识点。",
+        "key_points": [
+          {
+            "point": "核心概念",
+            "explanation": "理解弧度制的定义的基本含义"
+          }
+        ],
+        "application": [
+          "基础练习",
+          "综合应用"
+        ],
+        "connections": "本知识点是后续学习的基础",
+        "common_mistakes": [
+          {
+            "mistake": "常见错误",
+            "correction": "注意弧度制的定义的边界条件和特殊情况"
+          }
+        ],
+        "counter_examples": [
+          "注意边界条件"
+        ]
+      },
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "renjiao-math-g10-a-ku-必要条件的判定",
@@ -3113,11 +6521,40 @@
       "ku_type": "concept",
       "curriculum_standard": null,
       "mastery_levels": [],
-      "rich_content": null,
+      "rich_content": {
+        "examples": [
+          {
+            "problem": "基础练习",
+            "solution": "掌握必要条件的判定的定义和基本应用"
+          }
+        ],
+        "intuition": "必要条件的判定是高中数学renjiao-math-g10-a-kc-充分条件与必要条件中的基础知识点。",
+        "definition": "必要条件的判定是高中数学renjiao-math-g10-a-kc-充分条件与必要条件中的基础知识点。",
+        "key_points": [
+          {
+            "point": "核心概念",
+            "explanation": "理解必要条件的判定的基本含义"
+          }
+        ],
+        "application": [
+          "基础练习",
+          "综合应用"
+        ],
+        "connections": "本知识点是后续学习的基础",
+        "common_mistakes": [
+          {
+            "mistake": "常见错误",
+            "correction": "注意必要条件的判定的边界条件和特殊情况"
+          }
+        ],
+        "counter_examples": [
+          "注意边界条件"
+        ]
+      },
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "renjiao-math-g10-a-ku-必要条件的判定与举例",
@@ -3137,11 +6574,40 @@
       "ku_type": "concept",
       "curriculum_standard": null,
       "mastery_levels": [],
-      "rich_content": null,
+      "rich_content": {
+        "examples": [
+          {
+            "problem": "基础练习",
+            "solution": "掌握必要条件的判定与举例的定义和基本应用"
+          }
+        ],
+        "intuition": "必要条件的判定与举例是高中数学renjiao-math-g10-a-kc-命题与条件关系基础中的基础知识点。",
+        "definition": "必要条件的判定与举例是高中数学renjiao-math-g10-a-kc-命题与条件关系基础中的基础知识点。",
+        "key_points": [
+          {
+            "point": "核心概念",
+            "explanation": "理解必要条件的判定与举例的基本含义"
+          }
+        ],
+        "application": [
+          "基础练习",
+          "综合应用"
+        ],
+        "connections": "本知识点是后续学习的基础",
+        "common_mistakes": [
+          {
+            "mistake": "常见错误",
+            "correction": "注意必要条件的判定与举例的边界条件和特殊情况"
+          }
+        ],
+        "counter_examples": [
+          "注意边界条件"
+        ]
+      },
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "renjiao-math-g10-a-ku-性质定理与必要条件的关系",
@@ -3161,11 +6627,40 @@
       "ku_type": "concept",
       "curriculum_standard": null,
       "mastery_levels": [],
-      "rich_content": null,
+      "rich_content": {
+        "examples": [
+          {
+            "problem": "基础练习",
+            "solution": "掌握性质定理与必要条件的关系的定义和基本应用"
+          }
+        ],
+        "intuition": "性质定理与必要条件的关系是高中数学renjiao-math-g10-a-kc-充分条件与必要条件中的基础知识点。",
+        "definition": "性质定理与必要条件的关系是高中数学renjiao-math-g10-a-kc-充分条件与必要条件中的基础知识点。",
+        "key_points": [
+          {
+            "point": "核心概念",
+            "explanation": "理解性质定理与必要条件的关系的基本含义"
+          }
+        ],
+        "application": [
+          "基础练习",
+          "综合应用"
+        ],
+        "connections": "本知识点是后续学习的基础",
+        "common_mistakes": [
+          {
+            "mistake": "常见错误",
+            "correction": "注意性质定理与必要条件的关系的边界条件和特殊情况"
+          }
+        ],
+        "counter_examples": [
+          "注意边界条件"
+        ]
+      },
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "renjiao-math-g10-a-ku-扇形弧长与面积公式-弧度制",
@@ -3185,11 +6680,40 @@
       "ku_type": "concept",
       "curriculum_standard": null,
       "mastery_levels": [],
-      "rich_content": null,
+      "rich_content": {
+        "examples": [
+          {
+            "problem": "基础练习",
+            "solution": "掌握扇形弧长与面积公式（弧度制）的定义和基本应用"
+          }
+        ],
+        "intuition": "扇形弧长与面积公式（弧度制）是高中数学renjiao-math-g10-a-kc-任意角与弧度制中的基础知识点。",
+        "definition": "扇形弧长与面积公式（弧度制）是高中数学renjiao-math-g10-a-kc-任意角与弧度制中的基础知识点。",
+        "key_points": [
+          {
+            "point": "核心概念",
+            "explanation": "理解扇形弧长与面积公式（弧度制）的基本含义"
+          }
+        ],
+        "application": [
+          "基础练习",
+          "综合应用"
+        ],
+        "connections": "本知识点是后续学习的基础",
+        "common_mistakes": [
+          {
+            "mistake": "常见错误",
+            "correction": "注意扇形弧长与面积公式（弧度制）的边界条件和特殊情况"
+          }
+        ],
+        "counter_examples": [
+          "注意边界条件"
+        ]
+      },
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "renjiao-math-g10-a-ku-描述法",
@@ -3209,11 +6733,40 @@
       "ku_type": "concept",
       "curriculum_standard": null,
       "mastery_levels": [],
-      "rich_content": null,
+      "rich_content": {
+        "examples": [
+          {
+            "problem": "基础练习",
+            "solution": "掌握描述法的定义和基本应用"
+          }
+        ],
+        "intuition": "描述法是高中数学renjiao-math-g10-a-kc-集合的基本概念与表示中的基础知识点。",
+        "definition": "描述法是高中数学renjiao-math-g10-a-kc-集合的基本概念与表示中的基础知识点。",
+        "key_points": [
+          {
+            "point": "核心概念",
+            "explanation": "理解描述法的基本含义"
+          }
+        ],
+        "application": [
+          "基础练习",
+          "综合应用"
+        ],
+        "connections": "本知识点是后续学习的基础",
+        "common_mistakes": [
+          {
+            "mistake": "常见错误",
+            "correction": "注意描述法的边界条件和特殊情况"
+          }
+        ],
+        "counter_examples": [
+          "注意边界条件"
+        ]
+      },
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "renjiao-math-g10-a-ku-无限集合元素个数比较方法",
@@ -3233,11 +6786,40 @@
       "ku_type": "concept",
       "curriculum_standard": null,
       "mastery_levels": [],
-      "rich_content": null,
+      "rich_content": {
+        "examples": [
+          {
+            "problem": "基础练习",
+            "solution": "掌握无限集合元素个数比较方法的定义和基本应用"
+          }
+        ],
+        "intuition": "无限集合元素个数比较方法是高中数学renjiao-math-g10-a-kc-集合元素个数的计算中的基础知识点。",
+        "definition": "无限集合元素个数比较方法是高中数学renjiao-math-g10-a-kc-集合元素个数的计算中的基础知识点。",
+        "key_points": [
+          {
+            "point": "核心概念",
+            "explanation": "理解无限集合元素个数比较方法的基本含义"
+          }
+        ],
+        "application": [
+          "基础练习",
+          "综合应用"
+        ],
+        "connections": "本知识点是后续学习的基础",
+        "common_mistakes": [
+          {
+            "mistake": "常见错误",
+            "correction": "注意无限集合元素个数比较方法的边界条件和特殊情况"
+          }
+        ],
+        "counter_examples": [
+          "注意边界条件"
+        ]
+      },
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "renjiao-math-g10-a-ku-最小正周期",
@@ -3257,11 +6839,40 @@
       "ku_type": "concept",
       "curriculum_standard": null,
       "mastery_levels": [],
-      "rich_content": null,
+      "rich_content": {
+        "examples": [
+          {
+            "problem": "基础练习",
+            "solution": "掌握最小正周期的定义和基本应用"
+          }
+        ],
+        "intuition": "最小正周期是高中数学renjiao-math-g10-a-kc-三角函数的周期性中的基础知识点。",
+        "definition": "最小正周期是高中数学renjiao-math-g10-a-kc-三角函数的周期性中的基础知识点。",
+        "key_points": [
+          {
+            "point": "核心概念",
+            "explanation": "理解最小正周期的基本含义"
+          }
+        ],
+        "application": [
+          "基础练习",
+          "综合应用"
+        ],
+        "connections": "本知识点是后续学习的基础",
+        "common_mistakes": [
+          {
+            "mistake": "常见错误",
+            "correction": "注意最小正周期的边界条件和特殊情况"
+          }
+        ],
+        "counter_examples": [
+          "注意边界条件"
+        ]
+      },
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "renjiao-math-g10-a-ku-有限集合中元素的个数-card",
@@ -3281,11 +6892,40 @@
       "ku_type": "concept",
       "curriculum_standard": null,
       "mastery_levels": [],
-      "rich_content": null,
+      "rich_content": {
+        "examples": [
+          {
+            "problem": "基础练习",
+            "solution": "掌握有限集合中元素的个数（card）的定义和基本应用"
+          }
+        ],
+        "intuition": "有限集合中元素的个数（card）是高中数学renjiao-math-g10-a-kc-有限集合的计数中的基础知识点。",
+        "definition": "有限集合中元素的个数（card）是高中数学renjiao-math-g10-a-kc-有限集合的计数中的基础知识点。",
+        "key_points": [
+          {
+            "point": "核心概念",
+            "explanation": "理解有限集合中元素的个数（card）的基本含义"
+          }
+        ],
+        "application": [
+          "基础练习",
+          "综合应用"
+        ],
+        "connections": "本知识点是后续学习的基础",
+        "common_mistakes": [
+          {
+            "mistake": "常见错误",
+            "correction": "注意有限集合中元素的个数（card）的边界条件和特殊情况"
+          }
+        ],
+        "counter_examples": [
+          "注意边界条件"
+        ]
+      },
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "renjiao-math-g10-a-ku-有限集合的元素个数",
@@ -3305,11 +6945,40 @@
       "ku_type": "concept",
       "curriculum_standard": null,
       "mastery_levels": [],
-      "rich_content": null,
+      "rich_content": {
+        "examples": [
+          {
+            "problem": "基础练习",
+            "solution": "掌握有限集合的元素个数的定义和基本应用"
+          }
+        ],
+        "intuition": "有限集合的元素个数是高中数学renjiao-math-g10-a-kc-集合的元素个数中的基础知识点。",
+        "definition": "有限集合的元素个数是高中数学renjiao-math-g10-a-kc-集合的元素个数中的基础知识点。",
+        "key_points": [
+          {
+            "point": "核心概念",
+            "explanation": "理解有限集合的元素个数的基本含义"
+          }
+        ],
+        "application": [
+          "基础练习",
+          "综合应用"
+        ],
+        "connections": "本知识点是后续学习的基础",
+        "common_mistakes": [
+          {
+            "mistake": "常见错误",
+            "correction": "注意有限集合的元素个数的边界条件和特殊情况"
+          }
+        ],
+        "counter_examples": [
+          "注意边界条件"
+        ]
+      },
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "renjiao-math-g10-a-ku-有限集合的基数与容斥原理-两个集合",
@@ -3330,11 +6999,40 @@
       "ku_type": "concept",
       "curriculum_standard": null,
       "mastery_levels": [],
-      "rich_content": null,
+      "rich_content": {
+        "examples": [
+          {
+            "problem": "基础练习",
+            "solution": "掌握有限集合的基数与容斥原理（两个集合）的定义和基本应用"
+          }
+        ],
+        "intuition": "有限集合的基数与容斥原理（两个集合）是高中数学renjiao-math-g10-a-kc-集合的基数与容斥原理中的基础知识点。",
+        "definition": "有限集合的基数与容斥原理（两个集合）是高中数学renjiao-math-g10-a-kc-集合的基数与容斥原理中的基础知识点。",
+        "key_points": [
+          {
+            "point": "核心概念",
+            "explanation": "理解有限集合的基数与容斥原理（两个集合）的基本含义"
+          }
+        ],
+        "application": [
+          "基础练习",
+          "综合应用"
+        ],
+        "connections": "本知识点是后续学习的基础",
+        "common_mistakes": [
+          {
+            "mistake": "常见错误",
+            "correction": "注意有限集合的基数与容斥原理（两个集合）的边界条件和特殊情况"
+          }
+        ],
+        "counter_examples": [
+          "注意边界条件"
+        ]
+      },
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "renjiao-math-g10-a-ku-有限集合的并集元素个数公式",
@@ -3356,11 +7054,40 @@
       "ku_type": "concept",
       "curriculum_standard": null,
       "mastery_levels": [],
-      "rich_content": null,
+      "rich_content": {
+        "examples": [
+          {
+            "problem": "基础练习",
+            "solution": "掌握有限集合的并集元素个数公式的定义和基本应用"
+          }
+        ],
+        "intuition": "有限集合的并集元素个数公式是高中数学renjiao-math-g10-a-kc-集合元素个数的计算中的基础知识点。",
+        "definition": "有限集合的并集元素个数公式是高中数学renjiao-math-g10-a-kc-集合元素个数的计算中的基础知识点。",
+        "key_points": [
+          {
+            "point": "核心概念",
+            "explanation": "理解有限集合的并集元素个数公式的基本含义"
+          }
+        ],
+        "application": [
+          "基础练习",
+          "综合应用"
+        ],
+        "connections": "本知识点是后续学习的基础",
+        "common_mistakes": [
+          {
+            "mistake": "常见错误",
+            "correction": "注意有限集合的并集元素个数公式的边界条件和特殊情况"
+          }
+        ],
+        "counter_examples": [
+          "注意边界条件"
+        ]
+      },
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "renjiao-math-g10-a-ku-有限集合的并集元素个数公式推广到三个集合",
@@ -3380,11 +7107,40 @@
       "ku_type": "concept",
       "curriculum_standard": null,
       "mastery_levels": [],
-      "rich_content": null,
+      "rich_content": {
+        "examples": [
+          {
+            "problem": "基础练习",
+            "solution": "掌握有限集合的并集元素个数公式推广到三个集合的定义和基本应用"
+          }
+        ],
+        "intuition": "有限集合的并集元素个数公式推广到三个集合是高中数学renjiao-math-g10-a-kc-集合元素个数的计算中的基础知识点。",
+        "definition": "有限集合的并集元素个数公式推广到三个集合是高中数学renjiao-math-g10-a-kc-集合元素个数的计算中的基础知识点。",
+        "key_points": [
+          {
+            "point": "核心概念",
+            "explanation": "理解有限集合的并集元素个数公式推广到三个集合的基本含义"
+          }
+        ],
+        "application": [
+          "基础练习",
+          "综合应用"
+        ],
+        "connections": "本知识点是后续学习的基础",
+        "common_mistakes": [
+          {
+            "mistake": "常见错误",
+            "correction": "注意有限集合的并集元素个数公式推广到三个集合的边界条件和特殊情况"
+          }
+        ],
+        "counter_examples": [
+          "注意边界条件"
+        ]
+      },
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "renjiao-math-g10-a-ku-正切函数值域",
@@ -3404,11 +7160,40 @@
       "ku_type": "concept",
       "curriculum_standard": null,
       "mastery_levels": [],
-      "rich_content": null,
+      "rich_content": {
+        "examples": [
+          {
+            "problem": "基础练习",
+            "solution": "掌握正切函数值域的定义和基本应用"
+          }
+        ],
+        "intuition": "正切函数值域是高中数学renjiao-math-g10-a-kc-正切函数的性质与图象中的基础知识点。",
+        "definition": "正切函数值域是高中数学renjiao-math-g10-a-kc-正切函数的性质与图象中的基础知识点。",
+        "key_points": [
+          {
+            "point": "核心概念",
+            "explanation": "理解正切函数值域的基本含义"
+          }
+        ],
+        "application": [
+          "基础练习",
+          "综合应用"
+        ],
+        "connections": "本知识点是后续学习的基础",
+        "common_mistakes": [
+          {
+            "mistake": "常见错误",
+            "correction": "注意正切函数值域的边界条件和特殊情况"
+          }
+        ],
+        "counter_examples": [
+          "注意边界条件"
+        ]
+      },
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "renjiao-math-g10-a-ku-正切函数单调性",
@@ -3428,11 +7213,40 @@
       "ku_type": "concept",
       "curriculum_standard": null,
       "mastery_levels": [],
-      "rich_content": null,
+      "rich_content": {
+        "examples": [
+          {
+            "problem": "基础练习",
+            "solution": "掌握正切函数单调性的定义和基本应用"
+          }
+        ],
+        "intuition": "正切函数单调性是高中数学renjiao-math-g10-a-kc-正切函数的性质与图象中的基础知识点。",
+        "definition": "正切函数单调性是高中数学renjiao-math-g10-a-kc-正切函数的性质与图象中的基础知识点。",
+        "key_points": [
+          {
+            "point": "核心概念",
+            "explanation": "理解正切函数单调性的基本含义"
+          }
+        ],
+        "application": [
+          "基础练习",
+          "综合应用"
+        ],
+        "connections": "本知识点是后续学习的基础",
+        "common_mistakes": [
+          {
+            "mistake": "常见错误",
+            "correction": "注意正切函数单调性的边界条件和特殊情况"
+          }
+        ],
+        "counter_examples": [
+          "注意边界条件"
+        ]
+      },
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "renjiao-math-g10-a-ku-正切函数周期性",
@@ -3452,11 +7266,40 @@
       "ku_type": "concept",
       "curriculum_standard": null,
       "mastery_levels": [],
-      "rich_content": null,
+      "rich_content": {
+        "examples": [
+          {
+            "problem": "基础练习",
+            "solution": "掌握正切函数周期性的定义和基本应用"
+          }
+        ],
+        "intuition": "正切函数周期性是高中数学renjiao-math-g10-a-kc-正切函数的性质与图象中的基础知识点。",
+        "definition": "正切函数周期性是高中数学renjiao-math-g10-a-kc-正切函数的性质与图象中的基础知识点。",
+        "key_points": [
+          {
+            "point": "核心概念",
+            "explanation": "理解正切函数周期性的基本含义"
+          }
+        ],
+        "application": [
+          "基础练习",
+          "综合应用"
+        ],
+        "connections": "本知识点是后续学习的基础",
+        "common_mistakes": [
+          {
+            "mistake": "常见错误",
+            "correction": "注意正切函数周期性的边界条件和特殊情况"
+          }
+        ],
+        "counter_examples": [
+          "注意边界条件"
+        ]
+      },
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "renjiao-math-g10-a-ku-正切函数图象-正切曲线",
@@ -3477,11 +7320,40 @@
       "ku_type": "concept",
       "curriculum_standard": null,
       "mastery_levels": [],
-      "rich_content": null,
+      "rich_content": {
+        "examples": [
+          {
+            "problem": "基础练习",
+            "solution": "掌握正切函数图象（正切曲线）的定义和基本应用"
+          }
+        ],
+        "intuition": "正切函数图象（正切曲线）是高中数学renjiao-math-g10-a-kc-正切函数的性质与图象中的基础知识点。",
+        "definition": "正切函数图象（正切曲线）是高中数学renjiao-math-g10-a-kc-正切函数的性质与图象中的基础知识点。",
+        "key_points": [
+          {
+            "point": "核心概念",
+            "explanation": "理解正切函数图象（正切曲线）的基本含义"
+          }
+        ],
+        "application": [
+          "基础练习",
+          "综合应用"
+        ],
+        "connections": "本知识点是后续学习的基础",
+        "common_mistakes": [
+          {
+            "mistake": "常见错误",
+            "correction": "注意正切函数图象（正切曲线）的边界条件和特殊情况"
+          }
+        ],
+        "counter_examples": [
+          "注意边界条件"
+        ]
+      },
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "renjiao-math-g10-a-ku-正切函数奇偶性",
@@ -3501,11 +7373,40 @@
       "ku_type": "concept",
       "curriculum_standard": null,
       "mastery_levels": [],
-      "rich_content": null,
+      "rich_content": {
+        "examples": [
+          {
+            "problem": "基础练习",
+            "solution": "掌握正切函数奇偶性的定义和基本应用"
+          }
+        ],
+        "intuition": "正切函数奇偶性是高中数学renjiao-math-g10-a-kc-正切函数的性质与图象中的基础知识点。",
+        "definition": "正切函数奇偶性是高中数学renjiao-math-g10-a-kc-正切函数的性质与图象中的基础知识点。",
+        "key_points": [
+          {
+            "point": "核心概念",
+            "explanation": "理解正切函数奇偶性的基本含义"
+          }
+        ],
+        "application": [
+          "基础练习",
+          "综合应用"
+        ],
+        "connections": "本知识点是后续学习的基础",
+        "common_mistakes": [
+          {
+            "mistake": "常见错误",
+            "correction": "注意正切函数奇偶性的边界条件和特殊情况"
+          }
+        ],
+        "counter_examples": [
+          "注意边界条件"
+        ]
+      },
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "renjiao-math-g10-a-ku-正弦函数单调性",
@@ -3525,11 +7426,40 @@
       "ku_type": "concept",
       "curriculum_standard": null,
       "mastery_levels": [],
-      "rich_content": null,
+      "rich_content": {
+        "examples": [
+          {
+            "problem": "基础练习",
+            "solution": "掌握正弦函数单调性的定义和基本应用"
+          }
+        ],
+        "intuition": "正弦函数单调性是高中数学renjiao-math-g10-a-kc-正弦-余弦函数的单调性与最值中的基础知识点。",
+        "definition": "正弦函数单调性是高中数学renjiao-math-g10-a-kc-正弦-余弦函数的单调性与最值中的基础知识点。",
+        "key_points": [
+          {
+            "point": "核心概念",
+            "explanation": "理解正弦函数单调性的基本含义"
+          }
+        ],
+        "application": [
+          "基础练习",
+          "综合应用"
+        ],
+        "connections": "本知识点是后续学习的基础",
+        "common_mistakes": [
+          {
+            "mistake": "常见错误",
+            "correction": "注意正弦函数单调性的边界条件和特殊情况"
+          }
+        ],
+        "counter_examples": [
+          "注意边界条件"
+        ]
+      },
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "renjiao-math-g10-a-ku-正弦函数周期性",
@@ -3549,11 +7479,40 @@
       "ku_type": "concept",
       "curriculum_standard": null,
       "mastery_levels": [],
-      "rich_content": null,
+      "rich_content": {
+        "examples": [
+          {
+            "problem": "基础练习",
+            "solution": "掌握正弦函数周期性的定义和基本应用"
+          }
+        ],
+        "intuition": "正弦函数周期性是高中数学renjiao-math-g10-a-kc-三角函数的周期性中的基础知识点。",
+        "definition": "正弦函数周期性是高中数学renjiao-math-g10-a-kc-三角函数的周期性中的基础知识点。",
+        "key_points": [
+          {
+            "point": "核心概念",
+            "explanation": "理解正弦函数周期性的基本含义"
+          }
+        ],
+        "application": [
+          "基础练习",
+          "综合应用"
+        ],
+        "connections": "本知识点是后续学习的基础",
+        "common_mistakes": [
+          {
+            "mistake": "常见错误",
+            "correction": "注意正弦函数周期性的边界条件和特殊情况"
+          }
+        ],
+        "counter_examples": [
+          "注意边界条件"
+        ]
+      },
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "renjiao-math-g10-a-ku-正弦函数奇偶性",
@@ -3573,11 +7532,40 @@
       "ku_type": "concept",
       "curriculum_standard": null,
       "mastery_levels": [],
-      "rich_content": null,
+      "rich_content": {
+        "examples": [
+          {
+            "problem": "基础练习",
+            "solution": "掌握正弦函数奇偶性的定义和基本应用"
+          }
+        ],
+        "intuition": "正弦函数奇偶性是高中数学renjiao-math-g10-a-kc-三角函数的奇偶性中的基础知识点。",
+        "definition": "正弦函数奇偶性是高中数学renjiao-math-g10-a-kc-三角函数的奇偶性中的基础知识点。",
+        "key_points": [
+          {
+            "point": "核心概念",
+            "explanation": "理解正弦函数奇偶性的基本含义"
+          }
+        ],
+        "application": [
+          "基础练习",
+          "综合应用"
+        ],
+        "connections": "本知识点是后续学习的基础",
+        "common_mistakes": [
+          {
+            "mistake": "常见错误",
+            "correction": "注意正弦函数奇偶性的边界条件和特殊情况"
+          }
+        ],
+        "counter_examples": [
+          "注意边界条件"
+        ]
+      },
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "renjiao-math-g10-a-ku-正弦函数最值",
@@ -3597,11 +7585,40 @@
       "ku_type": "concept",
       "curriculum_standard": null,
       "mastery_levels": [],
-      "rich_content": null,
+      "rich_content": {
+        "examples": [
+          {
+            "problem": "基础练习",
+            "solution": "掌握正弦函数最值的定义和基本应用"
+          }
+        ],
+        "intuition": "正弦函数最值是高中数学renjiao-math-g10-a-kc-正弦-余弦函数的单调性与最值中的基础知识点。",
+        "definition": "正弦函数最值是高中数学renjiao-math-g10-a-kc-正弦-余弦函数的单调性与最值中的基础知识点。",
+        "key_points": [
+          {
+            "point": "核心概念",
+            "explanation": "理解正弦函数最值的基本含义"
+          }
+        ],
+        "application": [
+          "基础练习",
+          "综合应用"
+        ],
+        "connections": "本知识点是后续学习的基础",
+        "common_mistakes": [
+          {
+            "mistake": "常见错误",
+            "correction": "注意正弦函数最值的边界条件和特殊情况"
+          }
+        ],
+        "counter_examples": [
+          "注意边界条件"
+        ]
+      },
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "renjiao-math-g10-a-ku-正弦函数的图象-几何法",
@@ -3622,11 +7639,40 @@
       "ku_type": "concept",
       "curriculum_standard": null,
       "mastery_levels": [],
-      "rich_content": null,
+      "rich_content": {
+        "examples": [
+          {
+            "problem": "基础练习",
+            "solution": "掌握正弦函数的图象（几何法）的定义和基本应用"
+          }
+        ],
+        "intuition": "正弦函数的图象（几何法）是高中数学renjiao-math-g10-a-kc-正弦函数和余弦函数的图象中的基础知识点。",
+        "definition": "正弦函数的图象（几何法）是高中数学renjiao-math-g10-a-kc-正弦函数和余弦函数的图象中的基础知识点。",
+        "key_points": [
+          {
+            "point": "核心概念",
+            "explanation": "理解正弦函数的图象（几何法）的基本含义"
+          }
+        ],
+        "application": [
+          "基础练习",
+          "综合应用"
+        ],
+        "connections": "本知识点是后续学习的基础",
+        "common_mistakes": [
+          {
+            "mistake": "常见错误",
+            "correction": "注意正弦函数的图象（几何法）的边界条件和特殊情况"
+          }
+        ],
+        "counter_examples": [
+          "注意边界条件"
+        ]
+      },
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "renjiao-math-g10-a-ku-省略量词的全称量词命题的否定",
@@ -3647,11 +7693,40 @@
       "ku_type": "concept",
       "curriculum_standard": null,
       "mastery_levels": [],
-      "rich_content": null,
+      "rich_content": {
+        "examples": [
+          {
+            "problem": "基础练习",
+            "solution": "掌握省略量词的全称量词命题的否定的定义和基本应用"
+          }
+        ],
+        "intuition": "省略量词的全称量词命题的否定是高中数学renjiao-math-g10-a-kc-含有一个量词的命题的否定中的基础知识点。",
+        "definition": "省略量词的全称量词命题的否定是高中数学renjiao-math-g10-a-kc-含有一个量词的命题的否定中的基础知识点。",
+        "key_points": [
+          {
+            "point": "核心概念",
+            "explanation": "理解省略量词的全称量词命题的否定的基本含义"
+          }
+        ],
+        "application": [
+          "基础练习",
+          "综合应用"
+        ],
+        "connections": "本知识点是后续学习的基础",
+        "common_mistakes": [
+          {
+            "mistake": "常见错误",
+            "correction": "注意省略量词的全称量词命题的否定的边界条件和特殊情况"
+          }
+        ],
+        "counter_examples": [
+          "注意边界条件"
+        ]
+      },
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "renjiao-math-g10-a-ku-真子集的定义",
@@ -3671,11 +7746,40 @@
       "ku_type": "concept",
       "curriculum_standard": null,
       "mastery_levels": [],
-      "rich_content": null,
+      "rich_content": {
+        "examples": [
+          {
+            "problem": "基础练习",
+            "solution": "掌握真子集的定义的定义和基本应用"
+          }
+        ],
+        "intuition": "真子集的定义是高中数学renjiao-math-g10-a-kc-集合间的基本关系中的基础知识点。",
+        "definition": "真子集的定义是高中数学renjiao-math-g10-a-kc-集合间的基本关系中的基础知识点。",
+        "key_points": [
+          {
+            "point": "核心概念",
+            "explanation": "理解真子集的定义的基本含义"
+          }
+        ],
+        "application": [
+          "基础练习",
+          "综合应用"
+        ],
+        "connections": "本知识点是后续学习的基础",
+        "common_mistakes": [
+          {
+            "mistake": "常见错误",
+            "correction": "注意真子集的定义的边界条件和特殊情况"
+          }
+        ],
+        "counter_examples": [
+          "注意边界条件"
+        ]
+      },
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "renjiao-math-g10-a-ku-真子集的概念",
@@ -3695,11 +7799,40 @@
       "ku_type": "concept",
       "curriculum_standard": null,
       "mastery_levels": [],
-      "rich_content": null,
+      "rich_content": {
+        "examples": [
+          {
+            "problem": "基础练习",
+            "solution": "掌握真子集的概念的定义和基本应用"
+          }
+        ],
+        "intuition": "真子集的概念是高中数学renjiao-math-g10-a-kc-集合间的基本关系中的基础知识点。",
+        "definition": "真子集的概念是高中数学renjiao-math-g10-a-kc-集合间的基本关系中的基础知识点。",
+        "key_points": [
+          {
+            "point": "核心概念",
+            "explanation": "理解真子集的概念的基本含义"
+          }
+        ],
+        "application": [
+          "基础练习",
+          "综合应用"
+        ],
+        "connections": "本知识点是后续学习的基础",
+        "common_mistakes": [
+          {
+            "mistake": "常见错误",
+            "correction": "注意真子集的概念的边界条件和特殊情况"
+          }
+        ],
+        "counter_examples": [
+          "注意边界条件"
+        ]
+      },
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "renjiao-math-g10-a-ku-积化和差公式",
@@ -3719,11 +7852,40 @@
       "ku_type": "concept",
       "curriculum_standard": null,
       "mastery_levels": [],
-      "rich_content": null,
+      "rich_content": {
+        "examples": [
+          {
+            "problem": "基础练习",
+            "solution": "掌握积化和差公式的定义和基本应用"
+          }
+        ],
+        "intuition": "积化和差公式是高中数学renjiao-math-g10-a-kc-积化和差与和差化积中的基础知识点。",
+        "definition": "积化和差公式是高中数学renjiao-math-g10-a-kc-积化和差与和差化积中的基础知识点。",
+        "key_points": [
+          {
+            "point": "核心概念",
+            "explanation": "理解积化和差公式的基本含义"
+          }
+        ],
+        "application": [
+          "基础练习",
+          "综合应用"
+        ],
+        "connections": "本知识点是后续学习的基础",
+        "common_mistakes": [
+          {
+            "mistake": "常见错误",
+            "correction": "注意积化和差公式的边界条件和特殊情况"
+          }
+        ],
+        "counter_examples": [
+          "注意边界条件"
+        ]
+      },
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "renjiao-math-g10-a-ku-空集",
@@ -3743,11 +7905,40 @@
       "ku_type": "concept",
       "curriculum_standard": null,
       "mastery_levels": [],
-      "rich_content": null,
+      "rich_content": {
+        "examples": [
+          {
+            "problem": "基础练习",
+            "solution": "掌握空集的定义和基本应用"
+          }
+        ],
+        "intuition": "空集是高中数学renjiao-math-g10-a-kc-集合间的基本关系中的基础知识点。",
+        "definition": "空集是高中数学renjiao-math-g10-a-kc-集合间的基本关系中的基础知识点。",
+        "key_points": [
+          {
+            "point": "核心概念",
+            "explanation": "理解空集的基本含义"
+          }
+        ],
+        "application": [
+          "基础练习",
+          "综合应用"
+        ],
+        "connections": "本知识点是后续学习的基础",
+        "common_mistakes": [
+          {
+            "mistake": "常见错误",
+            "correction": "注意空集的边界条件和特殊情况"
+          }
+        ],
+        "counter_examples": [
+          "注意边界条件"
+        ]
+      },
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "renjiao-math-g10-a-ku-终边相同的角",
@@ -3768,11 +7959,40 @@
       "ku_type": "concept",
       "curriculum_standard": null,
       "mastery_levels": [],
-      "rich_content": null,
+      "rich_content": {
+        "examples": [
+          {
+            "problem": "基础练习",
+            "solution": "掌握终边相同的角的定义和基本应用"
+          }
+        ],
+        "intuition": "终边相同的角是高中数学renjiao-math-g10-a-kc-任意角与弧度制中的基础知识点。",
+        "definition": "终边相同的角是高中数学renjiao-math-g10-a-kc-任意角与弧度制中的基础知识点。",
+        "key_points": [
+          {
+            "point": "核心概念",
+            "explanation": "理解终边相同的角的基本含义"
+          }
+        ],
+        "application": [
+          "基础练习",
+          "综合应用"
+        ],
+        "connections": "本知识点是后续学习的基础",
+        "common_mistakes": [
+          {
+            "mistake": "常见错误",
+            "correction": "注意终边相同的角的边界条件和特殊情况"
+          }
+        ],
+        "counter_examples": [
+          "注意边界条件"
+        ]
+      },
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "renjiao-math-g10-a-ku-补集的定义",
@@ -3793,11 +8013,40 @@
       "ku_type": "concept",
       "curriculum_standard": null,
       "mastery_levels": [],
-      "rich_content": null,
+      "rich_content": {
+        "examples": [
+          {
+            "problem": "基础练习",
+            "solution": "掌握补集的定义的定义和基本应用"
+          }
+        ],
+        "intuition": "补集的定义是高中数学renjiao-math-g10-a-kc-集合的基本运算中的基础知识点。",
+        "definition": "补集的定义是高中数学renjiao-math-g10-a-kc-集合的基本运算中的基础知识点。",
+        "key_points": [
+          {
+            "point": "核心概念",
+            "explanation": "理解补集的定义的基本含义"
+          }
+        ],
+        "application": [
+          "基础练习",
+          "综合应用"
+        ],
+        "connections": "本知识点是后续学习的基础",
+        "common_mistakes": [
+          {
+            "mistake": "常见错误",
+            "correction": "注意补集的定义的边界条件和特殊情况"
+          }
+        ],
+        "counter_examples": [
+          "注意边界条件"
+        ]
+      },
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "renjiao-math-g10-a-ku-角的加减与相反角",
@@ -3817,11 +8066,40 @@
       "ku_type": "concept",
       "curriculum_standard": null,
       "mastery_levels": [],
-      "rich_content": null,
+      "rich_content": {
+        "examples": [
+          {
+            "problem": "基础练习",
+            "solution": "掌握角的加减与相反角的定义和基本应用"
+          }
+        ],
+        "intuition": "角的加减与相反角是高中数学renjiao-math-g10-a-kc-任意角与弧度制中的基础知识点。",
+        "definition": "角的加减与相反角是高中数学renjiao-math-g10-a-kc-任意角与弧度制中的基础知识点。",
+        "key_points": [
+          {
+            "point": "核心概念",
+            "explanation": "理解角的加减与相反角的基本含义"
+          }
+        ],
+        "application": [
+          "基础练习",
+          "综合应用"
+        ],
+        "connections": "本知识点是后续学习的基础",
+        "common_mistakes": [
+          {
+            "mistake": "常见错误",
+            "correction": "注意角的加减与相反角的边界条件和特殊情况"
+          }
+        ],
+        "counter_examples": [
+          "注意边界条件"
+        ]
+      },
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "renjiao-math-g10-a-ku-诱导公式三--α",
@@ -3842,11 +8120,40 @@
       "ku_type": "concept",
       "curriculum_standard": null,
       "mastery_levels": [],
-      "rich_content": null,
+      "rich_content": {
+        "examples": [
+          {
+            "problem": "基础练习",
+            "solution": "掌握诱导公式三（-α）的定义和基本应用"
+          }
+        ],
+        "intuition": "诱导公式三（-α）是高中数学renjiao-math-g10-a-kc-诱导公式及其应用中的基础知识点。",
+        "definition": "诱导公式三（-α）是高中数学renjiao-math-g10-a-kc-诱导公式及其应用中的基础知识点。",
+        "key_points": [
+          {
+            "point": "核心概念",
+            "explanation": "理解诱导公式三（-α）的基本含义"
+          }
+        ],
+        "application": [
+          "基础练习",
+          "综合应用"
+        ],
+        "connections": "本知识点是后续学习的基础",
+        "common_mistakes": [
+          {
+            "mistake": "常见错误",
+            "correction": "注意诱导公式三（-α）的边界条件和特殊情况"
+          }
+        ],
+        "counter_examples": [
+          "注意边界条件"
+        ]
+      },
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "renjiao-math-g10-a-ku-诱导公式二-π-α",
@@ -3867,11 +8174,40 @@
       "ku_type": "concept",
       "curriculum_standard": null,
       "mastery_levels": [],
-      "rich_content": null,
+      "rich_content": {
+        "examples": [
+          {
+            "problem": "基础练习",
+            "solution": "掌握诱导公式二（π+α）的定义和基本应用"
+          }
+        ],
+        "intuition": "诱导公式二（π+α）是高中数学renjiao-math-g10-a-kc-诱导公式及其应用中的基础知识点。",
+        "definition": "诱导公式二（π+α）是高中数学renjiao-math-g10-a-kc-诱导公式及其应用中的基础知识点。",
+        "key_points": [
+          {
+            "point": "核心概念",
+            "explanation": "理解诱导公式二（π+α）的基本含义"
+          }
+        ],
+        "application": [
+          "基础练习",
+          "综合应用"
+        ],
+        "connections": "本知识点是后续学习的基础",
+        "common_mistakes": [
+          {
+            "mistake": "常见错误",
+            "correction": "注意诱导公式二（π+α）的边界条件和特殊情况"
+          }
+        ],
+        "counter_examples": [
+          "注意边界条件"
+        ]
+      },
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "renjiao-math-g10-a-ku-诱导公式五-π-2-α",
@@ -3892,11 +8228,40 @@
       "ku_type": "concept",
       "curriculum_standard": null,
       "mastery_levels": [],
-      "rich_content": null,
+      "rich_content": {
+        "examples": [
+          {
+            "problem": "基础练习",
+            "solution": "掌握诱导公式五（π/2-α）的定义和基本应用"
+          }
+        ],
+        "intuition": "诱导公式五（π/2-α）是高中数学renjiao-math-g10-a-kc-诱导公式及其应用中的基础知识点。",
+        "definition": "诱导公式五（π/2-α）是高中数学renjiao-math-g10-a-kc-诱导公式及其应用中的基础知识点。",
+        "key_points": [
+          {
+            "point": "核心概念",
+            "explanation": "理解诱导公式五（π/2-α）的基本含义"
+          }
+        ],
+        "application": [
+          "基础练习",
+          "综合应用"
+        ],
+        "connections": "本知识点是后续学习的基础",
+        "common_mistakes": [
+          {
+            "mistake": "常见错误",
+            "correction": "注意诱导公式五（π/2-α）的边界条件和特殊情况"
+          }
+        ],
+        "counter_examples": [
+          "注意边界条件"
+        ]
+      },
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "renjiao-math-g10-a-ku-诱导公式六-π-2-α",
@@ -3917,11 +8282,40 @@
       "ku_type": "concept",
       "curriculum_standard": null,
       "mastery_levels": [],
-      "rich_content": null,
+      "rich_content": {
+        "examples": [
+          {
+            "problem": "基础练习",
+            "solution": "掌握诱导公式六（π/2+α）的定义和基本应用"
+          }
+        ],
+        "intuition": "诱导公式六（π/2+α）是高中数学renjiao-math-g10-a-kc-诱导公式及其应用中的基础知识点。",
+        "definition": "诱导公式六（π/2+α）是高中数学renjiao-math-g10-a-kc-诱导公式及其应用中的基础知识点。",
+        "key_points": [
+          {
+            "point": "核心概念",
+            "explanation": "理解诱导公式六（π/2+α）的基本含义"
+          }
+        ],
+        "application": [
+          "基础练习",
+          "综合应用"
+        ],
+        "connections": "本知识点是后续学习的基础",
+        "common_mistakes": [
+          {
+            "mistake": "常见错误",
+            "correction": "注意诱导公式六（π/2+α）的边界条件和特殊情况"
+          }
+        ],
+        "counter_examples": [
+          "注意边界条件"
+        ]
+      },
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "renjiao-math-g10-a-ku-诱导公式四-π-α",
@@ -3942,11 +8336,40 @@
       "ku_type": "concept",
       "curriculum_standard": null,
       "mastery_levels": [],
-      "rich_content": null,
+      "rich_content": {
+        "examples": [
+          {
+            "problem": "基础练习",
+            "solution": "掌握诱导公式四（π-α）的定义和基本应用"
+          }
+        ],
+        "intuition": "诱导公式四（π-α）是高中数学renjiao-math-g10-a-kc-诱导公式及其应用中的基础知识点。",
+        "definition": "诱导公式四（π-α）是高中数学renjiao-math-g10-a-kc-诱导公式及其应用中的基础知识点。",
+        "key_points": [
+          {
+            "point": "核心概念",
+            "explanation": "理解诱导公式四（π-α）的基本含义"
+          }
+        ],
+        "application": [
+          "基础练习",
+          "综合应用"
+        ],
+        "connections": "本知识点是后续学习的基础",
+        "common_mistakes": [
+          {
+            "mistake": "常见错误",
+            "correction": "注意诱导公式四（π-α）的边界条件和特殊情况"
+          }
+        ],
+        "counter_examples": [
+          "注意边界条件"
+        ]
+      },
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "renjiao-math-g10-a-ku-象限角",
@@ -3966,11 +8389,40 @@
       "ku_type": "concept",
       "curriculum_standard": null,
       "mastery_levels": [],
-      "rich_content": null,
+      "rich_content": {
+        "examples": [
+          {
+            "problem": "基础练习",
+            "solution": "掌握象限角的定义和基本应用"
+          }
+        ],
+        "intuition": "象限角是高中数学renjiao-math-g10-a-kc-任意角与弧度制中的基础知识点。",
+        "definition": "象限角是高中数学renjiao-math-g10-a-kc-任意角与弧度制中的基础知识点。",
+        "key_points": [
+          {
+            "point": "核心概念",
+            "explanation": "理解象限角的基本含义"
+          }
+        ],
+        "application": [
+          "基础练习",
+          "综合应用"
+        ],
+        "connections": "本知识点是后续学习的基础",
+        "common_mistakes": [
+          {
+            "mistake": "常见错误",
+            "correction": "注意象限角的边界条件和特殊情况"
+          }
+        ],
+        "counter_examples": [
+          "注意边界条件"
+        ]
+      },
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "renjiao-math-g10-a-ku-辅助角公式-合一变形",
@@ -3990,11 +8442,40 @@
       "ku_type": "concept",
       "curriculum_standard": null,
       "mastery_levels": [],
-      "rich_content": null,
+      "rich_content": {
+        "examples": [
+          {
+            "problem": "基础练习",
+            "solution": "掌握辅助角公式（合一变形）的定义和基本应用"
+          }
+        ],
+        "intuition": "辅助角公式（合一变形）是高中数学renjiao-math-g10-a-kc-辅助角公式及其应用中的基础知识点。",
+        "definition": "辅助角公式（合一变形）是高中数学renjiao-math-g10-a-kc-辅助角公式及其应用中的基础知识点。",
+        "key_points": [
+          {
+            "point": "核心概念",
+            "explanation": "理解辅助角公式（合一变形）的基本含义"
+          }
+        ],
+        "application": [
+          "基础练习",
+          "综合应用"
+        ],
+        "connections": "本知识点是后续学习的基础",
+        "common_mistakes": [
+          {
+            "mistake": "常见错误",
+            "correction": "注意辅助角公式（合一变形）的边界条件和特殊情况"
+          }
+        ],
+        "counter_examples": [
+          "注意边界条件"
+        ]
+      },
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "renjiao-math-g10-a-ku-重要不等式-a²-b²-2ab",
@@ -4014,11 +8495,40 @@
       "ku_type": "concept",
       "curriculum_standard": null,
       "mastery_levels": [],
-      "rich_content": null,
+      "rich_content": {
+        "examples": [
+          {
+            "problem": "基础练习",
+            "solution": "掌握重要不等式 a²+b²≥2ab的定义和基本应用"
+          }
+        ],
+        "intuition": "重要不等式 a²+b²≥2ab是高中数学renjiao-math-g10-a-kc-重要不等式与基本不等式中的基础知识点。",
+        "definition": "重要不等式 a²+b²≥2ab是高中数学renjiao-math-g10-a-kc-重要不等式与基本不等式中的基础知识点。",
+        "key_points": [
+          {
+            "point": "核心概念",
+            "explanation": "理解重要不等式 a²+b²≥2ab的基本含义"
+          }
+        ],
+        "application": [
+          "基础练习",
+          "综合应用"
+        ],
+        "connections": "本知识点是后续学习的基础",
+        "common_mistakes": [
+          {
+            "mistake": "常见错误",
+            "correction": "注意重要不等式 a²+b²≥2ab的边界条件和特殊情况"
+          }
+        ],
+        "counter_examples": [
+          "注意边界条件"
+        ]
+      },
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "renjiao-math-g10-a-ku-集合元素的互异性",
@@ -4038,11 +8548,40 @@
       "ku_type": "concept",
       "curriculum_standard": null,
       "mastery_levels": [],
-      "rich_content": null,
+      "rich_content": {
+        "examples": [
+          {
+            "problem": "基础练习",
+            "solution": "掌握集合元素的互异性的定义和基本应用"
+          }
+        ],
+        "intuition": "集合元素的互异性是高中数学renjiao-math-g10-a-kc-集合的基本概念与表示中的基础知识点。",
+        "definition": "集合元素的互异性是高中数学renjiao-math-g10-a-kc-集合的基本概念与表示中的基础知识点。",
+        "key_points": [
+          {
+            "point": "核心概念",
+            "explanation": "理解集合元素的互异性的基本含义"
+          }
+        ],
+        "application": [
+          "基础练习",
+          "综合应用"
+        ],
+        "connections": "本知识点是后续学习的基础",
+        "common_mistakes": [
+          {
+            "mistake": "常见错误",
+            "correction": "注意集合元素的互异性的边界条件和特殊情况"
+          }
+        ],
+        "counter_examples": [
+          "注意边界条件"
+        ]
+      },
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "renjiao-math-g10-a-ku-集合元素的确定性",
@@ -4062,11 +8601,40 @@
       "ku_type": "concept",
       "curriculum_standard": null,
       "mastery_levels": [],
-      "rich_content": null,
+      "rich_content": {
+        "examples": [
+          {
+            "problem": "基础练习",
+            "solution": "掌握集合元素的确定性的定义和基本应用"
+          }
+        ],
+        "intuition": "集合元素的确定性是高中数学renjiao-math-g10-a-kc-集合的基本概念与表示中的基础知识点。",
+        "definition": "集合元素的确定性是高中数学renjiao-math-g10-a-kc-集合的基本概念与表示中的基础知识点。",
+        "key_points": [
+          {
+            "point": "核心概念",
+            "explanation": "理解集合元素的确定性的基本含义"
+          }
+        ],
+        "application": [
+          "基础练习",
+          "综合应用"
+        ],
+        "connections": "本知识点是后续学习的基础",
+        "common_mistakes": [
+          {
+            "mistake": "常见错误",
+            "correction": "注意集合元素的确定性的边界条件和特殊情况"
+          }
+        ],
+        "counter_examples": [
+          "注意边界条件"
+        ]
+      },
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "renjiao-math-g10-a-ku-集合的含义",
@@ -4084,11 +8652,40 @@
       "ku_type": "concept",
       "curriculum_standard": null,
       "mastery_levels": [],
-      "rich_content": null,
+      "rich_content": {
+        "examples": [
+          {
+            "problem": "基础练习",
+            "solution": "掌握集合的含义的定义和基本应用"
+          }
+        ],
+        "intuition": "集合的含义是高中数学renjiao-math-g10-a-kc-集合的基本概念与表示中的基础知识点。",
+        "definition": "集合的含义是高中数学renjiao-math-g10-a-kc-集合的基本概念与表示中的基础知识点。",
+        "key_points": [
+          {
+            "point": "核心概念",
+            "explanation": "理解集合的含义的基本含义"
+          }
+        ],
+        "application": [
+          "基础练习",
+          "综合应用"
+        ],
+        "connections": "本知识点是后续学习的基础",
+        "common_mistakes": [
+          {
+            "mistake": "常见错误",
+            "correction": "注意集合的含义的边界条件和特殊情况"
+          }
+        ],
+        "counter_examples": [
+          "注意边界条件"
+        ]
+      },
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "renjiao-math-g10-a-ku-集合的概念",
@@ -4106,11 +8703,40 @@
       "ku_type": "concept",
       "curriculum_standard": null,
       "mastery_levels": [],
-      "rich_content": null,
+      "rich_content": {
+        "examples": [
+          {
+            "problem": "基础练习",
+            "solution": "掌握集合的概念的定义和基本应用"
+          }
+        ],
+        "intuition": "集合的概念是高中数学renjiao-math-g10-a-kc-集合的基本概念与表示中的基础知识点。",
+        "definition": "集合的概念是高中数学renjiao-math-g10-a-kc-集合的基本概念与表示中的基础知识点。",
+        "key_points": [
+          {
+            "point": "核心概念",
+            "explanation": "理解集合的概念的基本含义"
+          }
+        ],
+        "application": [
+          "基础练习",
+          "综合应用"
+        ],
+        "connections": "本知识点是后续学习的基础",
+        "common_mistakes": [
+          {
+            "mistake": "常见错误",
+            "correction": "注意集合的概念的边界条件和特殊情况"
+          }
+        ],
+        "counter_examples": [
+          "注意边界条件"
+        ]
+      },
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "renjiao-math-g10-a-ku-集合的相等",
@@ -4130,11 +8756,40 @@
       "ku_type": "concept",
       "curriculum_standard": null,
       "mastery_levels": [],
-      "rich_content": null,
+      "rich_content": {
+        "examples": [
+          {
+            "problem": "基础练习",
+            "solution": "掌握集合的相等的定义和基本应用"
+          }
+        ],
+        "intuition": "集合的相等是高中数学renjiao-math-g10-a-kc-集合的基本概念与表示中的基础知识点。",
+        "definition": "集合的相等是高中数学renjiao-math-g10-a-kc-集合的基本概念与表示中的基础知识点。",
+        "key_points": [
+          {
+            "point": "核心概念",
+            "explanation": "理解集合的相等的基本含义"
+          }
+        ],
+        "application": [
+          "基础练习",
+          "综合应用"
+        ],
+        "connections": "本知识点是后续学习的基础",
+        "common_mistakes": [
+          {
+            "mistake": "常见错误",
+            "correction": "注意集合的相等的边界条件和特殊情况"
+          }
+        ],
+        "counter_examples": [
+          "注意边界条件"
+        ]
+      },
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "renjiao-math-g10-a-ku-集合相等",
@@ -4154,11 +8809,40 @@
       "ku_type": "concept",
       "curriculum_standard": null,
       "mastery_levels": [],
-      "rich_content": null,
+      "rich_content": {
+        "examples": [
+          {
+            "problem": "基础练习",
+            "solution": "掌握集合相等的定义和基本应用"
+          }
+        ],
+        "intuition": "集合相等是高中数学renjiao-math-g10-a-kc-集合间的基本关系中的基础知识点。",
+        "definition": "集合相等是高中数学renjiao-math-g10-a-kc-集合间的基本关系中的基础知识点。",
+        "key_points": [
+          {
+            "point": "核心概念",
+            "explanation": "理解集合相等的基本含义"
+          }
+        ],
+        "application": [
+          "基础练习",
+          "综合应用"
+        ],
+        "connections": "本知识点是后续学习的基础",
+        "common_mistakes": [
+          {
+            "mistake": "常见错误",
+            "correction": "注意集合相等的边界条件和特殊情况"
+          }
+        ],
+        "counter_examples": [
+          "注意边界条件"
+        ]
+      },
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "renjiao-math-g10-a-ku-集合相等-子集角度",
@@ -4178,11 +8862,40 @@
       "ku_type": "concept",
       "curriculum_standard": null,
       "mastery_levels": [],
-      "rich_content": null,
+      "rich_content": {
+        "examples": [
+          {
+            "problem": "基础练习",
+            "solution": "掌握集合相等（子集角度）的定义和基本应用"
+          }
+        ],
+        "intuition": "集合相等（子集角度）是高中数学renjiao-math-g10-a-kc-集合间的基本关系中的基础知识点。",
+        "definition": "集合相等（子集角度）是高中数学renjiao-math-g10-a-kc-集合间的基本关系中的基础知识点。",
+        "key_points": [
+          {
+            "point": "核心概念",
+            "explanation": "理解集合相等（子集角度）的基本含义"
+          }
+        ],
+        "application": [
+          "基础练习",
+          "综合应用"
+        ],
+        "connections": "本知识点是后续学习的基础",
+        "common_mistakes": [
+          {
+            "mistake": "常见错误",
+            "correction": "注意集合相等（子集角度）的边界条件和特殊情况"
+          }
+        ],
+        "counter_examples": [
+          "注意边界条件"
+        ]
+      },
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "renjiao-math-g10-a-ku001",
@@ -4219,11 +8932,40 @@
           "level": 3
         }
       ],
-      "rich_content": null,
+      "rich_content": {
+        "examples": [
+          {
+            "problem": "基础练习",
+            "solution": "掌握集合的概念与表示的定义和基本应用"
+          }
+        ],
+        "intuition": "集合的概念与表示是高中数学renjiao-math-g10-a-c01中的基础知识点。",
+        "definition": "集合的概念与表示是高中数学renjiao-math-g10-a-c01中的基础知识点。",
+        "key_points": [
+          {
+            "point": "核心概念",
+            "explanation": "理解集合的概念与表示的基本含义"
+          }
+        ],
+        "application": [
+          "基础练习",
+          "综合应用"
+        ],
+        "connections": "本知识点是后续学习的基础",
+        "common_mistakes": [
+          {
+            "mistake": "常见错误",
+            "correction": "注意集合的概念与表示的边界条件和特殊情况"
+          }
+        ],
+        "counter_examples": [
+          "注意边界条件"
+        ]
+      },
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "renjiao-math-g10-a-ku002",
@@ -4261,11 +9003,40 @@
           "level": 3
         }
       ],
-      "rich_content": null,
+      "rich_content": {
+        "examples": [
+          {
+            "problem": "基础练习",
+            "solution": "掌握集合的基本运算的定义和基本应用"
+          }
+        ],
+        "intuition": "集合的基本运算是高中数学renjiao-math-g10-a-c01中的基础知识点。",
+        "definition": "集合的基本运算是高中数学renjiao-math-g10-a-c01中的基础知识点。",
+        "key_points": [
+          {
+            "point": "核心概念",
+            "explanation": "理解集合的基本运算的基本含义"
+          }
+        ],
+        "application": [
+          "基础练习",
+          "综合应用"
+        ],
+        "connections": "本知识点是后续学习的基础",
+        "common_mistakes": [
+          {
+            "mistake": "常见错误",
+            "correction": "注意集合的基本运算的边界条件和特殊情况"
+          }
+        ],
+        "counter_examples": [
+          "注意边界条件"
+        ]
+      },
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "renjiao-math-g10-a-ku003",
@@ -4297,11 +9068,40 @@
           "level": 2
         }
       ],
-      "rich_content": null,
+      "rich_content": {
+        "examples": [
+          {
+            "problem": "基础练习",
+            "solution": "掌握充分条件与必要条件的定义和基本应用"
+          }
+        ],
+        "intuition": "充分条件与必要条件是高中数学renjiao-math-g10-a-c01中的基础知识点。",
+        "definition": "充分条件与必要条件是高中数学renjiao-math-g10-a-c01中的基础知识点。",
+        "key_points": [
+          {
+            "point": "核心概念",
+            "explanation": "理解充分条件与必要条件的基本含义"
+          }
+        ],
+        "application": [
+          "基础练习",
+          "综合应用"
+        ],
+        "connections": "本知识点是后续学习的基础",
+        "common_mistakes": [
+          {
+            "mistake": "常见错误",
+            "correction": "注意充分条件与必要条件的边界条件和特殊情况"
+          }
+        ],
+        "counter_examples": [
+          "注意边界条件"
+        ]
+      },
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "renjiao-math-g10-a-ku004",
@@ -4339,11 +9139,40 @@
           "level": 3
         }
       ],
-      "rich_content": null,
+      "rich_content": {
+        "examples": [
+          {
+            "problem": "基础练习",
+            "solution": "掌握函数的概念与表示的定义和基本应用"
+          }
+        ],
+        "intuition": "函数的概念与表示是高中数学renjiao-math-g10-a-c02中的基础知识点。",
+        "definition": "函数的概念与表示是高中数学renjiao-math-g10-a-c02中的基础知识点。",
+        "key_points": [
+          {
+            "point": "核心概念",
+            "explanation": "理解函数的概念与表示的基本含义"
+          }
+        ],
+        "application": [
+          "基础练习",
+          "综合应用"
+        ],
+        "connections": "本知识点是后续学习的基础",
+        "common_mistakes": [
+          {
+            "mistake": "常见错误",
+            "correction": "注意函数的概念与表示的边界条件和特殊情况"
+          }
+        ],
+        "counter_examples": [
+          "注意边界条件"
+        ]
+      },
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "renjiao-math-g10-a-ku005",
@@ -4381,11 +9210,40 @@
           "level": 3
         }
       ],
-      "rich_content": null,
+      "rich_content": {
+        "examples": [
+          {
+            "problem": "基础练习",
+            "solution": "掌握指数函数与对数函数的定义和基本应用"
+          }
+        ],
+        "intuition": "指数函数与对数函数是高中数学renjiao-math-g10-a-c02中的基础知识点。",
+        "definition": "指数函数与对数函数是高中数学renjiao-math-g10-a-c02中的基础知识点。",
+        "key_points": [
+          {
+            "point": "核心概念",
+            "explanation": "理解指数函数与对数函数的基本含义"
+          }
+        ],
+        "application": [
+          "基础练习",
+          "综合应用"
+        ],
+        "connections": "本知识点是后续学习的基础",
+        "common_mistakes": [
+          {
+            "mistake": "常见错误",
+            "correction": "注意指数函数与对数函数的边界条件和特殊情况"
+          }
+        ],
+        "counter_examples": [
+          "注意边界条件"
+        ]
+      },
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     }
   ]
 }
