@@ -42,6 +42,7 @@ jobs:
       - name: Apply migrations
         env:
           DATABASE_URL: postgresql+asyncpg://postgres:postgres@localhost:5432/mneme_test
+          PYTHONPATH: vendor:packages/mneme-core:packages/mneme-agent:packages/event-schema:.
         run: uv run alembic upgrade head
       - name: Run repository quality gate
         env:
