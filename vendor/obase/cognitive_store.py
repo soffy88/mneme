@@ -5,6 +5,7 @@ obase/cognitive_store.py
 """
 
 from __future__ import annotations
+from collections.abc import Awaitable, Callable
 from datetime import datetime, timezone
 from typing import Protocol, runtime_checkable, Dict, List, Optional
 from uuid import UUID
@@ -17,13 +18,15 @@ from obase.cognitive_types import KCState, new_state_from_prior, fsrs_new_card
 from obase.prior_provider import PriorProvider
 from services.models import KCMastery, InteractionEvent
 
+LearningEventWriter = Callable[[UUID, UUID, str, dict], Awaitable[object]]
+
 
 @runtime_checkable
 class BaseCognitiveStore(Protocol):
     """认知状态存储协议。"""
 
     async def get_or_create(
-        self, student_id: UUID, kc_id: str, question_type: str = "solve"
+        self, student_id: UUID, kc_id: str, question_type: str = "solve", for_update: bool = False
     ) -> tuple[KCState, dict]:
         """获取或创建认知状态和 FSRS 卡片。"""
         ...
@@ -65,7 +68,7 @@ class InMemoryStore:
         return f"{student_id}::{kc_id}"
 
     async def get_or_create(
-        self, student_id: UUID, kc_id: str, question_type: str = "solve"
+        self, student_id: UUID, kc_id: str, question_type: str = "solve", for_update: bool = False
     ) -> tuple[KCState, dict]:
         k = self._key(student_id, kc_id)
         if k not in self._states:
@@ -116,25 +119,71 @@ class InMemoryStore:
 class PgStore:
     """PostgreSQL 状态存储。"""
 
-    def __init__(self, session: AsyncSession):
+    def __init__(
+        self,
+        session: AsyncSession,
+        learning_event_writer: LearningEventWriter | None = None,
+    ):
         self.session = session
+        self.learning_event_writer = learning_event_writer
 
     async def get_or_create(
-        self, student_id: UUID, kc_id: str, question_type: str = "solve"
+        self, student_id: UUID, kc_id: str, question_type: str = "solve", for_update: bool = False
     ) -> tuple[KCState, dict]:
-        stmt = select(KCMastery).where(
-            KCMastery.student_id == student_id, KCMastery.knowledge_point == kc_id
-        )
-        result = await self.session.execute(stmt)
-        row = result.scalar_one_or_none()
+        """读取（或创建）KC 掌握度行。
 
-        if row:
+        for_update=True（写路径：process_interaction/analyze_paper）时对该行加
+        ``FOR UPDATE`` 行锁，锁持有到当前事务 commit/rollback，覆盖调用方
+        ``get_or_create → cognitive_update → save`` 整段，避免同一
+        (student_id, knowledge_point) 并发提交时丢失 BKT/FSRS 更新。
+
+        读路径（mastery_overview / review_queue / 测试复用会话）必须保持
+        for_update=False：无锁读，不阻塞后续同会话操作。
+
+        新建行走 unique(student_id, knowledge_point) + savepoint：
+        两事务同时 miss 时，一方 INSERT 成功，另一方 IntegrityError 后
+        再 ``SELECT … FOR UPDATE`` 读到对方已提交/本事务已见的行。
+        """
+        from sqlalchemy.exc import IntegrityError
+
+        stmt = select(KCMastery).where(
+            KCMastery.student_id == student_id,
+            KCMastery.knowledge_point == kc_id,
+        )
+        if for_update:
+            stmt = stmt.with_for_update()
+        row = (await self.session.execute(stmt)).scalar_one_or_none()
+        if row is not None:
             return self._row_to_entry(row)
-        else:
-            prior = await PriorProvider.get_prior(self.session, kc_id, question_type)
-            state = new_state_from_prior(kc_id=kc_id, prior=prior)
-            card = fsrs_new_card()
-            return state, card
+
+        prior = await PriorProvider.get_prior(self.session, kc_id, question_type)
+        state = new_state_from_prior(kc_id=kc_id, prior=prior)
+        card = fsrs_new_card()
+        try:
+            async with self.session.begin_nested():
+                await self.session.execute(
+                    insert(KCMastery).values(
+                        student_id=student_id,
+                        knowledge_point=kc_id,
+                        p_init=state.p_init,
+                        p_transit=state.p_transit,
+                        p_guess=state.p_guess,
+                        p_slip=state.p_slip,
+                        p_mastery=state.p_mastery,
+                        long_term_mastery=state.long_term_mastery,
+                        p_recognition=state.p_recognition,
+                        p_recognition_init=state.p_recognition_init,
+                        fsrs_card_json=card,
+                        last_interaction_at=None,
+                        n_attempts=0,
+                    )
+                )
+        except IntegrityError:
+            # 并发会话已插入同一 (student, kc)；回退到加锁读取。
+            pass
+
+        row = (await self.session.execute(stmt)).scalar_one()
+        return self._row_to_entry(row)
 
     async def get_all_states(self, student_id: UUID) -> Dict[str, tuple[KCState, dict]]:
         stmt = select(KCMastery).where(KCMastery.student_id == student_id)
@@ -207,9 +256,12 @@ class PgStore:
     async def append_event(
         self, student_id: UUID, kc_id: str, event_data: dict
     ) -> Optional[UUID]:
+        event_id = _uuid.uuid4()
+        occurred_at = event_data.get("occurred_at", datetime.now(timezone.utc))
         ins_stmt = (
             insert(InteractionEvent)
             .values(
+                id=event_id,
                 student_id=student_id,
                 knowledge_point=kc_id,
                 question_id=event_data.get("question_id"),
@@ -223,12 +275,25 @@ class PgStore:
                 predicted_confidence=event_data.get("predicted_confidence"),
                 predicted_r=event_data.get("predicted_r"),
                 fire_meta=event_data.get("fire_meta"),
-                occurred_at=event_data.get("occurred_at", datetime.now(timezone.utc)),
+                tutor_mode=event_data.get("tutor_mode"),
+                ai_assisted=event_data.get("ai_assisted"),
+                independent_mode=event_data.get("independent_mode"),
+                evaluation_phase=event_data.get("evaluation_phase"),
+                occurred_at=occurred_at,
+                received_at=event_data.get("received_at", occurred_at),
             )
             .returning(InteractionEvent.id)
         )
         result = await self.session.execute(ins_stmt)
-        return result.scalar_one_or_none()
+        inserted_id = result.scalar_one_or_none()
+        if inserted_id is not None and self.learning_event_writer is not None:
+            await self.learning_event_writer(
+                inserted_id,
+                student_id,
+                kc_id,
+                {**event_data, "occurred_at": occurred_at},
+            )
+        return inserted_id
 
     async def get_verified_prerequisites(self, kc_id: str) -> List[str]:
         """kc_id 的 verified 前置边（M-H §4.8）：KU 自身与前置 KU 均须 verified。"""

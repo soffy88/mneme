@@ -20,6 +20,7 @@ celery_app = Celery(
         "tasks.partner_tasks",
         "tasks.memory_tasks",
         "tasks.partner_heartbeat",
+        "tasks.learning_memory_tasks",
     ],
 )
 celery_app.conf.update(
@@ -29,6 +30,11 @@ celery_app.conf.update(
     timezone="Asia/Shanghai",
     enable_utc=True,
     task_track_started=True,
+    # C5：ack 语义收紧——acks_late 让瞬时失败的任务在 worker 崩溃时重新入队
+    # （不会因 ack 后崩溃丢任务），配合每任务的 time_limit 防 worker 卡死。
+    task_acks_late=True,
+    task_time_limit=3600,
+    task_soft_time_limit=3500,
     # item 5：数据飞轮——每日 03:30 从累积作答校准 BKT 先验。
     beat_schedule={
         "daily-bkt-calibration": {

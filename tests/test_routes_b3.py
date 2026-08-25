@@ -170,7 +170,8 @@ async def test_kc_list(client):
     resp = await client.get("/v1/ku")
     assert resp.status_code == 200
     kc_list = resp.json()
-    assert len(kc_list) == 29, f"应有 29 个 KC，实际 {len(kc_list)}"
+    from data.guangdong_math_kc import KC_LIST as KCL
+    assert len(kc_list) == len(KCL), f"应有 {len(KCL)} 个 KC，实际 {len(kc_list)}"
     assert all("ku_id" in kc for kc in kc_list)
     print(f"  GET /v1/ku → {len(kc_list)} 个知识点 ✓")
 

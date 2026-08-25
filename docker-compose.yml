@@ -4,10 +4,11 @@ services:
     restart: always
     environment:
       POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?需在 .env 设置 POSTGRES_PASSWORD}
       POSTGRES_DB: mneme
     ports:
-      - "5433:5432"
+      # C4：仅本机可连，不暴露公网（生产在 127.0.0.1 上经 api 容器走内部网络）
+      - "127.0.0.1:5433:5432"
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U postgres"]
       interval: 5s
@@ -22,7 +23,7 @@ services:
     # 开启 AOF 持久化，重启不丢队列/验证码/缓存
     command: redis-server --appendonly yes
     ports:
-      - "6380:6379"
+      - "127.0.0.1:6380:6379"
     healthcheck:
       test: ["CMD", "redis-cli", "ping"]
       interval: 5s
@@ -35,11 +36,11 @@ services:
     image: minio/minio
     restart: always
     ports:
-      - "9002:9000"
-      - "9003:9001"
+      - "127.0.0.1:9002:9000"
+      - "127.0.0.1:9003:9001"
     environment:
-      MINIO_ROOT_USER: minioadmin
-      MINIO_ROOT_PASSWORD: minioadmin
+      MINIO_ROOT_USER: ${MINIO_ROOT_USER:-minioadmin}
+      MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD:?需在 .env 设置 MINIO_ROOT_PASSWORD}
     command: server /data --console-address ":9001"
     volumes:
       - mneme_minio_data:/data
@@ -51,8 +52,8 @@ services:
 
   api:
     build:
-      context: ..
-      dockerfile: mneme/Dockerfile
+      context: .
+      dockerfile: Dockerfile
     restart: always
     # 部署纪律（2026-07-09 事故修复）：启动先 alembic upgrade head 再起服务。
     # 之前迁移和重启全靠手动，导致"改了库、容器不重启、旧ORM引用已删列、每个
@@ -61,21 +62,23 @@ services:
     # 沙箱加固 push 后，PYTHONPATH 一直不含 vendor/，生产装的是站点包里
     # 未加固的旧内核，没有任何东西在生产验证过加固真的生效。现在自检随启动
     # 执行，自检不过（vendor 未生效/装了旧副本/内核绕过沙箱）则不对外提供服务。
-    command: sh -c "python -m obase.sandbox_selfcheck && alembic upgrade head && uvicorn services.main:app --host 0.0.0.0 --port 8000"
+    # 从 /tmp 启动，避免工作目录 /app 下的仓根 oprim shim 抢在 vendor/oprim 前；
+    # vendor 优先是 S0 自检与生产运行时一致性的必要条件。
+    command: sh -c "cd /tmp && python -m obase.sandbox_selfcheck && alembic -c /app/alembic.ini upgrade head && uvicorn services.main:app --host 0.0.0.0 --port 8000"
     ports:
-      - "8000:8000"
+      - "127.0.0.1:8000:8000"
     environment:
       # ②-0 打包：mneme-core（Phase1 门控内核 7 元素之家）加入 import 路径。
       # 现经 PYTHONPATH 验证整条链；稳定后再固化为 Dockerfile pip install（与 obase/oprim 平价）。
       # W4 S0：/app/vendor 加进最前面，让 oprim/oskill/omodul/obase 优先解析到
       # 本仓 vendor/ 副本（S0 沙箱加固 + Solve 模式所在），不再落到站点包
       # (site-packages) 里未加固的旧副本——这两者此前一直是两份不同代码。
-      PYTHONPATH: /app/vendor:/app:/app/packages/mneme-core
-      DATABASE_URL: postgresql+asyncpg://postgres:postgres@db:5432/mneme
+      PYTHONPATH: /app/vendor:/app:/app/packages/mneme-core:/app/packages/mneme-agent:/app/packages/event-schema
+      DATABASE_URL: postgresql+asyncpg://postgres:${POSTGRES_PASSWORD}@db:5432/mneme
       REDIS_URL: redis://redis:6379/0
       MINIO_ENDPOINT: minio:9000
-      MINIO_ACCESS_KEY: minioadmin
-      MINIO_SECRET_KEY: minioadmin
+      MINIO_ACCESS_KEY: ${MINIO_ACCESS_KEY:-minioadmin}
+      MINIO_SECRET_KEY: ${MINIO_SECRET_KEY:?需在 .env 设置 MINIO_SECRET_KEY}
       MINIO_BUCKET: mneme
       DEEPSEEK_API_KEY: ${DEEPSEEK_API_KEY}
       SMS_PROVIDER: mock
@@ -93,10 +96,19 @@ services:
       # _assert_prod_safety 才会拒绝"默认JWT密钥/mock短信"启动。此前 MNEME_ENV
       # 只在 .env 里、没进 compose，pydantic 丢弃，那道门永远处于 dev 态形同虚设。
       MNEME_ENV: ${MNEME_ENV:-dev}
-      # 云模型：文本用阿里云通义千问(qwen-plus)、视觉OCR用通义千问视觉(qwen-vl-max)，
-      # 均中国网信办备案合规。需在 .env 配 DASHSCOPE_API_KEY（阿里云百炼 sk-...）。
-      # 未配 key 时文本会回落到内核默认、视觉无 provider——上线前必须配 key 并实测。
-      MNEME_LLM: qwen
+      # API 与本地 CLI/pytest 必须使用同一签名密钥；生产环境由安全闸门拒绝默认值。
+      JWT_SECRET: ${JWT_SECRET:-mneme-dev-secret-change-in-prod!}
+      # Learning Event v2 is the canonical append-only fact stream.  The API
+      # startup command applies migrations before this flag can write.
+      LEARNING_EVENT_V2_DUAL_WRITE_ENABLED: ${LEARNING_EVENT_V2_DUAL_WRITE_ENABLED:-1}
+      # 本机 Veya gateway：文本 veya1.2-128K、视觉 veya1.2-vl；
+      # gateway 通过 host.docker.internal:8791 暴露 OpenAI-compatible API。
+      MNEME_LLM: ${MNEME_LLM:-veya}
+      VEYA_BASE_URL: ${VEYA_BASE_URL:-http://host.docker.internal:8791/v1}
+      VEYA_API_KEY: ${VEYA_API_KEY:-}
+      VEYA_MODEL: ${VEYA_MODEL:-veya1.2-128K}
+      VEYA_VL_MODEL: ${VEYA_VL_MODEL:-veya1.2-vl}
+      # 云端 Qwen 保留为显式 fallback（MNEME_LLM=qwen 时使用）。
       DASHSCOPE_API_KEY: ${DASHSCOPE_API_KEY:-}
       QWEN_BASE_URL: ${QWEN_BASE_URL:-}
       QWEN_MODEL: ${QWEN_MODEL:-qwen-plus}
@@ -138,24 +150,29 @@ services:
 
   worker:
     build:
-      context: ..
-      dockerfile: mneme/Dockerfile
+      context: .
+      dockerfile: Dockerfile
     restart: always
     # 部署纪律 2（同 api 服务同名注释）：worker 也直接调 oprim solve_* 内核
     # （tasks.paper_tasks 等），同样需要自检把关，不能只在 api 侧检查一次。
-    command: sh -c "python -m obase.sandbox_selfcheck && celery -A tasks.celery_app worker --loglevel=info --concurrency=2"
+    command: sh -c "cd /tmp && python -m obase.sandbox_selfcheck && celery -A tasks.celery_app worker --loglevel=info --concurrency=2"
     environment:
-      PYTHONPATH: /app/vendor:/app:/app/packages/mneme-core
-      DATABASE_URL: postgresql+asyncpg://postgres:postgres@db:5432/mneme
+      PYTHONPATH: /app/vendor:/app:/app/packages/mneme-core:/app/packages/mneme-agent:/app/packages/event-schema
+      DATABASE_URL: postgresql+asyncpg://postgres:${POSTGRES_PASSWORD}@db:5432/mneme
       REDIS_URL: redis://redis:6379/0
       MINIO_ENDPOINT: minio:9000
-      MINIO_ACCESS_KEY: minioadmin
-      MINIO_SECRET_KEY: minioadmin
+      MINIO_ACCESS_KEY: ${MINIO_ACCESS_KEY:-minioadmin}
+      MINIO_SECRET_KEY: ${MINIO_SECRET_KEY:?需在 .env 设置 MINIO_SECRET_KEY}
       MINIO_BUCKET: mneme
       DEEPSEEK_API_KEY: ${DEEPSEEK_API_KEY}
       SMS_PROVIDER: mock
-      # 云模型同 api：阿里云通义千问文本+视觉（worker 跑异步 OCR/变式，须一致）
-      MNEME_LLM: qwen
+      # 与 api 一致：worker 的异步 OCR/变式也走本机 Veya。
+      MNEME_LLM: ${MNEME_LLM:-veya}
+      LEARNING_EVENT_V2_DUAL_WRITE_ENABLED: ${LEARNING_EVENT_V2_DUAL_WRITE_ENABLED:-1}
+      VEYA_BASE_URL: ${VEYA_BASE_URL:-http://host.docker.internal:8791/v1}
+      VEYA_API_KEY: ${VEYA_API_KEY:-}
+      VEYA_MODEL: ${VEYA_MODEL:-veya1.2-128K}
+      VEYA_VL_MODEL: ${VEYA_VL_MODEL:-veya1.2-vl}
       DASHSCOPE_API_KEY: ${DASHSCOPE_API_KEY:-}
       QWEN_BASE_URL: ${QWEN_BASE_URL:-}
       QWEN_MODEL: ${QWEN_MODEL:-qwen-plus}
@@ -192,7 +209,7 @@ services:
     restart: unless-stopped
     profiles: ["gpu"]  # 默认不启动，需要 GPU 时 --profile gpu
     ports:
-      - "8081:8080"
+      - "127.0.0.1:8081:8080"
     environment:
       ECHO_DEVICE: ${ECHO_DEVICE:-cuda}
       ECHO_HALF_BODY: ${ECHO_HALF_BODY:-1}
@@ -222,21 +239,53 @@ services:
     restart: always
     # 部署纪律 2（同 api/worker）：beat 本身不直接调 solve_* 内核，但共用同一
     # PYTHONPATH/镜像，自检成本极低，统一加上不留死角。
-    command: sh -c "python -m obase.sandbox_selfcheck && celery -A tasks.celery_app beat --loglevel=info --schedule=/tmp/celerybeat-schedule"
+    command: sh -c "cd /tmp && python -m obase.sandbox_selfcheck && celery -A tasks.celery_app beat --loglevel=info --schedule=/tmp/celerybeat-schedule"
     environment:
-      PYTHONPATH: /app/vendor:/app:/app/packages/mneme-core
-      DATABASE_URL: postgresql+asyncpg://postgres:postgres@db:5432/mneme
+      PYTHONPATH: /app/vendor:/app:/app/packages/mneme-core:/app/packages/mneme-agent:/app/packages/event-schema
+      DATABASE_URL: postgresql+asyncpg://postgres:${POSTGRES_PASSWORD}@db:5432/mneme
       REDIS_URL: redis://redis:6379/0
       MINIO_ENDPOINT: minio:9000
-      MINIO_ACCESS_KEY: minioadmin
-      MINIO_SECRET_KEY: minioadmin
+      MINIO_ACCESS_KEY: ${MINIO_ACCESS_KEY:-minioadmin}
+      MINIO_SECRET_KEY: ${MINIO_SECRET_KEY:?需在 .env 设置 MINIO_SECRET_KEY}
       MINIO_BUCKET: mneme
       SMS_PROVIDER: mock
+      # beat 导入 celery_app 时也会装配 provider，保持与 api/worker 同源。
+      MNEME_LLM: ${MNEME_LLM:-veya}
+      VEYA_BASE_URL: ${VEYA_BASE_URL:-http://host.docker.internal:8791/v1}
+      VEYA_API_KEY: ${VEYA_API_KEY:-}
+      VEYA_MODEL: ${VEYA_MODEL:-veya1.2-128K}
+      VEYA_VL_MODEL: ${VEYA_VL_MODEL:-veya1.2-vl}
     depends_on:
       redis:
         condition: service_healthy
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
     volumes:
       - .:/app
+    networks:
+      - default
+      - helios-net
+
+  # Fay 数字人大脑（Phase 3 升级：替代自写 aria_brain，Fay 框架驱动）
+  fay:
+    build:
+      context: ./docker/fay
+      dockerfile: Dockerfile
+    container_name: mneme-fay
+    restart: unless-stopped
+    environment:
+      DASHSCOPE_API_KEY: ${DASHSCOPE_API_KEY:-}
+      QWEN_BASE_URL: ${QWEN_BASE_URL:-}
+      QWEN_MODEL: ${QWEN_MODEL:-qwen3.7-plus}
+      VEYA_BASE_URL: ${VEYA_BASE_URL:-http://host.docker.internal:8791/v1}
+      VEYA_API_KEY: ${VEYA_API_KEY:-}
+      VEYA_MODEL: ${VEYA_MODEL:-veya1.2-128K}
+      VEYA_VL_MODEL: ${VEYA_VL_MODEL:-veya1.2-vl}
+      PYTHONUNBUFFERED: "1"
+    ports:
+      - "127.0.0.1:5001:5000"     # Flask GUI/管理（主机 5001 避免冲突）
+      - "127.0.0.1:10002:10002"   # WebSocket → 数字人渲染器
+      - "127.0.0.1:10003:10003"   # WebSocket → Web 管理面板
     networks:
       - default
       - helios-net

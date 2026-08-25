@@ -21,7 +21,7 @@ async def test_review_due_returns_variants():
     try:
         # Patch get_due_variants to avoid DB
         with patch(
-            "services.main.get_due_variants",
+            "services.routers.review.get_due_variants",
             return_value=[
                 {
                     "ku_id": "TEST-KC",

@@ -22,7 +22,7 @@ import time
 from collections import OrderedDict
 from typing import Any, Dict, Optional, TYPE_CHECKING
 
-from vendor.oprim.vlm_scene import (
+from oprim.vlm_scene import (
     AriaScenePerception,
     parse_text_scene,
     vlm_scene_describe,

@@ -66,7 +66,7 @@ async def test_next_objective_never_leaks_expected():
 
 
 @pytest.mark.asyncio
-async def test_get_kc_info_returns_rubric_for_qualitative():
+async def test_get_kc_info_returns_rubric_for_qualitative(g10a_kc_baseline):
     """GetKCInfo：ku004 有 rubric → gate_type=qualitative + rubric 4 维。"""
     async with SessionLocal() as db:
         info = await tool_get_kc_info(db, KU004)
@@ -77,7 +77,7 @@ async def test_get_kc_info_returns_rubric_for_qualitative():
 
 
 @pytest.mark.asyncio
-async def test_get_kc_info_no_rubric_for_quantitative():
+async def test_get_kc_info_no_rubric_for_quantitative(g10a_kc_baseline):
     """量化 KC 无 rubric → rubric=None（fail-safe：不可 assess）。"""
     async with SessionLocal() as db:
         info = await tool_get_kc_info(db, QUANT_KC)
@@ -86,7 +86,7 @@ async def test_get_kc_info_no_rubric_for_quantitative():
 
 
 @pytest.mark.asyncio
-async def test_rubric_left_join():
+async def test_rubric_left_join(g10a_kc_baseline):
     """A7 具名：GetKCInfo 对 gate.rubric 做 LEFT JOIN，两态都正确。
 
     命中 → rubric 非空 + gate_type=qualitative；未命中 → rubric=None + gate_type=quantitative。

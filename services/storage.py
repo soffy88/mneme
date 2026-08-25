@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import io
 from pathlib import Path
+
 from minio import Minio
 from minio.error import S3Error
 from obase.config import settings
@@ -54,6 +55,21 @@ def download_file(object_path: str) -> bytes:
         return resp.read()
     except S3Error as e:
         raise FileNotFoundError(f"Object not found: {object_path}") from e
+
+
+def delete_file(object_path: str) -> None:
+    """删除 MinIO blob。对象不存在时静默（幂等），其余错误由调用方决定是否吞掉。
+
+    修复审计项"textbook_files 删除只删 DB 行、MinIO blob 残留"：物理删除教材
+    文件时（purge_service 硬删、未来的删除端点）同步清掉存储层对象，不留孤儿 blob。
+    """
+    c = _client()
+    try:
+        c.remove_object(TEXTBOOKS_BUCKET, object_path)
+    except S3Error as e:
+        if e.code == "NoSuchKey":
+            return
+        raise
 
 
 def content_type_for(file_type: str) -> str:

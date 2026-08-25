@@ -154,9 +154,9 @@ async def analyze_paper_workflow(
                     CognitiveUpdateInput,
                 )
 
-                # 获取当前状态
+                # 获取当前状态（写路径：行锁防并发丢更新）
                 state, card_dict = await store.get_or_create(
-                    input_data.student_id, kc_id
+                    input_data.student_id, kc_id, for_update=True
                 )
 
                 # 算法更新（T.6：步骤证据只在 careless/dontknow 近平局时打破平局，

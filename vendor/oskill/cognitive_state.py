@@ -41,6 +41,8 @@ class CognitiveUpdateInput(BaseModel):
     min_review_interval_hours: float = 0.0
     # 个性化 FSRS 权重（按群体/学生从真实复习日志优化）；None → 全局默认（行为不变）。
     fsrs_parameters: tuple | None = None
+    # Live scheduling keeps FSRS interval fuzzing; deterministic replay disables it.
+    fsrs_enable_fuzzing: bool = True
     # 步骤证据（T.6，verify_step 确定性链产出，仅答错时有意义）：
     #   "careless" —— 步骤全部通过校验（或仅末步出错）→ 更像粗心；
     #   "dontknow" —— 首个错步出现在前 1/3 → 更像不会。
@@ -142,7 +144,11 @@ def cognitive_update(*, input: CognitiveUpdateInput) -> CognitiveUpdateResult:
     )
     if schedule_advanced:
         new_card = fsrs_review(
-            card_dict=input.card_dict, rating=rating, now=now, parameters=fsrs_params
+            card_dict=input.card_dict,
+            rating=rating,
+            now=now,
+            parameters=fsrs_params,
+            enable_fuzzing=input.fsrs_enable_fuzzing,
         )
     else:
         # 集中练习去抖：保持原调度（不推进 due/stability），掌握度已在步骤2更新。

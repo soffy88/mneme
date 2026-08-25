@@ -226,7 +226,7 @@ async def test_cold_start_socratic_state_serializable(client, student, db, bypas
             new=AsyncMock(return_value=fake_result),
         ),
         patch(
-            "services.main.get_or_create_mission",
+            "services.routers.plan.get_or_create_mission",
             new=_noon_mission,
         ),
     ):

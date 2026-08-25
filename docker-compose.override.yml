@@ -1,10 +1,12 @@
-# W2a S2 本地 dev override —— 把仓外 platform/3O/oservi 挂进容器，供引擎装配 import。
-# 用 override 文件而非改 docker-compose.yml（后者混有会话前无关改动，不碰）。
-# 机器相关绝对路径（本 pilot 机）；CI/他机需相应调整或改为 pip install。
+# 本地 dev override：代码目录挂载，保持与生产相同的仓内 chat loop。
+# 用 override 文件而非改 docker-compose.yml（后者混有会话前无关改动）。
 services:
   api:
     volumes:
       - .:/app
-      - /data/soffy/projects/platform/3O/oservi:/opt/oservi_pkg:ro
     environment:
-      PYTHONPATH: /app/vendor:/app:/app/packages/mneme-core:/app/packages/mneme-agent:/opt/oservi_pkg
+      PYTHONPATH: /app/vendor:/app:/app/packages/mneme-core:/app/packages/mneme-agent:/app/packages/event-schema
+      MNEME_LLM: veya
+      VEYA_BASE_URL: http://host.docker.internal:8791/v1
+      VEYA_MODEL: veya1.2-128K
+      VEYA_VL_MODEL: veya1.2-vl

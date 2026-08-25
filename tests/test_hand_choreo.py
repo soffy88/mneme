@@ -2,8 +2,8 @@
 
 from __future__ import annotations
 
-from vendor.oprim.midi_parse import MidiFeature
-from vendor.oskill.hand_choreo import (
+from oprim.midi_parse import MidiFeature
+from oskill.hand_choreo import (
     HandChoreoParams,
     choreograph_hands,
     gesture_hands,
@@ -156,25 +156,43 @@ class TestHandChoreoParams:
 
 
 class TestDirectorHandChoreo:
-    """验证 Director 输出包含 hand_choreo 字段。"""
+    """Fay 大脑接管后（3a54124），Director 不再内嵌 hand_choreo 字段——
+    手部编排改由 oskill 生成、经 EchoDriveInput.hand_pose 传入 EchoMimic。
+    这里验证当前契约：Director heuristic 产出合法 action，且 oskill 能为
+    对应 action 生成正确 pattern 的手部参数。"""
 
-    def test_heuristic_play_piano_has_choreo(self):
+    def test_heuristic_play_piano_action(self):
+        import random
+
         from services.aria_director import AriaDirectorInput, _heuristic
 
+        # tick 路径有 40% 随机概率转 speak——固定种子保证确定性
+        random.seed(0)
         inp = AriaDirectorInput(event="tick")
         out = _heuristic(inp)
-        assert out.hand_choreo is not None
-        assert out.hand_choreo["pattern_label"] == "melody"
+        assert out.action == "play_piano"
+        # 手部编排由 oskill 按 action 生成（不再挂在 Director 输出上）
+        h = choreograph_hands(
+            MidiFeature(
+                pattern="melody",
+                hand_zone="both",
+                note_count=4,
+                avg_pitch=64.0,
+                density=1.5,
+            )
+        )
+        assert h.pattern_label == "melody"
 
-    def test_heuristic_speak_has_gesture_choreo(self):
+    def test_heuristic_speak_action_and_gesture(self):
         from services.aria_director import AriaDirectorInput, _heuristic
 
         inp = AriaDirectorInput(event="user_message", message="hello")
         out = _heuristic(inp)
-        assert out.hand_choreo is not None
-        assert out.hand_choreo["pattern_label"] == "gesture"
+        assert out.action == "speak"
+        g = gesture_hands(intensity=0.4)
+        assert g.pattern_label == "gesture"
 
-    def test_heuristic_idle_has_idle_choreo(self):
+    def test_heuristic_idle_action_and_idle_hands(self):
         from services.aria_director import AriaDirectorInput, AriaDirectorState, _heuristic
 
         inp = AriaDirectorInput(
@@ -182,5 +200,6 @@ class TestDirectorHandChoreo:
             state=AriaDirectorState(mode="conversation"),
         )
         out = _heuristic(inp)
-        assert out.hand_choreo is not None
-        assert out.hand_choreo["pattern_label"] == "idle"
+        assert out.action == "idle"
+        i = idle_hands()
+        assert i.pattern_label == "idle"

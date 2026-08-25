@@ -1,0 +1,10 @@
+[project]
+name = "mneme-event-schema"
+version = "0.1.0"
+description = "Versioned Learning Event and replay contracts for Mneme."
+requires-python = ">=3.12"
+dependencies = ["pydantic>=2.0"]
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.backends._legacy:_Backend"

@@ -9,16 +9,19 @@ from unittest.mock import patch
 
 import pytest
 from httpx import ASGITransport, AsyncClient
+from obase.auth import create_access_token
+from obase.config import settings
 from sqlalchemy import delete, update
 from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_async_engine
 
-from obase.config import settings
-from obase.auth import create_access_token
 from services.main import app
 from services.models import (
-    Highlight, ReadingNote, TextbookFile, User, UserRole,
+    Highlight,
+    ReadingNote,
+    TextbookFile,
+    User,
+    UserRole,
 )
-
 
 # ── fixtures ──────────────────────────────────────────────────────────────────
 
@@ -84,8 +87,12 @@ def _mock_storage():
             raise FileNotFoundError(path)
         return _store[path]
 
-    upload_patch = patch("services.main.upload_file", side_effect=fake_upload)
-    download_patch = patch("services.main.download_file", side_effect=fake_download)
+    upload_patch = patch(
+        "services.routers.textbook.upload_file", side_effect=fake_upload
+    )
+    download_patch = patch(
+        "services.routers.textbook.download_file", side_effect=fake_download
+    )
     return upload_patch, download_patch
 
 
@@ -211,21 +218,95 @@ async def test_download_platform_file_accessible_by_all(client, student_a, stude
     ))
     await db.commit()
 
-    up, dl = _mock_storage()
-    # 预存内容到 mock store
-    with up, dl:
-        # 直接 inject content into the mock's store via upload
-        import services.main as main_mod
-        with patch.object(main_mod, "download_file", side_effect=lambda p: content):
-            dl_resp = await client.get(
-                f"/v1/textbook-files/{file_id}/content",
-                headers={"Authorization": f"Bearer {_token(student_b)}"},
-            )
+    with patch(
+        "services.routers.textbook.download_file", side_effect=lambda p: content
+    ):
+        dl_resp = await client.get(
+            f"/v1/textbook-files/{file_id}/content",
+            headers={"Authorization": f"Bearer {_token(student_b)}"},
+        )
     assert dl_resp.status_code == 200
 
     # cleanup
     await db.execute(delete(TextbookFile).where(TextbookFile.id == file_id))
     await db.commit()
+
+
+@pytest.mark.asyncio
+async def test_upload_oversize_rejected(client, student_a):
+    """C3：超过 50MB 的文件被拒 413（限流防滥用）。"""
+    from services.routers.textbook import MAX_UPLOAD_BYTES
+
+    up, dl = _mock_storage()
+    with up, dl:
+        resp = await client.post(
+            "/v1/textbook-files/upload",
+            files={"file": ("big.pdf", b"x" * (MAX_UPLOAD_BYTES + 1), "application/pdf")},
+            headers={"Authorization": f"Bearer {_token(student_a)}"},
+        )
+    assert resp.status_code == 413, resp.text
+
+
+@pytest.mark.asyncio
+async def test_upload_textbook_id_non_admin_is_self(client, student_a, db):
+    """C3 越权修复：非 admin 学生即使带 textbook_id 上传 → 按自传处理（owner=自己）。
+
+    平台预置（owner_student_id=None）必须由 ADMIN_USER_IDS 白名单内 admin 触发；
+    admin 白名单判定失败 → 不得落为平台文件（防普通学生注平台课程库）。"""
+    from services.models import Textbook
+
+    textbook_id = str(uuid.uuid4())
+    db.add(Textbook(
+        id=textbook_id, subject="数学", grade="高一", edition="人教A版", book_name="必修一",
+    ))
+    await db.commit()
+    up, dl = _mock_storage()
+    with up, dl:
+        resp = await client.post(
+            "/v1/textbook-files/upload",
+            files={"file": ("t.pdf", b"%PDF t", "application/pdf")},
+            data={"textbook_id": textbook_id},
+            headers={"Authorization": f"Bearer {_token(student_a)}"},
+        )
+    assert resp.status_code == 201, resp.text
+    from sqlalchemy import select
+
+    row = (
+        await db.execute(
+            select(TextbookFile).where(TextbookFile.id == resp.json()["file_id"])
+        )
+    ).scalar_one()
+    assert str(row.owner_student_id) == str(student_a)
+
+
+@pytest.mark.asyncio
+async def test_upload_textbook_id_admin_is_platform(client, student_a, db, monkeypatch):
+    """C3：ADMIN_USER_IDS 白名单内的 admin 带 textbook_id → 平台预置（owner=None）。"""
+    from services.models import Textbook
+
+    monkeypatch.setenv("ADMIN_USER_IDS", str(student_a))
+    textbook_id = str(uuid.uuid4())
+    db.add(Textbook(
+        id=textbook_id, subject="数学", grade="高一", edition="人教A版", book_name="必修一",
+    ))
+    await db.commit()
+    up, dl = _mock_storage()
+    with up, dl:
+        resp = await client.post(
+            "/v1/textbook-files/upload",
+            files={"file": ("t.pdf", b"%PDF t", "application/pdf")},
+            data={"textbook_id": textbook_id},
+            headers={"Authorization": f"Bearer {_token(student_a)}"},
+        )
+    assert resp.status_code == 201, resp.text
+    from sqlalchemy import select
+
+    row = (
+        await db.execute(
+            select(TextbookFile).where(TextbookFile.id == resp.json()["file_id"])
+        )
+    ).scalar_one()
+    assert row.owner_student_id is None
 
 
 # ═══════════════════════════════════════════════════════════════════

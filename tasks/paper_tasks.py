@@ -12,15 +12,25 @@ import uuid as _uuid
 from tasks.celery_app import celery_app
 
 
+class _RetryableError(Exception):
+    """瞬时失败（MinIO 抖动/内核临时异常）→ 走 self.retry 指数重试；
+    永久性失败（paper 不存在/无图）直接返回 failed，不重试。"""
+
+
 @celery_app.task(bind=True, max_retries=3, default_retry_delay=10, name="tasks.paper_tasks.process_paper")
 def process_paper(self, paper_id: str) -> dict:
-    """Assembly task: read DB → call omodul.analyze_paper_workflow → commit."""
-    return asyncio.run(_process_paper_async(paper_id))
+    """Assembly task: read DB → call omodul.analyze_paper_workflow → commit.
+
+    C5 修复：瞬时失败不再裸 return failed（吞错不重试），改用 self.retry(exc=...)
+    交给 Celery 按 backoff 重试；重试耗尽后原异常照常上报任务失败。
+    """
+    try:
+        return asyncio.run(_process_paper_async(paper_id))
+    except _RetryableError as exc:
+        raise self.retry(exc=exc) from exc
 
 
 async def _process_paper_async(paper_id: str) -> dict:
-    from sqlalchemy import select, update
-
     from obase.cognitive_store import PgStore
     from obase.config import settings
     from obase.db import SessionLocal
@@ -30,6 +40,10 @@ async def _process_paper_async(paper_id: str) -> dict:
         AnalyzePaperInput,
         analyze_paper_workflow,
     )
+    from sqlalchemy import select, update
+
+    from services.feature_flags import learning_event_v2_dual_write_enabled
+    from services.learning_event_service import append_legacy_interaction_as_v2
     from services.models import Paper, PaperStatus
 
     pid = _uuid.UUID(paper_id)
@@ -38,6 +52,8 @@ async def _process_paper_async(paper_id: str) -> dict:
         paper = (await db.execute(select(Paper).where(Paper.id == pid))).scalar_one_or_none()
         if not paper:
             return {"status": "failed", "error": "paper not found"}
+        if paper.student_id is None:
+            return {"status": "failed", "error": "paper has no student"}
 
         object_names = list((paper.image_urls or {}).values())
         if not object_names:
@@ -58,12 +74,32 @@ async def _process_paper_async(paper_id: str) -> dict:
                     resp.release_conn()
                 image_b64_list.append(base64.b64encode(data).decode())
         except Exception as exc:
-            await db.execute(update(Paper).where(Paper.id == pid).values(status=PaperStatus.failed))
-            await db.commit()
-            return {"status": "failed", "error": f"image fetch failed: {exc}"}
+            # 瞬时失败（MinIO 抖动/网络）→ 重试而非一次性打 failed
+            raise _RetryableError(f"image fetch failed: {exc}") from exc
 
         try:
-            store = PgStore(db)
+            async def _write_learning_event_v2(
+                event_id: _uuid.UUID,
+                event_student_id: _uuid.UUID,
+                event_kc_id: str,
+                event_data: dict,
+            ) -> object:
+                return await append_legacy_interaction_as_v2(
+                    db,
+                    event_id=event_id,
+                    student_id=event_student_id,
+                    knowledge_point=event_kc_id,
+                    event_data=event_data,
+                )
+
+            store = PgStore(
+                db,
+                learning_event_writer=(
+                    _write_learning_event_v2
+                    if learning_event_v2_dual_write_enabled()
+                    else None
+                ),
+            )
             config = AnalyzePaperConfig(subject=paper.subject or "math")
             inp = AnalyzePaperInput(
                 paper_id=pid,
@@ -86,6 +122,5 @@ async def _process_paper_async(paper_id: str) -> dict:
             return {"status": "done", "wrong_count": wrong_count}
         except Exception as exc:
             await db.rollback()
-            await db.execute(update(Paper).where(Paper.id == pid).values(status=PaperStatus.failed))
-            await db.commit()
-            return {"status": "failed", "error": str(exc)}
+            # 内核/LLM/OCR 瞬时异常 → 重试（保留 DB 回滚，避免半成品状态提交）
+            raise _RetryableError(str(exc)) from exc

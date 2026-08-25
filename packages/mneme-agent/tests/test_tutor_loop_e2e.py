@@ -1,24 +1,29 @@
 """W2a S2 W5 — 引擎驱动的 DoD 三桩 e2e（撤销 R2 A-7 的工具序列临时方案）。
 
-真 oservi AgenticLoop.session() 多步循环驱动三桩广东真 KC 跑到 complete：
+真 LocalAgenticLoop.session() 多步循环驱动三桩广东真 KC 跑到 complete：
 scripted llm_caller 读上一个 tool_result + 工具名 → 决定下一个 tool_use（ReAct）。
 工具全走 HTTP /mcp/*（agent 零 DB）。定性桩经 AssessExplanation（真 qualitative_verifier
 + 注入伪 verifier_llm）→ ReportResult。**禁手写循环**：循环逻辑全在引擎 session。
 
 harness（本测试）有 DB：建 pilot 学生 + 断言写入 + 清理；agent（tutor_loop）零 DB。
-需 oservi（compose mount /opt/oservi_pkg）+ 运行中的 api（/mcp 活）。
+需运行中的 api（/mcp 活）；agent loop 本身不需要 oservi。
 """
 
 from __future__ import annotations
 
 import asyncio
 import json
+import os
 import uuid
 
 import pytest
 
-pytest.importorskip("oservi")
 pytest.importorskip("mneme_core")
+
+pytestmark = pytest.mark.skipif(
+    os.environ.get("MNEME_LIVE_INTEGRATION") != "1",
+    reason="requires a running Mneme API; set MNEME_LIVE_INTEGRATION=1",
+)
 
 from mneme_agent.assembly.tutor_loop import build_tutor_loop  # noqa: E402
 

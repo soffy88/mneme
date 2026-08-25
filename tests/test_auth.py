@@ -11,18 +11,17 @@ C.1 认证测试
 from __future__ import annotations
 
 import uuid
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 
 import pytest
 import redis.asyncio as aioredis
-from httpx import AsyncClient, ASGITransport
-
+from httpx import ASGITransport, AsyncClient
 from obase.config import settings
 from obase.db import SessionLocal
-from services.main import app
-from services.models import User, GuardianConsent, ParentStudent
 from sqlalchemy import delete, select, update
 
+from services.main import app
+from services.models import GuardianConsent, ParentStudent, User
 
 # ── helpers ───────────────────────────────────────────────────────────────────
 
@@ -41,7 +40,12 @@ async def _clean_phone(phone: str) -> None:
 
     r = aioredis.from_url(settings.REDIS_URL, decode_responses=True)
     try:
-        await r.delete(f"sms:code:{phone}", f"sms:limit:{phone}")
+        await r.delete(
+            f"sms:code:{phone}",
+            f"sms:limit:{phone}",
+            f"sms:attempt:{phone}",
+            f"sms:lock:{phone}",
+        )
     finally:
         await r.aclose()
 
@@ -275,7 +279,7 @@ async def test_deleted_user_cannot_login_or_query(client):
         await s.execute(
             update(User)
             .where(User.id == uuid.UUID(student_id))
-            .values(deleted_at=datetime.now(timezone.utc))
+            .values(deleted_at=datetime.now(UTC))
         )
         await s.commit()
 
@@ -380,3 +384,67 @@ async def test_register_parent_binds_child(client):
     finally:
         await _clean_phone("13988880003")
         await _cleanup()
+
+
+@pytest.mark.asyncio
+async def test_verify_code_lockout_after_many_attempts(client):
+    """C2 防暴力破解：验证码连续输错超过上限 → 即使输对也拒绝（通道锁定）。
+
+    用真实验证码（不走 MOCK_CODE 旁路）：注入 654321，连续输错 999999 达上限，
+    随后正确 654321 也返回 400（被锁）。"""
+    from services.auth_service import MAX_VERIFY_ATTEMPTS
+
+    phone = "13977776666"
+    await _clean_phone(phone)
+    try:
+        # 注入一个真实验证码（非 MOCK_CODE，强制走真实校验分支）
+        await _inject_code(phone, "654321")
+
+        body = {
+            "phone": phone,
+            "code": "999999",
+            "name": "Lockout",
+            "birth_date": "2000-01-01",
+            "grade": "高一",
+        }
+        # 输错达到上限-1 次：仍 400，不锁
+        for _ in range(MAX_VERIFY_ATTEMPTS - 1):
+            res = await client.post("/v1/auth/register/student", json=body)
+            assert res.status_code == 400, res.text
+        # 第 MAX 次输错后已锁；再输对也被拒
+        res = await client.post("/v1/auth/register/student", json=body)
+        assert res.status_code == 400, res.text
+        body["code"] = "654321"
+        res = await client.post("/v1/auth/register/student", json=body)
+        assert res.status_code == 400, res.text
+        assert "验证码" in res.json()["detail"]
+    finally:
+        await _clean_phone(phone)
+
+
+@pytest.mark.asyncio
+async def test_verify_code_attempts_reset_on_success(client):
+    """C2：验证码输对后计数清零——此后再次输错从零计，不会立刻被锁。"""
+
+    phone = "13966665555"
+    await _clean_phone(phone)
+    try:
+        # 输错 1 次
+        await _inject_code(phone, "654321")
+        body = {
+            "phone": phone,
+            "code": "999999",
+            "name": "Reset",
+            "birth_date": "2000-01-01",
+            "grade": "高一",
+        }
+        res = await client.post("/v1/auth/register/student", json=body)
+        assert res.status_code == 400, res.text
+
+        # 正确码成功注册（消费 code），attempt 计数随成功删除
+        await _inject_code(phone, "654321")
+        body["code"] = "654321"
+        res = await client.post("/v1/auth/register/student", json=body)
+        assert res.status_code == 201, res.text
+    finally:
+        await _clean_phone(phone)

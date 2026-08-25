@@ -33,7 +33,8 @@ from oprim.llm_oprims import (
 from obase.sympy_runtime import SymPyRuntime
 from oprim.verify_step import StepVerifyInput, verify_step
 from oskill.solve_and_visualize import SolveAndVisualizeInput, solve_and_visualize
-from services.models import WrongQuestion, ErrorType
+from obase.domain_enums import ErrorType
+from services.models import WrongQuestion
 from data.guangdong_math_kc import KC_LIST
 
 _runtime = SymPyRuntime()

@@ -40,8 +40,13 @@ T0 = datetime(2026, 1, 1, tzinfo=timezone.utc)
 # 与 scripts/seed_priors.py 的题型猜测率一致（默认先验的题型展开）
 GUESS_RATES = {"choice": 0.25, "fill": 0.05, "solve": 0.02}
 
-# 参与实验的 KC 池：取字典前 12 个（覆盖多模块，确定性选取）
-KC_POOL = KC_LIST[:12]
+# 参与实验的 KC 池：跨模块等距采样 12 个（确定性选取）。
+# 不能取字典前 12 个：KC 字典按教材章节排序，前 12 个会全挤在集合/逻辑/
+# 不等式基础模块（高 p_guess 低难度），世界构成单一化压低 AUC 上限，
+# 与"覆盖多模块"的池子设计意图相违（KC v2 迁移 29→62 后暴露）。
+_KC_POOL_SIZE = 12
+_KC_POOL_STRIDE = max(1, len(KC_LIST) // _KC_POOL_SIZE)
+KC_POOL = KC_LIST[::_KC_POOL_STRIDE][:_KC_POOL_SIZE]
 KC_BY_ID = {kc["kc_id"]: kc for kc in KC_POOL}
 
 

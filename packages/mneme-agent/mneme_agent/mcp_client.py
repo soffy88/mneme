@@ -1,7 +1,6 @@
 """MCP client — agent's ONLY interface to core. Never imports mneme_core directly."""
 from __future__ import annotations
 import httpx
-from typing import Optional
 
 class McpClient:
     def __init__(self, base_url: str = "http://localhost:8100"):

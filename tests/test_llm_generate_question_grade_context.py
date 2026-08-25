@@ -26,12 +26,60 @@ pytest.importorskip("mneme_core")
 
 from obase.db import SessionLocal  # noqa: E402
 from services.mcp_router import _GRADE_ZH, _llm_generate_question  # noqa: E402
-from services.models import User, UserRole  # noqa: E402
+from services.models import KnowledgeUnit, Textbook, User, UserRole, KnowledgeCluster  # noqa: E402
+from sqlalchemy import delete, select  # noqa: E402
 
 # 真实撞过原始 bug 的 G1 KU——41 条 wrong_questions 引用它，但题库过滤器
 # 硬编码只认 profiler_analysis.grade=="高一"，所以这个 G1 KU 的真实请求会
 # 可靠地落到 LLM 兜底分支（同原始事故的真实触发路径一致）。
 G1_KU_WITH_HARDCODED_HIGH_SCHOOL_BANK_FILTER = "RENJIAO-G1-MATH-S-ku-1-5的认识"
+G1_TEXTBOOK_ID = "RENJIAO-G1-MATH-S"
+G1_CLUSTER_ID = "RENJIAO-G1-MATH-S-c01"
+
+
+@pytest.fixture
+async def g1_ku_baseline():
+    """自包含 G1 KU 夹具：真实 G1 教材已存在于测试库，这里只种那个 G1 KU
+    及其 cluster，让 tool_request_question 能外联查到 Textbook.grade == 'G1'。测完即清。"""
+    ku_id = G1_KU_WITH_HARDCODED_HIGH_SCHOOL_BANK_FILTER
+    cluster_id = G1_CLUSTER_ID
+    async with SessionLocal() as db:
+        res = await db.execute(select(Textbook).where(Textbook.id == G1_TEXTBOOK_ID))
+        tb = res.scalars().first()
+        if not tb:
+            pytest.skip(f"G1 教材 {G1_TEXTBOOK_ID} 不在测试库，跳过年级上下文测试")
+        res = await db.execute(select(KnowledgeCluster).where(KnowledgeCluster.id == cluster_id))
+        if res.scalars().first() is None:
+            db.add(
+                KnowledgeCluster(
+                    id=cluster_id,
+                    textbook_id=G1_TEXTBOOK_ID,
+                    name="基础概念",
+                    display_order=1,
+                )
+            )
+            await db.flush()
+        res = await db.execute(select(KnowledgeUnit).where(KnowledgeUnit.id == ku_id))
+        if res.scalars().first() is None:
+            db.add(
+                KnowledgeUnit(
+                    id=ku_id,
+                    textbook_id=G1_TEXTBOOK_ID,
+                    cluster_id=cluster_id,
+                    name="1～5的认识",
+                    description="认识 1 到 5 的数",
+                    difficulty=0.2,
+                    exam_frequency="high",
+                    ku_type="concept",
+                    verified=False,
+                )
+            )
+            await db.commit()
+    yield {"ku_id": ku_id, "cluster_id": cluster_id}
+    async with SessionLocal() as db:
+        await db.execute(delete(KnowledgeUnit).where(KnowledgeUnit.id == ku_id))
+        await db.execute(delete(KnowledgeCluster).where(KnowledgeCluster.id == cluster_id))
+        await db.commit()
 
 
 def _fake_caller(captured: list):
@@ -109,7 +157,7 @@ async def test_unknown_grade_degrades_to_generic_label_not_crash():
 
 
 @pytest.mark.asyncio
-async def test_end_to_end_real_g1_ku_passes_real_grade_to_fallback():
+async def test_end_to_end_real_g1_ku_passes_real_grade_to_fallback(g1_ku_baseline):
     """端到端：真实撞过原始 bug 的 G1 KU，经 tool_request_question 真实
     联表查询，确认传给 _llm_generate_question 的 grade 确实是 "G1"（不是
     None/不是硬编码），不需要真的打 LLM。"""
@@ -127,7 +175,7 @@ async def test_end_to_end_real_g1_ku_passes_real_grade_to_fallback():
             ),
         ) as mock_gen:
             await tool_request_question(
-                db, sid, G1_KU_WITH_HARDCODED_HIGH_SCHOOL_BANK_FILTER
+                db, sid, g1_ku_baseline["ku_id"]
             )
 
         assert mock_gen.await_args is not None

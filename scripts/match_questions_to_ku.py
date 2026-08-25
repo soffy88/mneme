@@ -41,10 +41,15 @@ except ImportError as e:
 
 # ── 配置 ──────────────────────────────────────────────────────────────────────
 
-DB_URL      = os.environ.get("DATABASE_URL", "postgresql://postgres:postgres@db:5432/mneme")
-OLLAMA_URL  = os.environ.get("OLLAMA_URL", "http://localhost:11434")
-OLLAMA_MODEL = os.environ.get("OLLAMA_MODEL", "qwen2.5:7b")
-DS_KEY      = os.environ.get("DEEPSEEK_API_KEY", "")
+DB_URL = os.environ.get("DATABASE_URL", "postgresql://postgres:postgres@db:5432/mneme")
+# 容器内默认走 host.docker.internal；可用 OLLAMA_URL / OLLAMA_BASE_URL 覆盖
+OLLAMA_URL = (
+    os.environ.get("OLLAMA_URL")
+    or os.environ.get("OLLAMA_BASE_URL")
+    or "http://host.docker.internal:11434"
+).rstrip("/")
+OLLAMA_MODEL = os.environ.get("OLLAMA_MODEL", "qwen3-8b")
+DS_KEY = os.environ.get("DEEPSEEK_API_KEY", "")
 
 # 高中合并候选池（G10-G12题跨册）
 _HS_TB = [
@@ -114,14 +119,46 @@ def keyword_filter(question: str, kus: list[dict], top_n: int = 40) -> list[dict
 
 
 def build_ku_text(kus: list[dict]) -> str:
+    # 本机 Ollama 默认 context≈2048；过长候选会 400 exceed_context_size
     lines = []
     for ku in kus:
-        desc = (ku.get("description") or "")[:80]
-        lines.append(f'- id:"{ku["id"]}" | {ku["name"]} | {desc}')
+        desc = (ku.get("description") or "")[:40]
+        lines.append(f'- {ku["id"]} | {ku["name"]}' + (f" | {desc}" if desc else ""))
     return "\n".join(lines)
 
 
-# ── Ollama 匹配（qwen2.5:7b，format:json）────────────────────────────────────
+def adjacent_grades(grade: str) -> list[str]:
+    """CMM 年级标签常与人教册次差一档（如 g8 代数题考点在 G9）。
+
+    候选池用 grade±1，避免锁死在错误册导致 0 命中。
+    高中仍用全高中池（g10-g12 互换）。
+    """
+    if grade in ("g10", "g11", "g12"):
+        return ["g10", "g11", "g12"]
+    m = re.match(r"g(\d+)$", grade)
+    if not m:
+        return [grade]
+    n = int(m.group(1))
+    out: list[str] = []
+    for k in (n - 1, n, n + 1):
+        if 1 <= k <= 9:
+            out.append(f"g{k}")
+    return out or [grade]
+
+
+def merge_ku_lists(ku_cache: dict[str, list[dict]], grades: list[str]) -> list[dict]:
+    seen: set[str] = set()
+    out: list[dict] = []
+    for g in grades:
+        for ku in ku_cache.get(g, []):
+            kid = ku.get("id") or ""
+            if kid and kid not in seen:
+                seen.add(kid)
+                out.append(ku)
+    return out
+
+
+# ── Ollama 匹配（默认 qwen3-8b）───────────────────────────────────────────────
 
 def ollama_match(client: httpx.Client, question_text: str, grade: str, ku_text: str) -> dict:
     grade_cn = {
@@ -130,14 +167,14 @@ def ollama_match(client: httpx.Client, question_text: str, grade: str, ku_text: 
         "g9": "九年级", "g10": "高一", "g11": "高二", "g12": "高三",
     }.get(grade, grade)
 
-    # qwen3.5/gemma4等thinking模型用 think:False；qwen2.5用 format:json
+    # qwen3/gemma4 等 thinking 模型用 think:False；其余用 format:json
     is_thinking = any(k in OLLAMA_MODEL.lower() for k in ["qwen3", "gemma4"])
     payload: dict[str, Any] = {
         "model": OLLAMA_MODEL,
         "messages": [
             {"role": "system", "content": LLM_SYSTEM},
             {"role": "user", "content": (
-                f"题目（{grade_cn}数学）：\n{question_text[:600]}\n\n"
+                f"题目（标注年级约{grade_cn}，考点可能相邻年级）：\n{question_text[:600]}\n\n"
                 f"候选KU列表：\n{ku_text}"
             )},
         ],
@@ -151,17 +188,28 @@ def ollama_match(client: httpx.Client, question_text: str, grade: str, ku_text: 
 
     t0 = time.time()
     try:
-        resp = client.post(f"{OLLAMA_URL}/api/chat", json=payload, timeout=120)
-        resp.raise_for_status()
-        raw = resp.json()["message"]["content"].strip()
-        raw = re.sub(r'<think>.*?</think>', '', raw, flags=re.DOTALL).strip()
-        try:
-            data = json.loads(raw)
-        except json.JSONDecodeError:
-            m = re.search(r'\{.*\}', raw, re.DOTALL)
-            data = json.loads(m.group()) if m else {}
+        resp = client.post(f"{OLLAMA_URL}/api/chat", json=payload, timeout=180)
+        if resp.status_code >= 400:
+            data = {
+                "error": f"HTTP {resp.status_code}: {resp.text[:200]}",
+                "matched": [],
+                "confidence": 0,
+            }
+        else:
+            raw = (resp.json().get("message") or {}).get("content") or ""
+            raw = re.sub(r"<think>.*?</think>", "", raw, flags=re.DOTALL).strip()
+            if "```" in raw:
+                raw = re.sub(r"^```(?:json)?\s*", "", raw)
+                raw = re.sub(r"\s*```$", "", raw)
+            try:
+                data = json.loads(raw)
+            except json.JSONDecodeError:
+                m = re.search(r"\{.*\}", raw, re.DOTALL)
+                data = json.loads(m.group()) if m else {"matched": [], "confidence": 0, "error": "json_parse"}
+            if not isinstance(data, dict):
+                data = {"matched": [], "confidence": 0, "error": "non_object"}
     except Exception as e:
-        data = {"error": str(e)[:80]}
+        data = {"error": str(e)[:200], "matched": [], "confidence": 0}
     data["_elapsed"] = time.time() - t0
     return data
 
@@ -222,47 +270,59 @@ async def process_one(
             print(f"  [{idx}/{total}] ⚠ 无法提取年级 {wq_id[:8]}")
             return {"wq_id": wq_id, "status": "no_grade"}
 
-        kus = ku_cache.get(grade, [])
+        band = adjacent_grades(grade)
+        kus = merge_ku_lists(ku_cache, band)
         if not kus:
-            print(f"  [{idx}/{total}] ⚠ {grade}无KU")
+            print(f"  [{idx}/{total}] ⚠ {grade} 邻域{band}无KU")
             return {"wq_id": wq_id, "status": "no_ku", "grade": grade}
 
         # 图片题标记
         has_image = "<ImageHere>" in qtxt
+        ku_by_id = {k["id"]: k for k in kus if k.get("id")}
 
-        # keyword 预筛 → 40候选
-        candidates = keyword_filter(qtxt, kus, top_n=40)
+        # keyword 预筛 → 12 候选（适配本机 Ollama 小 context ≈2048）
+        candidates = keyword_filter(qtxt, kus, top_n=12)
+        cand_ids = {c["id"] for c in candidates if c.get("id")}
         ku_text = build_ku_text(candidates)
 
         # Ollama 匹配（在线程里跑同步 httpx）
         result = await asyncio.to_thread(ollama_match, ollama, qtxt, grade, ku_text)
         elapsed = result.pop("_elapsed", 0)
-        matched = result.get("matched", [])
-        conf    = float(result.get("confidence", 0))
+        err = result.get("error")
+        matched = result.get("matched") or []
+        try:
+            conf = float(result.get("confidence") or 0)
+        except (TypeError, ValueError):
+            conf = 0.0
         model_used = OLLAMA_MODEL
         used_ds = False
 
         # G10-G12 低置信 → DeepSeek 兜底
         is_hs = grade in ("g10", "g11", "g12")
-        if is_hs and conf < 0.7 and ds_client is not None:
+        if is_hs and conf < 0.7 and ds_client is not None and not err:
             ds_result = await asyncio.to_thread(deepseek_match, ds_client, qtxt, grade, ku_text)
             ds_matched = ds_result.get("matched", [])
             if ds_matched:
-                matched   = ds_matched
-                conf      = float(ds_result.get("confidence", conf))
+                matched = ds_matched
+                conf = float(ds_result.get("confidence", conf) or conf)
                 model_used = "deepseek"
-                used_ds   = True
+                used_ds = True
 
         # 构建新 knowledge_points {ku_id: ku_name}
-        # LLM 偶尔返回字符串列表而不是 dict 列表，跳过非 dict 元素
+        # 仅接受候选池内 id；name 可从候选补全
         new_kp: dict[str, str] = {}
-        for m in matched:
-            if not isinstance(m, dict):
+        for item in matched:
+            if not isinstance(item, dict):
                 continue
-            kid  = m.get("id", "")
-            kname = m.get("name", "")
-            if kid and kname:
-                new_kp[kid] = kname
+            kid = (item.get("id") or "").strip()
+            if not kid or kid not in cand_ids:
+                # 偶发返回邻域全库 id（未进 top50）——若在全邻域存在也收
+                if kid not in ku_by_id:
+                    continue
+            kname = (item.get("name") or "").strip()
+            if not kname:
+                kname = (ku_by_id.get(kid) or {}).get("name") or kid
+            new_kp[kid] = kname
 
         # flags
         flags: list[str] = []
@@ -272,20 +332,27 @@ async def process_one(
             flags.append("deepseek_fallback")
         if is_hs and conf < 0.7:
             flags.append("low_confidence")
+        if err:
+            flags.append("llm_error")
 
         meta = {
             "confidence": round(conf, 4),
             "model": model_used,
             "flags": flags,
             "elapsed_s": round(elapsed, 2),
+            "grade_band": band,
+            "error": (str(err)[:120] if err else None),
         }
 
         status_icon = "✅" if new_kp else "❌"
         ds_tag = " [DS]" if used_ds else ""
         img_tag = " [img]" if has_image else ""
-        print(f"  [{idx:04d}/{total}] {status_icon} {grade}{ds_tag}{img_tag} "
-              f"conf={conf:.2f} {elapsed:.1f}s | "
-              f"{list(new_kp.keys())[0][:50] if new_kp else '—'}")
+        err_tag = " [err]" if err else ""
+        print(
+            f"  [{idx:04d}/{total}] {status_icon} {grade}{ds_tag}{img_tag}{err_tag} "
+            f"conf={conf:.2f} {elapsed:.1f}s | "
+            f"{list(new_kp.keys())[0][:50] if new_kp else (str(err)[:40] if err else '—')}"
+        )
 
         if not dry_run:
             async with pool.acquire() as conn:

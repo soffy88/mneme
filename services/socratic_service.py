@@ -231,7 +231,11 @@ async def socratic_message_stream(
 
         from oprim.learner_profile_summary import get_latest_learner_profile
 
-        learner_profile = await get_latest_learner_profile(db, session.student_id)
+        learner_profile = (
+            await get_latest_learner_profile(db, session.student_id)
+            if session.student_id is not None
+            else None
+        )
 
         result = await socratic_session_workflow(
             config=SocraticConfig(
@@ -246,7 +250,7 @@ async def socratic_message_stream(
                 student_messages=[student_message],
                 conversation_history=history,
                 user_id=anon_ref(session.student_id),
-                learner_profile=learner_profile,
+                learner_profile=learner_profile or "",
                 textbook_id=textbook_id,
             ),
             output_dir=Path(f"/tmp/mneme/socratic/{session_id}"),

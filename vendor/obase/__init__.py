@@ -50,8 +50,6 @@ from obase import webhook
 from obase import collector_base
 from obase import email_client
 from obase import environ_processor_base
-from obase import ohlcv_store
-from obase import price_store
 from obase import symbol_normalize
 from obase import telegram_client
 from obase import ts_writer
@@ -107,8 +105,6 @@ __all__ = [
     "collector_base",
     "email_client",
     "environ_processor_base",
-    "ohlcv_store",
-    "price_store",
     "symbol_normalize",
     "telegram_client",
     "ts_writer",

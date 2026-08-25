@@ -80,7 +80,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-A'D⊥EF的证明",
@@ -122,7 +122,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-AB⊥PB的证明",
@@ -164,7 +164,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-AM与平面PBC所成角正切值的求解",
@@ -206,7 +206,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-B D⊥平面A BC 的证明",
@@ -247,7 +247,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-DE∥平面PAC的证明",
@@ -289,7 +289,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-H是 A C B重心的证明",
@@ -331,7 +331,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-PQ∥平面BCD的证明",
@@ -373,7 +373,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-三个平面分空间的部分数",
@@ -413,7 +413,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-三条共面的判断",
@@ -453,7 +453,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-三棱锥体积计算",
@@ -495,7 +495,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-三点共线的判定方法",
@@ -535,7 +535,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-三线共点的证明",
@@ -577,7 +577,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-三角形的余弦定理",
@@ -619,7 +619,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-三角形重心的性质",
@@ -661,7 +661,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-不同数据集的标准差比较",
@@ -701,7 +701,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-不放回简单随机抽样的样本空间",
@@ -741,7 +741,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-两个不重合的平面相交于一条直线",
@@ -781,7 +781,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-两个复数相乘的模与辐角关系",
@@ -823,7 +823,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-两个复数相除的模与辐角关系",
@@ -865,7 +865,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-两个平面互相垂直的定义",
@@ -905,7 +905,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-两个平面互相垂直的性质定理1",
@@ -945,7 +945,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-两个平面互相垂直的性质定理2",
@@ -986,7 +986,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-两个平面的位置关系：平行或相交",
@@ -1026,7 +1026,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-两组数据的性能比较",
@@ -1068,7 +1068,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-两角差的余弦公式证明",
@@ -1110,7 +1110,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-两轮活动中猜对3个成语的概率计算",
@@ -1150,7 +1150,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-中位线定理",
@@ -1190,7 +1190,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-中点坐标公式",
@@ -1230,7 +1230,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-事件的交事件",
@@ -1270,7 +1270,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-事件的关系与运算",
@@ -1312,7 +1312,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-事件的关系和运算",
@@ -1354,7 +1354,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-事件的关系或运算",
@@ -1394,7 +1394,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-事件的包含关系",
@@ -1436,7 +1436,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-事件的并事件",
@@ -1476,7 +1476,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-事件的概率计算",
@@ -1518,7 +1518,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-事件的独立性",
@@ -1558,7 +1558,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-二面角的定义",
@@ -1598,7 +1598,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-二面角的平面角",
@@ -1640,7 +1640,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-二面角的概念",
@@ -1680,7 +1680,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-互斥事件的概率加法公式",
@@ -1720,7 +1720,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-互斥事件的概率计算",
@@ -1762,7 +1762,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-估计总体平均值和标准差",
@@ -1804,7 +1804,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-估计总体平均数",
@@ -1847,7 +1847,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-估计总体平均数的改进方法",
@@ -1890,7 +1890,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-估计总体的80%和95%分位数",
@@ -1933,7 +1933,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-余弦定理",
@@ -1973,7 +1973,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-余弦定理的推导",
@@ -2016,7 +2016,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-侧面PBC与底面ABCD所成二面角余弦值的求解",
@@ -2058,7 +2058,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-全校学生体重调查方案设计",
@@ -2098,7 +2098,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-全面调查与抽样调查",
@@ -2141,7 +2141,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-全面调查与抽样调查的选择",
@@ -2183,7 +2183,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-共线向量定理",
@@ -2223,7 +2223,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-共轭复数",
@@ -2265,7 +2265,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-写出样本空间，并列举A和B包含的样本点",
@@ -2307,7 +2307,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-写出比赛所有可能结果构成的样本空间",
@@ -2347,7 +2347,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-分位数的定义",
@@ -2387,7 +2387,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-分位数的应用",
@@ -2429,7 +2429,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-分层抽样的均值和方差计算",
@@ -2471,7 +2471,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-分层随机抽样",
@@ -2514,7 +2514,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-分层随机抽样的效果",
@@ -2554,7 +2554,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-分层随机抽样的样本量分配",
@@ -2596,7 +2596,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-分层随机抽样的样本量分配计算",
@@ -2638,7 +2638,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-列出所有可能结果的方法",
@@ -2677,7 +2677,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-判断两个随机事件是否相互独立",
@@ -2719,7 +2719,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-判断二面角是否相等",
@@ -2759,7 +2759,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-判断墙面是否垂直于地面的方法",
@@ -2801,7 +2801,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-判断年薪是否为高收入",
@@ -2841,7 +2841,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-判断样本均值是否大于总体均值",
@@ -2881,7 +2881,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-判断样本点的等可能性",
@@ -2921,7 +2921,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-利用对立事件性质求解概率问题",
@@ -2963,7 +2963,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-利用概率性质简化计算",
@@ -3006,7 +3006,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-利用相交直线判定两个平面平行",
@@ -3046,7 +3046,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-利用计算器或计算机产生随机数",
@@ -3088,7 +3088,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-利用计算机进行随机模拟",
@@ -3130,7 +3130,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-加权平均数",
@@ -3170,7 +3170,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-区分简单随机抽样和分层随机抽样的特点与适用范围",
@@ -3210,7 +3210,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-古典概型的概率计算",
@@ -3250,7 +3250,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-古典概型的特征",
@@ -3290,7 +3290,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-古典概型试验的特点",
@@ -3330,7 +3330,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-向量与三角形的关系",
@@ -3370,7 +3370,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-向量与力的关系",
@@ -3410,7 +3410,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-向量共线条件",
@@ -3453,7 +3453,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-向量共线的充要条件",
@@ -3496,7 +3496,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-向量共线的判断方法",
@@ -3536,7 +3536,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-向量减法的坐标表示",
@@ -3579,7 +3579,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-向量减法的定义与几何意义",
@@ -3620,7 +3620,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-向量加、减、数乘运算律",
@@ -3664,7 +3664,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-向量加法的交换律与结合律",
@@ -3706,7 +3706,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-向量加法的几何意义",
@@ -3748,7 +3748,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-向量在另一向量上的投影",
@@ -3790,7 +3790,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-向量在平面上的旋转",
@@ -3830,7 +3830,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-向量在物理中的应用",
@@ -3870,7 +3870,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-向量坐标的定义",
@@ -3911,7 +3911,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-向量夹角余弦公式",
@@ -3951,7 +3951,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-向量夹角的计算公式",
@@ -3993,7 +3993,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-向量数乘运算的定义",
@@ -4033,7 +4033,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-向量数量积的定义",
@@ -4073,7 +4073,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-向量数量积的定义及性质",
@@ -4116,7 +4116,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-向量数量积的应用",
@@ -4159,7 +4159,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-向量数量积的性质",
@@ -4201,7 +4201,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-向量数量积的运算律",
@@ -4244,7 +4244,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-向量的减法运算",
@@ -4286,7 +4286,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-向量的加法法则",
@@ -4326,7 +4326,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-向量的加法法则（三角形法则）",
@@ -4368,7 +4368,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-向量的加法法则（平行四边形法则）",
@@ -4410,7 +4410,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-向量的数量积定义",
@@ -4452,7 +4452,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-向量的数量积运算",
@@ -4495,7 +4495,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-向量的概念",
@@ -4535,7 +4535,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-向量的正交分解与坐标表示的关系",
@@ -4578,7 +4578,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-向量的线性组合",
@@ -4620,7 +4620,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-向量长度及夹角的坐标表示",
@@ -4663,7 +4663,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-四边形在平面上的投影",
@@ -4705,7 +4705,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-圆台的定义及结构特征",
@@ -4747,7 +4747,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-圆柱、圆锥、圆台表面积公式",
@@ -4789,7 +4789,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-圆柱的定义及结构特征",
@@ -4829,7 +4829,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-圆锥的定义及结构特征",
@@ -4869,7 +4869,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-坐标系中点的位置关系",
@@ -4909,7 +4909,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-坐标表示下的向量加法和减法",
@@ -4952,7 +4952,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-基底的概念",
@@ -4992,7 +4992,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-复合条形图的使用",
@@ -5032,7 +5032,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-复平面与复数的关系",
@@ -5074,7 +5074,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-复平面两点间距离公式",
@@ -5116,7 +5116,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-复数三角形式与代数形式互化",
@@ -5158,7 +5158,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-复数与平面向量的一一对应关系",
@@ -5200,7 +5200,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-复数乘、除运算的几何意义",
@@ -5242,7 +5242,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-复数乘方的几何意义",
@@ -5284,7 +5284,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-复数乘法几何意义",
@@ -5326,7 +5326,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-复数乘法法则",
@@ -5366,7 +5366,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-复数乘法的几何意义",
@@ -5408,7 +5408,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-复数减法几何意义",
@@ -5450,7 +5450,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-复数减法法则",
@@ -5492,7 +5492,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-复数加法法则",
@@ -5532,7 +5532,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-复数加法满足交换律、结合律",
@@ -5574,7 +5574,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-复数模的比较",
@@ -5617,7 +5617,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-复数的三角形式",
@@ -5659,7 +5659,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-复数的三角表示式",
@@ -5701,7 +5701,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-复数的主值辐角",
@@ -5741,7 +5741,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-复数的代数形式与三角形式的关系",
@@ -5783,7 +5783,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-复数的代数形式表示",
@@ -5824,7 +5824,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-复数的几何表示",
@@ -5866,7 +5866,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-复数的分类",
@@ -5909,7 +5909,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-复数的概念",
@@ -5949,7 +5949,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-复数的模",
@@ -5991,7 +5991,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-复数相等的定义",
@@ -6033,7 +6033,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-复数除法几何意义",
@@ -6075,7 +6075,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-复数除法法则",
@@ -6117,7 +6117,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-复数除法的几何意义",
@@ -6159,7 +6159,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-多种抽样方法组合使用",
@@ -6201,7 +6201,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-多选题与单选题概率比较",
@@ -6241,7 +6241,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-多面体的定义及结构特征",
@@ -6283,7 +6283,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-多面体顶点数、棱数、面数的关系",
@@ -6323,7 +6323,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-夹在两平行平面间的平行线段相等的证明",
@@ -6365,7 +6365,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-实数与向量的乘积",
@@ -6407,7 +6407,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-实数集与复数集的关系",
@@ -6449,7 +6449,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-实系数一元二次方程在复数集中的根",
@@ -6489,7 +6489,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-容积计算",
@@ -6529,7 +6529,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-对立事件的定义与表示",
@@ -6571,7 +6571,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-对立事件的概率关系",
@@ -6613,7 +6613,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-平均数、中位数和众数的作用",
@@ -6655,7 +6655,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-平均数、中位数和众数的意义",
@@ -6695,7 +6695,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-平均数、中位数和标准差计算",
@@ -6735,7 +6735,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-平均数的加权计算",
@@ -6775,7 +6775,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-平均距离的概念",
@@ -6817,7 +6817,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-平面PAC⊥平面PBC的证明",
@@ -6859,7 +6859,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-平面与平面垂直的判定定理",
@@ -6899,7 +6899,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-平面与平面平行判定",
@@ -6941,7 +6941,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-平面与平面平行性质定理",
@@ -6981,7 +6981,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-平面内直线与平面外直线平行关系",
@@ -7021,7 +7021,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-平面内角性质",
@@ -7061,7 +7061,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-平面及其基本性质",
@@ -7101,7 +7101,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-平面向量减法法则",
@@ -7143,7 +7143,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-平面向量加法法则",
@@ -7183,7 +7183,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-平面向量基本定理",
@@ -7223,7 +7223,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-平面向量数乘运算的坐标表示",
@@ -7263,7 +7263,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-平面向量的加法法则",
@@ -7303,7 +7303,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-平面向量的模",
@@ -7343,7 +7343,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-平面外直线与平面平行判定",
@@ -7385,7 +7385,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-平面外直线与平面平行性质",
@@ -7427,7 +7427,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-平面的基本事实",
@@ -7467,7 +7467,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-异面直线m、n与平面 的位置关系",
@@ -7509,7 +7509,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-异面直线判定",
@@ -7549,7 +7549,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-异面直线所成角的定义与求法",
@@ -7589,7 +7589,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-必然事件与不可能事件",
@@ -7632,7 +7632,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-必然事件和不可能事件的概率",
@@ -7674,7 +7674,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-总体、个体与变量",
@@ -7716,7 +7716,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-总体均值",
@@ -7756,7 +7756,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-总体平均数的估计效果",
@@ -7799,7 +7799,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-总体百分位数的概念和计算方法",
@@ -7841,7 +7841,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-抛掷两枚质地均匀的硬币，设事件A=“第一枚硬币正面朝上”，事件B=“第二枚硬币反面朝上”",
@@ -7881,7 +7881,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-抽样调查与普查比较",
@@ -7923,7 +7923,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-抽样调查的样本抽取是否为简单随机抽样",
@@ -7963,7 +7963,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-抽签法进行简单随机抽样",
@@ -8005,7 +8005,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-按性别等比例分层抽样的样本空间",
@@ -8045,7 +8045,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-推论1：经过一条直线和这条直线外一点，有且只有一个平面",
@@ -8088,7 +8088,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-推论2：经过两条相交直线，有且只有一个平面",
@@ -8131,7 +8131,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-推论3：经过两条平行直线，有且只有一个平面",
@@ -8174,7 +8174,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-掷骰子事件的概率计算",
@@ -8214,7 +8214,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-收视率调查方案设计",
@@ -8256,7 +8256,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-放回简单随机抽样与不放回简单随机抽样",
@@ -8298,7 +8298,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-敏感性问题调查方法设计",
@@ -8338,7 +8338,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-数据分布估计",
@@ -8378,7 +8378,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-数据分组",
@@ -8418,7 +8418,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-数据对称性判断",
@@ -8458,7 +8458,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-斜二测画法",
@@ -8498,7 +8498,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-斜二测画法的基本步骤",
@@ -8540,7 +8540,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-斜线和平面所成角的概念",
@@ -8582,7 +8582,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-方差和标准差的定义",
@@ -8622,7 +8622,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-无放回摸球试验模拟事件概率",
@@ -8664,7 +8664,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-日销售量统计分析",
@@ -8704,7 +8704,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-有放回摸球试验模拟事件概率",
@@ -8746,7 +8746,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-有放回简单随机抽样",
@@ -8788,7 +8788,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-有放回简单随机抽样的样本空间",
@@ -8828,7 +8828,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-条形图、扇形图、折线图的应用场景",
@@ -8869,7 +8869,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-极差求法",
@@ -8909,7 +8909,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-极差的定义与应用",
@@ -8949,7 +8949,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-柱、锥、台、球的表面积和体积计算",
@@ -8991,7 +8991,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-样本估计总体",
@@ -9033,7 +9033,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-样本均值",
@@ -9075,7 +9075,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-样本数据的排序与分位数计算",
@@ -9115,7 +9115,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-样本标准差与总体标准差的关系",
@@ -9157,7 +9157,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-样本特征量可能产生的误导",
@@ -9197,7 +9197,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-样本空间与随机事件的关系",
@@ -9237,7 +9237,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-样本空间的定义",
@@ -9277,7 +9277,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-样本空间的表示方法",
@@ -9319,7 +9319,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-样本观测数据的频率分布估计总体分布",
@@ -9361,7 +9361,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-样本量的选择",
@@ -9404,7 +9404,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-棣莫佛定理",
@@ -9444,7 +9444,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-棱台体积公式",
@@ -9486,7 +9486,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-棱柱、棱锥、棱台的表面积公式",
@@ -9526,7 +9526,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-棱柱和棱锥体积的关系",
@@ -9566,7 +9566,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-棱柱的定义及其分类",
@@ -9608,7 +9608,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-概率与频率的关系",
@@ -9648,7 +9648,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-概率的加法法则与乘法法则的应用",
@@ -9690,7 +9690,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-概率的单调性",
@@ -9730,7 +9730,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-概率的基本性质",
@@ -9770,7 +9770,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-概率的基本运算：并、交、补事件",
@@ -9810,7 +9810,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-概率的定义",
@@ -9850,7 +9850,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-概率的定义与计算方法",
@@ -9892,7 +9892,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-概率预报的理解与评价",
@@ -9932,7 +9932,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-正三棱柱中线面垂直的证明方法",
@@ -9974,7 +9974,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-正交分解的概念",
@@ -10016,7 +10016,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-正六棱台表面积计算",
@@ -10058,7 +10058,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-正六边形中向量表示",
@@ -10100,7 +10100,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-正四棱柱补成长方体的方法",
@@ -10142,7 +10142,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-正四棱锥形容器容积公式",
@@ -10182,7 +10182,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-正弦定理",
@@ -10225,7 +10225,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-正弦定理的推导",
@@ -10267,7 +10267,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-正方体中平面与平面、线与线的位置关系",
@@ -10309,7 +10309,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-正方体中线线垂直的证明方法",
@@ -10351,7 +10351,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-正方体中面面平行的另一种证明方法",
@@ -10393,7 +10393,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-正方体中面面平行的证明方法",
@@ -10435,7 +10435,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-正方体中面面平行的证明方法二",
@@ -10477,7 +10477,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-正方体表面积和体积的变化规律",
@@ -10517,7 +10517,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-正方形ABCD的直观图绘制",
@@ -10559,7 +10559,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-比例分配的分层随机抽样",
@@ -10602,7 +10602,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-比较平均数、中位数与众数的特点",
@@ -10644,7 +10644,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-比较男、女员工在肥胖状况上的差异",
@@ -10684,7 +10684,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-水流影响下的航行问题",
@@ -10726,7 +10726,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-求和符号",
@@ -10766,7 +10766,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-求实际航行速度",
@@ -10808,7 +10808,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-测量角度的问题",
@@ -10851,7 +10851,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-测量距离的方法",
@@ -10894,7 +10894,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-测量高度的方法",
@@ -10936,7 +10936,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-游戏公平性的判断依据",
@@ -10978,7 +10978,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-漏斗容积的计算",
@@ -11020,7 +11020,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-点到平面的距离",
@@ -11060,7 +11060,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-点在直线上的表示法",
@@ -11100,7 +11100,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-独立事件与必然事件、不可能事件的关系证明",
@@ -11142,7 +11142,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-独立事件的概率关系",
@@ -11184,7 +11184,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-独立性与概率计算",
@@ -11226,7 +11226,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-球体的定义及结构特征",
@@ -11266,7 +11266,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-球体积公式的推导",
@@ -11308,7 +11308,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-理解方差和标准差、极差的意义",
@@ -11348,7 +11348,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-理解百分位数的意义",
@@ -11388,7 +11388,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-理解统计问题背景知识的重要性",
@@ -11428,7 +11428,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-用众数描述分类数据",
@@ -11470,7 +11470,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-用合适的统计图描述数据",
@@ -11510,7 +11510,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-用向量表示几何元素",
@@ -11550,7 +11550,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-用样本估计总体的方法",
@@ -11590,7 +11590,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-用样本的特征量估计总体的特征量",
@@ -11633,7 +11633,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-用电量分布分析与阶梯电价确定",
@@ -11673,7 +11673,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-电路通断的随机试验",
@@ -11713,7 +11713,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-画直线与平面垂直的方法",
@@ -11753,7 +11753,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-目标管理与销售指标建议",
@@ -11793,7 +11793,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-直三棱柱侧面面积关系",
@@ -11833,7 +11833,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-直棱柱和斜棱柱的区别",
@@ -11875,7 +11875,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-直线a、b和平面 的平行或垂直关系",
@@ -11915,7 +11915,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-直线与平面垂直的判定和性质定理",
@@ -11957,7 +11957,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-直线与平面垂直的判定定理",
@@ -11999,7 +11999,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-直线与平面垂直的定义",
@@ -12039,7 +12039,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-直线与平面平行的性质定理",
@@ -12081,7 +12081,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-直线和平面垂直的判定定理",
@@ -12123,7 +12123,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-直线和平面平行的判定定理",
@@ -12163,7 +12163,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-直线在平面内的表示法",
@@ -12205,7 +12205,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-直观图的作用",
@@ -12245,7 +12245,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-相互独立事件的判断与验证",
@@ -12287,7 +12287,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-空气质量等级的频数与频率分布表制作",
@@ -12329,7 +12329,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-空间两条直线的位置关系",
@@ -12370,7 +12370,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-空间中两条直线的位置关系：相交、平行或异面",
@@ -12410,7 +12410,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-空间中直线与平面的位置关系：在内、相交或平行",
@@ -12454,7 +12454,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-空间几何体的概念",
@@ -12494,7 +12494,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-空间几何体的结构特征",
@@ -12534,7 +12534,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-空间平行线传递性",
@@ -12576,7 +12576,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-立方体分割问题",
@@ -12618,7 +12618,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-第三个平面与两平行平面相交所得两条交线的位置关系",
@@ -12658,7 +12658,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-等比例分层随机抽样方法",
@@ -12700,7 +12700,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-简单组合体的概念及其构成方式",
@@ -12742,7 +12742,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-简单随机抽样",
@@ -12785,7 +12785,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-简单随机抽样的定义",
@@ -12825,7 +12825,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-简单随机样本的识别",
@@ -12865,7 +12865,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-组合体的直观图绘制",
@@ -12905,7 +12905,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-组距和组数确定",
@@ -12947,7 +12947,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-统计学的基本概念",
@@ -12987,7 +12987,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-统计量计算",
@@ -13027,7 +13027,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-获取数据的途径",
@@ -13067,7 +13067,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-蒙特卡洛方法",
@@ -13109,7 +13109,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-解三角形的方法",
@@ -13152,7 +13152,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-解已知两角和一边的三角形",
@@ -13194,7 +13194,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-解已知两边及其一边对角的三角形",
@@ -13236,7 +13236,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-解释频率分布表或直方图的信息",
@@ -13278,7 +13278,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-计算不同抽样方式下事件的概率",
@@ -13322,7 +13322,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-计算两个相互独立事件的概率",
@@ -13364,7 +13364,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-计算事件的概率",
@@ -13407,7 +13407,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-计算互斥事件的概率和",
@@ -13447,7 +13447,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-计算全年级同学数学成绩的平均数和方差",
@@ -13489,7 +13489,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-计算标准差范围内的数据数量",
@@ -13531,7 +13531,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-计算样本平均数和标准差",
@@ -13573,7 +13573,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-计算样本数据的第25,50,75百分位数",
@@ -13615,7 +13615,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-设事件A表示a队获得冠军，写出A包含的所有可能结果",
@@ -13657,7 +13657,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-设事件B表示a队进入冠亚军决赛，写出B包含的所有可能结果",
@@ -13699,7 +13699,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-设计抽样方案",
@@ -13739,7 +13739,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-设计调查方案",
@@ -13779,7 +13779,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-证明线面垂直的方法",
@@ -13821,7 +13821,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-评委打分相似性度量",
@@ -13861,7 +13861,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-调查结果代表性和差异分析",
@@ -13901,7 +13901,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-过一点有且只有一条垂线段",
@@ -13941,7 +13941,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-选择合适的统计图表描述数据",
@@ -13983,7 +13983,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-遗传规律中的概率模型",
@@ -14023,7 +14023,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-钝角三角形中正弦关系",
@@ -14063,7 +14063,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-锐角三角形中正弦关系",
@@ -14103,7 +14103,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-长方体中线线垂直的判断与求法",
@@ -14143,7 +14143,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-阳光照射下矩形窗户的影子形状",
@@ -14183,7 +14183,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-随机事件的概率计算",
@@ -14225,7 +14225,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-随机抽样方法",
@@ -14265,7 +14265,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-随机数与伪随机数",
@@ -14305,7 +14305,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-随机数产生",
@@ -14345,7 +14345,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-随机数法进行简单随机抽样",
@@ -14387,7 +14387,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-随机模拟方法的应用",
@@ -14429,7 +14429,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-随机模拟的方法应用",
@@ -14471,7 +14471,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-随机现象",
@@ -14511,7 +14511,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-随机试验的样本空间",
@@ -14551,7 +14551,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-静水中速度问题",
@@ -14591,7 +14591,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-频数与频率定义",
@@ -14631,7 +14631,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-频率与概率的关系",
@@ -14671,7 +14671,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-频率估计概率",
@@ -14713,7 +14713,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-频率分布直方图的应用",
@@ -14753,7 +14753,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-频率分布直方图的特点和应用",
@@ -14793,7 +14793,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-频率分布直方图绘制",
@@ -14835,7 +14835,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-频率分布直方图绘制与分析",
@@ -14875,7 +14875,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-频率分布表制作",
@@ -14918,7 +14918,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-频率的特性",
@@ -14958,7 +14958,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G10-MATH-BX2-ku-频率的稳定性及其应用",
@@ -14998,7 +14998,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     }
   ]
 }

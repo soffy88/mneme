@@ -12,22 +12,22 @@
     "@react-three/drei": "10.7.7",
     "@react-three/fiber": "9.6.1",
     "chart.js": "^4.5.1",
-    "katex": "0.16.11",
-    "mermaid": "^11.16.0",
-    "next": "16.2.10",
-    "react": "19.2.4",
+    "katex": "0.18.1",
+    "mermaid": "^11.16.1",
+    "next": "16.3.2",
+    "react": "19.2.8",
     "react-chartjs-2": "^5.3.1",
-    "react-dom": "19.2.4",
-    "three": "0.170.0"
+    "react-dom": "19.2.8",
+    "three": "0.185.1"
   },
   "devDependencies": {
-    "@playwright/test": "^1.61.1",
-    "@tailwindcss/postcss": "^4",
+    "@playwright/test": "^1.62.0",
+    "@tailwindcss/postcss": "^4.3.3",
     "@types/katex": "^0.16.7",
-    "@types/node": "^20",
+    "@types/node": "^26.1.2",
     "@types/react": "^19",
     "@types/react-dom": "^19",
-    "tailwindcss": "^4",
-    "typescript": "^5"
+    "tailwindcss": "^4.3.3",
+    "typescript": "^5.9.3"
   }
 }

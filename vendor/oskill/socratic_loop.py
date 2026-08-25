@@ -134,28 +134,34 @@ async def process_socratic_turn(
     result = await socratic_turn(inp, caller=caller, model=model)
     text = result.text
 
-    # Red line: filter answer leakage.
-    # Guard: only check when correct_answer is non-empty — empty string is a
-    # substring of every string in Python, which would cause a false positive
-    # on every turn when there is no known answer (e.g. KU explanation sessions).
-    _answer = (state.correct_answer or "").strip()
-    _answer_norm = "".join(_answer.split())
-    # 红队门禁：空格/换行混淆绕过（如 "x = 2" 绕过 "x=2" 的原样匹配）。
-    # 仅当答案去空白后 >=2 字符才做归一化比对，避免单字符答案在归一化后
-    # 因过短而对无关文本产生大量假阳性。
-    answer_leaked = bool(_answer) and (
-        _answer in text
-        or (len(_answer_norm) >= 2 and _answer_norm in "".join(text.split()))
+    # Red line: use the shared deterministic Tutor output guard.  Socratic
+    # turns are always a hint-ladder context, so the guard is fail-closed even
+    # when a future caller changes the surrounding prompt/role wording.
+    from mneme_core.tutor_control import (
+        TutorObservation,
+        decide_tutor_move,
+        sanitize_tutor_output,
     )
+
+    decision = decide_tutor_move(
+        TutorObservation(context="stuck", engine_enabled=True)
+    )
+    guarded = sanitize_tutor_output(
+        text,
+        protected_answer=state.correct_answer or "",
+        decision=decision,
+        fallback="这道题你再想想，思路是什么？",
+    )
+    answer_leaked = guarded.leaked
     if answer_leaked:
         state.violation_count += 1
         logger.warning(
             "socratic red-line: answer leaked in turn %d (answer=%r, preview=%r)",
             state.turn_count,
-            _answer[:20],
+            (state.correct_answer or "")[:20],
             text[:60],
         )
-        text = "这道题你再想想，思路是什么？"
+        text = guarded.text
 
     state.messages.append({"role": "assistant", "content": text})
 

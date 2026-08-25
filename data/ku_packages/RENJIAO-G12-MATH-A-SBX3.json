@@ -309,7 +309,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G12-MATH-A-SBX3-ku-2-2列联表的结构与含义",
@@ -353,7 +353,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G12-MATH-A-SBX3-ku-3σ原则",
@@ -397,7 +397,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G12-MATH-A-SBX3-ku-3σ原则的实际应用",
@@ -441,7 +441,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G12-MATH-A-SBX3-ku-n元集合子集个数的计数",
@@ -485,7 +485,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G12-MATH-A-SBX3-ku-r²的定义与意义",
@@ -529,7 +529,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G12-MATH-A-SBX3-ku-χ²独立性检验的基本思想",
@@ -574,7 +574,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G12-MATH-A-SBX3-ku-χ²统计量的构造",
@@ -619,7 +619,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G12-MATH-A-SBX3-ku-χ²统计量的计算公式",
@@ -663,7 +663,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G12-MATH-A-SBX3-ku-一元线性回归模型",
@@ -709,7 +709,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G12-MATH-A-SBX3-ku-一元线性回归模型的概念",
@@ -754,7 +754,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G12-MATH-A-SBX3-ku-两个计数原理的区别与联系",
@@ -799,7 +799,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G12-MATH-A-SBX3-ku-两点分布-0-1分布",
@@ -843,7 +843,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G12-MATH-A-SBX3-ku-两点分布的均值",
@@ -888,7 +888,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G12-MATH-A-SBX3-ku-临界值与显著性水平α",
@@ -932,7 +932,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G12-MATH-A-SBX3-ku-二项分布与超几何分布的关系",
@@ -977,7 +977,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G12-MATH-A-SBX3-ku-二项分布模型的建立步骤",
@@ -1021,7 +1021,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G12-MATH-A-SBX3-ku-二项分布的均值与方差",
@@ -1067,7 +1067,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G12-MATH-A-SBX3-ku-二项分布的定义",
@@ -1112,7 +1112,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G12-MATH-A-SBX3-ku-二项分布的概率最大值性质",
@@ -1156,7 +1156,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G12-MATH-A-SBX3-ku-二项展开式的通项公式",
@@ -1200,7 +1200,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G12-MATH-A-SBX3-ku-二项式定理",
@@ -1244,7 +1244,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G12-MATH-A-SBX3-ku-二项式系数与系数的区别",
@@ -1288,7 +1288,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G12-MATH-A-SBX3-ku-二项式系数的增减性与最大值",
@@ -1332,7 +1332,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G12-MATH-A-SBX3-ku-二项式系数的对称性",
@@ -1376,7 +1376,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G12-MATH-A-SBX3-ku-二项式系数的性质",
@@ -1420,7 +1420,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G12-MATH-A-SBX3-ku-伯努利试验与n重伯努利试验",
@@ -1464,7 +1464,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G12-MATH-A-SBX3-ku-全排列与阶乘",
@@ -1508,7 +1508,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G12-MATH-A-SBX3-ku-全概率公式",
@@ -1554,7 +1554,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G12-MATH-A-SBX3-ku-决定系数r²",
@@ -1599,7 +1599,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G12-MATH-A-SBX3-ku-分布列的性质",
@@ -1643,7 +1643,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G12-MATH-A-SBX3-ku-分步乘法计数原理",
@@ -1685,7 +1685,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G12-MATH-A-SBX3-ku-分步乘法计数原理的推广",
@@ -1728,7 +1728,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G12-MATH-A-SBX3-ku-分类加法计数原理",
@@ -1770,7 +1770,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G12-MATH-A-SBX3-ku-分类加法计数原理的推广",
@@ -1814,7 +1814,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G12-MATH-A-SBX3-ku-分类变量与数值变量的区别",
@@ -1856,7 +1856,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G12-MATH-A-SBX3-ku-分类变量的概念",
@@ -1898,7 +1898,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G12-MATH-A-SBX3-ku-参数μ和σ对正态曲线的影响",
@@ -1942,7 +1942,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G12-MATH-A-SBX3-ku-各二项式系数的和",
@@ -1986,7 +1986,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G12-MATH-A-SBX3-ku-回归系数的t检验",
@@ -2031,7 +2031,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G12-MATH-A-SBX3-ku-均值的线性性质",
@@ -2075,7 +2075,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G12-MATH-A-SBX3-ku-奇数项与偶数项二项式系数和相等",
@@ -2120,7 +2120,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G12-MATH-A-SBX3-ku-小概率事件原理",
@@ -2162,7 +2162,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G12-MATH-A-SBX3-ku-常用临界值表",
@@ -2206,7 +2206,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G12-MATH-A-SBX3-ku-排列与组合的区别与联系",
@@ -2251,7 +2251,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G12-MATH-A-SBX3-ku-排列数公式",
@@ -2295,7 +2295,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G12-MATH-A-SBX3-ku-排列数公式-连乘形式",
@@ -2340,7 +2340,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G12-MATH-A-SBX3-ku-排列数公式-阶乘形式",
@@ -2384,7 +2384,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G12-MATH-A-SBX3-ku-排列数公式的阶乘形式",
@@ -2428,7 +2428,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G12-MATH-A-SBX3-ku-排列数符号a_m-n",
@@ -2472,7 +2472,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G12-MATH-A-SBX3-ku-排列的定义",
@@ -2516,7 +2516,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G12-MATH-A-SBX3-ku-排列的概念",
@@ -2560,7 +2560,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G12-MATH-A-SBX3-ku-散点图",
@@ -2602,7 +2602,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G12-MATH-A-SBX3-ku-散点图的绘制与解读",
@@ -2646,7 +2646,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G12-MATH-A-SBX3-ku-方差的性质",
@@ -2690,7 +2690,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G12-MATH-A-SBX3-ku-方差的概念与定义",
@@ -2734,7 +2734,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G12-MATH-A-SBX3-ku-方差的计算公式",
@@ -2779,7 +2779,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G12-MATH-A-SBX3-ku-最小二乘估计公式",
@@ -2824,7 +2824,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G12-MATH-A-SBX3-ku-最小二乘法的思想",
@@ -2868,7 +2868,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G12-MATH-A-SBX3-ku-有限制条件的排列问题-特殊元素优先",
@@ -2913,7 +2913,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G12-MATH-A-SBX3-ku-有限制条件的组合问题-至少-至多",
@@ -2958,7 +2958,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G12-MATH-A-SBX3-ku-条件概率与独立性的关系",
@@ -3003,7 +3003,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G12-MATH-A-SBX3-ku-条件概率的定义",
@@ -3048,7 +3048,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G12-MATH-A-SBX3-ku-条件概率的性质",
@@ -3093,7 +3093,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G12-MATH-A-SBX3-ku-杨辉三角与垛积问题",
@@ -3137,7 +3137,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G12-MATH-A-SBX3-ku-杨辉三角与开方问题",
@@ -3181,7 +3181,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G12-MATH-A-SBX3-ku-杨辉三角基本性质-递推关系",
@@ -3225,7 +3225,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G12-MATH-A-SBX3-ku-杨辉三角的基本性质",
@@ -3269,7 +3269,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G12-MATH-A-SBX3-ku-杨辉三角的探究活动步骤",
@@ -3311,7 +3311,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G12-MATH-A-SBX3-ku-杨辉三角研究报告框架",
@@ -3354,7 +3354,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G12-MATH-A-SBX3-ku-标准差",
@@ -3398,7 +3398,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G12-MATH-A-SBX3-ku-标准正态分布",
@@ -3442,7 +3442,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G12-MATH-A-SBX3-ku-样本相关系数",
@@ -3486,7 +3486,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G12-MATH-A-SBX3-ku-样本相关系数的取值范围与意义",
@@ -3530,7 +3530,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G12-MATH-A-SBX3-ku-样本相关系数的定义与公式",
@@ -3576,7 +3576,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G12-MATH-A-SBX3-ku-样本相关系数的计算与推断",
@@ -3621,7 +3621,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G12-MATH-A-SBX3-ku-概率分布列的定义",
@@ -3665,7 +3665,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G12-MATH-A-SBX3-ku-概率的乘法公式",
@@ -3709,7 +3709,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G12-MATH-A-SBX3-ku-正态分布的定义与记号",
@@ -3753,7 +3753,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G12-MATH-A-SBX3-ku-正态分布的期望与方差",
@@ -3798,7 +3798,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G12-MATH-A-SBX3-ku-正态分布的概念",
@@ -3842,7 +3842,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G12-MATH-A-SBX3-ku-正态分布的概率计算-区间概率",
@@ -3886,7 +3886,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G12-MATH-A-SBX3-ku-正态密度函数",
@@ -3930,7 +3930,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G12-MATH-A-SBX3-ku-正态曲线的性质",
@@ -3974,7 +3974,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G12-MATH-A-SBX3-ku-正相关与负相关",
@@ -4018,7 +4018,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G12-MATH-A-SBX3-ku-残差与残差分析",
@@ -4062,7 +4062,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G12-MATH-A-SBX3-ku-残差分析",
@@ -4106,7 +4106,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G12-MATH-A-SBX3-ku-残差图",
@@ -4150,7 +4150,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G12-MATH-A-SBX3-ku-残差平方和比较模型",
@@ -4194,7 +4194,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G12-MATH-A-SBX3-ku-独立性检验与反证法的异同",
@@ -4238,7 +4238,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G12-MATH-A-SBX3-ku-独立性检验的决策规则",
@@ -4282,7 +4282,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G12-MATH-A-SBX3-ku-独立性检验的步骤",
@@ -4326,7 +4326,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G12-MATH-A-SBX3-ku-用两个计数原理解决计数问题的步骤",
@@ -4371,7 +4371,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G12-MATH-A-SBX3-ku-用条件概率判断分类变量关联性",
@@ -4416,7 +4416,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G12-MATH-A-SBX3-ku-相关关系与函数关系的区别",
@@ -4458,7 +4458,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G12-MATH-A-SBX3-ku-相关关系的定义",
@@ -4500,7 +4500,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G12-MATH-A-SBX3-ku-离散型随机变量的均值-数学期望",
@@ -4544,7 +4544,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G12-MATH-A-SBX3-ku-离散型随机变量的定义",
@@ -4588,7 +4588,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G12-MATH-A-SBX3-ku-离散型随机变量的方差",
@@ -4632,7 +4632,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G12-MATH-A-SBX3-ku-等高堆积条形图",
@@ -4676,7 +4676,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G12-MATH-A-SBX3-ku-线性关系的f检验",
@@ -4721,7 +4721,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G12-MATH-A-SBX3-ku-线性相关与非线性相关",
@@ -4765,7 +4765,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G12-MATH-A-SBX3-ku-组合数公式",
@@ -4810,7 +4810,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G12-MATH-A-SBX3-ku-组合数公式-连乘形式",
@@ -4856,7 +4856,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G12-MATH-A-SBX3-ku-组合数公式-阶乘形式",
@@ -4901,7 +4901,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G12-MATH-A-SBX3-ku-组合数的性质1",
@@ -4945,7 +4945,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G12-MATH-A-SBX3-ku-组合数的性质1-c-m-n--c-n-m-n",
@@ -4989,7 +4989,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G12-MATH-A-SBX3-ku-组合数的性质2",
@@ -5033,7 +5033,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G12-MATH-A-SBX3-ku-组合数的性质2-c-m-n-1--c-m-n--c-m-1-n",
@@ -5078,7 +5078,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G12-MATH-A-SBX3-ku-组合数符号c_m-n",
@@ -5122,7 +5122,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G12-MATH-A-SBX3-ku-组合的定义",
@@ -5166,7 +5166,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G12-MATH-A-SBX3-ku-组合的概念",
@@ -5210,7 +5210,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G12-MATH-A-SBX3-ku-经验回归方程",
@@ -5254,7 +5254,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G12-MATH-A-SBX3-ku-经验回归方程的预测注意事项",
@@ -5299,7 +5299,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G12-MATH-A-SBX3-ku-贝叶斯公式",
@@ -5344,7 +5344,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G12-MATH-A-SBX3-ku-超几何分布的均值",
@@ -5388,7 +5388,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G12-MATH-A-SBX3-ku-超几何分布的定义",
@@ -5433,7 +5433,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G12-MATH-A-SBX3-ku-连续型随机变量的定义",
@@ -5477,7 +5477,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G12-MATH-A-SBX3-ku-随机变量的概念",
@@ -5522,7 +5522,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G12-MATH-A-SBX3-ku-随机误差的来源",
@@ -5566,7 +5566,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G12-MATH-A-SBX3-ku-零假设与独立性等价",
@@ -5611,7 +5611,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G12-MATH-A-SBX3-ku-非线性回归模型的线性化方法",
@@ -5656,7 +5656,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G12-MATH-A-SBX3-ku-频率比较与独立性检验的区别",
@@ -5700,7 +5700,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     }
   ]
 }

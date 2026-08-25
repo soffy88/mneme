@@ -231,7 +231,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX2-ku-不等式e-x-ln-x-m--0的证明",
@@ -276,7 +276,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX2-ku-二次函数的导数",
@@ -320,7 +320,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX2-ku-函数y--x的导数",
@@ -364,7 +364,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX2-ku-函数y-1-x的导数",
@@ -408,7 +408,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX2-ku-函数y-e-x-2x-1---x-1-图象作法",
@@ -454,7 +454,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX2-ku-函数y-x-3的导数",
@@ -498,7 +498,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX2-ku-函数在闭区间上最值的概念",
@@ -542,7 +542,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX2-ku-函数极值的概念",
@@ -587,7 +587,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX2-ku-切线定义",
@@ -631,7 +631,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX2-ku-切线斜率与导数",
@@ -676,7 +676,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX2-ku-利用导数判断函数单调性的步骤",
@@ -724,7 +724,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX2-ku-利用导数判断函数增减快慢",
@@ -768,7 +768,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX2-ku-利用导数研究函数性质并画大致图象",
@@ -813,7 +813,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX2-ku-利用导数解决实际问题-优化问题",
@@ -857,7 +857,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX2-ku-利用导数证明不等式",
@@ -901,7 +901,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX2-ku-前n项和与通项的关系",
@@ -945,7 +945,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX2-ku-割线斜率",
@@ -987,7 +987,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX2-ku-含参指数函数单调性讨论",
@@ -1032,7 +1032,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX2-ku-含参指数函数零点个数问题",
@@ -1078,7 +1078,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX2-ku-圆锥形容器容积最大问题",
@@ -1123,7 +1123,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX2-ku-基本初等函数的导数公式表",
@@ -1169,7 +1169,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX2-ku-复利公式",
@@ -1213,7 +1213,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX2-ku-复合函数的概念",
@@ -1257,7 +1257,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX2-ku-复合函数的求导法则-链式法则",
@@ -1302,7 +1302,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX2-ku-导函数",
@@ -1346,7 +1346,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX2-ku-导数与函数单调性的关系",
@@ -1390,7 +1390,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX2-ku-导数与函数变化快慢的关系",
@@ -1434,7 +1434,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX2-ku-导数与函数增长快慢的关系",
@@ -1478,7 +1478,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX2-ku-导数的几何意义",
@@ -1523,7 +1523,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX2-ku-导数的定义",
@@ -1568,7 +1568,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX2-ku-导数运算法则-和差法则",
@@ -1612,7 +1612,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX2-ku-导数运算法则-商法则",
@@ -1656,7 +1656,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX2-ku-导数运算法则-积法则",
@@ -1700,7 +1700,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX2-ku-常数与函数积的导数法则",
@@ -1744,7 +1744,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX2-ku-常数函数的导数",
@@ -1788,7 +1788,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX2-ku-平均变化率",
@@ -1830,7 +1830,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX2-ku-平均速度",
@@ -1872,7 +1872,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX2-ku-数列与函数的关系",
@@ -1916,7 +1916,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX2-ku-数列的前n项和",
@@ -1960,7 +1960,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX2-ku-数列的单调性",
@@ -2005,7 +2005,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX2-ku-数列的定义",
@@ -2047,7 +2047,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX2-ku-数列的递推公式",
@@ -2092,7 +2092,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX2-ku-数列的通项公式",
@@ -2136,7 +2136,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX2-ku-数列的项与表示",
@@ -2180,7 +2180,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX2-ku-数学归纳法推广命题-加权不等式",
@@ -2225,7 +2225,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX2-ku-数学归纳法的原理-多米诺骨牌类比",
@@ -2267,7 +2267,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX2-ku-数学归纳法的定义与步骤",
@@ -2311,7 +2311,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX2-ku-数学归纳法的形式化表述",
@@ -2355,7 +2355,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX2-ku-数学归纳法证明不等式-含参数",
@@ -2400,7 +2400,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX2-ku-数学归纳法证明平方和公式",
@@ -2444,7 +2444,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX2-ku-数学归纳法证明恒等式-含二次三项式猜想",
@@ -2488,7 +2488,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX2-ku-数学归纳法证明数列通项公式",
@@ -2533,7 +2533,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX2-ku-数学归纳法证明数列通项猜想",
@@ -2578,7 +2578,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX2-ku-数学归纳法证明整除性问题",
@@ -2623,7 +2623,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX2-ku-数学归纳法证明等差数列通项公式",
@@ -2668,7 +2668,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX2-ku-数学归纳法证明等比数列通项与前n项和公式",
@@ -2713,7 +2713,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX2-ku-极值点与导数为零的关系",
@@ -2757,7 +2757,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX2-ku-极限的符号表示",
@@ -2801,7 +2801,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX2-ku-求函数在闭区间上最值的步骤",
@@ -2846,7 +2846,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX2-ku-求函数极值的步骤",
@@ -2890,7 +2890,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX2-ku-瞬时速度",
@@ -2934,7 +2934,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX2-ku-第二数学归纳法",
@@ -2978,7 +2978,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX2-ku-第二数学归纳法证明斐波那契数列通项",
@@ -3023,7 +3023,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX2-ku-等差中项",
@@ -3067,7 +3067,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX2-ku-等差数列与一次函数的关系",
@@ -3111,7 +3111,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX2-ku-等差数列前n项和公式-倒序相加法",
@@ -3156,7 +3156,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX2-ku-等差数列前n项和公式-用首项和公差表示",
@@ -3201,7 +3201,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX2-ku-等差数列前n项和的最值问题",
@@ -3246,7 +3246,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX2-ku-等差数列的定义",
@@ -3290,7 +3290,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX2-ku-等差数列的性质-若p-q-s-t则ap-aq-as-at",
@@ -3335,7 +3335,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX2-ku-等差数列的通项公式",
@@ -3379,7 +3379,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX2-ku-等比中项",
@@ -3423,7 +3423,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX2-ku-等比数列与等差数列的互化-指数与对数",
@@ -3470,7 +3470,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX2-ku-等比数列与等差数列的复合应用-实际问题",
@@ -3515,7 +3515,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX2-ku-等比数列前n项和公式-错位相减法推导",
@@ -3559,7 +3559,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX2-ku-等比数列前n项和公式在无限项和-极限-中的应用",
@@ -3604,7 +3604,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX2-ku-等比数列前n项和公式的应用-已知部分量求其他量",
@@ -3648,7 +3648,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX2-ku-等比数列前n项和的性质-sn--s2n-sn--s3n-s2n成等比",
@@ -3692,7 +3692,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX2-ku-等比数列的任意项表示-an-am-q--n-m",
@@ -3736,7 +3736,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX2-ku-等比数列的定义",
@@ -3778,7 +3778,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX2-ku-等比数列的递推公式与待定系数法-形如a_-n-1--c-a_n---d",
@@ -3823,7 +3823,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX2-ku-等比数列的通项公式",
@@ -3867,7 +3867,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     },
     {
       "id": "RENJIAO-G11-MATH-A-SBX2-ku-经济车速与总费用问题",
@@ -3912,7 +3912,7 @@
       "provenance": null,
       "source_excerpt": null,
       "ai_generated": true,
-      "verified": false
+      "verified": true
     }
   ]
 }

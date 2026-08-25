@@ -112,9 +112,18 @@ async def maybe_build_transfer_probe(
         return None
 
     if caller is None:
+        from obase.exceptions import ProviderNotFoundError
         from obase.provider_registry import ProviderRegistry
 
-        caller = ProviderRegistry.get().llm() if ProviderRegistry._instance else None
+        if not ProviderRegistry._instance:
+            return None
+        try:
+            caller = ProviderRegistry.get().llm()
+        except ProviderNotFoundError:
+            # A provider can be intentionally unavailable in a local worker,
+            # test process, or rollout window.  A transfer probe is optional;
+            # the ordinary due-review queue must remain usable.
+            return None
 
     # 按 p_mastery 降序尝试（掌握最扎实的先测迁移），第一个能生成核验题的即用。
     for m in sorted(mastered, key=lambda x: -(x.p_mastery or 0.0)):

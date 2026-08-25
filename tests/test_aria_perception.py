@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import pytest
 
-from vendor.oprim.vlm_scene import (
+from oprim.vlm_scene import (
     AriaScenePerception,
     parse_text_scene,
     _parse_vlm_response,
@@ -242,6 +242,8 @@ class TestDirectorPerception:
         assert _perception_nudge(inp) is None
 
     def test_heuristic_autonomous_with_piano_perception(self):
+        from unittest.mock import patch
+
         inp = AriaDirectorInput(
             event="tick",
             state=AriaDirectorState(
@@ -249,7 +251,9 @@ class TestDirectorPerception:
                 perception=AriaPerception(objects=["grand_piano"]),
             ),
         )
-        out = _heuristic(inp)
+        # 固定随机数避免 40% 概率的 autonomous_speak 干扰
+        with patch("services.aria_director.random.random", return_value=0.9):
+            out = _heuristic(inp)
         assert out.action == "play_piano"
         assert out.perception_brief != ""
         assert "grand_piano" in out.perception_brief
@@ -290,8 +294,11 @@ class TestDirectorPerception:
 
     def test_no_perception_still_works(self):
         """无 perception 时 Director 仍正常工作（向后兼容）。"""
+        from unittest.mock import patch
+
         inp = AriaDirectorInput(event="tick")
-        out = _heuristic(inp)
+        with patch("services.aria_director.random.random", return_value=0.9):
+            out = _heuristic(inp)
         assert out.action == "play_piano"
         assert out.perception_brief == ""
 

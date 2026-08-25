@@ -132,18 +132,25 @@ async def _drive(db, sid) -> int:
             r = await tool_submit_answer(
                 db, student_id=sid, question_id=qid, answer=spec["answer"]
             )
-            assert r.get("needs_qualitative") is True
-            evidence = await _verifier_evidence(db, kc, spec["answer"])
-            await tool_report_result(
-                db,
-                student_id=sid,
-                kc_id=kc,
-                question_id=qid,
-                is_correct=True,
-                verdict_source="llm_verified",
-                evidence=evidence,
-                model_id="fake-llm-w1",
-            )
+            # 两路径均合法（AA.2 后）：
+            # 1) 服务端 verifier 可用 → 直接 graded + llm_verified 落库
+            # 2) verifier 不可用 → needs_qualitative，交外部 assess + ReportResult
+            if r.get("needs_qualitative") is True:
+                evidence = await _verifier_evidence(db, kc, spec["answer"])
+                await tool_report_result(
+                    db,
+                    student_id=sid,
+                    kc_id=kc,
+                    question_id=qid,
+                    is_correct=True,
+                    verdict_source="llm_verified",
+                    evidence=evidence,
+                    model_id="fake-llm-w1",
+                )
+            else:
+                assert r.get("graded") is True, r
+                assert r.get("verdict_source") == "llm_verified", r
+                assert "is_correct" in r, r
         else:
             r = await tool_submit_answer(
                 db, student_id=sid, question_id=qid, answer=spec["answer"]

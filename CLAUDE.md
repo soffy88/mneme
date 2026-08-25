@@ -38,7 +38,7 @@ Mneme（对外名**善学记**，旧名"学鉴"已废弃）：面向全年级学
 | **oskill** | ≥2 个不同 oprim 组合的算法 | 可受限互调 sibling（深度≤2、被调 stateless、docstring 列出、无循环）；stateless；不持久化 |
 | **omodul** | ≥2 oskill/oprim 组合的业务事务 | 不调 sibling omodul（H1-modul 严格，含"包装模式"）；标准签名 `(config,input,output_dir)→dict`；失败不 raise 返回 status；显式声明 `_enabled_pillars`（4 支柱按需）|
 | **obase** | 基础设施横切（与 3O 平行） | 不反向调 3O |
-| **服务层** | Layer 4 对外运行边界 | 不替 omodul 算 fingerprint/写 report/累计 cost；不让 omodul 知道 user_id |
+| **服务层** | Layer 4 对外运行边界：鉴权 / 编排 / 持久化装配 / HTTP 契约 | **可**编排多 omodul 与读写 DB；**不可**重写 BKT/FSRS/判分内核。禁止替 omodul 算 fingerprint/写 report/累计 cost；调 omodul 前脱敏 user_id（anon）。算法状态转移必须经 3O（`process_interaction_workflow` 等） |
 
 - **命名扁平**：`from oprim import bkt_update`，不按领域分子模块；元素名不带项目前缀（`solve_conic` 不是 `mneme_solve_conic`）。
 - **单 LLM 调用 = oprim**，不是 oskill（复杂≠层级）。oskill 必须 ≥2 个不同 oprim。
@@ -116,7 +116,10 @@ cd /data/soffy/projects/mneme-web && npm run dev   # 真前端（善学记），
 ## 不要做的事
 
 - 不引入 Master 未列出的新框架/依赖（需先改 Master）。
-- 不在路由/服务层写本应属 oprim/oskill/omodul 的业务逻辑。
+- 不在路由/服务层**复制** oprim/oskill/omodul 的算法内核（编排与落库可以写在服务层；掌握度只经 `process_interaction`→omodul 写路径）。
 - 不让 omodul 调 omodul（含包装模式）；多 omodul 协作在服务层。
+- **vendor 教育边界**：禁止服务层 import 金融/交易语义 3O 路径；刷新 vendor 用闭包而非整仓 dump（见 `vendor/EDU_BOUNDARY.md`）。
+- **掌握度并发**：`PgStore.get_or_create` 对 `(student_id, kc)` 行 `FOR UPDATE`，禁止绕过另写 `kc_mastery`。
+- **双 BKT**：写路径只用 `vendor/oprim`（`_cognitive`）；`mneme_core.oprim.bkt` 仅门控/视图，禁止进写库链。
 - 不为了让测试过而弱化任何红线或合规校验。
 - 不一次性大改多个 Epic；按 TASKS 顺序推进。

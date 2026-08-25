@@ -163,4 +163,5 @@ from oprim._adamic_adar_score import adamic_adar_score
 # P-G7: knowledge-type affinity score
 from oprim._type_affinity_score import type_affinity_score
 
-from oprim._quant_analysis import compute_shapley_decomposition, compute_shapley_values
+# 2026-08-16 教育边界裁剪：_quant_analysis 为平台量化 Shapley 分解，mneme 未使用，
+# 已随本轮 vendor 裁剪删除（见 EDU_BOUNDARY.md）。刷新 vendor 时勿整仓 dump 带回。

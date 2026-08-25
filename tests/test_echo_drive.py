@@ -19,7 +19,7 @@ from services.aria_media import (
     request_echo_drive,
     runtime_features,
 )
-from vendor.oprim.echo_drive import (
+from oprim.echo_drive import (
     EchoDriveResult,
     echo_available,
     echo_drive,
@@ -180,16 +180,20 @@ class TestRuntimeFeaturesP3:
         assert feats["echo_degrade_to_p2"] is True
 
     def test_all_phases_present(self, monkeypatch: pytest.MonkeyPatch):
-        """runtime_features 包含 P0-P3 所有特性。"""
+        """runtime_features 包含当前契约的全部特性。
+
+        Fay 大脑接管（3a54124）后，2D cinema layer（cinema_layer/gsap_keys/
+        hand_choreo 标志）被 EchoMimic 身体驱动取代，不再在 runtime_features
+        里暴露；手部编排改经 EchoDriveInput.hand_pose 传入。"""
         monkeypatch.delenv("ECHO_BASE_URL", raising=False)
         feats = runtime_features()
-        # P0
+        # P0: Director 决策 + 自主 tick
         assert "director" in feats
-        assert "cinema_layer" in feats
-        assert "gsap_keys" in feats
-        # P1
+        assert "autonomous_tick" in feats
+        # P1: 场景感知
         assert "perception" in feats
-        # P2
-        assert "hand_choreo" in feats
-        # P3
+        # P3: EchoMimic 驱动 + 降级策略
         assert "echo_drive" in feats
+        assert "echo_degrade_to_p2" in feats
+        # TTS 能力探测（edge-tts 可选）
+        assert "tts_edge" in feats

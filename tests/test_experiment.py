@@ -34,10 +34,27 @@ def test_student_arm_control_when_experiment_off(monkeypatch):
         assert teaching_engine_on_for(sid) is False
 
 
+def test_protocol_freezes_endpoints_and_no_ai_contract():
+    from services.experiment_service import experiment_activation_status, experiment_protocol
+
+    protocol = experiment_protocol()
+    assert protocol["status"] == "protocol_only"
+    assert protocol["analysis"] == "intention_to_treat"
+    assert protocol["consent_required"] is True
+    assert protocol["primary"]["independent_mode"] is True
+    assert protocol["primary"]["ai_assisted"] is False
+    assert "received_at" in protocol["required_event_fields"]
+    activation = experiment_activation_status()
+    assert activation["activatable"] is False
+    assert "protocol_not_approved" in activation["blockers"]
+
+
 def test_student_arm_splits_when_experiment_on(monkeypatch):
-    from services.experiment_service import student_arm
+    from services.experiment_service import EXPERIMENTS, student_arm
 
     monkeypatch.setenv("EXPERIMENT_TEACHING_ENGINE", "1")
+    monkeypatch.setitem(EXPERIMENTS["teaching_engine_v1"]["protocol"], "status", "approved")
+    monkeypatch.setitem(EXPERIMENTS["teaching_engine_v1"]["protocol"], "minimum_arm_size", 30)
     arms = {student_arm(f"stu-{i}") for i in range(200)}
     assert arms == {"worked_example", "control"}  # 两臂都出现
 

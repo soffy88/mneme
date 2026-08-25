@@ -1,31 +1,15 @@
-"""Cryptographic primitives submodule."""
+"""Cryptographic primitives submodule (slimmed for mneme edu tree).
 
-from oprim.crypto.ed25519 import (
-    ed25519_keypair_generate,
-    ed25519_sign,
-    ed25519_verify,
-    generate_keypair,
-    load_private_key_pem,
-    load_public_key_pem,
-    save_keypair_pem,
-    sign,
-    verify,
-)
+2026-08-16 教育边界裁剪：ed25519/merkle 子模块随本轮 vendor 裁剪删除——
+mneme 实际只用 sha256_hash/hmac_sha256（omodul._decision_trail、
+oprim.signature.compute 的决策轨迹指纹）。Ed25519 签名走
+oprim.ed25519_sign（omodul.audit_record 延迟引用）。刷新 vendor 时
+勿把 oprim/crypto/ed25519.py、merkle.py 整仓 dump 带回。
+"""
+
 from oprim.crypto.hashing import hmac_sha256, sha256_hash
-from oprim.crypto.merkle import rfc6962_inclusion_proof, rfc6962_merkle_root
 
 __all__ = [
     "sha256_hash",
     "hmac_sha256",
-    "rfc6962_merkle_root",
-    "rfc6962_inclusion_proof",
-    "ed25519_keypair_generate",
-    "ed25519_sign",
-    "ed25519_verify",
-    "generate_keypair",
-    "sign",
-    "verify",
-    "save_keypair_pem",
-    "load_private_key_pem",
-    "load_public_key_pem",
 ]

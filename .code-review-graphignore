@@ -1,0 +1,20 @@
+# Project-specific CRG ignores (appended to defaults).
+# NOTE: defaults used to ignore **/vendor/** (PHP); that is disabled in local
+# CRG install so mneme/vendor 3O kernel is indexed.
+
+# Studio deps / build
+apps/mneme-studio/node_modules/
+apps/mneme-studio/.next/
+apps/mneme-studio/test-results/
+
+# Large non-runtime vendored / docker payloads
+docker/fay/
+docker/echomimic/
+.echo/
+
+# Curriculum PDFs & bulk data (not code)
+curriculum_standards/
+data/cornell_topics/
+data/ku_packages/
+outputs/
+mnt/

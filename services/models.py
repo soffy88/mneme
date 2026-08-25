@@ -9,6 +9,7 @@ from sqlalchemy import (
     BigInteger,
     Float,
     Boolean,
+    CheckConstraint,
     Date,
     DateTime,
     ForeignKey,
@@ -19,6 +20,9 @@ from sqlalchemy import (
 )
 from sqlalchemy.dialects.postgresql import JSONB, UUID
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
+
+# 单源在 obase（3O 可 import，无需反向依赖 services）
+from obase.domain_enums import ErrorType as ErrorType
 
 
 class Base(DeclarativeBase):
@@ -35,14 +39,6 @@ class PaperStatus(str, enum.Enum):
     processing = "processing"
     done = "done"
     failed = "failed"
-
-
-class ErrorType(str, enum.Enum):
-    conceptual = "conceptual"
-    transfer = "transfer"
-    careless = "careless"
-    logic_break = "logic_break"
-    dontknow = "dontknow"
 
 
 class StorageTier(str, enum.Enum):
@@ -247,6 +243,8 @@ class WrongQuestion(Base):
     step_analysis: Mapped[Optional[dict]] = mapped_column(
         JSONB
     )  # T.6 步骤链批改：{student_steps, step_verdicts, first_wrong_step(0-based|null)}
+    # ZPD 难度自适应排序用（迁移 8ad19eb4ab90）：未校准(NULL)时按 999.0 距离兜底
+    item_difficulty: Mapped[Optional[float]] = mapped_column(Float, nullable=True)
 
 
 # ===== 认知状态（内核落库）=====
@@ -356,6 +354,61 @@ class EvaluationRun(Base):
     meta: Mapped[Optional[dict]] = mapped_column(JSONB)  # 分桶结果/verdict/base_rate 等
 
 
+class ModelRegistry(Base):
+    """Versioned model/policy registry for evaluation isolation.
+
+    This table contains model metadata only, not student data.  A registry row
+    is valid only when its train/eval windows are ordered and non-overlapping;
+    the service layer additionally rejects windows in the future.
+    """
+
+    __tablename__ = "model_registry"
+    __table_args__ = (
+        CheckConstraint(
+            "status IN ('shadow', 'candidate', 'production', 'retired')",
+            name="ck_model_registry_status",
+        ),
+        CheckConstraint(
+            "train_end <= eval_start AND eval_start < eval_end",
+            name="ck_model_registry_time_windows",
+        ),
+    )
+
+    model_id: Mapped[str] = mapped_column(String(120), primary_key=True)
+    model_type: Mapped[str] = mapped_column(String(80), nullable=False)
+    code_sha: Mapped[str] = mapped_column(String(128), nullable=False)
+    train_start: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), nullable=False
+    )
+    train_end: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), nullable=False
+    )
+    eval_start: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), nullable=False
+    )
+    eval_end: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), nullable=False
+    )
+    params: Mapped[dict] = mapped_column(
+        JSONB, nullable=False, server_default=text("'{}'::jsonb")
+    )
+    metrics: Mapped[dict] = mapped_column(
+        JSONB, nullable=False, server_default=text("'{}'::jsonb")
+    )
+    status: Mapped[str] = mapped_column(
+        String(16), nullable=False, server_default="shadow"
+    )
+    rollback_to: Mapped[Optional[str]] = mapped_column(String(120))
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), server_default=text("now()"), nullable=False
+    )
+    updated_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True),
+        server_default=text("now()"),
+        nullable=False,
+    )
+
+
 class InteractionEvent(Base):
     __tablename__ = "interaction_events"
 
@@ -390,8 +443,179 @@ class InteractionEvent(Base):
     self_explanation: Mapped[Optional[str]] = mapped_column(
         Text
     )  # 自我解释（Chi 效应，教育理念 04）：学生"为什么这么做"，纯采集不参与判分
+    # Evaluation OS：历史事件保持 NULL（未知），不把未标注的迁移事件伪装成 no-AI
+    # 证据；新的 Tutor/独立探针路径显式写入这些字段。
+    tutor_mode: Mapped[Optional[str]] = mapped_column(String(32))
+    ai_assisted: Mapped[Optional[bool]] = mapped_column(Boolean)
+    independent_mode: Mapped[Optional[bool]] = mapped_column(Boolean)
+    evaluation_phase: Mapped[Optional[str]] = mapped_column(String(16))
     occurred_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True), server_default=text("now()")
+    )
+    received_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), server_default=text("now()")
+    )
+
+
+class LearningEventRecord(Base):
+    """持久化的 Learning Event v2 事实行。
+
+    该表是 append-only 事实边界；认知状态仍由既有 process_interaction 写入
+    ``kc_mastery``，不得把 ``p_mastery`` 或其他 projection 字段塞进这里。
+    JSONB 字段保存契约中的嵌套结构，``event_checksum`` 用于幂等重试和冲突检测。
+    """
+
+    __tablename__ = "learning_events"
+    __table_args__ = (
+        UniqueConstraint("event_id", name="uq_learning_events_event_id"),
+        # 未来版本用新表/迁移承载；v2 表不静默接受未知 schema。
+        CheckConstraint("schema_version = '2'", name="ck_learning_events_v2"),
+        CheckConstraint(
+            "privacy_class IN ('P0', 'P1', 'P2', 'P3')",
+            name="ck_learning_events_privacy_class",
+        ),
+    )
+
+    event_id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True), primary_key=True
+    )
+    schema_version: Mapped[str] = mapped_column(
+        String(16), nullable=False, server_default="2"
+    )
+    # actor 可以是系统/家长/外部主体，不强制绑定 users；student_id 才是
+    # 未成年人数据归属与 purge 边界。
+    actor_id: Mapped[Optional[uuid.UUID]] = mapped_column(UUID(as_uuid=True))
+    student_id: Mapped[Optional[uuid.UUID]] = mapped_column(
+        UUID(as_uuid=True), ForeignKey("users.id")
+    )
+    session_id: Mapped[Optional[uuid.UUID]] = mapped_column(UUID(as_uuid=True))
+    occurred_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), nullable=False
+    )
+    received_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), nullable=False
+    )
+    source: Mapped[str] = mapped_column(String(64), nullable=False)
+    action: Mapped[str] = mapped_column(String(64), nullable=False)
+    object_type: Mapped[str] = mapped_column(String(64), nullable=False)
+    object_id: Mapped[str] = mapped_column(String(200), nullable=False)
+    content_version: Mapped[Optional[str]] = mapped_column(String(100))
+    knowledge_refs: Mapped[list] = mapped_column(
+        JSONB, nullable=False, server_default=text("'[]'::jsonb")
+    )
+    item_features: Mapped[dict] = mapped_column(
+        JSONB, nullable=False, server_default=text("'{}'::jsonb")
+    )
+    response: Mapped[Optional[dict]] = mapped_column(JSONB)
+    outcome: Mapped[Optional[dict]] = mapped_column(JSONB)
+    process_signals: Mapped[dict] = mapped_column(
+        JSONB, nullable=False, server_default=text("'{}'::jsonb")
+    )
+    metacognitive: Mapped[dict] = mapped_column(
+        JSONB, nullable=False, server_default=text("'{}'::jsonb")
+    )
+    intervention: Mapped[Optional[dict]] = mapped_column(JSONB)
+    provenance: Mapped[dict] = mapped_column(
+        JSONB, nullable=False, server_default=text("'{}'::jsonb")
+    )
+    privacy_class: Mapped[str] = mapped_column(
+        String(2), nullable=False, server_default="P1"
+    )
+    trace_id: Mapped[Optional[str]] = mapped_column(String(200))
+    supersedes_event_id: Mapped[Optional[uuid.UUID]] = mapped_column(
+        UUID(as_uuid=True)
+    )
+    correction_reason: Mapped[Optional[str]] = mapped_column(Text)
+    event_checksum: Mapped[str] = mapped_column(String(64), nullable=False)
+
+
+class MemoryClaim(Base):
+    """Evidence-grounded learner-memory claim.
+
+    Claims are projections for explanation and narrative.  They are never the
+    source of truth for mastery; a claim must point at one or more immutable
+    evidence rows before it can be shown to a learner or guardian.
+    """
+
+    __tablename__ = "memory_claims"
+    __table_args__ = (
+        CheckConstraint(
+            "privacy_class IN ('P0', 'P1', 'P2', 'P3')",
+            name="ck_memory_claims_privacy_class",
+        ),
+    )
+
+    id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True), primary_key=True, server_default=text("gen_random_uuid()")
+    )
+    student_id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True), ForeignKey("users.id"), nullable=False
+    )
+    claim_type: Mapped[str] = mapped_column(String(64), nullable=False)
+    subject_type: Mapped[str] = mapped_column(String(64), nullable=False)
+    subject_id: Mapped[str] = mapped_column(String(200), nullable=False)
+    claim_text: Mapped[str] = mapped_column(Text, nullable=False)
+    confidence: Mapped[Optional[float]] = mapped_column(Float)
+    model_version: Mapped[Optional[str]] = mapped_column(String(120))
+    privacy_class: Mapped[str] = mapped_column(
+        String(2), nullable=False, server_default="P1"
+    )
+    provenance: Mapped[dict] = mapped_column(
+        JSONB, nullable=False, server_default=text("'{}'::jsonb")
+    )
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), server_default=text("now()")
+    )
+
+
+class MemoryEvidence(Base):
+    """A source fact attached to a claim, normally an event or verified result."""
+
+    __tablename__ = "memory_evidence"
+    __table_args__ = (
+        CheckConstraint(
+            "privacy_class IN ('P0', 'P1', 'P2', 'P3')",
+            name="ck_memory_evidence_privacy_class",
+        ),
+    )
+
+    id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True), primary_key=True, server_default=text("gen_random_uuid()")
+    )
+    student_id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True), ForeignKey("users.id"), nullable=False
+    )
+    source_event_id: Mapped[Optional[uuid.UUID]] = mapped_column(UUID(as_uuid=True))
+    evidence_type: Mapped[str] = mapped_column(String(64), nullable=False)
+    occurred_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), nullable=False
+    )
+    payload: Mapped[dict] = mapped_column(
+        JSONB, nullable=False, server_default=text("'{}'::jsonb")
+    )
+    provenance: Mapped[dict] = mapped_column(
+        JSONB, nullable=False, server_default=text("'{}'::jsonb")
+    )
+    privacy_class: Mapped[str] = mapped_column(
+        String(2), nullable=False, server_default="P1"
+    )
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), server_default=text("now()")
+    )
+
+
+class MemoryClaimEvidence(Base):
+    """Many-to-many edge; the edge itself carries no learner PII."""
+
+    __tablename__ = "memory_claim_evidence"
+    claim_id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True), ForeignKey("memory_claims.id", ondelete="CASCADE"), primary_key=True
+    )
+    evidence_id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True), ForeignKey("memory_evidence.id", ondelete="CASCADE"), primary_key=True
+    )
+    relation: Mapped[str] = mapped_column(
+        String(20), nullable=False, server_default="supports"
     )
 
 
@@ -454,6 +678,24 @@ class LessonPage(Base):
     report_path: Mapped[Optional[str]] = mapped_column(Text)
     created_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True), server_default=text("now()")
+    )
+
+
+class CornellProgress(Base):
+    """康奈尔笔记云端进度（自报 checklist，≠ kc_mastery）。"""
+
+    __tablename__ = "cornell_progress"
+
+    student_id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True), ForeignKey("users.id"), primary_key=True
+    )
+    topic_id: Mapped[str] = mapped_column(String(64), primary_key=True)
+    version: Mapped[int] = mapped_column(Integer, server_default="1", nullable=False)
+    state: Mapped[dict] = mapped_column(
+        JSONB, server_default=text("'{}'::jsonb"), nullable=False
+    )
+    updated_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), server_default=text("now()"), nullable=False
     )
 
 

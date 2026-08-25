@@ -1,9 +1,10 @@
-"""qwen_llm —— 独立 qwen tool-calling llm_caller（FC-7：仅供 tutor-loop 循环驱动）。
+"""OpenAI-compatible tool-calling callers（FC-7：仅供 tutor-loop 循环驱动）。
 
-零 DB、无 services import。经 DashScope OpenAI 兼容端点做 function-calling，把 oservi
-AgenticLoop 的 Anthropic 风格 content-blocks（tool_use / tool_result）↔ OpenAI
+零 DB、无 services import。经 OpenAI 兼容端点做 function-calling，把
+LocalAgenticLoop 的 Anthropic 风格 content-blocks（tool_use / tool_result）↔ OpenAI
 （tool_calls / role=tool）互转，返回引擎期望的 {content:[tool_use|text], stop_reason, usage}。
 
+QwenLoopCaller 保留 DashScope 兼容路径，VeyaLoopCaller 连接本机 Veya gateway。
 verifier 仍注入伪 LLMCaller（W2b 边界，不在此）。base_url/key/model 全走环境变量。
 """
 
@@ -43,7 +44,7 @@ def _to_openai_tools(tools: list[dict] | None) -> list[dict]:
 
 
 def _to_openai_messages(messages: list[dict]) -> list[dict]:
-    """oservi content-blocks → OpenAI chat messages（含 tool_calls / role=tool）。"""
+    """Provider-neutral content blocks → OpenAI chat messages（含 tool_calls / role=tool）。"""
     out: list[dict] = []
     for m in messages:
         role = m.get("role")
@@ -93,13 +94,19 @@ def _to_openai_messages(messages: list[dict]) -> list[dict]:
     return out
 
 
-class QwenLoopCaller:
-    """oservi AgenticLoop 的 llm_caller：__call__(messages, tools, ...) → Anthropic 风格 dict。"""
+class OpenAICompatibleLoopCaller:
+    """Provider-neutral OpenAI-compatible tool-calling adapter."""
 
-    def __init__(self, api_key: str | None = None, model: str | None = None) -> None:
-        self.api_key = api_key or os.environ["DASHSCOPE_API_KEY"]
-        self.model = model or os.environ.get("QWEN_MODEL", "qwen-plus")
-        self.base_url = _base_url()
+    def __init__(
+        self,
+        *,
+        api_key: str | None,
+        model: str,
+        base_url: str,
+    ) -> None:
+        self.api_key = api_key
+        self.model = model
+        self.base_url = base_url.rstrip("/")
 
     async def __call__(
         self,
@@ -124,10 +131,15 @@ class QwenLoopCaller:
         if oai_tools:
             payload["tools"] = oai_tools
 
-        async with httpx.AsyncClient(timeout=120) as client:
+        headers = (
+            {"Authorization": f"Bearer {self.api_key}"}
+            if self.api_key
+            else {}
+        )
+        async with httpx.AsyncClient(timeout=300) as client:
             resp = await client.post(
                 f"{self.base_url}/chat/completions",
-                headers={"Authorization": f"Bearer {self.api_key}"},
+                headers=headers,
                 json=payload,
             )
             resp.raise_for_status()
@@ -163,3 +175,37 @@ class QwenLoopCaller:
             "stop_reason": "end_turn",
             "usage": usage_out,
         }
+
+
+class QwenLoopCaller(OpenAICompatibleLoopCaller):
+    """DashScope Qwen tool-calling adapter kept for compatibility."""
+
+    def __init__(self, api_key: str | None = None, model: str | None = None) -> None:
+        super().__init__(
+            api_key=api_key or os.environ["DASHSCOPE_API_KEY"],
+            model=model or os.environ.get("QWEN_MODEL", "qwen-plus"),
+            base_url=_base_url(),
+        )
+
+
+class VeyaLoopCaller(OpenAICompatibleLoopCaller):
+    """Local Veya gateway tool-calling adapter."""
+
+    def __init__(
+        self,
+        model: str | None = None,
+        *,
+        base_url: str | None = None,
+        api_key: str | None = None,
+    ) -> None:
+        super().__init__(
+            api_key=(
+                api_key
+                if api_key is not None
+                else os.environ.get("VEYA_API_KEY") or None
+            ),
+            model=model or os.environ.get("VEYA_MODEL", "veya1.2-128K"),
+            base_url=base_url
+            or os.environ.get("VEYA_BASE_URL")
+            or "http://127.0.0.1:8791/v1",
+        )
