@@ -41,6 +41,9 @@ async def g10a_path_baseline():
     c_id = "renjiao-math-g10-a-c01"
     ku_id = "renjiao-math-g10-a-ku-集合的概念"
     wq_id = _uuid.uuid4()
+    created_textbook = False
+    created_cluster = False
+    created_ku = False
 
     async def _exists(db, model, pk):
         from sqlalchemy import select
@@ -60,6 +63,7 @@ async def g10a_path_baseline():
                     book_name="人教版·高中数学必修一（A版）",
                 )
             )
+            created_textbook = True
             await db.flush()
         if not await _exists(db, KnowledgeCluster, c_id):
             db.add(
@@ -70,6 +74,7 @@ async def g10a_path_baseline():
                     display_order=1,
                 )
             )
+            created_cluster = True
             await db.flush()
         if not await _exists(db, KnowledgeUnit, ku_id):
             db.add(
@@ -85,6 +90,7 @@ async def g10a_path_baseline():
                     verified=False,
                 )
             )
+            created_ku = True
         # 题库题：让该 KU “有内容”（过 tool_request_question 同款过滤）
         db.add(
             WrongQuestion(
@@ -109,9 +115,12 @@ async def g10a_path_baseline():
         await db.execute(
             delete(WrongQuestion).where(WrongQuestion.id == wq_id)
         )
-        await db.execute(delete(KnowledgeUnit).where(KnowledgeUnit.id == ku_id))
-        await db.execute(delete(KnowledgeCluster).where(KnowledgeCluster.id == c_id))
-        await db.execute(delete(Textbook).where(Textbook.id == tb_id))
+        if created_ku:
+            await db.execute(delete(KnowledgeUnit).where(KnowledgeUnit.id == ku_id))
+        if created_cluster:
+            await db.execute(delete(KnowledgeCluster).where(KnowledgeCluster.id == c_id))
+        if created_textbook:
+            await db.execute(delete(Textbook).where(Textbook.id == tb_id))
         await db.commit()
 
 
