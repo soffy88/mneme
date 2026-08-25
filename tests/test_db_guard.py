@@ -6,7 +6,7 @@ from pathlib import Path
 
 import pytest
 
-from tests.db_guard import (
+from .db_guard import (
     is_production_mneme_url,
     load_postgres_password,
     resolve_pytest_database_url,

@@ -48,6 +48,13 @@ else
     exit 1
 fi
 
+# The editable project install can expose a different top-level ``tests``
+# package in a clean uv environment. Keep the repository's vendored/runtime
+# modules and test package first for every check phase, including smoke tests.
+if [ "$MODE" = "venv" ]; then
+    export PYTHONPATH="$REPO_ROOT/vendor:$REPO_ROOT/packages/mneme-core:$REPO_ROOT/packages/mneme-agent:$REPO_ROOT/packages/event-schema:$REPO_ROOT${PYTHONPATH:+:$PYTHONPATH}"
+fi
+
 # ── 测试库解析：绝不在生产库 `mneme` 上跑测试（conftest 无事务隔离，会写真库）──
 # 专用测试库 mneme_test 已存在（同 PG 实例）。解析顺序：
 #   1. 显式 TEST_DATABASE_URL（用户/CI 提供）

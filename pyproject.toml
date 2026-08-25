@@ -35,6 +35,13 @@ dependencies = [
     "pymupdf4llm",
     "pypdf>=4.0",
     "edge-tts>=6.1.0",
+    "rapidfuzz>=3.0.0",
+    "cryptography>=42.0",
+    "pyotp>=2.9",
+    "qrcode>=7.4",
+    "pillow>=10.0",
+    "chardet>=5.0",
+    "python-multipart>=0.0.9",
 ]
 requires-python = ">=3.12"
 
