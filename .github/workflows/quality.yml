@@ -26,6 +26,13 @@ jobs:
         image: redis:7
         ports:
           - 6379:6379
+      minio:
+        image: minio/minio
+        env:
+          MINIO_ROOT_USER: minioadmin
+          MINIO_ROOT_PASSWORD: minioadmin
+        ports:
+          - 9002:9000
 
     steps:
       - uses: actions/checkout@v4
@@ -49,6 +56,10 @@ jobs:
           TEST_DATABASE_URL: postgresql+asyncpg://postgres:postgres@localhost:5432/mneme_test
           DATABASE_URL: postgresql+asyncpg://postgres:postgres@localhost:5432/mneme_test
           REDIS_URL: redis://localhost:6379/0
+          MINIO_ENDPOINT: localhost:9002
+          MINIO_ACCESS_KEY: minioadmin
+          MINIO_SECRET_KEY: minioadmin
+          MINIO_BUCKET: mneme
         run: ./scripts/check.sh
 
   web-quality:

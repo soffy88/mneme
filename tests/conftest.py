@@ -113,6 +113,9 @@ async def g10a_kc_baseline():
 
     c_qual = "renjiao-math-g10-a-c02"
     c_quant = "renjiao-math-g10-a-kc-一元二次不等式及其解法"
+    created_textbook = False
+    created_clusters: list[str] = []
+    created_units: list[str] = []
 
     async def _exists(db, model, pk):
         return (
@@ -130,6 +133,7 @@ async def g10a_kc_baseline():
                     book_name="人教版·高中数学必修一（A版）",
                 )
             )
+            created_textbook = True
             await db.flush()
         if not await _exists(db, KnowledgeCluster, c_qual):
             db.add(
@@ -140,6 +144,7 @@ async def g10a_kc_baseline():
                     display_order=2,
                 )
             )
+            created_clusters.append(c_qual)
         if not await _exists(db, KnowledgeCluster, c_quant):
             db.add(
                 KnowledgeCluster(
@@ -149,6 +154,7 @@ async def g10a_kc_baseline():
                     display_order=14,
                 )
             )
+            created_clusters.append(c_quant)
         await db.flush()
         if not await _exists(db, KnowledgeUnit, _G10A_KU_QUAL):
             db.add(
@@ -164,6 +170,7 @@ async def g10a_kc_baseline():
                     verified=False,
                 )
             )
+            created_units.append(_G10A_KU_QUAL)
         if not await _exists(db, KnowledgeUnit, _G10A_KU_QUANT):
             db.add(
                 KnowledgeUnit(
@@ -178,6 +185,7 @@ async def g10a_kc_baseline():
                     verified=False,
                 )
             )
+            created_units.append(_G10A_KU_QUANT)
         await db.commit()
 
     yield {
@@ -188,15 +196,16 @@ async def g10a_kc_baseline():
 
     async with SessionLocal() as db:
         # 顺序清：KU → cluster → textbook（FK 无 CASCADE）。只清自己种的 id。
-        await db.execute(
-            delete(KnowledgeUnit).where(
-                KnowledgeUnit.id.in_([_G10A_KU_QUAL, _G10A_KU_QUANT])
+        if created_units:
+            await db.execute(
+                delete(KnowledgeUnit).where(KnowledgeUnit.id.in_(created_units))
             )
-        )
-        await db.execute(
-            delete(KnowledgeCluster).where(
-                KnowledgeCluster.id.in_([c_qual, c_quant])
+        if created_clusters:
+            await db.execute(
+                delete(KnowledgeCluster).where(
+                    KnowledgeCluster.id.in_(created_clusters)
+                )
             )
-        )
-        await db.execute(delete(Textbook).where(Textbook.id == _G10A_TB))
+        if created_textbook:
+            await db.execute(delete(Textbook).where(Textbook.id == _G10A_TB))
         await db.commit()
