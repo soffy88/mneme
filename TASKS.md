@@ -1363,7 +1363,7 @@ T.8 开发中发现 `quiz_service.py` 有个"commit 后读 ORM 对象属性触�
   10 新测试（偏好读写×4 + flatten_rich_content×2 + 朗读×2 + 低带宽裁剪×2）；
   pytest 443 passed（+10）/3 skipped，check.sh 全绿。mneme 自己的文件走 bind mount，
   `docker compose restart` 即生效。
-- [~] **U.24 [P2] L9 教学机制 feature-flag 化 + Learner Model 边界清理（轻量版，未拆独立服务）** 🔄 2026-07-04
+- [x] **U.24 [P2] L9 教学机制 feature-flag 化 + Learner Model 边界清理（轻量版，未拆独立服务）** ✅ 2026-07-04
   ✅ 新增 `services/feature_flags.py`（`pedagogy_enabled(env_name)`，同既有
   `FSRS_FIT_ENABLED`/`TEACHING_ENGINE_ENABLED` 约定：env 一票否决，默认开=保留现状，
   显式设 "0"/"false" 才关——运维急停开关，不是 experiment_service 那种 A/B 分流）。
@@ -1644,13 +1644,12 @@ users.province 等）后 api 容器26小时没重启，内存里旧ORM引用已�
 
 ### ⛔ 功能型上线阻断（需运维/密钥决策，非代码，未解决）
 
-- [ ] **Y.4-a 文本LLM全线宕机**：OLLAMA_MODEL=qwen2.5:7b 没拉，Ollama只有
-  qwen2.5vl:3b/7b + llama3.2。每次文本LLM调用404。**坏的功能**：苏格拉底问答/
-  随手拍/变式题/冷启动诊断。修=host上 ollama pull qwen2.5:7b 或改 OLLAMA_MODEL
-  指向已有模型，然后实测一次苏格拉底调用成功。
-- [ ] **Y.4-b OCR/拍卷批改在静默跑mock**：ANTHROPIC_API_KEY 是占位符
-  your_key_here，VLM链路回退 _MockVLM，返回编造批改结果且不报错。教学平台给
-  假反馈=严重。修=配真实视觉密钥(Claude/Gemini)或路由到本地 qwen2.5vl:7b。
+- [x] **Y.4-a 文本 LLM provider 已切换**（2026-08-24）：默认使用本机 Veya
+  `veya1.2-128K`，已完成 provider、聊天/服务入口和 Compose 接线；本机 gateway
+  文本请求实测成功。
+- [x] **Y.4-b OCR/VLM provider 已切换**（2026-08-24）：默认使用本机 Veya
+  `veya1.2-vl`，已完成 VLM caller、拍卷服务入口和 Compose 接线；纯色 JPEG
+  视觉请求实测成功。批量 OCR 质量仍待 pilot 验证。
 - [ ] **Y.4-c SMS用mock（万能码123456）**：无法真实拉新用户。注册闸门当前正确
   关闭(REGISTRATION_OPEN=0)所以不是开放漏洞，但上线拉新前必须换阿里云(需报备)。
 - [ ] **Y.4-d 真上线时设 MNEME_ENV=prod**：Y.3 已把它接进 compose，但默认dev。
@@ -1702,13 +1701,16 @@ AI内核当前是坏的（文本LLM 404、OCR跑mock给假批改），这对教�
   （send-email-code/register student|parent-email/login-email）。合规红线在
   邮箱路径成立（<14须guardian_email）。6测试。543 passed，实证：<14无监护
   422、带监护201+IP留痕、登录200。
-- [~] **Z.3 前端登录/注册页 手机号→邮箱** 🔄 mneme-web PR #17 收尾完成，待你合并
+- [x] **Z.3 前端登录/注册页 手机号→邮箱** ✅ 2026-08-16 前端接线完成（mneme-web feat/email-registration PR #17）
   三个表单全改邮箱，tsc+build过，mock冒烟200无手机号残留。
   ✅ **真后端 E2E 收尾（2026-07-10）**：后端邮箱端点上线后补做端到端验证——
   真实HTTP :8000 send-email-code 200；用前端确切请求体跑
   register-student-email 201→login-email 200→/me 200(role/email/invite_code
   齐)；前端指向真后端(USE_MOCK=false)dev server /login 200渲染邮箱无报错。
   前后端契约完全对齐，已在 PR #17 留 E2E 结论评论，可合并。
+  2026-08-16 提交 073d43b 把全部改动（login/page.tsx + api-client.ts +
+  types/api.ts + 品牌/UX 收口 error/manifest/layout/globals.css）一次性
+  合入 feat/email-registration，diff 干净，工作树 clean。
 
   📌 **上线前你需要做**：配一个免费邮件服务的 SMTP 凭据（推荐国内免费
   QQ/163邮箱授权码）到 api 环境：EMAIL_PROVIDER=smtp + SMTP_HOST/PORT/USER/
@@ -2556,6 +2558,24 @@ CI 常驻的判分准确率回归门，堵死"构造桩题掩盖真实数据判�
 > Cohen's d 0.35 等）零真实数据支撑。本 Epic 先清偿"不需要真实学生就能推进"
 > 的三项，真实 pilot 相关项挂起等人决策。
 
+- [x] **GH-0 Blueprint P0：可复现依赖与质量门** ✅ 2026-08-24：移除
+  `pyproject.toml` 的宿主机 `file://` 3O 依赖，Docker 改用仓库内 `vendor/` 闭包，
+  新增 `uv.lock`、`uv export --frozen` 构建路径和 `.github/workflows/quality.yml`；
+  `scripts/check.sh` 支持 CI 显式测试库 URL，新增可复现构建静态守卫；README 已重写，
+  `docs/adr/0001-learning-event-v2-replay-contract.md` 已冻结 Event v2/Replay 边界；
+  Event v2 运行时 schema/ingest/replay 接线由 GH-0.5 延续完成。
+
+- [x] **GH-0.5 Blueprint P1：Event v2 契约与 Replay 基础层** ✅ 2026-08-24：新增
+  `packages/event-schema/`，冻结严格 v2 LearningEvent、legacy InteractionEvent adapter、
+  correction 关系、`as_of` 防未来信息泄漏、全序 replay 输入和 projection checksum；
+  新增 9 项契约/确定性测试；本轮补上 `learning_events` Alembic 表、`event_checksum`
+  冲突检测和幂等 append service，并纳入 purge 清单；本轮再接入可控双写、数据库行回放
+  反序列化和 checksum 等价性测试（另 9 项 ingest/双写测试）。双写默认关闭；新增
+  `services/learning_event_backfill_service.py` 的 keyset 分页、dry-run、冲突失败和幂等
+  历史回填，以及 `services/learning_event_replay_service.py` 的只读 BKT+FSRS replay、
+  correction/派生信用过滤与 projection checksum；Celery 手动任务已接线但不进 beat，
+  回填写入仍需 `LEARNING_EVENT_V2_BACKFILL_ENABLED=1`，materialized projection 暂不写回。
+
 - [x] **GH-1 ASSISTments 外部 AUC 对标**：用 ASSISTments 2009-2010 skill-builder
   公开数据集回放 `oskill.cognitive_update`（与 exp1 同路径），报外部真实数据
   AUC/log-loss，对照合成基线与 0.77 目标。产出 `scripts/moat_eval/exp5_external_auc.py`
@@ -2567,10 +2587,63 @@ CI 常驻的判分准确率回归门，堵死"构造桩题掩盖真实数据判�
   产出 `scripts/moat_eval/exp6_recognition.py` + `tests/test_recognition_guard.py`
   （快速档默认跑，MOAT=1 全量档）。首跑 7 seeds 全过：AUC 增益 +0.012~+0.063，
   惰性知识捕获（交错型 p_recognition 更高、迁移错误率更低）成立。
-- [ ] **GH-3 DKT 影子评估管道预建**：不训练模型，只建"真实作答序列 → 内核回放
-  vs 序列基线（如 per-KC 移动平均）"的对比脚手架，为真实数据到位后的 DKT 影子
-  模型（Master §4.7 Phase 3）铺路。
-- [ ] **GH-4 chat 断链修复**（⚠️ 需人决策：A 补 IDaemon_Bus+挂载需重启活 api /
-  B chat 去 oservi 化 / C 接受仅 dev）——见 STATUS.md「需人决策」。
+- [x] **GH-3 DKT 影子评估管道预建** ✅ 2026-08-24：新增
+  `scripts/moat_eval/exp7_shadow_eval.py`，只读 ASSISTments test split，逐事件比较
+  生产 BKT+FSRS 内核与学生内 per-KC 因果移动平均基线，输出 overall/warm-only
+  AUC、log-loss、方向明确的差值；无训练、无 DB 写入、无未来事件泄漏。新增
+  `tests/test_shadow_eval.py` 锁因果性、学生/KC 隔离、指标与窗口契约；后续带时间戳
+  LearningEvent v2 和真实 train window 到位后，沿用同一预测协议接入 DKT challenger。
+- [x] **GH-4 chat 断链修复** ✅ 2026-08-24：按方案 B 新增仓内无状态
+  `LocalAgenticLoop`，移除 chat/tutor_loop 对 oservi 的运行时硬依赖；保留 MCP HTTP
+  工具、学生 JWT 转发、intent/persona/history 契约。新增无 oservi tool-call/error
+  observation 测试；Docker/compose 纳入 `packages/mneme-agent`，移除 oservi dev 挂载。
+  活 API 尚未重启，生产发布需单独确认。
+- [x] **GH-0.6 Blueprint P1–P3 + Evaluation OS groundwork：Memory / State / Policy / Evaluation 纵向切片** ✅ 2026-08-24：
+  新增 Evidence Graph 三表及 Alembic 迁移、同学生证据约束、hard-delete 清理和
+  `/v2/memory/*`、`/v2/events`、`/v2/replay`、`/v2/export`；新增 Learner State 2.0
+  读模型（mastery/memory/recognition/transfer/error/metacognition/uncertainty）；
+  新增 `mneme_core.policy_engine`（gain/minute + 动态 ZPD/留存/迁移/考期/选择）并接入
+  daily plan 注释与 next-action；新增 Evaluation OS（D7/D30、near-transfer、Wilson
+  区间、两臂 observed uplift）及聚合端点。ADR-0002 冻结边界；7 项纯契约测试通过。
+  全量 Event v2 双写、far-transfer 题池、RCT 因果 uplift 和活库迁移仍不在本项宣称内。
+- [x] **GH-0.7 Blueprint P4：Tutor Guardrails 控制契约** ✅ 2026-08-25：新增
+  `packages/mneme-core/mneme_core/tutor_control.py`，冻结
+  `observe→decide→generate→verify→record` 控制边界、六类 pedagogical move、答案
+  分级与独立模式；每 5–10 次高强度 Tutor session 可确定性插入 no-AI retrieval/
+  reflect 检查。旧 `oprim.answer_policy` 改为兼容导出，避免策略分叉。
+  `/v1/teaching/policy` 返回 `tutor_control`、独立模式/已看答案/提示次数上下文；
+  Socratic 和 `LocalAgenticLoop` 在输出给学生前统一执行可信答案片段/显式答案标记
+  闸门，默认 agent loop 保守拦截。新增 ADR-0003 与 23 项纯契约/红线测试；不宣称
+  真人 no-AI transfer 效果，仍需独立检索事件、D7/D30 delayed holdout 和 pilot。
+- [x] **GH-0.8 Blueprint P5 groundwork：Evaluation OS v2 no-AI / delayed / time split** ✅ 2026-08-25：
+  `interaction_events` 新增 nullable `tutor_mode`、`ai_assisted`、`independent_mode`、
+  `evaluation_phase`、`received_at`（迁移 `d2e3f4a5b6c7`，历史 receipt 回填为 occurred）；
+  `process_interaction` 与 Event v2 legacy adapter 保留这些事实信号。
+  Evaluation OS 新增显式 no-AI transfer、同学生配 delayed-minus-baseline、train/eval
+  时间切分和 `as_of` 双时间未来信息排除；无标签/无配对一律返回 null，不把历史数据
+  包装成因果结论。ADR-0004、34 项事件/评估回归通过；活库迁移、真人 delayed holdout、
+  RCT/model registry 仍待发布与 pilot。
+- [x] **GH-0.9 Blueprint P5 ModelRegistry** ✅ 2026-08-25：新增 metadata-only
+  `model_registry` 表与迁移 `e3f4a5b6c7d8`，记录 model_id/model_type/code_sha、
+  train/eval windows、params/metrics、status、rollback_to；纯服务层拒绝时区缺失、
+  train/eval 重叠、未来 eval 窗和非法生命周期转换。新增 admin-only
+  `POST/GET /v2/evaluation/models` 与 status transition endpoint；production 不会
+  自动覆盖同类型旧版本。17 项 ModelRegistry/路由/评估契约通过；活库迁移与真实
+  shadow→A/B→production 发布仍待确认。
+- [x] **GH-0.11 Blueprint P5 promotion evidence gate** ✅ 2026-08-25：进入
+  `candidate/production` 必须带完整 `shadow-evaluation/v1` 报告，校验 model_id、同样本
+  baseline、四项 shadow guardrails、AUC/log-loss/Brier/ECE/calibration slope 和至少
+  30 个事件；status API 支持在 transition 时提交 metrics，缺证据 fail-closed，不自动晋升。
+  24 项 ModelRegistry/路由/影子契约通过；活库迁移和真实发布仍待确认。
+- [x] **GH-0.10 Blueprint P5 registry-aligned shadow comparator** ✅ 2026-08-25：新增
+  `services/shadow_evaluation.py`，候选与基线必须落在注册表 train/eval 不重叠的
+  `[eval_start, eval_end)` 且按相同 event keys 对齐；`as_of` 同时约束 occurred/received
+  时间。输出 AUC、log-loss、Brier、ECE、base rate 和方向明确的 observed difference，
+  明确 shadow-only、零数据库写入、零学习路径控制、零因果 uplift 声称；新增 4 项越窗、
+  未来、混模、错位基线契约测试；新增 `shadow_registry_eval.py` JSONL 离线适配器、
+  production BKT+FSRS 的只读 `InteractionEvent` 重放适配器，以及
+  `candidate_shadow_predictions`（当前真实结果仅在预测后进入历史）的候选接入契约；
+  新增无 sklearn 的 calibration slope 与候选距理想斜率 1 的改善量；输入、重放、候选与
+  校准契约均有测试覆盖。具体 DKT/Hybrid predictor、pilot/A-B、活库迁移仍不在本项宣称内。
 - [ ] **GH-5 真人 pilot 启动**（⚠️ 需人决策/运营）：FSRS 拟合 400 间隔复习对门槛、
   FIRe A/B、RCT、0.77 AUC 验证全部以此为前提。

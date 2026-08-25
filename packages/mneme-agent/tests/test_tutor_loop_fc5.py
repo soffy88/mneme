@@ -22,8 +22,12 @@ import uuid
 
 import pytest
 
-pytest.importorskip("oservi")
 pytest.importorskip("mneme_core")
+
+pytestmark = pytest.mark.skipif(
+    os.environ.get("MNEME_LIVE_INTEGRATION") != "1",
+    reason="requires a running Mneme API; set MNEME_LIVE_INTEGRATION=1",
+)
 
 from sqlalchemy import text  # noqa: E402
 

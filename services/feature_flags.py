@@ -15,6 +15,26 @@ def pedagogy_enabled(env_name: str) -> bool:
     return os.environ.get(env_name, "1").lower() not in ("0", "false")
 
 
+def learning_event_v2_dual_write_enabled() -> bool:
+    """Enable v2 dual-write only after the learning_events migration is deployed."""
+
+    return os.environ.get(LEARNING_EVENT_V2_DUAL_WRITE, "0").lower() in (
+        "1",
+        "true",
+        "yes",
+    )
+
+
+def learning_event_v2_backfill_enabled() -> bool:
+    """Allow historical writes only during an explicitly approved backfill window."""
+
+    return os.environ.get(LEARNING_EVENT_V2_BACKFILL, "0").lower() in (
+        "1",
+        "true",
+        "yes",
+    )
+
+
 # pedagogy/01-08 对应的 env 变量名（单源，散落字面量一律迁移引用此处）
 PEDAGOGY_FRINGE = "PEDAGOGY_FRINGE_ENABLED"  # 01 掌握门控+知识空间选题
 PEDAGOGY_LEAGUE = "PEDAGOGY_LEAGUE_ENABLED"  # 02 SDT 留存-归属(匿名联赛)
@@ -24,3 +44,5 @@ PEDAGOGY_GROWTH_FEEDBACK = "PEDAGOGY_GROWTH_FEEDBACK_ENABLED"  # 05 成长型思
 PEDAGOGY_EXAM_AWARE = "PEDAGOGY_EXAM_AWARE_ENABLED"  # 06 考期感知调度
 PEDAGOGY_FINE_FEEDBACK = "PEDAGOGY_FINE_FEEDBACK_ENABLED"  # 07 刻意练习细颗粒反馈
 PEDAGOGY_AFFECT = "PEDAGOGY_AFFECT_ENABLED"  # 08 情感感知
+LEARNING_EVENT_V2_DUAL_WRITE = "LEARNING_EVENT_V2_DUAL_WRITE_ENABLED"
+LEARNING_EVENT_V2_BACKFILL = "LEARNING_EVENT_V2_BACKFILL_ENABLED"

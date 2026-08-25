@@ -258,16 +258,27 @@ def _parse_json(raw: str) -> dict[str, Any]:
 
 async def direct(inp: AriaDirectorInput) -> AriaDirectorOutput:
     """指挥一步：优先真 LLM，失败回落启发式。"""
+    backend = os.environ.get("MNEME_LLM", "").lower()
     key = os.environ.get("DASHSCOPE_API_KEY") or os.environ.get("QWEN_API_KEY") or ""
-    if not key or key == "your_key_here":
+    caller_factory: Any
+    if backend == "veya":
+        from services.providers.veya_caller import VeyaTextCaller
+
+        caller_factory = VeyaTextCaller
+        caller_kwargs = {}
+    elif backend in ("qwen", "") and key and key != "your_key_here":
+        from services.providers.qwenvl_caller import QwenTextCaller
+
+        caller_factory = QwenTextCaller
+        caller_kwargs = {
+            "api_key": key,
+            "model": os.environ.get("QWEN_MODEL", "qwen-plus"),
+        }
+    else:
         return _heuristic(inp)
 
     try:
-        from services.providers.qwenvl_caller import QwenTextCaller
-
-        caller = QwenTextCaller(
-            api_key=key, model=os.environ.get("QWEN_MODEL", "qwen-plus")
-        )
+        caller = caller_factory(**caller_kwargs)
         hist_txt = ""
         for hist_item in (inp.history or [])[-8:]:
             role = hist_item.get("role", "user")

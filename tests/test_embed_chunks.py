@@ -20,6 +20,30 @@ from oprim.embed_chunks import (
 )
 
 
+def _ollama_embed_reachable() -> bool:
+    """探测代码实际会用的 Ollama embedding 端点（尊重 OLLAMA_BASE_URL）是否可达。
+
+    默认 OLLAMA_BASE_URL=host.docker.internal:11434（Docker 内）；宿主机跑测试时
+    需设 OLLAMA_BASE_URL=http://localhost:11434。不可达则跳过真实 embedding 测试，
+    与 test_cli_mneme 的 skipif-on-reachability 约定一致。"""
+    import httpx
+
+    url = os.environ.get("OLLAMA_BASE_URL", "http://host.docker.internal:11434")
+    model = os.environ.get("OLLAMA_EMBED_MODEL", "nomic-embed-text")
+    try:
+        r = httpx.post(
+            f"{url}/api/embeddings",
+            json={"model": model, "prompt": "ping"},
+            timeout=10.0,
+        )
+        return r.status_code == 200 and bool(r.json().get("embedding"))
+    except Exception:
+        return False
+
+
+_OLLAMA_EMBED_OK = _ollama_embed_reachable()
+
+
 def _assert_span_matches(page_text: str, chunk: TextChunk) -> None:
     stripped = page_text.strip()
     assert chunk.char_start is not None
@@ -97,6 +121,10 @@ def test_strip_control_chars_removes_nul_but_keeps_newlines_and_chinese():
 
 
 @pytest.mark.asyncio
+@pytest.mark.skipif(
+    not _OLLAMA_EMBED_OK,
+    reason="Ollama embedding 端点不可达（默认 host.docker.internal:11434；宿主机跑需设 OLLAMA_BASE_URL=http://localhost:11434）",
+)
 async def test_embed_text_produces_real_ollama_vector():
     """A-4 验收：Ollama embedding 真实产出向量（非空非 mock），非 OpenAI 路径。"""
     assert not os.environ.get("OPENAI_API_KEY"), (
@@ -115,6 +143,10 @@ async def test_embed_text_produces_real_ollama_vector():
 
 
 @pytest.mark.asyncio
+@pytest.mark.skipif(
+    not _OLLAMA_EMBED_OK,
+    reason="Ollama embedding 端点不可达（默认 host.docker.internal:11434；宿主机跑需设 OLLAMA_BASE_URL=http://localhost:11434）",
+)
 async def test_embed_text_with_model_reports_actual_provider_not_static_constant():
     """回归测试：A2 dry run 发现 embed_chunks() 曾固定记录 EMBED_MODEL（OpenAI 常量），
     即便实际走 Ollama fallback 也照记不误——embedding_model 字段说谎。

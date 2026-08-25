@@ -31,6 +31,11 @@ logger = logging.getLogger(__name__)
 
 def _get_caller():
     """获取 LLM caller（复用现有 provider 配置）。"""
+    if os.environ.get("MNEME_LLM", "").lower() == "veya":
+        from services.providers.veya_caller import VeyaTextCaller
+
+        return VeyaTextCaller()
+
     from services.providers.ollama_caller import OllamaCaller
 
     # 优先 OpenAI，若无 key 则用 Ollama

@@ -5,6 +5,7 @@ obase/cognitive_store.py
 """
 
 from __future__ import annotations
+from collections.abc import Awaitable, Callable
 from datetime import datetime, timezone
 from typing import Protocol, runtime_checkable, Dict, List, Optional
 from uuid import UUID
@@ -16,6 +17,8 @@ import uuid as _uuid
 from obase.cognitive_types import KCState, new_state_from_prior, fsrs_new_card
 from obase.prior_provider import PriorProvider
 from services.models import KCMastery, InteractionEvent
+
+LearningEventWriter = Callable[[UUID, UUID, str, dict], Awaitable[object]]
 
 
 @runtime_checkable
@@ -116,8 +119,13 @@ class InMemoryStore:
 class PgStore:
     """PostgreSQL 状态存储。"""
 
-    def __init__(self, session: AsyncSession):
+    def __init__(
+        self,
+        session: AsyncSession,
+        learning_event_writer: LearningEventWriter | None = None,
+    ):
         self.session = session
+        self.learning_event_writer = learning_event_writer
 
     async def get_or_create(
         self, student_id: UUID, kc_id: str, question_type: str = "solve", for_update: bool = False
@@ -248,9 +256,12 @@ class PgStore:
     async def append_event(
         self, student_id: UUID, kc_id: str, event_data: dict
     ) -> Optional[UUID]:
+        event_id = _uuid.uuid4()
+        occurred_at = event_data.get("occurred_at", datetime.now(timezone.utc))
         ins_stmt = (
             insert(InteractionEvent)
             .values(
+                id=event_id,
                 student_id=student_id,
                 knowledge_point=kc_id,
                 question_id=event_data.get("question_id"),
@@ -264,12 +275,25 @@ class PgStore:
                 predicted_confidence=event_data.get("predicted_confidence"),
                 predicted_r=event_data.get("predicted_r"),
                 fire_meta=event_data.get("fire_meta"),
-                occurred_at=event_data.get("occurred_at", datetime.now(timezone.utc)),
+                tutor_mode=event_data.get("tutor_mode"),
+                ai_assisted=event_data.get("ai_assisted"),
+                independent_mode=event_data.get("independent_mode"),
+                evaluation_phase=event_data.get("evaluation_phase"),
+                occurred_at=occurred_at,
+                received_at=event_data.get("received_at", occurred_at),
             )
             .returning(InteractionEvent.id)
         )
         result = await self.session.execute(ins_stmt)
-        return result.scalar_one_or_none()
+        inserted_id = result.scalar_one_or_none()
+        if inserted_id is not None and self.learning_event_writer is not None:
+            await self.learning_event_writer(
+                inserted_id,
+                student_id,
+                kc_id,
+                {**event_data, "occurred_at": occurred_at},
+            )
+        return inserted_id
 
     async def get_verified_prerequisites(self, kc_id: str) -> List[str]:
         """kc_id 的 verified 前置边（M-H §4.8）：KU 自身与前置 KU 均须 verified。"""

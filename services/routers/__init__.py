@@ -13,6 +13,7 @@ def register_domain_routers(app: FastAPI) -> None:
         cognitive,
         cornell,
         health,
+        memory,
         insights,
         papers,
         parent,
@@ -27,6 +28,7 @@ def register_domain_routers(app: FastAPI) -> None:
 
     for mod in (
         health,
+        memory,
         cornell,
         auth,
         aria,

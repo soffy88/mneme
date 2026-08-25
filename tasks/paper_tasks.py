@@ -42,6 +42,8 @@ async def _process_paper_async(paper_id: str) -> dict:
     )
     from sqlalchemy import select, update
 
+    from services.feature_flags import learning_event_v2_dual_write_enabled
+    from services.learning_event_service import append_legacy_interaction_as_v2
     from services.models import Paper, PaperStatus
 
     pid = _uuid.UUID(paper_id)
@@ -76,7 +78,28 @@ async def _process_paper_async(paper_id: str) -> dict:
             raise _RetryableError(f"image fetch failed: {exc}") from exc
 
         try:
-            store = PgStore(db)
+            async def _write_learning_event_v2(
+                event_id: _uuid.UUID,
+                event_student_id: _uuid.UUID,
+                event_kc_id: str,
+                event_data: dict,
+            ) -> object:
+                return await append_legacy_interaction_as_v2(
+                    db,
+                    event_id=event_id,
+                    student_id=event_student_id,
+                    knowledge_point=event_kc_id,
+                    event_data=event_data,
+                )
+
+            store = PgStore(
+                db,
+                learning_event_writer=(
+                    _write_learning_event_v2
+                    if learning_event_v2_dual_write_enabled()
+                    else None
+                ),
+            )
             config = AnalyzePaperConfig(subject=paper.subject or "math")
             inp = AnalyzePaperInput(
                 paper_id=pid,

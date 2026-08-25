@@ -85,3 +85,118 @@ def bypass_auth():
     app.dependency_overrides[get_current_user] = _auth_from_request
     yield
     app.dependency_overrides.pop(get_current_user, None)
+
+
+# ── g10-a KC 基线夹具（get_kc_info 类测试用）────────────────────────────
+# tool_get_kc_info 需要 knowledge_units 里有对应行才能返回 name/gate_type/rubric。
+# ku004 的 gate.rubric / gate.qualitative_intent 行在共享测试库里已持久化（无 FK 到
+# knowledge_units），敌只补 textbook/cluster/KU 三件套即可。
+#
+# 关键：KU 一律 verified=False——避免串到 test_daily_plan 的 P4 "verified 优先"过滤
+# （那会把未校验的 fixture KU 挤出新学路径）。get_kc_info 不读 verified，故安全。
+# 非 autouse（opt-in），不影响其它测试；测完即清，不污染共享库。
+_G10A_TB = "renjiao-math-g10-a"
+_G10A_KU_QUAL = "renjiao-math-g10-a-ku004"  # 定性（有 rubric/intent）
+_G10A_KU_QUANT = "renjiao-math-g10-a-ku-二次函数的零点"  # 量化（无 rubric）
+
+
+@pytest.fixture
+async def g10a_kc_baseline():
+    """种入 g10-a 教材 + 2 cluster + 2 KU（ku004 定性 / 二次函数零点量化）。
+
+    幂等：先查存在性，只插缺失的行（避免 PK 冲突）；teardown 只清自己种的 id。
+    """
+    from sqlalchemy import delete, select
+
+    from obase.db import SessionLocal
+    from services.models import KnowledgeCluster, KnowledgeUnit, Textbook
+
+    c_qual = "renjiao-math-g10-a-c02"
+    c_quant = "renjiao-math-g10-a-kc-一元二次不等式及其解法"
+
+    async def _exists(db, model, pk):
+        return (
+            await db.execute(select(model.id).where(model.id == pk))
+        ).first() is not None
+
+    async with SessionLocal() as db:
+        if not await _exists(db, Textbook, _G10A_TB):
+            db.add(
+                Textbook(
+                    id=_G10A_TB,
+                    subject="math",
+                    grade="高一",
+                    edition="2017修订",
+                    book_name="人教版·高中数学必修一（A版）",
+                )
+            )
+            await db.flush()
+        if not await _exists(db, KnowledgeCluster, c_qual):
+            db.add(
+                KnowledgeCluster(
+                    id=c_qual,
+                    textbook_id=_G10A_TB,
+                    name="函数与基本初等函数",
+                    display_order=2,
+                )
+            )
+        if not await _exists(db, KnowledgeCluster, c_quant):
+            db.add(
+                KnowledgeCluster(
+                    id=c_quant,
+                    textbook_id=_G10A_TB,
+                    name="一元二次不等式及其解法",
+                    display_order=14,
+                )
+            )
+        await db.flush()
+        if not await _exists(db, KnowledgeUnit, _G10A_KU_QUAL):
+            db.add(
+                KnowledgeUnit(
+                    id=_G10A_KU_QUAL,
+                    textbook_id=_G10A_TB,
+                    cluster_id=c_qual,
+                    name="函数的概念与表示",
+                    description="理解函数的定义（映射视角），掌握定义域、值域、对应法则",
+                    difficulty=0.4,
+                    exam_frequency="high",
+                    ku_type="concept",
+                    verified=False,
+                )
+            )
+        if not await _exists(db, KnowledgeUnit, _G10A_KU_QUANT):
+            db.add(
+                KnowledgeUnit(
+                    id=_G10A_KU_QUANT,
+                    textbook_id=_G10A_TB,
+                    cluster_id=c_quant,
+                    name="二次函数的零点",
+                    description="使ax²+bx+c=0的实数x称为二次函数y=ax²+bx+c的零点。",
+                    difficulty=0.4,
+                    exam_frequency="mid",
+                    ku_type="concept",
+                    verified=False,
+                )
+            )
+        await db.commit()
+
+    yield {
+        "textbook_id": _G10A_TB,
+        "ku_qual": _G10A_KU_QUAL,
+        "ku_quant": _G10A_KU_QUANT,
+    }
+
+    async with SessionLocal() as db:
+        # 顺序清：KU → cluster → textbook（FK 无 CASCADE）。只清自己种的 id。
+        await db.execute(
+            delete(KnowledgeUnit).where(
+                KnowledgeUnit.id.in_([_G10A_KU_QUAL, _G10A_KU_QUANT])
+            )
+        )
+        await db.execute(
+            delete(KnowledgeCluster).where(
+                KnowledgeCluster.id.in_([c_qual, c_quant])
+            )
+        )
+        await db.execute(delete(Textbook).where(Textbook.id == _G10A_TB))
+        await db.commit()

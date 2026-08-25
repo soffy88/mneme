@@ -141,7 +141,9 @@ class TestAnswerTieringRedline:
             assert "标准答案" not in str(resp)
 
     @pytest.mark.asyncio
-    async def test_get_kc_info_qualitative_returns_rubric_not_answer(self):
+    async def test_get_kc_info_qualitative_returns_rubric_not_answer(
+        self, g10a_kc_baseline
+    ):
         """GetKCInfo：定性 KC 返回 rubric（评分维度），不返回标准答案"""
         async with SessionLocal() as db:
             info = await tool_get_kc_info(db, KU_QUAL)

@@ -1,10 +1,23 @@
 """②-3b-i 数学确定性符号判分 grade_math。"""
 
-from services.math_grade import grade_math
+from services.math_grade import grade_math, grade_math_detailed
 
 
 def test_fraction_equals_decimal():
     assert grade_math("0.5", "1/2") is True
+
+
+def test_detailed_grade_reports_kernel_path():
+    result = grade_math_detailed("0.5", "1/2")
+    assert result.is_correct is True
+    assert result.method == "sympy"
+
+
+def test_detailed_grade_reports_plain_fallback_without_answer_data():
+    result = grade_math_detailed("北京", "北京")
+    assert result.is_correct is True
+    assert result.method == "plain_fallback"
+    assert result.fallback_reason == "parse_failure"
 
 
 def test_multi_root_order_independent():

@@ -57,11 +57,16 @@ class InteractionInput(BaseModel):
     predicted_r: Optional[float] = (
         None  # 保留探针：作答时 FSRS 预测可提取性 R（仅记录，不入算法）
     )
+    tutor_mode: Optional[str] = None
+    ai_assisted: Optional[bool] = None
+    independent_mode: Optional[bool] = None
+    evaluation_phase: Optional[str] = None
     now: Optional[datetime] = None
     min_review_interval_hours: float = (
         0.0  # 集中练习去抖阈值，透传 cognitive_update；默认 0 不改变行为
     )
     fsrs_parameters: tuple | None = None  # 个性化 FSRS 权重；None → 全局默认
+    fsrs_enable_fuzzing: bool = True
 
 
 class InteractionFindings(BaseModel):
@@ -174,6 +179,7 @@ async def process_interaction_workflow(
         difficulty=input_data.difficulty,
         min_review_interval_hours=input_data.min_review_interval_hours,
         fsrs_parameters=input_data.fsrs_parameters,
+        fsrs_enable_fuzzing=input_data.fsrs_enable_fuzzing,
         now=now,
     )
     result = cognitive_update(input=update_input)
@@ -201,6 +207,10 @@ async def process_interaction_workflow(
         "item_difficulty": input_data.difficulty,
         "predicted_confidence": input_data.predicted_confidence,
         "predicted_r": input_data.predicted_r,
+        "tutor_mode": input_data.tutor_mode,
+        "ai_assisted": input_data.ai_assisted,
+        "independent_mode": input_data.independent_mode,
+        "evaluation_phase": input_data.evaluation_phase,
         "occurred_at": now,
     }
     trigger_event_id = await store.append_event(

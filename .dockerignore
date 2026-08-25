@@ -1,0 +1,15 @@
+.git
+.github
+.venv
+.mypy_cache
+.ruff_cache
+.pytest_cache
+__pycache__
+*.pyc
+node_modules
+apps/mneme-studio/.next
+data/*.jsonl
+docs/*.docx
+outputs
+scratch
+tmp

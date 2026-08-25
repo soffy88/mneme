@@ -172,6 +172,18 @@ def _is_local_api_reachable() -> bool:
         return False
 
 
+def _skip_if_server_on_other_db(client: MnemeClient) -> None:
+    """服务器在跑但连的不是测试库（mneme_test）时，测试种的用户它看不见 →
+    whoami 返回 401 User not found。这是环境不匹配（服务器连生产库），不是 CLI
+    bug，跳过而非失败——与文件既有的 skipif-on-reachability 约定一致。"""
+    try:
+        client.whoami()
+    except RuntimeError as e:
+        if "401" in str(e) and "User not found" in str(e):
+            pytest.skip("本机 api 连的不是测试库（mneme_test），跳过真实端到端测试")
+        raise
+
+
 @pytest.mark.skipif(
     not _is_local_api_reachable(), reason="本机 api 服务未在跑，跳过真实端到端测试"
 )
@@ -181,7 +193,12 @@ def test_cli_whoami_against_real_running_server(two_students):
     token = create_access_token({"sub": str(two_students["a"]), "role": "student"})
     client = MnemeClient(base_url="http://localhost:8000", token=token)
 
-    who = client.whoami()
+    try:
+        who = client.whoami()
+    except RuntimeError as e:
+        if "401" in str(e) and "User not found" in str(e):
+            pytest.skip("本机 api 连的不是测试库（mneme_test），跳过真实端到端测试")
+        raise
     assert who["id"] == str(two_students["a"])
 
 
@@ -194,6 +211,9 @@ def test_cli_cannot_bypass_guard_cross_student_review_queue(two_students):
     既有护栏（走的是同一套 /mcp/* + JWT + guard）。"""
     token = create_access_token({"sub": str(two_students["a"]), "role": "student"})
     client = MnemeClient(base_url="http://localhost:8000", token=token)
+
+    # 先探测服务器是否连测试库：whoami 自己应成功；401 User not found = 连了别的库
+    _skip_if_server_on_other_db(client)
 
     with pytest.raises(RuntimeError, match="403"):
         client.mcp(

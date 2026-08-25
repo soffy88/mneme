@@ -55,7 +55,8 @@ fi
 # .venv（宿主）执行时再把容器内 host:port 换成宿主映射（docker compose port db 5432）。
 # 结果设入全局 TEST_DB_URL；解析失败或结果非 mneme_test 直接退出（fail-closed）。
 resolve_test_db_url() {
-    local src="${TEST_DATABASE_URL:-}"
+    local explicit="${TEST_DATABASE_URL:-}"
+    local src="$explicit"
     if [ -z "$src" ]; then
         src="$(docker compose exec -T api printenv DATABASE_URL 2>/dev/null | tr -d '\r')"
     fi
@@ -66,7 +67,9 @@ resolve_test_db_url() {
     # 强制库名 → mneme_test（覆盖 /mneme、/mneme_test、带 query 串等形态）
     src="$(printf '%s' "$src" | sed -E 's#/mneme(_test)?(\?[^ ]*)?$#/mneme_test\2#')"
     # 宿主执行：容器内 hostname:port（如 db:5432）→ 宿主映射端口
-    if [ "$MODE" = "venv" ]; then
+    # 显式 URL 由用户/CI 提供时已经是宿主可达地址，不要再按本机 compose
+    # 端口重写；只有从活 api 容器推导出的 db:5432 才需要映射到宿主端口。
+    if [ "$MODE" = "venv" ] && [ -z "$explicit" ]; then
         local hostport
         hostport="$(docker compose port db 5432 2>/dev/null | sed -E 's/.*:([0-9]+)[[:space:]]*$/\1/')"
         hostport="${hostport:-5433}"
@@ -110,12 +113,26 @@ else
 fi
 
 echo -e "\n${GREEN}==> Running MyPy...${NC}"
-"${RUN[@]}" mypy --explicit-package-bases .
+# vendor 与根目录 3O 兼容层各自含有 oprim.* 模块；显式排除它们，避免 mypy
+# 把同一文件同时注册成 vendor.oprim.* 和 oprim.*。第一方 services/packages
+# 仍通过 pyproject 的 mypy_path=vendor 获取 vendor 类型签名。
+"${RUN[@]}" mypy --explicit-package-bases . \
+    --exclude '(^|/)(vendor|oprim|oskill|omodul)/'
 
 if [ "${SKIP_PYTEST:-0}" = "1" ]; then
     echo -e "\n${GREEN}==> Skipping Pytest (SKIP_PYTEST=1).${NC}"
 else
     resolve_test_db_url
+    echo -e "\n${GREEN}==> Applying Alembic migrations to mneme_test...${NC}"
+    # 只对已经 fail-closed 解析出的 mneme_test 执行迁移；绝不触碰生产库 mneme。
+    if [ "$MODE" = "venv" ]; then
+        DATABASE_URL="$TEST_DB_URL" \
+            PYTHONPATH="vendor:packages/mneme-core:packages/mneme-agent:packages/event-schema:." \
+            "${RUN[@]}" alembic upgrade head
+    else
+        docker compose exec -T -e DATABASE_URL="$TEST_DB_URL" api \
+            python -m alembic -c /app/alembic.ini upgrade head
+    fi
     echo -e "\n${GREEN}==> Running Pytest with Coverage (DB=$(printf '%s' "$TEST_DB_URL" | sed -E 's#://[^@]+@#://***@#'))...${NC}"
     if [ "$MODE" = "venv" ]; then
         DATABASE_URL="$TEST_DB_URL" "${RUN[@]}" pytest

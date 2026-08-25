@@ -1,6 +1,6 @@
 # moat_eval — KT(BKT)+FSRS 内核与数据飞轮的护城河实证（合成数据）
 
-三个可复跑实验，全部固定 seed=42。实验 2 需要隔离库 `mneme_moat_eval`
+七个可复跑实验，合成实验固定 seed=42。实验 2 需要隔离库 `mneme_moat_eval`
 （**不要指向 dev 库 `mneme`**，脚本内有 DATABASE_URL 校验兜底）。
 
 ## 怎么跑（宿主机，api 容器内执行）
@@ -33,6 +33,12 @@ docker compose exec -T api python scripts/moat_eval/exp5_external_auc.py
 
 # 实验 6：recognition 识别维度独立验证（GH-2，纯模拟不碰库；~2s）
 docker compose exec -T api python scripts/moat_eval/exp6_recognition.py
+
+# 实验 7：真实序列影子评估（GH-3，内核 vs per-KC 移动平均；纯回放不碰库）
+docker compose exec -T api python scripts/moat_eval/exp7_shadow_eval.py
+
+# 注册表对齐的候选/基线 JSONL 影子比较（纯离线；不读库、不写库）
+python scripts/moat_eval/shadow_registry_eval.py --help
 
 # 收尾：丢弃隔离库
 docker compose exec -T db psql -U postgres -c "DROP DATABASE mneme_moat_eval;"
@@ -72,6 +78,15 @@ docker compose exec -T db psql -U postgres -c "DROP DATABASE mneme_moat_eval;"
   （seed42: 0.590→0.649），logloss 0.808→0.677；内核终态 p_recognition 交错型
   0.282 > 专项型 0.234，迁移错误率专项型 0.633 > 交错型 0.558——判别增益、
   惰性知识捕获、校准改善三断言成立。
+
+- **exp7_shadow_eval.py**（GH-3）：只读 test split 的真实作答序列，逐事件比较生产
+  BKT+FSRS 内核与学生内 per-KC 因果移动平均基线；输出 overall/warm-only AUC、
+  log-loss 和方向明确的差值。当前不训练 DKT，待带时间戳 LearningEvent v2 与真实
+  训练窗口到位后，沿用同一预测记录协议接入 challenger。
+- **shadow_registry_eval.py**：读取候选与可选基线的 JSONL 预测快照，调用
+  `services.shadow_evaluation` 校验不重叠时间窗、`as_of` 和逐事件对齐，输出 AUC、
+  log-loss、Brier、ECE、calibration slope 与 observed predictive difference；不连接
+  Mneme 数据库。
 
 ## CI 守卫（T.4）
 

@@ -9,6 +9,7 @@
 from __future__ import annotations
 
 import os
+from copy import deepcopy
 from datetime import datetime, timezone
 
 from sqlalchemy import select
@@ -55,8 +56,70 @@ EXPERIMENTS: dict[str, dict] = {
         "ratios": [0.5, 0.5],
         "enabled_env": "EXPERIMENT_TEACHING_ENGINE",  # =1 才分流，否则全 control
         "primary_endpoints": ["delayed_retention", "frustration_dropout"],
+        "protocol": {
+            "version": "teaching-engine-v1/2026-08-25",
+            "assignment": "deterministic_student_id_hash",
+            "analysis": "intention_to_treat",
+            "consent_required": True,
+            "primary": {
+                "name": "d7_delayed_transfer_accuracy",
+                "source": "transfer_probe",
+                "horizon_days": 7,
+                "independent_mode": True,
+                "ai_assisted": False,
+            },
+            "secondary": [
+                {
+                    "name": "d30_delayed_transfer_accuracy",
+                    "source": "transfer_probe",
+                    "horizon_days": 30,
+                    "independent_mode": True,
+                    "ai_assisted": False,
+                },
+                {"name": "frustration_dropout", "window_days": 7},
+            ],
+            "required_event_fields": [
+                "student_id",
+                "occurred_at",
+                "received_at",
+                "evaluation_phase",
+                "independent_mode",
+                "ai_assisted",
+            ],
+            "minimum_arm_size": None,
+            "status": "protocol_only",
+        },
     }
 }
+
+
+def experiment_protocol(experiment: str = "teaching_engine_v1") -> dict:
+    """Return a defensive copy of the frozen protocol, never student data."""
+
+    exp = EXPERIMENTS.get(experiment)
+    if not exp:
+        raise ValueError(f"unknown experiment: {experiment}")
+    return deepcopy(exp["protocol"])
+
+
+def experiment_activation_status(experiment: str = "teaching_engine_v1") -> dict:
+    """Return fail-closed activation blockers for a real experiment."""
+
+    protocol = experiment_protocol(experiment)
+    blockers: list[str] = []
+    if protocol.get("status") != "approved":
+        blockers.append("protocol_not_approved")
+    if not protocol.get("consent_required"):
+        blockers.append("consent_requirement_missing")
+    minimum_arm_size = protocol.get("minimum_arm_size")
+    if not isinstance(minimum_arm_size, int) or minimum_arm_size < 1:
+        blockers.append("minimum_arm_size_not_set")
+    return {
+        "experiment": experiment,
+        "activatable": not blockers,
+        "blockers": blockers,
+        "protocol_version": protocol["version"],
+    }
 
 
 def student_arm(student_id, experiment: str = "teaching_engine_v1") -> str:
@@ -65,6 +128,8 @@ def student_arm(student_id, experiment: str = "teaching_engine_v1") -> str:
     if not exp:
         return "control"
     if os.environ.get(exp["enabled_env"], "0").lower() not in ("1", "true", "yes"):
+        return "control"
+    if not experiment_activation_status(experiment)["activatable"]:
         return "control"
     return assign_arm(str(student_id), experiment, exp["arms"], exp["ratios"])
 
@@ -159,7 +224,12 @@ async def experiment_metrics(
         }
     return {
         "experiment": experiment,
-        "enabled": os.environ.get(exp["enabled_env"], "0") in ("1", "true", "yes"),
+        "protocol": experiment_protocol(experiment),
+        "activation": experiment_activation_status(experiment),
+        "enabled": (
+            os.environ.get(exp["enabled_env"], "0") in ("1", "true", "yes")
+            and experiment_activation_status(experiment)["activatable"]
+        ),
         "arms": out,
         "note": "延迟保持率(探针)+挫败流失率(会话埋点:连≥3错为挫败,末尾挫败且此后≥7天无活动为流失)按臂聚合。真实裁决需足量样本。",
     }

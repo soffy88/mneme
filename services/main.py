@@ -10,7 +10,7 @@ from __future__ import annotations
 import os
 from contextlib import asynccontextmanager
 
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from obase.db import SessionLocal
 from obase.prior_provider import PriorProvider
@@ -158,6 +158,42 @@ _email_provider = get_email_provider()
 
 app = FastAPI(title="Mneme API", version="0.1.0", lifespan=lifespan)
 
+
+@app.middleware("http")
+async def request_observability(request: Request, call_next):
+    """Propagate a trace ID and collect aggregate latency/error metrics."""
+
+    import time
+
+    from services.observability import (
+        accept_trace_id,
+        monotonic_ms,
+        record_request,
+        route_template,
+    )
+
+    trace_id = accept_trace_id(request.headers.get("x-trace-id"))
+    request.state.trace_id = trace_id
+    started = time.perf_counter()
+    try:
+        response = await call_next(request)
+    except Exception:
+        record_request(
+            request.method,
+            route_template(request.scope, request.url.path),
+            500,
+            monotonic_ms(started),
+        )
+        raise
+    response.headers["X-Trace-Id"] = trace_id
+    record_request(
+        request.method,
+        route_template(request.scope, request.url.path),
+        response.status_code,
+        monotonic_ms(started),
+    )
+    return response
+
 try:
     from services.mcp_router import router as _mcp_router
 
@@ -177,7 +213,7 @@ except ImportError as _chat_import_err:  # pragma: no cover
     import logging as _logging
 
     _logging.getLogger(__name__).warning(
-        "chat 工作区未挂载（mneme-agent/oservi 不可用）: %s", _chat_import_err
+        "chat 工作区未挂载（mneme-agent 不可用）: %s", _chat_import_err
     )
 
 from services.routers import register_domain_routers

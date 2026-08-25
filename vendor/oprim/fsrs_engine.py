@@ -21,16 +21,21 @@ from functools import lru_cache
 _scheduler = Scheduler()
 
 
-@lru_cache(maxsize=64)
-def _scheduler_for(parameters: tuple | None) -> Scheduler:
+@lru_cache(maxsize=128)
+def _scheduler_for(
+    parameters: tuple | None,
+    enable_fuzzing: bool = True,
+) -> Scheduler:
     """按权重向量取（缓存的）Scheduler。parameters=None → 全局默认（行为不变）。
 
     个性化基础设施：调用方可传按学生/群体优化出的 FSRS 权重，移除"只有一个
     全局默认 Scheduler"的架构瓶颈。权重的拟合/选择见 services.fsrs_optimize_service。
     """
-    if not parameters:
+    if not parameters and enable_fuzzing:
         return _scheduler
-    return Scheduler(parameters=parameters)
+    if parameters:
+        return Scheduler(parameters=parameters, enable_fuzzing=enable_fuzzing)
+    return Scheduler(enable_fuzzing=enable_fuzzing)
 
 
 # fsrs_new_card（初始卡片工厂）归 obase.cognitive_types（单源），此处 re-export 保持兼容。
@@ -60,6 +65,7 @@ def fsrs_review(
     rating: Rating,
     now: datetime | None = None,
     parameters: tuple | None = None,
+    enable_fuzzing: bool = True,
 ) -> dict:
     """对一张卡片做一次复习，返回更新后的 card dict。
 
@@ -67,7 +73,7 @@ def fsrs_review(
     """
     card = Card.from_dict(card_dict)
     now = now or datetime.now(timezone.utc)
-    scheduler = _scheduler_for(parameters)
+    scheduler = _scheduler_for(parameters, enable_fuzzing)
     card, _log = scheduler.review_card(card, rating, review_datetime=now)
     return card.to_dict()
 

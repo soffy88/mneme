@@ -11,6 +11,8 @@ from __future__ import annotations
 
 import re
 import unicodedata
+from dataclasses import dataclass
+from typing import Literal
 
 from obase.sympy_runtime import SymPyRuntime
 
@@ -31,6 +33,15 @@ _STRIP_EDGE = ".,;:!?，。；、'\" \t"
 
 _MATHWRAP = re.compile(r"\\(?:mathrm|mathbf|mathit|text|operatorname)\s*\{([^{}]*)\}")
 _SUP = re.compile(r"\^\s*\{([^{}]*)\}")
+
+
+@dataclass(frozen=True, slots=True)
+class MathGradeResult:
+    """Deterministic result plus a privacy-safe execution-path classification."""
+
+    is_correct: bool
+    method: Literal["sympy", "plain_fallback"]
+    fallback_reason: str | None = None
 
 
 def _delatex(text: str) -> str:
@@ -161,14 +172,16 @@ def _expr_eq(x, e) -> bool:  # type: ignore[no-untyped-def]
         return False
 
 
-def grade_math(answer: str, expected: str) -> bool:
-    """符号等价判分；sympy 无法解析/无法比对（如不等式、集合）则回落归一化精确比对。"""
+def grade_math_detailed(answer: str, expected: str) -> MathGradeResult:
+    """Grade and expose whether the deterministic parser needed plain fallback."""
+
+    fallback_reason = "parse_failure"
     try:
         a_exprs = _to_exprs(answer)
         e_exprs = _to_exprs(expected)
         if a_exprs is not None and e_exprs is not None:
             if len(a_exprs) != len(e_exprs):
-                return False
+                return MathGradeResult(False, "sympy")
             # 多解按集合比对（顺序无关）：每个期望根都能在作答里找到等价项
             remaining = list(a_exprs)
             for e in e_exprs:
@@ -177,11 +190,21 @@ def grade_math(answer: str, expected: str) -> bool:
                     None,
                 )
                 if hit is None:
-                    return False
+                    return MathGradeResult(False, "sympy")
                 remaining.remove(hit)
-            return True
-    except Exception:
-        pass  # 关系式/集合等无法符号相减 → 落字符串回落
+            return MathGradeResult(True, "sympy")
+    except Exception as exc:
+        fallback_reason = type(exc).__name__
 
     # 回落：非数学/解析失败 → 归一化精确（已去 LaTeX/$/首尾标点）
-    return _normalise_plain(answer) == _normalise_plain(expected)
+    return MathGradeResult(
+        _normalise_plain(answer) == _normalise_plain(expected),
+        "plain_fallback",
+        fallback_reason,
+    )
+
+
+def grade_math(answer: str, expected: str) -> bool:
+    """符号等价判分；保留旧 bool API，详细路径见 :func:`grade_math_detailed`."""
+
+    return grade_math_detailed(answer, expected).is_correct

@@ -60,10 +60,9 @@ KT(BKT)+FSRS 算法内核，先做广东数学。真实前端在独立仓库
 
 ## 依赖/环境说明
 
-- `oservi`（服务装配引擎）目前只是本机 dev 挂载
-  （`docker-compose.override.yml`），非正式生产依赖——W5 心跳/Partner 相关
-  代码不依赖它，走 Celery beat + 直接实现（见
-  `tasks/partner_heartbeat.py` 顶部说明）。
+- `oservi`（服务装配引擎）不是 Mneme 运行时依赖；chat 使用仓内
+  `packages/mneme-agent/mneme_agent/assembly/local_agentic_loop.py`，W5 心跳/Partner
+  代码走 Celery beat + 直接实现（见 `tasks/partner_heartbeat.py` 顶部说明）。
 - 生产容器启动经 `obase.sandbox_selfcheck.check_or_die()` 强制自检（S0-W5：
   全仓 AST 扫描零绕过），自检不过拒绝对外提供服务。
 

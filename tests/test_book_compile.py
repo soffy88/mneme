@@ -15,8 +15,65 @@ from sqlalchemy import text as sa_text
 
 from obase.db import SessionLocal
 from omodul.book_compile import BookCompileConfig, BookCompileInput, book_compile
+from services.models import KnowledgeCluster, KnowledgeUnit, Textbook
 
-REAL_TEXTBOOK_ID = "RENJIAO-G1-MATH-S"  # 最小的已索引教材，跑得快
+
+@pytest.fixture
+async def compile_textbook():
+    """自包含教材夹具：book_compile 需要该 textbook 至少 1 个 knowledge_cluster，
+    但共享测试库对真实教材 id 没有索引数据。这里种一本专用教材（唯一 id），
+    测完即清——不污染共享库（build_daily_plan 会扫全表 knowledge_units，残留
+    KU 会串到 test_daily_plan）。"""
+    import uuid as _uuid
+
+    from sqlalchemy import delete
+
+    tb_id = f"tb-bk-{_uuid.uuid4().hex[:8]}"
+    c_id = f"{tb_id}-c1"
+    ku_ids = [f"{tb_id}-ku-{i}" for i in range(2)]
+
+    async with SessionLocal() as db:
+        db.add(
+            Textbook(
+                id=tb_id,
+                subject="math",
+                grade="G1",
+                edition="测试版",
+                book_name="编译测试教材",
+            )
+        )
+        await db.flush()
+        db.add(
+            KnowledgeCluster(
+                id=c_id, textbook_id=tb_id, name="编译测试章节", display_order=1
+            )
+        )
+        await db.flush()
+        for ku_id in ku_ids:
+            db.add(
+                KnowledgeUnit(
+                    id=ku_id,
+                    textbook_id=tb_id,
+                    cluster_id=c_id,
+                    name=f"KU-{ku_id[-4:]}",
+                    description="编译测试知识点",
+                )
+            )
+        await db.commit()
+
+    yield tb_id
+
+    async with SessionLocal() as db:
+        # 先清编译产物（books 级联删 chapters/blocks），再清教材三件套
+        await db.execute(
+            sa_text("DELETE FROM books WHERE textbook_id=:tid"), {"tid": tb_id}
+        )
+        await db.execute(delete(KnowledgeUnit).where(KnowledgeUnit.textbook_id == tb_id))
+        await db.execute(
+            delete(KnowledgeCluster).where(KnowledgeCluster.textbook_id == tb_id)
+        )
+        await db.execute(delete(Textbook).where(Textbook.id == tb_id))
+        await db.commit()
 
 
 def _fake_caller(*, fixed_content=None, delay: float = 0.0):
@@ -40,7 +97,7 @@ async def _cleanup_book(db, book_id: str) -> None:
 
 
 @pytest.mark.asyncio
-async def test_book_compile_end_to_end_persists_book(tmp_path: Path):
+async def test_book_compile_end_to_end_persists_book(tmp_path: Path, compile_textbook: str):
     """B-1/B-9：一本书端到端编译，四支柱齐全，cost 非零。"""
     caller = _fake_caller(
         fixed_content=json.dumps(
@@ -57,7 +114,7 @@ async def test_book_compile_end_to_end_persists_book(tmp_path: Path):
     )
 
     async with SessionLocal() as db:
-        config = BookCompileConfig(textbook_id=REAL_TEXTBOOK_ID)
+        config = BookCompileConfig(textbook_id=compile_textbook)
         input_data = BookCompileInput(db=db, caller=caller)
         result = await book_compile(config, input_data, tmp_path)
 
@@ -116,6 +173,7 @@ async def test_unknown_textbook_id_fails_without_raising(tmp_path: Path):
 @pytest.mark.asyncio
 async def test_cost_accumulates_correctly_under_concurrent_chapter_compilation(
     tmp_path: Path,
+    compile_textbook: str,
 ):
     """C1：并发编译多章时，cost 必须正确累加到同一个 CostTracker——不能因为
     ContextVar 在并发 Task 间的传播方式而漏计或重复计。用带随机延迟的 caller
@@ -129,7 +187,7 @@ async def test_cost_accumulates_correctly_under_concurrent_chapter_compilation(
     )
 
     async with SessionLocal() as db:
-        config = BookCompileConfig(textbook_id=REAL_TEXTBOOK_ID)
+        config = BookCompileConfig(textbook_id=compile_textbook)
         input_data = BookCompileInput(db=db, caller=caller)
         result = await book_compile(config, input_data, tmp_path)
         book_id = result.get("book_id")
@@ -148,7 +206,7 @@ async def test_cost_accumulates_correctly_under_concurrent_chapter_compilation(
 
 
 @pytest.mark.asyncio
-async def test_step_no_follows_input_order_not_completion_order(tmp_path: Path):
+async def test_step_no_follows_input_order_not_completion_order(tmp_path: Path, compile_textbook: str):
     """C4：并发章节里，后面的章节故意配更长延迟，若先完成的章节抢占了小
     step_no，说明记录用了"记录时刻"而非"入参序"——这里验证 trail 里同一章节
     产生的 step_no 段（idx*100 起）不会因为完成顺序乱掉。
@@ -170,7 +228,7 @@ async def test_step_no_follows_input_order_not_completion_order(tmp_path: Path):
         }
 
     async with SessionLocal() as db:
-        config = BookCompileConfig(textbook_id=REAL_TEXTBOOK_ID)
+        config = BookCompileConfig(textbook_id=compile_textbook)
         input_data = BookCompileInput(db=db, caller=caller)
         result = await book_compile(config, input_data, tmp_path)
         book_id = result.get("book_id")
@@ -189,7 +247,7 @@ async def test_step_no_follows_input_order_not_completion_order(tmp_path: Path):
 
 
 @pytest.mark.asyncio
-async def test_cancellation_writes_trail_before_reraising(tmp_path: Path):
+async def test_cancellation_writes_trail_before_reraising(tmp_path: Path, compile_textbook: str):
     """C2/C3：编译中途被取消，必须重抛 CancelledError，且 trail 文件已写入
     （shield 保证 write 不被连带取消打断）。
     """
@@ -199,7 +257,7 @@ async def test_cancellation_writes_trail_before_reraising(tmp_path: Path):
         return {"content": "{}", "usage": {"input_tokens": 1, "output_tokens": 1}}
 
     async with SessionLocal() as db:
-        config = BookCompileConfig(textbook_id=REAL_TEXTBOOK_ID)
+        config = BookCompileConfig(textbook_id=compile_textbook)
         input_data = BookCompileInput(db=db, caller=slow_caller)
 
         task = asyncio.create_task(book_compile(config, input_data, tmp_path))

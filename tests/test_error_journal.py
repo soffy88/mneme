@@ -21,6 +21,29 @@ def _auth(bypass_auth):
     """自访问正向测试统一绕过 IDOR 鉴权。"""
 
 
+@pytest.fixture(autouse=True, scope="module")
+async def _ensure_runtime_tables():
+    """ASGITransport 不跑 FastAPI lifespan，启动期建的 obase 运行时表
+    （error_tags/interaction_history）不会自动存在——测试自己补建。
+
+    用独立命名的一次性 PgPool（非 get_or_create 的 DSN 缓存池）：缓存池
+    绑定创建时的 event loop，pytest-asyncio 每个 test 一个新 loop，模块级
+    fixture 里建的缓存池会在后续 test 的 loop 里报 connection closed。
+    建完即关，不污染进程级注册表。"""
+    from obase.config import settings
+    from obase.error_tag_store import ensure_error_tag_table
+    from obase.interaction_history import ensure_interaction_history_table
+    from obase.persistence.pool import PgPool
+
+    dsn = settings.DATABASE_URL.replace("+asyncpg", "")
+    pool = await PgPool.create(name="_test_error_journal_setup", dsn=dsn)
+    try:
+        await ensure_error_tag_table(pool)
+        await ensure_interaction_history_table(pool)
+    finally:
+        await pool.close()
+
+
 @pytest.fixture(scope="function")
 async def db():
     engine = create_async_engine(settings.DATABASE_URL)

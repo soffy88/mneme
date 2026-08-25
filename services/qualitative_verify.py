@@ -17,7 +17,7 @@ import asyncio
 import json
 import logging
 import os
-from typing import Optional
+from typing import Any, Optional
 
 from sqlalchemy.ext.asyncio import AsyncSession
 
@@ -34,6 +34,23 @@ def _api_key() -> Optional[str]:
     # 与 _llm_generate_question 同源的 key（DASHSCOPE_API_KEY 生产已配、出题实测可用）；
     # 兼容 QWEN_API_KEY 命名。
     return os.environ.get("DASHSCOPE_API_KEY") or os.environ.get("QWEN_API_KEY")
+
+
+def _configured_text_caller() -> Any | None:
+    """Construct the explicitly selected text provider for qualitative grading."""
+    backend = os.environ.get("MNEME_LLM", "").lower()
+    if backend == "veya":
+        from services.providers.veya_caller import VeyaTextCaller
+
+        return VeyaTextCaller()
+    if backend in ("qwen", ""):
+        key = _api_key()
+        if not key or key == "your_key_here":
+            return None
+        return QwenTextCaller(
+            api_key=key, model=os.environ.get("QWEN_MODEL", "qwen-plus")
+        )
+    return None
 
 
 def _repair_spans(raw: str, explanation: str) -> str:
@@ -69,12 +86,11 @@ def _repair_spans(raw: str, explanation: str) -> str:
     return json.dumps(data, ensure_ascii=False)
 
 
-class _SyncQwenAdapter:
-    """异步 QwenTextCaller → oskill 要的同步 LLMCaller：__call__(*, messages) -> str。
+class _SyncLLMAdapter:
+    """异步文本 caller → oskill 要的同步 LLMCaller：__call__(*, messages) -> str。
 
     在 asyncio.to_thread 的 worker 线程里被调用（该线程无运行中的 event loop），故用
-    asyncio.run 起临时 loop 执行异步 HTTP。QwenTextCaller 每次自建 httpx client、无跨
-    loop 共享资源，线程内新建 loop 安全。返回前用 _repair_spans 按 quote 重算偏移。
+    asyncio.run 起临时 loop 执行异步 HTTP。返回前用 _repair_spans 按 quote 重算偏移。
     """
 
     def __init__(self, caller: QwenTextCaller, explanation: str) -> None:
@@ -110,20 +126,17 @@ async def run_qualitative_verifier(
     *,
     kc_id: str,
     explanation: str,
-    caller: Optional[QwenTextCaller] = None,
+    caller: Any | None = None,
 ) -> Optional[QualitativeVerdict]:
-    """跑真 verifier 得 QualitativeVerdict；不可用（无 key/rubric/rubric 非法/LLM 失败）→ None。
+    """跑真 verifier 得 QualitativeVerdict；不可用（无 provider/rubric/LLM 失败）→ None。
 
-    caller 可注入（测试用假 caller）；缺省用真 Qwen（DASHSCOPE_API_KEY）。
+    caller 可注入（测试用假 caller）；缺省使用 MNEME_LLM 选择的文本 provider。
     注意：rubric 在 async 上下文里先取好，oskill 在线程内运行且不碰 db（AsyncSession 非线程安全）。
     """
     if caller is None:
-        key = _api_key()
-        if not key:
+        caller = _configured_text_caller()
+        if caller is None:
             return None
-        caller = QwenTextCaller(
-            api_key=key, model=os.environ.get("QWEN_MODEL", "qwen-plus")
-        )
 
     rubric_dict = await gate_store.get_rubric(db, kc_id)
     if not rubric_dict:
@@ -135,7 +148,7 @@ async def run_qualitative_verifier(
         return None
 
     kp = KpView(kc_id=kc_id, name=_kc_name(kc_id), gate_type="qualitative")
-    adapter = _SyncQwenAdapter(caller, explanation)
+    adapter = _SyncLLMAdapter(caller, explanation)
     try:
         verdict = await asyncio.to_thread(
             qualitative_verifier, explanation, rubric=rubric, kp=kp, llm=adapter

@@ -1,7 +1,7 @@
 """chat_loop —— C1（W2C）chat 工作区的循环装配。
 
-intent_router 判模式（自由问答 / 转 Mastery Path）+ **复用**已装配的 oservi
-AgenticLoop（tutor_loop.build_tutor_loop）驱动 free_qa 模式——**禁另起循环**
+intent_router 判模式（自由问答 / 转 Mastery Path）+ 复用仓内
+LocalAgenticLoop（tutor_loop.build_tutor_loop）驱动 free_qa 模式——**禁另起循环**
 （FC-4）：practice 模式完全不进循环，只返回 handoff，由前端导航 /studio/learn
 去驱动既有的路径学习流程（NextObjective/RequestQuestion 自然接手，不重造）。
 
@@ -10,7 +10,7 @@ tutor_loop 的既有 8 callable，含 AA.1 起必带的 auth_token——转发�
 token，不单独铸造）。tutor_loop 的工具集里没有 RequestQuestion——bank 的
 expected 从不进入这条对话路径的上下文，红线天然成立（不是额外补的）。
 
-多轮对话：``AgenticLoop.session()`` 本身不持久化跨调用历史（每次全新 SessionState）
+多轮对话：``LocalAgenticLoop.session()`` 本身不持久化跨调用历史（每次全新状态）
 ——调用方（本模块）负责把历史拼进单次 task 文本；真正的历史存储/持久化留 C5
 （mneme-agent MCP wiring 完成后再接，本轮 agent 进程仍不持久化任何东西）。
 """

@@ -1,6 +1,6 @@
 """chat_loop —— C1（W2C）：intent 分流 + 复用 tutor_loop（FC-4 禁另起循环）。
 
-真 oservi AgenticLoop（practice 分支必须完全不触发它——用会抛异常的假 llm_caller
+仓内 LocalAgenticLoop（practice 分支必须完全不触发它——用会抛异常的假 llm_caller
 证明"根本没调用"，而不仅仅是"调用了但没被使用"）。agent 零 DB，工具全走 HTTP，但
 free_qa 分支这里用脚本化 llm_caller 直接一轮结束，不需要真跑 /mcp/*。
 """
@@ -9,7 +9,6 @@ from __future__ import annotations
 
 import pytest
 
-pytest.importorskip("oservi")
 pytest.importorskip("mneme_core")
 
 from mneme_agent.assembly.chat_loop import run_chat_turn  # noqa: E402

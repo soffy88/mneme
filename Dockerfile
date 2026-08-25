@@ -11,30 +11,21 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 # Install uv for fast package management
 RUN pip install --no-cache-dir uv
 
-# Copy and install platform packages (obase/oprim/oskill/omodul)
-# Build context is the parent directory (projects/)
-COPY platform/3O/obase /app/platform/obase
-COPY platform/3O/oprim /app/platform/oprim
-COPY platform/3O/oskill /app/platform/oskill
-COPY platform/3O/omodul /app/platform/omodul
-
-RUN uv pip install --system \
-    /app/platform/obase \
-    /app/platform/oprim \
-    /app/platform/oskill \
-    /app/platform/omodul
-# obase  @ v0.15.9
-# oprim  @ v3.10.12
-# oskill @ v3.25.12
-# omodul @ v1.30.7
-
-# Copy mneme dependency files and install base deps
-COPY mneme/requirements.txt .
-COPY mneme/pyproject.toml .
-RUN uv pip install --system -r requirements.txt
+# Copy the repository dependency files and install base deps. The runtime uses the
+# checked-in vendor/ 3O closure via PYTHONPATH; do not install a second platform
+# source tree from a host-relative build context.
+COPY pyproject.toml .
+COPY uv.lock .
+RUN uv export --frozen --no-dev --format requirements.txt \
+        --no-emit-project --output-file /tmp/mneme-requirements.lock \
+    && uv pip install --system -r /tmp/mneme-requirements.lock
 
 # Copy mneme project files
-COPY mneme/ .
+COPY . .
+
+# Keep the checked-in runtime closure first even when the image is run without
+# docker-compose's environment override.
+ENV PYTHONPATH=/app/vendor:/app:/app/packages/mneme-core:/app/packages/mneme-agent:/app/packages/event-schema
 
 # Expose API port
 EXPOSE 8000

@@ -3,10 +3,10 @@
 Layer4 服务层（有 DB，供鉴权/取 persona/取路径用）；实际推理循环委托给
 ``mneme_agent.assembly.chat_loop.run_chat_turn``（零 DB，FC-5）。``tool_chat_turn``
 持全部编排逻辑、可脱 HTTP 直测（对照 mcp_router.py 的 tool_*/mcp_* 分层惯例）；
-HTTP 端点只做鉴权 + 组装真 Qwen caller。
+HTTP 端点只做鉴权 + 组装已配置的本机/云端 caller。
 
-依赖 mneme_core + mneme_agent + oservi，跟 mcp_router 同一"未装则优雅降级"惯例
-（main.py try/except ImportError 挂载）。
+依赖 mneme_core + mneme_agent；循环骨架由 mneme-agent 仓内实现，chat 不依赖可选
+oservi 挂载。
 """
 
 from __future__ import annotations
@@ -86,14 +86,23 @@ async def tool_chat_turn(
 
 async def _classify_llm(prompt: str) -> str:
     """intent_router 的注入 LLM：无 key 时保守回落 free_qa，不阻断对话。"""
-    key = os.environ.get("DASHSCOPE_API_KEY")
-    if not key:
-        return '{"mode": "free_qa"}'
-    from services.providers.qwenvl_caller import QwenTextCaller
+    backend = os.environ.get("MNEME_LLM", "").lower()
+    caller: Any
+    if backend == "veya":
+        from services.providers.veya_caller import VeyaTextCaller
 
-    caller = QwenTextCaller(
-        api_key=key, model=os.environ.get("QWEN_MODEL", "qwen-plus")
-    )
+        caller = VeyaTextCaller()
+    elif backend == "qwen":
+        key = os.environ.get("DASHSCOPE_API_KEY")
+        if not key:
+            return '{"mode": "free_qa"}'
+        from services.providers.qwenvl_caller import QwenTextCaller
+
+        caller = QwenTextCaller(
+            api_key=key, model=os.environ.get("QWEN_MODEL", "qwen-plus")
+        )
+    else:
+        return '{"mode": "free_qa"}'
     out = await caller(
         messages=[{"role": "user", "content": prompt}],
         max_tokens=200,
@@ -111,13 +120,21 @@ async def chat_turn(
 ) -> dict:
     _ensure_student_self(current_user, req.student_id)
 
-    key = os.environ.get("DASHSCOPE_API_KEY")
-    if not key:
-        raise HTTPException(503, "chat 暂不可用（缺 LLM key）")
+    backend = os.environ.get("MNEME_LLM", "").lower()
+    loop_caller: Any
+    if backend == "veya":
+        from mneme_agent.qwen_llm import VeyaLoopCaller
 
-    from mneme_agent.qwen_llm import QwenLoopCaller
+        loop_caller = VeyaLoopCaller()
+    elif backend == "qwen":
+        key = os.environ.get("DASHSCOPE_API_KEY")
+        if not key:
+            raise HTTPException(503, "chat 暂不可用（缺 LLM key）")
+        from mneme_agent.qwen_llm import QwenLoopCaller
 
-    loop_caller = QwenLoopCaller(api_key=key, model=os.environ.get("QWEN_MODEL"))
+        loop_caller = QwenLoopCaller(api_key=key, model=os.environ.get("QWEN_MODEL"))
+    else:
+        raise HTTPException(503, f"chat 暂不可用（不支持的 LLM backend: {backend or 'default'}）")
 
     return await tool_chat_turn(
         db,

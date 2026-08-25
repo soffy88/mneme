@@ -342,6 +342,20 @@ async def build_daily_plan(
         key=lambda x: subject_order.get(x["subject"], 99),
     )
 
+    # Unified policy annotation (P1–P4 rules remain backwards-compatible): the
+    # pure policy engine scores the already-authorized candidates and explains
+    # its objective, while this endpoint preserves the established priority
+    # ordering for existing clients.
+    from services.policy_service import annotate_plan_tasks
+
+    policy = annotate_plan_tasks(
+        tasks,
+        mastery_by_kc={
+            row.knowledge_point: float(row.p_mastery or 0.0) for row in masteries
+        },
+        near_exam=near_exam,
+    )
+
     return {
         "date": now.date().isoformat(),
         "exam_countdown_days": exam_countdown_days,  # 06 考期感知
@@ -353,6 +367,7 @@ async def build_daily_plan(
         "subjects_summary": subjects_summary,
         "tasks": tasks,
         "interleaved_queue": interleaved_queue,
+        "policy": policy,
     }
 
 

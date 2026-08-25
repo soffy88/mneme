@@ -50,3 +50,23 @@ def test_qwen_missing_key_allowed_with_flag(monkeypatch):
     from services.providers.setup import configure_llm_providers
 
     assert configure_llm_providers() == "qwen-missing-key-mock"
+
+
+def test_veya_registers_local_text_and_vision(monkeypatch):
+    monkeypatch.setenv("MNEME_LLM", "veya")
+    monkeypatch.setenv("VEYA_BASE_URL", "http://veya.test/v1")
+    monkeypatch.setenv("VEYA_MODEL", "veya1.2-128K")
+    monkeypatch.setenv("VEYA_VL_MODEL", "veya1.2-vl")
+
+    from services.providers.setup import configure_llm_providers
+
+    assert configure_llm_providers() == "veya"
+    registry = ProviderRegistry.get()
+    llm = registry.llm()
+    vlm = registry.vlm()
+    assert type(llm).__name__ == "VeyaTextCaller"
+    assert type(vlm).__name__ == "VeyaVLCaller"
+    assert llm.model == "veya1.2-128K"
+    assert vlm.model == "veya1.2-vl"
+    assert llm.base_url == "http://veya.test/v1"
+    assert vlm.base_url == "http://veya.test/v1"

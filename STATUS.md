@@ -32,8 +32,8 @@ Mneme（对外名**善学记**）：K-12 学生学习成长档案 + 自主学习
 **依赖方向**：omodul→oskill→oprim 单向；obase 平行不被反向依赖；omodul 不互调。
 
 **技术栈**：Python 3.12 / FastAPI async / SQLAlchemy 2.0 async / Alembic /
-PostgreSQL 16 / Redis 7 / Celery / 阿里云 Qwen（文本 qwen3.7-plus / 视觉 qwen-vl-max，
-MaaS 专属部署 OpenAI 兼容端点）/ Docker Compose / pytest。
+PostgreSQL 16 / Redis 7 / Celery / 本机 Veya gateway（文本 veya1.2-128K / 视觉
+veya1.2-vl，OpenAI 兼容端点；Qwen 为显式云端 fallback）/ Docker Compose / pytest。
 
 ## 关键文件地图
 
@@ -54,7 +54,7 @@ MaaS 专属部署 OpenAI 兼容端点）/ Docker Compose / pytest。
 | 沙箱 sympy | `vendor/obase/sympy_runtime.py` + `vendor/obase/sandbox_ast_audit.py` |
 | 数据合规/硬删除 | `services/purge_service.py` |
 | Provider 注册 | `services/providers/setup.py` |
-| 三层 Memory | `services/memory.py`（agent schema） |
+| 三层 Memory / Evidence Graph | `services/memory.py`、`services/evidence_graph.py`、`services/routers/memory.py` |
 | Partners 渠道 | `services/partner_channels.py` + `tasks/partner_heartbeat.py` |
 | 多用户授权/审计 | `vendor/obase/user_grants.py` / `vendor/obase/audit_log.py` |
 | CLI | `cli/mneme_cli.py`（文档见 `SKILL.md`） |
@@ -64,9 +64,9 @@ MaaS 专属部署 OpenAI 兼容端点）/ Docker Compose / pytest。
 
 ## 当前状态
 
-- **测试**（2026-08-16，宿主 pytest → `mneme_test`，约 3 min）：1100 passed / 26 failed / 4 skipped / 2 errors。失败全为环境/数据（ollama embed、CLI vs 活服务、book compile、knowledge hub、MCP rubric、provider 顺序、echo/hand、s1 grading、error_journal 运行时表、mcp_request_question 缺种子题）——已用 stash 对照 HEAD~1 验证**零回归**（HEAD~1 为 1099/27/4/2，失败集完全一致）。`check.sh` smoke 44 passed。
-- **覆盖率**：83%（services，greenlet concurrency；`fail_under=60`）
-- **mypy**：第一方代码 0 错误（docker/scratch 外部/实验目录排除；旧“vendor 双重模块名”已随 vendor.* import 统一为 oprim.* 消解）
+- **测试**（2026-08-25，宿主 pytest → `mneme_test`，Alembic 迁移后）：`1229 passed / 14 skipped`，`coverage=82.23%`；`./scripts/check.sh` 完整质量门干净通过。
+- **质量门**：Ruff 0、vendor edu closure 98 项、红线 smoke 44 项、Mypy `157 source files` 0 错误；迁移只对 `mneme_test` fail-closed 执行。
+- **前端**：`apps/mneme-studio` 的 `npm ci && npm run build` 已通过；`npm audit --audit-level=moderate` 当前为 0 vulnerabilities，审计已加入 CI。
 - **代码审查图（CRG）**：code-review-graph 已接入 opencode（`opencode.jsonc` MCP + 全局 crg-plugin 钩子），
   `.code-review-graph/` 已入 .gitignore；**本地 CRG 已取消默认忽略 `**/vendor/**`**（mneme vendor=3O 内核），
   项目 `.code-review-graphignore` 排除 studio node_modules / fay / PDF；全量图 ~9.8k 节点
@@ -78,15 +78,16 @@ MaaS 专属部署 OpenAI 兼容端点）/ Docker Compose / pytest。
   5. lifespan 强制 `sandbox_selfcheck.check_or_die`（`MNEME_SKIP_SANDBOX_SELFCHECK=1` 可跳）
   6. `cognitive_update` 纯单测 + 并发写路径测试
   7. main 拆出 `services/routers/{health,cornell}`；CLAUDE 服务层措辞对齐现实
-- **LLM**：阿里云 MaaS 专属部署（`QWEN_BASE_URL`/`QWEN_API_KEY` 在 .env），已实测通
+- **LLM**：本机 Veya 已部署；文本 `veya1.2-128K`、视觉 `veya1.2-vl`，API `/health`
+  healthy，`VeyaTextCaller/VeyaVLCaller` 均为非 mock；Qwen 仅作显式 fallback。
 - **注册**：邮箱（Z.2），SMS 仍 mock，注册闸门 `REGISTRATION_OPEN=0`
 - **环境**：`MNEME_ENV=demo`（非 prod）
 - **Ruff**：默认缺陷集 E4/E7/E9/F = 0（`[tool.ruff.lint] select` 钉死，防版本漂移扩成上千条风格规则）
 - **Git**：分支 `chore/test-pythonpath-fix`；质量可复现包已提交（db_guard 钉 `mneme_test` + ruff 清零 + smoke/edu-closure）；第二轮 vendor 裁剪 + mypy 清零待提交
 - **容器**：api + worker + beat + db + redis + minio；echomimic 侧车宿主机 native（profile=gpu）
-- **待应用迁移**：`8ad19eb4ab90`（wrong_questions.item_difficulty，nullable 补列）已应用
-  到 mneme_test；活库 `mneme` 待 api 容器下次重启时 alembic 自动应用（代码已 getattr
-  防御，重启前不会 500）
+- **迁移**：`b8c0d1e2f3a4`（Learning Events）、`c1d2e3f4a5b6`（Evidence Graph）、
+  `d2e3f4a5b6c7`（evaluation signals）和 `e3f4a5b6c7d8`（ModelRegistry）已在迁移链；
+  测试库已由质量门自动升级，活库发布仍需单独执行。
 - **前端**：mneme-web 独立仓库，旧 `frontend/` 已删（tag `archive/frontend-legacy`）
 
 ## 红线（违反 = task 未完成）
@@ -104,11 +105,11 @@ MaaS 专属部署 OpenAI 兼容端点）/ Docker Compose / pytest。
 
 ## 已知技术债 / 遗留
 
-- 全量 26 fail + 2 error（环境/数据，见「当前状态」；已与 HEAD~1 对照确认零回归）
 - 变式题 `_VARIANT_SYSTEM` prompt 硬编码 "math question generator"，物理/语文未调优
 - 英语 `knowledge_units` 为空（走独立词汇 FSRS 体系 U.19）
 - Stratum 语料库为空（C4 通路已通，内容填充未做）
 - PA-2 真实 webhook 推送未验（等用户提供 WeCom/Feishu 群 URL）
+- Blueprint 外部证据仍在：真人 pilot、far-transfer/no-AI delayed holdout、随机 A/B/RCT、真实留存/迁移/付费指标；代码与评估契约不能替代这些证据。
 - ship-gate 四条仍在（真人 pilot / KU→chunk 精度 / Z 回测 / 测试=生产 CI 收敛）
 - C4 部署已生效（2026-08-02）：db `ALTER USER` 新口令 + minio 重建（root 口令随 env 启动生效）
   + api/worker/beat 重建，enrich cron 崩溃（password auth failed）已修复，回归验证通过
@@ -128,6 +129,18 @@ MaaS 专属部署 OpenAI 兼容端点）/ Docker Compose / pytest。
 
 ## ✅ 近期完成（倒序，仅列最近一批）
 
+- **Blueprint 仓内实现收口**（2026-08-25）：Event v2 双写默认部署开关、fail-closed
+  历史回填脚本、xAPI/Caliper/CASE 导出适配器、P2/P3 默认脱敏、`X-Trace-Id` 与隐私安全
+  请求观测、Studio 生产构建门已完成；新增 ADR-0005 与互操作/观测契约测试。完整质量门
+  `1229 passed / 14 skipped / 82.23%` 通过。真实学生实验、因果效果和商业指标仍不宣称完成。
+- **安全与治理收口**（2026-08-25）：Next 16.3.2/Mermaid 11.17.1、DOMPurify 3.4.14、
+  nanoid 3.3.18 已锁定，npm audit 为 0；新增 [CONTRIBUTING.md](CONTRIBUTING.md)、
+  [docs/GOVERNANCE.md](docs/GOVERNANCE.md)，并把前端 audit 加入 GitHub quality workflow。
+- **Memory claims 列表**（2026-08-25）：新增 `/v2/memory/claims`，只读返回带 evidence_count
+  的证据绑定 claim，并沿用学生/家长过程数据授权与 P2/P3 脱敏。
+- **判分与试验验收契约**（2026-08-25）：新增 `/health/grading` 聚合确定性覆盖/降级/分歧
+  指标；数学判分返回内部路径分类但不改变 bool API；`teaching_engine_v1` 增加冻结的
+  protocol 元数据与 [PILOT_PROTOCOL.md](docs/PILOT_PROTOCOL.md)，仍保持 protocol_only。
 - **vendor 第二轮裁剪 + mypy 清零**（2026-08-16）：删 113 个未引用金融/量化/支付文件
   （alipay/stripe/okx/stat_arb/macro_*/risk_*/llm_agent 多空/ohlcv_store/price_store/
   crypto 交易族/backtest 族 + autoheal_cycle/backup_app_data/generative_video_pipeline），
@@ -139,7 +152,41 @@ MaaS 专属部署 OpenAI 兼容端点）/ Docker Compose / pytest。
   check.sh 加 ruff/mypy 缓存目录不可写回退；清理 mneme_test 历史污染行（JSON 'null'
   fsrs_card_json、test-* fixture KU）后 daily_plan/retention/review 恢复确定性。
   对照 HEAD~1 全量验证零回归。
-- **质量数字可复现**（2026-08-16）：宿主 pytest 经 `tests/db_guard.py` 钉 `mneme_test` + `.env` 现口令（fail-closed，禁打活库 `mneme`）；ruff 钉 E4/E7/E9/F 并清零；`check.sh` 加 smoke（44）+ `vendor_edu_closure --check`；L1 单源自检改扫 routers；`PgStore.get_or_create(for_update=)` 写路径显式加锁。全量 1095/29/6/2、cov 83%。未写 `DATABASE_URL` 进 `.env`（compose 活库用 `/mneme`）。oservi/chat 见「需人决策」。
+- **质量数字可复现**（2026-08-16）：宿主 pytest 经 `tests/db_guard.py` 钉 `mneme_test` + `.env` 现口令（fail-closed，禁打活库 `mneme`）；ruff 钉 E4/E7/E9/F 并清零；`check.sh` 加 smoke（44）+ `vendor_edu_closure --check`；L1 单源自检改扫 routers；`PgStore.get_or_create(for_update=)` 写路径显式加锁。全量 1095/29/6/2、cov 83%。未写 `DATABASE_URL` 进 `.env`（compose 活库用 `/mneme`）。
+- **GH-4 chat 断链修复**（2026-08-24）：采用方案 B，新增无 oservi 依赖的 `LocalAgenticLoop`；chat 保留 intent 分流、persona、MCP HTTP 工具和学生 token 转发。Docker/compose 已把 `packages/mneme-agent` 纳入运行时 PYTHONPATH，并移除 oservi dev 挂载；未重启活容器。
+- **本机 Veya LLM/VLM 接入并部署**（2026-08-24）：`MNEME_LLM=veya` 默认使用文本
+  `veya1.2-128K`、视觉 `veya1.2-vl`；聊天、出题、定性判定、教材问答和 Aria
+  Director 均已接到该 provider。宿主 `127.0.0.1:8791` 文本/视觉探针均返回 200；
+  `api/worker/beat` 已重建，API `/health` healthy，线上 provider 状态为非 mock 的
+  `VeyaTextCaller/VeyaVLCaller`。
+- **Blueprint P1–P3 + Evaluation groundwork**（2026-08-24）：Evidence Graph + Memory v2 API、
+  Learner State 2.0、统一 Policy Engine、Evaluation OS 已落代码；ADR-0002、迁移、
+  hard-delete 清单和契约测试同步补齐。全量双写/真实 far-transfer/RCT 仍待 pilot。
+- **Blueprint P4 Tutor Guardrails**（2026-08-25）：ADR-0003 与纯确定性
+  `tutor_control` 契约已落地；教学策略接口返回控制决策，Socratic/Agent 输出默认
+  经过答案片段和显式答案标记闸门；独立模式与 5–10 次 no-AI 检查 cadence 已可重放。
+  真实 no-AI transfer 不以代码测试代替，仍待独立检索事件与 delayed holdout。
+- **Blueprint P5 Evaluation OS v2 groundwork**（2026-08-25）：ADR-0004、评估信号
+  字段和迁移 `d2e3f4a5b6c7` 已完成；no-AI transfer 只认显式独立标记，delayed gain
+  按同学生配对，time split 同时防发生时间/接收时间未来泄漏。迁移仅完成 offline SQL
+  验证，尚未应用活库。
+- **Blueprint P5 ModelRegistry**（2026-08-25）：metadata-only 注册表、时间窗校验、
+  shadow/candidate/production/retired 生命周期和 admin-only API 已完成；迁移
+  `e3f4a5b6c7d8` 仅完成 offline SQL 验证，尚未应用活库。
+- **Blueprint P5 promotion evidence gate**（2026-08-25）：ModelRegistry 进入
+  `candidate/production` 前必须提交完整 `shadow-evaluation/v1` 报告，包含同样本 baseline、
+  四项安全 guardrail、AUC/log-loss/Brier/ECE/calibration slope 和至少 30 个 eval events；
+  缺证据、未来/非 shadow 报告或模型 ID 不匹配均拒绝。24 项 ModelRegistry/路由/影子契约
+  测试、Ruff、Mypy 已通过；不自动晋升，活库迁移仍未执行。
+- **Blueprint P5 registry-aligned shadow comparison**（2026-08-25）：新增纯计算
+  `services/shadow_evaluation.py`，对候选/基线使用相同 eval event keys，拒绝越窗、
+  未来发生/接收时间，报告 AUC、log-loss、Brier、ECE 与方向明确差值；明确 shadow-only、
+  不写库、不控制学习路径、不宣称因果 uplift；`shadow_registry_eval.py` 可从 JSONL
+  快照离线复跑；`evaluation_service` 新增只读 production BKT+FSRS baseline 重放适配器。
+  `candidate_shadow_predictions` 冻结了候选预测器不得读取当前真实结果的接入契约。
+  新增无 sklearn 的 calibration slope 与距理想斜率 1 的比较；19 项影子/重放契约测试、
+  Ruff、Mypy 已通过；具体 DKT/Hybrid predictor、pilot/A-B
+  和活库迁移仍未启动。
 - **CRG 审查闭环**（2026-08-04）：接入 code-review-graph（opencode MCP + 插件 + AGENTS.md 指引），
   修复高/中风险缺口 —— 新增 89 个测试（prod 禁 mock 旁路红线 19 测 / SMS+Email fail-closed /
   aria viseme+Director 回退 / paper_tasks retry / match_questions 纯函数 / _trim_plot_data /
@@ -169,11 +216,22 @@ MaaS 专属部署 OpenAI 兼容端点）/ Docker Compose / pytest。
 
 ## 🚨 需人决策
 
-- **oservi / chat 未挂载（线上）**：活 `mneme-api-1` 的 `import oservi` 失败（`cannot import name 'IDaemon_Bus' from 'obase'`，vendor/obase 无此符号）。`services/main.py` 吞 ImportError，线上 OpenAPI 24 个 `/mcp`、**0 个 chat**。`tutor_loop`/`chat_loop` 硬 `from oservi.agentic_loop import AgenticLoop`；oservi 仅 `docker-compose.override.yml` 挂 `/opt/oservi_pkg`（dev）。选项：A) vendor/obase 补 `IDaemon_Bus` 并在活容器挂 oservi（**会重启 api，需确认**）；B) chat 改成不依赖 oservi 的可选装配；C) 接受 chat 仅本机 dev、线上不提供。本包只把 chat 测试改成 `importorskip("oservi")`，未改活容器。
+- **生产发布**：GH-4 + Veya 代码已按确认重建 `mneme-api-1`、`mneme-worker-1`、
+  `mneme-beat-1`；启动命令同时修复了 vendor 优先路径，API `/health` 已 healthy。
+- **Pilot smoke 尚未重跑（2026-08-24）**：本机 Veya 文本/视觉 provider 探针已通过，
+  但 Memory Graph 新迁移尚未应用到活库；需要单独发布后，再隔离到 `mneme_test` 重跑
+  pilot smoke 与 `/v2` 端点验证。
 - **阿里云短信报备**：完成前勿开公网注册（当前邮箱注册可用）
 - **MNEME_ENV=prod**：设 prod 后 `_assert_prod_safety` 强制真实验证通道（SMS aliyun 或 SMTP 邮箱二选一）
 - **PA-2 真实 webhook**：需提供 WeCom/Feishu 群 webhook URL 才能验证
 - **真实学生数据**：0.77 AUC 验证 / FSRS 权重拟合启用 / FIRe 上线 A/B 均以此为前提
+- **Tutor 真实效果**：当前已完成控制契约与泄漏红线，尚未有真人 no-AI transfer、
+  answer-dependency 或 D7/D30 delayed holdout 样本，不能据此宣称学习增益
+- **Evaluation OS v2 发布**：`d2e3f4a5b6c7` 尚未应用到活库；需要发布后重新跑
+  pilot smoke，再积累独立检索和 delayed baseline/holdout 数据
+- **ModelRegistry 发布**：`e3f4a5b6c7d8` 尚未应用到活库；真实 shadow→A/B→production
+  切换仍需 admin 发布流程和实验数据
+- **仓库许可证**：尚未选定法律许可证；不能由 agent 擅自添加 SPDX/许可证文本。
 - **U.21 课标标注量产**：需更强模型（当前 qwen2.5vl:7b 错误率 ~5-8%，骨架可接受但量产不够）
 - **ship-gate 四条**：真人 pilot / KU→chunk 精度 / Z 回测 / 测试=生产 CI 收敛
 

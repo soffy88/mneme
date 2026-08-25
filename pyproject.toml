@@ -28,10 +28,13 @@ dependencies = [
     "ruff>=0.3",
     "mypy>=1.9",
     "httpx>=0.27",
-    "obase @ file:///home/soffy/projects/platform/3O/obase",
-    "oprim @ file:///home/soffy/projects/platform/3O/oprim",
-    "oskill @ file:///home/soffy/projects/platform/3O/oskill",
-    "omodul @ file:///home/soffy/projects/platform/3O/omodul",
+    "structlog>=24.0",
+    "minio>=7.2",
+    "psycopg2-binary>=2.9",
+    "openai>=1.0",
+    "pymupdf4llm",
+    "pypdf>=4.0",
+    "edge-tts>=6.1.0",
 ]
 requires-python = ">=3.12"
 
@@ -46,7 +49,13 @@ testpaths = ["tests"]
 # packages/mneme-core：私有内核（mneme_core.*），未 pip 安装也未进 vendor，必须显式
 # 上 path，否则 main→routers 拆分后 practice 路由硬导入 mneme_core 会让 services.main
 # 整体导入失败、conftest 崩溃、全量测试 0 收集。
-pythonpath = ["vendor", "packages/mneme-core", "packages/mneme-agent", "."]
+pythonpath = [
+    "vendor",
+    "packages/mneme-core",
+    "packages/mneme-agent",
+    "packages/event-schema",
+    ".",
+]
 addopts = "--cov=services --cov-report=term-missing"
 markers = [
     "moat: moat_eval CI 守卫（重测试，默认跳过，MOAT=1 时才运行）",
@@ -111,11 +120,12 @@ check_untyped_defs = false
 # tasks/paper_tasks.py: 与当前 omodul.analyze_paper 契约严重脱节（旧版按 image_paths/
 #   手动写 WrongQuestion，新版 workflow 已内部完成 OCR+认知更新+Paper 状态并返回
 #   AnalyzePaperFindings），属需重写的集成缺陷而非 lint，且无测试覆盖，暂排除待真实修复。
-# vendor/: 3O 内核 vendored 副本，不作为本仓检查目标；但通过 mypy_path 提供给
+# vendor/ 与 root oprim/oskill/omodul：3O 运行时闭包/兼容层，不作为本仓检查目标；
+# vendor 通过 mypy_path 提供给
 #   第一方代码做类型解析（否则 mypy 解析到 site-packages 里镜像构建时装入的旧版内核，
 #   报出与运行时不符的 "Unexpected keyword argument"）。
 # alembic/versions/: 一次性数据迁移脚本（多为自动生成/数据管线），与 scripts/ 同类。
-exclude = "(main\\.py|test_engine\\.py|test_proxy\\.py|tasks/paper_tasks\\.py|mnt/.*|\\.venv/.*|data/.*|tests/.*|scripts/.*|vendor/.*|alembic/versions/.*|docker/.*|scratch/.*)"
+exclude = "(^|/)(vendor|oprim|oskill|omodul|tests|scripts|data|alembic/versions|docker|scratch)/|(^|/)(main|test_engine|test_proxy)\\.py$|(^|/)tasks/paper_tasks\\.py$|(^|/)mnt/|(^|/)\\.venv/"
 # 让 oprim/oskill/omodul/obase 解析到 vendor 副本（与运行时 sys.path 注入一致）。
 mypy_path = "vendor"
 

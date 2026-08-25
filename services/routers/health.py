@@ -42,3 +42,21 @@ async def health_providers():
     from services.providers.setup import provider_status
 
     return provider_status()
+
+
+@router.get("/health/metrics")
+async def health_metrics():
+    """Return privacy-safe process metrics for a liveness/metrics scrape."""
+
+    from services.observability import metrics_snapshot
+
+    return metrics_snapshot()
+
+
+@router.get("/health/grading")
+async def health_grading():
+    """Return aggregate deterministic-grading coverage without learner data."""
+
+    from services.grading_observability import grading_snapshot
+
+    return grading_snapshot()

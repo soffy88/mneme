@@ -19,6 +19,7 @@ from services.models import (
     WrongQuestion,
 )
 from obase.provider_registry import ProviderRegistry
+from obase.exceptions import ProviderNotFoundError
 from obase.persistence.pool import PgPool
 from obase.config import settings
 
@@ -203,11 +204,16 @@ async def get_due_variants(
     due_items = []
     now = datetime.now(timezone.utc)
 
-    caller = (
-        (ProviderRegistry.get().llm() if ProviderRegistry._instance else None)
-        if generate_variants
-        else None
-    )
+    caller = None
+    if generate_variants:
+        # 变式纯锦上添花，非闭环必需：registry 实例存在但未注册 default LLM 时
+        # .llm() 会抛 ProviderNotFoundError——降级 caller=None（同题复现），不崩。
+        try:
+            caller = (
+                ProviderRegistry.get().llm() if ProviderRegistry._instance else None
+            )
+        except ProviderNotFoundError:
+            caller = None
 
     for m in masteries:
         if not m.fsrs_card_json:
@@ -378,6 +384,9 @@ async def reveal_review_answer(
         source=source,
         used_answer=True,  # 看答案 → fsrs_map_rating 返回 Again
         predicted_r=predicted_r,
+        tutor_mode=("independent_transfer" if source == "transfer_probe" else None),
+        ai_assisted=(False if source == "transfer_probe" else None),
+        independent_mode=(True if source == "transfer_probe" else None),
     )
     return {"ku_id": kc_id, "answer": answer, "recorded_again": True}
 
@@ -403,5 +412,8 @@ async def submit_review_answer(
             question_type="solve",
             source=source,
             predicted_r=predicted_r,
+            tutor_mode=("independent_transfer" if source == "transfer_probe" else None),
+            ai_assisted=(False if source == "transfer_probe" else None),
+            independent_mode=(True if source == "transfer_probe" else None),
         )
     return {"ku_id": kc_id, "verdict": verdict, "answer": answer}

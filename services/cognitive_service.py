@@ -179,6 +179,10 @@ async def process_interaction(
     difficulty: Optional[float] = None,
     predicted_confidence: Optional[float] = None,
     predicted_r: Optional[float] = None,
+    tutor_mode: Optional[str] = None,
+    ai_assisted: Optional[bool] = None,
+    independent_mode: Optional[bool] = None,
+    evaluation_phase: Optional[str] = None,
     student_answer: Optional[str] = None,
     correct_answer: Optional[str] = None,
     self_explanation: Optional[str] = None,
@@ -205,7 +209,32 @@ async def process_interaction(
     ).scalar_one_or_none()
     old_stability = float((old_card or {}).get("stability") or 0.0)
 
-    store = PgStore(db)
+    from services.feature_flags import learning_event_v2_dual_write_enabled
+
+    async def _write_learning_event_v2(
+        event_id: UUID,
+        event_student_id: UUID,
+        event_kc_id: str,
+        event_data: dict,
+    ) -> object:
+        from services.learning_event_service import append_legacy_interaction_as_v2
+
+        return await append_legacy_interaction_as_v2(
+            db,
+            event_id=event_id,
+            student_id=event_student_id,
+            knowledge_point=event_kc_id,
+            event_data=event_data,
+        )
+
+    store = PgStore(
+        db,
+        learning_event_writer=(
+            _write_learning_event_v2
+            if learning_event_v2_dual_write_enabled()
+            else None
+        ),
+    )
     config = InteractionConfig()
     # 个性化 FSRS 调度：个体优先→群体→默认（无则用默认权重）。
     from services.fsrs_optimize_service import load_weights_for_student
@@ -226,6 +255,10 @@ async def process_interaction(
         difficulty=difficulty,
         predicted_confidence=predicted_confidence,
         predicted_r=predicted_r,
+        tutor_mode=tutor_mode,
+        ai_assisted=ai_assisted,
+        independent_mode=independent_mode,
+        evaluation_phase=evaluation_phase,
         # 集中练习去抖（学习科学：间隔重复≠集中练习）：距上次 FSRS 复习不足 20h 的
         # 重复作答只更新掌握度、不推进调度。真正的到期复习相隔数天，不受影响；
         # 同卷/同日连答不再把生题排到几天后导致"学了就忘"。

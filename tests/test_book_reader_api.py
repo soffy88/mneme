@@ -16,8 +16,63 @@ from sqlalchemy import text as sa_text
 from obase.db import SessionLocal
 from omodul.book_compile import BookCompileConfig, BookCompileInput, book_compile
 from services.mcp_router import tool_get_book, tool_list_books
+from services.models import KnowledgeCluster, KnowledgeUnit, Textbook
 
-REAL_TEXTBOOK_ID = "RENJIAO-G1-MATH-S"
+
+@pytest.fixture
+async def compile_textbook():
+    """自包含教材夹具：book_compile 需要该 textbook 至少 1 个 knowledge_cluster，
+    但共享测试库对真实教材 id 没有索引数据。种一本专用教材（唯一 id），测完即清，
+    不污染共享库（build_daily_plan 会扫全表 knowledge_units）。"""
+    import uuid as _uuid
+
+    from sqlalchemy import delete
+
+    tb_id = f"tb-bkr-{_uuid.uuid4().hex[:8]}"
+    c_id = f"{tb_id}-c1"
+    ku_ids = [f"{tb_id}-ku-{i}" for i in range(2)]
+
+    async with SessionLocal() as db:
+        db.add(
+            Textbook(
+                id=tb_id,
+                subject="math",
+                grade="G1",
+                edition="测试版",
+                book_name="阅读器编译测试教材",
+            )
+        )
+        await db.flush()
+        db.add(
+            KnowledgeCluster(
+                id=c_id, textbook_id=tb_id, name="阅读器测试章节", display_order=1
+            )
+        )
+        await db.flush()
+        for ku_id in ku_ids:
+            db.add(
+                KnowledgeUnit(
+                    id=ku_id,
+                    textbook_id=tb_id,
+                    cluster_id=c_id,
+                    name=f"KU-{ku_id[-4:]}",
+                    description="阅读器测试知识点",
+                )
+            )
+        await db.commit()
+
+    yield tb_id
+
+    async with SessionLocal() as db:
+        await db.execute(
+            sa_text("DELETE FROM books WHERE textbook_id=:tid"), {"tid": tb_id}
+        )
+        await db.execute(delete(KnowledgeUnit).where(KnowledgeUnit.textbook_id == tb_id))
+        await db.execute(
+            delete(KnowledgeCluster).where(KnowledgeCluster.textbook_id == tb_id)
+        )
+        await db.execute(delete(Textbook).where(Textbook.id == tb_id))
+        await db.commit()
 
 
 def _fake_caller():
@@ -33,16 +88,16 @@ def _fake_caller():
 
 
 @pytest.fixture
-async def compiled_book(tmp_path: Path):
+async def compiled_book(tmp_path: Path, compile_textbook: str):
     async with SessionLocal() as db:
-        config = BookCompileConfig(textbook_id=REAL_TEXTBOOK_ID)
+        config = BookCompileConfig(textbook_id=compile_textbook)
         result = await book_compile(
             config, BookCompileInput(db=db, caller=_fake_caller()), tmp_path
         )
         assert result["status"] == "completed"
         book_id = result["book_id"]
 
-    yield book_id
+    yield book_id, compile_textbook
 
     async with SessionLocal() as db:
         await db.execute(sa_text("DELETE FROM books WHERE id=:id"), {"id": book_id})
@@ -51,13 +106,14 @@ async def compiled_book(tmp_path: Path):
 
 @pytest.mark.asyncio
 async def test_list_books_includes_compiled_book(compiled_book):
+    book_id, tb_id = compiled_book
     async with SessionLocal() as db:
         result = await tool_list_books(db)
 
     ids = [b["book_id"] for b in result["books"]]
-    assert compiled_book in ids
-    entry = next(b for b in result["books"] if b["book_id"] == compiled_book)
-    assert entry["textbook_id"] == REAL_TEXTBOOK_ID
+    assert book_id in ids
+    entry = next(b for b in result["books"] if b["book_id"] == book_id)
+    assert entry["textbook_id"] == tb_id
     assert entry["status"] in ("ready", "partial")
     # 列表页不带 citations 细节——避免整本书内容都传下来
     assert "chapters" not in entry
@@ -67,12 +123,13 @@ async def test_list_books_includes_compiled_book(compiled_book):
 async def test_get_book_returns_nested_chapters_and_blocks_with_citations(
     compiled_book,
 ):
+    book_id, _tb_id = compiled_book
     async with SessionLocal() as db:
-        result = await tool_get_book(db, compiled_book)
+        result = await tool_get_book(db, book_id)
 
     book = result["book"]
     assert book is not None
-    assert book["book_id"] == compiled_book
+    assert book["book_id"] == book_id
     assert len(book["chapters"]) > 0
 
     for chapter in book["chapters"]:

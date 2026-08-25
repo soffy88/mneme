@@ -18,7 +18,7 @@ from __future__ import annotations
 import re
 import time
 import uuid
-from typing import Optional
+from typing import Any, Optional
 
 from fastapi import APIRouter, Depends, HTTPException
 from pydantic import BaseModel
@@ -45,7 +45,6 @@ from services.auth_deps import (
     _ensure_student_self,
     get_current_user,
 )
-from services.math_grade import grade_math
 from services.partner_channels import CHANNEL_REGISTRY
 from services.models import (
     KnowledgeCluster,
@@ -543,7 +542,7 @@ _GRADE_ZH = {
 async def _llm_generate_question(
     kc_name: str, *, grade: Optional[str] = None
 ) -> Optional[dict]:
-    """题库无题时 LLM(qwen)兜底：出一道题 + 标准答案。失败→None。expected 不外传。
+    """题库无题时用已配置文本 provider 兜底出题。失败→None。
 
     grade（如 "G1"）来自 Textbook.grade，供出题 prompt 用——没有这个信号时
     LLM 只看到知识点名字，难度完全靠猜，曾经出过严重偏离学段的题。
@@ -551,15 +550,26 @@ async def _llm_generate_question(
     import json as _json
     import os
 
-    key = os.environ.get("DASHSCOPE_API_KEY")
-    if not key:
-        return None
+    backend = os.environ.get("MNEME_LLM", "").lower()
+    caller: Any
     try:
-        from services.providers.qwenvl_caller import QwenTextCaller
+        if backend == "veya":
+            from services.providers.veya_caller import VeyaTextCaller
 
-        caller = QwenTextCaller(
-            api_key=key, model=os.environ.get("QWEN_MODEL", "qwen-plus")
-        )
+            caller = VeyaTextCaller()
+        elif backend in ("qwen", ""):
+            key = os.environ.get("DASHSCOPE_API_KEY") or os.environ.get(
+                "QWEN_API_KEY"
+            )
+            if not key or key == "your_key_here":
+                return None
+            from services.providers.qwenvl_caller import QwenTextCaller
+
+            caller = QwenTextCaller(
+                api_key=key, model=os.environ.get("QWEN_MODEL", "qwen-plus")
+            )
+        else:
+            return None
         level_desc = _GRADE_ZH.get(grade or "", "") or "中小学"
         out = await caller(
             messages=[
@@ -595,7 +605,7 @@ async def tool_request_question(
 ) -> dict:
     """人在环出题（S3-A poser）：为当前 KC 出下一题并登记待答；**只出不答**。
 
-    题库(wrong_questions)优先、LLM(qwen)兜底。expected 只进 gate.pending_question，
+    题库(wrong_questions)优先、已配置文本 LLM 兜底。expected 只进 gate.pending_question，
     **绝不进返回体/prompt/LLM 上下文**。幂等：已有该 KC 的 pending 直接返回（不重复出题）。
     """
     active = await gate_store.get_active_pending(db, student_id=student_id)
@@ -754,6 +764,9 @@ async def tool_submit_answer(
 
         verdict = await run_qualitative_verifier(db, kc_id=kc_id, explanation=answer)
         if verdict is None:
+            from services.grading_observability import record_grading
+
+            record_grading("open", "needs_qualitative", fallback_reason="verifier_unavailable")
             return {
                 "needs_qualitative": True,
                 "kc_id": kc_id,
@@ -768,6 +781,9 @@ async def tool_submit_answer(
             verdict_source="llm_verified",
             evidence=verdict.to_evidence(),
         )
+        from services.grading_observability import record_grading
+
+        record_grading("open", "llm_verified")
         return {
             "graded": True,
             "is_correct": verdict.passed,
@@ -778,9 +794,22 @@ async def tool_submit_answer(
         }
 
     if qtype in ("solve", "fill"):
-        is_correct = grade_math(answer, expected)
+        from services.math_grade import grade_math_detailed
+
+        grade = grade_math_detailed(answer, expected)
+        is_correct = grade.is_correct
+        from services.grading_observability import record_grading
+
+        record_grading(
+            qtype,
+            grade.method,
+            fallback_reason=grade.fallback_reason,
+        )
     elif qtype in ("choice", "short"):
         is_correct = answer_match(answer, expected=expected, qtype=qtype).is_correct
+        from services.grading_observability import record_grading
+
+        record_grading(qtype, "objective_deterministic")
     else:
         return {"error": f"unsupported qtype: {qtype}"}
 

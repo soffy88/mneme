@@ -39,6 +39,9 @@ logger = logging.getLogger(__name__)
 _STUDENT_TABLES: list[tuple[str, str]] = [
     # 纯学生子表（只指向 users，互相无 FK）
     ("interaction_events", "student_id"),
+    ("learning_events", "student_id"),
+    ("memory_evidence", "student_id"),
+    ("memory_claims", "student_id"),
     ("interaction_history", "student_id"),
     ("kc_mastery", "student_id"),
     ("mastery_snapshots", "student_id"),
@@ -130,6 +133,24 @@ async def purge_deleted_users(
     # _delete_textbook_files_blobs）。注意顺序：textbook_files 在清单中位次靠后，
     # 但删行发生在循环里，blob 清理紧随其后即可。
     await _collect_textbook_storage_paths(db, id_strs)
+
+    # memory_claim_evidence has no student_id of its own.  Remove its edges
+    # before the student-scoped claim/evidence rows (and before users), even
+    # though the FK cascade is a second line of defence.
+    if await _table_exists(db, "memory_claim_evidence"):
+        res = await db.execute(
+            text(
+                "DELETE FROM memory_claim_evidence WHERE claim_id IN ("
+                "SELECT id FROM memory_claims WHERE student_id = ANY(:ids)"
+                ") OR evidence_id IN ("
+                "SELECT id FROM memory_evidence WHERE student_id = ANY(:ids)"
+                ")"
+            ),
+            {"ids": id_strs},
+        )
+        rc = getattr(res, "rowcount", 0)
+        if rc:
+            tables["memory_claim_evidence"] = rc
 
     for table, col in _STUDENT_TABLES:
         if not await _table_exists(db, table):

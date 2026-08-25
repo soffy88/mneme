@@ -7,15 +7,20 @@ build_s1_grading_fixture.py 式的真 LLM 验证放一次性脚本，非常驻 p
 from __future__ import annotations
 
 import json
+import os
 import uuid
 
 import pytest
 
-pytest.importorskip("oservi")
-
 from obase.db import SessionLocal
 from services.chat_router import tool_chat_turn
 from services.mcp_router import tool_get_path
+
+
+pytestmark = pytest.mark.skipif(
+    os.environ.get("MNEME_LIVE_INTEGRATION") != "1",
+    reason="requires a configured test DB; set MNEME_LIVE_INTEGRATION=1",
+)
 
 
 def _classify_llm(response: str):

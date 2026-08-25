@@ -1,7 +1,7 @@
 """FC-5 subprocess runner —— 独立 agent 进程，**零 DB**。经 HTTP 驱动 pilot 到 complete。
 
 由 harness 以剥离 DB 凭据的 env（+ PGAPPNAME=mneme-agent 标记）spawn。本进程无任何 DB
-import——只 build_tutor_loop（oservi + mneme_core 纯库）+ 复用 e2e 的 scripted caller。
+import——只 build_tutor_loop（mneme_core 纯库）+ 复用 e2e 的 scripted caller。
 argv: <student_id> <api_base> <kc_ids_csv> <auth_token>；exit 0 iff session status=="completed"。
 
 auth_token 由 harness（有 DB、已建 pilot 学生）现铸后经 argv 转发——跟真实场景一致

@@ -1,7 +1,7 @@
-"""tutor_loop — W2a S2 引擎装配（架构 A，FC-6 合规，无 oservi 改动）。
+"""tutor_loop — Mneme chat 的 MCP 工具装配（FC-5，零 DB）。
 
-用 oservi 真引擎 ``oservi.agentic_loop.AgenticLoop``（on_demand 多步 ReAct ``.session()``），
-经其**实例** ``.assemble()`` 注入 llm_caller + 12 callable：
+用仓内 ``LocalAgenticLoop``（on_demand 多步工具调用 ``.session()``），注入
+llm_caller + 12 callable：
   · 11 MCP 工具（NextObjective / GetKCInfo / CheckMastery / GetReviewQueue /
     PoseQuestion / SubmitAnswer / ReportResult / RecallMemory / RememberEpisode /
     SearchKnowledgeBase / SearchTextbookKnowledge，C5 起加 Recall/Remember、
@@ -16,11 +16,8 @@ kc_mastery/gate.* 无关，不影响任何过门判定。
 
 **agent 进程零 mneme-DB**：本模块无任何 DB import，工具全走 HTTP（FC-5）。
 
-为何不用 oservi 模块级 ``assemble(manifest)``：该路径因 oservi 双 agentic_loop 注册
-路由到不完整的 ``AgenticLoopEngine``（单轮执行、``turn_handler`` 必填），已上报 Wiki
-（``OSERVI-BUG-agentic_loop-assemble.md``）。改用引擎自带**实例** ``.assemble()``——
-同样对 injection_points 做校验、缺必填注入点即 ``ManifestValidationError``（W4）——
-驱动真 ``.session()`` 多步循环。**禁手写循环**（循环逻辑全在引擎 session）。
+循环骨架只处理 provider 的文本/工具调用协议，不持久化会话状态；Mneme 业务能力
+仍全部通过 HTTP MCP 工具注入。这样 chat 在没有可选 oservi 挂载时也能启动。
 """
 
 from __future__ import annotations
@@ -30,11 +27,16 @@ import json
 import urllib.request
 from typing import Any, Awaitable, Callable, Optional
 
-from oservi.agentic_loop import AgenticLoop, ToolSpec
+from mneme_agent.assembly.local_agentic_loop import LocalAgenticLoop, ToolSpec
 
 # mneme-core 纯库（无 DB）——t_assess_explanation 用
 from mneme_core.oprim.models import KpView, Rubric
 from mneme_core.oskill.qualitative_verifier import qualitative_verifier
+from mneme_core.tutor_control import (
+    TutorObservation,
+    decide_tutor_move,
+    sanitize_tutor_output,
+)
 
 DEFAULT_API_BASE = "http://localhost:8000"
 
@@ -42,6 +44,7 @@ DEFAULT_API_BASE = "http://localhost:8000"
 VerifierLLM = Callable[..., str]
 # 主循环 llm_caller（引擎用）：Anthropic 风格 (messages, tools, ...) -> dict
 LoopLLM = Callable[..., Awaitable[dict]]
+OutputGuard = Callable[[str], str]
 
 
 # ── HTTP 工具客户端（零 DB，纯 HTTP，同步调用包进线程）──────────────────────
@@ -359,14 +362,20 @@ def build_tutor_loop(
     auth_token: Optional[str] = None,
     max_iterations: int = 40,
     budget_usd: float = 5.0,
-) -> AgenticLoop:
-    """装配 on_demand tutor 引擎：真 oservi AgenticLoop + 实例 .assemble() 注入点校验。
+    output_guard: Optional[OutputGuard] = None,
+    tutor_context: str = "stuck",
+    learner_stage: Optional[str] = None,
+    independent_mode: bool = False,
+    answer_seen: bool = False,
+    protected_answer: str = "",
+) -> LocalAgenticLoop:
+    """装配无外部引擎依赖的 on-demand tutor loop。
 
     auth_token：/mcp/* 自 AA.1 起每端点要求 JWT（关 IDOR），不带 token 工具调用一律
     401。传发起本轮会话的学生自己的 token（调用方在鉴权时已拿到，这里只转发，不
     单独铸造）。
 
-    Returns 已装配、可 ``await loop.session(task=...)`` 的引擎。缺必填注入点 → ManifestValidationError。
+    Returns 已装配、可 ``await loop.session(task=...)`` 的内存循环。
     """
     tools = build_tools(
         api_base,
@@ -377,12 +386,36 @@ def build_tutor_loop(
     )
     from pathlib import Path
 
-    loop = AgenticLoop(
+    control = decide_tutor_move(
+        TutorObservation(
+            context=tutor_context,
+            learner_stage=learner_stage,
+            # The agent-side default is conservative.  The API policy remains
+            # the authority for enabling a worked example; this flag only
+            # selects the output guard for the already-authorized session.
+            engine_enabled=True,
+            independent_mode=independent_mode,
+            answer_seen=answer_seen,
+        )
+    )
+
+    def default_output_guard(text: str) -> str:
+        return sanitize_tutor_output(
+            text,
+            protected_answer=protected_answer,
+            decision=control,
+        ).text
+
+    loop = LocalAgenticLoop(
         max_iterations=max_iterations,
         model="tutor",
         mode="build",
         output_dir=Path("/tmp/mneme_tutor"),
         budget_usd=budget_usd,
     )
-    loop.assemble(llm_caller=llm_caller, tools=tools)  # 校验注入点（W4）
+    loop.assemble(
+        llm_caller=llm_caller,
+        tools=tools,
+        output_guard=output_guard or default_output_guard,
+    )  # 校验注入点（W4）
     return loop

@@ -1,10 +1,11 @@
 """学习洞察 / 校准 / 摸底 / 护城河指标（自 main 拆出）。"""
 from __future__ import annotations
 
-from datetime import date
+from datetime import date, datetime
+from typing import Any, Literal
 from uuid import UUID
 
-from fastapi import APIRouter, Depends, Query
+from fastapi import APIRouter, Depends, HTTPException, Query
 from obase.db import get_db
 from oprim.calibration import brier_calibration
 from pydantic import BaseModel, Field
@@ -209,11 +210,123 @@ async def get_learning_metrics(
     return await compute_learning_metrics(db)
 
 
+@router.get("/v2/evaluation/os")
+async def get_evaluation_os(
+    _auth: User = Depends(get_current_user),
+    db: AsyncSession = Depends(get_db),
+):
+    """Evaluation OS aggregate: retention, near-transfer and observed uplift.
+
+    The response deliberately contains no student IDs.  Missing cohorts/arms
+    return null metrics rather than an invented conclusion.
+    """
+
+    from services.evaluation_os import evaluation_os_report
+
+    return await evaluation_os_report(db)
+
+
+class ModelRegistryCreateRequest(BaseModel):
+    model_id: str = Field(min_length=1, max_length=120)
+    model_type: str = Field(min_length=1, max_length=80)
+    code_sha: str = Field(min_length=1, max_length=128)
+    train_start: datetime
+    train_end: datetime
+    eval_start: datetime
+    eval_end: datetime
+    params: dict[str, Any] = Field(default_factory=dict)
+    metrics: dict[str, Any] = Field(default_factory=dict)
+    status: Literal["shadow", "candidate", "production", "retired"] = "shadow"
+    rollback_to: str | None = Field(default=None, max_length=120)
+
+
+class ModelRegistryStatusRequest(BaseModel):
+    status: Literal["shadow", "candidate", "production", "retired"]
+    rollback_to: str | None = Field(default=None, max_length=120)
+    metrics: dict[str, Any] | None = None
+
+
+def _require_evaluation_admin(current_user: User) -> None:
+    from obase.admin_identity import is_admin
+
+    if not is_admin(current_user):
+        raise HTTPException(status_code=403, detail="仅 admin 可管理 ModelRegistry")
+
+
+@router.post("/v2/evaluation/models", status_code=201)
+async def post_evaluation_model(
+    body: ModelRegistryCreateRequest,
+    current_user: User = Depends(get_current_user),
+    db: AsyncSession = Depends(get_db),
+):
+    """登记一个 model/policy 版本；只允许 admin，且不接受未来评估窗。"""
+
+    _require_evaluation_admin(current_user)
+    from services.model_registry import ModelRegistryError, model_registry_payload, register_model
+
+    try:
+        row = await register_model(db, **body.model_dump())
+        payload = model_registry_payload(row)
+        await db.commit()
+    except ModelRegistryError as exc:
+        await db.rollback()
+        raise HTTPException(status_code=422, detail=str(exc)) from exc
+    return payload
+
+
+@router.get("/v2/evaluation/models")
+async def get_evaluation_models(
+    model_type: str | None = Query(None, max_length=80),
+    status: str | None = Query(None),
+    current_user: User = Depends(get_current_user),
+    db: AsyncSession = Depends(get_db),
+):
+    """列出模型注册元数据；不返回学生或原始学习事件。"""
+
+    _require_evaluation_admin(current_user)
+    from services.model_registry import ModelRegistryError, list_models, model_registry_payload
+
+    try:
+        rows = await list_models(db, model_type=model_type, status=status)
+    except ModelRegistryError as exc:
+        raise HTTPException(status_code=422, detail=str(exc)) from exc
+    return {"models": [model_registry_payload(row) for row in rows]}
+
+
+@router.post("/v2/evaluation/models/{model_id}/status")
+async def post_evaluation_model_status(
+    model_id: str,
+    body: ModelRegistryStatusRequest,
+    current_user: User = Depends(get_current_user),
+    db: AsyncSession = Depends(get_db),
+):
+    """执行显式 lifecycle transition；candidate/production 必须带 shadow 证据。"""
+
+    _require_evaluation_admin(current_user)
+    from services.model_registry import (
+        ModelRegistryError,
+        model_registry_payload,
+        transition_model,
+    )
+
+    try:
+        row = await transition_model(db, model_id=model_id, **body.model_dump())
+        payload = model_registry_payload(row)
+        await db.commit()
+    except ModelRegistryError as exc:
+        await db.rollback()
+        raise HTTPException(status_code=422, detail=str(exc)) from exc
+    return payload
+
+
 @router.get("/v1/teaching/policy")
 async def get_teaching_policy(
     student_id: UUID,
     ku_id: str,
     context: str = Query("system_taught"),
+    independent_mode: bool = Query(False),
+    answer_seen: bool = Query(False),
+    hints_used: int = Query(0, ge=0),
     _auth: User = Depends(require_student_access),
     db: AsyncSession = Depends(get_db),
 ):
@@ -222,8 +335,6 @@ async def get_teaching_policy(
     前端据此决定"给完整样例"还是"苏格拉底提问"。红线：own_homework/writing 恒不给。
     教学引擎 feature-flag(TEACHING_ENGINE_ENABLED) 关闭时保守回退 never。"""
 
-    from oprim.answer_policy import answer_policy
-
     from services.learner_model import get_mastery, get_stage
 
     m = await get_mastery(db, student_id, ku_id)
@@ -231,11 +342,32 @@ async def get_teaching_policy(
     from services.experiment_service import student_arm, teaching_engine_on_for
 
     enabled = teaching_engine_on_for(student_id)  # 全局 flag 或 RCT 臂=worked_example
-    pol = answer_policy(context, stage, enabled=enabled)
+    from mneme_core.tutor_control import TutorObservation, decide_tutor_move
+
+    control = decide_tutor_move(
+        TutorObservation(
+            context=context,
+            learner_stage=stage,
+            engine_enabled=enabled,
+            independent_mode=independent_mode,
+            answer_seen=answer_seen,
+            hints_used=hints_used,
+        )
+    )
+    pol = {
+        "mode": control.answer_mode,
+        "allow_full_answer": control.allow_full_answer,
+        "allow_worked_example": control.allow_worked_example,
+        "rationale": control.rationale,
+    }
     return {
         "stage": stage,
         "engine_enabled": enabled,
         "experiment_arm": student_arm(student_id),
+        "independent_mode": independent_mode,
+        "answer_seen": answer_seen,
+        "hints_used": hints_used,
+        "tutor_control": control.as_dict(),
         **pol,
     }
 
@@ -335,5 +467,3 @@ async def get_experiment_metrics(
     from services.experiment_service import experiment_metrics
 
     return await experiment_metrics(db, name)
-
-
