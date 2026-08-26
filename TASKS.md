@@ -2648,6 +2648,13 @@ CI 常驻的判分准确率回归门，堵死"构造桩题掩盖真实数据判�
 - [ ] **GH-5 真人 pilot 启动**（需真实 cohort、owner protocol/consent 与生产环境）：
   FSRS 拟合 400 间隔复习对门槛、FIRe A/B、RCT、0.77 AUC 验证全部以此为前提。
 
+- [x] **GH-0.13 Real-world validation readiness infrastructure** ✅ 2026-08-26：复用
+  Evaluation OS 增加 pilot mode 默认关闭、consent/enrollment/assignment、统一污染分类、
+  delayed 7d/30d 可配置调度、retention/transfer/JOL/RMG-AM endpoint、pilot data quality、
+  analysis manifest/replay、artifact-backed evidence registry、privacy/purge/export 和
+  `make pilot-readiness`。不自动启用、不自动招募、不生成 synthetic 或真实学生结果。
+  GH-5 仍需真实 cohort、owner protocol/consent、生产环境与后续 randomized/commercial evidence。
+
 - [x] **GH-0.12 Cognitive Infrastructure / 18+ closure contracts** ✅ 2026-08-26：
   新增 `CognitiveStateV2` typed projection（BKT/FSRS/recognition 复用、unknown-first
   uncertainty、rebuild/compare、EvidenceRef/Claim provenance）；Event v2 增加严格

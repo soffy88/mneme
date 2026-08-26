@@ -18,6 +18,7 @@ def register_domain_routers(app: FastAPI) -> None:
         papers,
         parent,
         plan,
+        pilot,
         practice,
         progress,
         review,
@@ -41,6 +42,7 @@ def register_domain_routers(app: FastAPI) -> None:
         insights,
         parent,
         practice,
+        pilot,
         progress,
         subjects,
     ):

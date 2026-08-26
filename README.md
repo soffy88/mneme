@@ -135,6 +135,14 @@ calibration slope 和方向明确的 observed predictive difference；它是纯�
 候选模型接入使用 `candidate_shadow_predictions`：预测器只收到历史结果和当前事件的
 非答案视图，当前事件的真实结果在预测后才追加。
 
+真实用户验证准备设施位于 `services/pilot_validation.py`：它复用 Evaluation OS，
+提供 protocol-versioned enrollment/assignment、consent technical gate、统一污染分类、
+可注入时钟的 delayed measurement、retention/transfer/JOL/RMG-AM endpoints、data-quality
+report、analysis manifest/replay 和 artifact-backed evidence registry。运行
+`make pilot-readiness` 可执行非生产 readiness gate；默认 pilot flags 全部关闭，且
+没有真实事件时只返回 `PENDING` / `INSUFFICIENT_EVIDENCE` / `WINDOW_NOT_REACHED`，
+不会生成 synthetic 结果。
+
 影子评估同时报告 AUC 与 log-loss。学习系统不能只追求排序能力，还必须验证概率校准、留存、迁移、元认知和安全指标。
 
 ```bash

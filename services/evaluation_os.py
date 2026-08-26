@@ -34,6 +34,25 @@ class EvaluationObservation:
     independent_mode: bool | None = None
     evaluation_phase: str | None = None
     received_at: datetime | None = None
+    event_id: UUID | None = None
+    knowledge_ref: str | None = None
+    protocol_version: str | None = None
+    active_learning_seconds: float | None = None
+    idle_seconds: float | None = None
+    background_seconds: float | None = None
+    upload_processing_seconds: float | None = None
+    ai_latency_seconds: float | None = None
+    system_wait_seconds: float | None = None
+    baseline_mastery: float | None = None
+    retained_mastery: float | None = None
+    retained_mastery_gain: float | None = None
+    jol_confidence: float | None = None
+    jol_at: datetime | None = None
+    outcome_revealed_at: datetime | None = None
+    assistance_requested: bool = False
+    answer_exposed: bool = False
+    solution_revealed: bool = False
+    hints_used: int = 0
 
 
 def _interval(successes: int, n: int) -> dict[str, float | int | None]:

@@ -3,7 +3,7 @@
 PYTHON ?= .venv/bin/python
 UV ?= uv
 
-.PHONY: help bootstrap dev test migrate seed backfill-events-dry-run backfill-events web-build clean
+.PHONY: help bootstrap dev test migrate seed backfill-events-dry-run backfill-events web-build pilot-readiness clean
 
 help:
 	@printf '%s\n' \
@@ -15,6 +15,7 @@ help:
 	  'make backfill-events  Run the explicitly enabled v2 event backfill' \
 	  'make test       Run the repository quality gate' \
 	  'make web-build  Install and build the Studio frontend' \
+	  'make pilot-readiness  Check real-world validation engineering readiness' \
 	  'make clean      Remove local Python/test caches'
 
 bootstrap:
@@ -41,6 +42,9 @@ test:
 web-build:
 	npm --prefix apps/mneme-studio ci
 	npm --prefix apps/mneme-studio run build
+
+pilot-readiness:
+	$(UV) run python scripts/pilot_readiness.py
 
 clean:
 	rm -rf .pytest_cache .mypy_cache .ruff_cache

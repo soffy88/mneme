@@ -677,6 +677,185 @@ class PolicyDecisionRecord(Base):
     )
 
 
+class PilotEnrollment(Base):
+    """Auditable pilot enrollment metadata without unnecessary learner PII."""
+
+    __tablename__ = "pilot_enrollments"
+    __table_args__ = (
+        UniqueConstraint(
+            "student_id",
+            "protocol_id",
+            "protocol_version",
+            name="uq_pilot_enrollments_student_protocol",
+        ),
+        CheckConstraint(
+            "consent_status IN ('UNKNOWN', 'NOT_REQUIRED', 'PENDING', 'GRANTED', 'REVOKED')",
+            name="ck_pilot_enrollments_consent_status",
+        ),
+    )
+
+    enrollment_id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True), primary_key=True, server_default=text("gen_random_uuid()")
+    )
+    student_id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True), ForeignKey("users.id"), nullable=False
+    )
+    protocol_id: Mapped[str] = mapped_column(String(120), nullable=False)
+    protocol_version: Mapped[str] = mapped_column(String(40), nullable=False)
+    cohort_id: Mapped[str] = mapped_column(String(120), nullable=False)
+    consent_status: Mapped[str] = mapped_column(
+        String(16), nullable=False, server_default="UNKNOWN"
+    )
+    consent_version: Mapped[Optional[str]] = mapped_column(String(40))
+    consent_recorded_at: Mapped[Optional[datetime]] = mapped_column(
+        DateTime(timezone=True)
+    )
+    enrolled_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), nullable=False
+    )
+    revoked_at: Mapped[Optional[datetime]] = mapped_column(DateTime(timezone=True))
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), server_default=text("now()"), nullable=False
+    )
+
+
+class PilotAssignment(Base):
+    """Immutable deterministic/pre-registered assignment metadata."""
+
+    __tablename__ = "pilot_assignments"
+    __table_args__ = (
+        UniqueConstraint(
+            "enrollment_id", name="uq_pilot_assignments_enrollment"
+        ),
+    )
+
+    assignment_id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True), primary_key=True, server_default=text("gen_random_uuid()")
+    )
+    enrollment_id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True), ForeignKey("pilot_enrollments.enrollment_id"), nullable=False
+    )
+    student_id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True), ForeignKey("users.id"), nullable=False
+    )
+    protocol_id: Mapped[str] = mapped_column(String(120), nullable=False)
+    protocol_version: Mapped[str] = mapped_column(String(40), nullable=False)
+    cohort_id: Mapped[str] = mapped_column(String(120), nullable=False)
+    arm: Mapped[str] = mapped_column(String(80), nullable=False)
+    assignment_method: Mapped[str] = mapped_column(String(120), nullable=False)
+    assigned_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), nullable=False
+    )
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), server_default=text("now()"), nullable=False
+    )
+
+
+class PilotMeasurementSchedule(Base):
+    """Protocol-versioned delayed measurement window for one student."""
+
+    __tablename__ = "pilot_measurement_schedules"
+    __table_args__ = (
+        UniqueConstraint(
+            "student_id",
+            "protocol_id",
+            "protocol_version",
+            "phase",
+            name="uq_pilot_measurement_student_phase",
+        ),
+        CheckConstraint(
+            "status IN ('SCHEDULED', 'AVAILABLE', 'COMPLETED', 'MISSED', 'INVALIDATED')",
+            name="ck_pilot_measurement_status",
+        ),
+    )
+
+    schedule_id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True), primary_key=True, server_default=text("gen_random_uuid()")
+    )
+    student_id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True), ForeignKey("users.id"), nullable=False
+    )
+    enrollment_id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True), ForeignKey("pilot_enrollments.enrollment_id"), nullable=False
+    )
+    protocol_id: Mapped[str] = mapped_column(String(120), nullable=False)
+    protocol_version: Mapped[str] = mapped_column(String(40), nullable=False)
+    phase: Mapped[str] = mapped_column(String(32), nullable=False)
+    measurement_due_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), nullable=False
+    )
+    window_open_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), nullable=False
+    )
+    window_close_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), nullable=False
+    )
+    completed_at: Mapped[Optional[datetime]] = mapped_column(DateTime(timezone=True))
+    status: Mapped[str] = mapped_column(
+        String(16), nullable=False, server_default="SCHEDULED"
+    )
+    evidence_event_ids: Mapped[list] = mapped_column(
+        JSONB, nullable=False, server_default=text("'[]'::jsonb")
+    )
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), server_default=text("now()"), nullable=False
+    )
+
+
+class PilotAnalysisArtifact(Base):
+    """Immutable aggregate analysis artifact used to support evidence claims."""
+
+    __tablename__ = "pilot_analysis_artifacts"
+
+    artifact_id: Mapped[str] = mapped_column(String(128), primary_key=True)
+    protocol_id: Mapped[str] = mapped_column(String(120), nullable=False)
+    protocol_version: Mapped[str] = mapped_column(String(40), nullable=False)
+    cohort_id: Mapped[str] = mapped_column(String(120), nullable=False)
+    code_sha: Mapped[str] = mapped_column(String(128), nullable=False)
+    analysis_version: Mapped[str] = mapped_column(String(120), nullable=False)
+    manifest: Mapped[dict] = mapped_column(
+        JSONB, nullable=False, server_default=text("'{}'::jsonb")
+    )
+    report: Mapped[dict] = mapped_column(
+        JSONB, nullable=False, server_default=text("'{}'::jsonb")
+    )
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), server_default=text("now()"), nullable=False
+    )
+
+
+class PilotEvidenceRegistry(Base):
+    """Product-level evidence registry; no student identifiers are stored."""
+
+    __tablename__ = "pilot_evidence_registry"
+    __table_args__ = (
+        CheckConstraint(
+            "evidence_level IN ('contract', 'offline', 'observational', 'randomized', 'commercial')",
+            name="ck_pilot_evidence_registry_level",
+        ),
+        CheckConstraint(
+            "status IN ('PENDING', 'SUPPORTED', 'NOT_SUPPORTED', 'INCONCLUSIVE', 'RETRACTED')",
+            name="ck_pilot_evidence_registry_status",
+        ),
+    )
+
+    evidence_id: Mapped[str] = mapped_column(String(128), primary_key=True)
+    claim: Mapped[str] = mapped_column(Text, nullable=False)
+    evidence_level: Mapped[str] = mapped_column(String(16), nullable=False)
+    protocol_id: Mapped[Optional[str]] = mapped_column(String(120))
+    cohort_id: Mapped[Optional[str]] = mapped_column(String(120))
+    data_cutoff: Mapped[Optional[datetime]] = mapped_column(DateTime(timezone=True))
+    analysis_version: Mapped[str] = mapped_column(String(120), nullable=False)
+    source: Mapped[str] = mapped_column(String(200), nullable=False)
+    status: Mapped[str] = mapped_column(String(16), nullable=False, server_default="PENDING")
+    analysis_artifact_id: Mapped[Optional[str]] = mapped_column(
+        String(128), ForeignKey("pilot_analysis_artifacts.artifact_id")
+    )
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), server_default=text("now()"), nullable=False
+    )
+
+
 class MasterySnapshot(Base):
     __tablename__ = "mastery_snapshots"
     __table_args__ = (

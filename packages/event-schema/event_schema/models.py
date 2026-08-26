@@ -32,6 +32,8 @@ class EvaluationPhase(str, Enum):
     practice = "practice"
     immediate_test = "immediate_test"
     delayed_test = "delayed_test"
+    delayed_7d = "delayed_7d"
+    delayed_30d = "delayed_30d"
     near_transfer = "near_transfer"
     far_transfer = "far_transfer"
     independent_no_ai = "independent_no_ai"

@@ -44,3 +44,24 @@ the repository to randomized or commercial evidence.
   backfill, or external webhook activation.
 - Supply the real pilot cohort and pre-registered no-AI/delayed-transfer
   protocol needed to turn code contracts into Blueprint evidence.
+
+## Real-world validation boundary
+
+Pilot-specific tables are split into student-scoped enrollment, assignment and
+measurement metadata plus aggregate analysis artifacts/registry rows. The former
+are included in `services/purge_service._STUDENT_TABLES`; the latter contain no
+student identifiers. Consent is a technical gate only: the default is
+`requires_consent=true`, and enrollment requires explicit `GRANTED` status,
+version and timestamp. Revocation invalidates future measurements without
+disabling ordinary learning.
+
+`services.pilot_validation.EvidenceContaminationClassifier` is the single source
+for clean/AI-assisted/hint-assisted/answer-exposed/invalidated/unknown evidence.
+Independent endpoints consume only clean evidence. RMG/AM consumes explicit
+active-learning time and excludes idle, background, upload, AI-latency and system
+wait time; session wall-clock is not a substitute. `make pilot-readiness` checks
+these contracts while leaving all rollout flags off.
+
+Engineering readiness is not real-world evidence. No pilot, randomized effect or
+commercial claim may be published until owner-approved consent/protocol and real
+student observations produce a replayable analysis artifact.

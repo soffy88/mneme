@@ -46,3 +46,81 @@ PEDAGOGY_FINE_FEEDBACK = "PEDAGOGY_FINE_FEEDBACK_ENABLED"  # 07 刻意练习细�
 PEDAGOGY_AFFECT = "PEDAGOGY_AFFECT_ENABLED"  # 08 情感感知
 LEARNING_EVENT_V2_DUAL_WRITE = "LEARNING_EVENT_V2_DUAL_WRITE_ENABLED"
 LEARNING_EVENT_V2_BACKFILL = "LEARNING_EVENT_V2_BACKFILL_ENABLED"
+
+
+# Real-world validation rollout controls.  Every flag is fail-closed: pilot
+# behavior is opt-in, cohort-scoped and kill-switchable.  These switches may
+# annotate/schedule/measure existing LearningEvents, but never bypass the
+# normal event -> projection -> policy path.
+PILOT_MODE = "PILOT_MODE"
+PILOT_PROTOCOL_ID = "PILOT_PROTOCOL_ID"
+PILOT_PROTOCOL_VERSION = "PILOT_PROTOCOL_VERSION"
+PILOT_COHORT_ID = "PILOT_COHORT_ID"
+PILOT_ENABLED = "PILOT_ENABLED"
+PILOT_COHORT_ALLOWLIST = "PILOT_COHORT_ALLOWLIST"
+PILOT_POLICY_EXPERIMENT_ENABLED = "PILOT_POLICY_EXPERIMENT_ENABLED"
+PILOT_INDEPENDENT_EVAL_ENABLED = "PILOT_INDEPENDENT_EVAL_ENABLED"
+PILOT_KILL_SWITCH = "PILOT_KILL_SWITCH"
+
+
+def _explicitly_on(name: str) -> bool:
+    return os.environ.get(name, "0").lower() in ("1", "true", "yes", "on")
+
+
+def pilot_mode_enabled() -> bool:
+    return _explicitly_on(PILOT_MODE)
+
+
+def pilot_enabled() -> bool:
+    return _explicitly_on(PILOT_ENABLED)
+
+
+def pilot_kill_switch_active() -> bool:
+    return _explicitly_on(PILOT_KILL_SWITCH)
+
+
+def pilot_cohort_allowlist() -> frozenset[str]:
+    raw = os.environ.get(PILOT_COHORT_ALLOWLIST, "")
+    return frozenset(item.strip() for item in raw.split(",") if item.strip())
+
+
+def pilot_cohort_allowed(cohort_id: str) -> bool:
+    return bool(cohort_id) and cohort_id in pilot_cohort_allowlist()
+
+
+def pilot_is_active(cohort_id: str) -> bool:
+    """Return whether pilot-specific behavior may run for this cohort."""
+
+    return (
+        pilot_mode_enabled()
+        and pilot_enabled()
+        and not pilot_kill_switch_active()
+        and bool(os.environ.get(PILOT_PROTOCOL_ID, "").strip())
+        and bool(os.environ.get(PILOT_PROTOCOL_VERSION, "").strip())
+        and cohort_id == os.environ.get(PILOT_COHORT_ID, "").strip()
+        and pilot_cohort_allowed(cohort_id)
+    )
+
+
+def pilot_policy_experiment_enabled() -> bool:
+    return _explicitly_on(PILOT_POLICY_EXPERIMENT_ENABLED) and not pilot_kill_switch_active()
+
+
+def pilot_independent_eval_enabled() -> bool:
+    return _explicitly_on(PILOT_INDEPENDENT_EVAL_ENABLED) and not pilot_kill_switch_active()
+
+
+def pilot_config() -> dict[str, object]:
+    """Expose non-secret rollout state for readiness/ops surfaces."""
+
+    return {
+        "pilot_mode": pilot_mode_enabled(),
+        "pilot_enabled": pilot_enabled(),
+        "pilot_protocol_id": os.environ.get(PILOT_PROTOCOL_ID) or None,
+        "pilot_protocol_version": os.environ.get(PILOT_PROTOCOL_VERSION) or None,
+        "pilot_cohort_id": os.environ.get(PILOT_COHORT_ID) or None,
+        "cohort_allowlist_configured": bool(pilot_cohort_allowlist()),
+        "policy_experiment_enabled": pilot_policy_experiment_enabled(),
+        "independent_eval_enabled": pilot_independent_eval_enabled(),
+        "kill_switch_active": pilot_kill_switch_active(),
+    }

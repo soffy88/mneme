@@ -950,6 +950,20 @@ PilotProtocol 和 RMG/AM 只提供真实事件分析基础设施。没有真实 
 结果必须是 `INSUFFICIENT_REAL_WORLD_EVIDENCE`，不得用 synthetic 数据替代；
 contract/offline/observational 不能升级为 randomized/commercial 结论。
 
+### Real-world validation readiness（2026-08-26）
+
+真实用户验证只作为测量层接入，不改变 Event → Cognitive State → Policy 的事实/推断/
+决策分层。`services/pilot_validation.py` 复用现有 Evaluation OS，统一管理
+consent/enrollment/assignment、contamination classification、delayed measurement
+windows、retention/transfer/JOL/RMG-AM endpoint、data quality、analysis manifest/replay
+和 artifact-backed evidence registry。`PILOT_MODE`、`PILOT_ENABLED`、policy experiment、
+independent evaluation 和 kill switch 默认关闭；cohort allowlist 为空时拒绝运行。
+
+这套设施的结论边界是 `ENGINEERING COMPLETE` / `REAL-WORLD EVIDENCE PENDING`。没有
+真实学生事件时不生成结果；observational 不得写成 causal，未注册/未具备 artifact 的
+claim 不得标成 supported。详见 `docs/PILOT_OPERATIONS.md`、`docs/PILOT_METRICS.md` 和
+`docs/REAL_WORLD_VALIDATION.md`。
+
 ### 明确不做（后续）
 
 多课题统一进度中心、暗色模式、从 KU 自动 LLM 生成 content、
