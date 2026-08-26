@@ -59,6 +59,9 @@ def _event_record_values(event: LearningEvent) -> dict[str, Any]:
         "process_signals": payload["process_signals"],
         "metacognitive": payload["metacognitive"],
         "intervention": payload["intervention"],
+        "evaluation_phase": (
+            event.evaluation_phase.value if event.evaluation_phase is not None else None
+        ),
         "provenance": payload["provenance"],
         "privacy_class": event.privacy_class.value,
         "trace_id": event.trace_id,
@@ -84,6 +87,14 @@ async def append_learning_event(
     """Append one v2 fact idempotently; caller commits or rolls back the transaction."""
 
     checksum = replay_checksum((event,))
+    from services.observability import record_learning_event_ingest
+
+    record_learning_event_ingest(
+        projection_lag_ms=max(
+            0,
+            int((event.received_at - event.occurred_at).total_seconds() * 1000),
+        )
+    )
     result = await db.execute(_event_insert_statement(event))
     inserted_id = result.scalar_one_or_none()
     if inserted_id is not None:
@@ -168,6 +179,7 @@ def learning_event_record_to_event(
             "process_signals": value("process_signals"),
             "metacognitive": value("metacognitive"),
             "intervention": value("intervention"),
+            "evaluation_phase": value("evaluation_phase"),
             "provenance": value("provenance"),
             "privacy_class": value("privacy_class"),
             "trace_id": value("trace_id"),

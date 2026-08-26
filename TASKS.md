@@ -2645,5 +2645,13 @@ CI 常驻的判分准确率回归门，堵死"构造桩题掩盖真实数据判�
   `candidate_shadow_predictions`（当前真实结果仅在预测后进入历史）的候选接入契约；
   新增无 sklearn 的 calibration slope 与候选距理想斜率 1 的改善量；输入、重放、候选与
   校准契约均有测试覆盖。具体 DKT/Hybrid predictor、pilot/A-B、活库迁移仍不在本项宣称内。
-- [ ] **GH-5 真人 pilot 启动**（⚠️ 需人决策/运营）：FSRS 拟合 400 间隔复习对门槛、
-  FIRe A/B、RCT、0.77 AUC 验证全部以此为前提。
+- [ ] **GH-5 真人 pilot 启动**（需真实 cohort、owner protocol/consent 与生产环境）：
+  FSRS 拟合 400 间隔复习对门槛、FIRe A/B、RCT、0.77 AUC 验证全部以此为前提。
+
+- [x] **GH-0.12 Cognitive Infrastructure / 18+ closure contracts** ✅ 2026-08-26：
+  新增 `CognitiveStateV2` typed projection（BKT/FSRS/recognition 复用、unknown-first
+  uncertainty、rebuild/compare、EvidenceRef/Claim provenance）；Event v2 增加严格
+  evaluation phase 与 no-AI contamination guard；新增 PolicyDecision trace + additive
+  migration、uncertainty-first policy、pilot protocol/RMG-AM runner、model evaluation
+  slices、pipeline counters、purge/export/interop guards；新增 closure contract tests
+  与文档。未宣称真实学生、RCT、商业或线上运行证据。

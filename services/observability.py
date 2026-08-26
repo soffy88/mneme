@@ -20,6 +20,15 @@ _TRACE_ID_RE = re.compile(r"^[A-Za-z0-9._:-]{1,128}$")
 _MAX_ENDPOINTS = 128
 _MAX_SAMPLES = 256
 _metrics: dict[str, dict[str, Any]] = {}
+_counters: dict[str, int] = {
+    "learning_event_ingest_total": 0,
+    "learning_event_projection_lag": 0,
+    "cognitive_projection_failures": 0,
+    "policy_decision_total": 0,
+    "policy_fallback_total": 0,
+    "model_shadow_eval_total": 0,
+    "evidence_insufficient_total": 0,
+}
 _lock = threading.Lock()
 
 
@@ -91,6 +100,7 @@ def metrics_snapshot() -> dict[str, Any]:
             }
     return {
         "schema_version": "mneme-observability/v1",
+        "counters": dict(_counters),
         "requests_total": total_requests,
         "errors_total": total_errors,
         "error_rate": round(total_errors / total_requests, 6)
@@ -105,6 +115,40 @@ def reset_metrics() -> None:
 
     with _lock:
         _metrics.clear()
+        for name in _counters:
+            _counters[name] = 0
+
+
+def increment_metric(name: str, value: int = 1) -> None:
+    """Increment one bounded learning-pipeline counter."""
+
+    if value < 0:
+        raise ValueError("metric increment must be non-negative")
+    with _lock:
+        _counters[name] = _counters.get(name, 0) + value
+
+
+def record_learning_event_ingest(*, projection_lag_ms: int | None = None) -> None:
+    increment_metric("learning_event_ingest_total")
+    if projection_lag_ms is not None:
+        increment_metric("learning_event_projection_lag", max(0, projection_lag_ms))
+
+
+def record_cognitive_projection(*, failed: bool = False, evidence_sufficient: bool = True) -> None:
+    if failed:
+        increment_metric("cognitive_projection_failures")
+    if not evidence_sufficient:
+        increment_metric("evidence_insufficient_total")
+
+
+def record_policy_decision(*, fallback: bool = False) -> None:
+    increment_metric("policy_decision_total")
+    if fallback:
+        increment_metric("policy_fallback_total")
+
+
+def record_shadow_evaluation() -> None:
+    increment_metric("model_shadow_eval_total")
 
 
 def route_template(scope: Mapping[str, Any], fallback: str) -> str:

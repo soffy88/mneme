@@ -515,6 +515,7 @@ class LearningEventRecord(Base):
         JSONB, nullable=False, server_default=text("'{}'::jsonb")
     )
     intervention: Mapped[Optional[dict]] = mapped_column(JSONB)
+    evaluation_phase: Mapped[Optional[str]] = mapped_column(String(32))
     provenance: Mapped[dict] = mapped_column(
         JSONB, nullable=False, server_default=text("'{}'::jsonb")
     )
@@ -555,8 +556,15 @@ class MemoryClaim(Base):
     subject_type: Mapped[str] = mapped_column(String(64), nullable=False)
     subject_id: Mapped[str] = mapped_column(String(200), nullable=False)
     claim_text: Mapped[str] = mapped_column(Text, nullable=False)
+    knowledge_ref: Mapped[Optional[str]] = mapped_column(String(100))
+    claim_value: Mapped[Optional[dict]] = mapped_column(JSONB)
     confidence: Mapped[Optional[float]] = mapped_column(Float)
     model_version: Mapped[Optional[str]] = mapped_column(String(120))
+    computed_at: Mapped[Optional[datetime]] = mapped_column(DateTime(timezone=True))
+    uncertainty: Mapped[Optional[dict]] = mapped_column(JSONB)
+    evidence_level: Mapped[str] = mapped_column(
+        String(16), nullable=False, server_default="contract"
+    )
     privacy_class: Mapped[str] = mapped_column(
         String(2), nullable=False, server_default="P1"
     )
@@ -586,9 +594,18 @@ class MemoryEvidence(Base):
         UUID(as_uuid=True), ForeignKey("users.id"), nullable=False
     )
     source_event_id: Mapped[Optional[uuid.UUID]] = mapped_column(UUID(as_uuid=True))
+    knowledge_ref: Mapped[Optional[str]] = mapped_column(String(100))
     evidence_type: Mapped[str] = mapped_column(String(64), nullable=False)
+    source: Mapped[Optional[str]] = mapped_column(String(64))
     occurred_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True), nullable=False
+    )
+    weight: Mapped[Optional[float]] = mapped_column(Float)
+    confidence: Mapped[Optional[float]] = mapped_column(Float)
+    model_version: Mapped[Optional[str]] = mapped_column(String(120))
+    verifier_version: Mapped[Optional[str]] = mapped_column(String(120))
+    evidence_level: Mapped[str] = mapped_column(
+        String(16), nullable=False, server_default="contract"
     )
     payload: Mapped[dict] = mapped_column(
         JSONB, nullable=False, server_default=text("'{}'::jsonb")
@@ -616,6 +633,47 @@ class MemoryClaimEvidence(Base):
     )
     relation: Mapped[str] = mapped_column(
         String(20), nullable=False, server_default="supports"
+    )
+
+
+class PolicyDecisionRecord(Base):
+    """Append-only trace of a policy decision; it is never learner state."""
+
+    __tablename__ = "policy_decisions"
+    __table_args__ = (
+        CheckConstraint(
+            "evidence_level IN ('contract', 'offline', 'observational', 'randomized', 'commercial')",
+            name="ck_policy_decisions_evidence_level",
+        ),
+    )
+
+    decision_id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True), primary_key=True, server_default=text("gen_random_uuid()")
+    )
+    student_id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True), ForeignKey("users.id"), nullable=False
+    )
+    timestamp: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), nullable=False
+    )
+    candidate_actions: Mapped[list] = mapped_column(JSONB, nullable=False)
+    selected_action: Mapped[Optional[dict]] = mapped_column(JSONB)
+    reason_codes: Mapped[list] = mapped_column(JSONB, nullable=False)
+    state_version: Mapped[str] = mapped_column(String(120), nullable=False)
+    policy_version: Mapped[str] = mapped_column(String(120), nullable=False)
+    evidence_refs: Mapped[list] = mapped_column(JSONB, nullable=False)
+    constraints: Mapped[dict] = mapped_column(JSONB, nullable=False)
+    expected_utility: Mapped[Optional[float]] = mapped_column(Float)
+    exploration_flag: Mapped[bool] = mapped_column(
+        Boolean, nullable=False, server_default=text("false")
+    )
+    fallback_reason: Mapped[Optional[str]] = mapped_column(Text)
+    evidence_level: Mapped[str] = mapped_column(
+        String(16), nullable=False, server_default="contract"
+    )
+    trace_id: Mapped[Optional[str]] = mapped_column(String(128))
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), server_default=text("now()"), nullable=False
     )
 
 

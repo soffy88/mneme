@@ -17,12 +17,27 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from oprim.prereq_graph import fringe_status
 from services.models import KCMastery
 
+# CognitiveStateV2 is the versioned projection facade.  Existing callers keep
+# using the small L1 helpers below; new callers should consume the projection.
+from services.cognitive_state_v2 import CognitiveStateV2
+
 # ── 权威阈值（单源，散落字面量一律迁移引用此处）─────────────────────────────
 GATE = 0.6  # 前置放行 / 薄弱线（低于=薄弱、前置未达此值=锁）
 MASTERED = 0.7  # 掌握裁决：计数、进入巩固态
 GREEN = 0.75  # 掌握色：绿
 YELLOW = 0.40  # 掌握色：黄
 _NASCENT = 0.05  # 视为"未开始"
+
+
+async def rebuild_cognitive_state(
+    db: AsyncSession,
+    student_id: UUID,
+    knowledge_ref: str,
+    as_of=None,
+) -> CognitiveStateV2:
+    """Compatibility facade for the unified, replayable cognitive projection."""
+
+    return await CognitiveStateV2.rebuild(db, student_id, knowledge_ref, as_of)
 
 
 def mastery_color(p: Optional[float]) -> str:

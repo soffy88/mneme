@@ -12,6 +12,25 @@ student_id 解析顺序：路径参数 → query 参数 → JSON body →
 from __future__ import annotations
 
 import os as _os
+import sys as _sys
+from pathlib import Path as _Path
+
+# A clean ``uv sync`` environment puts the current checkout before the
+# configured pythonpath.  Reassert the same vendor-first order used by CI
+# before importing services, so the vendored 3O runtime cannot be shadowed by
+# Mneme's small compatibility package.
+_ROOT = _Path(__file__).resolve().parents[1]
+for _entry in (
+    _ROOT,
+    _ROOT / "packages" / "event-schema",
+    _ROOT / "packages" / "mneme-agent",
+    _ROOT / "packages" / "mneme-core",
+    _ROOT / "vendor",
+):
+    _value = str(_entry)
+    if _value in _sys.path:
+        _sys.path.remove(_value)
+    _sys.path.insert(0, _value)
 
 # 测试环境放开注册闸门（生产/部署默认关，见 main._require_registration_open）
 _os.environ.setdefault("REGISTRATION_OPEN", "1")

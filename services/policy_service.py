@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import math
 from typing import Any, Iterable
 from uuid import UUID
 
@@ -15,6 +16,7 @@ from mneme_core.policy_engine import (
     rank_candidates,
 )
 from services.models import InteractionEvent, InteractionSource, KCMastery
+from services.policy_trace import PolicyDecision as PolicyTrace
 
 
 def _task_signal(task: dict[str, Any], name: str, default: float) -> float:
@@ -88,6 +90,27 @@ def candidates_from_plan(
                 ),
                 exam_relevance=_task_signal(task, "exam_relevance", 0.0),
                 learner_choice=_task_signal(task, "learner_choice", 0.0),
+                evidence_count=(
+                    int(task["evidence_count"])
+                    if task.get("evidence_count") is not None
+                    else None
+                ),
+                epistemic_uncertainty=(
+                    float(task["epistemic_uncertainty"])
+                    if task.get("epistemic_uncertainty") is not None
+                    else None
+                ),
+                evidence_sufficiency=(
+                    float(task["evidence_sufficiency"])
+                    if task.get("evidence_sufficiency") is not None
+                    else None
+                ),
+                evidence_refs=tuple(str(ref) for ref in task.get("evidence_refs", [])),
+                state_version=(
+                    str(task["state_version"])
+                    if task.get("state_version") is not None
+                    else None
+                ),
             )
         )
     return candidates
@@ -129,6 +152,29 @@ async def next_best_action(
         await db.execute(select(KCMastery).where(KCMastery.student_id == student_id))
     ).scalars().all()
     mastery_by_kc = {row.knowledge_point: float(row.p_mastery or 0.0) for row in masteries}
+    for task in plan["tasks"]:
+        refs = [str(ref) for ref in task.get("ku_ids", [])]
+        if not refs:
+            continue
+        rows = [row for row in masteries if row.knowledge_point in refs]
+        counts = [int(row.n_attempts or 0) for row in rows]
+        uncertainties = []
+        sufficiencies = []
+        for row in rows:
+            p_value = row.p_mastery
+            n_value = int(row.n_attempts or 0)
+            if p_value is None or n_value <= 0:
+                uncertainties.append(1.0)
+                sufficiencies.append(0.0)
+                continue
+            uncertainties.append(
+                math.sqrt(max(0.0, float(p_value) * (1.0 - float(p_value)) / (n_value + 1)))
+            )
+            sufficiencies.append(min(1.0, n_value / 10.0))
+        task.setdefault("evidence_count", sum(counts))
+        task.setdefault("epistemic_uncertainty", max(uncertainties, default=1.0))
+        task.setdefault("evidence_sufficiency", min(sufficiencies, default=0.0))
+        task.setdefault("state_version", "cognitive-state/v2")
     transfer_rows = (
         await db.execute(
             select(InteractionEvent.knowledge_point)
@@ -150,9 +196,16 @@ async def next_best_action(
         candidates,
         PolicyContext(near_exam=bool(plan.get("near_exam"))),
     )
+    trace = PolicyTrace.from_core(
+        student_id=student_id,
+        candidates=candidates,
+        decision=decision,
+        timestamp=now,
+        constraints={"near_exam": bool(plan.get("near_exam"))},
+    )
     return {
         "student_id": str(student_id),
-        "policy_version": "policy/v1",
+        "policy_version": decision.policy_version,
         "decision": {
             "candidate_id": decision.candidate_id,
             "action": decision.action,
@@ -161,6 +214,7 @@ async def next_best_action(
             "reason": decision.reason,
             "considered": decision.considered,
         },
+        "policy_decision": trace.model_dump(mode="json"),
         "plan_date": plan.get("date"),
         "near_exam": plan.get("near_exam", False),
     }

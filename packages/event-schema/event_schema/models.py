@@ -26,6 +26,21 @@ class PrivacyClass(str, Enum):
     P3 = "P3"
 
 
+class EvaluationPhase(str, Enum):
+    """Evaluation context used to prevent contaminated mastery evidence."""
+
+    practice = "practice"
+    immediate_test = "immediate_test"
+    delayed_test = "delayed_test"
+    near_transfer = "near_transfer"
+    far_transfer = "far_transfer"
+    independent_no_ai = "independent_no_ai"
+    # Backward-compatible labels used by Evaluation OS v2 before the explicit
+    # delayed_test vocabulary was frozen.
+    baseline = "baseline"
+    delayed = "delayed"
+
+
 class ItemFeatures(BaseModel):
     model_config = ConfigDict(extra="forbid")
 
@@ -64,6 +79,7 @@ class MetacognitiveSignals(BaseModel):
     jol_confidence: float | None = Field(default=None, ge=0.0, le=1.0)
     self_explanation_quality: float | None = Field(default=None, ge=0.0, le=1.0)
     help_seeking: bool | None = None
+    help_seeking_dependency: float | None = Field(default=None, ge=0.0, le=1.0)
     answer_dependency: float | None = Field(default=None, ge=0.0, le=1.0)
 
 
@@ -111,6 +127,7 @@ class LearningEvent(BaseModel):
     process_signals: ProcessSignals = Field(default_factory=ProcessSignals)
     metacognitive: MetacognitiveSignals = Field(default_factory=MetacognitiveSignals)
     intervention: dict[str, Any] | None = None
+    evaluation_phase: EvaluationPhase | None = None
     provenance: EventProvenance = Field(default_factory=EventProvenance)
     privacy_class: PrivacyClass = PrivacyClass.P1
     trace_id: str | None = None
@@ -132,6 +149,16 @@ class LearningEvent(BaseModel):
             raise ValueError("correction events must use action=corrected")
         if self.action == "corrected" and self.supersedes_event_id is None:
             raise ValueError("corrected events must identify the superseded event")
+        if self.evaluation_phase == EvaluationPhase.independent_no_ai:
+            intervention = self.intervention or {}
+            if intervention.get("ai_assisted") is not False:
+                raise ValueError(
+                    "independent_no_ai evidence must explicitly set ai_assisted=false"
+                )
+            if intervention.get("independent_mode") is not True:
+                raise ValueError(
+                    "independent_no_ai evidence must explicitly set independent_mode=true"
+                )
         return self
 
     @property
@@ -218,6 +245,7 @@ def legacy_interaction_to_event(
         value = _read_value(record, name)
         if value is not None:
             intervention[name] = value
+    evaluation_phase = _read_value(record, "evaluation_phase")
 
     return LearningEvent(
         event_id=event_id,
@@ -251,12 +279,29 @@ def legacy_interaction_to_event(
             jol_confidence=_read_value(record, "predicted_confidence"),
         ),
         intervention=intervention or None,
+        evaluation_phase=(
+            EvaluationPhase(str(_enum_value(evaluation_phase)))
+            if evaluation_phase is not None
+            else None
+        ),
         provenance=EventProvenance(
             adapter="interaction_event_v1",
             source_system="mneme.services.models.InteractionEvent",
             metadata=provenance_metadata,
         ),
         privacy_class=PrivacyClass.P1,
+    )
+
+
+def is_independent_no_ai_event(event: LearningEvent) -> bool:
+    """Return true only for explicitly uncontaminated evaluation evidence."""
+
+    intervention = event.intervention or {}
+    return (
+        event.evaluation_phase == EvaluationPhase.independent_no_ai
+        and bool(intervention)
+        and intervention.get("ai_assisted") is False
+        and intervention.get("independent_mode") is True
     )
 
 

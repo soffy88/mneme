@@ -41,6 +41,9 @@ _STUDENT_TABLES: list[tuple[str, str]] = [
     ("interaction_events", "student_id"),
     ("learning_events", "student_id"),
     ("memory_evidence", "student_id"),
+    # PolicyDecision traces are student-linked operational evidence and must
+    # follow the same hard-delete boundary as the cognitive projection.
+    ("policy_decisions", "student_id"),
     ("memory_claims", "student_id"),
     ("interaction_history", "student_id"),
     ("kc_mastery", "student_id"),

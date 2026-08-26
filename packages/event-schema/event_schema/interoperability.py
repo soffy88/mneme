@@ -56,6 +56,9 @@ def _event_fields(event: LearningEvent, *, redact_private: bool) -> dict[str, An
             else event.metacognitive.model_dump(exclude_none=True)
         ),
         "intervention": None if redact_private and private else event.intervention,
+        "evaluation_phase": (
+            event.evaluation_phase.value if event.evaluation_phase is not None else None
+        ),
     }
 
 
@@ -121,6 +124,9 @@ def event_to_xapi(
                     "knowledge_refs"
                 ],
                 f"{MNEME_BASE_URI}/extensions/trace-id": event.trace_id,
+                f"{MNEME_BASE_URI}/extensions/evaluation-phase": fields[
+                    "evaluation_phase"
+                ],
             }
         },
         "result": result,
@@ -145,6 +151,9 @@ def event_to_caliper(
             f"{MNEME_BASE_URI}/extensions/schema-version": event.schema_version,
             f"{MNEME_BASE_URI}/extensions/privacy-class": event.privacy_class.value,
             f"{MNEME_BASE_URI}/extensions/knowledge-refs": fields["knowledge_refs"],
+            f"{MNEME_BASE_URI}/extensions/evaluation-phase": fields[
+                "evaluation_phase"
+            ],
         },
     }
     if event.outcome is not None:

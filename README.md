@@ -18,6 +18,14 @@ Learning Experience
   → new evidence
 ```
 
+The versioned state/evidence/policy contracts are exposed under `/v2`:
+`/v2/cognitive-state/{student_id}/{knowledge_ref}` returns a replayable
+`CognitiveStateV2` with evidence claims, `/explain` returns only those claims and
+refs, `/v2/evidence/independent/{student_id}` filters explicit no-AI evidence,
+and `/v2/policy/next-action/{student_id}` returns and records a
+`PolicyDecision` trace. Unknown dimensions remain `null`; code presence is not
+real-student or causal evidence.
+
 三个不可替代的核心域是：
 
 1. Learning Event & Evidence：发生过什么；

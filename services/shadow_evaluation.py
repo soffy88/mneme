@@ -36,6 +36,9 @@ class ShadowPrediction:
     kc_id: str | None = None
     received_at: datetime | None = None
     event_id: UUID | None = None
+    subject: str | None = None
+    evidence_count: int | None = None
+    out_of_distribution: bool | None = None
 
     def __post_init__(self) -> None:
         if not self.model_id.strip():
@@ -271,6 +274,63 @@ def _metrics(predictions: Sequence[ShadowPrediction]) -> dict[str, Any]:
     }
 
 
+def evaluation_slices(
+    predictions: Sequence[ShadowPrediction],
+    *,
+    train_end: datetime | None = None,
+    eval_start: datetime | None = None,
+    eval_end: datetime | None = None,
+) -> dict[str, list[ShadowPrediction]]:
+    """Build deterministic evaluation slices without changing learning paths."""
+
+    ordered = sorted(predictions, key=_event_key)
+    slices: dict[str, list[ShadowPrediction]] = {"all": list(ordered)}
+    if train_end is not None:
+        slices["temporal_train"] = [row for row in ordered if row.occurred_at < train_end]
+    if eval_start is not None and eval_end is not None:
+        slices["temporal_eval"] = [
+            row for row in ordered if eval_start <= row.occurred_at < eval_end
+        ]
+    if ordered and all(row.student_id is not None for row in ordered):
+        slices["student_level_eval"] = [
+            row
+            for row in ordered
+            if int(str(row.student_id).replace("-", "")[-2:], 16) % 5 == 0
+        ]
+    first_by_student: dict[UUID, datetime] = {}
+    for row in ordered:
+        if row.student_id is not None:
+            first_by_student.setdefault(row.student_id, row.occurred_at)
+    slices["cold_start"] = [
+        row
+        for row in ordered
+        if row.student_id is not None and first_by_student[row.student_id] == row.occurred_at
+    ]
+    slices["warm_start"] = [
+        row
+        for row in ordered
+        if row.student_id is not None and first_by_student[row.student_id] < row.occurred_at
+    ]
+    slices["ood"] = [row for row in ordered if row.out_of_distribution is True]
+    for subject in sorted({row.subject for row in ordered if row.subject}):
+        slices[f"subject:{subject}"] = [row for row in ordered if row.subject == subject]
+    for label, lower, upper in (("0-1", 0, 1), ("2-4", 2, 4), ("5+", 5, None)):
+        slices[f"evidence_count:{label}"] = [
+            row
+            for row in ordered
+            if row.evidence_count is not None
+            and row.evidence_count >= lower
+            and (upper is None or row.evidence_count <= upper)
+        ]
+    return slices
+
+
+def slice_metrics(predictions: Sequence[ShadowPrediction]) -> dict[str, dict[str, Any]]:
+    """Return the same AUC/logloss/Brier/ECE contract for every slice."""
+
+    return {name: _metrics(rows) for name, rows in evaluation_slices(predictions).items()}
+
+
 def _event_key(
     prediction: ShadowPrediction,
 ) -> tuple[UUID | None, str | None, datetime, UUID | None]:
@@ -332,6 +392,9 @@ def shadow_evaluation_report(
     is an observed predictive difference, never a causal treatment effect.
     """
 
+    from services.observability import record_shadow_evaluation
+
+    record_shadow_evaluation()
     effective_as_of = as_of or datetime.now(UTC)
     _validate_window(
         train_start=train_start,
@@ -361,6 +424,7 @@ def shadow_evaluation_report(
             "as_of": effective_as_of.isoformat(),
         },
         "candidate": candidate_metrics,
+        "slices": slice_metrics(candidate_rows),
         "comparison": None,
         "guardrails": {
             "writes_database": False,

@@ -7,7 +7,7 @@ from typing import Any, Literal
 from uuid import UUID
 
 from event_schema import LearningEvent, export_events, legacy_interaction_to_event
-from fastapi import APIRouter, Depends, HTTPException, Query
+from fastapi import APIRouter, Depends, HTTPException, Query, Request
 from obase.db import get_db
 from pydantic import BaseModel, Field
 from sqlalchemy import func, select
@@ -24,6 +24,11 @@ from services.evidence_graph import (
     claim_evidence_payload,
     redact_event_for_parent,
 )
+from services.cognitive_state_v2 import (
+    explain_cognitive_state,
+    get_cognitive_state_with_evidence,
+    get_independent_mastery_evidence,
+)
 from services.learning_event_replay_service import (
     ReplayConfig,
     replay_student_from_db,
@@ -39,6 +44,7 @@ from services.models import (
     MemoryClaim,
     MemoryClaimEvidence,
     MemoryEvidence,
+    PolicyDecisionRecord,
     User,
 )
 
@@ -136,6 +142,7 @@ async def _timeline_events(
                 "process_signals": row.process_signals,
                 "metacognitive": row.metacognitive,
                 "intervention": row.intervention,
+                "evaluation_phase": row.evaluation_phase,
                 "provenance": row.provenance,
                 "privacy_class": row.privacy_class,
                 "trace_id": row.trace_id,
@@ -348,6 +355,48 @@ async def get_growth_period(
         raise HTTPException(status_code=422, detail=str(exc)) from exc
 
 
+@router.get("/v2/cognitive-state/{student_id}/{knowledge_ref}")
+async def get_cognitive_state(
+    student_id: UUID,
+    knowledge_ref: str,
+    as_of: datetime | None = Query(default=None),
+    _auth: User = Depends(require_student_access),
+    db: AsyncSession = Depends(get_db),
+):
+    return await get_cognitive_state_with_evidence(
+        db, student_id, knowledge_ref, as_of=as_of
+    )
+
+
+@router.get("/v2/cognitive-state/{student_id}/{knowledge_ref}/explain")
+async def explain_cognitive_state_route(
+    student_id: UUID,
+    knowledge_ref: str,
+    as_of: datetime | None = Query(default=None),
+    _auth: User = Depends(require_student_access),
+    db: AsyncSession = Depends(get_db),
+):
+    state = await get_cognitive_state_with_evidence(
+        db, student_id, knowledge_ref, as_of=as_of
+    )
+    return explain_cognitive_state(state)
+
+
+@router.get("/v2/evidence/independent/{student_id}")
+async def get_independent_evidence(
+    student_id: UUID,
+    knowledge_ref: str | None = Query(default=None),
+    _auth: User = Depends(require_student_access),
+    db: AsyncSession = Depends(get_db),
+):
+    return {
+        "student_id": str(student_id),
+        "evidence": await get_independent_mastery_evidence(
+            db, student_id, knowledge_ref
+        ),
+    }
+
+
 @router.post("/v2/replay")
 async def post_replay(
     body: ReplayRequest,
@@ -388,6 +437,13 @@ async def post_memory_export(
             select(MemoryClaim)
             .where(MemoryClaim.student_id == body.student_id)
             .order_by(MemoryClaim.created_at)
+        )
+    ).scalars().all()
+    policy_decisions = (
+        await db.execute(
+            select(PolicyDecisionRecord)
+            .where(PolicyDecisionRecord.student_id == body.student_id)
+            .order_by(PolicyDecisionRecord.timestamp, PolicyDecisionRecord.decision_id)
         )
     ).scalars().all()
     if body.format != "mneme":
@@ -433,15 +489,49 @@ async def post_memory_export(
             }
             for claim in claims
         ],
+        "policy_decisions": [
+            {
+                "decision_id": str(decision.decision_id),
+                "timestamp": decision.timestamp.isoformat(),
+                "candidate_actions": decision.candidate_actions,
+                "selected_action": decision.selected_action,
+                "reason_codes": decision.reason_codes,
+                "state_version": decision.state_version,
+                "policy_version": decision.policy_version,
+                "evidence_refs": decision.evidence_refs,
+                "constraints": decision.constraints,
+                "expected_utility": decision.expected_utility,
+                "exploration_flag": decision.exploration_flag,
+                "fallback_reason": decision.fallback_reason,
+                "evidence_level": decision.evidence_level,
+                "trace_id": decision.trace_id,
+            }
+            for decision in policy_decisions
+        ],
     }
 
 
 @router.get("/v2/policy/next-action/{student_id}")
 async def get_next_action(
     student_id: UUID,
+    request: Request,
     _auth: User = Depends(require_student_access),
     db: AsyncSession = Depends(get_db),
 ):
     from services.policy_service import next_best_action
+    from services.policy_trace import persist_policy_decision
 
-    return await next_best_action(db, student_id)
+    result = await next_best_action(db, student_id)
+    from services.observability import record_policy_decision
+
+    record_policy_decision(
+        fallback=bool(result.get("policy_decision", {}).get("fallback_reason"))
+    )
+    trace = result.get("policy_decision")
+    if trace is not None:
+        from services.policy_trace import PolicyDecision
+
+        trace["trace_id"] = getattr(request.state, "trace_id", None)
+        await persist_policy_decision(db, PolicyDecision.model_validate(trace))
+        await db.commit()
+    return result

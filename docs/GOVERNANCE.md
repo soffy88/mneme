@@ -19,6 +19,12 @@ Every Blueprint claim must use one of these labels:
 The repository currently has contract and offline/observational mechanisms. It
 does not contain fabricated randomized, student, or commercial evidence.
 
+The cognitive closure contracts are implemented in
+`services/cognitive_state_v2.py`, `services/evidence_graph.py`,
+`services/policy_trace.py`, and `services/pilot_protocol.py`. Their outputs are
+still contract/observational infrastructure; implementation does not upgrade
+the repository to randomized or commercial evidence.
+
 ## Release gates
 
 1. `./scripts/check.sh` passes against `mneme_test` after Alembic migrations.

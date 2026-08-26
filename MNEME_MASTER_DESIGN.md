@@ -933,6 +933,23 @@ data/cornell_topics/{topicId}/content.json
 
 前端：登录后可拉/推；失败降级 localStorage；可选 autoPush。
 
+### Cognitive Infrastructure closure（2026-08-26）
+
+`LearningEvent` 是事实，`CognitiveStateV2` 是可重放投影，`PolicyDecision` 是
+决策轨迹。统一投影必须带 `state_version`、`model_version`、事件 watermark、
+`EvidenceRef`、kernel versions 和 uncertainty；证据不足时返回 unknown/null。
+掌握度仍只由 SubmitAnswer → cognitive kernel 更新，FSRS/recognition 继续复用
+既有内核，不得在服务层复制算法。
+
+迁移/迁移兼容策略：`learning_events.evaluation_phase` 支持
+`practice`/`immediate_test`/`delayed_test`/`near_transfer`/`far_transfer`/
+`independent_no_ai`，并保留旧 `baseline`/`delayed` 标签；`policy_decisions`、
+Evidence 扩展字段均为可回滚的 additive schema，并进入 purge/export 边界。
+
+PilotProtocol 和 RMG/AM 只提供真实事件分析基础设施。没有真实 cohort 时，分析
+结果必须是 `INSUFFICIENT_REAL_WORLD_EVIDENCE`，不得用 synthetic 数据替代；
+contract/offline/observational 不能升级为 randomized/commercial 结论。
+
 ### 明确不做（后续）
 
 多课题统一进度中心、暗色模式、从 KU 自动 LLM 生成 content、

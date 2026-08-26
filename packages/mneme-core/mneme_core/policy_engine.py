@@ -11,6 +11,15 @@ from dataclasses import dataclass
 from typing import Iterable
 
 
+POLICY_VERSION = "policy/v2"
+UNCERTAINTY_CONTRACT_VERSION = "uncertainty-contract/1.0.0"
+UNCERTAINTY_CONTRACT: dict[str, float] = {
+    "high_epistemic_uncertainty": 0.30,
+    "low_evidence_sufficiency": 0.40,
+}
+DIAGNOSTIC_ACTIONS = frozenset({"diagnostic", "information_gain", "diagnostic_probe"})
+
+
 def _clip(value: float, low: float = 0.0, high: float = 1.0) -> float:
     return max(low, min(high, float(value)))
 
@@ -28,6 +37,11 @@ class PolicyCandidate:
     exam_relevance: float = 0.0
     learner_choice: float = 0.0
     blocked: bool = False
+    evidence_count: int | None = None
+    epistemic_uncertainty: float | None = None
+    evidence_sufficiency: float | None = None
+    evidence_refs: tuple[str, ...] = ()
+    state_version: str | None = None
 
 
 @dataclass(frozen=True, slots=True)
@@ -40,6 +54,7 @@ class PolicyContext:
     exam_weight: float = 0.20
     choice_weight: float = 0.10
     zpd_weight: float = 0.15
+    uncertainty_contract_version: str = UNCERTAINTY_CONTRACT_VERSION
 
 
 @dataclass(frozen=True, slots=True)
@@ -50,6 +65,16 @@ class PolicyDecision:
     objective: str
     reason: str
     considered: int
+    candidate_actions: tuple[str, ...] = ()
+    selected_action: str | None = None
+    reason_codes: tuple[str, ...] = ()
+    state_version: str | None = None
+    policy_version: str = POLICY_VERSION
+    evidence_refs: tuple[str, ...] = ()
+    constraints: tuple[str, ...] = ()
+    expected_utility: float | None = None
+    exploration_flag: bool = False
+    fallback_reason: str | None = None
 
 
 def score_candidate(
@@ -78,6 +103,15 @@ def score_candidate(
         + context.zpd_weight * _clip(zpd_fit)
         - new_learning_penalty
     )
+    if candidate.epistemic_uncertainty is not None or candidate.evidence_sufficiency is not None:
+        high_uncertainty = (
+            (candidate.epistemic_uncertainty or 0.0)
+            >= UNCERTAINTY_CONTRACT["high_epistemic_uncertainty"]
+            or (candidate.evidence_sufficiency is not None and candidate.evidence_sufficiency
+                <= UNCERTAINTY_CONTRACT["low_evidence_sufficiency"])
+        )
+        if high_uncertainty:
+            raw += 1.0 if candidate.action in DIAGNOSTIC_ACTIONS else -0.25
     return round(raw / minutes, 8)
 
 
@@ -106,13 +140,26 @@ def choose_next_action(
             objective="expected_learning_gain_per_minute",
             reason="没有可执行候选项",
             considered=0,
+            fallback_reason="no_executable_candidate",
         )
     candidate, score = ranked[0]
     reasons = ["单位时间预期学习收益最高"]
+    reason_codes = ["expected_gain_per_minute"]
     if candidate.due_urgency >= 0.7:
         reasons.append("接近遗忘临界")
+        reason_codes.append("retrieval_urgency")
     if candidate.transfer_need >= 0.7:
         reasons.append("迁移证据不足")
+        reason_codes.append("transfer_evidence_gap")
+    if (
+        candidate.epistemic_uncertainty is not None
+        and candidate.epistemic_uncertainty >= UNCERTAINTY_CONTRACT["high_epistemic_uncertainty"]
+    ) or (
+        candidate.evidence_sufficiency is not None
+        and candidate.evidence_sufficiency <= UNCERTAINTY_CONTRACT["low_evidence_sufficiency"]
+    ):
+        reasons.append("证据不足，优先获取信息")
+        reason_codes.append("high_uncertainty_diagnostic")
     if context.near_exam and candidate.action in {"review", "error_review", "weak_practice"}:
         reasons.append("临考窗口优先巩固")
     return PolicyDecision(
@@ -122,4 +169,10 @@ def choose_next_action(
         objective="expected_learning_gain_per_minute",
         reason="；".join(reasons),
         considered=len(ranked),
+        candidate_actions=tuple(item[0].candidate_id for item in ranked),
+        selected_action=candidate.candidate_id,
+        reason_codes=tuple(reason_codes),
+        state_version=candidate.state_version,
+        evidence_refs=candidate.evidence_refs,
+        expected_utility=score,
     )

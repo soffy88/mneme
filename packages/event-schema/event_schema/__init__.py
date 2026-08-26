@@ -2,12 +2,14 @@
 
 from .models import (
     EventOutcome,
+    EvaluationPhase,
     EventProvenance,
     ItemFeatures,
     LearningEvent,
     MetacognitiveSignals,
     ProcessSignals,
     PrivacyClass,
+    is_independent_no_ai_event,
     canonical_replay_events,
     legacy_interaction_to_event,
     replay_checksum,
@@ -22,12 +24,14 @@ from .interoperability import (
 
 __all__ = [
     "EventOutcome",
+    "EvaluationPhase",
     "EventProvenance",
     "ItemFeatures",
     "LearningEvent",
     "MetacognitiveSignals",
     "ProcessSignals",
     "PrivacyClass",
+    "is_independent_no_ai_event",
     "canonical_replay_events",
     "legacy_interaction_to_event",
     "replay_checksum",

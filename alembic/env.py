@@ -13,7 +13,18 @@ config = context.config
 
 import os  # noqa: E402
 import sys  # noqa: E402
-sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+from pathlib import Path  # noqa: E402
+
+_repo_root = Path(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+for _path in (
+    _repo_root,
+    _repo_root / "vendor",
+    _repo_root / "packages" / "mneme-core",
+    _repo_root / "packages" / "mneme-agent",
+    _repo_root / "packages" / "event-schema",
+):
+    if str(_path) not in sys.path:
+        sys.path.insert(0, str(_path))
 
 from obase.config import settings  # noqa: E402
 config.set_main_option("sqlalchemy.url", settings.DATABASE_URL)
