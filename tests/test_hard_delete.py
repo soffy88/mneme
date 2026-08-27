@@ -30,6 +30,21 @@ async def db():
     await engine.dispose()
 
 
+@pytest.fixture(autouse=True)
+def storage_cleanup_available(monkeypatch):
+    """Keep database deletion tests independent of an external MinIO service.
+
+    Storage failure semantics are asserted explicitly by the P0 hotfix tests;
+    these legacy tests exercise the relational dependency graph only.
+    """
+    async def no_storage_cleanup():
+        return []
+
+    monkeypatch.setattr(
+        "services.purge_service._delete_textbook_files_blobs", no_storage_cleanup
+    )
+
+
 async def _mk_user(db, *, deleted_days_ago: int | None) -> uuid.UUID:
     sid = uuid.uuid4()
     deleted_at = (

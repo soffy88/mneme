@@ -67,6 +67,46 @@ def test_next_day_review_advances_despite_debounce():
     assert r2.card_dict.get("last_review") != last1
 
 
+def test_due_review_advances_even_when_previous_interaction_was_recent():
+    """到期复习是 FSRS 证据，不能被集中练习去抖吞掉。"""
+    r1 = _first_review(debounce=20.0)
+    due1 = r1.card_dict["due"]
+    last1 = r1.card_dict["last_review"]
+    r2 = cognitive_update(
+        input=CognitiveUpdateInput(
+            state=r1.state,
+            card_dict=r1.card_dict,
+            is_correct=True,
+            source="review",
+            min_review_interval_hours=20.0,
+            now=_NOW + timedelta(hours=2),
+        )
+    )
+    assert r2.schedule_advanced is True
+    assert r2.card_dict["due"] != due1
+    assert r2.card_dict["last_review"] != last1
+
+
+def test_non_due_review_keeps_massed_practice_debounce():
+    """非到期的 review 事实仍不能伪装成一次 FSRS 复习。"""
+    r1 = _first_review(debounce=20.0)
+    due1 = r1.card_dict["due"]
+    last1 = r1.card_dict["last_review"]
+    r2 = cognitive_update(
+        input=CognitiveUpdateInput(
+            state=r1.state,
+            card_dict=r1.card_dict,
+            is_correct=True,
+            source="review",
+            min_review_interval_hours=20.0,
+            now=_NOW + timedelta(minutes=1),
+        )
+    )
+    assert r2.schedule_advanced is False
+    assert r2.card_dict["due"] == due1
+    assert r2.card_dict["last_review"] == last1
+
+
 def test_fsrs_parameters_change_scheduling():
     """个性化基础设施：自定义 FSRS 权重改变调度（默认 None 行为不变）。"""
     from fsrs import Rating, Scheduler

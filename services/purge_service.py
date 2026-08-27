@@ -22,6 +22,18 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 logger = logging.getLogger(__name__)
 
+
+class PurgeVerificationError(RuntimeError):
+    """Raised when a purge cannot prove that the privacy boundary is empty."""
+
+
+class PurgeStorageCleanupError(RuntimeError):
+    """Raised when DB deletion cannot be completed with object cleanup."""
+
+    def __init__(self, paths: list[str]):
+        self.paths = tuple(paths)
+        super().__init__(f"storage cleanup failed for {len(paths)} object(s)")
+
 # (表, 关联列)：按 FK 依赖排序，先删子表引用，最后删 users。
 # FK 依赖（对齐 live DB pg_constraint，2026-08 实测）：
 #   lesson_pages.question_id → wrong_questions.id（且 lesson_pages 无 student_id 列，
@@ -33,7 +45,8 @@ logger = logging.getLogger(__name__)
 #   reading_notes.file_id → textbook_files.id
 #   textbook_chunks.file_id → textbook_files.id（ON DELETE CASCADE，靠级联，不入清单）
 # 因此正确删除顺序（先子后父）：
-#   …纯学生子表 → socratic_sessions → wrong_questions → reading_notes →
+#   …纯学生子表 → pilot_assignments/pilot_measurement_schedules →
+#   pilot_enrollments → socratic_sessions → wrong_questions → reading_notes →
 #   highlights → papers → textbook_files → parent_student/parent_alerts → users
 # parent_student / parent_alerts 的 parent_id 也指向 users，须双列清（见 _PARENT_TABLES）。
 _STUDENT_TABLES: list[tuple[str, str]] = [
@@ -44,9 +57,12 @@ _STUDENT_TABLES: list[tuple[str, str]] = [
     # PolicyDecision traces are student-linked operational evidence and must
     # follow the same hard-delete boundary as the cognitive projection.
     ("policy_decisions", "student_id"),
-    ("pilot_enrollments", "student_id"),
     ("pilot_assignments", "student_id"),
     ("pilot_measurement_schedules", "student_id"),
+    # Both tables reference pilot_enrollments.enrollment_id; they must be
+    # removed before their parent, otherwise PostgreSQL correctly rolls back
+    # the whole purge transaction.
+    ("pilot_enrollments", "student_id"),
     ("policy_outcome_links", "student_id"),
     ("learning_outcome_ledger", "student_id"),
     ("memory_claims", "student_id"),
@@ -128,7 +144,13 @@ async def purge_deleted_users(
         ).all()
     ]
     if not ids:
-        return {"purged_users": 0, "ids": [], "tables": {}}
+        return {
+            "purged_users": 0,
+            "ids": [],
+            "tables": {},
+            "storage_cleanup_pending": [],
+            "purge_complete": True,
+        }
 
     id_strs = [str(i) for i in ids]
     tables: dict[str, int] = {}
@@ -190,10 +212,103 @@ async def purge_deleted_users(
     )
     tables["users"] = getattr(res, "rowcount", 0)
 
-    # MinIO 孤儿 blob 清理（best-effort，不阻塞已完成的 DB 物理删除）
-    await _delete_textbook_files_blobs()
+    # The DB work is still uncommitted here.  Verify the privacy boundary
+    # before reporting success; a residual must fail closed and roll back the
+    # caller's transaction rather than returning a partial purge.
+    residual: dict[str, dict[str, int]] = {}
+    for student_id in ids:
+        student_residual = await verify_student_purge(db, student_id)
+        if student_residual:
+            residual[str(student_id)] = student_residual
+    if residual:
+        raise PurgeVerificationError(f"student purge residuals: {residual}")
 
-    return {"purged_users": len(ids), "ids": id_strs, "tables": tables}
+    # Object deletion happens before the caller commits this DB transaction.
+    # If any object cannot be removed, fail the purge so the DB transaction is
+    # rolled back and a retry can safely collect the paths again. Missing
+    # objects are already idempotent success in services.storage.delete_file.
+    failed_blobs = await _delete_textbook_files_blobs()
+    if failed_blobs:
+        raise PurgeStorageCleanupError(failed_blobs)
+
+    return {
+        "purged_users": len(ids),
+        "ids": id_strs,
+        "tables": tables,
+        "storage_cleanup_pending": [],
+        "purge_complete": True,
+    }
+
+
+async def verify_student_purge(
+    db: AsyncSession, student_id: uuid.UUID
+) -> dict[str, int]:
+    """Return every known student-linked residual after a purge attempt.
+
+    The check intentionally uses the same inventory as the delete path plus
+    the two parent-link tables and the user row itself.  It is a verification
+    boundary, not a second delete path: callers must stop and roll back when
+    it returns anything.
+    """
+    sid = str(student_id)
+    residual: dict[str, int] = {}
+
+    for table, column in _STUDENT_TABLES:
+        if not await _table_exists(db, table):
+            continue
+        count = (
+            await db.execute(
+                text(f"SELECT count(*) FROM {table} WHERE {column} = :sid"),
+                {"sid": sid},
+            )
+        ).scalar_one()
+        if count:
+            residual[f"{table}.{column}"] = int(count)
+
+    for table in _PARENT_TABLES:
+        if not await _table_exists(db, table):
+            continue
+        count = (
+            await db.execute(
+                text(
+                    f"SELECT count(*) FROM {table} "
+                    "WHERE student_id = :sid OR parent_id = :sid"
+                ),
+                {"sid": sid},
+            )
+        ).scalar_one()
+        if count:
+            residual[table] = int(count)
+
+    # The edge table has no student_id of its own.  Keep an explicit check so
+    # a future FK change cannot make a user's evidence edges invisible to the
+    # purge verifier.
+    if await _table_exists(db, "memory_claim_evidence"):
+        count = (
+            await db.execute(
+                text(
+                    "SELECT count(*) FROM memory_claim_evidence e "
+                    "LEFT JOIN memory_claims c ON c.id = e.claim_id "
+                    "LEFT JOIN memory_evidence v ON v.id = e.evidence_id "
+                    "WHERE c.student_id = :sid OR v.student_id = :sid"
+                ),
+                {"sid": sid},
+            )
+        ).scalar_one()
+        if count:
+            residual["memory_claim_evidence"] = int(count)
+
+    if await _table_exists(db, "users"):
+        count = (
+            await db.execute(
+                text("SELECT count(*) FROM users WHERE id = :sid"),
+                {"sid": sid},
+            )
+        ).scalar_one()
+        if count:
+            residual["users.id"] = int(count)
+
+    return residual
 
 
 async def _table_exists(db: AsyncSession, table: str) -> bool:
@@ -265,23 +380,28 @@ async def _collect_textbook_storage_paths(db: AsyncSession, id_strs: list[str]) 
     _collected_storage_paths = [r[0] for r in rows if r[0]]
 
 
-async def _delete_textbook_files_blobs() -> None:
+async def _delete_textbook_files_blobs() -> list[str]:
     """把收集到的 storage_path 对应的 MinIO 对象删掉（孤儿 blob 清理）。
 
-    best-effort：MinIO 不可达/对象已不存在都不应拖垮 PII 硬删主流程——
-    删不掉的对象留着由 future 巡检任务兜底，但 DB 删除必须完成（合规红线）。
+    MinIO 不可达/对象已不存在不应让数据库进入半删除状态。对象已不存在
+    视为完成；其余失败路径由调用方通过 ``storage_cleanup_pending`` 继续
+    巡检，且 ``purge_complete`` 会保持为 False。
     """
     global _collected_storage_paths
     paths, _collected_storage_paths = _collected_storage_paths, []
     if not paths:
-        return
+        return []
+    failed: list[str] = []
     try:
         from services.storage import delete_file
 
         for p in paths:
             try:
                 await asyncio.to_thread(delete_file, p)
-            except Exception:  # noqa: BLE001 — best-effort，单对象失败不阻断其余
+            except Exception:  # noqa: BLE001 — 记录失败并继续清理其余对象
                 logger.warning("MinIO blob 删除失败（留待巡检兜底）: %s", p)
+                failed.append(p)
     except Exception:  # noqa: BLE001 — best-effort，MinIO 整体不可达不阻断 DB 删除
         logger.warning("MinIO 不可达，blob 清理跳过（DB 删除已优先完成）")
+        failed.extend(paths)
+    return failed

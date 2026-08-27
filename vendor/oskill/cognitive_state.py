@@ -14,6 +14,7 @@ from pydantic import BaseModel
 
 from oprim import KCState
 from oprim.bkt import bkt_update, classify_error, error_weights
+from oprim.due_compute import due_compute
 from oprim.fsrs_engine import fsrs_retrievability, fsrs_review, fsrs_map_rating
 
 # 步骤证据打破平局的接近度阈值：两假设权重之比 min/max ≥ 该值才视为"接近"。
@@ -29,6 +30,10 @@ class CognitiveUpdateInput(BaseModel):
     state: KCState
     card_dict: dict
     is_correct: bool
+    # The fact source is part of the scheduling eligibility contract.  A due
+    # review is authoritative retrieval evidence; ordinary same-session
+    # practice remains subject to the massed-practice debounce.
+    source: str = "paper"
     used_answer: bool = False
     struggled: bool = False
     effortless: bool = False
@@ -132,15 +137,23 @@ def cognitive_update(*, input: CognitiveUpdateInput) -> CognitiveUpdateResult:
             if hi > 0 and lo / hi >= _STEP_EVIDENCE_TIE_RATIO:
                 error_type = input.step_evidence
 
-    # 4. FSRS 更新
+    # 4. FSRS 更新。source 随不可变交互事实透传到这里，使权威记忆投影
+    # 区分到期检索证据和同场次集中练习。
     rating = fsrs_map_rating(
         is_correct=input.is_correct,
         used_answer=input.used_answer,
         struggled=input.struggled,
         effortless=input.effortless,
     )
+    min_review_interval_hours = input.min_review_interval_hours
+    if input.source == "review" and due_compute(card_dict=input.card_dict, now=now):
+        # A review task is only issued for a due card.  It must be allowed to
+        # advance FSRS even when the previous interaction was recent; otherwise
+        # BKT/mastery moves while the memory projection silently stays stale.
+        # Non-due review calls and all other sources retain the debounce.
+        min_review_interval_hours = 0.0
     schedule_advanced = _should_advance_schedule(
-        input.card_dict, now, input.min_review_interval_hours
+        input.card_dict, now, min_review_interval_hours
     )
     if schedule_advanced:
         new_card = fsrs_review(

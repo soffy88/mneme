@@ -369,6 +369,52 @@ async def test_practice_submit_correct_no_wrong_question_created(
 
 
 @pytest.mark.asyncio
+async def test_practice_submit_duplicate_event_id_does_not_double_update(
+    db, seed_ku, student, bank_question
+):
+    """HTTP retries with one event identity must not advance FSRS twice."""
+    sid, token = student
+    ku2_id = seed_ku["ku2_id"]
+    event_id = str(uuid.uuid4())
+    payload = {
+        "event_id": event_id,
+        "question_id": str(bank_question),
+        "student_id": str(sid),
+        "student_answer": "4",
+        "ku_id": ku2_id,
+    }
+    async with AsyncClient(
+        transport=ASGITransport(app=app), base_url="http://test"
+    ) as c:
+        first = await c.post(
+            "/v1/practice/submit", json=payload, headers=_h(token)
+        )
+        second = await c.post(
+            "/v1/practice/submit", json=payload, headers=_h(token)
+        )
+    assert first.status_code == 200
+    assert second.status_code == 200
+    assert second.json()["duplicate"] is True
+    mastery = (
+        await db.execute(
+            select(KCMastery).where(
+                KCMastery.student_id == sid,
+                KCMastery.knowledge_point == ku2_id,
+            )
+        )
+    ).scalar_one()
+    assert mastery.n_attempts == 1
+    assert (
+        await db.execute(
+            select(InteractionEvent).where(
+                InteractionEvent.student_id == sid,
+                InteractionEvent.id == uuid.UUID(event_id),
+            )
+        )
+    ).scalar_one_or_none() is not None
+
+
+@pytest.mark.asyncio
 async def test_practice_submit_wrong_creates_student_record_not_bank(
     db, seed_ku, student, bank_question
 ):

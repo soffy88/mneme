@@ -42,6 +42,9 @@ class InteractionInput(BaseModel):
     student_id: UUID
     ku_id: str
     is_correct: bool
+    # Optional immutable event identity supplied by retrying HTTP callers.
+    # The legacy API remains backward compatible when it is omitted.
+    event_id: Optional[UUID] = None
     question_type: str = "solve"
     question_id: Optional[UUID] = None
     source: str = "paper"
@@ -172,6 +175,7 @@ async def process_interaction_workflow(
         state=state,
         card_dict=card_dict,
         is_correct=input_data.is_correct,
+        source=input_data.source,
         used_answer=input_data.used_answer,
         struggled=input_data.struggled,
         effortless=input_data.effortless,
@@ -197,6 +201,7 @@ async def process_interaction_workflow(
         ).total_seconds() / 86400.0
 
     event_data = {
+        "event_id": input_data.event_id,
         "question_id": input_data.question_id,
         "source": input_data.source,
         "is_correct": input_data.is_correct,

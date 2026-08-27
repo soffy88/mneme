@@ -27,7 +27,10 @@ from services.auth_deps import (
     get_current_user,
 )
 from data.guangdong_math_kc import get_kc
-from services.cognitive_service import process_interaction
+from services.cognitive_service import (
+    InteractionEventConflictError,
+    process_interaction,
+)
 from services.feature_flags import PEDAGOGY_FINE_FEEDBACK, pedagogy_enabled
 from services.instant_solve_service import get_pg_pool, handle_instant_solve
 from services.logging_config import logger
@@ -369,6 +372,7 @@ async def list_practice_topics(
 class PracticeSubmitReq(BaseModel):
     question_id: UUID  # 公共题库行（student_id IS NULL）
     student_id: UUID
+    event_id: UUID | None = None  # retry-safe identity for this attempt
     student_answer: str = ""
     is_correct: bool | None = (
         None  # None=先让后端自动判；自由作答判不了时再带自评二次提交
@@ -436,7 +440,42 @@ async def post_practice_submit(
             "feedback": None,
         }
 
-    # 3. 答错则写学生错题记录
+    # 3. BKT/FSRS 更新. The event id is locked and checked before any
+    # student wrong-question side effect, so a retry cannot double-write.
+    try:
+        result = await process_interaction(
+            db,
+            student_id=body.student_id,
+            kc_id=body.ku_id,
+            is_correct=is_correct,
+            question_id=bank_q.id,
+            event_id=body.event_id,
+            source="review",
+            is_interleaved=body.interleaved,
+            predicted_confidence=body.predicted_confidence,
+            self_explanation=body.self_explanation,
+        )
+    except InteractionEventConflictError as exc:
+        await db.rollback()
+        raise HTTPException(status_code=409, detail="event identity conflict") from exc
+
+    if result.get("duplicate"):
+        if result.get("existing_question_id") not in (None, str(body.question_id)):
+            raise HTTPException(status_code=409, detail="event identity conflict")
+        return {
+            "is_correct": result.get("is_correct"),
+            "auto_judged": True,
+            "needs_self_grade": False,
+            "correct_answer": correct_ans,
+            "wrong_question_id": None,
+            "p_mastery": result.get("p_mastery"),
+            "mastery_color": _mastery_color(result.get("p_mastery")),
+            "feedback": None,
+            "duplicate": True,
+        }
+
+    # 4. 答错则写学生错题记录。 This follows the idempotent cognitive write;
+    # an exception rolls back both writes in the request transaction.
     student_wq_id: UUID | None = None
     if not is_correct:
         student_wq = WrongQuestion(
@@ -452,19 +491,6 @@ async def post_practice_submit(
         db.add(student_wq)
         student_wq_id = student_wq.id
         await db.flush()
-
-    # 4. BKT/FSRS 更新
-    result = await process_interaction(
-        db,
-        student_id=body.student_id,
-        kc_id=body.ku_id,
-        is_correct=is_correct,
-        question_id=bank_q.id,
-        source="review",
-        is_interleaved=body.interleaved,
-        predicted_confidence=body.predicted_confidence,
-        self_explanation=body.self_explanation,
-    )
     await db.commit()
 
     # 刻意练习细颗粒反馈（教育理念 07）：答错且带步骤时，确定性定位首个错步（非整题重来）
@@ -668,5 +694,3 @@ async def get_error_journal(
         )
 
     return {"distribution": dist, "items": res}
-
-

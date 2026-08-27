@@ -104,7 +104,7 @@ class InMemoryStore:
         self, student_id: UUID, kc_id: str, event_data: dict
     ) -> Optional[UUID]:
         event = event_data.copy()
-        event["id"] = _uuid.uuid4()
+        event["id"] = event_data.get("event_id") or _uuid.uuid4()
         event["student_id"] = student_id
         event["knowledge_point"] = kc_id
         if "occurred_at" not in event:
@@ -256,7 +256,7 @@ class PgStore:
     async def append_event(
         self, student_id: UUID, kc_id: str, event_data: dict
     ) -> Optional[UUID]:
-        event_id = _uuid.uuid4()
+        event_id = event_data.get("event_id") or _uuid.uuid4()
         occurred_at = event_data.get("occurred_at", datetime.now(timezone.utc))
         ins_stmt = (
             insert(InteractionEvent)

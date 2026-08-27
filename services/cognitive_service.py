@@ -11,7 +11,7 @@ from typing import Optional
 from uuid import UUID
 
 from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy import func, select, update
+from sqlalchemy import func, select, text, update
 from sqlalchemy.dialects.postgresql import insert as pg_insert
 
 from obase.cognitive_store import PgStore
@@ -43,6 +43,76 @@ from services.models import (
 
 # 集中练习去抖阈值（小时）：见 process_interaction 内说明。
 _MASSED_PRACTICE_DEBOUNCE_HOURS = 20.0
+
+
+class InteractionEventConflictError(ValueError):
+    """Raised when an idempotency key belongs to another learner/event."""
+
+
+async def _lock_and_get_interaction_event(
+    db: AsyncSession, event_id: UUID
+) -> InteractionEvent | None:
+    """Serialize retries for one event before any cognitive state is changed.
+
+    The legacy interaction row is written after the BKT/FSRS calculation. A
+    plain pre-check would still race under concurrent delivery. A
+    transaction-scoped PostgreSQL advisory lock gives the first request an
+    exclusive event key; a retry waits, then observes the committed row and
+    exits without applying BKT or FSRS a second time.
+    """
+
+    await db.execute(
+        text("SELECT pg_advisory_xact_lock(hashtextextended(:event_key, 0))"),
+        {"event_key": str(event_id)},
+    )
+    return (
+        await db.execute(
+            select(InteractionEvent).where(InteractionEvent.id == event_id)
+        )
+    ).scalar_one_or_none()
+
+
+async def _duplicate_interaction_result(
+    db: AsyncSession,
+    *,
+    existing: InteractionEvent,
+    student_id: UUID,
+    kc_id: str,
+) -> dict:
+    """Return the stable response for an already-applied interaction."""
+
+    if existing.student_id != student_id or existing.knowledge_point != kc_id:
+        raise InteractionEventConflictError("event identity conflict")
+    row = (
+        await db.execute(
+            select(KCMastery).where(
+                KCMastery.student_id == student_id,
+                KCMastery.knowledge_point == kc_id,
+            )
+        )
+    ).scalar_one_or_none()
+    card = (row.fsrs_card_json if row is not None else {}) or {}
+    p_mastery = row.p_mastery if row is not None else None
+    return {
+        "ku_id": kc_id,
+        "p_mastery": p_mastery,
+        "long_term_mastery": (
+            row.long_term_mastery if row is not None else p_mastery
+        ),
+        "effective_mastery": p_mastery,
+        "error_type": None,
+        "rating": existing.fsrs_rating,
+        "next_review_due": card.get("due"),
+        "n_attempts": row.n_attempts if row is not None else 0,
+        "feedback": None,
+        "growth_message": None,
+        "duplicate": True,
+        "event_id": str(existing.id),
+        "existing_question_id": (
+            str(existing.question_id) if existing.question_id is not None else None
+        ),
+        "is_correct": existing.is_correct,
+    }
 
 
 async def daily_report(db: AsyncSession, student_id: UUID, day=None) -> dict:
@@ -170,6 +240,7 @@ async def process_interaction(
     *,
     question_type: str = "solve",
     question_id: Optional[UUID] = None,
+    event_id: Optional[UUID] = None,
     source: str = "paper",
     used_answer: bool = False,
     struggled: bool = False,
@@ -190,6 +261,15 @@ async def process_interaction(
 ) -> dict:
     """处理一次答题交互，落 kc_mastery + interaction_events + mastery_snapshots。"""
     now = now or datetime.now(timezone.utc)
+    if event_id is not None:
+        existing = await _lock_and_get_interaction_event(db, event_id)
+        if existing is not None:
+            return await _duplicate_interaction_result(
+                db,
+                existing=existing,
+                student_id=student_id,
+                kc_id=kc_id,
+            )
     # Phase 2（IRT 通电）：未显式给难度时，按 kc_id 取 KU 难度；非 KU 知识点保持 None（行为不变）
     if difficulty is None:
         from services.models import KnowledgeUnit
@@ -244,6 +324,7 @@ async def process_interaction(
         student_id=student_id,
         ku_id=kc_id,
         is_correct=is_correct,
+        event_id=event_id,
         question_type=question_type,
         question_id=question_id,
         source=source,
@@ -261,7 +342,9 @@ async def process_interaction(
         evaluation_phase=evaluation_phase,
         # 集中练习去抖（学习科学：间隔重复≠集中练习）：距上次 FSRS 复习不足 20h 的
         # 重复作答只更新掌握度、不推进调度。真正的到期复习相隔数天，不受影响；
-        # 同卷/同日连答不再把生题排到几天后导致"学了就忘"。
+        # 同卷/同日连答不再把生题排到几天后导致"学了就忘"。内核会对
+        # source=review 且卡片已到期的真实检索证据解除该去抖，保证 mastery 与
+        # FSRS memory projection 同时推进。
         min_review_interval_hours=_MASSED_PRACTICE_DEBOUNCE_HOURS,
         fsrs_parameters=fsrs_params,
         now=now,
