@@ -45,6 +45,8 @@ def _assert_prod_safety() -> None:
     # real production DB validation in a launched process.
     if env.get("TEST_DATABASE_URL") == env.get("DATABASE_URL"):
         env.pop("DATABASE_URL", None)
+        env.pop("MINIO_ACCESS_KEY", None)
+        env.pop("MINIO_SECRET_KEY", None)
     else:
         env.setdefault("DATABASE_URL", _s.DATABASE_URL)
     try:
