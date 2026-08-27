@@ -49,7 +49,7 @@ from services.models import (
     User,
     UserRole,
 )
-from services.purge_service import purge_deleted_users, verify_student_purge
+from services.purge_service import _STUDENT_TABLES, purge_deleted_users, verify_student_purge
 from services.storage import delete_file, download_file, upload_file
 
 
@@ -68,17 +68,11 @@ async def _cleanup_student(db, student_id: UUID, object_path: str | None = None)
             ),
             {"sid": str(student_id)},
         )
-    for table, column in (
-        ("pilot_assignments", "student_id"),
-        ("pilot_measurement_schedules", "student_id"),
-        ("pilot_enrollments", "student_id"),
-        ("interaction_events", "student_id"),
-        ("learning_events", "student_id"),
-        ("memory_claims", "student_id"),
-        ("memory_evidence", "student_id"),
-        ("kc_mastery", "student_id"),
-        ("textbook_files", "owner_student_id"),
-    ):
+    # Keep this cleanup inventory coupled to the production purge inventory.
+    # The staging runner creates a mastery snapshot through the real review
+    # path; omitting that table leaves the synthetic user behind and makes a
+    # successful regression appear to fail during teardown.
+    for table, column in _STUDENT_TABLES:
         if await _exists(db, table):
             await db.execute(
                 text(f"DELETE FROM {table} WHERE {column}=:sid"),
@@ -129,6 +123,7 @@ async def _run(expected_sha: str) -> dict:
                 )
             ).scalar_one()
             card_before = copy.deepcopy(before.fsrs_card_json)
+            mastery_before = before.p_mastery
             await process_interaction(
                 db,
                 sid,
@@ -157,7 +152,7 @@ async def _run(expected_sha: str) -> dict:
             result["p0_1"] = {
                 "student_id": str(sid),
                 "event_id": str(event.id) if event else None,
-                "mastery_before": before.p_mastery,
+                "mastery_before": mastery_before,
                 "mastery_after": after.p_mastery,
                 "fsrs_before": {k: card_before.get(k) for k in ("stability", "difficulty", "due", "last_review")},
                 "fsrs_after": {k: after.fsrs_card_json.get(k) for k in ("stability", "difficulty", "due", "last_review")},
@@ -166,7 +161,7 @@ async def _run(expected_sha: str) -> dict:
                 raise AssertionError("review did not advance FSRS due")
             if card_before["last_review"] == after.fsrs_card_json["last_review"]:
                 raise AssertionError("review did not persist FSRS last_review")
-            if after.p_mastery == before.p_mastery:
+            if after.p_mastery == mastery_before:
                 raise AssertionError("review did not update mastery")
 
             card_after_review = copy.deepcopy(after.fsrs_card_json)
