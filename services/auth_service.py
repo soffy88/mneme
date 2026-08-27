@@ -42,7 +42,7 @@ def _mock_bypass_allowed() -> bool:
     生产即使 SMS_PROVIDER 误配为 mock，万能码 123456 也不得放行——
     否则任何人可登录任何已知账号（C2 修复：demo/dev 保留演示机制，
     生产必须走真实验证通道，main._assert_prod_safety 同时把关）。"""
-    return os.environ.get("MNEME_ENV", "dev").lower() != "prod"
+    return os.environ.get("MNEME_ENV", "dev").lower() not in {"prod", "production"}
 
 
 def _mask_phone(phone: str) -> str:

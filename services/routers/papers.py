@@ -2,7 +2,6 @@
 from __future__ import annotations
 
 import os
-import shutil
 import uuid
 from datetime import date
 from pathlib import Path
@@ -21,6 +20,7 @@ from services.auth_deps import (
 )
 from services.logging_config import logger
 from services.models import Paper, User, WrongQuestion
+from services.upload_safety import UploadValidationError, cleanup_failed_upload, copy_stream, validate_content_type, validate_filename
 
 router = APIRouter(tags=["papers"])
 
@@ -43,16 +43,20 @@ async def post_paper_upload(
     # 临时保存本地
     temp_dir = "/tmp/mneme_uploads"
     os.makedirs(temp_dir, exist_ok=True)
-    local_path = Path(temp_dir) / f"{uuid.uuid4()}_{file.filename}"
+    try:
+        filename = validate_filename(file.filename, allowed_extensions={".pdf", ".jpg", ".jpeg", ".png", ".webp"})
+        validate_content_type(filename, file.content_type)
+    except UploadValidationError as exc:
+        raise HTTPException(status_code=exc.status_code, detail=str(exc)) from exc
+    local_path = Path(temp_dir) / f"{uuid.uuid4()}_{filename}"
 
     try:
-        with open(local_path, "wb") as buffer:
-            shutil.copyfileobj(file.file, buffer)
+        copy_stream(file.file, local_path)
 
         payload = PaperUploadInput(
             student_id=student_id,
             local_file_path=local_path,
-            filename=file.filename or "unknown.jpg",
+            filename=filename,
         )
 
         result = await upload_paper_workflow(config, payload, db)
@@ -76,8 +80,7 @@ async def post_paper_upload(
 
     finally:
         # 清理临时文件
-        if local_path.exists():
-            os.remove(local_path)
+        cleanup_failed_upload(local_path)
 
 
 @router.get("/v1/papers/{paper_id}")
@@ -172,5 +175,3 @@ async def post_quick_question(
     db.add(wq)
     await db.commit()
     return {"question_id": str(wq_id), "status": "pending_ocr", "kc_hint": kc_hint}
-
-

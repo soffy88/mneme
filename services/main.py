@@ -11,6 +11,7 @@ import os
 from contextlib import asynccontextmanager
 
 from fastapi import FastAPI, Request
+from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
 from obase.db import SessionLocal
 from obase.prior_provider import PriorProvider
@@ -32,24 +33,27 @@ from services.sms import get_sms_provider
 
 def _assert_prod_safety() -> None:
     """生产环境(MNEME_ENV=prod)安全闸门：默认 JWT 密钥 / 无真实验证通道 一律拒启动。"""
-    import os as _os
-
     from obase.config import settings as _s
+    from services.production_config import ProductionConfigError, validate_production_config
 
-    if _os.environ.get("MNEME_ENV", "dev").lower() != "prod":
+    if os.environ.get("MNEME_ENV", "dev").lower() not in {"prod", "production"}:
         return
-    problems = []
-    if _s.JWT_SECRET == "mneme-dev-secret-change-in-prod!":
-        problems.append("JWT_SECRET 仍是默认开发密钥（可伪造任意 token）")
-    sms = _os.environ.get("SMS_PROVIDER", "mock").lower()
-    email = _os.environ.get("EMAIL_PROVIDER", "mock").lower()
-    if sms != "aliyun" and email != "smtp":
-        problems.append(
-            "无真实验证通道（SMS_PROVIDER≠aliyun 且 EMAIL_PROVIDER≠smtp，"
-            "mock 万能码/验证码可登录任何人）"
-        )
-    if problems:
-        raise RuntimeError("❌ 生产环境安全校验失败，拒绝启动：" + "；".join(problems))
+    env = dict(os.environ)
+    env.setdefault("JWT_SECRET", _s.JWT_SECRET)
+    # pytest's fail-closed db guard intentionally injects mneme_test for all
+    # tests.  It is not a production deployment setting and must not mask the
+    # real production DB validation in a launched process.
+    if env.get("TEST_DATABASE_URL") == env.get("DATABASE_URL"):
+        env.pop("DATABASE_URL", None)
+    else:
+        env.setdefault("DATABASE_URL", _s.DATABASE_URL)
+    try:
+        validate_production_config(env)
+    except ProductionConfigError as exc:
+        message = str(exc)
+        if "verification provider" in message:
+            message += "；无真实验证通道（SMS_PROVIDER≠aliyun 且 EMAIL_PROVIDER≠smtp）"
+        raise RuntimeError("❌ 生产环境安全校验失败，拒绝启动：" + message) from exc
 
 
 @asynccontextmanager
@@ -159,6 +163,21 @@ _email_provider = get_email_provider()
 app = FastAPI(title="Mneme API", version="0.1.0", lifespan=lifespan)
 
 
+@app.exception_handler(Exception)
+async def user_safe_exception_handler(request: Request, exc: Exception):
+    """Never expose stack traces, SQL, credentials, or internal IDs to users."""
+
+    from services.errors import user_safe_error_payload
+
+    trace_id = getattr(request.state, "trace_id", None)
+    logger.error("request_failed", error_type=type(exc).__name__, trace_id=trace_id)
+    return JSONResponse(
+        status_code=500,
+        content=user_safe_error_payload(trace_id=trace_id),
+        headers={"X-Trace-Id": trace_id} if trace_id else None,
+    )
+
+
 @app.middleware("http")
 async def request_observability(request: Request, call_next):
     """Propagate a trace ID and collect aggregate latency/error metrics."""
@@ -216,7 +235,7 @@ except ImportError as _chat_import_err:  # pragma: no cover
         "chat 工作区未挂载（mneme-agent 不可用）: %s", _chat_import_err
     )
 
-from services.routers import register_domain_routers
+from services.routers import register_domain_routers  # noqa: E402
 
 register_domain_routers(app)
 

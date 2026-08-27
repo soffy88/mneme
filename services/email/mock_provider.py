@@ -13,7 +13,7 @@ class MockEmailProvider(EmailProvider):
     生产误配 EMAIL_PROVIDER=mock 时 fail-closed（不发验证码日志）。"""
 
     def _prod_gate(self) -> bool:
-        return os.environ.get("MNEME_ENV", "dev").lower() == "prod"
+        return os.environ.get("MNEME_ENV", "dev").lower() in {"prod", "production"}
 
     async def send_code(self, email: str, code: str) -> bool:
         if self._prod_gate():

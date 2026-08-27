@@ -63,6 +63,8 @@ PILOT_INDEPENDENT_EVAL_ENABLED = "PILOT_INDEPENDENT_EVAL_ENABLED"
 PILOT_KILL_SWITCH = "PILOT_KILL_SWITCH"
 DEMO_MODE = "DEMO_MODE"
 NOTIFICATIONS_ENABLED = "NOTIFICATIONS_ENABLED"
+EARLY_ACCESS_MODE = "EARLY_ACCESS_MODE"
+EARLY_ACCESS_ALLOWLIST = "EARLY_ACCESS_ALLOWLIST"
 
 
 def _explicitly_on(name: str) -> bool:
@@ -125,16 +127,33 @@ def pilot_config() -> dict[str, object]:
         "policy_experiment_enabled": pilot_policy_experiment_enabled(),
         "independent_eval_enabled": pilot_independent_eval_enabled(),
         "kill_switch_active": pilot_kill_switch_active(),
+        "early_access_mode": early_access_mode_enabled(),
+        "early_access_allowlist_configured": bool(early_access_allowlist()),
     }
 
 
 def demo_mode_enabled() -> bool:
     """Enable explicitly marked synthetic demo content only in non-production."""
 
-    return _explicitly_on(DEMO_MODE) and os.environ.get("MNEME_ENV", "dev").lower() != "prod"
+    return _explicitly_on(DEMO_MODE) and os.environ.get("MNEME_ENV", "dev").lower() not in {"prod", "production"}
 
 
 def notifications_enabled() -> bool:
     """Notifications are opt-in; this flag never sends a notification itself."""
 
     return _explicitly_on(NOTIFICATIONS_ENABLED)
+
+
+def early_access_mode_enabled() -> bool:
+    """Closed by default; this gate is opt-in and cohort-independent."""
+
+    return _explicitly_on(EARLY_ACCESS_MODE)
+
+
+def early_access_allowlist() -> frozenset[str]:
+    raw = os.environ.get(EARLY_ACCESS_ALLOWLIST, "")
+    return frozenset(item.strip() for item in raw.split(",") if item.strip())
+
+
+def early_access_allowed(user_id: str) -> bool:
+    return early_access_mode_enabled() and user_id in early_access_allowlist()

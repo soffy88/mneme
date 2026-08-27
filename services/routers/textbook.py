@@ -29,6 +29,7 @@ from services.auth_deps import get_current_user, require_student_access
 from services.models import Highlight, ReadingNote, Textbook, TextbookFile, User
 from services.route_helpers import grade_sort_key as _grade_sort_key
 from services.storage import content_type_for, download_file, upload_file
+from services.upload_safety import UploadValidationError, max_upload_bytes, validate_content_type, validate_filename, validate_size
 from services.textbook_bindings_service import (
     get_textbook_bindings,
     set_textbook_bindings,
@@ -41,7 +42,7 @@ from services.textbook_qa_service import (
 
 router = APIRouter(tags=["textbook"])
 
-MAX_UPLOAD_BYTES = 50 * 1024 * 1024
+MAX_UPLOAD_BYTES = max_upload_bytes()
 
 _SUBJECT_ORDER = ["math", "physics", "chinese", "english", "history"]
 _SUBJECT_NAMES = {
@@ -125,17 +126,18 @@ async def upload_textbook_file(
     current_user: User = Depends(get_current_user),
     db: AsyncSession = Depends(get_db),
 ):
-    filename = file.filename or "untitled"
-    ext = filename.rsplit(".", 1)[-1].lower() if "." in filename else ""
-    if ext not in ("pdf", "epub"):
-        raise HTTPException(status_code=400, detail="仅支持 PDF 或 EPUB 文件")
+    try:
+        filename = validate_filename(file.filename, allowed_extensions={".pdf", ".epub"})
+        validate_content_type(filename, file.content_type)
+    except UploadValidationError as exc:
+        raise HTTPException(status_code=exc.status_code, detail=str(exc)) from exc
+    ext = filename.rsplit(".", 1)[-1].lower()
 
     data = await file.read()
-    if len(data) > MAX_UPLOAD_BYTES:
-        raise HTTPException(
-            status_code=413,
-            detail=f"文件过大（上限 {MAX_UPLOAD_BYTES // (1024 * 1024)}MB）",
-        )
+    try:
+        validate_size(len(data), limit=MAX_UPLOAD_BYTES)
+    except UploadValidationError as exc:
+        raise HTTPException(status_code=exc.status_code, detail=str(exc)) from exc
     file_id = _new_file_id()
     from obase.admin_identity import is_admin
 

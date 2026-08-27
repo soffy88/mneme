@@ -28,6 +28,12 @@ _counters: dict[str, int] = {
     "policy_fallback_total": 0,
     "model_shadow_eval_total": 0,
     "evidence_insufficient_total": 0,
+    "worker_failures_total": 0,
+    "llm_failures_total": 0,
+    "upload_failures_total": 0,
+    "purge_failures_total": 0,
+    "scheduler_failures_total": 0,
+    "rate_limit_total": 0,
 }
 _lock = threading.Lock()
 
@@ -149,6 +155,23 @@ def record_policy_decision(*, fallback: bool = False) -> None:
 
 def record_shadow_evaluation() -> None:
     increment_metric("model_shadow_eval_total")
+
+
+def record_worker_event_metric(event: str) -> None:
+    if event == "failure" or event == "poison":
+        increment_metric("worker_failures_total")
+
+
+def record_dependency_failure(dependency: str) -> None:
+    names = {
+        "llm": "llm_failures_total",
+        "upload": "upload_failures_total",
+        "purge": "purge_failures_total",
+        "scheduler": "scheduler_failures_total",
+    }
+    name = names.get(dependency)
+    if name:
+        increment_metric(name)
 
 
 def route_template(scope: Mapping[str, Any], fallback: str) -> str:

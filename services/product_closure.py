@@ -380,7 +380,7 @@ class FakeBillingProvider:
     """Test-only billing adapter; construction is forbidden in production."""
 
     def __init__(self) -> None:
-        if os.environ.get("MNEME_ENV", "dev").lower() == "prod":
+        if os.environ.get("MNEME_ENV", "dev").lower() in {"prod", "production"}:
             raise RuntimeError("FakeBillingProvider is forbidden in production")
 
     async def create_checkout(self, *, user_id: UUID, plan: Plan) -> dict[str, Any]:
@@ -442,9 +442,9 @@ def _metadata(record: Any) -> dict[str, Any]:
 
 
 def is_synthetic_event(record: Any) -> bool:
-    return bool(_metadata(record).get("synthetic")) or bool(
-        _value(record, "synthetic", False)
-    )
+    from services.real_user_data import UserDataClass, classify_user_data
+
+    return classify_user_data(record) != UserDataClass.REAL
 
 
 def _action(record: Any) -> str:
@@ -1030,7 +1030,21 @@ def project_outcome_ledger(
 async def persist_policy_outcome_link(db: Any, link: PolicyOutcomeLink) -> Any:
     """Persist only the attribution edge; callers own commit/authorization."""
 
+    from sqlalchemy import select
+
     from services.models import PolicyOutcomeLinkRecord
+
+    existing = (
+        await db.execute(
+            select(PolicyOutcomeLinkRecord).where(
+                PolicyOutcomeLinkRecord.decision_id == link.decision_id,
+                PolicyOutcomeLinkRecord.action_event_id == link.action_event_id,
+                PolicyOutcomeLinkRecord.outcome_event_id == link.outcome_event_id,
+            )
+        )
+    ).scalar_one_or_none()
+    if existing is not None:
+        return existing
 
     row = PolicyOutcomeLinkRecord(
         link_id=link.link_id,
@@ -1052,7 +1066,21 @@ async def persist_policy_outcome_link(db: Any, link: PolicyOutcomeLink) -> Any:
 async def persist_outcome_ledger_entry(db: Any, entry: LearningOutcomeLedgerEntry) -> Any:
     """Persist a projection row; raw LearningEvent remains the fact source."""
 
+    from sqlalchemy import select
+
     from services.models import LearningOutcomeLedgerRecord
+
+    existing = (
+        await db.execute(
+            select(LearningOutcomeLedgerRecord).where(
+                LearningOutcomeLedgerRecord.decision_id == entry.decision_id,
+                LearningOutcomeLedgerRecord.action_event_id == entry.action_event_id,
+                LearningOutcomeLedgerRecord.outcome_event_id == entry.outcome_event_id,
+            )
+        )
+    ).scalar_one_or_none()
+    if existing is not None:
+        return existing
 
     row = LearningOutcomeLedgerRecord(
         ledger_id=entry.ledger_id,

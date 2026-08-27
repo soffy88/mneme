@@ -2,7 +2,7 @@
 
 from celery import Celery
 from celery.schedules import crontab
-from celery.signals import worker_process_init
+from celery.signals import task_failure, task_retry, task_success, worker_process_init
 from obase.config import settings
 
 celery_app = Celery(
@@ -93,3 +93,24 @@ def _register_providers(**_kwargs):
     from services.providers.setup import configure_llm_providers
 
     configure_llm_providers()
+
+
+@task_success.connect
+def _record_task_success(**_kwargs):
+    from services.worker_health import record_worker_event
+
+    record_worker_event("success")
+
+
+@task_retry.connect
+def _record_task_retry(**_kwargs):
+    from services.worker_health import record_worker_event
+
+    record_worker_event("retry")
+
+
+@task_failure.connect
+def _record_task_failure(**_kwargs):
+    from services.worker_health import record_worker_event
+
+    record_worker_event("failure")

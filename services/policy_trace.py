@@ -12,6 +12,7 @@ from uuid import UUID, uuid4
 
 from mneme_core.policy_engine import PolicyCandidate, PolicyDecision as CoreDecision
 from pydantic import BaseModel, ConfigDict, Field
+from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from services.models import PolicyDecisionRecord
@@ -104,6 +105,18 @@ async def persist_policy_decision(
     decision: PolicyDecision,
 ) -> PolicyDecisionRecord:
     """Append a policy trace; this function has no access to mastery columns."""
+
+    existing = (
+        await db.execute(
+            select(PolicyDecisionRecord).where(
+                PolicyDecisionRecord.decision_id == decision.decision_id
+            )
+        )
+    ).scalar_one_or_none()
+    if existing is not None:
+        if existing.student_id != decision.student_id or existing.policy_version != decision.policy_version:
+            raise ValueError("policy decision idempotency key reused with different data")
+        return existing
 
     row = PolicyDecisionRecord(
         decision_id=decision.decision_id,

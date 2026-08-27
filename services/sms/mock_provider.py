@@ -15,7 +15,7 @@ class MockSMSProvider(SMSProvider):
     """
 
     def _prod_gate(self) -> bool:
-        return os.environ.get("MNEME_ENV", "dev").lower() == "prod"
+        return os.environ.get("MNEME_ENV", "dev").lower() in {"prod", "production"}
 
     async def send_code(self, phone: str, code: str) -> bool:
         if self._prod_gate():

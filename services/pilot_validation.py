@@ -1246,7 +1246,9 @@ def run_pilot_validation(
     code_sha: str | None = None,
     claim: str = "Mneme improves learning",
 ) -> PilotAnalysisReport:
-    rows = _eval_rows(observations)
+    from services.real_user_data import production_analytics_allowed
+
+    rows = [row for row in _eval_rows(observations) if production_analytics_allowed(row)]
     assignment_rows = list(assignments or [])
     quality = check_pilot_data_quality(
         rows,

@@ -7,33 +7,35 @@ from sqlalchemy import text
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from obase.db import get_db
+from services.readiness import health_payload, readiness_payload
+
+EXPECTED_MIGRATION_HEAD = "5e7f8a9b0c12"
 
 router = APIRouter(tags=["health"])
 
 
 @router.get("/health")
-async def health_check(db: AsyncSession = Depends(get_db)):
-    """GET /health — 就绪探针：真的打一次 DB（SELECT 1）。
+async def health_check():
+    """GET /health — liveness only; dependency failures belong to /readiness."""
+    return health_payload()
 
-    DB 不通 → 503。附带 providers 摘要（类型名 + 是否 mock，无密钥）。
-    """
+
+@router.get("/readiness")
+async def readiness_check(db: AsyncSession = Depends(get_db)):
+    """GET /readiness — critical DB/migration compatibility probe."""
+    database = False
+    migrations = False
     try:
         await db.execute(text("SELECT 1"))
+        database = True
+        revision = (await db.execute(text("SELECT version_num FROM alembic_version LIMIT 1"))).scalar_one_or_none()
+        migrations = revision == EXPECTED_MIGRATION_HEAD
     except Exception:
-        raise HTTPException(status_code=503, detail="db unavailable")
-    providers: dict = {}
-    try:
-        from services.providers.setup import provider_status
-
-        providers = provider_status()
-    except Exception as e:  # noqa: BLE001 — health 不得因 provider 探测失败变 503
-        providers = {"error": type(e).__name__}
-    return {
-        "status": "ok",
-        "version": "0.1.0",
-        "service": "mneme-api",
-        "providers": providers,
-    }
+        database = False
+    payload, status = readiness_payload(database=database, migrations=migrations)
+    if status != 200:
+        raise HTTPException(status_code=status, detail=payload)
+    return payload
 
 
 @router.get("/health/providers")

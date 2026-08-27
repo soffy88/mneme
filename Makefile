@@ -3,7 +3,7 @@
 PYTHON ?= .venv/bin/python
 UV ?= uv
 
-.PHONY: help bootstrap dev test migrate seed backfill-events-dry-run backfill-events web-build pilot-readiness product-readiness clean
+.PHONY: help bootstrap dev test migrate seed backfill-events-dry-run backfill-events web-build pilot-readiness product-readiness production-db-preflight launch-readiness secret-scan restore-drill clean
 
 help:
 	@printf '%s\n' \
@@ -17,6 +17,9 @@ help:
 	  'make web-build  Install and build the Studio frontend' \
 	  'make pilot-readiness  Check real-world validation engineering readiness' \
 	  'make product-readiness Check JTBD, product loop, flywheel, and commercial readiness' \
+	  'make production-db-preflight  Read-only migration preflight; never changes a database' \
+	  'make launch-readiness  Check first-user production launch engineering readiness' \
+	  'make secret-scan  Scan tracked files for credential leakage' \
 	  'make clean      Remove local Python/test caches'
 
 bootstrap:
@@ -49,6 +52,18 @@ pilot-readiness:
 
 product-readiness:
 	$(UV) run python scripts/product_readiness.py
+
+production-db-preflight:
+	$(UV) run python scripts/production_db_preflight.py
+
+launch-readiness:
+	$(UV) run python scripts/launch_readiness.py
+
+secret-scan:
+	$(UV) run python scripts/secret_scan.py
+
+restore-drill:
+	$(UV) run python scripts/restore_drill.py --environment test
 
 clean:
 	rm -rf .pytest_cache .mypy_cache .ruff_cache

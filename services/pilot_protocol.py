@@ -245,7 +245,9 @@ def run_pilot_analysis(
 ) -> dict[str, Any]:
     """Analyze supplied real events; never manufacture an empty-cohort result."""
 
-    rows = list(observations)
+    from services.real_user_data import production_analytics_allowed
+
+    rows = [row for row in observations if production_analytics_allowed(row)]
     if not real_world or not rows:
         return {
             "status": "INSUFFICIENT_REAL_WORLD_EVIDENCE",

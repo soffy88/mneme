@@ -134,8 +134,9 @@ services:
       - helios-net
       - stratum-net
     healthcheck:
-      # /health 现在真打 DB（SELECT 1），不再是恒 ok 的静态桩——能反映真实就绪度。
-      test: ["CMD", "python3", "-c", "import urllib.request,sys; sys.exit(0 if urllib.request.urlopen('http://localhost:8000/health').status==200 else 1)"]
+      # liveness 与 readiness 分离：容器只有在 DB + migration compatibility
+      # ready 后才算 healthy；/health 仅表示进程存活。
+      test: ["CMD", "python3", "-c", "import urllib.request,sys; sys.exit(0 if urllib.request.urlopen('http://localhost:8000/readiness').status==200 else 1)"]
       interval: 30s
       timeout: 5s
       retries: 3
