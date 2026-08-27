@@ -2,14 +2,16 @@
 
 import { useCallback, useEffect, useState } from "react";
 import {
-  OButton, OCard, OCardHeader, OCardTitle, OTextInput, OProgress,
+  OButton, OCard, OCardHeader, OCardTitle, OTextInput,
   OEmptyState,
 } from "@helios/blocks";
 import {
   mcp, getStudentId, getToken, redirectToLogin,
   type NextStep, type Mastery,
+  type LearnNowView,
 } from "@/lib/mcp";
 import { MathText } from "@/components/MathText";
+import Link from "next/link";
 
 // 一套登录：student_id 取自 mneme 登录会话（mneme_user），**不再走 ?student=**。
 // 学习路径（AA.5）：默认经 GetPath 按学生档案拉（有内容的 KC、按章节序）；`?kcs=` 仍可覆盖；
@@ -43,6 +45,7 @@ export default function LearnPage() {
     { question_id: string; prompt: string; qtype: string } | null
   >(null);
   const [mastery, setMastery] = useState<Mastery | null>(null);
+  const [learnNow, setLearnNow] = useState<LearnNowView | null>(null);
   const [answer, setAnswer] = useState("");
   const [feedback, setFeedback] = useState<{ ok: boolean; msg: string } | null>(null);
   const [busy, setBusy] = useState(false);
@@ -54,6 +57,14 @@ export default function LearnPage() {
     try {
       const s = await mcp.nextObjective(c.studentId, c.kcIds);
       setStep(s);
+      try {
+        const productView = await mcp.productLearnNow(c.studentId);
+        setLearnNow(productView);
+      } catch {
+        // The existing learning path remains usable if the product projection
+        // is temporarily unavailable; it never makes a local policy choice.
+        setLearnNow(null);
+      }
       if (s.kc_id) setMastery(await mcp.checkMastery(c.studentId, s.kc_id));
       // 人在环出题：complete→无题；已有待答题→用它；否则自动请求下一题（RequestQuestion）。
       if (s.action === "complete" || !s.kc_id) {
@@ -92,6 +103,7 @@ export default function LearnPage() {
       }
       const c = { studentId: sid, kcIds };
       setCtx(c);
+      void mcp.productEvent(sid, "learning_session_started", kcIds).catch(() => undefined);
       void refresh(c);
     })();
   }, [refresh]);
@@ -102,6 +114,7 @@ export default function LearnPage() {
     setFeedback(null);
     try {
       const r = await mcp.submitAnswer(ctx.studentId, question.question_id, answer);
+      void mcp.productEvent(ctx.studentId, "next_best_action_completed", step?.kc_id ? [step.kc_id] : [], learnNow?.policy_decision_id ?? undefined).catch(() => undefined);
       if (r.needs_qualitative) {
         // verifier 暂不可用（无 key/rubric）→ 交外部评判的退回态
         setFeedback({ ok: true, msg: "你的解释已提交，老师会评判后给你反馈。" });
@@ -139,17 +152,25 @@ export default function LearnPage() {
   return (
     <main className="mx-auto max-w-2xl p-6 space-y-4" data-testid="learn-root">
       <header className="flex items-center justify-between">
-        <h1 className="text-2xl font-bold">善学记 · 学习</h1>
+        <h1 className="text-2xl font-bold">善学记 · Learn Now</h1>
         <OButton size="sm" onClick={() => void refresh(ctx)} data-testid="refresh">
           刷新
         </OButton>
       </header>
 
+      <nav className="flex flex-wrap gap-3 text-sm" aria-label="学习导航">
+        <Link href="/learn" className="font-semibold">Learn Now</Link>
+        <Link href="/today">Today</Link>
+        <Link href="/memory">Memory</Link>
+        <Link href="/weak-areas">Weak Areas</Link>
+        <Link href="/progress">Progress</Link>
+      </nav>
+
       {error && (
         <OCard data-testid="error"><div className="p-4 text-sm text-[var(--o-color-danger,#c00)]">出错了：{error}</div></OCard>
       )}
 
-      {/* 掌握度进度 */}
+      {/* 状态标签来自服务端；前端不计算掌握度或选择策略。 */}
       {mastery && (
         <OCard data-testid="mastery">
           <div className="p-4 space-y-2">
@@ -167,10 +188,27 @@ export default function LearnPage() {
                 {mastery.is_mastered ? "已过门" : "学习中"}
               </span>
             </div>
-            <OProgress value={Math.round((mastery.p_learned_lower_bound || 0) * 100)} data-testid="mastery-bar" />
             <div className="text-xs text-[var(--o-color-fg-muted,#888)]" data-testid="mastery-stats">
-              掌握下界 {Math.round((mastery.p_learned_lower_bound || 0) * 100)}% · 作答 {mastery.n_obs} 次
+              状态由 Mneme 的认知模型提供 · 证据记录 {mastery.n_obs} 次
             </div>
+          </div>
+        </OCard>
+      )}
+
+      {learnNow && (
+        <OCard data-testid="why-this">
+          <div className="p-4 space-y-2">
+            <div className="font-semibold">Why this?</div>
+            {learnNow.status === "CAUGHT_UP" ? (
+              <div className="text-sm">You’re caught up.</div>
+            ) : (
+              <>
+                <div className="text-sm">下一步由 PolicyDecision 选择。</div>
+                <div className="text-xs text-[var(--o-color-fg-muted,#888)]">
+                  {learnNow.reason_codes.length ? learnNow.reason_codes.join(" · ") : "证据正在积累"}
+                </div>
+              </>
+            )}
           </div>
         </OCard>
       )}

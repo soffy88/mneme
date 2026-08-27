@@ -2662,3 +2662,10 @@ CI 常驻的判分准确率回归门，堵死"构造桩题掩盖真实数据判�
   migration、uncertainty-first policy、pilot protocol/RMG-AM runner、model evaluation
   slices、pipeline counters、purge/export/interop guards；新增 closure contract tests
   与文档。未宣称真实学生、RCT、商业或线上运行证据。
+- [x] **GH-0.14 Product closure — JTBD / data flywheel / commercial readiness** ✅ 2026-08-27：
+  增加 learner-facing JTBD 与 first-value contract、Learn Now/Today/Memory/Weak Areas/
+  Progress projections、return/notification contract；复用 LearningEvent 建立
+  PolicyOutcomeLink、LearningOutcomeLedger、usable-evidence flywheel health、product/cohort
+  analytics、demo isolation；增加 FREE/PRO server-side entitlements 与 provider-neutral
+  billing boundary、readiness command、tests 和文档。无真实用户、收入、留存、learning-effect
+  或 product-market-fit 证据。

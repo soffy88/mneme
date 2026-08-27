@@ -13,6 +13,7 @@ from sqlalchemy import (
     Date,
     DateTime,
     ForeignKey,
+    Index,
     Text,
     SmallInteger,
     UniqueConstraint,
@@ -853,6 +854,90 @@ class PilotEvidenceRegistry(Base):
     )
     created_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True), server_default=text("now()"), nullable=False
+    )
+
+
+class PolicyOutcomeLinkRecord(Base):
+    """Append-only edge from a policy decision to its observed outcome."""
+
+    __tablename__ = "policy_outcome_links"
+    __table_args__ = (
+        UniqueConstraint(
+            "decision_id",
+            "action_event_id",
+            "outcome_event_id",
+            name="uq_policy_outcome_link_edge",
+        ),
+        CheckConstraint(
+            "contamination_status IN ('CLEAN', 'AI_ASSISTED', 'HINT_ASSISTED', 'ANSWER_EXPOSED', 'INVALIDATED', 'UNKNOWN')",
+            name="ck_policy_outcome_link_contamination",
+        ),
+    )
+
+    link_id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True), primary_key=True, server_default=text("gen_random_uuid()")
+    )
+    student_id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True), ForeignKey("users.id"), nullable=False
+    )
+    decision_id: Mapped[uuid.UUID] = mapped_column(UUID(as_uuid=True), nullable=False)
+    action_event_id: Mapped[uuid.UUID] = mapped_column(UUID(as_uuid=True), nullable=False)
+    outcome_event_id: Mapped[uuid.UUID] = mapped_column(UUID(as_uuid=True), nullable=False)
+    latency_seconds: Mapped[Optional[float]] = mapped_column(Float)
+    eligible_for_evaluation: Mapped[bool] = mapped_column(
+        Boolean, nullable=False, server_default=text("false")
+    )
+    contamination_status: Mapped[str] = mapped_column(
+        String(16), nullable=False, server_default="UNKNOWN"
+    )
+    trace_id: Mapped[Optional[str]] = mapped_column(String(128))
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), server_default=text("now()"), nullable=False
+    )
+
+
+class LearningOutcomeLedgerRecord(Base):
+    """Query projection of LearningEvent outcomes, not a second event store."""
+
+    __tablename__ = "learning_outcome_ledger"
+    ledger_id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True), primary_key=True, server_default=text("gen_random_uuid()")
+    )
+    student_id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True), ForeignKey("users.id"), nullable=False
+    )
+    decision_id: Mapped[uuid.UUID] = mapped_column(UUID(as_uuid=True), nullable=False)
+    action_event_id: Mapped[uuid.UUID] = mapped_column(UUID(as_uuid=True), nullable=False)
+    outcome_event_id: Mapped[uuid.UUID] = mapped_column(UUID(as_uuid=True), nullable=False)
+    knowledge_ref: Mapped[Optional[str]] = mapped_column(String(100))
+    state_version: Mapped[Optional[str]] = mapped_column(String(120))
+    policy_version: Mapped[Optional[str]] = mapped_column(String(120))
+    outcome: Mapped[dict] = mapped_column(
+        JSONB, nullable=False, server_default=text("'{}'::jsonb")
+    )
+    evaluation_phase: Mapped[Optional[str]] = mapped_column(String(32))
+    evaluation_kind: Mapped[str] = mapped_column(
+        String(20), nullable=False, server_default="descriptive"
+    )
+    contamination_status: Mapped[str] = mapped_column(
+        String(16), nullable=False, server_default="UNKNOWN"
+    )
+    protocol_id: Mapped[Optional[str]] = mapped_column(String(120))
+    protocol_version: Mapped[Optional[str]] = mapped_column(String(40))
+    occurred_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False)
+    synthetic: Mapped[bool] = mapped_column(
+        Boolean, nullable=False, server_default=text("false")
+    )
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), server_default=text("now()"), nullable=False
+    )
+
+    __table_args__ = (
+        CheckConstraint(
+            "contamination_status IN ('CLEAN', 'AI_ASSISTED', 'HINT_ASSISTED', 'ANSWER_EXPOSED', 'INVALIDATED', 'UNKNOWN')",
+            name="ck_learning_outcome_ledger_contamination",
+        ),
+        Index("ix_learning_outcome_ledger_student_time", "student_id", "occurred_at"),
     )
 
 

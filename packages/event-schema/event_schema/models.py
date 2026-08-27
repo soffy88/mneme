@@ -73,6 +73,15 @@ class ProcessSignals(BaseModel):
     interruptions: int | None = Field(default=None, ge=0)
     interleaved: bool | None = None
     days_since_last: float | None = Field(default=None, ge=0.0)
+    # Product analytics must use active learning time, never session wall-clock.
+    # These fields are optional because old events cannot be retrofitted with
+    # activity evidence without inventing data.
+    active_learning_seconds: float | None = Field(default=None, ge=0.0)
+    idle_seconds: float | None = Field(default=None, ge=0.0)
+    background_seconds: float | None = Field(default=None, ge=0.0)
+    upload_processing_seconds: float | None = Field(default=None, ge=0.0)
+    ai_latency_seconds: float | None = Field(default=None, ge=0.0)
+    system_wait_seconds: float | None = Field(default=None, ge=0.0)
 
 
 class MetacognitiveSignals(BaseModel):

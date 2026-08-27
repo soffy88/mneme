@@ -66,6 +66,61 @@ async function call<T>(tool: string, payload: unknown): Promise<T> {
   return (await res.json()) as T;
 }
 
+async function apiGet<T>(path: string): Promise<T> {
+  const token = getToken();
+  const res = await fetch(`${API_BASE}${path}`, {
+    headers: token ? { Authorization: `Bearer ${token}` } : {},
+  });
+  if (!res.ok) {
+    if (res.status === 401 && typeof window !== "undefined") redirectToLogin();
+    throw new McpError(res.status, await res.text());
+  }
+  return (await res.json()) as T;
+}
+
+async function apiPost<T>(path: string, payload: unknown): Promise<T> {
+  const token = getToken();
+  const res = await fetch(`${API_BASE}${path}`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      ...(token ? { Authorization: `Bearer ${token}` } : {}),
+    },
+    body: JSON.stringify(payload),
+  });
+  if (!res.ok) {
+    if (res.status === 401 && typeof window !== "undefined") redirectToLogin();
+    throw new McpError(res.status, await res.text());
+  }
+  return (await res.json()) as T;
+}
+
+export interface LearnNowView {
+  status: string;
+  selected_action?: { action?: string; candidate_id?: string } | null;
+  policy_decision_id?: string | null;
+  reason_codes: string[];
+  evidence_refs: string[];
+  why_this: { claim_type?: string; claim_value?: unknown; evidence_refs: string[] }[];
+}
+
+export interface ProductProgress {
+  activity_progress: { active_minutes: number | null; attempts: number | null; reviews: number | null; learning_days: number | null };
+  learning_progress: { retained_mastery?: unknown; retention?: unknown; transfer?: unknown; independent_performance?: unknown; jol_calibration?: unknown; long_term_retention_label: string };
+  evidence_mode: string;
+}
+
+export type ProductEventType =
+  | "content_ready"
+  | "learning_session_started"
+  | "first_value_completed"
+  | "next_best_action_started"
+  | "next_best_action_completed"
+  | "learning_session_completed"
+  | "return_reason_presented"
+  | "review_completed"
+  | "independent_test_completed";
+
 export class McpError extends Error {
   constructor(public status: number, public detail: string) {
     super(`MCP ${status}: ${detail}`);
@@ -291,4 +346,19 @@ export const mcp = {
   // W4 Visualize：非学生数据，不传 student_id。
   visualizeConcept: (conceptText: string) =>
     call<VisualizeConceptResult>("VisualizeConcept", { concept_text: conceptText }),
+
+  // Product surfaces are read projections over the same policy/state/event APIs.
+  productLearnNow: (studentId: string) => apiGet<LearnNowView>(`/v2/product/learn-now/${studentId}`),
+  productFirstValue: (studentId: string) => apiGet<{ stage: string; time_to_first_value_seconds: number | null }>(`/v2/product/first-value/${studentId}`),
+  productProgress: (studentId: string) => apiGet<ProductProgress>(`/v2/product/progress/${studentId}`),
+  productMemory: (studentId: string) => apiGet<{ items: unknown[]; status: string }>(`/v2/product/memory/${studentId}`),
+  productWeakAreas: (studentId: string) => apiGet<{ items: unknown[]; status: string }>(`/v2/product/weak-areas/${studentId}`),
+  productReturnReason: (studentId: string) => apiGet<{ return_reason: { reason: string }; notification: { should_send: boolean } }>(`/v2/product/return-reason/${studentId}`),
+  productEvent: (studentId: string, eventType: ProductEventType, knowledgeRefs: string[] = [], policyDecisionId?: string) =>
+    apiPost<{ event_id: string }>(`/v2/product/events/${studentId}`, {
+      event_type: eventType,
+      occurred_at: new Date().toISOString(),
+      knowledge_refs: knowledgeRefs,
+      policy_decision_id: policyDecisionId,
+    }),
 };

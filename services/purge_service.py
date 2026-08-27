@@ -47,6 +47,8 @@ _STUDENT_TABLES: list[tuple[str, str]] = [
     ("pilot_enrollments", "student_id"),
     ("pilot_assignments", "student_id"),
     ("pilot_measurement_schedules", "student_id"),
+    ("policy_outcome_links", "student_id"),
+    ("learning_outcome_ledger", "student_id"),
     ("memory_claims", "student_id"),
     ("interaction_history", "student_id"),
     ("kc_mastery", "student_id"),

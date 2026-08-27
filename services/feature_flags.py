@@ -61,6 +61,8 @@ PILOT_COHORT_ALLOWLIST = "PILOT_COHORT_ALLOWLIST"
 PILOT_POLICY_EXPERIMENT_ENABLED = "PILOT_POLICY_EXPERIMENT_ENABLED"
 PILOT_INDEPENDENT_EVAL_ENABLED = "PILOT_INDEPENDENT_EVAL_ENABLED"
 PILOT_KILL_SWITCH = "PILOT_KILL_SWITCH"
+DEMO_MODE = "DEMO_MODE"
+NOTIFICATIONS_ENABLED = "NOTIFICATIONS_ENABLED"
 
 
 def _explicitly_on(name: str) -> bool:
@@ -124,3 +126,15 @@ def pilot_config() -> dict[str, object]:
         "independent_eval_enabled": pilot_independent_eval_enabled(),
         "kill_switch_active": pilot_kill_switch_active(),
     }
+
+
+def demo_mode_enabled() -> bool:
+    """Enable explicitly marked synthetic demo content only in non-production."""
+
+    return _explicitly_on(DEMO_MODE) and os.environ.get("MNEME_ENV", "dev").lower() != "prod"
+
+
+def notifications_enabled() -> bool:
+    """Notifications are opt-in; this flag never sends a notification itself."""
+
+    return _explicitly_on(NOTIFICATIONS_ENABLED)

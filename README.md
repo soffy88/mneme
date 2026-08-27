@@ -143,6 +143,11 @@ report、analysis manifest/replay 和 artifact-backed evidence registry。运行
 没有真实事件时只返回 `PENDING` / `INSUFFICIENT_EVIDENCE` / `WINDOW_NOT_REACHED`，
 不会生成 synthetic 结果。
 
+`make product-readiness` 检查 learner-facing JTBD、first value、Learn Now/Today/Memory/
+Weak Areas/Progress 产品循环、数据飞轮、demo 隔离、server-side entitlement、provider-neutral
+billing 和前端。产品与商业 readiness 是工程契约；没有真实用户、收入、留存、学习效果或
+product-market-fit 证据的声明。
+
 影子评估同时报告 AUC 与 log-loss。学习系统不能只追求排序能力，还必须验证概率校准、留存、迁移、元认知和安全指标。
 
 ```bash

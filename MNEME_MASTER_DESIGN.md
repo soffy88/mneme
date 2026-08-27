@@ -950,6 +950,18 @@ PilotProtocol 和 RMG/AM 只提供真实事件分析基础设施。没有真实 
 结果必须是 `INSUFFICIENT_REAL_WORLD_EVIDENCE`，不得用 synthetic 数据替代；
 contract/offline/observational 不能升级为 randomized/commercial 结论。
 
+### Product closure: JTBD, flywheel, and commercial boundary
+
+Mneme 的 learner-facing contract 是 `Learn Now → Today → Memory → Weak Areas →
+Progress → Why this?`。这些页面是现有 LearningEvent、CognitiveState、PolicyDecision 和
+Evidence 层的产品投影；产品行为仍写入 LearningEvent v2。`PolicyOutcomeLink` 和
+`LearningOutcomeLedger` 是查询投影，不是第二套 event store 或 analytics 系统。
+
+Product retention 与 learning retention 分离。没有真实用户时 product/cohort analytics 返回
+`NO REAL USER DATA`；demo 数据明确标记 synthetic，并排除出正式 analytics、evaluation 和
+commercial metrics。FREE/PRO entitlement 在服务端执行，价格为 `TBD_OWNER_DECISION`，没有
+默认 payment provider。仓库不声称 revenue、conversion、learning effect 或 product-market fit。
+
 ### Real-world validation readiness（2026-08-26）
 
 真实用户验证只作为测量层接入，不改变 Event → Cognitive State → Policy 的事实/推断/

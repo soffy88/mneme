@@ -65,3 +65,18 @@ these contracts while leaving all rollout flags off.
 Engineering readiness is not real-world evidence. No pilot, randomized effect or
 commercial claim may be published until owner-approved consent/protocol and real
 student observations produce a replayable analysis artifact.
+## Product and commercial boundary
+
+Learner-facing surfaces use `Learn Now`, `Today`, `Memory`, `Weak Areas`,
+`Progress`, and `Why this?`; they must not require knowledge of BKT, FSRS, IRT,
+or Policy Engine. Learn Now/Today consume the existing server PolicyDecision.
+Frontend code may not compute mastery or choose a learning policy. Memory and
+misconception views retain evidence references and use `Unknown`/`Possible
+misconception` when evidence is insufficient.
+
+Product retention is not learning retention. Synthetic/demo events are marked
+and excluded from formal analytics, evaluation, and commercial metrics. Without
+real users or billing, surfaces show `NO REAL USER DATA` or `NO COMMERCIAL
+EVIDENCE`, never fabricated zeros. FREE/PRO entitlement is server-side and the
+billing adapter is provider-neutral until the owner approves a provider and the
+associated legal/operational policy.

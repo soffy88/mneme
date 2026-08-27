@@ -3,7 +3,7 @@
 PYTHON ?= .venv/bin/python
 UV ?= uv
 
-.PHONY: help bootstrap dev test migrate seed backfill-events-dry-run backfill-events web-build pilot-readiness clean
+.PHONY: help bootstrap dev test migrate seed backfill-events-dry-run backfill-events web-build pilot-readiness product-readiness clean
 
 help:
 	@printf '%s\n' \
@@ -16,6 +16,7 @@ help:
 	  'make test       Run the repository quality gate' \
 	  'make web-build  Install and build the Studio frontend' \
 	  'make pilot-readiness  Check real-world validation engineering readiness' \
+	  'make product-readiness Check JTBD, product loop, flywheel, and commercial readiness' \
 	  'make clean      Remove local Python/test caches'
 
 bootstrap:
@@ -45,6 +46,9 @@ web-build:
 
 pilot-readiness:
 	$(UV) run python scripts/pilot_readiness.py
+
+product-readiness:
+	$(UV) run python scripts/product_readiness.py
 
 clean:
 	rm -rf .pytest_cache .mypy_cache .ruff_cache
