@@ -196,7 +196,7 @@ async def ingest_immersive_event(
             student_id=student_id,
             kc_id=decision.knowledge_ref,
             is_correct=bool(correctness),
-            event_id=eid,
+            event_id=None,  # Do not reuse immersive event_id for legacy interaction
             question_type=f"immersive_{action}",
             source="immersive",  # InteractionSource.immersive (PG enum)
             evaluation_phase=evaluation_phase,

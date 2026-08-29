@@ -209,13 +209,19 @@ async def upload_media(
             title=title,
             language=language,
         )
+        # Capture attributes before commit (expire_on_commit=True default)
+        media_id = str(asset.id)
+        media_type = asset.media_type
+        asset_title = asset.title
+        storage_ref = asset.storage_ref
+        content_provenance = asset.content_provenance
         await db.commit()
         return {
-            "media_id": str(asset.id),
-            "media_type": asset.media_type,
-            "title": asset.title,
-            "storage_ref": asset.storage_ref,
-            "content_provenance": asset.content_provenance,
+            "media_id": media_id,
+            "media_type": media_type,
+            "title": asset_title,
+            "storage_ref": storage_ref,
+            "content_provenance": content_provenance,
         }
     except (UploadValidationError, MediaServiceError) as exc:
         await db.rollback()
@@ -371,16 +377,21 @@ async def open_session(
         session = await start_or_resume_session(
             db, student_id=student_id, media_id=media_id
         )
+        # Capture attributes before commit (expire_on_commit=True default)
+        sess_id = str(session.id)
+        sess_media_id = str(session.media_id)
+        playhead_ms = session.playhead_ms
+        current_segment_id = str(session.current_segment_id) if session.current_segment_id else None
+        scaffold_level = session.scaffold_level
+        sess_state = session.state
         await db.commit()
         return {
-            "session_id": str(session.id),
-            "media_id": str(session.media_id),
-            "playhead_ms": session.playhead_ms,
-            "current_segment_id": str(session.current_segment_id)
-            if session.current_segment_id
-            else None,
-            "scaffold_level": session.scaffold_level,
-            "state": session.state,
+            "session_id": sess_id,
+            "media_id": sess_media_id,
+            "playhead_ms": playhead_ms,
+            "current_segment_id": current_segment_id,
+            "scaffold_level": scaffold_level,
+            "state": sess_state,
             "note": "playhead is continuity only; not CognitiveState",
         }
     except MediaServiceError as exc:
@@ -408,15 +419,19 @@ async def patch_session(
             scaffold_level=body.scaffold_level,
             state=body.state,
         )
+        # Capture attributes before commit (expire_on_commit=True default)
+        sess_id = str(session.id)
+        playhead_ms = session.playhead_ms
+        current_segment_id = str(session.current_segment_id) if session.current_segment_id else None
+        scaffold_level = session.scaffold_level
+        sess_state = session.state
         await db.commit()
         return {
-            "session_id": str(session.id),
-            "playhead_ms": session.playhead_ms,
-            "current_segment_id": str(session.current_segment_id)
-            if session.current_segment_id
-            else None,
-            "scaffold_level": session.scaffold_level,
-            "state": session.state,
+            "session_id": sess_id,
+            "playhead_ms": playhead_ms,
+            "current_segment_id": current_segment_id,
+            "scaffold_level": scaffold_level,
+            "state": sess_state,
         }
     except MediaServiceError as exc:
         await db.rollback()

@@ -36,18 +36,25 @@ async def main():
     print("SID:"+str(sid)); print("TOK:"+tok)
 asyncio.run(main())
 `.trim();
-  const out = execSync(`.venv/bin/python -c ${JSON.stringify(py)}`, {
-    cwd: MNEME,
-    encoding: "utf-8",
-    env: {
-      ...process.env,
-      DATABASE_URL: process.env.IMMERSIVE_E2E_DATABASE_URL || process.env.DATABASE_URL || "",
-    },
-  });
-  const studentId = (out.match(/SID:(\S+)/) || [])[1] || "";
-  const token = (out.match(/TOK:(\S+)/) || [])[1] || "";
-  if (!studentId || !token) throw new Error("failed to seed immersive e2e student");
-  return { studentId, token };
+  // Write to temp file to avoid shell escaping issues with newlines
+  const tmpPy = join(tmpdir(), `create-student-${Date.now()}.py`);
+  writeFileSync(tmpPy, py, { encoding: "utf-8" });
+  try {
+    const out = execSync(`.venv/bin/python ${tmpPy}`, {
+      cwd: MNEME,
+      encoding: "utf-8",
+      env: {
+        ...process.env,
+        DATABASE_URL: process.env.IMMERSIVE_E2E_DATABASE_URL || process.env.DATABASE_URL || "",
+      },
+    });
+    const studentId = (out.match(/SID:(\S+)/) || [])[1] || "";
+    const token = (out.match(/TOK:(\S+)/) || [])[1] || "";
+    if (!studentId || !token) throw new Error("failed to seed immersive e2e student");
+    return { studentId, token };
+  } finally {
+    try { unlinkSync(tmpPy); } catch { /* ignore */ }
+  }
 }
 
 function tinyWav(): Buffer {
@@ -245,11 +252,10 @@ test.describe("Immersive Learning — live isolated API", () => {
     const tel = await request.post(`${LIVE_API}/v2/immersive/${studentId}/telemetry`, {
       headers: { Authorization: `Bearer ${token}` },
       data: {
-        session_id: session.session_id,
         events: [
-          { event_type: "play", t_ms: 0 },
-          { event_type: "pause", t_ms: 100 },
-          { event_type: "seek", t_ms: 200, payload: { to_ms: 500 } },
+          { event_type: "play", session_id: session.session_id, media_id: mediaId },
+          { event_type: "pause", session_id: session.session_id, media_id: mediaId },
+          { event_type: "seek", session_id: session.session_id, media_id: mediaId, payload: { to_ms: 500 } },
         ],
       },
     });

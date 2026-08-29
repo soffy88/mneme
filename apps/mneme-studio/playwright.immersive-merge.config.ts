@@ -5,6 +5,9 @@ export default defineConfig({
   testDir: "./e2e",
   testMatch: /immersive\.spec\.ts/,
   timeout: 90_000,
-  use: { baseURL: "http://127.0.0.1:3102", headless: true },
+  use: {
+    baseURL: process.env.E2E_FRONTEND_BASE || "http://127.0.0.1:3001",
+    headless: true
+  },
   reporter: [["list"]],
 });
