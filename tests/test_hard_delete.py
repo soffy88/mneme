@@ -43,6 +43,9 @@ def storage_cleanup_available(monkeypatch):
     monkeypatch.setattr(
         "services.purge_service._delete_textbook_files_blobs", no_storage_cleanup
     )
+    monkeypatch.setattr(
+        "services.purge_service._delete_media_files_blobs", no_storage_cleanup
+    )
 
 
 async def _mk_user(db, *, deleted_days_ago: int | None) -> uuid.UUID:

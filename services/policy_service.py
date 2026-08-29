@@ -192,6 +192,62 @@ async def next_best_action(
         mastery_by_kc=mastery_by_kc,
         transfer_by_kc=transfer_by_kc,
     )
+    # Immersive Learning candidates (feature-flagged) — no separate recommender.
+    from services.feature_flags import immersive_learning_enabled
+
+    if immersive_learning_enabled():
+        immersive_tasks = [
+            {
+                "candidate_id": "VIDEO_SEGMENT_TASK",
+                "type": "VIDEO_SEGMENT_TASK",
+                "estimated_minutes": 3,
+                "expected_gain": 0.35,
+                "ku_ids": [],
+            },
+            {
+                "candidate_id": "LISTENING_TASK",
+                "type": "LISTENING_TASK",
+                "estimated_minutes": 4,
+                "expected_gain": 0.4,
+                "ku_ids": [],
+            },
+            {
+                "candidate_id": "DICTATION_TASK",
+                "type": "DICTATION_TASK",
+                "estimated_minutes": 4,
+                "expected_gain": 0.45,
+                "ku_ids": [],
+            },
+            {
+                "candidate_id": "COMPREHENSION_TASK",
+                "type": "COMPREHENSION_TASK",
+                "estimated_minutes": 3,
+                "expected_gain": 0.4,
+                "ku_ids": [],
+            },
+            {
+                "candidate_id": "RECALL_TASK",
+                "type": "RECALL_TASK",
+                "estimated_minutes": 3,
+                "expected_gain": 0.5,
+                "ku_ids": [],
+            },
+            {
+                "candidate_id": "TRANSFER_TASK",
+                "type": "TRANSFER_TASK",
+                "estimated_minutes": 5,
+                "expected_gain": 0.55,
+                "ku_ids": [],
+                "transfer_need": 0.8,
+            },
+        ]
+        candidates.extend(
+            candidates_from_plan(
+                immersive_tasks,
+                mastery_by_kc=mastery_by_kc,
+                transfer_by_kc=transfer_by_kc,
+            )
+        )
     decision = choose_next_action(
         candidates,
         PolicyContext(near_exam=bool(plan.get("near_exam"))),

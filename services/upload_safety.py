@@ -14,6 +14,13 @@ _CONTENT_TYPES = {
     ".jpeg": {"image/jpeg"},
     ".png": {"image/png"},
     ".webp": {"image/webp"},
+    ".mp4": {"video/mp4", "application/octet-stream"},
+    ".webm": {"video/webm", "application/octet-stream"},
+    ".mp3": {"audio/mpeg", "audio/mp3", "application/octet-stream"},
+    ".m4a": {"audio/mp4", "audio/m4a", "application/octet-stream"},
+    ".wav": {"audio/wav", "audio/x-wav", "application/octet-stream"},
+    ".srt": {"application/x-subrip", "text/plain", "application/octet-stream"},
+    ".vtt": {"text/vtt", "text/plain", "application/octet-stream"},
 }
 
 

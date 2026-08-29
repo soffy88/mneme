@@ -8,6 +8,7 @@ export function ProductNav() {
       <Link href="/memory">Memory</Link>
       <Link href="/weak-areas">Weak Areas</Link>
       <Link href="/progress">Progress</Link>
+      <Link href="/immersive">Immersive</Link>
     </nav>
   );
 }

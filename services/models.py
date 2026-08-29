@@ -1375,3 +1375,236 @@ class ReadingPassage(Base):
     created_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True), server_default=text("now()")
     )
+
+
+# ===== Immersive Learning / Media Learning Engine =====
+# Python attr is `meta` (not `metadata`) to avoid clobbering DeclarativeBase.metadata.
+
+
+class MediaAsset(Base):
+    __tablename__ = "media_assets"
+
+    id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True), primary_key=True, server_default=text("gen_random_uuid()")
+    )
+    owner_student_id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True), ForeignKey("users.id"), nullable=False
+    )
+    media_type: Mapped[str] = mapped_column(String(16), nullable=False)  # VIDEO|AUDIO
+    source_type: Mapped[str] = mapped_column(
+        String(32), nullable=False
+    )  # USER_UPLOAD|OBJECT_STORAGE
+    title: Mapped[str] = mapped_column(String(500), nullable=False)
+    language: Mapped[Optional[str]] = mapped_column(String(16))
+    duration_ms: Mapped[Optional[int]] = mapped_column(Integer)
+    # Object key only — never a signed URL.
+    storage_ref: Mapped[Optional[str]] = mapped_column(String(500))
+    external_ref: Mapped[Optional[str]] = mapped_column(String(500))
+    content_provenance: Mapped[str] = mapped_column(
+        String(32), nullable=False, server_default="USER_UPLOADED"
+    )
+    processing_state: Mapped[str] = mapped_column(
+        String(32), nullable=False, server_default="READY"
+    )
+    meta: Mapped[dict] = mapped_column(
+        "metadata", JSONB, nullable=False, server_default=text("'{}'::jsonb")
+    )
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), server_default=text("now()"), nullable=False
+    )
+    updated_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), server_default=text("now()"), nullable=False
+    )
+
+
+class Transcript(Base):
+    __tablename__ = "transcripts"
+
+    id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True), primary_key=True, server_default=text("gen_random_uuid()")
+    )
+    media_id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True),
+        ForeignKey("media_assets.id", ondelete="CASCADE"),
+        nullable=False,
+    )
+    role: Mapped[str] = mapped_column(
+        String(16), nullable=False, server_default="PRIMARY"
+    )  # PRIMARY|TRANSLATION
+    source: Mapped[str] = mapped_column(
+        String(32), nullable=False
+    )  # uploaded_subtitle|manual|asr
+    format: Mapped[str] = mapped_column(String(16), nullable=False)  # srt|vtt|json
+    language: Mapped[Optional[str]] = mapped_column(String(16))
+    model_version: Mapped[Optional[str]] = mapped_column(String(120))
+    confidence: Mapped[Optional[float]] = mapped_column(Float)
+    provenance: Mapped[dict] = mapped_column(
+        JSONB, nullable=False, server_default=text("'{}'::jsonb")
+    )
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), server_default=text("now()"), nullable=False
+    )
+
+
+class TranscriptSegment(Base):
+    __tablename__ = "transcript_segments"
+    __table_args__ = (
+        CheckConstraint("start_ms >= 0", name="ck_transcript_segments_start_ms"),
+        CheckConstraint("end_ms > start_ms", name="ck_transcript_segments_end_ms"),
+        UniqueConstraint(
+            "transcript_id",
+            "order_index",
+            name="uq_transcript_segments_transcript_order",
+        ),
+    )
+
+    id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True), primary_key=True, server_default=text("gen_random_uuid()")
+    )
+    transcript_id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True),
+        ForeignKey("transcripts.id", ondelete="CASCADE"),
+        nullable=False,
+    )
+    order_index: Mapped[int] = mapped_column(Integer, nullable=False)
+    start_ms: Mapped[int] = mapped_column(Integer, nullable=False)
+    end_ms: Mapped[int] = mapped_column(Integer, nullable=False)
+    text: Mapped[str] = mapped_column(Text, nullable=False)
+    translated_text: Mapped[Optional[str]] = mapped_column(Text)
+    speaker: Mapped[Optional[str]] = mapped_column(String(120))
+    language: Mapped[Optional[str]] = mapped_column(String(16))
+    confidence: Mapped[Optional[float]] = mapped_column(Float)
+
+
+class LearningUnit(Base):
+    """Stable cross-media learning target (lemma / pattern / concept).
+
+    Identity is ``(kind, stable_key)`` — never a transcript segment id.
+    Shared catalog rows have no student_id (not purged per-user).
+    """
+
+    __tablename__ = "learning_units"
+    __table_args__ = (
+        UniqueConstraint("kind", "stable_key", name="uq_learning_units_kind_key"),
+    )
+
+    id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True), primary_key=True, server_default=text("gen_random_uuid()")
+    )
+    kind: Mapped[str] = mapped_column(String(32), nullable=False)
+    stable_key: Mapped[str] = mapped_column(String(200), nullable=False)
+    display_text: Mapped[str] = mapped_column(String(500), nullable=False)
+    language: Mapped[Optional[str]] = mapped_column(String(16))
+    meta: Mapped[dict] = mapped_column(
+        "metadata", JSONB, nullable=False, server_default=text("'{}'::jsonb")
+    )
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), server_default=text("now()"), nullable=False
+    )
+
+
+class LearningUnitOccurrence(Base):
+    """Context link: LearningUnit appears in a specific media segment."""
+
+    __tablename__ = "learning_unit_occurrences"
+    __table_args__ = (
+        UniqueConstraint(
+            "learning_unit_id",
+            "segment_id",
+            name="uq_learning_unit_occurrences_lu_segment",
+        ),
+    )
+
+    id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True), primary_key=True, server_default=text("gen_random_uuid()")
+    )
+    learning_unit_id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True),
+        ForeignKey("learning_units.id", ondelete="CASCADE"),
+        nullable=False,
+    )
+    media_id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True),
+        ForeignKey("media_assets.id", ondelete="CASCADE"),
+        nullable=False,
+    )
+    segment_id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True),
+        ForeignKey("transcript_segments.id", ondelete="CASCADE"),
+        nullable=False,
+    )
+    surface_form: Mapped[Optional[str]] = mapped_column(String(500))
+    char_start: Mapped[Optional[int]] = mapped_column(Integer)
+    char_end: Mapped[Optional[int]] = mapped_column(Integer)
+    meta: Mapped[dict] = mapped_column(
+        "metadata", JSONB, nullable=False, server_default=text("'{}'::jsonb")
+    )
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), server_default=text("now()"), nullable=False
+    )
+
+
+class MediaSession(Base):
+    """Playback continuity only — playhead_ms is not CognitiveState."""
+
+    __tablename__ = "media_sessions"
+
+    id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True), primary_key=True, server_default=text("gen_random_uuid()")
+    )
+    student_id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True), ForeignKey("users.id"), nullable=False
+    )
+    media_id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True),
+        ForeignKey("media_assets.id", ondelete="CASCADE"),
+        nullable=False,
+    )
+    playhead_ms: Mapped[int] = mapped_column(
+        Integer, nullable=False, server_default="0"
+    )
+    current_segment_id: Mapped[Optional[uuid.UUID]] = mapped_column(
+        UUID(as_uuid=True),
+        ForeignKey("transcript_segments.id", ondelete="SET NULL"),
+    )
+    scaffold_level: Mapped[int] = mapped_column(
+        Integer, nullable=False, server_default="0"
+    )
+    state: Mapped[str] = mapped_column(
+        String(32), nullable=False, server_default="ACTIVE"
+    )
+    started_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), server_default=text("now()"), nullable=False
+    )
+    last_active_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), server_default=text("now()"), nullable=False
+    )
+    completed_at: Mapped[Optional[datetime]] = mapped_column(DateTime(timezone=True))
+    meta: Mapped[dict] = mapped_column(
+        "metadata", JSONB, nullable=False, server_default=text("'{}'::jsonb")
+    )
+
+
+class MediaTelemetryEvent(Base):
+    """Short-retention player telemetry — NOT learning_events / Evidence."""
+
+    __tablename__ = "media_telemetry_events"
+
+    id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True), primary_key=True, server_default=text("gen_random_uuid()")
+    )
+    student_id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True), ForeignKey("users.id"), nullable=False
+    )
+    media_id: Mapped[Optional[uuid.UUID]] = mapped_column(UUID(as_uuid=True))
+    session_id: Mapped[Optional[uuid.UUID]] = mapped_column(UUID(as_uuid=True))
+    event_type: Mapped[str] = mapped_column(String(64), nullable=False)
+    payload: Mapped[dict] = mapped_column(
+        JSONB, nullable=False, server_default=text("'{}'::jsonb")
+    )
+    occurred_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), server_default=text("now()"), nullable=False
+    )
+    received_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), server_default=text("now()"), nullable=False
+    )
