@@ -14,6 +14,13 @@ _CONTENT_TYPES = {
     ".jpeg": {"image/jpeg"},
     ".png": {"image/png"},
     ".webp": {"image/webp"},
+    ".mp4": {"video/mp4", "application/octet-stream"},
+    ".webm": {"video/webm", "application/octet-stream"},
+    ".mp3": {"audio/mpeg", "audio/mp3", "application/octet-stream"},
+    ".m4a": {"audio/mp4", "audio/m4a", "application/octet-stream"},
+    ".wav": {"audio/wav", "audio/x-wav", "application/octet-stream"},
+    ".srt": {"application/x-subrip", "text/plain", "application/octet-stream"},
+    ".vtt": {"text/vtt", "text/plain", "application/octet-stream"},
 }
 
 
@@ -36,6 +43,29 @@ def max_upload_bytes() -> int:
     return value
 
 
+# Intermediate suffixes that make "double extension" uploads dangerous even when
+# the final suffix is allowlisted (e.g. ``payload.php.mp4``).
+_DANGEROUS_INNER_SUFFIXES = {
+    ".php",
+    ".phtml",
+    ".asp",
+    ".aspx",
+    ".jsp",
+    ".cgi",
+    ".exe",
+    ".bat",
+    ".cmd",
+    ".com",
+    ".js",
+    ".mjs",
+    ".html",
+    ".htm",
+    ".shtml",
+    ".svg",
+    ".xml",
+}
+
+
 def validate_filename(filename: str | None, *, allowed_extensions: set[str] | None = None) -> str:
     name = filename or "untitled"
     if "\x00" in name or "\\" in name or Path(name).is_absolute() or ".." in Path(name).parts:
@@ -46,6 +76,13 @@ def validate_filename(filename: str | None, *, allowed_extensions: set[str] | No
     extension = Path(safe).suffix.lower()
     if allowed_extensions is not None and extension not in allowed_extensions:
         raise UploadValidationError("不支持的文件类型")
+    # Reject double-extension disguises: foo.php.mp4 / bar.exe.webm
+    stem_path = Path(safe).with_suffix("")
+    while stem_path.suffix:
+        inner = stem_path.suffix.lower()
+        if inner in _DANGEROUS_INNER_SUFFIXES:
+            raise UploadValidationError("文件名不安全")
+        stem_path = stem_path.with_suffix("")
     return safe
 
 

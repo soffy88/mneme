@@ -65,6 +65,7 @@ DEMO_MODE = "DEMO_MODE"
 NOTIFICATIONS_ENABLED = "NOTIFICATIONS_ENABLED"
 EARLY_ACCESS_MODE = "EARLY_ACCESS_MODE"
 EARLY_ACCESS_ALLOWLIST = "EARLY_ACCESS_ALLOWLIST"
+IMMERSIVE_LEARNING_ENABLED = "IMMERSIVE_LEARNING_ENABLED"
 
 
 def _explicitly_on(name: str) -> bool:
@@ -157,3 +158,9 @@ def early_access_allowlist() -> frozenset[str]:
 
 def early_access_allowed(user_id: str) -> bool:
     return early_access_mode_enabled() and user_id in early_access_allowlist()
+
+
+def immersive_learning_enabled() -> bool:
+    """Immersive / Media Learning Engine. Fail-closed: default OFF for RC2 safety."""
+
+    return _explicitly_on(IMMERSIVE_LEARNING_ENABLED)

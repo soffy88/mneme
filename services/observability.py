@@ -34,6 +34,7 @@ _counters: dict[str, int] = {
     "purge_failures_total": 0,
     "scheduler_failures_total": 0,
     "rate_limit_total": 0,
+    "immersive_requests_total": 0,
 }
 _lock = threading.Lock()
 
@@ -172,6 +173,13 @@ def record_dependency_failure(dependency: str) -> None:
     name = names.get(dependency)
     if name:
         increment_metric(name)
+
+
+def record_immersive_request(action: str | None = None) -> None:
+    """Count Immersive Learning API activity without student identifiers."""
+
+    del action  # reserved for future action-templated labels
+    increment_metric("immersive_requests_total")
 
 
 def route_template(scope: Mapping[str, Any], fallback: str) -> str:

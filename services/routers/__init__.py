@@ -13,6 +13,7 @@ def register_domain_routers(app: FastAPI) -> None:
         cognitive,
         cornell,
         health,
+        immersive,
         memory,
         insights,
         papers,
@@ -49,5 +50,6 @@ def register_domain_routers(app: FastAPI) -> None:
         operator,
         progress,
         subjects,
+        immersive,
     ):
         app.include_router(mod.router)

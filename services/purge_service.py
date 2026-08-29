@@ -87,8 +87,14 @@ _STUDENT_TABLES: list[tuple[str, str]] = [
     # highlights 先于 textbook_files（其 file_id 指向 textbook_files.id）
     ("highlights", "student_id"),
     ("papers", "student_id"),
-    # textbook_files：highlight_id 列名是 owner_student_id 不是 student_id。
+    # Immersive Learning：telemetry/session 先于 media_assets；occurrences /
+    # transcripts / segments 无 student_id，靠 media CASCADE 或显式 helper。
+    ("media_telemetry_events", "student_id"),
+    ("media_sessions", "student_id"),
+    # textbook_files：列名是 owner_student_id 不是 student_id。
     ("textbook_files", "owner_student_id"),
+    # media_assets：owner_student_id；删前收集 storage_ref + occurrences helper。
+    ("media_assets", "owner_student_id"),
     # Phase1 门控内核 gate schema（独立 schema，无 FK，可任意序删）：三表皆带
     # student_id（未成年 PII 关联），随用户删除一并物理清除（合规红线）。
     ("gate.pending_question", "student_id"),
@@ -163,6 +169,7 @@ async def purge_deleted_users(
     # _delete_textbook_files_blobs）。注意顺序：textbook_files 在清单中位次靠后，
     # 但删行发生在循环里，blob 清理紧随其后即可。
     await _collect_textbook_storage_paths(db, id_strs)
+    await _collect_media_storage_refs(db, id_strs)
 
     # memory_claim_evidence has no student_id of its own.  Remove its edges
     # before the student-scoped claim/evidence rows (and before users), even
@@ -181,6 +188,10 @@ async def purge_deleted_users(
         rc = getattr(res, "rowcount", 0)
         if rc:
             tables["memory_claim_evidence"] = rc
+
+    # learning_unit_occurrences 无 student_id；须在删 media_assets 前按所属
+    # media 清掉（CASCADE 是第二道防线）。全局 learning_units 目录不按用户清。
+    await _delete_learning_unit_occurrences_for_students(db, id_strs, tables)
 
     for table, col in _STUDENT_TABLES:
         if not await _table_exists(db, table):
@@ -226,8 +237,10 @@ async def purge_deleted_users(
     # Object deletion happens before the caller commits this DB transaction.
     # If any object cannot be removed, fail the purge so the DB transaction is
     # rolled back and a retry can safely collect the paths again. Missing
-    # objects are already idempotent success in services.storage.delete_file.
+    # objects are already idempotent success in services.storage.delete_file /
+    # delete_media_file.
     failed_blobs = await _delete_textbook_files_blobs()
+    failed_blobs.extend(await _delete_media_files_blobs())
     if failed_blobs:
         raise PurgeStorageCleanupError(failed_blobs)
 
@@ -298,6 +311,57 @@ async def verify_student_purge(
         if count:
             residual["memory_claim_evidence"] = int(count)
 
+    # Immersive tables without student_id — residual via owned media_assets.
+    # Global learning_units catalog is intentionally shared and not checked.
+    if await _table_exists(db, "learning_unit_occurrences") and await _table_exists(
+        db, "media_assets"
+    ):
+        count = (
+            await db.execute(
+                text(
+                    "SELECT count(*) FROM learning_unit_occurrences o "
+                    "JOIN media_assets m ON m.id = o.media_id "
+                    "WHERE m.owner_student_id = :sid"
+                ),
+                {"sid": sid},
+            )
+        ).scalar_one()
+        if count:
+            residual["learning_unit_occurrences"] = int(count)
+
+    if await _table_exists(db, "transcripts") and await _table_exists(
+        db, "media_assets"
+    ):
+        count = (
+            await db.execute(
+                text(
+                    "SELECT count(*) FROM transcripts t "
+                    "JOIN media_assets m ON m.id = t.media_id "
+                    "WHERE m.owner_student_id = :sid"
+                ),
+                {"sid": sid},
+            )
+        ).scalar_one()
+        if count:
+            residual["transcripts"] = int(count)
+
+    if await _table_exists(db, "transcript_segments") and await _table_exists(
+        db, "media_assets"
+    ):
+        count = (
+            await db.execute(
+                text(
+                    "SELECT count(*) FROM transcript_segments s "
+                    "JOIN transcripts t ON t.id = s.transcript_id "
+                    "JOIN media_assets m ON m.id = t.media_id "
+                    "WHERE m.owner_student_id = :sid"
+                ),
+                {"sid": sid},
+            )
+        ).scalar_one()
+        if count:
+            residual["transcript_segments"] = int(count)
+
     if await _table_exists(db, "users"):
         count = (
             await db.execute(
@@ -357,9 +421,10 @@ async def request_delete_and_purge_now(db: AsyncSession, student_id: uuid.UUID) 
     return await purge_deleted_users(db, grace_days=0)
 
 
-# 模块级占位：本任务从 DB 删除用户时，顺带清理其 MinIO blob（教材文件），
-# 不留孤儿对象。MinIO 故障不阻断 PII 物理删除（合规优先，blob 由巡检兜底）。
+# 模块级占位：本任务从 DB 删除用户时，顺带清理其 MinIO blob（教材 + immersive
+# media），不留孤儿对象。MinIO 故障不阻断 PII 物理删除（合规优先，blob 由巡检兜底）。
 _collected_storage_paths: list[str] = []
+_collected_media_storage_refs: list[str] = []
 
 
 async def _collect_textbook_storage_paths(db: AsyncSession, id_strs: list[str]) -> None:
@@ -378,6 +443,45 @@ async def _collect_textbook_storage_paths(db: AsyncSession, id_strs: list[str]) 
         )
     ).all()
     _collected_storage_paths = [r[0] for r in rows if r[0]]
+
+
+async def _collect_media_storage_refs(db: AsyncSession, id_strs: list[str]) -> None:
+    """删行前收集该学生 media_assets.storage_ref，供 immersive-media blob 清理。"""
+    global _collected_media_storage_refs
+    if not await _table_exists(db, "media_assets"):
+        _collected_media_storage_refs = []
+        return
+    rows = (
+        await db.execute(
+            text(
+                "SELECT storage_ref FROM media_assets "
+                "WHERE owner_student_id = ANY(:ids)"
+            ),
+            {"ids": id_strs},
+        )
+    ).all()
+    _collected_media_storage_refs = [r[0] for r in rows if r[0]]
+
+
+async def _delete_learning_unit_occurrences_for_students(
+    db: AsyncSession, id_strs: list[str], tables: dict
+) -> None:
+    """learning_unit_occurrences 无 student_id，靠所属 media 反查删除。"""
+    if not await _table_exists(db, "learning_unit_occurrences"):
+        return
+    if not await _table_exists(db, "media_assets"):
+        return
+    res = await db.execute(
+        text(
+            "DELETE FROM learning_unit_occurrences WHERE media_id IN ("
+            "  SELECT id FROM media_assets WHERE owner_student_id = ANY(:ids)"
+            ")"
+        ),
+        {"ids": id_strs},
+    )
+    rc = getattr(res, "rowcount", 0)
+    if rc:
+        tables["learning_unit_occurrences"] = rc
 
 
 async def _delete_textbook_files_blobs() -> list[str]:
@@ -405,3 +509,78 @@ async def _delete_textbook_files_blobs() -> list[str]:
         logger.warning("MinIO 不可达，blob 清理跳过（DB 删除已优先完成）")
         failed.extend(paths)
     return failed
+
+
+async def _delete_media_files_blobs() -> list[str]:
+    """Delete collected immersive-media object keys from MEDIA_BUCKET."""
+    global _collected_media_storage_refs
+    refs, _collected_media_storage_refs = _collected_media_storage_refs, []
+    if not refs:
+        return []
+    failed: list[str] = []
+    try:
+        from services.storage import delete_media_file
+
+        for ref in refs:
+            try:
+                await asyncio.to_thread(delete_media_file, ref)
+            except Exception:  # noqa: BLE001 — 记录失败并继续清理其余对象
+                logger.warning("immersive media blob 删除失败（留待巡检兜底）: %s", ref)
+                failed.append(ref)
+    except Exception:  # noqa: BLE001 — MinIO 整体不可达
+        logger.warning("MinIO 不可达，immersive media blob 清理跳过")
+        failed.extend(refs)
+    return failed
+
+
+async def delete_media_asset(
+    db: AsyncSession, student_id: uuid.UUID, media_id: uuid.UUID
+) -> dict:
+    """Delete one media asset owned by ``student_id`` (DB cascade + blob).
+
+    Verifies ownership. Cascades remove transcripts, segments, occurrences,
+    and sessions linked to the media. Shared ``learning_units`` catalog rows
+    are left intact. Returns ``{media_id, storage_ref, deleted}``.
+    """
+    sid = str(student_id)
+    mid = str(media_id)
+    if not await _table_exists(db, "media_assets"):
+        raise LookupError("media_assets table missing")
+
+    row = (
+        await db.execute(
+            text(
+                "SELECT storage_ref FROM media_assets "
+                "WHERE id = :mid AND owner_student_id = :sid"
+            ),
+            {"mid": mid, "sid": sid},
+        )
+    ).first()
+    if row is None:
+        raise LookupError("media asset not found or not owned by student")
+
+    storage_ref = row[0]
+    # Explicit occurrence cleanup before media row (CASCADE is backup).
+    if await _table_exists(db, "learning_unit_occurrences"):
+        await db.execute(
+            text("DELETE FROM learning_unit_occurrences WHERE media_id = :mid"),
+            {"mid": mid},
+        )
+
+    await db.execute(
+        text("DELETE FROM media_assets WHERE id = :mid AND owner_student_id = :sid"),
+        {"mid": mid, "sid": sid},
+    )
+
+    if storage_ref:
+        try:
+            from services.storage import delete_media_file
+
+            await asyncio.to_thread(delete_media_file, storage_ref)
+        except Exception:  # noqa: BLE001 — surface as storage failure after DB delete
+            logger.warning(
+                "delete_media_asset: blob cleanup failed for %s", storage_ref
+            )
+            raise PurgeStorageCleanupError([storage_ref]) from None
+
+    return {"media_id": mid, "storage_ref": storage_ref, "deleted": True}

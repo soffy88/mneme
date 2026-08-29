@@ -9,7 +9,8 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from obase.db import get_db
 from services.readiness import health_payload, readiness_payload
 
-EXPECTED_MIGRATION_HEAD = "5e7f8a9b0c12"
+# Must match `alembic heads` (immersive InteractionSource revision).
+EXPECTED_MIGRATION_HEAD = "7b2c3d4e5f6a"
 
 router = APIRouter(tags=["health"])
 
