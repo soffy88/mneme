@@ -318,7 +318,12 @@ export function ImmersiveWorkspace({
               />
               <p className="text-sm opacity-80">Audio · {cueLabel}</p>
               {showSubtitle && current ? (
-                <p className="max-w-xl text-center text-lg">{current.text}</p>
+                <p
+                  data-testid="immersive-current-segment"
+                  className="max-w-xl text-center text-lg"
+                >
+                  {current.text}
+                </p>
               ) : null}
               {showTranslation && current?.translated_text ? (
                 <p className="max-w-xl text-center text-sm text-neutral-400">
@@ -333,7 +338,12 @@ export function ImmersiveWorkspace({
               {mock ? "Mock player (timer-driven)" : "No playback URL"}
             </p>
             {showSubtitle && current ? (
-              <p className="max-w-xl text-center text-lg">{current.text}</p>
+              <p
+                data-testid="immersive-current-segment"
+                className="max-w-xl text-center text-lg"
+              >
+                {current.text}
+              </p>
             ) : null}
             {showTranslation && current?.translated_text ? (
               <p className="max-w-xl text-center text-sm text-neutral-400">

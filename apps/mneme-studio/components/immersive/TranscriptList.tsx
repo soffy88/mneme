@@ -111,6 +111,8 @@ export function TranscriptList({
                 type="button"
                 role="option"
                 aria-selected={active}
+                data-testid="immersive-segment-row"
+                data-active={active ? "true" : "false"}
                 onClick={() => handleClick(index)}
                 className={`absolute left-0 right-0 flex w-full flex-col justify-center border-b border-neutral-50 px-3 text-left transition-colors dark:border-neutral-800 ${
                   active
