@@ -1,0 +1,562 @@
+{
+  "start_time": "2026-08-29T18:30:24Z",
+  "duration_min": 30,
+  "samples": [
+    {
+      "sample": 1,
+      "api_health": 200,
+      "readiness": 200,
+      "flag": 200,
+      "frontend_immersive": 200,
+      "restarts": {
+        "api": 0,
+        "worker": 0,
+        "beat": 0,
+        "frontend": 0
+      },
+      "errors_5min": {
+        "api": 0,
+        "worker": 0,
+        "beat": 0
+      }
+    },
+    {
+      "sample": 2,
+      "api_health": 200,
+      "readiness": 200,
+      "flag": 200,
+      "frontend_immersive": 200,
+      "restarts": {
+        "api": 0,
+        "worker": 0,
+        "beat": 0,
+        "frontend": 0
+      },
+      "errors_5min": {
+        "api": 0,
+        "worker": 0,
+        "beat": 0
+      }
+    },
+    {
+      "sample": 3,
+      "api_health": 200,
+      "readiness": 200,
+      "flag": 200,
+      "frontend_immersive": 200,
+      "restarts": {
+        "api": 0,
+        "worker": 0,
+        "beat": 0,
+        "frontend": 0
+      },
+      "errors_5min": {
+        "api": 0,
+        "worker": 0,
+        "beat": 0
+      }
+    },
+    {
+      "sample": 4,
+      "api_health": 200,
+      "readiness": 200,
+      "flag": 200,
+      "frontend_immersive": 200,
+      "restarts": {
+        "api": 0,
+        "worker": 0,
+        "beat": 0,
+        "frontend": 0
+      },
+      "errors_5min": {
+        "api": 0,
+        "worker": 0,
+        "beat": 0
+      }
+    },
+    {
+      "sample": 5,
+      "api_health": 200,
+      "readiness": 200,
+      "flag": 200,
+      "frontend_immersive": 200,
+      "restarts": {
+        "api": 0,
+        "worker": 0,
+        "beat": 0,
+        "frontend": 0
+      },
+      "errors_5min": {
+        "api": 0,
+        "worker": 0,
+        "beat": 0
+      }
+    },
+    {
+      "sample": 6,
+      "api_health": 200,
+      "readiness": 200,
+      "flag": 200,
+      "frontend_immersive": 200,
+      "restarts": {
+        "api": 0,
+        "worker": 0,
+        "beat": 0,
+        "frontend": 0
+      },
+      "errors_5min": {
+        "api": 0,
+        "worker": 0,
+        "beat": 0
+      }
+    },
+    {
+      "sample": 7,
+      "api_health": 200,
+      "readiness": 200,
+      "flag": 200,
+      "frontend_immersive": 200,
+      "restarts": {
+        "api": 0,
+        "worker": 0,
+        "beat": 0,
+        "frontend": 0
+      },
+      "errors_5min": {
+        "api": 0,
+        "worker": 0,
+        "beat": 0
+      }
+    },
+    {
+      "sample": 8,
+      "api_health": 200,
+      "readiness": 200,
+      "flag": 200,
+      "frontend_immersive": 200,
+      "restarts": {
+        "api": 0,
+        "worker": 0,
+        "beat": 0,
+        "frontend": 0
+      },
+      "errors_5min": {
+        "api": 0,
+        "worker": 0,
+        "beat": 0
+      }
+    },
+    {
+      "sample": 9,
+      "api_health": 200,
+      "readiness": 200,
+      "flag": 200,
+      "frontend_immersive": 200,
+      "restarts": {
+        "api": 0,
+        "worker": 0,
+        "beat": 0,
+        "frontend": 0
+      },
+      "errors_5min": {
+        "api": 0,
+        "worker": 0,
+        "beat": 0
+      }
+    },
+    {
+      "sample": 10,
+      "api_health": 200,
+      "readiness": 200,
+      "flag": 200,
+      "frontend_immersive": 200,
+      "restarts": {
+        "api": 0,
+        "worker": 0,
+        "beat": 0,
+        "frontend": 0
+      },
+      "errors_5min": {
+        "api": 0,
+        "worker": 0,
+        "beat": 0
+      }
+    },
+    {
+      "sample": 11,
+      "api_health": 200,
+      "readiness": 200,
+      "flag": 200,
+      "frontend_immersive": 200,
+      "restarts": {
+        "api": 0,
+        "worker": 0,
+        "beat": 0,
+        "frontend": 0
+      },
+      "errors_5min": {
+        "api": 0,
+        "worker": 0,
+        "beat": 0
+      }
+    },
+    {
+      "sample": 12,
+      "api_health": 200,
+      "readiness": 200,
+      "flag": 200,
+      "frontend_immersive": 200,
+      "restarts": {
+        "api": 0,
+        "worker": 0,
+        "beat": 0,
+        "frontend": 0
+      },
+      "errors_5min": {
+        "api": 0,
+        "worker": 0,
+        "beat": 0
+      }
+    },
+    {
+      "sample": 13,
+      "api_health": 200,
+      "readiness": 200,
+      "flag": 200,
+      "frontend_immersive": 200,
+      "restarts": {
+        "api": 0,
+        "worker": 0,
+        "beat": 0,
+        "frontend": 0
+      },
+      "errors_5min": {
+        "api": 0,
+        "worker": 0,
+        "beat": 0
+      }
+    },
+    {
+      "sample": 14,
+      "api_health": 200,
+      "readiness": 200,
+      "flag": 200,
+      "frontend_immersive": 200,
+      "restarts": {
+        "api": 0,
+        "worker": 0,
+        "beat": 0,
+        "frontend": 0
+      },
+      "errors_5min": {
+        "api": 0,
+        "worker": 0,
+        "beat": 0
+      }
+    },
+    {
+      "sample": 15,
+      "api_health": 200,
+      "readiness": 200,
+      "flag": 200,
+      "frontend_immersive": 200,
+      "restarts": {
+        "api": 0,
+        "worker": 0,
+        "beat": 0,
+        "frontend": 0
+      },
+      "errors_5min": {
+        "api": 0,
+        "worker": 0,
+        "beat": 0
+      }
+    },
+    {
+      "sample": 16,
+      "api_health": 200,
+      "readiness": 200,
+      "flag": 200,
+      "frontend_immersive": 200,
+      "restarts": {
+        "api": 0,
+        "worker": 0,
+        "beat": 0,
+        "frontend": 0
+      },
+      "errors_5min": {
+        "api": 0,
+        "worker": 0,
+        "beat": 0
+      }
+    },
+    {
+      "sample": 17,
+      "api_health": 200,
+      "readiness": 200,
+      "flag": 200,
+      "frontend_immersive": 200,
+      "restarts": {
+        "api": 0,
+        "worker": 0,
+        "beat": 0,
+        "frontend": 0
+      },
+      "errors_5min": {
+        "api": 0,
+        "worker": 0,
+        "beat": 0
+      }
+    },
+    {
+      "sample": 18,
+      "api_health": 200,
+      "readiness": 200,
+      "flag": 200,
+      "frontend_immersive": 200,
+      "restarts": {
+        "api": 0,
+        "worker": 0,
+        "beat": 0,
+        "frontend": 0
+      },
+      "errors_5min": {
+        "api": 0,
+        "worker": 0,
+        "beat": 0
+      }
+    },
+    {
+      "sample": 19,
+      "api_health": 200,
+      "readiness": 200,
+      "flag": 200,
+      "frontend_immersive": 200,
+      "restarts": {
+        "api": 0,
+        "worker": 0,
+        "beat": 0,
+        "frontend": 0
+      },
+      "errors_5min": {
+        "api": 0,
+        "worker": 0,
+        "beat": 0
+      }
+    },
+    {
+      "sample": 20,
+      "api_health": 200,
+      "readiness": 200,
+      "flag": 200,
+      "frontend_immersive": 200,
+      "restarts": {
+        "api": 0,
+        "worker": 0,
+        "beat": 0,
+        "frontend": 0
+      },
+      "errors_5min": {
+        "api": 0,
+        "worker": 0,
+        "beat": 0
+      }
+    },
+    {
+      "sample": 21,
+      "api_health": 200,
+      "readiness": 200,
+      "flag": 200,
+      "frontend_immersive": 200,
+      "restarts": {
+        "api": 0,
+        "worker": 0,
+        "beat": 0,
+        "frontend": 0
+      },
+      "errors_5min": {
+        "api": 0,
+        "worker": 0,
+        "beat": 0
+      }
+    },
+    {
+      "sample": 22,
+      "api_health": 200,
+      "readiness": 200,
+      "flag": 200,
+      "frontend_immersive": 200,
+      "restarts": {
+        "api": 0,
+        "worker": 0,
+        "beat": 0,
+        "frontend": 0
+      },
+      "errors_5min": {
+        "api": 0,
+        "worker": 0,
+        "beat": 0
+      }
+    },
+    {
+      "sample": 23,
+      "api_health": 200,
+      "readiness": 200,
+      "flag": 200,
+      "frontend_immersive": 200,
+      "restarts": {
+        "api": 0,
+        "worker": 0,
+        "beat": 0,
+        "frontend": 0
+      },
+      "errors_5min": {
+        "api": 0,
+        "worker": 0,
+        "beat": 0
+      }
+    },
+    {
+      "sample": 24,
+      "api_health": 200,
+      "readiness": 200,
+      "flag": 200,
+      "frontend_immersive": 200,
+      "restarts": {
+        "api": 0,
+        "worker": 0,
+        "beat": 0,
+        "frontend": 0
+      },
+      "errors_5min": {
+        "api": 0,
+        "worker": 0,
+        "beat": 0
+      }
+    },
+    {
+      "sample": 25,
+      "api_health": 200,
+      "readiness": 200,
+      "flag": 200,
+      "frontend_immersive": 200,
+      "restarts": {
+        "api": 0,
+        "worker": 0,
+        "beat": 0,
+        "frontend": 0
+      },
+      "errors_5min": {
+        "api": 0,
+        "worker": 0,
+        "beat": 0
+      }
+    },
+    {
+      "sample": 26,
+      "api_health": 200,
+      "readiness": 200,
+      "flag": 200,
+      "frontend_immersive": 200,
+      "restarts": {
+        "api": 0,
+        "worker": 0,
+        "beat": 0,
+        "frontend": 0
+      },
+      "errors_5min": {
+        "api": 0,
+        "worker": 0,
+        "beat": 0
+      }
+    },
+    {
+      "sample": 27,
+      "api_health": 200,
+      "readiness": 200,
+      "flag": 200,
+      "frontend_immersive": 200,
+      "restarts": {
+        "api": 0,
+        "worker": 0,
+        "beat": 0,
+        "frontend": 0
+      },
+      "errors_5min": {
+        "api": 0,
+        "worker": 0,
+        "beat": 0
+      }
+    },
+    {
+      "sample": 28,
+      "api_health": 200,
+      "readiness": 200,
+      "flag": 200,
+      "frontend_immersive": 200,
+      "restarts": {
+        "api": 0,
+        "worker": 0,
+        "beat": 0,
+        "frontend": 0
+      },
+      "errors_5min": {
+        "api": 0,
+        "worker": 0,
+        "beat": 0
+      }
+    },
+    {
+      "sample": 29,
+      "api_health": 200,
+      "readiness": 200,
+      "flag": 200,
+      "frontend_immersive": 200,
+      "restarts": {
+        "api": 0,
+        "worker": 0,
+        "beat": 0,
+        "frontend": 0
+      },
+      "errors_5min": {
+        "api": 0,
+        "worker": 0,
+        "beat": 0
+      }
+    },
+    {
+      "sample": 30,
+      "api_health": 200,
+      "readiness": 200,
+      "flag": 200,
+      "frontend_immersive": 200,
+      "restarts": {
+        "api": 0,
+        "worker": 0,
+        "beat": 0,
+        "frontend": 0
+      },
+      "errors_5min": {
+        "api": 0,
+        "worker": 0,
+        "beat": 0
+      }
+    }
+  ],
+  "summary": {
+    "all_health_passed": true,
+    "all_readiness_passed": true,
+    "all_flag_passed": true,
+    "total_restart_delta": {
+      "api": 0,
+      "worker": 0,
+      "beat": 0,
+      "frontend": 0
+    },
+    "max_errors_5min": {
+      "api": 0,
+      "worker": 0,
+      "beat": 0
+    }
+  }
+}
