@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+from dataclasses import asdict
 from typing import Any
 from uuid import UUID, uuid4
 
@@ -121,7 +122,7 @@ async def run_dictation(
         item_features={"modality": "audio", "format": "dictation"},
         provenance={"verifier": score.verifier, "confidence": 0.9},
     )
-    return {"score": score.__dict__, "ingest": result, "segment_text": seg.text}
+    return {"score": asdict(score), "ingest": result, "segment_text": seg.text}
 
 
 async def run_listening(
@@ -179,7 +180,7 @@ async def run_listening(
         item_features={"modality": "audio", "format": "listening"},
         provenance={"confidence": 0.85},
     )
-    return {"score": score.__dict__, "ingest": result}
+    return {"score": asdict(score), "ingest": result}
 
 
 async def run_comprehension(
@@ -244,7 +245,7 @@ async def run_comprehension(
             "metadata": {"question_provenance": question_provenance or {"type": "deterministic"}},
         },
     )
-    return {"score": score.__dict__, "ingest": result}
+    return {"score": asdict(score), "ingest": result}
 
 
 async def run_sentence_recall(
@@ -300,7 +301,7 @@ async def run_sentence_recall(
         item_features={"modality": "transcript", "format": "recall"},
         provenance={"confidence": 0.9},
     )
-    return {"score": score.__dict__, "ingest": result}
+    return {"score": asdict(score), "ingest": result}
 
 
 async def run_transfer(
@@ -363,4 +364,4 @@ async def run_transfer(
         item_features={"modality": "video", "format": "transfer"},
         provenance={"confidence": 0.9},
     )
-    return {"score": score.__dict__, "ingest": result, "distance": distance}
+    return {"score": asdict(score), "ingest": result, "distance": distance}

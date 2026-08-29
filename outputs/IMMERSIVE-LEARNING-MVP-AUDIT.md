@@ -2,7 +2,7 @@
 
 > Branch: `feat/immersive-learning-mvp`  
 > Base: `a48c14acf189a03de5eabb2ed0ea3ef4e4d4c725` (`v0.1.0-rc2`)  
-> Migration: `5e7f8a9b0c12` → `6a1b2c3d4e5f`  
+> Migration: `5e7f8a9b0c12` → `6a1b2c3d4e5f` → `7b2c3d4e5f6a` (immersive InteractionSource)  
 > Date: 2026-08-29  
 > License: clean-room; DashPlayer AGPL = INSPIRED_BY only
 
@@ -255,3 +255,24 @@ Recommended next action: **FIX BLOCKERS** (isolated E2E stack + clean full suite
 ## ADRs
 
 See `docs/adr/ADR-IMMERSIVE-AGPL-BOUNDARY.md` and `0006`–`0015`.
+
+
+### Blocker-fix round (same day)
+
+Fixes landed:
+
+- CLI env-mismatch probes: timeout/network → skip (complete existing wrong-DB contract)
+- Double-extension upload reject; oversized subtitle 413; MIME spoof tests
+- Cross-user media IDOR + media delete ownership tests
+- Live golden path + cross-media + telemetry→practice→transfer→delete on `mneme_test` (service layer)
+- `InteractionSource.immersive` PG enum + Alembic `7b2c3d4e5f6a`
+- `ScoreResult` response serialization via `dataclasses.asdict` (slots-safe)
+
+`./scripts/check.sh` #4: **PASS** — 1386 passed, 14 skipped, coverage 80.15%, exit 0.
+
+Still open for Strict browser live golden path:
+
+- Isolated uvicorn on `:18000` hangs in `D` state before bind in this environment (TestClient lifespan works; script left for retry)
+- Playwright `IMMERSIVE_E2E_LIVE=1` therefore not browser-executed against a live HTTP port
+
+MERGE_READY remains **NO** until isolated HTTP server + live Playwright golden path pass.

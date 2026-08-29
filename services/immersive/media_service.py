@@ -15,6 +15,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from services.immersive.constants import (
     CONTENT_PROVENANCE,
     DEFAULT_MAX_MEDIA_BYTES,
+    DEFAULT_MAX_SUBTITLE_BYTES,
     MEDIA_ALLOWED_EXTENSIONS,
     MEDIA_CONTENT_TYPES,
     MEDIA_TYPES,
@@ -151,6 +152,10 @@ async def attach_transcript(
     asset = await get_owned_media(db, student_id=student_id, media_id=media_id)
     if role not in {"PRIMARY", "TRANSLATION"}:
         raise MediaServiceError("invalid transcript role")
+    # Cap subtitle payload size before parse (DoS / memory).
+    raw_bytes = content.encode("utf-8", errors="replace")
+    if len(raw_bytes) > DEFAULT_MAX_SUBTITLE_BYTES:
+        raise MediaServiceError("subtitle too large", status_code=413)
     hint = None
     if filename:
         safe = validate_filename(filename, allowed_extensions=SUBTITLE_ALLOWED_EXTENSIONS)

@@ -198,7 +198,7 @@ async def ingest_immersive_event(
             is_correct=bool(correctness),
             event_id=eid,
             question_type=f"immersive_{action}",
-            source="immersive",
+            source="immersive",  # InteractionSource.immersive (PG enum)
             evaluation_phase=evaluation_phase,
             ai_assisted=(intervention or {}).get("ai_assisted"),
             independent_mode=(intervention or {}).get("independent_mode"),

@@ -70,6 +70,9 @@ class InteractionSource(str, enum.Enum):
     # U.19 英语习得型范式：词汇 FSRS 复现卡片作答（认识/不认识），复用既有
     # KCMastery/process_interaction 通用字符串 knowledge_point 机制，不新建调度表。
     vocab_review = "vocab_review"
+    # Immersive Learning：视频/听写/理解练习的 performance Evidence 经 Memory Router
+    # 进入同一 process_interaction 写路径（禁止第二套 scheduler）。
+    immersive = "immersive"
 
 
 class SocraticMode(str, enum.Enum):
