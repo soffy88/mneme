@@ -6,9 +6,11 @@ pre-1.0 release train. Pre-release versions are tagged as `v0.1.0-rcN`.
 
 ## v0.1.0-rc3 — Immersive Learning MVP
 
-**Release date**: 2026-08-29
-**Source SHA**: `05377c9b09b7815c8f3ba0362f4619827a08bfb3`
-**Release commit**: `9a3bc1b9cfb6dc03d319d66624e06b3f5481c023`
+**Release date**: 2026-08-30
+**Source feature SHA**: `05377c9b09b7815c8f3ba0362f4619827a08bfb3`
+**Staging runtime SHA**: `0b8bf9f96c8cbb3f9d51e83027f9b9f948f7041e`
+**Code release SHA**: `b5d41c32e4ffe52e2ed41902c7345598b8a5549b`
+**Release metadata commit**: `SELF_TAGGED_COMMIT`
 **Alembic head**: `7b2c3d4e5f6a`
 **Feature flag**: `IMMERSIVE_LEARNING_ENABLED` (default **OFF**, opt-in per env)
 
