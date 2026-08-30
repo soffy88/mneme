@@ -33,6 +33,19 @@ def test_run_with_timeout_kills_hanging_computation():
     print(f"  挂起5秒的计算在 {elapsed:.2f}s 内被杀（超时设为0.3s）✓")
 
 
+def test_run_isolated_reaps_completed_child():
+    """完成后若 child 未及时自然退出，必须 terminate/kill 并 join 回收。
+
+    长测试套件会反复调用沙箱；未 reap 的已完成 child 会积累为 zombie，最终
+    让后续合法可视化计算出现无结果的假失败。这里锁定清理 contract。
+    """
+    import multiprocessing as mp
+
+    rt = SymPyRuntime(RuntimeConfig(timeout_seconds=1.0))
+    assert rt.run_isolated(lambda: 1) == 1
+    assert not [child for child in mp.active_children() if child.is_alive()]
+
+
 def test_pathological_high_degree_polynomial_gets_killed_via_real_solver():
     """端到端：通过 solve_function（真实求解主链路，非孤立测沙箱工具）喂一个
     80次高次多项式求零点——sympy 通用求解器对这种输入基本必然抛不出解析解，

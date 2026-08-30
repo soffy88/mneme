@@ -515,6 +515,10 @@ class SymPyRuntime:
         proc.join(1.0)
         if proc.is_alive():
             proc.terminate()
+            proc.join(0.5)
+        if proc.is_alive():
+            proc.kill()
+            proc.join()
 
         status, value = payload
         if status == "err":
