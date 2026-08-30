@@ -12,7 +12,6 @@ from __future__ import annotations
 import ast
 import multiprocessing as mp
 import os as _os
-import queue as _queue
 from dataclasses import dataclass
 from typing import Any, Callable
 
@@ -385,7 +384,12 @@ class SymPyRuntime:
         except ValueError:
             return self._run_with_alarm(func, effective)
 
-        result_q: Any = ctx.Queue()
+        # A Queue starts a feeder thread after the first put.  Forking from
+        # the long-lived, multi-threaded API/test process can inherit that
+        # transport in a half-initialized state, making an otherwise completed
+        # child exit without its result.  A one-way Pipe has no feeder thread
+        # and keeps the result channel synchronous and pollable.
+        result_recv, result_send = ctx.Pipe(duplex=False)
         max_memory_bytes = self._config.max_memory_bytes
 
         def _worker() -> None:
@@ -396,7 +400,7 @@ class SymPyRuntime:
             # SymPy startup can be mistaken for a memory-limit violation.
             if max_memory_bytes:
                 try:
-                    result_q.put(("ready", _read_rss_bytes(_os.getpid())))
+                    result_send.send(("ready", _read_rss_bytes(_os.getpid())))
                 except Exception:
                     # A missing baseline disables the incremental RSS guard
                     # for this invocation; the hard timeout remains active.
@@ -407,14 +411,21 @@ class SymPyRuntime:
                 status, payload = "err", exc
 
             try:
-                result_q.put((status, payload))
+                result_send.send((status, payload))
             except Exception:
-                result_q.put(
-                    ("err", SymPyRuntimeError(f"{type(payload).__name__}: {payload}"))
-                )
+                try:
+                    result_send.send(
+                        ("err", SymPyRuntimeError(f"{type(payload).__name__}: {payload}"))
+                    )
+                except Exception:
+                    pass
+            finally:
+                result_send.close()
 
         proc = ctx.Process(target=_worker, daemon=True)
         proc.start()
+        # The parent only reads; the child owns the sending endpoint.
+        result_send.close()
 
         # Memory is bounded by polling the *resident* (physical) growth of
         # the child from the parent side, not an in-child rlimit. This
@@ -438,13 +449,22 @@ class SymPyRuntime:
             if remaining <= 0:
                 break
             try:
-                item = result_q.get(timeout=min(remaining, 0.05))
+                if not result_recv.poll(min(remaining, 0.05)):
+                    if max_memory_bytes and baseline_rss is not None:
+                        rss = _read_rss_bytes(proc.pid)
+                        if rss is not None and (rss - baseline_rss) > max_memory_bytes:
+                            memory_exceeded = True
+                            break
+                    if not proc.is_alive():
+                        break
+                    continue
+                item = result_recv.recv()
                 if item[0] == "ready":
                     baseline_rss = item[1]
                     continue
                 payload = item
                 break
-            except _queue.Empty:
+            except (EOFError, OSError):
                 if not proc.is_alive():
                     break
                 if max_memory_bytes and baseline_rss is not None:
@@ -459,6 +479,7 @@ class SymPyRuntime:
             if proc.is_alive():
                 proc.kill()
                 proc.join()
+            result_recv.close()
             raise SymPyMemoryError(
                 f"Execution exceeded memory limit of {max_memory_bytes} bytes "
                 f"(process killed)"
@@ -473,11 +494,13 @@ class SymPyRuntime:
                 if proc.is_alive():
                     proc.kill()
                     proc.join()
+                result_recv.close()
                 raise SymPyTimeoutError(
                     f"Execution exceeded timeout of {effective}s (process killed)"
                 )
             proc.join()
             exitcode = proc.exitcode
+            result_recv.close()
             if exitcode is not None and exitcode < 0:
                 raise SymPyMemoryError(
                     f"Execution subprocess was killed by signal {-exitcode} "
@@ -486,6 +509,8 @@ class SymPyRuntime:
             raise SymPyRuntimeError(
                 "SymPy computation subprocess terminated without a result"
             )
+
+        result_recv.close()
 
         proc.join(1.0)
         if proc.is_alive():
