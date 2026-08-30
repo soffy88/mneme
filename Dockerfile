@@ -24,6 +24,8 @@ FROM python:3.12-slim AS runtime
 
 WORKDIR /app
 
+RUN groupadd --system mneme && useradd --system --gid mneme --home-dir /app mneme
+
 # The builder needs a compiler for a few optional native wheels.  Copy only
 # the resolved Python runtime into the final image; never ship the compiler,
 # Perl, headers, or package-manager caches to production containers.
@@ -32,6 +34,8 @@ COPY --from=builder /usr/local/bin /usr/local/bin
 
 # Copy mneme project files
 COPY . .
+RUN chown -R mneme:mneme /app
+USER mneme
 
 # Keep the checked-in runtime closure first even when the image is run without
 # docker-compose's environment override.
@@ -39,6 +43,9 @@ ENV PYTHONPATH=/app/vendor:/app:/app/packages/mneme-core:/app/packages/mneme-age
 
 # Expose API port
 EXPOSE 8000
+
+HEALTHCHECK --interval=30s --timeout=5s --start-period=30s --retries=3 \
+    CMD python -c "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/health')"
 
 # Command to run the application
 CMD ["uvicorn", "services.main:app", "--host", "0.0.0.0", "--port", "8000"]
