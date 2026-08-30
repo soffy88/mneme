@@ -46,7 +46,11 @@ async def test_student():
 
 
 @pytest.mark.asyncio
-async def test_paper_upload(api_client, test_student):
+async def test_paper_upload(api_client, test_student, monkeypatch):
+    async def isolated_upload_file(*_args, **_kwargs):
+        """Keep the upload contract test independent from external OSS."""
+
+    monkeypatch.setattr("omodul.paper.upload_file", isolated_upload_file)
     # 模拟一个文件内容
     file_content = b"fake image content"
     file = io.BytesIO(file_content)

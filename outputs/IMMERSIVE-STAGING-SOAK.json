@@ -1,4 +1,6 @@
 {
+  "source_feature_sha": "05377c9b09b7815c8f3ba0362f4619827a08bfb3",
+  "staging_runtime_sha": "0b8bf9f96c8cbb3f9d51e83027f9b9f948f7041e",
   "start_time": "2026-08-29T18:30:24Z",
   "duration_min": 30,
   "samples": [

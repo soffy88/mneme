@@ -2,7 +2,8 @@
 
 **Generated**: 2026-08-29
 **Staging**: `mneme-staging` (internal-only Docker Compose)
-**Source SHA**: `05377c9b09b7815c8f3ba0362f4619827a08bfb3` (post-merge, includes 1 deterministic-fix commit)
+**Source feature SHA**: `05377c9b09b7815c8f3ba0362f4619827a08bfb3`
+**Staging runtime SHA**: `0b8bf9f96c8cbb3f9d51e83027f9b9f948f7041e`
 **Main SHA**:   `0b8bf9f96c8cbb3f9d51e83027f9b9f948f7041e` (merge commit on `main`)
 
 ## Scope
