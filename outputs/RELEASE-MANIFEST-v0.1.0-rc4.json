@@ -1,0 +1,146 @@
+{
+  "schema": "mneme.release.manifest/v1",
+  "release_version": "v0.1.0-rc4",
+  "code_release_sha": "a359877676a39fc2627a6f429adea77b0ed41311",
+  "environment_contract": {
+    "file": "docs/ENVIRONMENTS.md",
+    "version": "v1",
+    "production_identity": "UNKNOWN",
+    "production_deployed": false
+  },
+  "release_metadata_identity": {
+    "tag": "v0.1.0-rc4",
+    "tag_type": "annotated",
+    "target": "the final main commit containing this manifest and the RC4 qualification reports",
+    "verification": "local and origin tag object, peeled commit, and origin/main are verified in the final release handoff"
+  },
+  "canary_gate": {
+    "global_flag": "IMMERSIVE_LEARNING_ENABLED",
+    "global_default": "OFF",
+    "allowlist_env": "IMMERSIVE_LEARNING_CANARY_USER_IDS",
+    "allowlist_default": "EMPTY",
+    "semantics": "global ON allows every authenticated authorized user; global OFF allows only exact canonical allowlist IDs",
+    "validation": "trim, UUID canonicalization, exact match, deduplicate, max 1000, malformed and wildcard values fail closed",
+    "frontend": "user-specific authenticated capability only; allowlist is never exposed"
+  },
+  "artifacts": [
+    {
+      "name": "api",
+      "tag": "mneme-api:v0.1.0-rc4-a359877676a3",
+      "digest": "sha256:32aec19baf11a7523398fa6b013d09ee65c83c548f732709d430f7dd90007c33",
+      "git_sha_label": "a359877676a39fc2627a6f429adea77b0ed41311"
+    },
+    {
+      "name": "worker",
+      "tag": "mneme-worker:v0.1.0-rc4-a359877676a3",
+      "digest": "sha256:32aec19baf11a7523398fa6b013d09ee65c83c548f732709d430f7dd90007c33",
+      "git_sha_label": "a359877676a39fc2627a6f429adea77b0ed41311"
+    },
+    {
+      "name": "beat",
+      "tag": "mneme-beat:v0.1.0-rc4-a359877676a3",
+      "digest": "sha256:32aec19baf11a7523398fa6b013d09ee65c83c548f732709d430f7dd90007c33",
+      "git_sha_label": "a359877676a39fc2627a6f429adea77b0ed41311"
+    },
+    {
+      "name": "frontend",
+      "tag": "mneme-web:v0.1.0-rc4-a359877676a3",
+      "digest": "sha256:aefdde6da5a7580ff596dfffa9849f2d66c9705d1c37a8a00e17958628d73495",
+      "git_sha_label": "a359877676a39fc2627a6f429adea77b0ed41311"
+    }
+  ],
+  "tests": {
+    "full_check": {
+      "command": "./scripts/check.sh",
+      "passed": 1355,
+      "failed": 0,
+      "skipped": 14,
+      "coverage": "79.82%"
+    },
+    "svg_flake_regression": {
+      "focused_runs": 10,
+      "passed": 10,
+      "failed": 0,
+      "root_cause": "completed sandbox child processes were not deterministically reaped after join timeout"
+    },
+    "frontend_typecheck": "PASS",
+    "frontend_production_build": "PASS",
+    "canary_matrix": "PASS",
+    "impersonation": "PASS",
+    "learn_now": "PASS",
+    "telemetry_non_advancement": "PASS",
+    "core_mneme_regression": "PASS",
+    "staging_soak": {
+      "duration": "30 minutes",
+      "health_samples": 30,
+      "five_xx": 0,
+      "restarts": 0,
+      "gate_errors": 0,
+      "projection_errors": 0,
+      "fsrs_errors": 0
+    }
+  },
+  "security": {
+    "pip_audit": {
+      "dependencies": 112,
+      "vulnerabilities": 0,
+      "critical": 0,
+      "high": 0
+    },
+    "npm_audit": {
+      "critical": 0,
+      "high": 0,
+      "moderate": 0,
+      "low": 0,
+      "production_only": {
+        "critical": 0,
+        "high": 0,
+        "moderate": 0,
+        "low": 0
+      },
+      "remediation": "minimal compatible upgrades/overrides for Next.js, PDF.js, EPUB/XML, and affected transitive chains"
+    },
+    "gitleaks": {
+      "rc3_to_rc4_delta_findings": 0,
+      "historical_baseline_findings": 9,
+      "new_findings": 0
+    },
+    "tracked_secret_scan": "PASS",
+    "container_scan": {
+      "tool": "trivy 0.74.0",
+      "api_raw": {"unknown": 7, "low": 85, "medium": 83, "high": 52, "critical": 3},
+      "frontend_raw": {"unknown": 7, "low": 99, "medium": 97, "high": 53, "critical": 3},
+      "new_high_or_critical_vs_base": 0,
+      "misconfigurations": 0,
+      "image_secrets": 0,
+      "policy": "PASS; inherited base findings are retained and explicitly reported"
+    }
+  },
+  "sbom": {
+    "file": "outputs/RELEASE-SBOM-v0.1.0-rc4.json",
+    "tool": "syft 1.51.1",
+    "status": "PASS"
+  },
+  "staging_qualification": {
+    "isolated": true,
+    "global_off_empty_allowlist": "PASS",
+    "canary_a": "PASS",
+    "control_b_denied": "PASS",
+    "url_user_impersonation_denied": "PASS",
+    "global_on_regression": "PASS",
+    "golden_path": "PASS",
+    "final_state": "global OFF + synthetic canary A",
+    "production_data_used": false
+  },
+  "migration": "NONE",
+  "qualification": {
+    "p0": "NONE",
+    "p1": "NONE",
+    "rc4_qualified": "YES"
+  },
+  "audit_files": [
+    "outputs/ENVIRONMENT-FORENSICS.md",
+    "outputs/IMMERSIVE-RC4-QUALIFICATION.md",
+    "outputs/IMMERSIVE-RC4-STAGING-CANARY.md"
+  ]
+}

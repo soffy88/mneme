@@ -13,6 +13,13 @@ _ENV_SECRET = re.compile(r"^\s*(?:JWT_SECRET|MINIO_SECRET_KEY|POSTGRES_PASSWORD|
 _SAFE_VALUES = {"\"\"", "''", "your_key_here", "your-secret-key-here", "change-me", "changeme", "mneme-dev-secret-change-in-prod!", "minioadmin", "postgres"}
 
 
+def _is_secret_reference(value: str) -> bool:
+    """Allow shell indirection while continuing to reject literal secrets."""
+
+    unquoted = value.strip("\"'")
+    return unquoted.startswith("${") or unquoted.startswith("$(")
+
+
 def tracked_files(root: Path) -> list[Path]:
     result = subprocess.run(["git", "ls-files", "-z"], cwd=root, capture_output=True, check=True)
     return [root / raw for raw in result.stdout.decode().split("\0") if raw]
@@ -26,7 +33,11 @@ def scan_text(path: Path, text: str) -> list[str]:
         findings.append(f"tracked environment file {path}")
     for line_number, line in enumerate(text.splitlines(), 1):
         match = _ENV_SECRET.match(line)
-        if match and match.group(1).strip('"\'') not in _SAFE_VALUES and not match.group(1).startswith("${"):
+        if (
+            match
+            and match.group(1).strip('"\'') not in _SAFE_VALUES
+            and not _is_secret_reference(match.group(1))
+        ):
             findings.append(f"non-placeholder secret assignment in {path}:{line_number}")
     return findings
 
