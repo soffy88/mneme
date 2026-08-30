@@ -8,6 +8,7 @@ env 一票否决，默认开（保留当前上线行为），显式设为 "0"/"f
 from __future__ import annotations
 
 import os
+import uuid
 
 
 def pedagogy_enabled(env_name: str) -> bool:
@@ -66,6 +67,8 @@ NOTIFICATIONS_ENABLED = "NOTIFICATIONS_ENABLED"
 EARLY_ACCESS_MODE = "EARLY_ACCESS_MODE"
 EARLY_ACCESS_ALLOWLIST = "EARLY_ACCESS_ALLOWLIST"
 IMMERSIVE_LEARNING_ENABLED = "IMMERSIVE_LEARNING_ENABLED"
+IMMERSIVE_LEARNING_CANARY_USER_IDS = "IMMERSIVE_LEARNING_CANARY_USER_IDS"
+_MAX_IMMERSIVE_CANARY_USERS = 1000
 
 
 def _explicitly_on(name: str) -> bool:
@@ -164,3 +167,46 @@ def immersive_learning_enabled() -> bool:
     """Immersive / Media Learning Engine. Fail-closed: default OFF for RC2 safety."""
 
     return _explicitly_on(IMMERSIVE_LEARNING_ENABLED)
+
+
+def immersive_learning_canary_user_ids() -> frozenset[str]:
+    """Parse the server-only canary list, failing closed on bad configuration."""
+
+    raw = os.environ.get(IMMERSIVE_LEARNING_CANARY_USER_IDS, "")
+    values = [item.strip() for item in raw.split(",") if item.strip()]
+    if len(values) > _MAX_IMMERSIVE_CANARY_USERS:
+        return frozenset()
+    parsed: set[str] = set()
+    for value in values:
+        try:
+            parsed.add(str(uuid.UUID(value)))
+        except (ValueError, AttributeError):
+            return frozenset()
+    return frozenset(parsed)
+
+
+def is_immersive_learning_enabled_for_user(user_id: uuid.UUID | str | None) -> bool:
+    """Single authoritative user-aware immersive gate.
+
+    Global enablement wins; otherwise only an exact canonical UUID in the
+    server-side canary list is eligible. Missing or malformed configuration is
+    deny-by-default.
+    """
+
+    if immersive_learning_enabled():
+        return True
+    if user_id is None:
+        return False
+    try:
+        canonical_id = str(uuid.UUID(str(user_id)))
+    except (ValueError, AttributeError):
+        return False
+    return canonical_id in immersive_learning_canary_user_ids()
+
+
+def immersive_gate_reason(user_id: uuid.UUID | str | None) -> str:
+    if immersive_learning_enabled():
+        return "GLOBAL"
+    if is_immersive_learning_enabled_for_user(user_id):
+        return "CANARY"
+    return "DISABLED"

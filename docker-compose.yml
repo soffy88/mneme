@@ -95,9 +95,11 @@ services:
       # 环境标记：默认 dev（prod-safety 门不武装，行为不变）。真上线时设成 prod，
       # _assert_prod_safety 才会拒绝"默认JWT密钥/mock短信"启动。此前 MNEME_ENV
       # 只在 .env 里、没进 compose，pydantic 丢弃，那道门永远处于 dev 态形同虚设。
-      MNEME_ENV: ${MNEME_ENV:-dev}
+      MNEME_ENV: ${MNEME_ENV:?需明确设置 MNEME_ENV}
       # API 与本地 CLI/pytest 必须使用同一签名密钥；生产环境由安全闸门拒绝默认值。
       JWT_SECRET: ${JWT_SECRET:-mneme-dev-secret-change-in-prod!}
+      IMMERSIVE_LEARNING_ENABLED: ${IMMERSIVE_LEARNING_ENABLED:-0}
+      IMMERSIVE_LEARNING_CANARY_USER_IDS: ${IMMERSIVE_LEARNING_CANARY_USER_IDS:-}
       # Learning Event v2 is the canonical append-only fact stream.  The API
       # startup command applies migrations before this flag can write.
       LEARNING_EVENT_V2_DUAL_WRITE_ENABLED: ${LEARNING_EVENT_V2_DUAL_WRITE_ENABLED:-1}

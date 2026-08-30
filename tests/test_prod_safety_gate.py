@@ -11,23 +11,45 @@ from services.main import _assert_prod_safety
 
 
 def test_non_prod_env_always_passes(monkeypatch):
-    monkeypatch.delenv("MNEME_ENV", raising=False)
-    _assert_prod_safety()  # 默认 dev，不应抛异常，即便密钥是默认值
+    monkeypatch.setenv("MNEME_ENV", "development")
+    _assert_prod_safety()
 
-    monkeypatch.setenv("MNEME_ENV", "dev")
+    monkeypatch.setenv("MNEME_ENV", "test")
     _assert_prod_safety()
 
     monkeypatch.setenv("MNEME_ENV", "demo")
     _assert_prod_safety()
 
+    monkeypatch.setenv("MNEME_ENV", "staging")
+    _assert_prod_safety()
+
+
+def test_missing_or_alias_environment_refuses_to_start(monkeypatch):
+    for value in (None, "dev", "prod", "unknown"):
+        if value is None:
+            monkeypatch.delenv("MNEME_ENV", raising=False)
+        else:
+            monkeypatch.setenv("MNEME_ENV", value)
+        try:
+            _assert_prod_safety()
+            assert False, f"environment {value!r} should be rejected"
+        except RuntimeError as exc:
+            assert "MNEME_ENV" in str(exc)
+
 
 def test_prod_with_default_jwt_secret_and_mock_channels_refuses_to_start(monkeypatch):
     from obase.config import settings
 
-    monkeypatch.setenv("MNEME_ENV", "prod")
+    monkeypatch.setenv("MNEME_ENV", "production")
     monkeypatch.setattr(settings, "JWT_SECRET", "mneme-dev-secret-change-in-prod!")
     monkeypatch.delenv("SMS_PROVIDER", raising=False)
     monkeypatch.delenv("EMAIL_PROVIDER", raising=False)
+    monkeypatch.setenv("DATABASE_URL", "postgresql://prod-db/mneme")
+    monkeypatch.setenv("REDIS_URL", "redis://prod-redis:6379/4")
+    monkeypatch.setenv("MINIO_ENDPOINT", "https://prod-storage.example")
+    monkeypatch.setenv("MINIO_BUCKET", "mneme-production")
+    monkeypatch.setenv("GIT_SHA", "a" * 40)
+    monkeypatch.setenv("RELEASE_VERSION", "v0.1.0-rc4")
 
     try:
         _assert_prod_safety()
@@ -41,10 +63,16 @@ def test_prod_with_default_jwt_secret_and_mock_channels_refuses_to_start(monkeyp
 def test_prod_with_real_secret_and_aliyun_sms_starts_cleanly(monkeypatch):
     from obase.config import settings
 
-    monkeypatch.setenv("MNEME_ENV", "prod")
+    monkeypatch.setenv("MNEME_ENV", "production")
     monkeypatch.setattr(settings, "JWT_SECRET", "a-real-rotated-production-secret")
     monkeypatch.setenv("SMS_PROVIDER", "aliyun")
     monkeypatch.delenv("EMAIL_PROVIDER", raising=False)
+    monkeypatch.setenv("DATABASE_URL", "postgresql://prod-db/mneme")
+    monkeypatch.setenv("REDIS_URL", "redis://prod-redis:6379/4")
+    monkeypatch.setenv("MINIO_ENDPOINT", "https://prod-storage.example")
+    monkeypatch.setenv("MINIO_BUCKET", "mneme-production")
+    monkeypatch.setenv("GIT_SHA", "a" * 40)
+    monkeypatch.setenv("RELEASE_VERSION", "v0.1.0-rc4")
 
     _assert_prod_safety()  # 不应抛异常
     print("  prod + 真实密钥 + aliyun短信 → 正常放行 ✓")
@@ -54,10 +82,16 @@ def test_prod_with_real_secret_and_smtp_email_starts_cleanly(monkeypatch):
     """注册已转邮箱：SMTP 邮箱是真实验证通道，短信保持 mock 也应放行。"""
     from obase.config import settings
 
-    monkeypatch.setenv("MNEME_ENV", "prod")
+    monkeypatch.setenv("MNEME_ENV", "production")
     monkeypatch.setattr(settings, "JWT_SECRET", "a-real-rotated-production-secret")
     monkeypatch.setenv("SMS_PROVIDER", "mock")
     monkeypatch.setenv("EMAIL_PROVIDER", "smtp")
+    monkeypatch.setenv("DATABASE_URL", "postgresql://prod-db/mneme")
+    monkeypatch.setenv("REDIS_URL", "redis://prod-redis:6379/4")
+    monkeypatch.setenv("MINIO_ENDPOINT", "https://prod-storage.example")
+    monkeypatch.setenv("MINIO_BUCKET", "mneme-production")
+    monkeypatch.setenv("GIT_SHA", "a" * 40)
+    monkeypatch.setenv("RELEASE_VERSION", "v0.1.0-rc4")
 
     _assert_prod_safety()  # 不应抛异常
     print("  prod + 真实密钥 + SMTP邮箱（短信仍mock）→ 正常放行 ✓")
@@ -67,10 +101,16 @@ def test_prod_with_only_one_problem_still_refuses(monkeypatch):
     """只改对了一半（换了密钥但短信/邮箱全是mock）也不能放行——两个校验独立生效。"""
     from obase.config import settings
 
-    monkeypatch.setenv("MNEME_ENV", "prod")
+    monkeypatch.setenv("MNEME_ENV", "production")
     monkeypatch.setattr(settings, "JWT_SECRET", "a-real-rotated-production-secret")
     monkeypatch.setenv("SMS_PROVIDER", "mock")
     monkeypatch.setenv("EMAIL_PROVIDER", "mock")
+    monkeypatch.setenv("DATABASE_URL", "postgresql://prod-db/mneme")
+    monkeypatch.setenv("REDIS_URL", "redis://prod-redis:6379/4")
+    monkeypatch.setenv("MINIO_ENDPOINT", "https://prod-storage.example")
+    monkeypatch.setenv("MINIO_BUCKET", "mneme-production")
+    monkeypatch.setenv("GIT_SHA", "a" * 40)
+    monkeypatch.setenv("RELEASE_VERSION", "v0.1.0-rc4")
 
     try:
         _assert_prod_safety()

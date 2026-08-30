@@ -32,11 +32,12 @@ from services.sms import get_sms_provider
 
 
 def _assert_prod_safety() -> None:
-    """生产环境(MNEME_ENV=prod)安全闸门：默认 JWT 密钥 / 无真实验证通道 一律拒启动。"""
+    """Validate the explicit runtime environment before opening services."""
     from obase.config import settings as _s
-    from services.production_config import ProductionConfigError, validate_production_config
+    from services.production_config import ProductionConfigError, validate_environment_name, validate_production_deploy_preflight
 
-    if os.environ.get("MNEME_ENV", "dev").lower() not in {"prod", "production"}:
+    environment = validate_environment_name(os.environ.get("MNEME_ENV"), require_explicit=True)
+    if environment != "production":
         return
     env = dict(os.environ)
     env.setdefault("JWT_SECRET", _s.JWT_SECRET)
@@ -50,7 +51,7 @@ def _assert_prod_safety() -> None:
     else:
         env.setdefault("DATABASE_URL", _s.DATABASE_URL)
     try:
-        validate_production_config(env)
+        validate_production_deploy_preflight(env)
     except ProductionConfigError as exc:
         message = str(exc)
         if "verification provider" in message:

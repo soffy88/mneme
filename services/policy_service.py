@@ -144,6 +144,7 @@ async def next_best_action(
     student_id: UUID,
     *,
     now=None,
+    immersive_user_id: UUID | None = None,
 ) -> dict[str, Any]:
     from services.daily_plan_service import build_daily_plan
 
@@ -193,9 +194,9 @@ async def next_best_action(
         transfer_by_kc=transfer_by_kc,
     )
     # Immersive Learning candidates (feature-flagged) — no separate recommender.
-    from services.feature_flags import immersive_learning_enabled
+    from services.feature_flags import is_immersive_learning_enabled_for_user
 
-    if immersive_learning_enabled():
+    if is_immersive_learning_enabled_for_user(immersive_user_id or student_id):
         immersive_tasks = [
             {
                 "candidate_id": "VIDEO_SEGMENT_TASK",

@@ -9,8 +9,9 @@ const API_BASE = (process.env.NEXT_PUBLIC_API_BASE ?? "http://localhost:8000").r
 );
 
 export const IMMERSIVE_MOCK =
-  process.env.NEXT_PUBLIC_IMMERSIVE_MOCK === "1" ||
-  process.env.NEXT_PUBLIC_IMMERSIVE_MOCK === "true";
+  process.env.NODE_ENV !== "production" &&
+  (process.env.NEXT_PUBLIC_IMMERSIVE_MOCK === "1" ||
+    process.env.NEXT_PUBLIC_IMMERSIVE_MOCK === "true");
 
 export interface ImmersiveSegment {
   segment_id: string;
@@ -86,7 +87,10 @@ async function immersiveFetch<T>(
 }
 
 export const immersiveApi = {
-  status: () => immersiveFetch<{ enabled: boolean }>("/v2/immersive/status"),
+  status: () =>
+    immersiveFetch<{ enabled: boolean; feature_gate_reason: string }>(
+      "/v2/immersive/status"
+    ),
 
   listMedia: (studentId: string) =>
     immersiveFetch<{ items: ImmersiveMediaItem[] }>(

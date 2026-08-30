@@ -131,7 +131,7 @@ async def get_learn_now(
     _auth: User = Depends(require_student_access),
     db: AsyncSession = Depends(get_db),
 ):
-    result = await next_best_action(db, student_id)
+    result = await next_best_action(db, student_id, immersive_user_id=_auth.id)
     decision = await _persist_decision(db, result)
     return build_learn_now(decision).model_dump(mode="json") | {"policy_decision": decision.model_dump(mode="json")}
 

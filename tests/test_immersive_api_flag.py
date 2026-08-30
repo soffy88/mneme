@@ -18,8 +18,11 @@ def test_status_endpoint_reports_flag(client: TestClient, monkeypatch: pytest.Mo
     monkeypatch.setenv("IMMERSIVE_LEARNING_ENABLED", "0")
     # Re-import check via live endpoint (reads env each call).
     resp = client.get("/v2/immersive/status")
-    assert resp.status_code == 200
-    assert resp.json()["enabled"] is False
+    assert resp.status_code == 401
+
+
+def test_status_endpoint_requires_authentication(client: TestClient) -> None:
+    assert client.get("/v2/immersive/status").status_code == 401
 
 
 def test_protected_route_404_when_flag_off(client: TestClient, monkeypatch: pytest.MonkeyPatch) -> None:

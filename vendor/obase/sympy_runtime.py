@@ -11,6 +11,7 @@ from __future__ import annotations
 
 import ast
 import multiprocessing as mp
+import os as _os
 import queue as _queue
 from dataclasses import dataclass
 from typing import Any, Callable
@@ -388,6 +389,18 @@ class SymPyRuntime:
         max_memory_bytes = self._config.max_memory_bytes
 
         def _worker() -> None:
+            # The parent cannot reliably sample RSS immediately after
+            # proc.start(): the child may still be between fork and Python
+            # initialization. Report a post-fork baseline from inside the
+            # child before importing/running the callable, otherwise normal
+            # SymPy startup can be mistaken for a memory-limit violation.
+            if max_memory_bytes:
+                try:
+                    result_q.put(("ready", _read_rss_bytes(_os.getpid())))
+                except Exception:
+                    # A missing baseline disables the incremental RSS guard
+                    # for this invocation; the hard timeout remains active.
+                    pass
             try:
                 status, payload = "ok", func()
             except BaseException as exc:  # noqa: BLE001 - propagate to parent
@@ -415,7 +428,7 @@ class SymPyRuntime:
         # child's own post-fork baseline is what actually reflects a
         # computation blowing up, independent of however big the host
         # process happens to be.
-        baseline_rss = _read_rss_bytes(proc.pid) if max_memory_bytes else None
+        baseline_rss: int | None = None
 
         deadline = _time.monotonic() + effective
         payload: tuple[str, Any] | None = None
@@ -425,7 +438,11 @@ class SymPyRuntime:
             if remaining <= 0:
                 break
             try:
-                payload = result_q.get(timeout=min(remaining, 0.05))
+                item = result_q.get(timeout=min(remaining, 0.05))
+                if item[0] == "ready":
+                    baseline_rss = item[1]
+                    continue
+                payload = item
                 break
             except _queue.Empty:
                 if not proc.is_alive():

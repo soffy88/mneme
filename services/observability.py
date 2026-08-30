@@ -36,6 +36,7 @@ _counters: dict[str, int] = {
     "rate_limit_total": 0,
     "immersive_requests_total": 0,
 }
+_immersive_gate_decisions: dict[tuple[str, str], int] = {}
 _lock = threading.Lock()
 
 
@@ -108,6 +109,10 @@ def metrics_snapshot() -> dict[str, Any]:
     return {
         "schema_version": "mneme-observability/v1",
         "counters": dict(_counters),
+        "immersive_gate_decision_total": {
+            f"{decision}:{reason}": count
+            for (decision, reason), count in _immersive_gate_decisions.items()
+        },
         "requests_total": total_requests,
         "errors_total": total_errors,
         "error_rate": round(total_errors / total_requests, 6)
@@ -124,6 +129,7 @@ def reset_metrics() -> None:
         _metrics.clear()
         for name in _counters:
             _counters[name] = 0
+        _immersive_gate_decisions.clear()
 
 
 def increment_metric(name: str, value: int = 1) -> None:
@@ -180,6 +186,16 @@ def record_immersive_request(action: str | None = None) -> None:
 
     del action  # reserved for future action-templated labels
     increment_metric("immersive_requests_total")
+
+
+def record_immersive_gate_decision(*, decision: str, reason: str) -> None:
+    """Record only bounded gate labels; never include user identifiers."""
+
+    if decision not in {"allow", "deny"} or reason not in {"GLOBAL", "CANARY", "DISABLED"}:
+        return
+    with _lock:
+        key = (decision, reason.lower())
+        _immersive_gate_decisions[key] = _immersive_gate_decisions.get(key, 0) + 1
 
 
 def route_template(scope: Mapping[str, Any], fallback: str) -> str:

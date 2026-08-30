@@ -17,7 +17,10 @@ from services.auth_deps import (
     require_student_access,
 )
 from obase.db import get_db
-from services.feature_flags import immersive_learning_enabled
+from services.feature_flags import (
+    immersive_gate_reason,
+    is_immersive_learning_enabled_for_user,
+)
 from services.immersive.events import ImmersiveEventError, ingest_immersive_event
 from services.immersive.media_service import (
     MediaServiceError,
@@ -39,7 +42,7 @@ from services.immersive.practice import (
 )
 from services.learning_event_service import LearningEventConflictError
 from services.models import LearningUnit, LearningUnitOccurrence, MediaAsset, User
-from services.observability import record_immersive_request
+from services.observability import record_immersive_gate_decision, record_immersive_request
 from services.purge_service import PurgeStorageCleanupError, delete_media_asset
 from services.storage import presign_media_get_url
 from services.upload_safety import UploadValidationError
@@ -47,8 +50,12 @@ from services.upload_safety import UploadValidationError
 router = APIRouter(prefix="/v2/immersive", tags=["immersive"])
 
 
-def _require_flag() -> None:
-    if not immersive_learning_enabled():
+def _require_flag(user_id: UUID | str | None) -> None:
+    reason = immersive_gate_reason(user_id)
+    record_immersive_gate_decision(
+        decision="allow" if reason != "DISABLED" else "deny", reason=reason
+    )
+    if reason == "DISABLED":
         raise HTTPException(status_code=404, detail="immersive learning disabled")
 
 
@@ -180,10 +187,17 @@ class ExplainRequest(BaseModel):
 
 
 @router.get("/status")
-async def immersive_status() -> dict[str, Any]:
+async def immersive_status(
+    current_user: User = Depends(get_current_user),
+) -> dict[str, Any]:
     """Always reachable — reports flag without leaking disabled routes' shapes."""
 
-    return {"enabled": immersive_learning_enabled()}
+    enabled = is_immersive_learning_enabled_for_user(current_user.id)
+    reason = immersive_gate_reason(current_user.id)
+    record_immersive_gate_decision(
+        decision="allow" if enabled else "deny", reason=reason
+    )
+    return {"enabled": enabled, "feature_gate_reason": reason}
 
 
 @router.post("/{student_id}/media")
@@ -195,7 +209,7 @@ async def upload_media(
     current_user: User = Depends(get_current_user),
     db: AsyncSession = Depends(get_db),
 ):
-    _require_flag()
+    _require_flag(current_user.id)
     _ensure_student_self(current_user, student_id)
     record_immersive_request("upload_media")
     try:
@@ -235,7 +249,7 @@ async def list_media(
     _auth: User = Depends(require_student_access),
     db: AsyncSession = Depends(get_db),
 ):
-    _require_flag()
+    _require_flag(_auth.id)
     rows = (
         await db.execute(
             select(MediaAsset)
@@ -267,7 +281,7 @@ async def get_media(
     _auth: User = Depends(require_student_access),
     db: AsyncSession = Depends(get_db),
 ):
-    _require_flag()
+    _require_flag(_auth.id)
     try:
         asset = await get_owned_media(db, student_id=student_id, media_id=media_id)
     except MediaServiceError as exc:
@@ -298,7 +312,7 @@ async def delete_media(
     current_user: User = Depends(get_current_user),
     db: AsyncSession = Depends(get_db),
 ):
-    _require_flag()
+    _require_flag(current_user.id)
     _ensure_student_self(current_user, student_id)
     try:
         result = await delete_media_asset(db, student_id, media_id)
@@ -325,7 +339,7 @@ async def upload_transcript(
     current_user: User = Depends(get_current_user),
     db: AsyncSession = Depends(get_db),
 ):
-    _require_flag()
+    _require_flag(current_user.id)
     _ensure_student_self(current_user, student_id)
     try:
         content = (await file.read()).decode("utf-8", errors="replace")
@@ -355,7 +369,7 @@ async def get_segments(
     _auth: User = Depends(require_student_access),
     db: AsyncSession = Depends(get_db),
 ):
-    _require_flag()
+    _require_flag(_auth.id)
     try:
         return await list_segments(
             db, student_id=student_id, media_id=media_id, offset=offset, limit=limit
@@ -371,7 +385,7 @@ async def open_session(
     current_user: User = Depends(get_current_user),
     db: AsyncSession = Depends(get_db),
 ):
-    _require_flag()
+    _require_flag(current_user.id)
     _ensure_student_self(current_user, student_id)
     try:
         session = await start_or_resume_session(
@@ -407,7 +421,7 @@ async def patch_session(
     current_user: User = Depends(get_current_user),
     db: AsyncSession = Depends(get_db),
 ):
-    _require_flag()
+    _require_flag(current_user.id)
     _ensure_student_self(current_user, student_id)
     try:
         session = await update_session_continuity(
@@ -445,7 +459,7 @@ async def post_telemetry(
     current_user: User = Depends(get_current_user),
     db: AsyncSession = Depends(get_db),
 ):
-    _require_flag()
+    _require_flag(current_user.id)
     _ensure_student_self(current_user, student_id)
     ids: list[str] = []
     try:
@@ -474,7 +488,7 @@ async def post_learning_event(
     current_user: User = Depends(get_current_user),
     db: AsyncSession = Depends(get_db),
 ):
-    _require_flag()
+    _require_flag(current_user.id)
     _ensure_student_self(current_user, student_id)
     try:
         result = await ingest_immersive_event(
@@ -513,7 +527,7 @@ async def practice_dictation(
     current_user: User = Depends(get_current_user),
     db: AsyncSession = Depends(get_db),
 ):
-    _require_flag()
+    _require_flag(current_user.id)
     _ensure_student_self(current_user, student_id)
     try:
         result = await run_dictation(
@@ -541,7 +555,7 @@ async def practice_listening(
     current_user: User = Depends(get_current_user),
     db: AsyncSession = Depends(get_db),
 ):
-    _require_flag()
+    _require_flag(current_user.id)
     _ensure_student_self(current_user, student_id)
     try:
         result = await run_listening(
@@ -569,7 +583,7 @@ async def practice_comprehension(
     current_user: User = Depends(get_current_user),
     db: AsyncSession = Depends(get_db),
 ):
-    _require_flag()
+    _require_flag(current_user.id)
     _ensure_student_self(current_user, student_id)
     try:
         result = await run_comprehension(
@@ -599,7 +613,7 @@ async def practice_recall(
     current_user: User = Depends(get_current_user),
     db: AsyncSession = Depends(get_db),
 ):
-    _require_flag()
+    _require_flag(current_user.id)
     _ensure_student_self(current_user, student_id)
     try:
         result = await run_sentence_recall(
@@ -627,7 +641,7 @@ async def practice_transfer(
     current_user: User = Depends(get_current_user),
     db: AsyncSession = Depends(get_db),
 ):
-    _require_flag()
+    _require_flag(current_user.id)
     _ensure_student_self(current_user, student_id)
     try:
         result = await run_transfer(
@@ -658,7 +672,7 @@ async def policy_recommend(
     body: PolicyRequest,
     _auth: User = Depends(require_student_access),
 ):
-    _require_flag()
+    _require_flag(_auth.id)
     result = recommend_immersive_next(
         student_id=student_id,
         current_scaffold=body.current_scaffold,
@@ -682,7 +696,7 @@ async def learning_unit_occurrences(
 ):
     """Prove cross-media LearningUnit identity for transfer."""
 
-    _require_flag()
+    _require_flag(_auth.id)
     unit = (
         await db.execute(
             select(LearningUnit).where(
@@ -729,7 +743,7 @@ async def explain_sentence(
 ):
     """Graceful sentence explanation — never writes mastery."""
 
-    _require_flag()
+    _require_flag(_auth.id)
     # Prefer existing LLM provider if present; otherwise degrade.
     try:
         from services.immersive.explain import explain_sentence_safe

@@ -14,12 +14,44 @@ from typing import Any
 from urllib.parse import urlparse
 
 DEFAULT_JWT_SECRET = "mneme-dev-secret-change-in-prod!"
-PRODUCTION_NAMES = frozenset({"prod", "production"})
+PRODUCTION_NAMES = frozenset({"production"})
+ENVIRONMENT_NAMES = frozenset({"development", "test", "demo", "staging", "production"})
 DEFAULT_SECRET_VALUES = frozenset({"", "your_key_here", "change-me", "changeme"})
 
 
 class ProductionConfigError(RuntimeError):
     """Raised when production configuration would violate a safety invariant."""
+
+
+def validate_environment_name(value: str | None, *, require_explicit: bool = False) -> str:
+    """Return a canonical environment name and fail closed on unknown values."""
+
+    raw = (value or "").strip().lower()
+    if not raw:
+        if require_explicit:
+            raise ProductionConfigError("MNEME_ENV is required and must be one of development, test, demo, staging, production")
+        return "development"
+    if raw not in ENVIRONMENT_NAMES:
+        raise ProductionConfigError("MNEME_ENV must be one of development, test, demo, staging, production")
+    return raw
+
+
+def validate_production_deploy_preflight(environ: Mapping[str, str]) -> ProductionConfigReport:
+    """Fail-closed contract for an explicit production deployment target."""
+
+    environment = validate_environment_name(environ.get("MNEME_ENV"), require_explicit=True)
+    errors: list[str] = []
+    if environment != "production":
+        errors.append("MNEME_ENV must explicitly be production")
+    for key in ("DATABASE_URL", "REDIS_URL", "MINIO_ENDPOINT", "MINIO_BUCKET", "GIT_SHA", "RELEASE_VERSION"):
+        if not environ.get(key, "").strip():
+            errors.append(f"{key} must be explicit for production deployment")
+    base = validate_production_config(environ, raise_on_error=False)
+    errors.extend(base.errors)
+    report = ProductionConfigReport(environment=environment, valid=not errors, errors=tuple(errors))
+    if errors:
+        raise ProductionConfigError("production deployment preflight rejected: " + "; ".join(errors))
+    return report
 
 
 @dataclass(frozen=True, slots=True)
@@ -118,7 +150,7 @@ def validate_production_config(
     """
 
     env = os.environ if environ is None else environ
-    environment = env.get("MNEME_ENV", "dev").strip().lower()
+    environment = validate_environment_name(env.get("MNEME_ENV"))
     errors = _production_errors(env) if environment in PRODUCTION_NAMES else []
     report = ProductionConfigReport(environment=environment, valid=not errors, errors=tuple(errors))
     if errors and raise_on_error:
@@ -139,4 +171,4 @@ def validate_session_contract(environ: Mapping[str, str] | None = None) -> dict[
     return {"transport": transport, "secure": secure, "http_only": http_only, "same_site": same_site, "valid": secure and http_only and same_site in {"lax", "strict"}}
 
 
-__all__ = ["DEFAULT_JWT_SECRET", "ProductionConfigError", "ProductionConfigReport", "validate_production_config", "validate_session_contract"]
+__all__ = ["DEFAULT_JWT_SECRET", "ProductionConfigError", "ProductionConfigReport", "validate_environment_name", "validate_production_config", "validate_production_deploy_preflight", "validate_session_contract"]
