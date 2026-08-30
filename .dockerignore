@@ -13,3 +13,4 @@ docs/*.docx
 outputs
 scratch
 tmp
+docker
