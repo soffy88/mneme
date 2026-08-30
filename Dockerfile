@@ -1,4 +1,4 @@
-FROM python:3.12-slim
+FROM python:3.12-slim AS builder
 
 WORKDIR /app
 
@@ -19,6 +19,16 @@ COPY uv.lock .
 RUN uv export --frozen --no-dev --format requirements.txt \
         --no-emit-project --output-file /tmp/mneme-requirements.lock \
     && uv pip install --system -r /tmp/mneme-requirements.lock
+
+FROM python:3.12-slim AS runtime
+
+WORKDIR /app
+
+# The builder needs a compiler for a few optional native wheels.  Copy only
+# the resolved Python runtime into the final image; never ship the compiler,
+# Perl, headers, or package-manager caches to production containers.
+COPY --from=builder /usr/local/lib/python3.12/site-packages /usr/local/lib/python3.12/site-packages
+COPY --from=builder /usr/local/bin /usr/local/bin
 
 # Copy mneme project files
 COPY . .
