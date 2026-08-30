@@ -2,15 +2,15 @@
 
 两层：① 用 httpx.MockTransport（httpx 自带，不引新依赖）对 MnemeClient 做纯逻辑
 单测——每个子命令真的往正确的 /v1/auth/* 或 /mcp/* 路径发正确的 payload，不
-碰真实网络/DB。② 一条真实端到端测试，直接打本机正在跑的 api 服务
-（http://localhost:8000，同容器内回环），证明红线成立：CLI 跟人类用户走同一套
-HTTP 面 + JWT 鉴权 + guard，跨学生访问一样被 403 拦下——不是"结构上应该"，是
-真的拦下来了。
+碰真实网络/DB。② 两条真实端到端测试，直接打进程内 isolated ASGI app，证明红线成立：
+CLI 跟人类用户走同一套 HTTP 面 + JWT 鉴权 + guard，跨学生访问一样被 403 拦下。
 """
 
 from __future__ import annotations
 
+import asyncio
 import json
+import threading
 import uuid
 from datetime import datetime, timezone
 
@@ -22,6 +22,7 @@ from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_asyn
 from cli.mneme_cli import MnemeClient
 from obase.auth import create_access_token
 from obase.config import settings
+from services.main import app
 from services.models import User, UserRole
 
 
@@ -136,7 +137,50 @@ def test_build_parser_wires_submit_answer_arguments():
     assert args.func.__name__ == "cmd_submit_answer"
 
 
-# ── 真实端到端：同容器回环打本机正在跑的 api 服务 ───────────────────────────
+# ── 真实端到端：进程内 isolated ASGI app，不访问宿主/production ─────────────
+
+
+class _SyncASGITransport(httpx.BaseTransport):
+    """Bridge the sync CLI client to an in-process isolated ASGI app."""
+
+    def __init__(self, application):
+        self.application = application
+
+    def handle_request(self, request: httpx.Request) -> httpx.Response:
+        async def send() -> httpx.Response:
+            async with httpx.AsyncClient(
+                transport=httpx.ASGITransport(app=self.application),
+                base_url="http://isolated-test-server",
+            ) as client:
+                response = await client.request(
+                    request.method,
+                    request.url,
+                    headers=request.headers,
+                    content=request.content,
+                )
+                body = await response.aread()
+                return httpx.Response(
+                    response.status_code,
+                    headers=response.headers,
+                    content=body,
+                    request=request,
+                )
+
+        result: list[httpx.Response] = []
+        errors: list[BaseException] = []
+
+        def run_in_isolated_loop() -> None:
+            try:
+                result.append(asyncio.run(send()))
+            except BaseException as exc:  # pragma: no cover - bridge failure path
+                errors.append(exc)
+
+        thread = threading.Thread(target=run_in_isolated_loop)
+        thread.start()
+        thread.join()
+        if errors:
+            raise errors[0]
+        return result[0]
 
 
 @pytest.fixture(scope="function")
@@ -164,79 +208,31 @@ async def two_students(db):
     await db.commit()
 
 
-def _is_local_api_reachable() -> bool:
-    try:
-        httpx.get("http://localhost:8000/health", timeout=2.0)
-        return True
-    except Exception:
-        return False
+def _isolated_client(token: str) -> MnemeClient:
+    return MnemeClient(
+        base_url="http://isolated-test-server",
+        token=token,
+        transport=_SyncASGITransport(app),
+    )
 
 
-def _skip_if_server_env_mismatch(exc: BaseException) -> None:
-    """Map production-api / wrong-DB probe failures to skip (not FAIL).
-
-    ``localhost:8000`` is the live compose API (often production DB). Test users
-    live in ``mneme_test``. Wrong-DB returns 401; overloaded/prod probes may
-    ReadTimeout. Neither is a CLI red-line regression.
-    """
-
-    text = str(exc)
-    if isinstance(exc, RuntimeError) and "401" in text and "User not found" in text:
-        pytest.skip("本机 api 连的不是测试库（mneme_test），跳过真实端到端测试")
-    if isinstance(
-        exc,
-        (
-            httpx.TimeoutException,
-            httpx.NetworkError,
-            httpx.RemoteProtocolError,
-        ),
-    ):
-        pytest.skip("本机 api 探测超时/不可达（多为生产库回环），跳过真实端到端测试")
-    # httpx errors wrapped by callers
-    if "timed out" in text.lower() or "timeout" in text.lower():
-        pytest.skip("本机 api 探测超时（多为生产库回环），跳过真实端到端测试")
-
-
-def _skip_if_server_on_other_db(client: MnemeClient) -> None:
-    """服务器在跑但连的不是测试库（mneme_test）时，测试种的用户它看不见 →
-    whoami 返回 401 User not found。这是环境不匹配（服务器连生产库），不是 CLI
-    bug，跳过而非失败——与文件既有的 skipif-on-reachability 约定一致。"""
-    try:
-        client.whoami()
-    except Exception as e:  # noqa: BLE001 — env probe only
-        _skip_if_server_env_mismatch(e)
-        raise
-
-
-@pytest.mark.skipif(
-    not _is_local_api_reachable(), reason="本机 api 服务未在跑，跳过真实端到端测试"
-)
-def test_cli_whoami_against_real_running_server(two_students):
+@pytest.mark.asyncio
+async def test_cli_whoami_against_real_running_server(two_students):
     """CLI 打真实跑着的 api（回环），whoami 拿到真实学生身份——证明 CLI 走的是
     真实 HTTP 面，不是套壳直连 DB。"""
     token = create_access_token({"sub": str(two_students["a"]), "role": "student"})
-    client = MnemeClient(base_url="http://localhost:8000", token=token)
-
-    try:
-        who = client.whoami()
-    except Exception as e:  # noqa: BLE001 — env probe only
-        _skip_if_server_env_mismatch(e)
-        raise
+    client = _isolated_client(token)
+    who = client.whoami()
     assert who["id"] == str(two_students["a"])
 
 
-@pytest.mark.skipif(
-    not _is_local_api_reachable(), reason="本机 api 服务未在跑，跳过真实端到端测试"
-)
-def test_cli_cannot_bypass_guard_cross_student_review_queue(two_students):
+@pytest.mark.asyncio
+async def test_cli_cannot_bypass_guard_cross_student_review_queue(two_students):
     """红线验证：CLI 用学生 A 的 token 查学生 B 的复习队列——真实服务器的
     _ensure_student_access guard 一样把它拦下来（403），证明 CLI 没有绕过任何
     既有护栏（走的是同一套 /mcp/* + JWT + guard）。"""
     token = create_access_token({"sub": str(two_students["a"]), "role": "student"})
-    client = MnemeClient(base_url="http://localhost:8000", token=token)
-
-    # 先探测服务器是否连测试库：whoami 自己应成功；401 User not found = 连了别的库
-    _skip_if_server_on_other_db(client)
+    client = _isolated_client(token)
 
     with pytest.raises(RuntimeError, match="403"):
         client.mcp(

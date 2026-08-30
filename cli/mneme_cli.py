@@ -41,9 +41,15 @@ def _save_token(token: str) -> None:
 class MnemeClient:
     """/v1/auth/* + /mcp/* 的瘦 HTTP 封装——不做任何业务判断，纯转发。"""
 
-    def __init__(self, base_url: str = DEFAULT_API_BASE, token: Optional[str] = None):
+    def __init__(
+        self,
+        base_url: str = DEFAULT_API_BASE,
+        token: Optional[str] = None,
+        transport: httpx.BaseTransport | None = None,
+    ):
         self.base_url = base_url.rstrip("/")
         self.token = token or _load_token()
+        self.transport = transport
 
     def _headers(self) -> dict[str, str]:
         if not self.token:
@@ -51,7 +57,9 @@ class MnemeClient:
         return {"Authorization": f"Bearer {self.token}"}
 
     def _request(self, method: str, path: str, **kwargs: Any) -> dict:
-        with httpx.Client(base_url=self.base_url, timeout=20.0) as client:
+        with httpx.Client(
+            base_url=self.base_url, timeout=20.0, transport=self.transport
+        ) as client:
             resp = client.request(method, path, headers=self._headers(), **kwargs)
         if resp.status_code >= 400:
             raise RuntimeError(f"{method} {path} -> {resp.status_code}: {resp.text}")
