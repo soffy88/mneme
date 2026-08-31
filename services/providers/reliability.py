@@ -559,7 +559,10 @@ def _classify_exception(exc: BaseException) -> ProviderExecutionError:
         pass
     if isinstance(exc, (ConnectionError, OSError)):
         return ProviderExecutionError("network", retryable=True)
-    if isinstance(exc, (json.JSONDecodeError, KeyError, TypeError, ValueError)):
+    if isinstance(
+        exc,
+        (json.JSONDecodeError, KeyError, IndexError, AttributeError, TypeError, ValueError),
+    ):
         return ProviderMalformedResponseError()
     return ProviderExecutionError("provider_error", retryable=False)
 

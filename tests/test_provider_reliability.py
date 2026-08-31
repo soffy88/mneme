@@ -211,6 +211,20 @@ async def test_non_content_and_non_json_content_shapes_are_malformed():
         )
 
 
+@pytest.mark.asyncio
+async def test_provider_protocol_index_error_is_malformed_not_provider_error():
+    async def malformed_protocol(**_kwargs):
+        raise IndexError("choices")
+
+    with pytest.raises(ProviderMalformedResponseError):
+        await wrap_provider(
+            malformed_protocol,
+            provider="fake",
+            model="protocol-shape",
+            config=_config(),
+        )(messages=[])
+
+
 def test_reliability_config_has_hard_retry_and_timeout_caps():
     with pytest.raises(ValueError):
         _config(max_retries=3)
