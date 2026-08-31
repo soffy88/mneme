@@ -166,6 +166,11 @@ historical runbooks: `sxueji.com/studio`, `sxueji.com/mcp`, and
 stack. No Cloudflare/DNS/aegis route was changed, and the existing demo route
 was not covered or replaced.
 
+A final read-only probe observed `sxueji.com/studio/learn` HTTP 200,
+`sxueji.com/mcp/health` HTTP 404, and `api.sxueji.com/health` HTTP 200. These
+status codes do not establish environment identity and do not show the new
+loopback-only production edge as their backend.
+
 Therefore:
 
 - `PUBLIC_ROUTE_STATUS=OWNER_BLOCKED`
