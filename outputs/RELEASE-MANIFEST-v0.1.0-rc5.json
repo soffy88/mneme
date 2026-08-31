@@ -34,7 +34,7 @@
   ],
   "tests": {
     "full_check": {"command": "./scripts/check.sh", "passed": 1418, "failed": 0, "skipped": 14, "coverage": "80.30%"},
-    "provider_reliability": {"passed": 17, "failed": 0},
+    "provider_reliability": {"passed": 16, "failed": 0},
     "frontend_api_base": {"runtime_passed": 4, "build_contract_passed": 2},
     "frontend_typecheck": "PASS",
     "frontend_production_build": "PASS",
