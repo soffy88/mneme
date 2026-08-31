@@ -1,0 +1,85 @@
+{
+  "schema": "mneme.release.manifest/v1",
+  "release_version": "v0.1.0-rc5",
+  "starting_main_sha": "2fc24bb23793cf27a406ada2accccdb6d8b91e22",
+  "code_release_sha": "2dda33e1fa5532d0375aaeed47e793cac9da720c",
+  "frontend_code_release_sha": "3769bce5e401e0bbd8022fd46231a54da4e7564c",
+  "environment_contract": {
+    "production_frontend_api_base": "https://api-prod.sxueji.com",
+    "demo_api_base": "https://api-demo.sxueji.com",
+    "staging_api_base": "https://api-staging.sxueji.com",
+    "local_staging_qualification_api_base": "http://127.0.0.1:18000",
+    "retired_api_base_forbidden": "api.sxueji.com",
+    "production_deployed": false
+  },
+  "release_metadata_identity": {
+    "tag": "v0.1.0-rc5",
+    "tag_type": "annotated",
+    "target": "final main commit containing this manifest and RC5 qualification reports",
+    "tag_object_sha": "recorded in final handoff after tag creation",
+    "peeled_commit_sha": "recorded in final handoff after tag creation"
+  },
+  "canary_gate": {
+    "immersive_global": "OFF",
+    "allowlist": "synthetic A only",
+    "synthetic_A": "PASS",
+    "synthetic_B": "DENY"
+  },
+  "artifacts": [
+    {"name": "api", "tag": "mneme-api:v0.1.0-rc5-2dda33e", "digest": "sha256:dc02c73d2057b2d40416b2ad8cfd1d8029302780cfa4f60f015823bde5b6d2bf", "git_sha_label": "2dda33e1fa5532d0375aaeed47e793cac9da720c"},
+    {"name": "worker", "tag": "mneme-worker:v0.1.0-rc5-2dda33e", "digest": "sha256:dc02c73d2057b2d40416b2ad8cfd1d8029302780cfa4f60f015823bde5b6d2bf", "git_sha_label": "2dda33e1fa5532d0375aaeed47e793cac9da720c"},
+    {"name": "beat", "tag": "mneme-beat:v0.1.0-rc5-2dda33e", "digest": "sha256:dc02c73d2057b2d40416b2ad8cfd1d8029302780cfa4f60f015823bde5b6d2bf", "git_sha_label": "2dda33e1fa5532d0375aaeed47e793cac9da720c"},
+    {"name": "frontend-production", "tag": "mneme-web:v0.1.0-rc5-3769bce", "digest": "sha256:6f2659ee4a269734837b9e4521c6e774f01e39af7d4e6c2264f8f6bbd551f204", "git_sha_label": "3769bce5e401e0bbd8022fd46231a54da4e7564c"},
+    {"name": "frontend-staging", "tag": "mneme-web:v0.1.0-rc5-3769bce-staging", "digest": "sha256:849a0605652cb3dfee7dc1fe31ab8eb5f4b07960b99887e5fdd2e6a605fe4229", "git_sha_label": "3769bce5e401e0bbd8022fd46231a54da4e7564c"}
+  ],
+  "tests": {
+    "full_check": {"command": "./scripts/check.sh", "passed": 1418, "failed": 0, "skipped": 14, "coverage": "80.30%"},
+    "provider_reliability": {"passed": 17, "failed": 0},
+    "frontend_api_base": {"runtime_passed": 4, "build_contract_passed": 2},
+    "frontend_typecheck": "PASS",
+    "frontend_production_build": "PASS",
+    "fake_provider_failure_matrix": "PASS",
+    "provider_failure_non_advancement": "PASS",
+    "staging_soak": {"duration": "30.5 minutes", "health_samples": 183, "five_xx": 0, "restarts": 0, "provider_errors": 0, "projection_errors": 0, "fsrs_errors": 0}
+  },
+  "security": {
+    "pip_audit": {"status": "PASS", "vulnerabilities": 0},
+    "npm_audit": {"status": "PASS", "total_dependencies": 906, "vulnerabilities": 0},
+    "gitleaks": {"status": "PASS", "historical_baseline_findings": 16, "new_findings": 0, "note": "redacted scan; exact non-secret RC5 image tag allowlisted"},
+    "secret_leakage": "NONE",
+    "frontend_bundle_secret_check": "PASS"
+  },
+  "provider_contract": {
+    "unified_wrapper": "PASS",
+    "timeout": "PASS",
+    "retry_backoff_jitter": "PASS",
+    "circuit_breaker": "PASS",
+    "bulkhead": "PASS",
+    "rate_token_cost_budget": "PASS",
+    "graceful_degradation": "PASS",
+    "live_text": "OWNER_BLOCKED",
+    "live_vlm": "OWNER_BLOCKED",
+    "live_token_cost_proof": "NOT_RUN"
+  },
+  "staging_qualification": {
+    "isolated": true,
+    "global_immersive_off": "PASS",
+    "canary_A": "PASS",
+    "control_B_denied": "PASS",
+    "fake_provider_matrix": "PASS",
+    "soak": "PASS",
+    "real_provider_connectivity": "OWNER_BLOCKED",
+    "production_data_used": false
+  },
+  "qualification": {
+    "p0": "OWNER_BLOCKED: owner live-provider staging secret/connectivity gate not supplied",
+    "p1": "NONE",
+    "rc5_qualified": "NO",
+    "next_gate": "OWNER ROUTING ACTION"
+  },
+  "audit_files": [
+    "outputs/RELEASE-SBOM-v0.1.0-rc5.json",
+    "outputs/RC5-PROVIDER-QUALIFICATION.md",
+    "outputs/RC5-STAGING-QUALIFICATION.md"
+  ]
+}
