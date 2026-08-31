@@ -184,3 +184,313 @@ zero restarts, and zero DB/worker/projection/FSRS errors.
 Recommended next gate: `OWNER ROUTING ACTION`. After owner routing and provider
 readiness are separately approved and verified, run the public-route smoke and
 30-minute soak, then enter a specifically authorized `PRODUCTION CANARY`.
+
+## Owner action packet — recommended production hostnames
+
+This packet is executable by the infrastructure/Cloudflare owner. It is a
+request for owner-side changes, not evidence that those changes have been
+performed. The recommended names are:
+
+- Frontend: `app-prod.sxueji.com`
+- API: `api-prod.sxueji.com`
+
+No DNS answer, HTTPS route, or local deployment reference was found for either
+name during this audit. `CONFLICT_CHECK=PASS` means no visible local/DNS
+conflict; the owner must still confirm that both names are unclaimed in the
+Cloudflare account before creating them. Existing `sxueji.com/*`,
+`api.sxueji.com/*`, `mneme.uex.hk`, and `mneme-api.uex.hk` routes are excluded
+from this packet and must not be changed.
+
+### Production target and network
+
+The production edge is the only intended public entry point:
+
+```text
+app-prod.sxueji.com  ─┐
+                      ├─ Cloudflare Tunnel → 127.0.0.1:18081
+api-prod.sxueji.com  ─┘                         → mneme-production-edge-1:80
+                                                   ├─ API paths → api:8000
+                                                   └─ frontend  → frontend:3001
+```
+
+The exact Docker identities are:
+
+- edge container: `mneme-production-edge-1`, container port `80`, host binding
+  `127.0.0.1:18081`, Docker network `mneme-production-edge`;
+- API target: service `api:8000` / container `mneme-production-api-1` on
+  `mneme-production-edge`;
+- frontend target: service `frontend:3001` / container
+  `mneme-production-frontend-1` on `mneme-production-edge`.
+
+Preferred minimal owner procedure (run on the production host, with the
+Cloudflare and Docker owner identities):
+
+```sh
+# Confirm the isolated edge before touching routing.
+docker inspect mneme-production-edge-1 \
+  --format 'name={{.Name}} port={{(index .Config.ExposedPorts "80/tcp")}} networks={{json .NetworkSettings.Networks}}'
+curl --fail --silent --show-error http://127.0.0.1:18081/health
+curl --fail --silent --show-error http://127.0.0.1:18081/readiness
+
+# Add the existing Aegis Caddy container to the production edge network only
+# if the owner chooses Aegis as the tunnel origin. Do not disconnect it from
+# any existing network and do not change an existing route.
+docker network connect mneme-production-edge aegis-caddy
+```
+
+If the tunnel daemon runs on this same host, its two new ingress entries may
+point directly to `http://127.0.0.1:18081`, avoiding any shared Aegis route.
+If the owner standard requires Aegis, point both names to the dedicated edge
+service `mneme-production-edge-1:80` from Aegis after the network attachment.
+Do not point either name to `mneme-api-1`, `mneme-web`, `mneme-studio`, or a
+shared `:8081`/`:8083` listener.
+
+### Cloudflare/Tunnel action
+
+With the existing tunnel name or ID filled in by the owner:
+
+```sh
+TUNNEL='<OWNER_APPROVED_TUNNEL_NAME_OR_ID>'
+cloudflared tunnel route dns "$TUNNEL" app-prod.sxueji.com
+cloudflared tunnel route dns "$TUNNEL" api-prod.sxueji.com
+cloudflared tunnel ingress validate
+```
+
+Add these ingress rules to the authoritative tunnel configuration, before its
+catch-all rule, and reload the tunnel through its managed service. The exact
+configuration form is:
+
+```yaml
+ingress:
+  - hostname: app-prod.sxueji.com
+    service: http://127.0.0.1:18081
+  - hostname: api-prod.sxueji.com
+    service: http://127.0.0.1:18081
+  - service: http_status:404
+```
+
+If Cloudflare runs outside the production host, replace the service target with
+the owner-approved private Aegis endpoint; do not expose port 18081 publicly.
+Enable proxied DNS, TLS mode `Full (strict)`, HTTPS redirect, and the normal
+Cloudflare WebSocket setting. Do not make any DNS or ingress change for the
+existing demo/legacy names.
+
+### Aegis/Caddy action
+
+If Aegis is the selected origin, add the following host blocks to the
+authoritative Aegis Caddyfile and reload only after `caddy validate` succeeds.
+The upstream is the dedicated production edge, not the shared demo services:
+
+```caddyfile
+app-prod.sxueji.com {
+    encode zstd gzip
+    reverse_proxy mneme-production-edge-1:80 {
+        header_up Host {http.request.host}
+        header_up X-Forwarded-Proto https
+        header_up X-Forwarded-Host {http.request.host}
+        transport http {
+            dial_timeout 5s
+            response_header_timeout 30s
+            read_timeout 305s
+            write_timeout 305s
+        }
+    }
+}
+
+api-prod.sxueji.com {
+    request_body {
+        max_size 25MB
+    }
+    reverse_proxy mneme-production-edge-1:80 {
+        header_up Host {http.request.host}
+        header_up X-Forwarded-Proto https
+        header_up X-Forwarded-Host {http.request.host}
+        transport http {
+            dial_timeout 5s
+            response_header_timeout 30s
+            read_timeout 305s
+            write_timeout 305s
+        }
+    }
+}
+```
+
+Caddy's `reverse_proxy` provides WebSocket upgrade support; verify it with a
+synthetic authenticated streaming/WebSocket fixture if that path is used.
+Preserve `X-Forwarded-For` using the managed proxy's trusted-proxy policy;
+accept forwarded headers only from the Cloudflare/Aegis source ranges, and do
+not trust arbitrary client-supplied `X-Forwarded-*` values. The 305-second
+upstream read/write ceiling is intentionally above the current provider
+caller's maximum 300 seconds, but it does not fix the caller's retry policy.
+The 25 MB body limit must be checked against the API's actual upload contract
+before activation; lower it if the owner contract permits a smaller limit.
+
+The production edge's existing path split remains authoritative:
+
+```text
+/health, /readiness, /v1/*, /v2/*, /mcp/* → api:8000
+/studio* and fallback                       → frontend:3001
+```
+
+### Post-routing verification packet
+
+Codex can run these checks after the owner confirms the two changes. They must
+be run against synthetic production credentials only; values containing keys,
+tokens, cookies, or user content must not be pasted into the audit:
+
+```sh
+set -eu
+for host in app-prod.sxueji.com api-prod.sxueji.com; do
+  curl --fail --silent --show-error --proto '=https' --tlsv1.2 \
+    "https://$host/health" >/tmp/mneme-prod-health.json
+  curl --fail --silent --show-error --proto '=https' --tlsv1.2 \
+    "https://$host/readiness" >/tmp/mneme-prod-readiness.json
+done
+curl --fail --silent --show-error --proto '=https' --tlsv1.2 \
+  -o /tmp/mneme-prod-frontend.html https://app-prod.sxueji.com/studio
+
+# The operator must compare these redacted fields from health/readiness and
+# container labels; never print environment files or secret-bearing headers.
+docker inspect mneme-production-api-1 mneme-production-worker-1 \
+  mneme-production-beat-1 mneme-production-frontend-1 \
+  --format '{{.Name}} {{index .Config.Labels "org.opencontainers.image.revision"}} {{index .Config.Labels "org.opencontainers.image.version"}}'
+```
+
+Expected identity is `MNEME_ENV=production`,
+`GIT_SHA=a359877676a39fc2627a6f429adea77b0ed41311`, release
+`v0.1.0-rc4`, API/worker/beat digest
+`sha256:32aec19baf11a7523398fa6b013d09ee65c83c548f732709d430f7dd90007c33`,
+and frontend digest
+`sha256:aefdde6da5a7580ff596dfffa9849f2d66c9705d1c37a8a00e17958628d73495`.
+The verifier must also confirm the production DB/storage/Redis identity, HTTPS
+redirect, Host/forwarded-header behavior, upload limit, WebSocket/streaming
+behavior, and that the existing demo/staging route probes and resource marker
+counts are unchanged.
+
+Important artifact finding: the exact RC4 frontend image was built with
+`NEXT_PUBLIC_API_BASE=https://api.sxueji.com`. It therefore cannot safely be
+used as the browser frontend for `app-prod.sxueji.com` while the API is
+`api-prod.sxueji.com`; the browser would call the existing shared API. The
+owner must either provide an explicitly approved same-origin/API routing design
+that is proven not to hit the demo API, or request a new frontend build with
+`NEXT_PUBLIC_API_BASE=https://api-prod.sxueji.com`. That build-time artifact
+change is not being made here and cannot be represented as the existing RC4
+frontend artifact.
+
+## Provider activation owner template
+
+The following are the variables read by the current RC4 code. Fill only the
+chosen provider branch; leave unused provider secrets unset. `MODEL`, `API_KEY`,
+and `BASE_URL` are explanatory placeholders, not generic variables recognized
+by the current code.
+
+```dotenv
+# Selector: qwen | veya | ollama | (empty/default priority mode)
+MNEME_LLM=<OWNER_CHOICE>
+MNEME_ALLOW_MOCK_LLM=0
+
+# Qwen (text + VLM through the OpenAI-compatible caller)
+DASHSCOPE_API_KEY=<SECRET>
+QWEN_API_KEY=<SECRET_OR_EMPTY>
+QWEN_BASE_URL=<APPROVED_HTTPS_ENDPOINT>
+QWEN_MODEL=<APPROVED_TEXT_MODEL>
+QWEN_VL_MODEL=<APPROVED_VISION_MODEL>
+
+# Veya (text + VLM; only an owner-approved reachable gateway)
+VEYA_API_KEY=<SECRET_OR_EMPTY>
+VEYA_BASE_URL=<APPROVED_HTTPS_OR_PRIVATE_ENDPOINT>
+VEYA_MODEL=<APPROVED_TEXT_MODEL>
+VEYA_VL_MODEL=<APPROVED_VISION_MODEL>
+
+# Default-priority providers (only if MNEME_LLM is empty/default)
+DEEPSEEK_API_KEY=<SECRET_OR_EMPTY>
+OPENAI_API_KEY=<SECRET_OR_EMPTY>
+ANTHROPIC_API_KEY=<SECRET_OR_EMPTY>
+GEMINI_API_KEY=<SECRET_OR_EMPTY>
+
+# Ollama only (text; it does not configure a VLM)
+OLLAMA_BASE_URL=<APPROVED_PRIVATE_ENDPOINT>
+OLLAMA_MODEL=<APPROVED_TEXT_MODEL>
+```
+
+Authoritative defaults are Qwen text `qwen-plus`, Qwen VLM `qwen-vl-max`,
+Veya text `veya1.2-128K`, Veya VLM `veya1.2-vl`, Ollama text `qwen2.5:7b`,
+DeepSeek text `deepseek-chat`, Claude text `claude-3-5-sonnet-20240620`,
+OpenAI text `gpt-4o-mini`, and Gemini VLM/text `gemini-1.5-flash`. The owner
+must explicitly approve the actual model and endpoint rather than relying on a
+default. Qwen's current custom caller needs a reachable OpenAI-compatible
+`/chat/completions` endpoint; the host-local Veya gateway observed in this
+environment is not reachable from production and is not an approved production
+dependency.
+
+The following policy fields are required for a safe live canary but are **not**
+recognized by RC4 callers today:
+
+```dotenv
+PROVIDER_CONNECT_TIMEOUT_SECONDS=<OWNER_POLICY>
+PROVIDER_READ_TIMEOUT_SECONDS=<OWNER_POLICY>
+PROVIDER_MAX_RETRIES=<OWNER_POLICY>
+PROVIDER_RETRY_BACKOFF_SECONDS=<OWNER_POLICY>
+PROVIDER_RATE_LIMIT_RPM=<OWNER_POLICY>
+PROVIDER_TOKEN_BUDGET_DAILY=<OWNER_POLICY>
+PROVIDER_COST_BUDGET_DAILY=<OWNER_POLICY>
+PROVIDER_SYNTHETIC_FIXTURE_ENDPOINT=<OWNER_ONLY>
+PROVIDER_METRICS_NAMESPACE=mneme_provider
+```
+
+Store secrets in the approved external production secret manager, injected at
+runtime, or in the existing mode-0600
+`/data/soffy/mneme-production/.env.production` mechanism with directory mode
+700. The secret manager is preferred. Do not place them in Git, a Dockerfile,
+an image layer, Next.js public variables, `/health` responses, metrics labels,
+logs, or audit files. `MNEME_LLM`, model names, and non-secret policy values
+may be config, but endpoint authorization and secret-bearing configuration must
+remain server-side.
+
+## Provider canary assessment and RC boundary
+
+Current RC4 caller behavior is not sufficient for a real provider canary as a
+production reliability contract:
+
+- Qwen text timeout is 120 seconds and Qwen VLM timeout is 180 seconds;
+- Veya text/VLM and Ollama text callers use 300 seconds;
+- caller-level retry/backoff, circuit breaking, bounded concurrency, rate
+  limiting, and cost/token budgets are absent;
+- the existing metrics provide aggregate request/error/latency and
+  `llm_failures_total`, but not provider request count, provider error class,
+  timeout count, provider latency, input/output token usage, or cost series;
+- existing failure fallback was verified offline (56 tests passed), but no live
+  provider connectivity, timeout, retry, malformed-response, or rate-limit
+  fixture was run.
+
+Therefore:
+
+`LLM_PROVIDER_REQUIRED=YES` before an LLM-dependent production canary;
+`VLM_PROVIDER_REQUIRED=YES` before enabling any immersive/VLM path (it is not
+needed for the current global-off core smoke); `PROVIDER_ACTIVATED=NO`;
+`PROVIDER_OBSERVABILITY=INSUFFICIENT`; and
+`RUNTIME_CODE_CHANGE_REQUIRED_BEFORE_CANARY=YES`.
+
+The minimum runtime work is a new RC (`RC5_REQUIRED`): configurable bounded
+connect/read deadlines, bounded retries only for explicitly idempotent calls
+with exponential backoff, circuit breaker/bulkhead, rate and token/cost
+budgets, graceful malformed/timeout/provider-error handling, and aggregate
+provider metrics for request/error/latency/timeout/token usage/cost with no
+user/email/phone labels. The frontend API-base artifact issue above also needs
+an explicitly rebuilt/qualified frontend image if `api-prod.sxueji.com` is used.
+No such runtime or image change was made in this turn.
+
+Owner completion required before Codex can resume: approve and create the two
+hostnames, install the tunnel ingress, apply and validate the Aegis/edge route,
+confirm TLS/proxy limits, resolve the frontend API-base choice, select and
+provision a live provider secret/model/endpoint and its policy/fixture, and
+provide owner evidence that the changes are live. Codex can then automatically
+run route identity proof, public health/readiness/frontend checks, public core
+smoke, immersive denial, demo/staging preservation checks, provider fixture
+tests, and the 30-minute public-route soak. If runtime changes are required,
+Codex must stop at `NEW_RC_REQUIRED` and not reuse RC4.
+
+This turn changed documentation only. `RC4_TAG_UNCHANGED=YES`,
+`PRODUCTION_DEPLOYED=NO`, `PUBLIC_ROUTING_READY=NO`, and the recommended next
+gate is `FIX BLOCKERS` in the order: owner routing action → frontend artifact/
+RC5 decision → public routing verification.
