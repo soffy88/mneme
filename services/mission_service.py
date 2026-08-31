@@ -19,7 +19,6 @@ from omodul.daily_mission_workflow import (
 from services.models import DailyMission, KCMastery, MissionType, Streak, WrongQuestion
 from services.anon import anon_ref
 from oskill.cold_start_single import cold_start_single, ColdStartInput
-from obase.provider_registry import ProviderRegistry
 
 
 def _to_jsonable(obj: Any) -> Any:
@@ -79,12 +78,9 @@ async def get_or_create_mission(
     )
     if not wrong_count:
         # 全新用户，走 cold_start_single
-        caller = None
-        if ProviderRegistry._instance:
-            try:
-                caller = ProviderRegistry.get().llm()
-            except Exception:
-                caller = None
+        from services.providers.setup import get_optional_text_caller
+
+        caller = get_optional_text_caller()
         try:
             cs_res = await cold_start_single(
                 ColdStartInput(

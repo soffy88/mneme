@@ -97,8 +97,11 @@ async def grade_question(
             method="llm",
             reason=data.get("reason"),
         )
-    except:
-        return GradeResult(is_correct=False, method="llm", reason="LLM Parse Error")
+    except Exception as exc:
+        # A malformed model response is provider failure, not a wrong answer.
+        # Let the surrounding transaction roll back instead of manufacturing a
+        # wrong-question/evidence record that could affect learning state.
+        raise RuntimeError("provider response malformed") from exc
 
 
 # ── §5.3 profiler_analyze ─────────────────────────────────────────────────────
@@ -141,17 +144,13 @@ async def profiler_analyze(
             raw = raw.split("```json")[1].split("```")[0].strip()
         data = json.loads(raw)
         return ProfilerResult(**data)
-    except Exception as e:
-        # 异常兜底
-        return ProfilerResult(
-            error_type="dontknow",
-            error_reason=f"Analysis failed: {str(e)}",
-            knowledge_points=kc_candidates[:1] if kc_candidates else [],
-            cognitive_break_point="Unknown",
-            socratic_questions=["你能再读一遍题吗？"],
-            mastery_estimate=0.1,
-            parent_note="分析遇到一点小问题。",
-        )
+    except Exception as exc:
+        # Do not turn timeout/429/5xx/malformed output into a plausible
+        # ``dontknow`` diagnosis.  The caller's transaction will roll back and
+        # the task/service can select its normal degraded path.
+        if getattr(exc, "error_class", None):
+            raise
+        raise RuntimeError("provider response malformed") from exc
 
 
 _PROFILER_PROMPT = """

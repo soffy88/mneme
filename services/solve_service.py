@@ -9,12 +9,12 @@ from __future__ import annotations
 
 from typing import Any
 
-from obase.provider_registry import ProviderRegistry
+from services.providers.setup import get_optional_text_caller
 from omodul.solve_problem import SolveProblemConfig, SolveProblemInput, solve_problem
 
 
 async def handle_solve_problem(problem_text: str) -> dict[str, Any]:
-    caller = ProviderRegistry.get().llm() if ProviderRegistry._instance else None
+    caller = get_optional_text_caller()
 
     config = SolveProblemConfig()
     input_data = SolveProblemInput(problem_text=problem_text)

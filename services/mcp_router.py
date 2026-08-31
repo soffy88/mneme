@@ -548,28 +548,12 @@ async def _llm_generate_question(
     LLM 只看到知识点名字，难度完全靠猜，曾经出过严重偏离学段的题。
     """
     import json as _json
-    import os
 
-    backend = os.environ.get("MNEME_LLM", "").lower()
     caller: Any
     try:
-        if backend == "veya":
-            from services.providers.veya_caller import VeyaTextCaller
+        from services.providers.setup import get_text_caller
 
-            caller = VeyaTextCaller()
-        elif backend in ("qwen", ""):
-            key = os.environ.get("DASHSCOPE_API_KEY") or os.environ.get(
-                "QWEN_API_KEY"
-            )
-            if not key or key == "your_key_here":
-                return None
-            from services.providers.qwenvl_caller import QwenTextCaller
-
-            caller = QwenTextCaller(
-                api_key=key, model=os.environ.get("QWEN_MODEL", "qwen-plus")
-            )
-        else:
-            return None
+        caller = get_text_caller()
         level_desc = _GRADE_ZH.get(grade or "", "") or "中小学"
         out = await caller(
             messages=[

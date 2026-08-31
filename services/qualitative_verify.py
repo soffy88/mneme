@@ -16,7 +16,6 @@ from __future__ import annotations
 import asyncio
 import json
 import logging
-import os
 from typing import Any, Optional
 
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -25,32 +24,27 @@ from mneme_core.oprim.models import KpView, QualitativeVerdict, Rubric
 from mneme_core.oskill.qualitative_verifier import qualitative_verifier
 
 from services import gate_store
-from services.providers.qwenvl_caller import QwenTextCaller
 
 logger = logging.getLogger(__name__)
 
 
-def _api_key() -> Optional[str]:
-    # 与 _llm_generate_question 同源的 key（DASHSCOPE_API_KEY 生产已配、出题实测可用）；
-    # 兼容 QWEN_API_KEY 命名。
-    return os.environ.get("DASHSCOPE_API_KEY") or os.environ.get("QWEN_API_KEY")
-
-
 def _configured_text_caller() -> Any | None:
     """Construct the explicitly selected text provider for qualitative grading."""
-    backend = os.environ.get("MNEME_LLM", "").lower()
-    if backend == "veya":
-        from services.providers.veya_caller import VeyaTextCaller
+    try:
+        from services.providers.setup import get_text_caller
 
-        return VeyaTextCaller()
-    if backend in ("qwen", ""):
-        key = _api_key()
-        if not key or key == "your_key_here":
-            return None
-        return QwenTextCaller(
-            api_key=key, model=os.environ.get("QWEN_MODEL", "qwen-plus")
-        )
-    return None
+        caller = get_text_caller()
+    except Exception:
+        return None
+    # An explicitly selected qwen backend without a key is rejected by setup;
+    # default-mode mock callers remain unavailable to this production verifier.
+    underlying_type = type(getattr(caller, "caller", caller)).__name__
+    if underlying_type in {
+        "_MockLLM",
+        "_MockVLM",
+    }:
+        return None
+    return caller
 
 
 def _repair_spans(raw: str, explanation: str) -> str:
@@ -93,7 +87,7 @@ class _SyncLLMAdapter:
     asyncio.run 起临时 loop 执行异步 HTTP。返回前用 _repair_spans 按 quote 重算偏移。
     """
 
-    def __init__(self, caller: QwenTextCaller, explanation: str) -> None:
+    def __init__(self, caller: Any, explanation: str) -> None:
         self._caller = caller
         self._explanation = explanation
 

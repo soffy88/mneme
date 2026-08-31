@@ -10,6 +10,7 @@
 - analyze_paper 全链（Mock OCR → 批改 → step_analysis 落库 → 认知更新）。
 """
 
+import json
 import uuid
 
 import pytest
@@ -24,6 +25,7 @@ from sqlalchemy.pool import NullPool
 from obase.cognitive_types import KCState, fsrs_new_card
 from obase.config import settings
 from obase.llm import register_mock_providers
+from obase.provider_registry import ProviderRegistry
 from oprim.bkt import error_weights
 from oskill.cognitive_state import CognitiveUpdateInput, cognitive_update
 from oskill.paper_grading import (
@@ -48,6 +50,24 @@ def setup_mock_llm():
         register_mock_providers()
     except Exception:
         pass
+
+    async def grading_fake(**kwargs):
+        prompt = str((kwargs.get("messages") or [{}])[0].get("content", ""))
+        if "error_type" in prompt:
+            content = {
+                "error_type": "dontknow",
+                "error_reason": "synthetic provider fixture",
+                "knowledge_points": ["GDMATH-SET-01"],
+                "cognitive_break_point": "synthetic",
+                "socratic_questions": ["请再检查一步。"],
+                "mastery_estimate": 0.1,
+                "parent_note": "synthetic fixture",
+            }
+        else:
+            content = {"is_correct": False, "reason": "synthetic provider fixture"}
+        return {"content": json.dumps(content), "usage": {}}
+
+    ProviderRegistry.register("llm", "default", grading_fake, replace=True)
 
 
 @pytest.fixture

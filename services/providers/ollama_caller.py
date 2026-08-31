@@ -9,6 +9,8 @@ from __future__ import annotations
 import os
 from typing import Any, Dict, List, Optional
 
+from obase.provider_timeout import provider_httpx_timeout
+
 
 class OllamaCaller:
     def __init__(self, base_url: Optional[str] = None, model: Optional[str] = None):
@@ -24,6 +26,7 @@ class OllamaCaller:
         tools: Optional[List[Dict[str, Any]]] = None,
         response_format: Optional[str] = None,
         system: Optional[str] = None,
+        enable_thinking: bool | None = None,
     ) -> Dict[str, Any]:
         import httpx
 
@@ -39,7 +42,7 @@ class OllamaCaller:
         if response_format == "json":
             payload["response_format"] = {"type": "json_object"}
 
-        async with httpx.AsyncClient(timeout=300) as client:
+        async with httpx.AsyncClient(timeout=provider_httpx_timeout()) as client:
             resp = await client.post(f"{self.base_url}/chat/completions", json=payload)
             resp.raise_for_status()
             data = resp.json()

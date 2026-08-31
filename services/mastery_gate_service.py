@@ -83,9 +83,9 @@ async def start_gate_check(
         }
 
     if caller is None:
-        from obase.provider_registry import ProviderRegistry
+        from services.providers.setup import get_optional_text_caller
 
-        caller = ProviderRegistry.get().llm() if ProviderRegistry._instance else None
+        caller = get_optional_text_caller()
 
     variant = await variant_for_review(
         ReviewVariantInput(

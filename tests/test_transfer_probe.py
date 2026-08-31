@@ -211,6 +211,7 @@ async def test_end_to_end_due_queue_and_grading(db_student):
         patch(
             "services.transfer_probe_service.variant_for_review", return_value=verified
         ),
+        patch("services.providers.setup.get_optional_text_caller", return_value=object()),
     ):
         items = await get_due_variants(db, sid)
 

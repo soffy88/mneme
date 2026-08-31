@@ -3,7 +3,6 @@ import tempfile
 import uuid
 import logging
 from typing import Any, Optional
-from obase.provider_registry import ProviderRegistry
 from omodul.speaking_practice_workflow import (
     speaking_practice_workflow,
     Config,
@@ -63,7 +62,9 @@ async def handle_speaking_practice(
         f"Topic: {topic} | Target Sentences: {target_sentences} | Grade: {grade}"
     )
 
-    llm_caller = ProviderRegistry.get().llm() if ProviderRegistry._instance else None
+    from services.providers.setup import get_optional_text_caller
+
+    llm_caller = get_optional_text_caller()
 
     input_data = InputData(
         topic=full_topic,

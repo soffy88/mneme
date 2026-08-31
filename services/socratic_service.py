@@ -31,7 +31,6 @@ from services.models import (
 from services.anon import anon_ref
 
 from oskill.metacog_scaffold import metacog_scaffold, MetacogScaffoldInput
-from obase.provider_registry import ProviderRegistry
 from obase.sympy_runtime import SymPyRuntime
 
 _runtime = SymPyRuntime()
@@ -109,12 +108,9 @@ async def start_session(
     metacog_options = []
     first_q = anchored_q
     if mode != "sprint":
-        try:
-            caller = (
-                ProviderRegistry.get().llm() if ProviderRegistry._instance else None
-            )
-        except Exception:
-            caller = None
+        from services.providers.setup import get_optional_text_caller
+
+        caller = get_optional_text_caller()
         try:
             meta_res = await metacog_scaffold(
                 MetacogScaffoldInput(

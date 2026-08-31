@@ -52,9 +52,13 @@ class _FakeCaller:
 
 
 def _patch_caller(monkeypatch: pytest.MonkeyPatch, content: str):
-    from services.providers import qwenvl_caller
+    from services.providers import setup
 
-    monkeypatch.setattr(qwenvl_caller, "QwenTextCaller", lambda **kw: _FakeCaller({"content": content}))
+    monkeypatch.setattr(
+        setup,
+        "get_text_caller",
+        lambda: _FakeCaller({"content": content}),
+    )
 
 
 @pytest.mark.asyncio
@@ -98,13 +102,13 @@ async def test_direct_llm_speak_without_utterance_fills_heuristic(monkeypatch):
 @pytest.mark.asyncio
 async def test_direct_llm_exception_falls_back_to_heuristic(monkeypatch):
     monkeypatch.setenv("DASHSCOPE_API_KEY", "test-key")
-    from services.providers import qwenvl_caller
-
     class _RaisingCaller:
         async def __call__(self, **kwargs):
             raise RuntimeError("upstream down")
 
-    monkeypatch.setattr(qwenvl_caller, "QwenTextCaller", lambda **kw: _RaisingCaller())
+    from services.providers import setup
+
+    monkeypatch.setattr(setup, "get_text_caller", lambda: _RaisingCaller())
     out = await direct(AriaDirectorInput(event="wake"))
     assert out.source == "heuristic"
     assert out.reason.startswith("llm_fail:")

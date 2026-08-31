@@ -11,7 +11,6 @@ oservi 挂载。
 
 from __future__ import annotations
 
-import os
 import uuid
 from typing import Any, Awaitable, Callable, Optional
 
@@ -86,29 +85,17 @@ async def tool_chat_turn(
 
 async def _classify_llm(prompt: str) -> str:
     """intent_router 的注入 LLM：无 key 时保守回落 free_qa，不阻断对话。"""
-    backend = os.environ.get("MNEME_LLM", "").lower()
-    caller: Any
-    if backend == "veya":
-        from services.providers.veya_caller import VeyaTextCaller
+    try:
+        from services.providers.setup import get_text_caller
 
-        caller = VeyaTextCaller()
-    elif backend == "qwen":
-        key = os.environ.get("DASHSCOPE_API_KEY")
-        if not key:
-            return '{"mode": "free_qa"}'
-        from services.providers.qwenvl_caller import QwenTextCaller
-
-        caller = QwenTextCaller(
-            api_key=key, model=os.environ.get("QWEN_MODEL", "qwen-plus")
+        out = await get_text_caller()(
+            messages=[{"role": "user", "content": prompt}],
+            max_tokens=200,
+            enable_thinking=False,  # 分类任务无需思维链（AA.8 同理）
         )
-    else:
+        return str(out.get("content", ""))
+    except Exception:  # noqa: BLE001 - intent safely falls back to free_qa
         return '{"mode": "free_qa"}'
-    out = await caller(
-        messages=[{"role": "user", "content": prompt}],
-        max_tokens=200,
-        enable_thinking=False,  # 分类任务无需思维链（AA.8 同理）
-    )
-    return str(out.get("content", ""))
 
 
 @router.post("/turn")
@@ -120,21 +107,12 @@ async def chat_turn(
 ) -> dict:
     _ensure_student_self(current_user, req.student_id)
 
-    backend = os.environ.get("MNEME_LLM", "").lower()
-    loop_caller: Any
-    if backend == "veya":
-        from mneme_agent.qwen_llm import VeyaLoopCaller
+    try:
+        from services.providers.setup import get_agent_loop_caller
 
-        loop_caller = VeyaLoopCaller()
-    elif backend == "qwen":
-        key = os.environ.get("DASHSCOPE_API_KEY")
-        if not key:
-            raise HTTPException(503, "chat 暂不可用（缺 LLM key）")
-        from mneme_agent.qwen_llm import QwenLoopCaller
-
-        loop_caller = QwenLoopCaller(api_key=key, model=os.environ.get("QWEN_MODEL"))
-    else:
-        raise HTTPException(503, f"chat 暂不可用（不支持的 LLM backend: {backend or 'default'}）")
+        loop_caller = get_agent_loop_caller()
+    except Exception as exc:  # noqa: BLE001 - safe provider boundary
+        raise HTTPException(503, "chat 暂不可用（provider unavailable）") from exc
 
     return await tool_chat_turn(
         db,

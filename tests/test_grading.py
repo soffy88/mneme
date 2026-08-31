@@ -1,3 +1,4 @@
+import json
 import pytest
 import uuid
 from sqlalchemy.ext.asyncio import create_async_engine, async_sessionmaker, AsyncSession
@@ -5,6 +6,7 @@ from sqlalchemy.pool import NullPool
 from sqlalchemy import select, delete
 from obase.config import settings
 from obase.llm import register_mock_providers
+from obase.provider_registry import ProviderRegistry
 from oskill.paper_grading import process_single_question
 from services.models import WrongQuestion, User, UserRole
 
@@ -22,6 +24,24 @@ def setup_mock_llm():
         register_mock_providers()
     except Exception:
         pass  # 已注册（同一 pytest 进程多用例）即可复用
+
+    async def grading_fake(**kwargs):
+        prompt = str((kwargs.get("messages") or [{}])[0].get("content", ""))
+        if "error_type" in prompt:
+            content = {
+                "error_type": "dontknow",
+                "error_reason": "synthetic provider fixture",
+                "knowledge_points": ["GDMATH-SET-01"],
+                "cognitive_break_point": "synthetic",
+                "socratic_questions": ["请再检查一步。"],
+                "mastery_estimate": 0.1,
+                "parent_note": "synthetic fixture",
+            }
+        else:
+            content = {"is_correct": False, "reason": "synthetic provider fixture"}
+        return {"content": json.dumps(content), "usage": {}}
+
+    ProviderRegistry.register("llm", "default", grading_fake, replace=True)
 
 
 @pytest.fixture
@@ -47,12 +67,6 @@ async def test_student():
 @pytest.mark.asyncio
 async def test_process_single_question_wrong(test_student):
     async with SessionLocal() as session:
-        # 1. 运行单题批改流程 (Mock 下默认会是错的，因为 MockVLM 返回空 questions，
-        # 但 grade_question LLM mock 返回 "Mock Response" 被 json.loads 失败，兜底是 False)
-        # 修正：MockLLM 在 obase/llm.py 中现在返回固定内容。
-        # 实际上 MockLLM 需要返回 JSON 格式才能让 grade_question 解析。
-        # 暂时依赖 grade_question 的异常兜底 (False) 进行测试。
-
         res = await process_single_question(
             session=session,
             student_id=test_student,

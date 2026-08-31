@@ -14,6 +14,8 @@ import json
 import os
 from typing import Any
 
+from obase.provider_timeout import provider_httpx_timeout
+
 
 def _base_url() -> str:
     return (os.environ.get("QWEN_BASE_URL") or "").rstrip("/") or (
@@ -136,7 +138,7 @@ class OpenAICompatibleLoopCaller:
             if self.api_key
             else {}
         )
-        async with httpx.AsyncClient(timeout=300) as client:
+        async with httpx.AsyncClient(timeout=provider_httpx_timeout()) as client:
             resp = await client.post(
                 f"{self.base_url}/chat/completions",
                 headers=headers,

@@ -27,6 +27,7 @@ pytest.importorskip("mneme_core")
 from obase.db import SessionLocal  # noqa: E402
 from services.mcp_router import _GRADE_ZH, _llm_generate_question  # noqa: E402
 from services.models import KnowledgeUnit, Textbook, User, UserRole, KnowledgeCluster  # noqa: E402
+from services.providers.reliability import wrap_provider  # noqa: E402
 from sqlalchemy import delete, select  # noqa: E402
 
 # 真实撞过原始 bug 的 G1 KU——41 条 wrong_questions 引用它，但题库过滤器
@@ -95,14 +96,10 @@ def _fake_caller(captured: list):
 @pytest.mark.asyncio
 async def test_grade_g1_produces_elementary_level_prompt_not_generic_middle_school():
     captured: list = []
-    with (
-        patch(
-            "services.providers.qwenvl_caller.QwenTextCaller",
-            return_value=_fake_caller(captured),
-        ),
-        patch(
-            "os.environ.get",
-            side_effect=lambda k, d=None: "fake-key" if k == "DASHSCOPE_API_KEY" else d,
+    with patch(
+        "services.providers.setup.get_text_caller",
+        return_value=wrap_provider(
+            _fake_caller(captured), provider="fake", model="test", retryable=True
         ),
     ):
         result = await _llm_generate_question("1～5的认识", grade="G1")
@@ -117,14 +114,10 @@ async def test_grade_g1_produces_elementary_level_prompt_not_generic_middle_scho
 @pytest.mark.asyncio
 async def test_grade_g10_produces_high_school_level_prompt():
     captured: list = []
-    with (
-        patch(
-            "services.providers.qwenvl_caller.QwenTextCaller",
-            return_value=_fake_caller(captured),
-        ),
-        patch(
-            "os.environ.get",
-            side_effect=lambda k, d=None: "fake-key" if k == "DASHSCOPE_API_KEY" else d,
+    with patch(
+        "services.providers.setup.get_text_caller",
+        return_value=wrap_provider(
+            _fake_caller(captured), provider="fake", model="test", retryable=True
         ),
     ):
         result = await _llm_generate_question("二次函数的零点", grade="G10")
@@ -139,14 +132,10 @@ async def test_unknown_grade_degrades_to_generic_label_not_crash():
     """grade=None（联表查不到 Textbook 行的边界情况）必须优雅降级，不崩，
     也不能悄悄用回旧的"适合中学生"硬编码——用更中性的"中小学"兜底。"""
     captured: list = []
-    with (
-        patch(
-            "services.providers.qwenvl_caller.QwenTextCaller",
-            return_value=_fake_caller(captured),
-        ),
-        patch(
-            "os.environ.get",
-            side_effect=lambda k, d=None: "fake-key" if k == "DASHSCOPE_API_KEY" else d,
+    with patch(
+        "services.providers.setup.get_text_caller",
+        return_value=wrap_provider(
+            _fake_caller(captured), provider="fake", model="test", retryable=True
         ),
     ):
         result = await _llm_generate_question("某知识点", grade=None)

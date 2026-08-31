@@ -16,7 +16,6 @@ from services.auth_deps import (
     _ensure_student_self,
     get_current_user,
 )
-from obase.provider_registry import ProviderRegistry
 from services.instant_solve_service import get_pg_pool
 from services.models import User, UserRole
 
@@ -41,12 +40,9 @@ async def post_essay_guide(
     POST /v1/essay/guide
     作文引导批改（不改写，仅引导）。
     """
-    caller = None
-    if ProviderRegistry._instance:
-        try:
-            caller = ProviderRegistry.get().llm()
-        except Exception:
-            caller = None
+    from services.providers.setup import get_optional_text_caller
+
+    caller = get_optional_text_caller()
 
     res = await essay_guide(
         EssayGuideInput(
@@ -384,5 +380,4 @@ async def get_graded_passage(
     if "error" in result:
         raise HTTPException(status_code=404, detail=result["error"])
     return result
-
 

@@ -16,7 +16,6 @@ from __future__ import annotations
 
 import json
 import logging
-import os
 import uuid
 from datetime import datetime, timezone
 from typing import AsyncGenerator
@@ -31,36 +30,9 @@ logger = logging.getLogger(__name__)
 
 def _get_caller():
     """获取 LLM caller（复用现有 provider 配置）。"""
-    if os.environ.get("MNEME_LLM", "").lower() == "veya":
-        from services.providers.veya_caller import VeyaTextCaller
+    from services.providers.setup import get_text_caller
 
-        return VeyaTextCaller()
-
-    from services.providers.ollama_caller import OllamaCaller
-
-    # 优先 OpenAI，若无 key 则用 Ollama
-    openai_key = os.environ.get("OPENAI_API_KEY", "")
-    if openai_key:
-        import openai as _openai
-
-        class _OpenAICaller:
-            def __init__(self):
-                self._client = _openai.AsyncOpenAI(api_key=openai_key)
-                self.model = os.environ.get("OPENAI_MODEL", "gpt-4o-mini")
-
-            async def __call__(self, *, messages, system=None, max_tokens=800, **_):
-                msgs = list(messages)
-                if system:
-                    msgs.insert(0, {"role": "system", "content": system})
-                resp = await self._client.chat.completions.create(
-                    model=self.model,
-                    messages=msgs,
-                    max_tokens=max_tokens,
-                )
-                return {"content": resp.choices[0].message.content or ""}
-
-        return _OpenAICaller()
-    return OllamaCaller()
+    return get_text_caller()
 
 
 # ── 系统提示（苏格拉底+引用约束）────────────────────────────────────────────────

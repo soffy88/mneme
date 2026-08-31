@@ -37,6 +37,14 @@ _counters: dict[str, int] = {
     "immersive_requests_total": 0,
 }
 _immersive_gate_decisions: dict[tuple[str, str], int] = {}
+_provider_requests: dict[tuple[str, str, str], int] = {}
+_provider_errors: dict[tuple[str, str], int] = {}
+_provider_timeouts: dict[str, int] = {}
+_provider_latency_seconds: dict[tuple[str, str], float] = {}
+_provider_input_tokens: dict[tuple[str, str], int] = {}
+_provider_output_tokens: dict[tuple[str, str], int] = {}
+_provider_cost: dict[tuple[str, str], float] = {}
+_circuit_breaker_states: dict[tuple[str, str], str] = {}
 _lock = threading.Lock()
 
 
@@ -106,6 +114,38 @@ def metrics_snapshot() -> dict[str, Any]:
                 "latency_ms_p50": _percentile(samples, 0.50),
                 "latency_ms_p95": _percentile(samples, 0.95),
             }
+        provider_requests = [
+            {"provider": p, "model": m, "outcome": outcome, "value": count}
+            for (p, m, outcome), count in sorted(_provider_requests.items())
+        ]
+        provider_errors = [
+            {"provider": p, "error_class": error_class, "value": count}
+            for (p, error_class), count in sorted(_provider_errors.items())
+        ]
+        provider_timeouts = [
+            {"provider": p, "value": count}
+            for p, count in sorted(_provider_timeouts.items())
+        ]
+        provider_latency = [
+            {"provider": p, "model": m, "value": round(value, 6)}
+            for (p, m), value in sorted(_provider_latency_seconds.items())
+        ]
+        provider_input_tokens = [
+            {"provider": p, "model": m, "value": count}
+            for (p, m), count in sorted(_provider_input_tokens.items())
+        ]
+        provider_output_tokens = [
+            {"provider": p, "model": m, "value": count}
+            for (p, m), count in sorted(_provider_output_tokens.items())
+        ]
+        provider_cost = [
+            {"provider": p, "model": m, "value": round(value, 8)}
+            for (p, m), value in sorted(_provider_cost.items())
+        ]
+        circuit_breaker_state = [
+            {"provider": p, "model": m, "state": state}
+            for (p, m), state in sorted(_circuit_breaker_states.items())
+        ]
     return {
         "schema_version": "mneme-observability/v1",
         "counters": dict(_counters),
@@ -119,6 +159,14 @@ def metrics_snapshot() -> dict[str, Any]:
         if total_requests
         else 0.0,
         "endpoints": snapshot,
+        "provider_requests_total": provider_requests,
+        "provider_errors_total": provider_errors,
+        "provider_timeouts_total": provider_timeouts,
+        "provider_latency_seconds": provider_latency,
+        "provider_input_tokens_total": provider_input_tokens,
+        "provider_output_tokens_total": provider_output_tokens,
+        "provider_cost_total": provider_cost,
+        "circuit_breaker_state": circuit_breaker_state,
     }
 
 
@@ -130,6 +178,14 @@ def reset_metrics() -> None:
         for name in _counters:
             _counters[name] = 0
         _immersive_gate_decisions.clear()
+        _provider_requests.clear()
+        _provider_errors.clear()
+        _provider_timeouts.clear()
+        _provider_latency_seconds.clear()
+        _provider_input_tokens.clear()
+        _provider_output_tokens.clear()
+        _provider_cost.clear()
+        _circuit_breaker_states.clear()
 
 
 def increment_metric(name: str, value: int = 1) -> None:
@@ -196,6 +252,87 @@ def record_immersive_gate_decision(*, decision: str, reason: str) -> None:
     with _lock:
         key = (decision, reason.lower())
         _immersive_gate_decisions[key] = _immersive_gate_decisions.get(key, 0) + 1
+
+
+def _metric_label(value: str, fallback: str = "unknown") -> str:
+    """Keep provider metric labels bounded and free of request data."""
+
+    if isinstance(value, str) and 0 < len(value) <= 64 and re.fullmatch(
+        r"[A-Za-z0-9_.:/-]+", value
+    ):
+        return value
+    return fallback
+
+
+def record_provider_result(
+    *,
+    provider: str,
+    model: str,
+    outcome: str,
+    elapsed_seconds: float,
+    input_tokens: int,
+    output_tokens: int,
+    cost_usd: float,
+) -> None:
+    """Record a provider call using only bounded provider/model/outcome labels."""
+
+    p = _metric_label(provider)
+    m = _metric_label(model)
+    o = _metric_label(outcome, "failure")
+    key = (p, m, o)
+    pair = (p, m)
+    with _lock:
+        if key not in _provider_requests and len(_provider_requests) >= 128:
+            key = ("unknown", "unknown", "other")
+        _provider_requests[key] = _provider_requests.get(key, 0) + 1
+        _provider_latency_seconds[pair] = _provider_latency_seconds.get(pair, 0.0) + max(
+            0.0, float(elapsed_seconds)
+        )
+        _provider_input_tokens[pair] = _provider_input_tokens.get(pair, 0) + max(
+            0, int(input_tokens)
+        )
+        _provider_output_tokens[pair] = _provider_output_tokens.get(pair, 0) + max(
+            0, int(output_tokens)
+        )
+        _provider_cost[pair] = _provider_cost.get(pair, 0.0) + max(0.0, float(cost_usd))
+
+
+def record_provider_error(*, provider: str, error_class: str) -> None:
+    p = _metric_label(provider)
+    error = _metric_label(error_class, "provider_error")
+    with _lock:
+        key = (p, error)
+        if key not in _provider_errors and len(_provider_errors) >= 64:
+            key = ("unknown", "other")
+        _provider_errors[key] = _provider_errors.get(key, 0) + 1
+
+
+def record_provider_timeout(*, provider: str) -> None:
+    p = _metric_label(provider)
+    with _lock:
+        _provider_timeouts[p] = _provider_timeouts.get(p, 0) + 1
+
+
+def record_circuit_breaker_state(*, provider: str, model: str, state: str) -> None:
+    p = _metric_label(provider)
+    m = _metric_label(model)
+    normalized = state if state in {"closed", "open", "half_open"} else "unknown"
+    with _lock:
+        _circuit_breaker_states[(p, m)] = normalized
+
+
+def reset_provider_metrics() -> None:
+    """Reset provider series without changing unrelated request metrics."""
+
+    with _lock:
+        _provider_requests.clear()
+        _provider_errors.clear()
+        _provider_timeouts.clear()
+        _provider_latency_seconds.clear()
+        _provider_input_tokens.clear()
+        _provider_output_tokens.clear()
+        _provider_cost.clear()
+        _circuit_breaker_states.clear()
 
 
 def route_template(scope: Mapping[str, Any], fallback: str) -> str:

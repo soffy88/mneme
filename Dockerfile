@@ -24,6 +24,12 @@ FROM python:3.12-slim AS runtime
 
 WORKDIR /app
 
+ARG GIT_SHA=unknown
+ARG RELEASE_VERSION=dev
+LABEL org.opencontainers.image.revision=$GIT_SHA \
+      org.opencontainers.image.version=$RELEASE_VERSION \
+      org.opencontainers.image.source="https://github.com/mneme/mneme"
+
 RUN groupadd --system mneme && useradd --system --gid mneme --home-dir /app mneme
 
 # The builder needs a compiler for a few optional native wheels.  Copy only

@@ -11,6 +11,8 @@ import json
 import os
 from typing import Any
 
+from obase.provider_timeout import provider_httpx_timeout
+
 
 def _base_url() -> str:
     return (
@@ -79,7 +81,7 @@ class VeyaTextCaller:
         if enable_thinking is not None:
             payload["enable_thinking"] = enable_thinking
 
-        async with httpx.AsyncClient(timeout=300) as client:
+        async with httpx.AsyncClient(timeout=provider_httpx_timeout()) as client:
             response = await client.post(
                 f"{self.base_url}/chat/completions",
                 headers=_headers(),
@@ -121,7 +123,7 @@ class VeyaVLCaller:
             ],
             "max_tokens": 2000,
         }
-        async with httpx.AsyncClient(timeout=300) as client:
+        async with httpx.AsyncClient(timeout=provider_httpx_timeout()) as client:
             response = await client.post(
                 f"{self.base_url}/chat/completions",
                 headers=_headers(),

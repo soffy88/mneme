@@ -18,8 +18,6 @@ from services.models import (
     KCMastery,
     WrongQuestion,
 )
-from obase.provider_registry import ProviderRegistry
-from obase.exceptions import ProviderNotFoundError
 from obase.persistence.pool import PgPool
 from obase.config import settings
 
@@ -206,14 +204,10 @@ async def get_due_variants(
 
     caller = None
     if generate_variants:
-        # 变式纯锦上添花，非闭环必需：registry 实例存在但未注册 default LLM 时
-        # .llm() 会抛 ProviderNotFoundError——降级 caller=None（同题复现），不崩。
-        try:
-            caller = (
-                ProviderRegistry.get().llm() if ProviderRegistry._instance else None
-            )
-        except ProviderNotFoundError:
-            caller = None
+        # 变式纯锦上添花；provider 不可用时降级同题复现，不崩。
+        from services.providers.setup import get_optional_text_caller
+
+        caller = get_optional_text_caller()
 
     for m in masteries:
         if not m.fsrs_card_json:

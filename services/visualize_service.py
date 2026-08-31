@@ -9,7 +9,6 @@ from __future__ import annotations
 
 from typing import Any
 
-from obase.provider_registry import ProviderRegistry
 from omodul.visualize_concept import (
     VisualizeConceptConfig,
     VisualizeConceptInput,
@@ -18,7 +17,9 @@ from omodul.visualize_concept import (
 
 
 async def handle_visualize_concept(concept_text: str) -> dict[str, Any]:
-    caller = ProviderRegistry.get().llm() if ProviderRegistry._instance else None
+    from services.providers.setup import get_optional_text_caller
+
+    caller = get_optional_text_caller()
 
     config = VisualizeConceptConfig()
     input_data = VisualizeConceptInput(concept_text=concept_text)

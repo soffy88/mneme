@@ -18,6 +18,8 @@ import json
 import os
 from typing import Any
 
+from obase.provider_timeout import provider_httpx_timeout
+
 
 def _extract_json(text: str) -> Any:
     """从模型输出里尽量抠出 JSON（兼容 ```json 代码块 / 裸 JSON）。抠不出返回原文。"""
@@ -74,7 +76,7 @@ class QwenTextCaller:
         # DashScope OpenAI 兼容端点接受顶层 enable_thinking（非 extra_body）。
         if enable_thinking is not None:
             payload["enable_thinking"] = enable_thinking
-        async with httpx.AsyncClient(timeout=120) as client:
+        async with httpx.AsyncClient(timeout=provider_httpx_timeout()) as client:
             resp = await client.post(
                 f"{self.base_url}/chat/completions",
                 headers={"Authorization": f"Bearer {self.api_key}"},
@@ -124,7 +126,7 @@ class QwenVLCaller:
             ],
             "max_tokens": 2000,
         }
-        async with httpx.AsyncClient(timeout=180) as client:
+        async with httpx.AsyncClient(timeout=provider_httpx_timeout()) as client:
             resp = await client.post(
                 f"{self.base_url}/chat/completions",
                 headers={"Authorization": f"Bearer {self.api_key}"},

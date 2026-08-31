@@ -4,7 +4,7 @@ from typing import Optional
 from obase.config import settings
 from obase.persistence.pool import PgPool
 from omodul.instant_solve import InstantSolveConfig, InstantSolveInput, instant_solve
-from obase.provider_registry import ProviderRegistry
+from services.providers.setup import get_optional_text_caller
 
 
 async def get_pg_pool() -> PgPool:
@@ -16,7 +16,7 @@ async def handle_instant_solve(
     student_id: UUID, image_b64: str, kc_hint: Optional[str] = None
 ) -> dict:
     pool = await get_pg_pool()
-    caller = ProviderRegistry.get().llm() if ProviderRegistry._instance else None
+    caller = get_optional_text_caller()
 
     config = InstantSolveConfig()
     input_data = InstantSolveInput(
@@ -51,7 +51,7 @@ async def handle_instant_solve(
 async def handle_deep_solve(problem_text: str) -> dict:
     """深度研究 (Deep Solve): 执行多步推理解题路线图。"""
     from omodul.deep_solve_workflow import deep_solve_workflow, DeepSolveConfig, DeepSolveInput
-    caller = ProviderRegistry.get().llm() if ProviderRegistry._instance else None
+    caller = get_optional_text_caller()
 
     config = DeepSolveConfig()
     input_data = DeepSolveInput(problem_text=problem_text)

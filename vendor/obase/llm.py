@@ -5,20 +5,26 @@ obase/llm.py
 """
 
 from __future__ import annotations
-import os
 import json
-import base64
 from typing import List, Dict, Any, Optional
 from anthropic import AsyncAnthropic
 from obase.config import settings
 from obase.provider_registry import ProviderRegistry
+from obase.provider_timeout import provider_httpx_timeout
 
 
 class ClaudeCaller:
     """Anthropic Claude API 调用封装。"""
 
     def __init__(self, api_key: str, model: str = "claude-3-5-sonnet-20240620"):
-        self.client = AsyncAnthropic(api_key=api_key)
+        # The service-level ReliableProvider owns retries.  Disable the SDK's
+        # hidden retry loop so timeout/429/5xx attempts stay bounded and
+        # observable under one contract.
+        self.client = AsyncAnthropic(
+            api_key=api_key,
+            timeout=provider_httpx_timeout(),
+            max_retries=0,
+        )
         self.model = model
 
     async def __call__(
@@ -64,7 +70,11 @@ class ClaudeVLMCaller:
     """Claude Vision 调用封装。"""
 
     def __init__(self, api_key: str, model: str = "claude-3-5-sonnet-20240620"):
-        self.client = AsyncAnthropic(api_key=api_key)
+        self.client = AsyncAnthropic(
+            api_key=api_key,
+            timeout=provider_httpx_timeout(),
+            max_retries=0,
+        )
         self.model = model
 
     async def __call__(
@@ -101,12 +111,12 @@ class ClaudeVLMCaller:
                 json_str = raw_text.split("```json")[1].split("```")[0].strip()
                 try:
                     parsed = json.loads(json_str)
-                except:
+                except (TypeError, ValueError):
                     pass
             else:
                 try:
                     parsed = json.loads(raw_text)
-                except:
+                except (TypeError, ValueError):
                     pass
 
         return {
@@ -163,7 +173,7 @@ class DeepSeekCaller:
         }
         if response_format == "json":
             payload["response_format"] = {"type": "json_object"}
-        async with httpx.AsyncClient(timeout=120) as client:
+        async with httpx.AsyncClient(timeout=provider_httpx_timeout()) as client:
             resp = await client.post(
                 "https://api.deepseek.com/v1/chat/completions",
                 headers=headers,
@@ -225,7 +235,7 @@ class OpenAICaller:
             payload["response_format"] = {"type": "json_object"}
         if tools:
             payload["tools"] = [{"type": "function", "function": t} for t in tools]
-        async with httpx.AsyncClient(timeout=120) as client:
+        async with httpx.AsyncClient(timeout=provider_httpx_timeout()) as client:
             resp = await client.post(
                 "https://api.openai.com/v1/chat/completions",
                 headers=headers,
@@ -288,7 +298,7 @@ class QwenCaller:
         }
         if response_format == "json":
             payload["parameters"]["result_format"] = "message"
-        async with httpx.AsyncClient(timeout=120) as client:
+        async with httpx.AsyncClient(timeout=provider_httpx_timeout()) as client:
             resp = await client.post(
                 "https://dashscope.aliyuncs.com/api/v1/services/aigc/text-generation/generation",
                 headers=headers,
@@ -355,7 +365,7 @@ class GeminiCaller:
             f"https://generativelanguage.googleapis.com/v1beta/models/"
             f"{self.model}:generateContent?key={self.api_key}"
         )
-        async with httpx.AsyncClient(timeout=120) as client:
+        async with httpx.AsyncClient(timeout=provider_httpx_timeout()) as client:
             resp = await client.post(url, json=payload)
             resp.raise_for_status()
             data = resp.json()

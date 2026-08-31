@@ -112,14 +112,10 @@ async def maybe_build_transfer_probe(
         return None
 
     if caller is None:
-        from obase.exceptions import ProviderNotFoundError
-        from obase.provider_registry import ProviderRegistry
+        from services.providers.setup import get_optional_text_caller
 
-        if not ProviderRegistry._instance:
-            return None
-        try:
-            caller = ProviderRegistry.get().llm()
-        except ProviderNotFoundError:
+        caller = get_optional_text_caller()
+        if caller is None:
             # A provider can be intentionally unavailable in a local worker,
             # test process, or rollout window.  A transfer probe is optional;
             # the ordinary due-review queue must remain usable.
