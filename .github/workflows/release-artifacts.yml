@@ -152,10 +152,14 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          test -s outputs/RELEASE-MANIFEST-*.json
+          manifest_path="$(find outputs -maxdepth 1 -type f -name 'RELEASE-MANIFEST-*.json' -print -quit)"
+          test -n "$manifest_path"
+          test -s "$manifest_path"
           python - <<'PY'
           import glob, json, subprocess
-          manifest = json.load(open(glob.glob("outputs/RELEASE-MANIFEST-*.json")[0]))
+          paths = glob.glob("outputs/RELEASE-MANIFEST-*.json")
+          assert len(paths) == 1, paths
+          manifest = json.load(open(paths[0]))
           for image in manifest["images"]:
               ref = image["repository"] + "@" + image["digest"]
               subprocess.run(["docker", "pull", ref], check=True)
