@@ -132,7 +132,9 @@ jobs:
       - uses: actions/upload-artifact@v4
         with:
           name: release-${{ steps.identity.outputs.version }}
-          path: outputs/RELEASE-*.json
+          path: |
+            outputs/RELEASE-MANIFEST-${{ steps.identity.outputs.version }}.json
+            outputs/RELEASE-SBOM-${{ steps.identity.outputs.version }}.spdx.json
 
   fresh-pull-verify:
     needs: publish
@@ -150,16 +152,17 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
       - name: Pull by recorded digest on a fresh runner
         shell: bash
+        env:
+          RELEASE_VERSION: ${{ github.event.inputs.release_version || github.ref_name }}
         run: |
           set -euo pipefail
-          manifest_path="$(find outputs -maxdepth 1 -type f -name 'RELEASE-MANIFEST-*.json' -print -quit)"
+          manifest_path="outputs/RELEASE-MANIFEST-${RELEASE_VERSION}.json"
           test -n "$manifest_path"
           test -s "$manifest_path"
+          export RELEASE_MANIFEST_PATH="$manifest_path"
           python - <<'PY'
-          import glob, json, subprocess
-          paths = glob.glob("outputs/RELEASE-MANIFEST-*.json")
-          assert len(paths) == 1, paths
-          manifest = json.load(open(paths[0]))
+          import json, os, subprocess
+          manifest = json.load(open(os.environ["RELEASE_MANIFEST_PATH"]))
           for image in manifest["images"]:
               ref = image["repository"] + "@" + image["digest"]
               subprocess.run(["docker", "pull", ref], check=True)
