@@ -1,0 +1,166 @@
+name: Publish immutable Mneme release artifacts
+
+on:
+  push:
+    tags: ["v0.1.0-rc[0-9]+"]
+  workflow_dispatch:
+    inputs:
+      release_version:
+        description: "Annotated release tag to publish"
+        required: true
+        type: string
+
+permissions:
+  contents: read
+  packages: write
+  id-token: write
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAMESPACE: ghcr.io/${{ github.repository_owner }}
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    outputs:
+      manifest: ${{ steps.manifest.outputs.manifest }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Resolve immutable release identity
+        id: identity
+        shell: bash
+        run: |
+          set -euo pipefail
+          version="${GITHUB_REF_NAME}"
+          if [[ "${GITHUB_EVENT_NAME}" == workflow_dispatch ]]; then
+            version="${{ inputs.release_version }}"
+          fi
+          [[ "$version" =~ ^v[0-9]+\.[0-9]+\.[0-9]+-rc[0-9]+$ ]]
+          sha="$(git rev-parse "${version}^{commit}")"
+          short="${sha:0:12}"
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+          echo "sha=$sha" >> "$GITHUB_OUTPUT"
+          echo "short=$short" >> "$GITHUB_OUTPUT"
+          echo "built_at=$(date -u +%Y-%m-%dT%H:%M:%SZ)" >> "$GITHUB_OUTPUT"
+
+      - uses: docker/setup-buildx-action@v3
+      - uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build and push backend image
+        id: backend
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: Dockerfile
+          push: true
+          tags: |
+            ${{ env.IMAGE_NAMESPACE }}/mneme-api:${{ steps.identity.outputs.version }}
+            ${{ env.IMAGE_NAMESPACE }}/mneme-api:${{ steps.identity.outputs.version }}-${{ steps.identity.outputs.short }}
+          build-args: |
+            GIT_SHA=${{ steps.identity.outputs.sha }}
+            RELEASE_VERSION=${{ steps.identity.outputs.version }}
+          labels: |
+            org.opencontainers.image.revision=${{ steps.identity.outputs.sha }}
+            org.opencontainers.image.version=${{ steps.identity.outputs.version }}
+            org.opencontainers.image.created=${{ steps.identity.outputs.built_at }}
+            org.opencontainers.image.source=https://github.com/${{ github.repository }}
+
+      - name: Publish worker and beat aliases to the same immutable backend
+        shell: bash
+        run: |
+          set -euo pipefail
+          src="${{ env.IMAGE_NAMESPACE }}/mneme-api@${{ steps.backend.outputs.digest }}"
+          docker buildx imagetools create --tag "${{ env.IMAGE_NAMESPACE }}/mneme-worker:${{ steps.identity.outputs.version }}" "$src"
+          docker buildx imagetools create --tag "${{ env.IMAGE_NAMESPACE }}/mneme-beat:${{ steps.identity.outputs.version }}" "$src"
+
+      - name: Build and push frontend image
+        id: frontend
+        uses: docker/build-push-action@v6
+        with:
+          context: apps/mneme-studio
+          file: apps/mneme-studio/Dockerfile
+          push: true
+          tags: |
+            ${{ env.IMAGE_NAMESPACE }}/mneme-web:${{ steps.identity.outputs.version }}
+            ${{ env.IMAGE_NAMESPACE }}/mneme-web:${{ steps.identity.outputs.version }}-${{ steps.identity.outputs.short }}
+          labels: |
+            org.opencontainers.image.revision=${{ steps.identity.outputs.sha }}
+            org.opencontainers.image.version=${{ steps.identity.outputs.version }}
+            org.opencontainers.image.created=${{ steps.identity.outputs.built_at }}
+            org.opencontainers.image.source=https://github.com/${{ github.repository }}
+
+      - name: Verify published digests and generate manifest
+        id: manifest
+        shell: bash
+        env:
+          RELEASE_VERSION: ${{ steps.identity.outputs.version }}
+          CODE_SHA: ${{ steps.identity.outputs.sha }}
+          BUILT_AT: ${{ steps.identity.outputs.built_at }}
+          BACKEND_DIGEST: ${{ steps.backend.outputs.digest }}
+          FRONTEND_DIGEST: ${{ steps.frontend.outputs.digest }}
+          IMAGE_NAMESPACE: ${{ env.IMAGE_NAMESPACE }}
+        run: |
+          set -euo pipefail
+          for image in mneme-api mneme-worker mneme-beat; do
+            docker buildx imagetools inspect "$IMAGE_NAMESPACE/$image:$RELEASE_VERSION" >/dev/null
+          done
+          docker buildx imagetools inspect "$IMAGE_NAMESPACE/mneme-web:$RELEASE_VERSION" >/dev/null
+          python scripts/generate_release_manifest.py \
+            --version "$RELEASE_VERSION" --code-sha "$CODE_SHA" --built-at "$BUILT_AT" \
+            --backend-repository "$IMAGE_NAMESPACE/mneme-api" --backend-digest "$BACKEND_DIGEST" \
+            --worker-repository "$IMAGE_NAMESPACE/mneme-worker" \
+            --beat-repository "$IMAGE_NAMESPACE/mneme-beat" \
+            --frontend-repository "$IMAGE_NAMESPACE/mneme-web" --frontend-digest "$FRONTEND_DIGEST" \
+            --output "outputs/RELEASE-MANIFEST-$RELEASE_VERSION.json"
+          echo "manifest=outputs/RELEASE-MANIFEST-$RELEASE_VERSION.json" >> "$GITHUB_OUTPUT"
+
+      - name: Generate SBOM
+        uses: anchore/sbom-action@v0
+        with:
+          image: ${{ env.IMAGE_NAMESPACE }}/mneme-api@${{ steps.backend.outputs.digest }}
+          artifact-name: RELEASE-SBOM-${{ steps.identity.outputs.version }}.spdx.json
+          output-file: outputs/RELEASE-SBOM-${{ steps.identity.outputs.version }}.spdx.json
+          format: spdx-json
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: release-${{ steps.identity.outputs.version }}
+          path: outputs/RELEASE-*.json
+
+  fresh-pull-verify:
+    needs: publish
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: release-${{ github.event.inputs.release_version || github.ref_name }}
+          path: outputs
+      - uses: docker/setup-buildx-action@v3
+      - uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Pull by recorded digest on a fresh runner
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -s outputs/RELEASE-MANIFEST-*.json
+          python - <<'PY'
+          import glob, json, subprocess
+          manifest = json.load(open(glob.glob("outputs/RELEASE-MANIFEST-*.json")[0]))
+          for image in manifest["images"]:
+              ref = image["repository"] + "@" + image["digest"]
+              subprocess.run(["docker", "pull", ref], check=True)
+              inspect = json.loads(subprocess.check_output(["docker", "inspect", ref]))[0]
+              labels = inspect["Config"].get("Labels") or {}
+              assert labels.get("org.opencontainers.image.revision") == manifest["code_release_sha"]
+          print("fresh_pull_by_digest=PASS")
+          PY
