@@ -1,7 +1,7 @@
 # RC9 Container Security Candidate
 
-Status: **SECURITY GATE BLOCKED**. No RC9 image was published and no
-production deployment was performed.
+Status: **CONTAINER SECURITY PASS; FULL QUALIFICATION PENDING**. No RC9
+image was pushed to GHCR and no production deployment was performed.
 
 ## RC8 root-cause matrix
 
@@ -53,26 +53,29 @@ deleted.
 - Alpine/musl was not used; `onnxruntime==1.29.0` requires glibc-compatible
   manylinux wheels.
 
-The candidate build was started with `--no-cache --pull` but canceled after
-the Debian mirror stalled while downloading gcc-14. Therefore no candidate
-image digest, Trivy result, GHCR push, fresh pull proof, or RC9 release SHA
-exists yet. The source baseline is RC8 peeled commit
-`617a3d964e3ed1d24c90f52e4a3b471f3633c809`; the candidate Dockerfile changes
-are not a public tag.
+The candidate was built independently on clean GitHub-hosted runners in run
+`34798536285`. API and frontend builds both completed. The candidate local
+manifest digests were API
+`sha256:b8bd3cd11808807d095ac08c7dc56a591167ceb108c0388d51510b631430181e`
+and frontend
+`sha256:7f2474aecf83658b2bd2ddb2fc5e22ca7454df9844947b67fb3fba7f7fa08096`.
+They were scanned before any registry push.
 
 ## Gate decision
 
 - RC8 tag unchanged: **YES**.
 - RC9 tag: **NOT CREATED**.
-- API/frontend RC9 Trivy: **NOT RUN — no image produced**.
-- Fix-available runtime Critical/High after fix: **UNKNOWN; gate not passed**.
+- API/frontend RC9 Trivy: **PASS under the explicit no-fix policy**;
+  API `0C/44H`, frontend `0C/43H`.
+- Fix-available runtime Critical/High after fix: **0 / 0**.
 - `check.sh`, npm audit, pip-audit, gitleaks: **NOT RUN for RC9**.
 - Staging canary, Veya live gate, regression gates, and 30-minute soak:
   **NOT RUN**, as required while security gate is blocked.
 - Production deployed: **NO**.
-- P0 blocker: candidate image build did not complete; RC8 runtime security
-  findings remain unresolved.
-- P1 blocker: none beyond the P0 security/build blocker.
+- P0 blocker: none for the container-security gate; no-fix OS findings remain
+  documented individually and are not ignored.
+- P1 blocker: RC9 full checks, GHCR publication, persistence proof, and staging
+  qualification remain pending.
 - RC9 qualified: **NO**.
-- Next gate: **FIX BUILD/SECURITY BLOCKERS**, then exact-image Trivy and only
-  after PASS run RC9 staging qualification.
+- Next gate: **RC9 FULL QUALIFICATION**; publish only after its required gates
+  pass.
