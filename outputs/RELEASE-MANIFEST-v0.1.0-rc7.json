@@ -1,0 +1,33 @@
+{
+  "schema": "mneme.release.manifest/v2",
+  "release_version": "v0.1.0-rc7",
+  "code_release_sha": "2377731f236e6f7733eb7ee3b74d24d91c5b96b6",
+  "built_at": "2026-09-14T00:10:59Z",
+  "source_repository": "https://github.com/soffy88/mneme",
+  "images": [
+    {
+      "name": "api",
+      "repository": "ghcr.io/soffy88/mneme-api",
+      "digest": "sha256:0e2ee0e0048e1c91b05f2aa3e9366f1c313d6e6a15d19b07e33a0936a4736c79"
+    },
+    {
+      "name": "worker",
+      "repository": "ghcr.io/soffy88/mneme-worker",
+      "digest": "sha256:0e2ee0e0048e1c91b05f2aa3e9366f1c313d6e6a15d19b07e33a0936a4736c79"
+    },
+    {
+      "name": "beat",
+      "repository": "ghcr.io/soffy88/mneme-beat",
+      "digest": "sha256:0e2ee0e0048e1c91b05f2aa3e9366f1c313d6e6a15d19b07e33a0936a4736c79"
+    },
+    {
+      "name": "frontend",
+      "repository": "ghcr.io/soffy88/mneme-web",
+      "digest": "sha256:ad2ae640a77d0d3cca9abcbe2cf59aa4d7d90e35dba7223d13b956608522a404"
+    }
+  ],
+  "artifact_persistence_gate": "fresh_pull_by_digest_required",
+  "runtime_delta_vs_rc5": "NONE",
+  "production_deployed": false,
+  "rc6_qualified": false
+}

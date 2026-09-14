@@ -1,4 +1,4 @@
-# RC6 artifact persistence qualification
+# RC6/RC7 artifact persistence qualification
 
 Status: **PASS** for registry publication and fresh pull-by-digest.
 
@@ -17,3 +17,6 @@ included historical manifests. The workflow was corrected to upload and select
 only the requested release manifest; the subsequent fresh-runner gate passed.
 
 RC5 remains unchanged and its lost local-only images were not reconstructed.
+RC7 publication and fresh-pull verification also passed in workflow run
+`34791859610`; its complete refs are in
+`RELEASE-MANIFEST-v0.1.0-rc7.json`.
