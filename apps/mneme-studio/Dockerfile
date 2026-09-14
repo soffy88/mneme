@@ -21,6 +21,11 @@ RUN npm run build
 # 3) run
 FROM node:20-trixie-slim@sha256:1694ccde5ea9efb3060bb8612b1f287256061ff2a04d75dc1b71f57cb7239520 AS runner
 WORKDIR /app
+ARG GIT_SHA=unknown
+ARG RELEASE_VERSION=dev
+LABEL org.opencontainers.image.revision=$GIT_SHA \
+      org.opencontainers.image.version=$RELEASE_VERSION \
+      org.opencontainers.image.source="https://github.com/mneme/mneme"
 ENV NODE_ENV=production
 ENV PORT=3001
 ENV HOSTNAME=0.0.0.0
