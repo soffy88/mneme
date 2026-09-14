@@ -39,7 +39,7 @@
     },
     "omodul": {
       "repo": "/data/soffy/projects/platform/3O/omodul",
-      "commit": "728ba5cf723f156a0855e5abc8f146df540bfef7",
+      "commit": "1bb87b87556f3f53f81fc24ab8b453b12875089f",
       "version": "1.49.0",
       "closure": [
         {
@@ -47,13 +47,33 @@
           "local_path": "vendor/omodul/echo_loop_session.py",
           "canonical_repo": "/data/soffy/projects/platform/3O/omodul",
           "canonical_element": "omodul.echo_loop_session",
-          "canonical_sha256": "9285574c6dd4a06a7e74392b7a6a50fc66345bb6997179bb58c6e614e9b64ae7",
-          "local_sha256": "9285574c6dd4a06a7e74392b7a6a50fc66345bb6997179bb58c6e614e9b64ae7",
+          "canonical_sha256": "a8b884e4582547a6cef4474d1d2868c41ef0a3d4c3ddaeae11f0ec7b93d03fe3",
+          "local_sha256": "a8b884e4582547a6cef4474d1d2868c41ef0a3d4c3ddaeae11f0ec7b93d03fe3",
+          "exact_match": true,
+          "classification": "EXACT_CANONICAL_COPY"
+        },
+        {
+          "canonical_path": "_base.py",
+          "local_path": "vendor/omodul/_base.py",
+          "canonical_repo": "/data/soffy/projects/platform/3O/omodul",
+          "canonical_element": "omodul._base",
+          "canonical_sha256": "dc7f2e0446dd55ac00449fe0fd390c62f8e201982f0b93f6951a02a0004bbd4c",
+          "local_sha256": "dc7f2e0446dd55ac00449fe0fd390c62f8e201982f0b93f6951a02a0004bbd4c",
+          "exact_match": true,
+          "classification": "EXACT_CANONICAL_COPY"
+        },
+        {
+          "canonical_path": "_fingerprint.py",
+          "local_path": "vendor/omodul/_fingerprint.py",
+          "canonical_repo": "/data/soffy/projects/platform/3O/omodul",
+          "canonical_element": "omodul._fingerprint",
+          "canonical_sha256": "b278aadb5bd3d711eff670dbc71d8f9a660a6df5e1fbee18aebf7e14d08b5167",
+          "local_sha256": "b278aadb5bd3d711eff670dbc71d8f9a660a6df5e1fbee18aebf7e14d08b5167",
           "exact_match": true,
           "classification": "EXACT_CANONICAL_COPY"
         }
       ],
-      "manifest_sha256": "b52dc29a691f68f222974f2410830e0fcb89e4d0ae9dc479b739fb7f2b8ab929"
+      "manifest_sha256": "3732445c8e3b49ec9be54af9a502b490dc31669494a9fc56726c823b5385e831"
     },
     "obase": {
       "repo": "/data/soffy/projects/platform/3O/obase",
@@ -82,5 +102,709 @@
     }
   },
   "no_reverse_sync": true,
-  "generated_by": "scripts/sync_3o_from_platform.py"
+  "generated_by": "scripts/sync_3o_from_platform.py",
+  "runtime_closure": [
+    {
+      "element": "obase.admin_identity",
+      "local_path": "vendor/obase/admin_identity.py",
+      "local_sha256": "74a3416052197898f66e2cc8903e486048fb0fa8e2eb974d74d49bee4401448f",
+      "classification": "PROJECT_LAYER4"
+    },
+    {
+      "element": "obase.audit_log",
+      "local_path": "vendor/obase/audit_log.py",
+      "local_sha256": "b748b175ecaf3ddcdfe10db12ce34b3bdfde76918305971c236c6f7f7242c29c",
+      "classification": "PROJECT_LAYER4"
+    },
+    {
+      "element": "obase.cognitive_store",
+      "local_path": "vendor/obase/cognitive_store.py",
+      "local_sha256": "a2c6f1ad92222027d1052340913d39762c2c97f2145b59106fb2e6971f34d13f",
+      "classification": "PROJECT_LAYER4"
+    },
+    {
+      "element": "obase.cognitive_types",
+      "local_path": "vendor/obase/cognitive_types.py",
+      "local_sha256": "7947e6096e0a993243d794d89b70c12201ea30dd7ffe95e3b98f5be0de251241",
+      "classification": "EXACT_CANONICAL_COPY",
+      "canonical_repo": "/data/soffy/projects/platform/3O/obase",
+      "canonical_path": "cognitive_types.py",
+      "canonical_sha": "87be8400b05284e1ba347cdec56dfbd55eadc511",
+      "canonical_version": "0.31.0",
+      "canonical_sha256": "7947e6096e0a993243d794d89b70c12201ea30dd7ffe95e3b98f5be0de251241",
+      "exact_match": true
+    },
+    {
+      "element": "obase.config",
+      "local_path": "vendor/obase/config.py",
+      "local_sha256": "d264b13056378b0d18309b5a54a2ff3262d2c19e656db8a4570c8783e9e96397",
+      "classification": "PROJECT_LAYER4"
+    },
+    {
+      "element": "obase.db",
+      "local_path": "vendor/obase/db.py",
+      "local_sha256": "b4a211b263abc7222a05f5e5e827c5b9178412f4283bb00d9e327e8ecaa966d6",
+      "classification": "PROJECT_LAYER4"
+    },
+    {
+      "element": "obase.domain_enums",
+      "local_path": "vendor/obase/domain_enums.py",
+      "local_sha256": "5f064b4e66ebf31c54059485b3d1e1897e39538319e638caa84bbedef691dbb0",
+      "classification": "PROJECT_LAYER4"
+    },
+    {
+      "element": "obase.error_tag_store",
+      "local_path": "vendor/obase/error_tag_store.py",
+      "local_sha256": "714845f067216b7e41abae9911ec57515630b3d637b5cef6ca88b6cb7fa5ff01",
+      "classification": "PROJECT_LAYER4"
+    },
+    {
+      "element": "obase.interaction_history",
+      "local_path": "vendor/obase/interaction_history.py",
+      "local_sha256": "c7bb4818bf5f9de25d8a6414b810b67f37bf6a6716c452346797ba53a555566e",
+      "classification": "PROJECT_LAYER4"
+    },
+    {
+      "element": "obase.llm",
+      "local_path": "vendor/obase/llm.py",
+      "local_sha256": "56bdb11ada50e55715e32a0b63202103c8f5f740af24345f81d3c27f77b38919",
+      "classification": "PROJECT_LAYER4"
+    },
+    {
+      "element": "obase.oss",
+      "local_path": "vendor/obase/oss.py",
+      "local_sha256": "d8a1dbaaeb41e37eba93c09d99b7152080830bf620919600624114238851004c",
+      "classification": "PROJECT_LAYER4"
+    },
+    {
+      "element": "obase.partner_bus",
+      "local_path": "vendor/obase/partner_bus.py",
+      "local_sha256": "dc648d10d1f7df0bcd5915e250b506ec043a66cb35a91279f305ce8048045a4e",
+      "classification": "PROJECT_LAYER4"
+    },
+    {
+      "element": "obase.persistence.pool",
+      "local_path": "vendor/obase/persistence/pool.py",
+      "local_sha256": "6c59eb61b1e72f6b43b3cc50bb4ee30e2b37cb5a597497b038de62cd2f30d447",
+      "classification": "EXACT_CANONICAL_COPY",
+      "canonical_repo": "/data/soffy/projects/platform/3O/obase",
+      "canonical_path": "persistence/pool.py",
+      "canonical_sha": "87be8400b05284e1ba347cdec56dfbd55eadc511",
+      "canonical_version": "0.31.0",
+      "canonical_sha256": "6c59eb61b1e72f6b43b3cc50bb4ee30e2b37cb5a597497b038de62cd2f30d447",
+      "exact_match": true
+    },
+    {
+      "element": "obase.prior_provider",
+      "local_path": "vendor/obase/prior_provider.py",
+      "local_sha256": "e2a4fe7b0a689fc45cdabfe6b3d9cda0f464cd326d16183edf742f48a1e751e7",
+      "classification": "PROJECT_LAYER4"
+    },
+    {
+      "element": "obase.provider_registry",
+      "local_path": "vendor/obase/provider_registry.py",
+      "local_sha256": "324be36d358c8b95f130f9b5a8b4c01fa54856381a70be2149d4faf42ce81075",
+      "classification": "PROJECT_LAYER4"
+    },
+    {
+      "element": "obase.provider_timeout",
+      "local_path": "vendor/obase/provider_timeout.py",
+      "local_sha256": "ef8dcc25d3786d46bd613240e2ac5a0bb155ad28fc2220856c7b494d77b0ee35",
+      "classification": "PROJECT_LAYER4"
+    },
+    {
+      "element": "obase.sandbox_ast_audit",
+      "local_path": "vendor/obase/sandbox_ast_audit.py",
+      "local_sha256": "e10fe4452db2f10c50d26305d04edf0bbe7d36e3cfbb10929447fe0cc9a52df5",
+      "classification": "PROJECT_LAYER4"
+    },
+    {
+      "element": "obase.sandbox_selfcheck",
+      "local_path": "vendor/obase/sandbox_selfcheck.py",
+      "local_sha256": "cd60366fec33a77a39c1087ff2dc29844d25f43d1b411fb690bd1710a3e67bf7",
+      "classification": "PROJECT_LAYER4"
+    },
+    {
+      "element": "obase.sympy_runtime",
+      "local_path": "vendor/obase/sympy_runtime.py",
+      "local_sha256": "23ad54368363ac03a8c7c8331028014d9c86b4392111a63f2ff465d896d83fba",
+      "classification": "PROJECT_LAYER4"
+    },
+    {
+      "element": "obase.user_grants",
+      "local_path": "vendor/obase/user_grants.py",
+      "local_sha256": "0f4a675436271621314b7a1ffca8624e71c6ec0255a243687564514791e1f0dd",
+      "classification": "PROJECT_LAYER4"
+    },
+    {
+      "element": "omodul",
+      "local_path": "vendor/omodul/__init__.py",
+      "local_sha256": "08db8626909c139ae5b5b033e829430da10df2df85a5ff5b81e610db45af3622",
+      "classification": "PROJECT_LAYER4"
+    },
+    {
+      "element": "omodul._base",
+      "local_path": "vendor/omodul/_base.py",
+      "local_sha256": "dc7f2e0446dd55ac00449fe0fd390c62f8e201982f0b93f6951a02a0004bbd4c",
+      "classification": "EXACT_CANONICAL_COPY",
+      "canonical_repo": "/data/soffy/projects/platform/3O/omodul",
+      "canonical_path": "_base.py",
+      "canonical_sha": "1bb87b87556f3f53f81fc24ab8b453b12875089f",
+      "canonical_version": "1.49.0",
+      "canonical_sha256": "dc7f2e0446dd55ac00449fe0fd390c62f8e201982f0b93f6951a02a0004bbd4c",
+      "exact_match": true
+    },
+    {
+      "element": "omodul._fingerprint",
+      "local_path": "vendor/omodul/_fingerprint.py",
+      "local_sha256": "b278aadb5bd3d711eff670dbc71d8f9a660a6df5e1fbee18aebf7e14d08b5167",
+      "classification": "EXACT_CANONICAL_COPY",
+      "canonical_repo": "/data/soffy/projects/platform/3O/omodul",
+      "canonical_path": "_fingerprint.py",
+      "canonical_sha": "1bb87b87556f3f53f81fc24ab8b453b12875089f",
+      "canonical_version": "1.49.0",
+      "canonical_sha256": "b278aadb5bd3d711eff670dbc71d8f9a660a6df5e1fbee18aebf7e14d08b5167",
+      "exact_match": true
+    },
+    {
+      "element": "omodul.analyze_paper",
+      "local_path": "vendor/omodul/analyze_paper.py",
+      "local_sha256": "07d6de4ae3a5afd07df9f4c10b3938c072f25d4afea409c7f89bc8fd1140c9ea",
+      "classification": "PROJECT_LAYER4"
+    },
+    {
+      "element": "omodul.auth",
+      "local_path": "vendor/omodul/auth.py",
+      "local_sha256": "fa4100a122b10d3ce5286d6cd15a408869441e4f64744eb52090b94a827a69f8",
+      "classification": "PROJECT_LAYER4"
+    },
+    {
+      "element": "omodul.book_compile",
+      "local_path": "vendor/omodul/book_compile.py",
+      "local_sha256": "ad11e7c73c01349ccb389f96ff620e9b3340e2ec2b4c4e9168ab55fb8f5bef66",
+      "classification": "PROJECT_LAYER4"
+    },
+    {
+      "element": "omodul.cognitive",
+      "local_path": "vendor/omodul/cognitive.py",
+      "local_sha256": "b1ee700832f99a422d45eebe2c5b288605c5268f69afcd391453b28837d16cb4",
+      "classification": "PROJECT_LAYER4"
+    },
+    {
+      "element": "omodul.daily_mission_workflow",
+      "local_path": "vendor/omodul/daily_mission_workflow.py",
+      "local_sha256": "4c2a3d49655fdf3802c815da6bb726a4e7545925fa0660843ffa169c5772d272",
+      "classification": "PROJECT_LAYER4"
+    },
+    {
+      "element": "omodul.deep_solve_workflow",
+      "local_path": "vendor/omodul/deep_solve_workflow.py",
+      "local_sha256": "5c13b4afe2f8ece76d88a35f28e68662e6b20ff80a7b6331350f5b411f5b0b5d",
+      "classification": "PROJECT_LAYER4"
+    },
+    {
+      "element": "omodul.due_recall_push",
+      "local_path": "vendor/omodul/due_recall_push.py",
+      "local_sha256": "bba29851d59a8b486157d8fa4678bd783f86c6f471f0b51310a7a6973f1beca3",
+      "classification": "PROJECT_LAYER4"
+    },
+    {
+      "element": "omodul.echo_loop_session",
+      "local_path": "vendor/omodul/echo_loop_session.py",
+      "local_sha256": "a8b884e4582547a6cef4474d1d2868c41ef0a3d4c3ddaeae11f0ec7b93d03fe3",
+      "classification": "EXACT_CANONICAL_COPY",
+      "canonical_repo": "/data/soffy/projects/platform/3O/omodul",
+      "canonical_path": "echo_loop_session.py",
+      "canonical_sha": "1bb87b87556f3f53f81fc24ab8b453b12875089f",
+      "canonical_version": "1.49.0",
+      "canonical_sha256": "a8b884e4582547a6cef4474d1d2868c41ef0a3d4c3ddaeae11f0ec7b93d03fe3",
+      "exact_match": true
+    },
+    {
+      "element": "omodul.generate_lesson_page",
+      "local_path": "vendor/omodul/generate_lesson_page.py",
+      "local_sha256": "347d2b1824d874001c7878dd8ac899dde59e24c25431fd08b1065e61bc804d73",
+      "classification": "EXACT_CANONICAL_COPY",
+      "canonical_repo": "/data/soffy/projects/platform/3O/omodul",
+      "canonical_path": "generate_lesson_page.py",
+      "canonical_sha": "1bb87b87556f3f53f81fc24ab8b453b12875089f",
+      "canonical_version": "1.49.0",
+      "canonical_sha256": "347d2b1824d874001c7878dd8ac899dde59e24c25431fd08b1065e61bc804d73",
+      "exact_match": true
+    },
+    {
+      "element": "omodul.instant_solve",
+      "local_path": "vendor/omodul/instant_solve.py",
+      "local_sha256": "2e60d850d77b9ad03795f7dd4ca9f30c7f33d255124d0f6b0ae1d8ef67673595",
+      "classification": "PROJECT_LAYER4"
+    },
+    {
+      "element": "omodul.paper",
+      "local_path": "vendor/omodul/paper.py",
+      "local_sha256": "282b097b14cb18000f32ab8804ce2196a57ce9d2602b0ce2ae6b1eac9c2a5f03",
+      "classification": "EXACT_CANONICAL_COPY",
+      "canonical_repo": "/data/soffy/projects/platform/3O/omodul",
+      "canonical_path": "paper.py",
+      "canonical_sha": "1bb87b87556f3f53f81fc24ab8b453b12875089f",
+      "canonical_version": "1.49.0",
+      "canonical_sha256": "282b097b14cb18000f32ab8804ce2196a57ce9d2602b0ce2ae6b1eac9c2a5f03",
+      "exact_match": true
+    },
+    {
+      "element": "omodul.practice_workflow",
+      "local_path": "vendor/omodul/practice_workflow.py",
+      "local_sha256": "a17b7bec08da929e6a0ac1aaa75e3171cb680edd3b72892e8b92c3291300c9bb",
+      "classification": "PROJECT_LAYER4"
+    },
+    {
+      "element": "omodul.socratic_session_workflow",
+      "local_path": "vendor/omodul/socratic_session_workflow.py",
+      "local_sha256": "d9eed3dcd087ca1d1774e1c73b5f6b3db26370bba2a717bf71432970d1a0f4bf",
+      "classification": "PROJECT_LAYER4"
+    },
+    {
+      "element": "omodul.solve_problem",
+      "local_path": "vendor/omodul/solve_problem.py",
+      "local_sha256": "77975929c82d3c1db8fde512746cf948ad4f06ee884aaeb98817896b49dba44f",
+      "classification": "PROJECT_LAYER4"
+    },
+    {
+      "element": "omodul.speaking_practice_workflow",
+      "local_path": "vendor/omodul/speaking_practice_workflow.py",
+      "local_sha256": "3a22b9b8cad7782466af44fec22c0f226af4d65685dee942c6c15edb89b3b3c1",
+      "classification": "PROJECT_LAYER4"
+    },
+    {
+      "element": "omodul.visualize_concept",
+      "local_path": "vendor/omodul/visualize_concept.py",
+      "local_sha256": "d99f47d2a76742cbed01611c74fae53fd16defa27774927a247ef5d33847fb2c",
+      "classification": "PROJECT_LAYER4"
+    },
+    {
+      "element": "oprim",
+      "local_path": "vendor/oprim/__init__.py",
+      "local_sha256": "c71dc7312ac5b48cef547a3a98fce0b957fa3473384b2a4cda4e41c1512054ec",
+      "classification": "PROJECT_LAYER4"
+    },
+    {
+      "element": "oprim._cognitive",
+      "local_path": "vendor/oprim/_cognitive.py",
+      "local_sha256": "4fce087c16a3f9139186c369f3e4eed35896fc07b9cee020c513d202af969179",
+      "classification": "PROJECT_LAYER4"
+    },
+    {
+      "element": "oprim._mneme_speech_types",
+      "local_path": "vendor/oprim/_mneme_speech_types.py",
+      "local_sha256": "cbcc1fb5193a7aaa3a9af7bdfa4c006f32dd05110aa7ae4e73622ded87a3feca",
+      "classification": "EXACT_CANONICAL_COPY",
+      "canonical_repo": "/data/soffy/projects/platform/3O/oprim",
+      "canonical_path": "_mneme_speech_types.py",
+      "canonical_sha": "651f7e37855fd4deff2bd3621fd2999e9058223e",
+      "canonical_version": "3.23.0",
+      "canonical_sha256": "cbcc1fb5193a7aaa3a9af7bdfa4c006f32dd05110aa7ae4e73622ded87a3feca",
+      "exact_match": true
+    },
+    {
+      "element": "oprim._physics_concept_diagnostic",
+      "local_path": "vendor/oprim/_physics_concept_diagnostic.py",
+      "local_sha256": "7bb2c9ac1de92be9ce206b4659b87df14febc6583553aaa61568f281715306a3",
+      "classification": "PROJECT_LAYER4"
+    },
+    {
+      "element": "oprim._readability_score",
+      "local_path": "vendor/oprim/_readability_score.py",
+      "local_sha256": "482a6580fc760ad3e6d19411115adfb0a94e50bcf1b3f33d21c55402c02c6647",
+      "classification": "PROJECT_LAYER4"
+    },
+    {
+      "element": "oprim._vocab_gloss_generate",
+      "local_path": "vendor/oprim/_vocab_gloss_generate.py",
+      "local_sha256": "959f79308053574909b64cab6966e6bf446dc861f3ef96925ed425b966403305",
+      "classification": "PROJECT_LAYER4"
+    },
+    {
+      "element": "oprim._word_frequency_stats",
+      "local_path": "vendor/oprim/_word_frequency_stats.py",
+      "local_sha256": "3e0b9aaf20010672ca790f00032a6587bf961f3cc4f662854564eaab4aca7b18",
+      "classification": "PROJECT_LAYER4"
+    },
+    {
+      "element": "oprim.ability",
+      "local_path": "vendor/oprim/ability.py",
+      "local_sha256": "5e2a7e2270f0c292f9c6c7fba7103b6b680022096c13855baf02c2bdb76549fe",
+      "classification": "PROJECT_LAYER4"
+    },
+    {
+      "element": "oprim.affect",
+      "local_path": "vendor/oprim/affect.py",
+      "local_sha256": "8acdf73a1d9f9ba459dc0aba1e9c7faf6c00b4781ba8a083bd91ba804f972eff",
+      "classification": "PROJECT_LAYER4"
+    },
+    {
+      "element": "oprim.answer_judge",
+      "local_path": "vendor/oprim/answer_judge.py",
+      "local_sha256": "9397df575c029a8d173ca9b767c3dc24d0693309986cff436448b5df83c8cc23",
+      "classification": "EXACT_CANONICAL_COPY",
+      "canonical_repo": "/data/soffy/projects/platform/3O/oprim",
+      "canonical_path": "answer_judge.py",
+      "canonical_sha": "651f7e37855fd4deff2bd3621fd2999e9058223e",
+      "canonical_version": "3.23.0",
+      "canonical_sha256": "9397df575c029a8d173ca9b767c3dc24d0693309986cff436448b5df83c8cc23",
+      "exact_match": true
+    },
+    {
+      "element": "oprim.answer_policy",
+      "local_path": "vendor/oprim/answer_policy.py",
+      "local_sha256": "0a7cb9466bcafacd679a2c3e835bd7d426f54f1ffc71b8ebbb9e46294f9233ce",
+      "classification": "PROJECT_LAYER4"
+    },
+    {
+      "element": "oprim.bkt",
+      "local_path": "vendor/oprim/bkt.py",
+      "local_sha256": "4d46300a28519ea44f53b0fdf40a851e3704e4499da6e25d24f3df2b8a8290fe",
+      "classification": "PROJECT_LAYER4"
+    },
+    {
+      "element": "oprim.calibration",
+      "local_path": "vendor/oprim/calibration.py",
+      "local_sha256": "9a186899c845f1b0f3944322451e45b3376a220f1ada0f02efac6f691b9de9ba",
+      "classification": "EXACT_CANONICAL_COPY",
+      "canonical_repo": "/data/soffy/projects/platform/3O/oprim",
+      "canonical_path": "calibration.py",
+      "canonical_sha": "651f7e37855fd4deff2bd3621fd2999e9058223e",
+      "canonical_version": "3.23.0",
+      "canonical_sha256": "9a186899c845f1b0f3944322451e45b3376a220f1ada0f02efac6f691b9de9ba",
+      "exact_match": true
+    },
+    {
+      "element": "oprim.chinese_track",
+      "local_path": "vendor/oprim/chinese_track.py",
+      "local_sha256": "991c4f6affd4808d87b6d820cc93b59bb9f620b6f9df8a8a7f24f8740f9ae8d7",
+      "classification": "PROJECT_LAYER4"
+    },
+    {
+      "element": "oprim.compute_feedback",
+      "local_path": "vendor/oprim/compute_feedback.py",
+      "local_sha256": "85825d8fe72fa0b4eed9833af496434b77f3d2535ff340de040739306a7bc5a6",
+      "classification": "PROJECT_LAYER4"
+    },
+    {
+      "element": "oprim.compute_peer_percentile",
+      "local_path": "vendor/oprim/compute_peer_percentile.py",
+      "local_sha256": "0cf61d657f3e7136994f2b5b819391764d37bbd01455b1ceed90dc3f26535e0e",
+      "classification": "EXACT_CANONICAL_COPY",
+      "canonical_repo": "/data/soffy/projects/platform/3O/oprim",
+      "canonical_path": "compute_peer_percentile.py",
+      "canonical_sha": "651f7e37855fd4deff2bd3621fd2999e9058223e",
+      "canonical_version": "3.23.0",
+      "canonical_sha256": "0cf61d657f3e7136994f2b5b819391764d37bbd01455b1ceed90dc3f26535e0e",
+      "exact_match": true
+    },
+    {
+      "element": "oprim.due_compute",
+      "local_path": "vendor/oprim/due_compute.py",
+      "local_sha256": "921435920b90b8670c26f003bfbdbd9f4e8aa6dacad559829347dce75c179b4b",
+      "classification": "PROJECT_LAYER4"
+    },
+    {
+      "element": "oprim.echo_drive",
+      "local_path": "vendor/oprim/echo_drive.py",
+      "local_sha256": "5703bf7609b837a7d5a569913238c7b5de2b006bd879433500f2cfd79fb9198e",
+      "classification": "PROJECT_LAYER4"
+    },
+    {
+      "element": "oprim.echo_loop",
+      "local_path": "vendor/oprim/echo_loop.py",
+      "local_sha256": "1fdd37a9a1ca43ba0029dbc3d9ed0b7f134ce63a829fe912a71e5a33a929551f",
+      "classification": "EXACT_CANONICAL_COPY",
+      "canonical_repo": "/data/soffy/projects/platform/3O/oprim",
+      "canonical_path": "echo_loop.py",
+      "canonical_sha": "651f7e37855fd4deff2bd3621fd2999e9058223e",
+      "canonical_version": "3.23.0",
+      "canonical_sha256": "1fdd37a9a1ca43ba0029dbc3d9ed0b7f134ce63a829fe912a71e5a33a929551f",
+      "exact_match": true
+    },
+    {
+      "element": "oprim.embed_chunks",
+      "local_path": "vendor/oprim/embed_chunks.py",
+      "local_sha256": "564b6c62fe2a37a5bcc0d1d413c4ebf3e8480820dee441ba40e412e5327f4be8",
+      "classification": "PROJECT_LAYER4"
+    },
+    {
+      "element": "oprim.experiment",
+      "local_path": "vendor/oprim/experiment.py",
+      "local_sha256": "3e671cc5a3936f1978bf8eb57a69e72bfda6a3e9265d5fec051767b525443bd4",
+      "classification": "PROJECT_LAYER4"
+    },
+    {
+      "element": "oprim.fsrs_engine",
+      "local_path": "vendor/oprim/fsrs_engine.py",
+      "local_sha256": "69d88a2f17ded2b39c1551c4c85632d8a328d949ebe3967c5670810ea8d17d8c",
+      "classification": "PROJECT_LAYER4"
+    },
+    {
+      "element": "oprim.generate_partner_push_text",
+      "local_path": "vendor/oprim/generate_partner_push_text.py",
+      "local_sha256": "21a98eb9680a8a112e008cdc026114462839e9224c008cb4c5aeb75368485cc5",
+      "classification": "PROJECT_LAYER4"
+    },
+    {
+      "element": "oprim.growth_feedback",
+      "local_path": "vendor/oprim/growth_feedback.py",
+      "local_sha256": "f12181785905b999ebb1be405e8b6270bf17f445ad496f004aa3f6618eff9ac7",
+      "classification": "PROJECT_LAYER4"
+    },
+    {
+      "element": "oprim.kernel_to_plot2d",
+      "local_path": "vendor/oprim/kernel_to_plot2d.py",
+      "local_sha256": "1d09ab17b4d2292b694bd34ca96e8e5d56dddfea7b669853262e11b9b8f57988",
+      "classification": "PROJECT_LAYER4"
+    },
+    {
+      "element": "oprim.kernel_to_three",
+      "local_path": "vendor/oprim/kernel_to_three.py",
+      "local_sha256": "2a50755ac9aae517e5824c4dd64171f25ed89435953e9efde3c0ef5c37d6f2a3",
+      "classification": "PROJECT_LAYER4"
+    },
+    {
+      "element": "oprim.learner_profile_summary",
+      "local_path": "vendor/oprim/learner_profile_summary.py",
+      "local_sha256": "f3ff7f251cc1d4d2f8de5cb69694bc2b908c5633ae54dfb7bc436b1c205f7cc4",
+      "classification": "PROJECT_LAYER4"
+    },
+    {
+      "element": "oprim.learning_metrics",
+      "local_path": "vendor/oprim/learning_metrics.py",
+      "local_sha256": "4422864ffa991c0c5eab826562791934a2bfaf38b4f77d65f9e5cf29893c7ead",
+      "classification": "EXACT_CANONICAL_COPY",
+      "canonical_repo": "/data/soffy/projects/platform/3O/oprim",
+      "canonical_path": "learning_metrics.py",
+      "canonical_sha": "651f7e37855fd4deff2bd3621fd2999e9058223e",
+      "canonical_version": "3.23.0",
+      "canonical_sha256": "4422864ffa991c0c5eab826562791934a2bfaf38b4f77d65f9e5cf29893c7ead",
+      "exact_match": true
+    },
+    {
+      "element": "oprim.llm_oprims",
+      "local_path": "vendor/oprim/llm_oprims.py",
+      "local_sha256": "a6edfcf2922705f9a9dcc38b164a21b04461a5a9266cc54d49dffbce4d8c96ce",
+      "classification": "PROJECT_LAYER4"
+    },
+    {
+      "element": "oprim.midi_parse",
+      "local_path": "vendor/oprim/midi_parse.py",
+      "local_sha256": "8e06d55277d5e916b7dd2afea672cf2b666c46eb23c80853326b8e75bf400ac7",
+      "classification": "PROJECT_LAYER4"
+    },
+    {
+      "element": "oprim.misconception",
+      "local_path": "vendor/oprim/misconception.py",
+      "local_sha256": "9c8d7d7b9e9be2a8d166741919bbae2774a9783225b24be525fedd0bf1a6b800",
+      "classification": "PROJECT_LAYER4"
+    },
+    {
+      "element": "oprim.prereq_graph",
+      "local_path": "vendor/oprim/prereq_graph.py",
+      "local_sha256": "1435903d48b2006eea83d641e28db981a9e83c43fd81d2003f21bddcf26b0f63",
+      "classification": "PROJECT_LAYER4"
+    },
+    {
+      "element": "oprim.retrieve_chunks",
+      "local_path": "vendor/oprim/retrieve_chunks.py",
+      "local_sha256": "7de1b8fbd8cafb0f3d30cb076c75b5656dcb27b9099f0287a29aecefc26de693",
+      "classification": "PROJECT_LAYER4"
+    },
+    {
+      "element": "oprim.solve_conic",
+      "local_path": "vendor/oprim/solve_conic.py",
+      "local_sha256": "dd5177d6ae41a312ab4933f3209e39044917a9bd26d745b0fd4094472cb4a67b",
+      "classification": "PROJECT_LAYER4"
+    },
+    {
+      "element": "oprim.solve_derivative",
+      "local_path": "vendor/oprim/solve_derivative.py",
+      "local_sha256": "992387e1932c9c95ed240fcf65cea35b6dd0c8e4a72acfbdcebc3dfba2934270",
+      "classification": "PROJECT_LAYER4"
+    },
+    {
+      "element": "oprim.solve_function",
+      "local_path": "vendor/oprim/solve_function.py",
+      "local_sha256": "396cd88d017854b2be8e8f387045a04131229780b27bc7e78f1a8cc5f351437b",
+      "classification": "PROJECT_LAYER4"
+    },
+    {
+      "element": "oprim.solve_probability",
+      "local_path": "vendor/oprim/solve_probability.py",
+      "local_sha256": "6d8cfbd048e93eb2e2ef6d554b578fd0d093c7d32be81033f204c63773b09d60",
+      "classification": "PROJECT_LAYER4"
+    },
+    {
+      "element": "oprim.verify_step",
+      "local_path": "vendor/oprim/verify_step.py",
+      "local_sha256": "a2e08dccbdd54937f25b09f41f17f863926a9fd96b46a6ffa19a5c87c01595bd",
+      "classification": "PROJECT_LAYER4"
+    },
+    {
+      "element": "oprim.vlm_scene",
+      "local_path": "vendor/oprim/vlm_scene.py",
+      "local_sha256": "9c3d4ae04beb342bc74274d517540ff355276953a86a1560236042c6362f870e",
+      "classification": "PROJECT_LAYER4"
+    },
+    {
+      "element": "oskill",
+      "local_path": "vendor/oskill/__init__.py",
+      "local_sha256": "fec6cfd1e3ddac8a975de7dd7a5ce7561c2aff46122f393c31c2564abec20ef5",
+      "classification": "PROJECT_LAYER4"
+    },
+    {
+      "element": "oskill._physics_concept_diagnosis",
+      "local_path": "vendor/oskill/_physics_concept_diagnosis.py",
+      "local_sha256": "bae47b84acaf494e58e939fe95df352d5224d283b1c618ad316c071dd32e9e6b",
+      "classification": "PROJECT_LAYER4"
+    },
+    {
+      "element": "oskill._physics_force_analysis_guide",
+      "local_path": "vendor/oskill/_physics_force_analysis_guide.py",
+      "local_sha256": "14676d48c1a8f864aafd9bbc40c70ba3131d250a7ccba6fc9e87263b3c247e4f",
+      "classification": "PROJECT_LAYER4"
+    },
+    {
+      "element": "oskill._reading_comprehension_guide",
+      "local_path": "vendor/oskill/_reading_comprehension_guide.py",
+      "local_sha256": "7892dbde36bd06619d4621c22ad3ad95cee7a401791c3c8fc7793e00d97acd1d",
+      "classification": "PROJECT_LAYER4"
+    },
+    {
+      "element": "oskill.cognitive_state",
+      "local_path": "vendor/oskill/cognitive_state.py",
+      "local_sha256": "1f6eeb7ff2d4524d9b7451f7a6bcbdb2f0020f649b2a93ca0c7fdbee31993f0f",
+      "classification": "PROJECT_LAYER4"
+    },
+    {
+      "element": "oskill.cold_start_single",
+      "local_path": "vendor/oskill/cold_start_single.py",
+      "local_sha256": "f9385a4a1b4a2d32a031169a5d17fd0cb8b8f71179f64469e5875468b07d58e1",
+      "classification": "EXACT_CANONICAL_COPY",
+      "canonical_repo": "/data/soffy/projects/platform/3O/oskill",
+      "canonical_path": "cold_start_single.py",
+      "canonical_sha": "96b0521b85d086eda94de2a5454e756c71c55499",
+      "canonical_version": "4.14.0",
+      "canonical_sha256": "f9385a4a1b4a2d32a031169a5d17fd0cb8b8f71179f64469e5875468b07d58e1",
+      "exact_match": true
+    },
+    {
+      "element": "oskill.essay_guide",
+      "local_path": "vendor/oskill/essay_guide.py",
+      "local_sha256": "3ea126372fa6e17267dca0a8ef89d893b4ca3cad9603f31f8873474b1fe4e523",
+      "classification": "PROJECT_LAYER4"
+    },
+    {
+      "element": "oskill.fire_propagate",
+      "local_path": "vendor/oskill/fire_propagate.py",
+      "local_sha256": "c0f4f3a067dcdbfb030712752857cd0d388fed919a79e4e0b2fe9e30782b5c0e",
+      "classification": "PROJECT_LAYER4"
+    },
+    {
+      "element": "oskill.hand_choreo",
+      "local_path": "vendor/oskill/hand_choreo.py",
+      "local_sha256": "df73a7b2e534e02ac19b85c48e8789c9bb300977a8cb14131a1ccb37d0de05d8",
+      "classification": "PROJECT_LAYER4"
+    },
+    {
+      "element": "oskill.interleave_select",
+      "local_path": "vendor/oskill/interleave_select.py",
+      "local_sha256": "41bb47e9a3a88cb5a3708dfeb2555aaf46d1e1e3e14ea48b58d7131ca61912ad",
+      "classification": "EXACT_CANONICAL_COPY",
+      "canonical_repo": "/data/soffy/projects/platform/3O/oskill",
+      "canonical_path": "interleave_select.py",
+      "canonical_sha": "96b0521b85d086eda94de2a5454e756c71c55499",
+      "canonical_version": "4.14.0",
+      "canonical_sha256": "41bb47e9a3a88cb5a3708dfeb2555aaf46d1e1e3e14ea48b58d7131ca61912ad",
+      "exact_match": true
+    },
+    {
+      "element": "oskill.ku_extract_pipeline",
+      "local_path": "vendor/oskill/ku_extract_pipeline.py",
+      "local_sha256": "29062d808cc83f343341da1618177081a856e58ac387bf15db0840ee8926bbe7",
+      "classification": "EXACT_CANONICAL_COPY",
+      "canonical_repo": "/data/soffy/projects/platform/3O/oskill",
+      "canonical_path": "ku_extract_pipeline.py",
+      "canonical_sha": "96b0521b85d086eda94de2a5454e756c71c55499",
+      "canonical_version": "4.14.0",
+      "canonical_sha256": "29062d808cc83f343341da1618177081a856e58ac387bf15db0840ee8926bbe7",
+      "exact_match": true
+    },
+    {
+      "element": "oskill.longitudinal_pattern",
+      "local_path": "vendor/oskill/longitudinal_pattern.py",
+      "local_sha256": "bd714b1f93188652be910ed8e64601db240db32fd60c01fa810622783e57ffe5",
+      "classification": "EXACT_CANONICAL_COPY",
+      "canonical_repo": "/data/soffy/projects/platform/3O/oskill",
+      "canonical_path": "longitudinal_pattern.py",
+      "canonical_sha": "96b0521b85d086eda94de2a5454e756c71c55499",
+      "canonical_version": "4.14.0",
+      "canonical_sha256": "bd714b1f93188652be910ed8e64601db240db32fd60c01fa810622783e57ffe5",
+      "exact_match": true
+    },
+    {
+      "element": "oskill.metacog_scaffold",
+      "local_path": "vendor/oskill/metacog_scaffold.py",
+      "local_sha256": "f819a4191c8799b77a5f5f61c96f582fb5badb4e5e66f9a87523fa2d9baea8ce",
+      "classification": "EXACT_CANONICAL_COPY",
+      "canonical_repo": "/data/soffy/projects/platform/3O/oskill",
+      "canonical_path": "metacog_scaffold.py",
+      "canonical_sha": "96b0521b85d086eda94de2a5454e756c71c55499",
+      "canonical_version": "4.14.0",
+      "canonical_sha256": "f819a4191c8799b77a5f5f61c96f582fb5badb4e5e66f9a87523fa2d9baea8ce",
+      "exact_match": true
+    },
+    {
+      "element": "oskill.paper_grading",
+      "local_path": "vendor/oskill/paper_grading.py",
+      "local_sha256": "0cd03ed1e3d3523e206d52b7cdd3347da3d376b3ff9850270dfc2fd187d6f4da",
+      "classification": "PROJECT_LAYER4"
+    },
+    {
+      "element": "oskill.partner_dispatch",
+      "local_path": "vendor/oskill/partner_dispatch.py",
+      "local_sha256": "c825d1f72f53617e3c52bccf238cbd40589af5ff970dfe12a3c43b5feda7aba6",
+      "classification": "PROJECT_LAYER4"
+    },
+    {
+      "element": "oskill.socratic_loop",
+      "local_path": "vendor/oskill/socratic_loop.py",
+      "local_sha256": "ccd94c639dd0092483a4ad19ed811ba4d37d4a90215eaedd7cfc9e2692cca1c7",
+      "classification": "PROJECT_LAYER4"
+    },
+    {
+      "element": "oskill.solve_and_visualize",
+      "local_path": "vendor/oskill/solve_and_visualize.py",
+      "local_sha256": "c410f6a5c200894695fb48c09868eedf61cba6ed74a7837529cc3d3e44c25c7d",
+      "classification": "EXACT_CANONICAL_COPY",
+      "canonical_repo": "/data/soffy/projects/platform/3O/oskill",
+      "canonical_path": "solve_and_visualize.py",
+      "canonical_sha": "96b0521b85d086eda94de2a5454e756c71c55499",
+      "canonical_version": "4.14.0",
+      "canonical_sha256": "c410f6a5c200894695fb48c09868eedf61cba6ed74a7837529cc3d3e44c25c7d",
+      "exact_match": true
+    },
+    {
+      "element": "oskill.solve_dispatch",
+      "local_path": "vendor/oskill/solve_dispatch.py",
+      "local_sha256": "31e6f0f120b0149a7fc137ea073211f4d311c6890a75db986272a313f2122550",
+      "classification": "PROJECT_LAYER4"
+    },
+    {
+      "element": "oskill.variant_for_review",
+      "local_path": "vendor/oskill/variant_for_review.py",
+      "local_sha256": "0c2c66be0578caae8cdf3e9f7d410a0a63d2560a71325c1b351d5a986119fb75",
+      "classification": "PROJECT_LAYER4"
+    },
+    {
+      "element": "oskill.visualize_dispatch",
+      "local_path": "vendor/oskill/visualize_dispatch.py",
+      "local_sha256": "31d26d9b00bcdde1d55f34d4a04483bd446963994b5ede1a94c4e0aae6da50e3",
+      "classification": "PROJECT_LAYER4"
+    }
+  ]
 }

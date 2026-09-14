@@ -1,0 +1,760 @@
+{
+  "schema": 1,
+  "starting_private_3o_count": 63,
+  "elements": [
+    {
+      "old_path": "mneme_core/oprim/bkt.py",
+      "symbol": "BktParams",
+      "old_layer": "oprim",
+      "classification": "PROJECT_LAYER4",
+      "canonical_target": null,
+      "canonical_sha": null,
+      "layer4_target": "mneme_core/domain/oprim/bkt.py",
+      "mneme_new_path": "mneme_core/domain/oprim/bkt.py",
+      "tests": [
+        "packages/mneme-core/tests/test_bkt.py"
+      ]
+    },
+    {
+      "old_path": "mneme_core/oprim/bkt.py",
+      "symbol": "new_posterior",
+      "old_layer": "oprim",
+      "classification": "PROJECT_LAYER4",
+      "canonical_target": null,
+      "canonical_sha": null,
+      "layer4_target": "mneme_core/domain/oprim/bkt.py",
+      "mneme_new_path": "mneme_core/domain/oprim/bkt.py",
+      "tests": [
+        "packages/mneme-core/tests/test_bkt.py"
+      ]
+    },
+    {
+      "old_path": "mneme_core/oprim/bkt.py",
+      "symbol": "update",
+      "old_layer": "oprim",
+      "classification": "PROJECT_LAYER4",
+      "canonical_target": null,
+      "canonical_sha": null,
+      "layer4_target": "mneme_core/domain/oprim/bkt.py",
+      "mneme_new_path": "mneme_core/domain/oprim/bkt.py",
+      "tests": [
+        "packages/mneme-core/tests/test_bkt.py"
+      ]
+    },
+    {
+      "old_path": "mneme_core/oprim/grade.py",
+      "symbol": "GradeResult",
+      "old_layer": "oprim",
+      "classification": "PROJECT_LAYER4",
+      "canonical_target": null,
+      "canonical_sha": null,
+      "layer4_target": "mneme_core/domain/oprim/grade.py",
+      "mneme_new_path": "mneme_core/domain/oprim/grade.py",
+      "tests": [
+        "packages/mneme-core/tests/test_grade.py"
+      ]
+    },
+    {
+      "old_path": "mneme_core/oprim/grade.py",
+      "symbol": "answer_match",
+      "old_layer": "oprim",
+      "classification": "PROJECT_LAYER4",
+      "canonical_target": null,
+      "canonical_sha": null,
+      "layer4_target": "mneme_core/domain/oprim/grade.py",
+      "mneme_new_path": "mneme_core/domain/oprim/grade.py",
+      "tests": [
+        "packages/mneme-core/tests/test_grade.py"
+      ]
+    },
+    {
+      "old_path": "mneme_core/oprim/grade.py",
+      "symbol": "grade_objective",
+      "old_layer": "oprim",
+      "classification": "PROJECT_LAYER4",
+      "canonical_target": null,
+      "canonical_sha": null,
+      "layer4_target": "mneme_core/domain/oprim/grade.py",
+      "mneme_new_path": "mneme_core/domain/oprim/grade.py",
+      "tests": [
+        "packages/mneme-core/tests/test_grade.py"
+      ]
+    },
+    {
+      "old_path": "mneme_core/oprim/intent_router.py",
+      "symbol": "ChatIntent",
+      "old_layer": "oprim",
+      "classification": "PROJECT_LAYER4",
+      "canonical_target": null,
+      "canonical_sha": null,
+      "layer4_target": "mneme_core/domain/oprim/intent_router.py",
+      "mneme_new_path": "mneme_core/domain/oprim/intent_router.py",
+      "tests": [
+        "packages/mneme-core/tests/test_intent_router.py"
+      ]
+    },
+    {
+      "old_path": "mneme_core/oprim/intent_router.py",
+      "symbol": "classify_chat_intent",
+      "old_layer": "oprim",
+      "classification": "PROJECT_LAYER4",
+      "canonical_target": null,
+      "canonical_sha": null,
+      "layer4_target": "mneme_core/domain/oprim/intent_router.py",
+      "mneme_new_path": "mneme_core/domain/oprim/intent_router.py",
+      "tests": [
+        "packages/mneme-core/tests/test_intent_router.py"
+      ]
+    },
+    {
+      "old_path": "mneme_core/oprim/mastery_gate.py",
+      "symbol": "is_mastered",
+      "old_layer": "oprim",
+      "classification": "PROJECT_LAYER4",
+      "canonical_target": null,
+      "canonical_sha": null,
+      "layer4_target": "mneme_core/domain/oprim/mastery_gate.py",
+      "mneme_new_path": "mneme_core/domain/oprim/mastery_gate.py",
+      "tests": [
+        "packages/mneme-core/tests/test_mastery_gate.py",
+        "tests/test_mastery_gate.py"
+      ]
+    },
+    {
+      "old_path": "mneme_core/oprim/mastery_gate.py",
+      "symbol": "next_objective",
+      "old_layer": "oprim",
+      "classification": "PROJECT_LAYER4",
+      "canonical_target": null,
+      "canonical_sha": null,
+      "layer4_target": "mneme_core/domain/oprim/mastery_gate.py",
+      "mneme_new_path": "mneme_core/domain/oprim/mastery_gate.py",
+      "tests": [
+        "packages/mneme-core/tests/test_mastery_gate.py",
+        "tests/test_mastery_gate.py"
+      ]
+    },
+    {
+      "old_path": "mneme_core/oprim/mastery_gate.py",
+      "symbol": "map_summary",
+      "old_layer": "oprim",
+      "classification": "PROJECT_LAYER4",
+      "canonical_target": null,
+      "canonical_sha": null,
+      "layer4_target": "mneme_core/domain/oprim/mastery_gate.py",
+      "mneme_new_path": "mneme_core/domain/oprim/mastery_gate.py",
+      "tests": [
+        "packages/mneme-core/tests/test_mastery_gate.py",
+        "tests/test_mastery_gate.py"
+      ]
+    },
+    {
+      "old_path": "mneme_core/oprim/mastery_lower_bound.py",
+      "symbol": "mastery_lower_bound",
+      "old_layer": "oprim",
+      "classification": "PROJECT_LAYER4",
+      "canonical_target": null,
+      "canonical_sha": null,
+      "layer4_target": "mneme_core/domain/oprim/mastery_lower_bound.py",
+      "mneme_new_path": "mneme_core/domain/oprim/mastery_lower_bound.py",
+      "tests": [
+        "packages/mneme-core/tests/test_mastery_lower_bound.py"
+      ]
+    },
+    {
+      "old_path": "mneme_core/oprim/models.py",
+      "symbol": "KnowledgeType",
+      "old_layer": "oprim",
+      "classification": "PROJECT_LAYER4",
+      "canonical_target": null,
+      "canonical_sha": null,
+      "layer4_target": "mneme_core/domain/oprim/models.py",
+      "mneme_new_path": "mneme_core/domain/oprim/models.py",
+      "tests": []
+    },
+    {
+      "old_path": "mneme_core/oprim/models.py",
+      "symbol": "KnowledgePoint",
+      "old_layer": "oprim",
+      "classification": "PROJECT_LAYER4",
+      "canonical_target": null,
+      "canonical_sha": null,
+      "layer4_target": "mneme_core/domain/oprim/models.py",
+      "mneme_new_path": "mneme_core/domain/oprim/models.py",
+      "tests": []
+    },
+    {
+      "old_path": "mneme_core/oprim/models.py",
+      "symbol": "Module",
+      "old_layer": "oprim",
+      "classification": "PROJECT_LAYER4",
+      "canonical_target": null,
+      "canonical_sha": null,
+      "layer4_target": "mneme_core/domain/oprim/models.py",
+      "mneme_new_path": "mneme_core/domain/oprim/models.py",
+      "tests": []
+    },
+    {
+      "old_path": "mneme_core/oprim/models.py",
+      "symbol": "BktPosterior",
+      "old_layer": "oprim",
+      "classification": "PROJECT_LAYER4",
+      "canonical_target": null,
+      "canonical_sha": null,
+      "layer4_target": "mneme_core/domain/oprim/models.py",
+      "mneme_new_path": "mneme_core/domain/oprim/models.py",
+      "tests": []
+    },
+    {
+      "old_path": "mneme_core/oprim/models.py",
+      "symbol": "FsrsState",
+      "old_layer": "oprim",
+      "classification": "PROJECT_LAYER4",
+      "canonical_target": null,
+      "canonical_sha": null,
+      "layer4_target": "mneme_core/domain/oprim/models.py",
+      "mneme_new_path": "mneme_core/domain/oprim/models.py",
+      "tests": []
+    },
+    {
+      "old_path": "mneme_core/oprim/models.py",
+      "symbol": "ReviewTask",
+      "old_layer": "oprim",
+      "classification": "PROJECT_LAYER4",
+      "canonical_target": null,
+      "canonical_sha": null,
+      "layer4_target": "mneme_core/domain/oprim/models.py",
+      "mneme_new_path": "mneme_core/domain/oprim/models.py",
+      "tests": []
+    },
+    {
+      "old_path": "mneme_core/oprim/models.py",
+      "symbol": "PendingQuestion",
+      "old_layer": "oprim",
+      "classification": "PROJECT_LAYER4",
+      "canonical_target": null,
+      "canonical_sha": null,
+      "layer4_target": "mneme_core/domain/oprim/models.py",
+      "mneme_new_path": "mneme_core/domain/oprim/models.py",
+      "tests": []
+    },
+    {
+      "old_path": "mneme_core/oprim/models.py",
+      "symbol": "Attempt",
+      "old_layer": "oprim",
+      "classification": "PROJECT_LAYER4",
+      "canonical_target": null,
+      "canonical_sha": null,
+      "layer4_target": "mneme_core/domain/oprim/models.py",
+      "mneme_new_path": "mneme_core/domain/oprim/models.py",
+      "tests": []
+    },
+    {
+      "old_path": "mneme_core/oprim/models.py",
+      "symbol": "LearningProgress",
+      "old_layer": "oprim",
+      "classification": "PROJECT_LAYER4",
+      "canonical_target": null,
+      "canonical_sha": null,
+      "layer4_target": "mneme_core/domain/oprim/models.py",
+      "mneme_new_path": "mneme_core/domain/oprim/models.py",
+      "tests": []
+    },
+    {
+      "old_path": "mneme_core/oprim/models.py",
+      "symbol": "NextAction",
+      "old_layer": "oprim",
+      "classification": "PROJECT_LAYER4",
+      "canonical_target": null,
+      "canonical_sha": null,
+      "layer4_target": "mneme_core/domain/oprim/models.py",
+      "mneme_new_path": "mneme_core/domain/oprim/models.py",
+      "tests": []
+    },
+    {
+      "old_path": "mneme_core/oprim/models.py",
+      "symbol": "NextStep",
+      "old_layer": "oprim",
+      "classification": "PROJECT_LAYER4",
+      "canonical_target": null,
+      "canonical_sha": null,
+      "layer4_target": "mneme_core/domain/oprim/models.py",
+      "mneme_new_path": "mneme_core/domain/oprim/models.py",
+      "tests": []
+    },
+    {
+      "old_path": "mneme_core/oprim/models.py",
+      "symbol": "RubricDimension",
+      "old_layer": "oprim",
+      "classification": "PROJECT_LAYER4",
+      "canonical_target": null,
+      "canonical_sha": null,
+      "layer4_target": "mneme_core/domain/oprim/models.py",
+      "mneme_new_path": "mneme_core/domain/oprim/models.py",
+      "tests": []
+    },
+    {
+      "old_path": "mneme_core/oprim/models.py",
+      "symbol": "Rubric",
+      "old_layer": "oprim",
+      "classification": "PROJECT_LAYER4",
+      "canonical_target": null,
+      "canonical_sha": null,
+      "layer4_target": "mneme_core/domain/oprim/models.py",
+      "mneme_new_path": "mneme_core/domain/oprim/models.py",
+      "tests": []
+    },
+    {
+      "old_path": "mneme_core/oprim/models.py",
+      "symbol": "KpView",
+      "old_layer": "oprim",
+      "classification": "PROJECT_LAYER4",
+      "canonical_target": null,
+      "canonical_sha": null,
+      "layer4_target": "mneme_core/domain/oprim/models.py",
+      "mneme_new_path": "mneme_core/domain/oprim/models.py",
+      "tests": []
+    },
+    {
+      "old_path": "mneme_core/oprim/models.py",
+      "symbol": "EvidenceSpan",
+      "old_layer": "oprim",
+      "classification": "PROJECT_LAYER4",
+      "canonical_target": null,
+      "canonical_sha": null,
+      "layer4_target": "mneme_core/domain/oprim/models.py",
+      "mneme_new_path": "mneme_core/domain/oprim/models.py",
+      "tests": []
+    },
+    {
+      "old_path": "mneme_core/oprim/models.py",
+      "symbol": "DimensionVerdict",
+      "old_layer": "oprim",
+      "classification": "PROJECT_LAYER4",
+      "canonical_target": null,
+      "canonical_sha": null,
+      "layer4_target": "mneme_core/domain/oprim/models.py",
+      "mneme_new_path": "mneme_core/domain/oprim/models.py",
+      "tests": []
+    },
+    {
+      "old_path": "mneme_core/oprim/models.py",
+      "symbol": "QualitativeVerdict",
+      "old_layer": "oprim",
+      "classification": "PROJECT_LAYER4",
+      "canonical_target": null,
+      "canonical_sha": null,
+      "layer4_target": "mneme_core/domain/oprim/models.py",
+      "mneme_new_path": "mneme_core/domain/oprim/models.py",
+      "tests": []
+    },
+    {
+      "old_path": "mneme_core/oprim/models.py",
+      "symbol": "BookContentType",
+      "old_layer": "oprim",
+      "classification": "PROJECT_LAYER4",
+      "canonical_target": null,
+      "canonical_sha": null,
+      "layer4_target": "mneme_core/domain/oprim/models.py",
+      "mneme_new_path": "mneme_core/domain/oprim/models.py",
+      "tests": []
+    },
+    {
+      "old_path": "mneme_core/oprim/models.py",
+      "symbol": "BookBlockType",
+      "old_layer": "oprim",
+      "classification": "PROJECT_LAYER4",
+      "canonical_target": null,
+      "canonical_sha": null,
+      "layer4_target": "mneme_core/domain/oprim/models.py",
+      "mneme_new_path": "mneme_core/domain/oprim/models.py",
+      "tests": []
+    },
+    {
+      "old_path": "mneme_core/oprim/models.py",
+      "symbol": "TextbookMeta",
+      "old_layer": "oprim",
+      "classification": "PROJECT_LAYER4",
+      "canonical_target": null,
+      "canonical_sha": null,
+      "layer4_target": "mneme_core/domain/oprim/models.py",
+      "mneme_new_path": "mneme_core/domain/oprim/models.py",
+      "tests": []
+    },
+    {
+      "old_path": "mneme_core/oprim/models.py",
+      "symbol": "ClusterSummary",
+      "old_layer": "oprim",
+      "classification": "PROJECT_LAYER4",
+      "canonical_target": null,
+      "canonical_sha": null,
+      "layer4_target": "mneme_core/domain/oprim/models.py",
+      "mneme_new_path": "mneme_core/domain/oprim/models.py",
+      "tests": []
+    },
+    {
+      "old_path": "mneme_core/oprim/models.py",
+      "symbol": "BookProposal",
+      "old_layer": "oprim",
+      "classification": "PROJECT_LAYER4",
+      "canonical_target": null,
+      "canonical_sha": null,
+      "layer4_target": "mneme_core/domain/oprim/models.py",
+      "mneme_new_path": "mneme_core/domain/oprim/models.py",
+      "tests": []
+    },
+    {
+      "old_path": "mneme_core/oprim/models.py",
+      "symbol": "ChapterSpec",
+      "old_layer": "oprim",
+      "classification": "PROJECT_LAYER4",
+      "canonical_target": null,
+      "canonical_sha": null,
+      "layer4_target": "mneme_core/domain/oprim/models.py",
+      "mneme_new_path": "mneme_core/domain/oprim/models.py",
+      "tests": []
+    },
+    {
+      "old_path": "mneme_core/oprim/models.py",
+      "symbol": "BookSpine",
+      "old_layer": "oprim",
+      "classification": "PROJECT_LAYER4",
+      "canonical_target": null,
+      "canonical_sha": null,
+      "layer4_target": "mneme_core/domain/oprim/models.py",
+      "mneme_new_path": "mneme_core/domain/oprim/models.py",
+      "tests": []
+    },
+    {
+      "old_path": "mneme_core/oprim/models.py",
+      "symbol": "BlockSpec",
+      "old_layer": "oprim",
+      "classification": "PROJECT_LAYER4",
+      "canonical_target": null,
+      "canonical_sha": null,
+      "layer4_target": "mneme_core/domain/oprim/models.py",
+      "mneme_new_path": "mneme_core/domain/oprim/models.py",
+      "tests": []
+    },
+    {
+      "old_path": "mneme_core/oprim/models.py",
+      "symbol": "SolveTaskPlan",
+      "old_layer": "oprim",
+      "classification": "PROJECT_LAYER4",
+      "canonical_target": null,
+      "canonical_sha": null,
+      "layer4_target": "mneme_core/domain/oprim/models.py",
+      "mneme_new_path": "mneme_core/domain/oprim/models.py",
+      "tests": []
+    },
+    {
+      "old_path": "mneme_core/oprim/models.py",
+      "symbol": "VisualizeTaskPlan",
+      "old_layer": "oprim",
+      "classification": "PROJECT_LAYER4",
+      "canonical_target": null,
+      "canonical_sha": null,
+      "layer4_target": "mneme_core/domain/oprim/models.py",
+      "mneme_new_path": "mneme_core/domain/oprim/models.py",
+      "tests": []
+    },
+    {
+      "old_path": "mneme_core/oprim/quiz_selection.py",
+      "symbol": "shape_by_difficulty",
+      "old_layer": "oprim",
+      "classification": "PROJECT_LAYER4",
+      "canonical_target": null,
+      "canonical_sha": null,
+      "layer4_target": "mneme_core/domain/oprim/quiz_selection.py",
+      "mneme_new_path": "mneme_core/domain/oprim/quiz_selection.py",
+      "tests": [
+        "packages/mneme-core/tests/test_quiz_selection.py"
+      ]
+    },
+    {
+      "old_path": "mneme_core/oprim/spacing.py",
+      "symbol": "get_initial_state",
+      "old_layer": "oprim",
+      "classification": "PROJECT_LAYER4",
+      "canonical_target": null,
+      "canonical_sha": null,
+      "layer4_target": "mneme_core/domain/oprim/spacing.py",
+      "mneme_new_path": "mneme_core/domain/oprim/spacing.py",
+      "tests": [
+        "packages/mneme-core/tests/test_spacing.py"
+      ]
+    },
+    {
+      "old_path": "mneme_core/oprim/spacing.py",
+      "symbol": "schedule_next",
+      "old_layer": "oprim",
+      "classification": "PROJECT_LAYER4",
+      "canonical_target": null,
+      "canonical_sha": null,
+      "layer4_target": "mneme_core/domain/oprim/spacing.py",
+      "mneme_new_path": "mneme_core/domain/oprim/spacing.py",
+      "tests": [
+        "packages/mneme-core/tests/test_spacing.py"
+      ]
+    },
+    {
+      "old_path": "mneme_core/oprim/spacing.py",
+      "symbol": "build_review_queue",
+      "old_layer": "oprim",
+      "classification": "PROJECT_LAYER4",
+      "canonical_target": null,
+      "canonical_sha": null,
+      "layer4_target": "mneme_core/domain/oprim/spacing.py",
+      "mneme_new_path": "mneme_core/domain/oprim/spacing.py",
+      "tests": [
+        "packages/mneme-core/tests/test_spacing.py"
+      ]
+    },
+    {
+      "old_path": "mneme_core/oprim/spacing.py",
+      "symbol": "due_reviews",
+      "old_layer": "oprim",
+      "classification": "PROJECT_LAYER4",
+      "canonical_target": null,
+      "canonical_sha": null,
+      "layer4_target": "mneme_core/domain/oprim/spacing.py",
+      "mneme_new_path": "mneme_core/domain/oprim/spacing.py",
+      "tests": [
+        "packages/mneme-core/tests/test_spacing.py"
+      ]
+    },
+    {
+      "old_path": "mneme_core/oskill/book_ideation.py",
+      "symbol": "LLMCaller",
+      "old_layer": "oskill",
+      "classification": "PROJECT_LAYER4",
+      "canonical_target": null,
+      "canonical_sha": null,
+      "layer4_target": "mneme_core/domain/oskill/book_ideation.py",
+      "mneme_new_path": "mneme_core/domain/oskill/book_ideation.py",
+      "tests": []
+    },
+    {
+      "old_path": "mneme_core/oskill/book_ideation.py",
+      "symbol": "book_ideation",
+      "old_layer": "oskill",
+      "classification": "PROJECT_LAYER4",
+      "canonical_target": null,
+      "canonical_sha": null,
+      "layer4_target": "mneme_core/domain/oskill/book_ideation.py",
+      "mneme_new_path": "mneme_core/domain/oskill/book_ideation.py",
+      "tests": []
+    },
+    {
+      "old_path": "mneme_core/oskill/book_page_plan.py",
+      "symbol": "book_page_plan",
+      "old_layer": "oskill",
+      "classification": "PROJECT_LAYER4",
+      "canonical_target": null,
+      "canonical_sha": null,
+      "layer4_target": "mneme_core/domain/oskill/book_page_plan.py",
+      "mneme_new_path": "mneme_core/domain/oskill/book_page_plan.py",
+      "tests": []
+    },
+    {
+      "old_path": "mneme_core/oskill/book_spine.py",
+      "symbol": "book_spine",
+      "old_layer": "oskill",
+      "classification": "PROJECT_LAYER4",
+      "canonical_target": null,
+      "canonical_sha": null,
+      "layer4_target": "mneme_core/domain/oskill/book_spine.py",
+      "mneme_new_path": "mneme_core/domain/oskill/book_spine.py",
+      "tests": []
+    },
+    {
+      "old_path": "mneme_core/oskill/narrate_solve_steps.py",
+      "symbol": "LLMCaller",
+      "old_layer": "oskill",
+      "classification": "PROJECT_LAYER4",
+      "canonical_target": null,
+      "canonical_sha": null,
+      "layer4_target": "mneme_core/domain/oskill/narrate_solve_steps.py",
+      "mneme_new_path": "mneme_core/domain/oskill/narrate_solve_steps.py",
+      "tests": [
+        "packages/mneme-core/tests/test_narrate_solve_steps.py"
+      ]
+    },
+    {
+      "old_path": "mneme_core/oskill/narrate_solve_steps.py",
+      "symbol": "narrate_solve_steps",
+      "old_layer": "oskill",
+      "classification": "PROJECT_LAYER4",
+      "canonical_target": null,
+      "canonical_sha": null,
+      "layer4_target": "mneme_core/domain/oskill/narrate_solve_steps.py",
+      "mneme_new_path": "mneme_core/domain/oskill/narrate_solve_steps.py",
+      "tests": [
+        "packages/mneme-core/tests/test_narrate_solve_steps.py"
+      ]
+    },
+    {
+      "old_path": "mneme_core/oskill/plan_solve_task.py",
+      "symbol": "LLMCaller",
+      "old_layer": "oskill",
+      "classification": "PROJECT_LAYER4",
+      "canonical_target": null,
+      "canonical_sha": null,
+      "layer4_target": "mneme_core/domain/oskill/plan_solve_task.py",
+      "mneme_new_path": "mneme_core/domain/oskill/plan_solve_task.py",
+      "tests": [
+        "packages/mneme-core/tests/test_plan_solve_task.py"
+      ]
+    },
+    {
+      "old_path": "mneme_core/oskill/plan_solve_task.py",
+      "symbol": "plan_solve_task",
+      "old_layer": "oskill",
+      "classification": "PROJECT_LAYER4",
+      "canonical_target": null,
+      "canonical_sha": null,
+      "layer4_target": "mneme_core/domain/oskill/plan_solve_task.py",
+      "mneme_new_path": "mneme_core/domain/oskill/plan_solve_task.py",
+      "tests": [
+        "packages/mneme-core/tests/test_plan_solve_task.py"
+      ]
+    },
+    {
+      "old_path": "mneme_core/oskill/plan_visualize_task.py",
+      "symbol": "LLMCaller",
+      "old_layer": "oskill",
+      "classification": "PROJECT_LAYER4",
+      "canonical_target": null,
+      "canonical_sha": null,
+      "layer4_target": "mneme_core/domain/oskill/plan_visualize_task.py",
+      "mneme_new_path": "mneme_core/domain/oskill/plan_visualize_task.py",
+      "tests": [
+        "packages/mneme-core/tests/test_plan_visualize_task.py"
+      ]
+    },
+    {
+      "old_path": "mneme_core/oskill/plan_visualize_task.py",
+      "symbol": "plan_visualize_task",
+      "old_layer": "oskill",
+      "classification": "PROJECT_LAYER4",
+      "canonical_target": null,
+      "canonical_sha": null,
+      "layer4_target": "mneme_core/domain/oskill/plan_visualize_task.py",
+      "mneme_new_path": "mneme_core/domain/oskill/plan_visualize_task.py",
+      "tests": [
+        "packages/mneme-core/tests/test_plan_visualize_task.py"
+      ]
+    },
+    {
+      "old_path": "mneme_core/oskill/qualitative_verifier.py",
+      "symbol": "LLMCaller",
+      "old_layer": "oskill",
+      "classification": "PROJECT_LAYER4",
+      "canonical_target": null,
+      "canonical_sha": null,
+      "layer4_target": "mneme_core/domain/oskill/qualitative_verifier.py",
+      "mneme_new_path": "mneme_core/domain/oskill/qualitative_verifier.py",
+      "tests": [
+        "packages/mneme-core/tests/test_qualitative_verifier.py"
+      ]
+    },
+    {
+      "old_path": "mneme_core/oskill/qualitative_verifier.py",
+      "symbol": "qualitative_verifier",
+      "old_layer": "oskill",
+      "classification": "PROJECT_LAYER4",
+      "canonical_target": null,
+      "canonical_sha": null,
+      "layer4_target": "mneme_core/domain/oskill/qualitative_verifier.py",
+      "mneme_new_path": "mneme_core/domain/oskill/qualitative_verifier.py",
+      "tests": [
+        "packages/mneme-core/tests/test_qualitative_verifier.py"
+      ]
+    },
+    {
+      "old_path": "mneme_core/oskill/quiz_generator.py",
+      "symbol": "quiz_generator",
+      "old_layer": "oskill",
+      "classification": "PROJECT_LAYER4",
+      "canonical_target": null,
+      "canonical_sha": null,
+      "layer4_target": "mneme_core/domain/oskill/quiz_generator.py",
+      "mneme_new_path": "mneme_core/domain/oskill/quiz_generator.py",
+      "tests": [
+        "packages/mneme-core/tests/test_quiz_generator.py"
+      ]
+    },
+    {
+      "old_path": "mneme_core/omodul/_base.py",
+      "symbol": "BaseConfig",
+      "old_layer": "omodul",
+      "classification": "PROJECT_LAYER4",
+      "canonical_target": null,
+      "canonical_sha": null,
+      "layer4_target": "mneme_core/domain/omodul/_base.py",
+      "mneme_new_path": "mneme_core/domain/omodul/_base.py",
+      "tests": []
+    },
+    {
+      "old_path": "mneme_core/omodul/_base.py",
+      "symbol": "compute_fingerprint",
+      "old_layer": "omodul",
+      "classification": "PROJECT_LAYER4",
+      "canonical_target": null,
+      "canonical_sha": null,
+      "layer4_target": "mneme_core/domain/omodul/_base.py",
+      "mneme_new_path": "mneme_core/domain/omodul/_base.py",
+      "tests": []
+    },
+    {
+      "old_path": "mneme_core/omodul/_base.py",
+      "symbol": "standard_return",
+      "old_layer": "omodul",
+      "classification": "PROJECT_LAYER4",
+      "canonical_target": null,
+      "canonical_sha": null,
+      "layer4_target": "mneme_core/domain/omodul/_base.py",
+      "mneme_new_path": "mneme_core/domain/omodul/_base.py",
+      "tests": []
+    },
+    {
+      "old_path": "mneme_core/omodul/mastery_path.py",
+      "symbol": "MasteryPathConfig",
+      "old_layer": "omodul",
+      "classification": "PROJECT_LAYER4",
+      "canonical_target": null,
+      "canonical_sha": null,
+      "layer4_target": "mneme_core/domain/omodul/mastery_path.py",
+      "mneme_new_path": "mneme_core/domain/omodul/mastery_path.py",
+      "tests": [
+        "packages/mneme-core/tests/test_mastery_path.py"
+      ]
+    },
+    {
+      "old_path": "mneme_core/omodul/mastery_path.py",
+      "symbol": "MasteryPathInput",
+      "old_layer": "omodul",
+      "classification": "PROJECT_LAYER4",
+      "canonical_target": null,
+      "canonical_sha": null,
+      "layer4_target": "mneme_core/domain/omodul/mastery_path.py",
+      "mneme_new_path": "mneme_core/domain/omodul/mastery_path.py",
+      "tests": [
+        "packages/mneme-core/tests/test_mastery_path.py"
+      ]
+    },
+    {
+      "old_path": "mneme_core/omodul/mastery_path.py",
+      "symbol": "mastery_path",
+      "old_layer": "omodul",
+      "classification": "PROJECT_LAYER4",
+      "canonical_target": null,
+      "canonical_sha": null,
+      "layer4_target": "mneme_core/domain/omodul/mastery_path.py",
+      "mneme_new_path": "mneme_core/domain/omodul/mastery_path.py",
+      "tests": [
+        "packages/mneme-core/tests/test_mastery_path.py"
+      ]
+    }
+  ]
+}

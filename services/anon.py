@@ -12,10 +12,13 @@
 from __future__ import annotations
 
 import hashlib
+import hmac
+import os
 
-_SALT = "mneme-omodul-pseudonym-v1"
+_DEV_SALT = "mneme-dev-only-anon-salt-change-in-production"
 
 
 def anon_ref(student_id) -> str:
     """把 student_id 伪名化为 24 位稳定引用（供 omodul 指纹/轨迹用，不可逆）。"""
-    return hashlib.sha256(f"{_SALT}:{student_id}".encode()).hexdigest()[:24]
+    salt = os.environ.get("MNEME_ANON_SALT") or os.environ.get("JWT_SECRET") or _DEV_SALT
+    return hmac.new(salt.encode(), str(student_id).encode(), hashlib.sha256).hexdigest()[:24]
