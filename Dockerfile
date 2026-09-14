@@ -1,4 +1,4 @@
-FROM python:3.12-slim-bookworm@sha256:782412e85d0f0984994c290652577d4018aff08145c85b262bb63dc0c7522254 AS builder
+FROM python:3.12-slim-trixie@sha256:2fe5997d249a808b8eeea52c58a1dbffbba28754dc11699ef5c029f2d818ce79 AS builder
 
 WORKDIR /app
 
@@ -20,7 +20,7 @@ RUN uv export --frozen --no-dev --format requirements.txt \
         --no-emit-project --output-file /tmp/mneme-requirements.lock \
     && uv pip install --system -r /tmp/mneme-requirements.lock
 
-FROM python:3.12-slim-bookworm@sha256:782412e85d0f0984994c290652577d4018aff08145c85b262bb63dc0c7522254 AS runtime
+FROM python:3.12-slim-trixie@sha256:2fe5997d249a808b8eeea52c58a1dbffbba28754dc11699ef5c029f2d818ce79 AS runtime
 
 WORKDIR /app
 
@@ -30,7 +30,11 @@ LABEL org.opencontainers.image.revision=$GIT_SHA \
       org.opencontainers.image.version=$RELEASE_VERSION \
       org.opencontainers.image.source="https://github.com/mneme/mneme"
 
-RUN groupadd --system mneme && useradd --system --gid mneme --home-dir /app mneme
+RUN apt-get update \
+    && apt-get -y dist-upgrade \
+    && rm -rf /var/lib/apt/lists/* \
+    && groupadd --system mneme \
+    && useradd --system --gid mneme --home-dir /app mneme
 
 # The builder needs a compiler for a few optional native wheels.  Copy only
 # the resolved Python runtime into the final image; never ship the compiler,

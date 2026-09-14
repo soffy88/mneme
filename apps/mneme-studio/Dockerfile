@@ -2,14 +2,14 @@
 # @helios/blocks 走 vendor tarball（file:vendor/*.tgz），build context 内自足。
 
 # 1) deps
-FROM node:20-bookworm-slim@sha256:2cf067cfed83d5ea958367df9f966191a942351a2df77d6f0193e162b5febfc0 AS deps
+FROM node:20-trixie-slim@sha256:1694ccde5ea9efb3060bb8612b1f287256061ff2a04d75dc1b71f57cb7239520 AS deps
 WORKDIR /app
 COPY package.json package-lock.json .npmrc ./
 COPY vendor ./vendor
 RUN npm install --no-audit --no-fund
 
 # 2) build（standalone 产物）
-FROM node:20-bookworm-slim@sha256:2cf067cfed83d5ea958367df9f966191a942351a2df77d6f0193e162b5febfc0 AS builder
+FROM node:20-trixie-slim@sha256:1694ccde5ea9efb3060bb8612b1f287256061ff2a04d75dc1b71f57cb7239520 AS builder
 WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
@@ -19,12 +19,16 @@ ENV NEXT_PUBLIC_API_BASE=""
 RUN npm run build
 
 # 3) run
-FROM node:20-bookworm-slim@sha256:2cf067cfed83d5ea958367df9f966191a942351a2df77d6f0193e162b5febfc0 AS runner
+FROM node:20-trixie-slim@sha256:1694ccde5ea9efb3060bb8612b1f287256061ff2a04d75dc1b71f57cb7239520 AS runner
 WORKDIR /app
 ENV NODE_ENV=production
 ENV PORT=3001
 ENV HOSTNAME=0.0.0.0
-RUN groupadd --system nodejs && useradd --system --gid nodejs --home-dir /app nextjs
+RUN apt-get update \
+    && apt-get -y dist-upgrade \
+    && rm -rf /var/lib/apt/lists/* \
+    && groupadd --system nodejs \
+    && useradd --system --gid nodejs --home-dir /app nextjs
 # npm is a build-time tool and its bundled dependency tree is not needed by
 # the standalone server.  Keep it out of the production filesystem.
 RUN rm -rf /usr/local/lib/node_modules/npm /usr/local/bin/npm /usr/local/bin/npx /usr/local/bin/corepack
