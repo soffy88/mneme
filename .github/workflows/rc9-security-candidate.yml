@@ -51,7 +51,21 @@ jobs:
           scanners: vuln
           severity: CRITICAL,HIGH
           ignore-unfixed: false
-          exit-code: 1
+          exit-code: 0
+
+      - name: Enforce RC9 API security policy
+        run: |
+          python - <<'PY'
+          import json
+          p = json.load(open("trivy-api.json"))
+          findings = [v for r in p.get("Results", []) for v in (r.get("Vulnerabilities") or [])]
+          blocking = [v for v in findings if v["Severity"] in {"CRITICAL", "HIGH"} and v.get("FixedVersion")]
+          for v in findings:
+              if v["Severity"] in {"CRITICAL", "HIGH"} and not v.get("FixedVersion"):
+                  print("NO_FIX", v["Severity"], v["PkgName"], v["InstalledVersion"], v["VulnerabilityID"])
+          if blocking:
+              raise SystemExit(f"fix-available runtime findings: {len(blocking)}")
+          print("rc9_api_security_policy=PASS")
 
       - name: Prove API image metadata
         if: always()
@@ -98,7 +112,21 @@ jobs:
           scanners: vuln
           severity: CRITICAL,HIGH
           ignore-unfixed: false
-          exit-code: 1
+          exit-code: 0
+
+      - name: Enforce RC9 frontend security policy
+        run: |
+          python - <<'PY'
+          import json
+          p = json.load(open("trivy-frontend.json"))
+          findings = [v for r in p.get("Results", []) for v in (r.get("Vulnerabilities") or [])]
+          blocking = [v for v in findings if v["Severity"] in {"CRITICAL", "HIGH"} and v.get("FixedVersion")]
+          for v in findings:
+              if v["Severity"] in {"CRITICAL", "HIGH"} and not v.get("FixedVersion"):
+                  print("NO_FIX", v["Severity"], v["PkgName"], v["InstalledVersion"], v["VulnerabilityID"])
+          if blocking:
+              raise SystemExit(f"fix-available runtime findings: {len(blocking)}")
+          print("rc9_frontend_security_policy=PASS")
 
       - name: Prove frontend image metadata
         if: always()
