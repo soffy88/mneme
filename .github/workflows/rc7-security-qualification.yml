@@ -2,6 +2,8 @@ name: RC7 security qualification
 
 on:
   workflow_dispatch:
+  push:
+    branches: [release/v0.1.0-rc5]
 
 permissions:
   contents: read
