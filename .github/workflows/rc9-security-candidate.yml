@@ -120,6 +120,11 @@ jobs:
           build-args: |
             GIT_SHA=${{ env.CANDIDATE_SHA }}
             RELEASE_VERSION=v0.1.0-rc9
+          labels: |
+            org.opencontainers.image.revision=${{ env.CANDIDATE_SHA }}
+            org.opencontainers.image.version=v0.1.0-rc9
+            org.opencontainers.image.source=https://github.com/mneme/mneme
+            org.opencontainers.image.created=${{ github.run_started_at }}
           cache-from: type=gha,scope=rc9-frontend
           cache-to: type=gha,mode=max,scope=rc9-frontend
 
