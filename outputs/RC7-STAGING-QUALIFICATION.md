@@ -16,15 +16,21 @@ frontend dependency fixes. RC7 source SHA is
 - gitleaks RC6→RC7 diff: 0 new findings.
 - GHCR publication and independent fresh-runner pull-by-digest: PASS.
 - OCI revision metadata matches the RC7 manifest.
+- `.echo/echomimic_repo` is excluded by the root `.dockerignore`, is not copied
+  by either release Dockerfile, and has no Mneme import path: **NOT_RUNTIME_REACHABLE**.
 
 ## Blocking evidence
 
 - Full RC7 isolated-staging deployment and 30-minute soak were not run.
 - Veya live completion was not rerun from an RC7 staging container.
-- trivy container scan could not complete locally because the temporary layer
-  extraction hit the host disk quota. The filesystem scan separately reported
-  25 HIGH/CRITICAL findings under the unrelated `.echo/echomimic_repo`
-  依赖树; they require explicit scope/base-image disposition before release.
+- Hosted-runner Trivy scan of the exact API digest completed with **56 findings
+  (53 HIGH, 3 CRITICAL)**, so the image security gate is **FAIL**.
+- The frontend exact-digest scan was launched in the same hosted workflow, but
+  its final result was not retrievable after the GitHub API rate limit was hit;
+  it is not treated as PASS.
+- The separate filesystem scan reported 25 HIGH/CRITICAL findings under the
+  non-runtime `.echo/echomimic_repo` dependency tree; they are not included in
+  the RC7 image, but remain an audit finding outside the release runtime.
 
 Immersive remains OFF, the canary policy is not opened, registration is not
 changed, and production is not deployed.
