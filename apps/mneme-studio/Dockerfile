@@ -2,14 +2,14 @@
 # @helios/blocks 走 vendor tarball（file:vendor/*.tgz），build context 内自足。
 
 # 1) deps
-FROM node:20-trixie-slim AS deps
+FROM node:20-bookworm-slim@sha256:2cf067cfed83d5ea958367df9f966191a942351a2df77d6f0193e162b5febfc0 AS deps
 WORKDIR /app
 COPY package.json package-lock.json .npmrc ./
 COPY vendor ./vendor
 RUN npm install --no-audit --no-fund
 
 # 2) build（standalone 产物）
-FROM node:20-trixie-slim AS builder
+FROM node:20-bookworm-slim@sha256:2cf067cfed83d5ea958367df9f966191a942351a2df77d6f0193e162b5febfc0 AS builder
 WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
@@ -19,7 +19,7 @@ ENV NEXT_PUBLIC_API_BASE=""
 RUN npm run build
 
 # 3) run
-FROM node:20-trixie-slim AS runner
+FROM node:20-bookworm-slim@sha256:2cf067cfed83d5ea958367df9f966191a942351a2df77d6f0193e162b5febfc0 AS runner
 WORKDIR /app
 ENV NODE_ENV=production
 ENV PORT=3001
