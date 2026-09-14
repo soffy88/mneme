@@ -190,7 +190,7 @@ async def get_learner_model(
 
     if not pedagogy_enabled(PEDAGOGY_OLM):
         raise HTTPException(status_code=404, detail="Feature disabled")
-    from oprim import KCState
+    from obase.cognitive_types import KCState
     from oprim._cognitive import bkt_error_weights
     from oprim.fsrs_engine import fsrs_retrievability
 
@@ -462,5 +462,4 @@ async def get_patterns(
             for t in result.kc_trajectories.values()
         ],
     }
-
 

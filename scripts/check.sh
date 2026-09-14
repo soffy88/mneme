@@ -91,6 +91,12 @@ resolve_test_db_url() {
 }
 
 echo -e "\n${GREEN}==> Running Ruff...${NC}"
+echo -e "\n${GREEN}==> 3O_CANONICAL_REPLICATION_GATE...${NC}"
+if [ "$MODE" = "venv" ]; then
+    .venv/bin/python scripts/sync_3o_from_platform.py --check
+else
+    docker compose exec -T api python scripts/sync_3o_from_platform.py --check
+fi
 "${RUN[@]}" ruff check .
 
 echo -e "\n${GREEN}==> vendor edu closure (runtime 不得 import 金融 3O 路径)...${NC}"

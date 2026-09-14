@@ -42,3 +42,13 @@ find vendor -name __pycache__ -type d -exec rm -rf {} +
 
 > 注：这是内核的**副本**。内核算法的权威源仍是 platform/3O 各仓；此处只为把
 > mneme 需要的版本钉死、避免共享目录被切分支时 mneme 被动。
+
+## Canonical replication policy (required)
+
+`vendor/oprim`, `vendor/oskill`, `vendor/omodul`, `vendor/obase`, and
+`vendor/oservi` are generated/read-only replication outputs. Do not edit a
+vendored 3O file directly. Changes must be made and tested in the matching
+`/data/soffy/projects/platform/3O/*` canonical repository, committed at an
+exact SHA, and then pulled with `scripts/sync_3o_from_platform.py`. Mneme has
+no automatic reverse-sync path; the sync script only reads platform and writes
+the allow-listed closure plus `3o-replication-lock.json`.

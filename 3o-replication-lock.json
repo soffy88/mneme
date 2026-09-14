@@ -1,0 +1,86 @@
+{
+  "schema": 1,
+  "packages": {
+    "oprim": {
+      "repo": "/data/soffy/projects/platform/3O/oprim",
+      "commit": "651f7e37855fd4deff2bd3621fd2999e9058223e",
+      "version": "3.23.0",
+      "closure": [
+        {
+          "canonical_path": "echo_loop.py",
+          "local_path": "vendor/oprim/echo_loop.py",
+          "canonical_repo": "/data/soffy/projects/platform/3O/oprim",
+          "canonical_element": "oprim.echo_loop",
+          "canonical_sha256": "1fdd37a9a1ca43ba0029dbc3d9ed0b7f134ce63a829fe912a71e5a33a929551f",
+          "local_sha256": "1fdd37a9a1ca43ba0029dbc3d9ed0b7f134ce63a829fe912a71e5a33a929551f",
+          "exact_match": true,
+          "classification": "EXACT_CANONICAL_COPY"
+        }
+      ],
+      "manifest_sha256": "ce35720079e2a02082c35873933d1e229e2589bf133c8bdbb5413d9542ec3591"
+    },
+    "oskill": {
+      "repo": "/data/soffy/projects/platform/3O/oskill",
+      "commit": "96b0521b85d086eda94de2a5454e756c71c55499",
+      "version": "4.14.0",
+      "closure": [
+        {
+          "canonical_path": "echo_loop_skill.py",
+          "local_path": "vendor/oskill/echo_loop_skill.py",
+          "canonical_repo": "/data/soffy/projects/platform/3O/oskill",
+          "canonical_element": "oskill.echo_loop_skill",
+          "canonical_sha256": "e3b307f8405f4d4c1755db70a323aa951e26389cf0a0146feabbde682da31f97",
+          "local_sha256": "e3b307f8405f4d4c1755db70a323aa951e26389cf0a0146feabbde682da31f97",
+          "exact_match": true,
+          "classification": "EXACT_CANONICAL_COPY"
+        }
+      ],
+      "manifest_sha256": "82ad83ae1753eea41678233e6c57f4641d6f0d0bb81c0e1c761eaef46becc624"
+    },
+    "omodul": {
+      "repo": "/data/soffy/projects/platform/3O/omodul",
+      "commit": "728ba5cf723f156a0855e5abc8f146df540bfef7",
+      "version": "1.49.0",
+      "closure": [
+        {
+          "canonical_path": "echo_loop_session.py",
+          "local_path": "vendor/omodul/echo_loop_session.py",
+          "canonical_repo": "/data/soffy/projects/platform/3O/omodul",
+          "canonical_element": "omodul.echo_loop_session",
+          "canonical_sha256": "9285574c6dd4a06a7e74392b7a6a50fc66345bb6997179bb58c6e614e9b64ae7",
+          "local_sha256": "9285574c6dd4a06a7e74392b7a6a50fc66345bb6997179bb58c6e614e9b64ae7",
+          "exact_match": true,
+          "classification": "EXACT_CANONICAL_COPY"
+        }
+      ],
+      "manifest_sha256": "b52dc29a691f68f222974f2410830e0fcb89e4d0ae9dc479b739fb7f2b8ab929"
+    },
+    "obase": {
+      "repo": "/data/soffy/projects/platform/3O/obase",
+      "commit": "87be8400b05284e1ba347cdec56dfbd55eadc511",
+      "version": "0.31.0",
+      "closure": [
+        {
+          "canonical_path": "cognitive_types.py",
+          "local_path": "vendor/obase/cognitive_types.py",
+          "canonical_repo": "/data/soffy/projects/platform/3O/obase",
+          "canonical_element": "obase.cognitive_types",
+          "canonical_sha256": "7947e6096e0a993243d794d89b70c12201ea30dd7ffe95e3b98f5be0de251241",
+          "local_sha256": "7947e6096e0a993243d794d89b70c12201ea30dd7ffe95e3b98f5be0de251241",
+          "exact_match": true,
+          "classification": "EXACT_CANONICAL_COPY"
+        }
+      ],
+      "manifest_sha256": "adff29022e5644f212c73a81dd3fa42445d875b77d861f693bd136266a07187a"
+    },
+    "oservi": {
+      "repo": "/data/soffy/projects/platform/3O/oservi",
+      "commit": "d0809e59609473ecd33c033790ebd39eee835218",
+      "version": "1.2.0",
+      "closure": [],
+      "manifest_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    }
+  },
+  "no_reverse_sync": true,
+  "generated_by": "scripts/sync_3o_from_platform.py"
+}

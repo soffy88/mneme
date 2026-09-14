@@ -66,6 +66,14 @@ KT(BKT)+FSRS 算法内核，先做广东数学。真实前端在独立仓库
 - 生产容器启动经 `obase.sandbox_selfcheck.check_or_die()` 强制自检（S0-W5：
   全仓 AST 扫描零绕过），自检不过拒绝对外提供服务。
 
+## 3O replication closure
+
+`vendor/{oprim,oskill,omodul,obase,oservi}` is generated/read-only. 3O
+changes are platform-first: test and commit the matching canonical repository,
+then run `scripts/sync_3o_from_platform.py --sync`. Never edit vendor directly
+and never reverse-sync Mneme into platform. Exact provenance and hashes are
+locked in `3o-replication-lock.json`; `scripts/check.sh` requires its gate.
+
 <!-- code-review-graph MCP tools -->
 ## MCP Tools: code-review-graph
 
