@@ -1,0 +1,110 @@
+name: RC9 security candidate build and scan
+
+on:
+  workflow_dispatch:
+    inputs:
+      code_sha:
+        description: "Candidate source commit (must not be a release tag)"
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+jobs:
+  api-build-scan:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.code_sha }}
+          fetch-depth: 1
+
+      - uses: docker/setup-buildx-action@v3
+
+      - name: Build API candidate locally (no registry push)
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: Dockerfile
+          load: true
+          push: false
+          tags: mneme-api:rc9-candidate
+          build-args: |
+            GIT_SHA=${{ inputs.code_sha }}
+            RELEASE_VERSION=v0.1.0-rc9
+          cache-from: type=gha,scope=rc9-api
+          cache-to: type=gha,mode=max,scope=rc9-api
+
+      - name: Scan API exact local image
+        uses: aquasecurity/trivy-action@1f0aa582c8c8f5f7639610d6d38baddfea4fdcee
+        with:
+          image-ref: mneme-api:rc9-candidate
+          format: json
+          output: trivy-api.json
+          scanners: vuln
+          severity: CRITICAL,HIGH
+          ignore-unfixed: false
+          exit-code: 1
+
+      - name: Prove API image metadata
+        if: always()
+        run: |
+          docker image inspect mneme-api:rc9-candidate \
+            --format '{{json .RepoDigests}} {{json .Config.Labels}}' > api-image-proof.json
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: rc9-api-security-candidate
+          path: |
+            trivy-api.json
+            api-image-proof.json
+
+  frontend-build-scan:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.code_sha }}
+          fetch-depth: 1
+
+      - uses: docker/setup-buildx-action@v3
+
+      - name: Build frontend candidate locally (no registry push)
+        uses: docker/build-push-action@v6
+        with:
+          context: apps/mneme-studio
+          file: apps/mneme-studio/Dockerfile
+          load: true
+          push: false
+          tags: mneme-web:rc9-candidate
+          cache-from: type=gha,scope=rc9-frontend
+          cache-to: type=gha,mode=max,scope=rc9-frontend
+
+      - name: Scan frontend exact local image
+        uses: aquasecurity/trivy-action@1f0aa582c8c8f5f7639610d6d38baddfea4fdcee
+        with:
+          image-ref: mneme-web:rc9-candidate
+          format: json
+          output: trivy-frontend.json
+          scanners: vuln
+          severity: CRITICAL,HIGH
+          ignore-unfixed: false
+          exit-code: 1
+
+      - name: Prove frontend image metadata
+        if: always()
+        run: |
+          docker image inspect mneme-web:rc9-candidate \
+            --format '{{json .RepoDigests}} {{json .Config.Labels}}' > frontend-image-proof.json
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: rc9-frontend-security-candidate
+          path: |
+            trivy-frontend.json
+            frontend-image-proof.json

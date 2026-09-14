@@ -2,12 +2,6 @@ FROM python:3.12-slim-trixie@sha256:2fe5997d249a808b8eeea52c58a1dbffbba28754dc11
 
 WORKDIR /app
 
-# Install system dependencies
-RUN apt-get update && apt-get install -y --no-install-recommends \
-    build-essential \
-    libpq-dev \
-    && rm -rf /var/lib/apt/lists/*
-
 # Install uv for fast package management
 RUN pip install --no-cache-dir uv
 
@@ -18,7 +12,7 @@ COPY pyproject.toml .
 COPY uv.lock .
 RUN uv export --frozen --no-dev --format requirements.txt \
         --no-emit-project --output-file /tmp/mneme-requirements.lock \
-    && uv pip install --system -r /tmp/mneme-requirements.lock
+    && uv pip install --system --only-binary=:all: -r /tmp/mneme-requirements.lock
 
 FROM python:3.12-slim-trixie@sha256:2fe5997d249a808b8eeea52c58a1dbffbba28754dc11699ef5c029f2d818ce79 AS runtime
 

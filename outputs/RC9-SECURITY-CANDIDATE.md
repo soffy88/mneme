@@ -45,7 +45,9 @@ deleted.
 - frontend base: `node:20-trixie-slim@sha256:1694ccde5ea9efb3060bb8612b1f287256061ff2a04d75dc1b71f57cb7239520`
 - Final layers execute same-distribution `apt-get dist-upgrade` and remove
   apt lists.
-- API builder-only `build-essential`/`libpq-dev` remain builder-only.
+- API no longer installs `build-essential`/`libpq-dev`: the locked production
+  requirements have compatible manylinux wheels and the builder enforces
+  `--only-binary=:all:`.
 - Frontend runner retains only Next standalone/static/public output and removes
   npm/npx/corepack.
 - Alpine/musl was not used; `onnxruntime==1.29.0` requires glibc-compatible
