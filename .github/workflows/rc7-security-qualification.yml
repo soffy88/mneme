@@ -1,0 +1,39 @@
+name: RC7 security qualification
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  packages: read
+
+jobs:
+  scan-exact-images:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Prove EchoMimic scope is not Mneme release runtime
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -f .dockerignore
+          grep -qxF '.echo' .dockerignore
+          ! grep -R --exclude-dir=.git --exclude-dir=.echo -E '(^|[[:space:]])(import|from)[[:space:]]+\.echo' .
+          ! grep -E '(^|[[:space:]])(COPY|ADD)[[:space:]].*\.echo' Dockerfile apps/mneme-studio/Dockerfile
+          echo 'echo_mimic_release_runtime=NOT_RUNTIME_REACHABLE'
+      - uses: aquasecurity/trivy-action@0.28.0
+        with:
+          image-ref: ghcr.io/soffy88/mneme-api@sha256:0e2ee0e0048e1c91b05f2aa3e9366f1c313d6e6a15d19b07e33a0936a4736c79
+          format: table
+          scanners: vuln
+          severity: CRITICAL,HIGH
+          ignore-unfixed: false
+          exit-code: '1'
+      - uses: aquasecurity/trivy-action@0.28.0
+        with:
+          image-ref: ghcr.io/soffy88/mneme-web@sha256:ad2ae640a77d0d3cca9abcbe2cf59aa4d7d90e35dba7223d13b956608522a404
+          format: table
+          scanners: vuln
+          severity: CRITICAL,HIGH
+          ignore-unfixed: false
+          exit-code: '1'
