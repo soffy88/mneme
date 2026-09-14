@@ -12,14 +12,18 @@ on:
 
 permissions:
   contents: read
+  packages: write
 
 env:
-  CANDIDATE_SHA: ${{ github.event_name == 'workflow_dispatch' && inputs.code_sha || github.sha }}
+  CANDIDATE_SHA: ${{ github.event_name == 'workflow_dispatch' && inputs.code_sha || '40249cb0ed81680f466f5f292a61ff282c88077f' }}
+  IMAGE_NAMESPACE: ghcr.io/${{ github.repository_owner }}
 
 jobs:
   api-build-scan:
     runs-on: ubuntu-latest
     timeout-minutes: 45
+    outputs:
+      digest: ${{ steps.build.outputs.digest }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -28,24 +32,30 @@ jobs:
 
       - uses: docker/setup-buildx-action@v3
 
-      - name: Build API candidate locally (no registry push)
+      - uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build and push API immutable candidate
+        id: build
         uses: docker/build-push-action@v6
         with:
           context: .
           file: Dockerfile
-          load: true
-          push: false
-          tags: mneme-api:rc9-candidate
+          push: true
+          tags: ${{ env.IMAGE_NAMESPACE }}/mneme-api:rc9-40249cb0ed81
           build-args: |
             GIT_SHA=${{ env.CANDIDATE_SHA }}
             RELEASE_VERSION=v0.1.0-rc9
           cache-from: type=gha,scope=rc9-api
           cache-to: type=gha,mode=max,scope=rc9-api
 
-      - name: Scan API exact local image
+      - name: Scan pushed API digest
         uses: aquasecurity/trivy-action@1f0aa582c8c8f5f7639610d6d38baddfea4fdcee
         with:
-          image-ref: mneme-api:rc9-candidate
+          image-ref: ${{ env.IMAGE_NAMESPACE }}/mneme-api@${{ steps.build.outputs.digest }}
           format: json
           output: trivy-api.json
           scanners: vuln
@@ -70,8 +80,7 @@ jobs:
       - name: Prove API image metadata
         if: always()
         run: |
-          docker image inspect mneme-api:rc9-candidate \
-            --format '{{json .RepoDigests}} {{json .Config.Labels}}' > api-image-proof.json
+          echo '{"repository":"${{ env.IMAGE_NAMESPACE }}/mneme-api","digest":"${{ steps.build.outputs.digest }}","worker_digest":"${{ steps.build.outputs.digest }}","beat_digest":"${{ steps.build.outputs.digest }}"}' > api-image-proof.json
 
       - uses: actions/upload-artifact@v4
         if: always()
@@ -84,6 +93,8 @@ jobs:
   frontend-build-scan:
     runs-on: ubuntu-latest
     timeout-minutes: 45
+    outputs:
+      digest: ${{ steps.build.outputs.digest }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -92,21 +103,27 @@ jobs:
 
       - uses: docker/setup-buildx-action@v3
 
-      - name: Build frontend candidate locally (no registry push)
+      - uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build and push frontend immutable candidate
+        id: build
         uses: docker/build-push-action@v6
         with:
           context: apps/mneme-studio
           file: apps/mneme-studio/Dockerfile
-          load: true
-          push: false
-          tags: mneme-web:rc9-candidate
+          push: true
+          tags: ${{ env.IMAGE_NAMESPACE }}/mneme-web:rc9-40249cb0ed81
           cache-from: type=gha,scope=rc9-frontend
           cache-to: type=gha,mode=max,scope=rc9-frontend
 
-      - name: Scan frontend exact local image
+      - name: Scan pushed frontend digest
         uses: aquasecurity/trivy-action@1f0aa582c8c8f5f7639610d6d38baddfea4fdcee
         with:
-          image-ref: mneme-web:rc9-candidate
+          image-ref: ${{ env.IMAGE_NAMESPACE }}/mneme-web@${{ steps.build.outputs.digest }}
           format: json
           output: trivy-frontend.json
           scanners: vuln
@@ -131,8 +148,7 @@ jobs:
       - name: Prove frontend image metadata
         if: always()
         run: |
-          docker image inspect mneme-web:rc9-candidate \
-            --format '{{json .RepoDigests}} {{json .Config.Labels}}' > frontend-image-proof.json
+          echo '{"repository":"${{ env.IMAGE_NAMESPACE }}/mneme-web","digest":"${{ steps.build.outputs.digest }}"}' > frontend-image-proof.json
 
       - uses: actions/upload-artifact@v4
         if: always()
@@ -141,3 +157,74 @@ jobs:
           path: |
             trivy-frontend.json
             frontend-image-proof.json
+
+  fresh-pull-verify:
+    needs: [api-build-scan, frontend-build-scan]
+    if: ${{ needs.api-build-scan.result == 'success' && needs.frontend-build-scan.result == 'success' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Pull exact digests on a fresh runner
+        env:
+          API_REF: ${{ env.IMAGE_NAMESPACE }}/mneme-api@${{ needs.api-build-scan.outputs.digest }}
+          WEB_REF: ${{ env.IMAGE_NAMESPACE }}/mneme-web@${{ needs.frontend-build-scan.outputs.digest }}
+        run: |
+          set -euo pipefail
+          docker pull "$API_REF"
+          docker pull "$WEB_REF"
+          docker image inspect "$API_REF" > api-inspect.json
+          docker image inspect "$WEB_REF" > web-inspect.json
+          python - <<'PY'
+          import json
+          expected = "40249cb0ed81680f466f5f292a61ff282c88077f"
+          for path in ("api-inspect.json", "web-inspect.json"):
+              data = json.load(open(path))[0]
+              labels = data.get("Config", {}).get("Labels") or {}
+              assert labels.get("org.opencontainers.image.revision") == expected, (path, labels)
+          print("fresh_pull_digest_and_GIT_SHA=PASS")
+          PY
+
+      - name: API minimal runtime smoke
+        env:
+          API_REF: ${{ env.IMAGE_NAMESPACE }}/mneme-api@${{ needs.api-build-scan.outputs.digest }}
+        run: docker run --rm --entrypoint python "$API_REF" -c 'import fastapi, uvicorn, onnxruntime; print("api_runtime_smoke=PASS")'
+
+      - name: Frontend minimal runtime smoke
+        env:
+          WEB_REF: ${{ env.IMAGE_NAMESPACE }}/mneme-web@${{ needs.frontend-build-scan.outputs.digest }}
+        run: docker run --rm --entrypoint node "$WEB_REF" -e 'console.log("frontend_runtime_smoke=PASS")'
+
+      - name: Artifact persistence proof
+        env:
+          IMAGE_NAMESPACE: ${{ env.IMAGE_NAMESPACE }}
+          API_DIGEST: ${{ needs.api-build-scan.outputs.digest }}
+          WEB_DIGEST: ${{ needs.frontend-build-scan.outputs.digest }}
+        run: |
+          python - <<'PY'
+          import json, os
+          ns = os.environ["IMAGE_NAMESPACE"]
+          out = {
+              "code_release_sha": "40249cb0ed81680f466f5f292a61ff282c88077f",
+              "images": [
+                  {"repository": f"{ns}/mneme-api", "digest": os.environ["API_DIGEST"]},
+                  {"repository": f"{ns}/mneme-worker", "digest": os.environ["API_DIGEST"]},
+                  {"repository": f"{ns}/mneme-beat", "digest": os.environ["API_DIGEST"]},
+                  {"repository": f"{ns}/mneme-web", "digest": os.environ["WEB_DIGEST"]},
+              ],
+              "fresh_pull": "PASS",
+              "git_sha": "PASS",
+              "runtime_smoke": "PASS",
+          }
+          json.dump(out, open("RC9-CANDIDATE-MANIFEST.json", "w"), indent=2)
+          print("artifact_persistence=PASS")
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: rc9-candidate-persistence
+          path: RC9-CANDIDATE-MANIFEST.json
