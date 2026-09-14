@@ -29,6 +29,7 @@ jobs:
         with:
           image-ref: ghcr.io/soffy88/mneme-api@sha256:52b6f0f0d00b7ba5bb83694939bae06e66ec9ec82168f6322e050d81a39b73af
           format: table
+          output: trivy-api.json
           scanners: vuln
           severity: CRITICAL,HIGH
           ignore-unfixed: false
@@ -39,6 +40,7 @@ jobs:
         with:
           image-ref: ghcr.io/soffy88/mneme-web@sha256:b8b9173fc4adbf90932cbec22af343d65225aa40c49b993707e15a107c658cf8
           format: table
+          output: trivy-frontend.json
           scanners: vuln
           severity: CRITICAL,HIGH
           ignore-unfixed: false
@@ -50,3 +52,11 @@ jobs:
           set -euo pipefail
           test "${{ steps.api_scan.outcome }}" = success
           test "${{ steps.frontend_scan.outcome }}" = success
+      - name: Upload machine-readable scan reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: rc8-trivy-reports
+          path: |
+            trivy-api.json
+            trivy-frontend.json
