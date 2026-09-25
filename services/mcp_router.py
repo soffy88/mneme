@@ -25,17 +25,17 @@ from pydantic import BaseModel
 from sqlalchemy import and_, func, or_, select, text
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from mneme_core.oprim.grade import answer_match
-from mneme_core.oprim.mastery_gate import (
+from mneme_core.domain.oprim.grade import answer_match
+from mneme_core.domain.oprim.mastery_gate import (
     N_MIN,
     QUALITATIVE_TYPES,
     Z,
     is_mastered,
     next_objective,
 )
-from mneme_core.oprim.quiz_selection import DifficultyCurve
-from mneme_core.oprim.spacing import due_reviews
-from mneme_core.oskill.quiz_generator import quiz_generator
+from mneme_core.domain.oprim.quiz_selection import DifficultyCurve
+from mneme_core.domain.oprim.spacing import due_reviews
+from mneme_core.domain.oskill.quiz_generator import quiz_generator
 from mneme_core.service.verdict_guard import GuardRejection, enforce
 
 from obase.db import get_db

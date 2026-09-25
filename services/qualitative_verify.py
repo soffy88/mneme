@@ -20,8 +20,8 @@ from typing import Any, Optional
 
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from mneme_core.oprim.models import KpView, QualitativeVerdict, Rubric
-from mneme_core.oskill.qualitative_verifier import qualitative_verifier
+from mneme_core.domain.oprim.models import KpView, QualitativeVerdict, Rubric
+from mneme_core.domain.oskill.qualitative_verifier import qualitative_verifier
 
 from services import gate_store
 

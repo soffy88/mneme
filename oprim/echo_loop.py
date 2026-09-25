@@ -1,4 +1,4 @@
-"""Thin compatibility entry point for canonical vendored Echo Loop primitives."""
+"""Thin compatibility entry point for the canonical vendored Echo Loop."""
 
 from vendor.oprim.echo_loop import *  # noqa: F401,F403
 

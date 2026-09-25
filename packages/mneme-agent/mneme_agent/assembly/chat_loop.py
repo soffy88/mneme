@@ -19,7 +19,7 @@ from __future__ import annotations
 
 from typing import Awaitable, Callable, Optional
 
-from mneme_core.oprim.intent_router import classify_chat_intent
+from mneme_core.domain.oprim.intent_router import classify_chat_intent
 
 from mneme_agent.assembly.tutor_loop import (
     DEFAULT_API_BASE,

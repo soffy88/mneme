@@ -32,6 +32,11 @@ if [ -d "$REPO_ROOT/.mypy_cache" ] && [ ! -w "$REPO_ROOT/.mypy_cache" ]; then
     export MYPY_CACHE_DIR="$(mktemp -d /tmp/mypy-cache-XXXXXX)"
     echo -e "${YELLOW}==> .mypy_cache 不可写，mypy 缓存回退到 $MYPY_CACHE_DIR${NC}"
 fi
+# pytest 缓存同理（避免 PytestCacheWarning）
+if [ -d "$REPO_ROOT/.pytest_cache" ] && [ ! -w "$REPO_ROOT/.pytest_cache" ]; then
+    export PYTEST_ADDOPTS="-o cache_dir=/tmp/pytest-cache ${PYTEST_ADDOPTS:-}"
+    echo -e "${YELLOW}==> .pytest_cache 不可写，pytest 缓存回退到 /tmp/pytest-cache${NC}"
+fi
 
 # 选择执行环境
 if [ -x ".venv/bin/python" ]; then

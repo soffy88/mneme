@@ -37,7 +37,7 @@ from typing import Any, Callable, Optional, Protocol
 from sqlalchemy import text as sa_text
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from mneme_core.oprim.models import BlockSpec, BookBlockType, ChapterSpec
+from mneme_core.domain.oprim.models import BlockSpec, BookBlockType, ChapterSpec
 from services.knowledge_hub_search import citation_state, search_knowledge_base
 
 logger = logging.getLogger(__name__)

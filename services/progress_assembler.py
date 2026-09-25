@@ -22,9 +22,9 @@ from typing import Optional
 from sqlalchemy import func, select
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from mneme_core.oprim.mastery_gate import N_MIN, QUANTITATIVE_GATE, Z
-from mneme_core.oprim.mastery_lower_bound import mastery_lower_bound
-from mneme_core.oprim.models import (
+from mneme_core.domain.oprim.mastery_gate import N_MIN, QUANTITATIVE_GATE, Z
+from mneme_core.domain.oprim.mastery_lower_bound import mastery_lower_bound
+from mneme_core.domain.oprim.models import (
     BktPosterior,
     FsrsState,
     KnowledgePoint,

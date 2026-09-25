@@ -30,8 +30,8 @@ from typing import Any, Awaitable, Callable, Optional
 from mneme_agent.assembly.local_agentic_loop import LocalAgenticLoop, ToolSpec
 
 # mneme-core 纯库（无 DB）——t_assess_explanation 用
-from mneme_core.oprim.models import KpView, Rubric
-from mneme_core.oskill.qualitative_verifier import qualitative_verifier
+from mneme_core.domain.oprim.models import KpView, Rubric
+from mneme_core.domain.oskill.qualitative_verifier import qualitative_verifier
 from mneme_core.tutor_control import (
     TutorObservation,
     decide_tutor_move,
