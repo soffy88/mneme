@@ -31,6 +31,7 @@ docker/fay/
 
 # scratch / 一次性探索
 scratch/
+artifacts/
 
 # cron 运行时日志（不入库，历史误跟踪已 git rm --cached）
 scripts/enrich_gaoyi_cron.log
