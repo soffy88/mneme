@@ -1,6 +1,7 @@
 # Mneme v0.1.0-rc5 provider qualification
 
-Status: **code/reliability gate PASS; live-provider gate OWNER_BLOCKED**.
+Status: **code/reliability gate PASS; isolated staging live Veya text gate
+PASS**.
 
 ## Unified execution contract
 
@@ -67,7 +68,7 @@ The health metrics endpoint exposes the requested low-cardinality series:
 Labels are bounded provider/model/outcome/error/state values. No user,
 contact, prompt, content, or secret value is retained by the metrics contract.
 
-## Secret and live-provider gate
+## Live Veya text qualification
 
 The exact artifact build contexts came from `git archive`; `.env` files and
 runtime credentials are excluded by Docker ignore rules. Provider status only
@@ -75,7 +76,47 @@ reports key presence/type/model metadata. Redacted gitleaks delta is clean;
 the historical baseline contains only existing false-positive generic-key
 matches in old generated artifacts and fixtures. No new credential was found.
 
-Owner did not provide a new staging secret for the requested live text call or
-synthetic VLM call in this run. Therefore live text connectivity is
-**OWNER_BLOCKED**, live VLM connectivity is **OWNER_BLOCKED**, and live token /
-cost proof is **NOT_RUN**. No real provider endpoint was called.
+The existing local Veya endpoint is `http://127.0.0.1:8791/v1` on the host.
+`GET /v1/models` returned a live model list containing the exact identity
+`veya1.2-free`. No API key was injected because the endpoint accepted the
+probe without authentication.
+
+The isolated staging API path was configured with:
+
+```text
+MNEME_LLM=veya
+VEYA_BASE_URL=http://host.docker.internal:8791/v1
+VEYA_MODEL=veya1.2-free
+VEYA_API_KEY=<empty>
+```
+
+The Veya gateway now listens only on the dedicated staging-edge bridge gateway
+`192.168.80.1:8791`; it is not bound to `0.0.0.0`. The staging container
+resolves `host.docker.internal` to `192.168.80.1`, establishes TCP, and reaches
+`/v1/models`: **staging reachability PASS**. The internal data network remains
+`internal=true`; only the API's existing staging-edge attachment is used.
+
+An isolated staging-edge qualification container used the existing
+`VeyaTextCaller` through `ReliableProvider` exactly once with a synthetic
+prompt. Results: **completion PASS**, non-empty response, latency **3365.40
+ms**, input tokens **30**, output tokens **181**, and actual model identity
+**veya1.2-free** as confirmed by the live `/v1/models` response.
+The adapter returned no provider cost field; because the configured model is
+`veya1.2-free`, qualification records **cost=0/free**, not a fabricated price.
+The reliability metric snapshot recorded request=1, error=0, timeout=0,
+latency=3.365284 s, input=30, output=181, cost=0.0, circuit=closed.
+
+Failure-path evidence remains the existing RC5 deterministic test matrix:
+provider timeout/failure raises a typed safe error before any Evidence,
+mastery, or FSRS write; retries do not duplicate writes. No failure-path
+probe was run against a real provider, and no learning state was touched by
+the live success probe.
+
+## Secret and live-provider gate
+
+The live probe used an empty `VEYA_API_KEY`; no credential was printed,
+persisted, or added to Git/log/report. Veya is restricted to the dedicated
+staging bridge interface and has no public listen address. Live VLM was not
+required: production immersive global flag
+is OFF and the production canary allowlist is empty, so no current production
+canary path depends on VLM.

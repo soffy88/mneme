@@ -1,11 +1,101 @@
-# Production public routing and provider preflight — v0.1.0-rc4
+# Production public routing and provider preflight — v0.1.0-rc5
 
-Date: 2026-08-31 UTC
+Date: 2026-09-13 UTC
 Status: `PUBLIC_ROUTING_READY=NO`; owner action required. No public route was
 changed, no runtime code was changed, and no ordinary-user rollout occurred.
 
 This audit contains no credentials, tokens, learner content, or real-user
 identifiers.
+
+## RC5 artifact persistence audit — 2026-09-13
+
+Result: **ARTIFACT_PERSISTENCE_BLOCKER**. The qualified RC5 Git history and
+tag are present (`v0.1.0-rc5^{}` =
+`49fbd442021785c4623dc2b3aef7a280056766fe`), but the exact OCI artifacts are
+not retrievable:
+
+- Local Docker store: no RC5 API/worker/beat/frontend images or matching
+  digests.
+- GitHub release `v0.1.0-rc5`: not found.
+- GitHub Actions artifacts and runs for the RC5 SHA: none.
+- GitHub Container Registry packages/versions for the repository owner:
+  not found.
+- Repository CI contains only quality checks; no image publish workflow.
+
+The required digests therefore cannot be proven or pulled. No rebuild,
+retagging, `latest` substitution, production backup, production restart,
+Compose upgrade, migration, or production→Veya configuration was performed.
+Production remains on the pre-upgrade RC4 stack. The next action is to restore
+the original exact RC5 OCI artifacts through the approved release registry or
+artifact store; only then may the production backup and internal upgrade
+proceed. Public DNS/Tunnel remains an owner action and was not touched.
+
+## RC5 internal production upgrade preflight — 2026-09-13
+
+The upgrade was **not started**. The live `mneme-production` stack is still
+RC4 and its baseline is:
+
+- API/worker/beat: SHA `a359877676a39fc2627a6f429adea77b0ed41311`, digest
+  `sha256:32aec19baf11a7523398fa6b013d09ee65c83c548f732709d430f7dd90007c33`.
+- Frontend: digest
+  `sha256:aefdde6da5a7580ff596dfffa9849f2d66c9705d1c37a8a00e17958628d73495`.
+- Internal `/health` and `/readiness`: PASS.
+- Production safety: `MNEME_ENV=production`, Immersive OFF, canary EMPTY,
+  registration CLOSED.
+
+The exact RC5 images required by the release manifest are not present in the
+local Docker image store, and the production Compose file still references
+RC4. No approved registry/import source was supplied. Consequently no DB
+backup, Compose upgrade, migration, restart, provider configuration change,
+or production soak was performed. This preserves the live RC4 service and
+avoids rebuilding or substituting an image for the exact RC5 artifact.
+
+### Shortest owner actions remaining
+
+1. Make the exact RC5 API/worker/beat and frontend images available through
+   the approved deployment mechanism, without rebuilding or retagging them.
+2. Approve the production backup window and deploy those exact images with
+   `GIT_SHA=2dda33e1fa5532d0375aaeed47e793cac9da720c`, keeping Immersive OFF,
+   canary EMPTY, and registration CLOSED.
+3. Configure the production container's controlled Veya bridge/path and
+   server-only `VEYA_BASE_URL`/`VEYA_MODEL=veya1.2-free`.
+4. Create `app-prod.sxueji.com` and `api-prod.sxueji.com` on the approved
+   Cloudflare Tunnel to `mneme-production-edge`, add the two production
+   Aegis/Caddy host routes, enable TLS Full (strict), HTTPS redirect,
+   forwarded headers, WebSocket/streaming, 25 MB upload, and the specified
+   proxy timeouts. Leave all existing legacy/demo routes unchanged.
+
+## Current RC5 PUBLIC ROUTING VERIFY
+
+The requested owner-side DNS/Cloudflare Tunnel and Aegis/Caddy route has not
+been installed. `app-prod.sxueji.com` and `api-prod.sxueji.com` did not produce
+a usable DNS answer or TLS connection in this verification. The existing
+production edge remains loopback-only at `127.0.0.1:18081` and is not attached
+to `aegis-caddy`.
+
+| Gate | Result | Evidence |
+|---|---|---|
+| app-prod DNS/Tunnel | FAIL | no DNS/TLS route verified |
+| api-prod DNS/Tunnel | FAIL | no DNS/TLS route verified |
+| TLS/HTTPS and redirect | FAIL | public TLS handshake unavailable |
+| Frontend/API public route | FAIL | no public route terminates at production edge |
+| Production environment | PASS internally | API reports `MNEME_ENV=production` |
+| RC5 backend SHA/digest | FAIL | running stack is RC4 `a359877...`; RC5 image absent |
+| Production DB/Redis/storage identity | PASS internally | `mneme_production`, `mneme-production`, production bucket/prefix |
+| Production → Veya readiness | FAIL | production API has no `VEYA_BASE_URL`; `host.docker.internal` unresolved |
+| Immersive / registration safety | PASS | global OFF, allowlist EMPTY, registration CLOSED |
+| Public core smoke / immersive denial | NOT RUN | public route is absent |
+| 30-minute public soak | NOT RUN | public route is absent |
+
+The production frontend/API, exact RC5 digests, public headers, WebSocket or
+streaming behavior, upload limit, proxy timeouts, synthetic public account
+smoke, and public data isolation therefore remain unverified. No production
+container was restarted or rebuilt. No DNS, Cloudflare, Caddy, or tunnel
+configuration was changed.
+
+`Veya publicly exposed=NO`: the separately configured Veya service is bound
+only to the staging Docker bridge address, not a public interface. This does
+not constitute production provider activation.
 
 ## Decision
 
@@ -174,16 +264,18 @@ zero restarts, and zero DB/worker/projection/FSRS errors.
 
 ## Final gate status
 
-- P0 blockers: `NONE`.
-- P1 blockers: `ROUTING_OWNER_BLOCKER`; `PROVIDER_ACTIVATION_OWNER_BLOCKER`.
+- P0 blockers: `ROUTING_OWNER_BLOCKER`; `RC5_PRODUCTION_ARTIFACT_NOT_DEPLOYED`;
+  `PRODUCTION_VEYA_PATH_NOT_CONFIGURED`.
+- P1 blockers: `PUBLIC_SMOKE_NOT_RUN`; `PUBLIC_SOAK_NOT_RUN`.
 - `PUBLIC_ROUTING_READY=NO`.
-- `PRODUCTION_CODE_DEPLOYED_INTERNALLY=YES`.
+- `PRODUCTION_CODE_DEPLOYED_INTERNALLY=RC4_ONLY`.
 - `PRODUCTION_PUBLICLY_EXPOSED=NO`.
 - `FORMAL_USER_ROLLOUT=NO`.
 
-Recommended next gate: `OWNER ROUTING ACTION`. After owner routing and provider
-readiness are separately approved and verified, run the public-route smoke and
-30-minute soak, then enter a specifically authorized `PRODUCTION CANARY`.
+Recommended next gate: `OWNER ROUTING ACTION`. After owner routing, RC5
+artifact deployment, and provider-path readiness are separately approved and
+verified, run the public-route smoke and 30-minute soak, then enter a
+specifically authorized `PRODUCTION CANARY`.
 
 ## Owner action packet — recommended production hostnames
 

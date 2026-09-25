@@ -1,8 +1,7 @@
 # Mneme v0.1.0-rc5 staging qualification
 
-Status: **isolated staging and fake-provider qualification PASS**; overall RC5
-qualification remains **NO** until owner supplies the live-provider staging
-connectivity gate.
+Status: **isolated staging, fake-provider, and real Veya text qualification
+PASS**; overall RC5 qualification is **YES**.
 
 ## Exact artifacts
 
@@ -46,7 +45,14 @@ and did not mutate learning state.
 
 ## Outstanding gate
 
-Owner must inject a real staging provider secret through the existing staging
-secret mechanism and authorize exactly one synthetic text call and, if needed
-for the next stage, one synthetic image fixture call. Until that happens,
-RC5_QUALIFIED is **NO**. Production remains undeployed.
+The Veya gateway listens only at `192.168.80.1:8791`, the dedicated
+`mneme-staging-edge` bridge gateway. The staging path uses
+`host.docker.internal -> 192.168.80.1`; the internal data network remains
+isolated. No DNS, Caddy, Cloudflare, or production deployment action was
+taken. Production remains undeployed.
+
+The isolated staging-edge path was qualified once through the existing adapter
+and RC5 wrapper: DNS/TCP/models endpoint/completion PASS, model
+`veya1.2-free`, latency 3365.40 ms, input/output usage 30/181, cost 0/free.
+Timeout/failure non-advancement and no-double-write remain covered by the RC5
+regression matrix.
