@@ -1,118 +1,81 @@
-"""mneme-core spacing — FSRS state update and review queue management.
+"""Compatibility adapter for the canonical FSRS engine.
 
-Pure functions, no IO.  Time is always passed as ``now: float`` (unix ts).
-Uses simplified FSRS formulas for stability/difficulty updates.
+Queue construction remains a pure value-object operation, but card scheduling
+delegates to ``oprim.fsrs_engine``. The former simplified formulas are gone so
+this package has no independent spacing algorithm authority.
 """
+
 from __future__ import annotations
 
+from datetime import datetime, timezone
+
+from fsrs import Rating
 from mneme_core.domain.oprim.models import FsrsState, ReviewTask
-
-# ---------------------------------------------------------------------------
-# Constants
-# ---------------------------------------------------------------------------
-_INITIAL_STABILITY = 1.0  # days
-_INITIAL_DIFFICULTY = 5.0  # 1–10 scale
-_DAY_SECONDS = 86_400.0
+from oprim.fsrs_engine import fsrs_new_card, fsrs_review
 
 
-# ---------------------------------------------------------------------------
-# Public API
-# ---------------------------------------------------------------------------
+def _iso(seconds: float) -> datetime:
+    return datetime.fromtimestamp(seconds, tz=timezone.utc)
+
+
+def _seconds(value: object, fallback: float) -> float:
+    if isinstance(value, datetime):
+        return value.timestamp()
+    if isinstance(value, str):
+        return datetime.fromisoformat(value.replace("Z", "+00:00")).timestamp()
+    return fallback
 
 
 def get_initial_state(now: float) -> FsrsState:
-    """Return a fresh FSRS state with default stability & difficulty.
-
-    The first review is due immediately (``due_at == now``).
-    """
+    card = fsrs_new_card()
     return FsrsState(
-        stability=_INITIAL_STABILITY,
-        difficulty=_INITIAL_DIFFICULTY,
+        stability=float(card.get("stability") or 1.0),
+        difficulty=float(card.get("difficulty") or 5.0),
         last_review=now,
-        due_at=now,
-        reps=0,
+        due_at=_seconds(card.get("due"), now),
+        reps=int(card.get("reps") or 0),
     )
 
 
 def schedule_next(state: FsrsState, rating: int, now: float) -> FsrsState:
-    """Compute the next FSRS state after a review with the given *rating*.
-
-    Args:
-        state: Current FSRS state (not mutated).
-        rating: Quality rating 1–4 (1=again, 2=hard, 3=good, 4=easy).
-        now: Current unix timestamp.
-
-    Returns:
-        A NEW ``FsrsState`` with updated stability, difficulty, due_at, etc.
-
-    Simplified FSRS formulas:
-        - difficulty is adjusted ±0.5 based on rating vs. 3 (neutral),
-          clamped to [1, 10].
-        - stability is multiplied by a factor derived from the rating,
-          with a floor of 0.1 days.
-        - interval = stability days → due_at = now + interval.
-    """
-    rating = max(1, min(4, rating))
-
-    # --- Difficulty update ---
-    delta_d = (3 - rating) * 0.5  # positive when rating < 3 (harder)
-    new_difficulty = max(1.0, min(10.0, state.difficulty + delta_d))
-
-    # --- Stability update ---
-    # Rating multipliers: again=0.2, hard=0.8, good=2.5, easy=4.0
-    multipliers = {1: 0.2, 2: 0.8, 3: 2.5, 4: 4.0}
-    new_stability = max(0.1, state.stability * multipliers[rating])
-
-    # --- Interval → due_at ---
-    interval_secs = new_stability * _DAY_SECONDS
-    new_due_at = now + interval_secs
-
+    rating_enum = {
+        1: Rating.Again,
+        2: Rating.Hard,
+        3: Rating.Good,
+        4: Rating.Easy,
+    }[max(1, min(4, rating))]
+    card = fsrs_new_card()
+    card["stability"] = state.stability
+    card["difficulty"] = state.difficulty
+    card["reps"] = state.reps
+    card["last_review"] = _iso(state.last_review).isoformat()
+    card["due"] = _iso(state.due_at).isoformat()
+    updated = fsrs_review(card_dict=card, rating=rating_enum, now=_iso(now))
     return FsrsState(
-        stability=new_stability,
-        difficulty=new_difficulty,
+        stability=float(updated.get("stability") or state.stability),
+        difficulty=float(updated.get("difficulty") or state.difficulty),
         last_review=now,
-        due_at=new_due_at,
-        reps=state.reps + 1,
+        due_at=_seconds(updated.get("due"), now),
+        reps=int(updated.get("reps") or state.reps + 1),
     )
 
 
 def build_review_queue(
-    fsrs: dict[str, FsrsState],
-    error_linked: set[str],
+    fsrs: dict[str, FsrsState], error_linked: set[str]
 ) -> list[ReviewTask]:
-    """Build a full review queue from FSRS states.
-
-    Error-linked KPs get ``priority=1`` (highest).  All others get
-    ``priority=2`` and are sorted by ``due_at`` ascending.
-
-    Args:
-        fsrs: Mapping of knowledge-point ID → current FSRS state.
-        error_linked: Set of KP IDs that are linked to recent errors.
-
-    Returns:
-        A NEW sorted list of ``ReviewTask`` objects.
-    """
-    tasks: list[ReviewTask] = []
-    for kp_id, state in fsrs.items():
-        priority = 1 if kp_id in error_linked else 2
-        tasks.append(
-            ReviewTask(
-                knowledge_point_id=kp_id,
-                due_at=state.due_at,
-                priority=priority,
-            )
+    tasks = [
+        ReviewTask(
+            knowledge_point_id=kp_id,
+            due_at=state.due_at,
+            priority=1 if kp_id in error_linked else 2,
         )
-    # Sort by priority ascending (1 first), then by due_at ascending.
-    tasks.sort(key=lambda t: (t.priority, t.due_at))
+        for kp_id, state in fsrs.items()
+    ]
+    tasks.sort(key=lambda task: (task.priority, task.due_at))
     return tasks
 
 
 def due_reviews(queue: list[ReviewTask], now: float) -> list[ReviewTask]:
-    """Filter and sort reviews that are due (``due_at <= now``).
-
-    Returns a NEW list sorted by priority ascending (error-linked first),
-    then by ``due_at`` ascending within the same priority.
-    """
-    due = [t for t in queue if t.due_at <= now]
-    due.sort(key=lambda t: (t.priority, t.due_at))
+    due = [task for task in queue if task.due_at <= now]
+    due.sort(key=lambda task: (task.priority, task.due_at))
     return due

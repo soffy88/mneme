@@ -111,6 +111,13 @@ else
     docker compose exec -T api python scripts/vendor_edu_closure.py --check
 fi
 
+echo -e "\n${GREEN}==> canonical architecture boundary...${NC}"
+if [ "$MODE" = "venv" ]; then
+    .venv/bin/python scripts/architecture_gate.py
+else
+    docker compose exec -T api python scripts/architecture_gate.py
+fi
+
 # 纯单测 / AST 红线：不依赖真 DB 业务数据，约数十秒。全量 pytest 仍走 mneme_test。
 echo -e "\n${GREEN}==> Smoke (red-line AST / sandbox / db_guard)...${NC}"
 SMOKE_FILES=(
@@ -130,11 +137,19 @@ else
     docker compose exec -T api python -m pytest --no-cov -q "${SMOKE_FILES[@]}"
 fi
 
+# DB-free unit gate. confcutdir prevents the integration conftest from
+# resolving or connecting to PostgreSQL.
+if [ "$MODE" = "venv" ]; then
+    "${RUN[@]}" pytest -o addopts= --confcutdir=tests/unit -q tests/unit
+else
+    docker compose exec -T api python -m pytest -o addopts= --confcutdir=tests/unit -q tests/unit
+fi
+
 echo -e "\n${GREEN}==> Running MyPy...${NC}"
 # vendor 与根目录 3O 兼容层各自含有 oprim.* 模块；显式排除它们，避免 mypy
 # 把同一文件同时注册成 vendor.oprim.* 和 oprim.*。第一方 services/packages
 # 仍通过 pyproject 的 mypy_path=vendor 获取 vendor 类型签名。
-"${RUN[@]}" mypy --explicit-package-bases . \
+"${RUN[@]}" mypy --explicit-package-bases services tasks cli packages \
     --exclude '(^|/)(vendor|oprim|oskill|omodul)/'
 
 if [ "${SKIP_PYTEST:-0}" = "1" ]; then
