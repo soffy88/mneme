@@ -20,7 +20,7 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 import services  # noqa: F401 — must run first: registers vendor/ on sys.path
 from obase.db import SessionLocal
-from services.models import VocabularyImportBatch
+from services.models import VocabularyImportBatch, VocabularyItem
 
 from scripts.nce_importer.fetch import ResourceFetcher
 from scripts.nce_importer.manifest import BookManifestParser, NCEManifestLoader
@@ -120,13 +120,11 @@ async def run_async(args) -> int:
             )
             lesson_facts[parsed.book_key].append(facts)
 
-    new_vocab_ids: set = set()
     plan = None
     async with SessionLocal() as db:
         resolver = CanonicalVocabularyResolver(db)
         planner = CourseImportPlanner(db, resolver)
         plan = await planner.build_plan(manifest, parsed_books, lesson_facts)
-        new_vocab_ids = {v.vocabulary_item_id for v in plan.new_vocab}
 
     validator = NCEImportValidator()
     validation = validator.validate(plan, manifest)
@@ -137,9 +135,22 @@ async def run_async(args) -> int:
         print(f"  ISSUE {issue.code}: {issue.detail}")
 
     reporter = NCEImportReporter()
+    # new_vocab from the DB (source='nce') — the cumulative truth, stable across
+    # idempotent re-applies (the current plan's new_vocab is empty on re-apply).
+    db_new_vocab_ids = set()
+    if args.apply:
+        async with SessionLocal() as db:
+            from sqlalchemy import select
+
+            rows = (
+                await db.execute(
+                    select(VocabularyItem.id).where(VocabularyItem.source == "nce")
+                )
+            ).scalars().all()
+            db_new_vocab_ids = set(rows)
     report = reporter.build(
         plan,
-        new_vocab_ids,
+        db_new_vocab_ids,
         resource_failures=fetch_report.failure_count + len(blocked_resources),
         blocked_resources=blocked_resources,
     )

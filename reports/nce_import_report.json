@@ -1,5 +1,5 @@
 {
-  "import_batch_id": "eae6634e-43cf-424b-90c4-b25cb8f0433b",
+  "import_batch_id": "f013fb62-513e-4770-a952-29ae758569c0",
   "books": [
     {
       "book_key": "NCE1",
@@ -7,8 +7,8 @@
       "lessons": 72,
       "timed_sentences": 1514,
       "unique_vocab": 1356,
-      "reused_existing_vocab": 1356,
-      "new_vocab": 0,
+      "reused_existing_vocab": 1119,
+      "new_vocab": 237,
       "resource_failures": 0
     },
     {
@@ -17,8 +17,8 @@
       "lessons": 96,
       "timed_sentences": 1429,
       "unique_vocab": 2724,
-      "reused_existing_vocab": 2724,
-      "new_vocab": 0,
+      "reused_existing_vocab": 2023,
+      "new_vocab": 701,
       "resource_failures": 0
     },
     {
@@ -27,8 +27,8 @@
       "lessons": 60,
       "timed_sentences": 1725,
       "unique_vocab": 4637,
-      "reused_existing_vocab": 4637,
-      "new_vocab": 0,
+      "reused_existing_vocab": 3086,
+      "new_vocab": 1551,
       "resource_failures": 0
     },
     {
@@ -37,8 +37,8 @@
       "lessons": 48,
       "timed_sentences": 1377,
       "unique_vocab": 4399,
-      "reused_existing_vocab": 4399,
-      "new_vocab": 0,
+      "reused_existing_vocab": 2800,
+      "new_vocab": 1599,
       "resource_failures": 0
     },
     {
@@ -47,8 +47,8 @@
       "lessons": 72,
       "timed_sentences": 1310,
       "unique_vocab": 1513,
-      "reused_existing_vocab": 1513,
-      "new_vocab": 0,
+      "reused_existing_vocab": 1089,
+      "new_vocab": 424,
       "resource_failures": 0
     },
     {
@@ -57,8 +57,8 @@
       "lessons": 96,
       "timed_sentences": 1792,
       "unique_vocab": 2656,
-      "reused_existing_vocab": 2656,
-      "new_vocab": 0,
+      "reused_existing_vocab": 1983,
+      "new_vocab": 673,
       "resource_failures": 0
     },
     {
@@ -67,8 +67,8 @@
       "lessons": 55,
       "timed_sentences": 1916,
       "unique_vocab": 4174,
-      "reused_existing_vocab": 4174,
-      "new_vocab": 0,
+      "reused_existing_vocab": 2815,
+      "new_vocab": 1359,
       "resource_failures": 0
     },
     {
@@ -77,8 +77,8 @@
       "lessons": 60,
       "timed_sentences": 1954,
       "unique_vocab": 5204,
-      "reused_existing_vocab": 5204,
-      "new_vocab": 0,
+      "reused_existing_vocab": 3232,
+      "new_vocab": 1972,
       "resource_failures": 0
     }
   ],
@@ -87,8 +87,8 @@
     "lessons": 559,
     "sentences": 13017,
     "lesson_vocab_memberships": 71368,
-    "new_vocab": 0,
-    "reused_vocab": 26663,
+    "new_vocab": 8516,
+    "reused_vocab": 18147,
     "resource_failures": 0
   },
   "cross_source_reuse": {
