@@ -497,4 +497,4 @@ def test_alembic_single_head():
     assert result.returncode == 0, result.stderr
     heads = [line for line in result.stdout.splitlines() if "(head)" in line]
     assert len(heads) == 1
-    assert "b2c3d4e5f6a7" in heads[0]
+    assert "c3d4e5f6a7b9" in heads[0]
