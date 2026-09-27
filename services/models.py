@@ -1574,6 +1574,173 @@ class SentenceVocabularyOccurrence(Base):
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=text("now()"))
 
 
+# ===== 学习产品层（Textbook-First Learning）=====
+# 这些是用户学习产品对象，不是词汇/FSRS authority。
+# VocabularyItem 决定词汇身份；KCMastery.fsrs_card_json 决定复习调度；
+# 本层只组织"学生今天学什么、学得如何"。
+class LearningPlan(Base):
+    """用户当前英语学习路线。同一用户只允许一个 ACTIVE English plan。"""
+
+    __tablename__ = "learning_plans"
+    __table_args__ = (
+        Index(
+            "uq_learning_plan_active",
+            "user_id",
+            "subject",
+            unique=True,
+            postgresql_where=text("status = 'ACTIVE'"),
+        ),
+    )
+
+    id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True), primary_key=True, server_default=text("gen_random_uuid()")
+    )
+    user_id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True), ForeignKey("users.id"), nullable=False
+    )
+    subject: Mapped[str] = mapped_column(String(20), server_default=text("'english'"))
+    primary_scope: Mapped[str] = mapped_column(String(20), server_default=text("'K12_SYNC'"))
+    primary_collection_id: Mapped[Optional[str]] = mapped_column(
+        String(100), ForeignKey("vocabulary_collections.id"), nullable=True
+    )
+    current_book_id: Mapped[Optional[str]] = mapped_column(
+        String(100), ForeignKey("course_books.id"), nullable=True
+    )
+    current_lesson_id: Mapped[Optional[str]] = mapped_column(
+        String(100), ForeignKey("lessons.id"), nullable=True
+    )
+    exam_target: Mapped[str] = mapped_column(String(20), server_default=text("'NONE'"))
+    nce_support_enabled: Mapped[bool] = mapped_column(
+        Boolean, server_default=text("true"), nullable=False
+    )
+    daily_new_word_target: Mapped[int] = mapped_column(
+        Integer, server_default=text("10"), nullable=False
+    )
+    daily_review_target: Mapped[int] = mapped_column(
+        Integer, server_default=text("20"), nullable=False
+    )
+    status: Mapped[str] = mapped_column(String(20), server_default=text("'ACTIVE'"))
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), server_default=text("now()")
+    )
+    updated_at: Mapped[Optional[datetime]] = mapped_column(
+        DateTime(timezone=True), onupdate=text("now()")
+    )
+
+
+class LearningSession(Base):
+    """一次真实学习活动。用于学习进度，不是 FSRS authority。"""
+
+    __tablename__ = "learning_sessions"
+
+    id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True), primary_key=True, server_default=text("gen_random_uuid()")
+    )
+    user_id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True), ForeignKey("users.id"), nullable=False
+    )
+    learning_plan_id: Mapped[Optional[uuid.UUID]] = mapped_column(
+        UUID(as_uuid=True), ForeignKey("learning_plans.id"), nullable=True
+    )
+    mode: Mapped[str] = mapped_column(String(20), nullable=False)
+    lesson_id: Mapped[Optional[str]] = mapped_column(
+        String(100), ForeignKey("lessons.id"), nullable=True
+    )
+    started_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False)
+    ended_at: Mapped[Optional[datetime]] = mapped_column(DateTime(timezone=True))
+    items_presented: Mapped[int] = mapped_column(Integer, server_default=text("0"))
+    items_correct: Mapped[int] = mapped_column(Integer, server_default=text("0"))
+    items_incorrect: Mapped[int] = mapped_column(Integer, server_default=text("0"))
+    new_items: Mapped[int] = mapped_column(Integer, server_default=text("0"))
+    review_items: Mapped[int] = mapped_column(Integer, server_default=text("0"))
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), server_default=text("now()")
+    )
+
+
+class LearningSessionItem(Base):
+    """Session 内一道题。prompt/context 在 session 开始后不可变（resume 稳定）。"""
+
+    __tablename__ = "learning_session_items"
+    __table_args__ = (
+        UniqueConstraint("session_id", "sequence", name="uq_session_item_sequence"),
+    )
+
+    id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True), primary_key=True, server_default=text("gen_random_uuid()")
+    )
+    session_id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True), ForeignKey("learning_sessions.id"), nullable=False
+    )
+    vocabulary_item_id: Mapped[str] = mapped_column(
+        String(100), ForeignKey("vocabulary_items.id"), nullable=False
+    )
+    task_type: Mapped[str] = mapped_column(String(20), nullable=False)
+    context_source: Mapped[str] = mapped_column(String(20), server_default=text("'TEXTBOOK'"))
+    sentence_id: Mapped[Optional[str]] = mapped_column(
+        String(100), ForeignKey("timed_sentences.id"), nullable=True
+    )
+    state: Mapped[str] = mapped_column(String(20), server_default=text("'PENDING'"))
+    sequence: Mapped[int] = mapped_column(Integer, nullable=False)
+    interaction_id: Mapped[Optional[uuid.UUID]] = mapped_column(UUID(as_uuid=True))
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), server_default=text("now()")
+    )
+
+
+class UserLessonProgress(Base):
+    """派生状态：一课的进度。可从 LearningEvent + KCMastery 重算。"""
+
+    __tablename__ = "user_lesson_progress"
+    __table_args__ = (
+        UniqueConstraint("user_id", "lesson_id", name="uq_user_lesson_progress"),
+    )
+
+    id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True), primary_key=True, server_default=text("gen_random_uuid()")
+    )
+    user_id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True), ForeignKey("users.id"), nullable=False
+    )
+    lesson_id: Mapped[str] = mapped_column(
+        String(100), ForeignKey("lessons.id"), nullable=False
+    )
+    status: Mapped[str] = mapped_column(String(20), server_default=text("'not_started'"))
+    vocab_total: Mapped[int] = mapped_column(Integer, server_default=text("0"))
+    vocab_started: Mapped[int] = mapped_column(Integer, server_default=text("0"))
+    vocab_mastered: Mapped[int] = mapped_column(Integer, server_default=text("0"))
+    lesson_check_score: Mapped[Optional[float]] = mapped_column(Float)
+    updated_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), server_default=text("now()")
+    )
+
+
+class UserBookProgress(Base):
+    """派生状态：一册的进度。课程进度与词汇掌握分开。"""
+
+    __tablename__ = "user_book_progress"
+    __table_args__ = (
+        UniqueConstraint("user_id", "book_id", name="uq_user_book_progress"),
+    )
+
+    id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True), primary_key=True, server_default=text("gen_random_uuid()")
+    )
+    user_id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True), ForeignKey("users.id"), nullable=False
+    )
+    book_id: Mapped[str] = mapped_column(
+        String(100), ForeignKey("course_books.id"), nullable=False
+    )
+    completed_lessons: Mapped[int] = mapped_column(Integer, server_default=text("0"))
+    total_lessons: Mapped[int] = mapped_column(Integer, server_default=text("0"))
+    book_vocab_mastered: Mapped[int] = mapped_column(Integer, server_default=text("0"))
+    book_vocab_total: Mapped[int] = mapped_column(Integer, server_default=text("0"))
+    updated_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), server_default=text("now()")
+    )
+
+
 class ReadingPassage(Base):
     """分级泛读文章。difficulty_band 与 VocabularyItem.frequency_band 同一 1-5 分档尺度。"""
 
