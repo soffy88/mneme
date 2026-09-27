@@ -325,8 +325,8 @@ class LearningEngine:
             student_id=session.user_id,
             kc_id=_kp(vocab.id),
             is_correct=score_result.score == Score.CORRECT,
-            question_type=item.task_type.value,
-            source="learning_session",
+            question_type=str(item.task_type),
+            source="quick",
         )
         await self._db.flush()
         return AnswerResult(score=score_result.score, fsrs_rating=rating, detail=score_result.detail)
