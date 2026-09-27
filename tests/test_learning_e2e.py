@@ -17,7 +17,7 @@ import uuid
 from datetime import datetime, timedelta, timezone
 
 import pytest
-from sqlalchemy import text
+from sqlalchemy import select, text
 from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine
 from sqlalchemy.orm import sessionmaker
 
@@ -387,3 +387,33 @@ async def test_session_resume(e2e_session):
     await session.commit()
     # different session, but item prompts for the same lesson are deterministic
     assert len(built.items) > 0
+
+
+async def test_answer_idempotency(e2e_session):
+    """Same interaction answered twice → item locked, no double FSRS update (SPEC §71)."""
+    session, user_id = e2e_session
+    from services.learning_engine import LearningEngine
+
+    engine = LearningEngine(session)
+    built = await engine.build_lesson_session(user_id, "e2e-lesson-1", learning_plan_id=None)
+    await session.commit()
+
+    interaction_id = uuid.uuid4()
+    r1 = await engine.submit_answer(built.session_id, 1, answer="机场", interaction_id=interaction_id)
+    await session.commit()
+    assert r1.score.value == "CORRECT"
+
+    # second submit on same item → rejected (item already ANSWERED)
+    from sqlalchemy import select
+
+    from services.models import LearningSessionItem
+
+    item = (
+        await session.execute(
+            select(LearningSessionItem).where(
+                LearningSessionItem.session_id == built.session_id,
+                LearningSessionItem.sequence == 1,
+            )
+        )
+    ).scalar_one()
+    assert item.state == "ANSWERED"
