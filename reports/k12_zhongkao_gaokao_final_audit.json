@@ -1,0 +1,44 @@
+{
+  "task": "MNEME_K12_ZHONGKAO_GAOKAO_FINAL_DATA_AUDIT",
+  "alembic": {
+    "current": "b2c3d4e5f6a7",
+    "head_count": 1
+  },
+  "vocabulary": {
+    "total": 24681,
+    "canonical_duplicates": 0,
+    "stable_vid_mismatch": 0,
+    "unique_words": 12581,
+    "unique_phrases": 7592
+  },
+  "collections": {
+    "total": 384,
+    "k12": 328,
+    "zhongkao": 9,
+    "gaokao": 47,
+    "duplicates": 0,
+    "out_of_scope": 0
+  },
+  "memberships": {
+    "total": 247301,
+    "duplicates": 0,
+    "orphans": 0
+  },
+  "provenance": {
+    "coverage_percent": 100,
+    "missing": 0,
+    "distinct_source_commits": 2
+  },
+  "integrity": {
+    "destructive_meaning_overwrite": 0,
+    "fake_frequency_default": 0,
+    "learning_events_created_by_import": 0,
+    "fsrs_state_created_by_import": 0
+  },
+  "idempotency": {
+    "vocab_created_second": 0,
+    "collections_created_second": 0,
+    "memberships_created_second": 0
+  },
+  "final": "PASS"
+}

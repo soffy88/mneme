@@ -1,0 +1,76 @@
+{
+  "source_repository": "iChochy/NCE",
+  "source_commit": "0a92ab5af50e2898a104f15eac7adb00f17bd96b",
+  "source_manifest_url": "https://raw.githubusercontent.com/iChochy/NCE/0a92ab5af50e2898a104f15eac7adb00f17bd96b/data.json",
+  "parser_version": "nce-importer/1.0",
+  "code_license": "MIT",
+  "content_rights": "RESTRICTED_EXTERNAL_EDUCATIONAL_CONTENT",
+  "redistribution_allowed": false,
+  "rights_note": "Repository code is MIT-licensed; textbook text/audio/lrc content remains copyright of its respective owners. Content is fetched for personal learning use only and must not be redistributed. Content rights and code license are recorded separately.",
+  "books": [
+    {
+      "book_key": "NCE1",
+      "edition": "CURRENT",
+      "book_resource_url": "https://nce.mleo.site/NCE1",
+      "book_json_url": "https://nce.mleo.site/NCE1/book.json",
+      "audio_url": "https://nce.mleo.site/NCE1/{filename}.mp3",
+      "lrc_url": "https://nce.mleo.site/NCE1/{filename}.lrc"
+    },
+    {
+      "book_key": "NCE2",
+      "edition": "CURRENT",
+      "book_resource_url": "https://nce.mleo.site/NCE2",
+      "book_json_url": "https://nce.mleo.site/NCE2/book.json",
+      "audio_url": "https://nce.mleo.site/NCE2/{filename}.mp3",
+      "lrc_url": "https://nce.mleo.site/NCE2/{filename}.lrc"
+    },
+    {
+      "book_key": "NCE3",
+      "edition": "CURRENT",
+      "book_resource_url": "https://nce.mleo.site/NCE3",
+      "book_json_url": "https://nce.mleo.site/NCE3/book.json",
+      "audio_url": "https://nce.mleo.site/NCE3/{filename}.mp3",
+      "lrc_url": "https://nce.mleo.site/NCE3/{filename}.lrc"
+    },
+    {
+      "book_key": "NCE4",
+      "edition": "CURRENT",
+      "book_resource_url": "https://nce.mleo.site/NCE4",
+      "book_json_url": "https://nce.mleo.site/NCE4/book.json",
+      "audio_url": "https://nce.mleo.site/NCE4/{filename}.mp3",
+      "lrc_url": "https://nce.mleo.site/NCE4/{filename}.lrc"
+    },
+    {
+      "book_key": "NCE1(85)",
+      "edition": "1985",
+      "book_resource_url": "https://85.mleo.site/NCE1",
+      "book_json_url": "https://85.mleo.site/NCE1/book.json",
+      "audio_url": "https://85.mleo.site/NCE1/{filename}.mp3",
+      "lrc_url": "https://85.mleo.site/NCE1/{filename}.lrc"
+    },
+    {
+      "book_key": "NCE2(85)",
+      "edition": "1985",
+      "book_resource_url": "https://85.mleo.site/NCE2",
+      "book_json_url": "https://85.mleo.site/NCE2/book.json",
+      "audio_url": "https://85.mleo.site/NCE2/{filename}.mp3",
+      "lrc_url": "https://85.mleo.site/NCE2/{filename}.lrc"
+    },
+    {
+      "book_key": "NCE3(85)",
+      "edition": "1985",
+      "book_resource_url": "https://85.mleo.site/NCE3",
+      "book_json_url": "https://85.mleo.site/NCE3/book.json",
+      "audio_url": "https://85.mleo.site/NCE3/{filename}.mp3",
+      "lrc_url": "https://85.mleo.site/NCE3/{filename}.lrc"
+    },
+    {
+      "book_key": "NCE4(85)",
+      "edition": "1985",
+      "book_resource_url": "https://85.mleo.site/NCE4",
+      "book_json_url": "https://85.mleo.site/NCE4/book.json",
+      "audio_url": "https://85.mleo.site/NCE4/{filename}.mp3",
+      "lrc_url": "https://85.mleo.site/NCE4/{filename}.lrc"
+    }
+  ]
+}

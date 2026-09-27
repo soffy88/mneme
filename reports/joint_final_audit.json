@@ -1,0 +1,28 @@
+{
+  "canonical_vocab_authority_count": 1,
+  "parallel_authority_tables": 0,
+  "canonical_duplicate_vocab": 0,
+  "k12_audit": "PASS",
+  "zhongkao_audit": "PASS",
+  "gaokao_audit": "PASS",
+  "nce_audit": "PASS",
+  "nce_counts": {
+    "books": 8,
+    "lessons": 559,
+    "sentences": 13017,
+    "memberships": 71368
+  },
+  "nce_k12_intersection": 4779,
+  "nce_zhongkao_intersection": 2449,
+  "nce_gaokao_intersection": 4865,
+  "cross_source_reuse": "PASS",
+  "out_of_scope_pollution": 0,
+  "orphan_memberships": 0,
+  "broken_foreign_keys": 0,
+  "source_provenance_coverage": 100,
+  "learning_events_import_pollution": 0,
+  "fsrs_import_pollution": 0,
+  "alembic_head_count": 1,
+  "targeted_tests": "PASS",
+  "joint_final_audit": "PASS"
+}

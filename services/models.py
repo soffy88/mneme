@@ -1354,9 +1354,224 @@ class VocabularyItem(Base):
     source: Mapped[str] = mapped_column(String(50), server_default=text("'simplewiki'"))
     # meaning_cn/example_sentence 是否 LLM 生成（词频/分档本身是确定性统计，不受影响）。
     ai_generated: Mapped[bool] = mapped_column(Boolean, server_default=text("true"))
+    
+    # SPEC V1
+    language: Mapped[str] = mapped_column(String(10), server_default=text("'en'"))
+    display_form: Mapped[Optional[str]] = mapped_column(String(100), nullable=True)
+    normalized_form: Mapped[Optional[str]] = mapped_column(String(100), nullable=True)
+    lexeme_type: Mapped[str] = mapped_column(String(20), server_default=text("'WORD'"))
+    canonical_meaning: Mapped[Optional[str]] = mapped_column(Text, nullable=True)
+    phonetic_uk: Mapped[Optional[str]] = mapped_column(String(100), nullable=True)
+    phonetic_us: Mapped[Optional[str]] = mapped_column(String(100), nullable=True)
+    phonetic_generic: Mapped[Optional[str]] = mapped_column(String(100), nullable=True)
+    
     created_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True), server_default=text("now()")
     )
+    updated_at: Mapped[Optional[datetime]] = mapped_column(
+        DateTime(timezone=True), onupdate=text("now()")
+    )
+
+class VocabularyCollection(Base):
+    __tablename__ = "vocabulary_collections"
+
+    id: Mapped[str] = mapped_column(String(100), primary_key=True)
+    source_id: Mapped[Optional[str]] = mapped_column(String(100), nullable=True)
+    kind: Mapped[str] = mapped_column(String(20), nullable=False) # TEXTBOOK / EXAM
+    scope: Mapped[str] = mapped_column(String(20), nullable=False) # K12_SYNC / ZHONGKAO / GAOKAO
+    title: Mapped[str] = mapped_column(String(200), nullable=False)
+    publisher: Mapped[Optional[str]] = mapped_column(String(100), nullable=True)
+    stage: Mapped[str] = mapped_column(String(20), nullable=False) # PRIMARY / JUNIOR / SENIOR / UNKNOWN
+    grade: Mapped[Optional[int]] = mapped_column(Integer, nullable=True)
+    semester: Mapped[Optional[int]] = mapped_column(Integer, nullable=True) # 1: 上, 2: 下
+    edition: Mapped[Optional[str]] = mapped_column(String(50), nullable=True)
+    curriculum_year: Mapped[Optional[int]] = mapped_column(Integer, nullable=True)
+    book_type: Mapped[Optional[str]] = mapped_column(String(50), nullable=True)
+    exam_type: Mapped[Optional[str]] = mapped_column(String(50), nullable=True)
+    region: Mapped[Optional[str]] = mapped_column(String(100), nullable=True)
+    source_relative_path: Mapped[Optional[str]] = mapped_column(String(500), nullable=True)
+    source_file_sha256: Mapped[Optional[str]] = mapped_column(String(64), nullable=True)
+    metadata_json: Mapped[Optional[dict]] = mapped_column(JSONB, nullable=True)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=text("now()"))
+    updated_at: Mapped[Optional[datetime]] = mapped_column(DateTime(timezone=True), onupdate=text("now()"))
+
+class VocabularyCollectionMembership(Base):
+    __tablename__ = "vocabulary_collection_memberships"
+
+    id: Mapped[str] = mapped_column(String(100), primary_key=True)
+    collection_id: Mapped[str] = mapped_column(String(100), ForeignKey("vocabulary_collections.id"), nullable=False)
+    vocabulary_item_id: Mapped[str] = mapped_column(String(100), ForeignKey("vocabulary_items.id"), nullable=False)
+
+    source_order: Mapped[Optional[int]] = mapped_column(Integer, nullable=True)
+    source_definition: Mapped[Optional[str]] = mapped_column(Text, nullable=True)
+    source_pos: Mapped[Optional[str]] = mapped_column(String(50), nullable=True)
+    source_phonetic_uk: Mapped[Optional[str]] = mapped_column(String(100), nullable=True)
+    source_phonetic_us: Mapped[Optional[str]] = mapped_column(String(100), nullable=True)
+    source_phonetic_generic: Mapped[Optional[str]] = mapped_column(String(100), nullable=True)
+    source_sentence: Mapped[Optional[str]] = mapped_column(Text, nullable=True)
+
+    source_relative_path: Mapped[Optional[str]] = mapped_column(String(500), nullable=True)
+    source_row: Mapped[Optional[int]] = mapped_column(Integer, nullable=True)
+    source_entry_key: Mapped[Optional[str]] = mapped_column(String(100), nullable=True)
+
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=text("now()"))
+    updated_at: Mapped[Optional[datetime]] = mapped_column(DateTime(timezone=True), onupdate=text("now()"))
+
+class VocabularyImportBatch(Base):
+    __tablename__ = "vocabulary_import_batches"
+
+    id: Mapped[str] = mapped_column(String(100), primary_key=True)
+    source_name: Mapped[Optional[str]] = mapped_column(String(100), nullable=True)
+    source_commit_sha: Mapped[Optional[str]] = mapped_column(String(40), nullable=True)
+    parser_version: Mapped[Optional[str]] = mapped_column(String(20), nullable=True)
+    mode: Mapped[Optional[str]] = mapped_column(String(20), nullable=True)
+    started_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=text("now()"))
+    completed_at: Mapped[Optional[datetime]] = mapped_column(DateTime(timezone=True), nullable=True)
+
+    files_total: Mapped[Optional[int]] = mapped_column(Integer, nullable=True)
+    files_parsed: Mapped[Optional[int]] = mapped_column(Integer, nullable=True)
+    files_failed: Mapped[Optional[int]] = mapped_column(Integer, nullable=True)
+
+    rows_total: Mapped[Optional[int]] = mapped_column(Integer, nullable=True)
+    rows_valid: Mapped[Optional[int]] = mapped_column(Integer, nullable=True)
+    rows_skipped: Mapped[Optional[int]] = mapped_column(Integer, nullable=True)
+    rows_invalid: Mapped[Optional[int]] = mapped_column(Integer, nullable=True)
+
+    vocab_created: Mapped[Optional[int]] = mapped_column(Integer, nullable=True)
+    vocab_existing: Mapped[Optional[int]] = mapped_column(Integer, nullable=True)
+    collections_created: Mapped[Optional[int]] = mapped_column(Integer, nullable=True)
+    memberships_created: Mapped[Optional[int]] = mapped_column(Integer, nullable=True)
+    memberships_updated: Mapped[Optional[int]] = mapped_column(Integer, nullable=True)
+
+    duplicates_in_collection: Mapped[Optional[int]] = mapped_column(Integer, nullable=True)
+    phrases: Mapped[Optional[int]] = mapped_column(Integer, nullable=True)
+    words: Mapped[Optional[int]] = mapped_column(Integer, nullable=True)
+
+    status: Mapped[str] = mapped_column(String(20), nullable=False) # DRY_RUN / SUCCESS / FAILED / ROLLED_BACK
+    report_path: Mapped[Optional[str]] = mapped_column(String(500), nullable=True)
+
+
+# ===== 通用课程内容链（Course → Book → Lesson → TimedSentence）=====
+# 通用教育内容模型：NCE 是 scope=NCE 的第一套完整课程实现；未来 K12 教材
+# 词表可投影到同一 Lesson/Sentence 课程链，不写死 NCE only。
+class Course(Base):
+    """课程（系列）。同一 scope+series 唯一。"""
+
+    __tablename__ = "courses"
+
+    id: Mapped[str] = mapped_column(String(100), primary_key=True)
+    scope: Mapped[str] = mapped_column(String(20), nullable=False) # NCE / K12_SYNC / ...
+    series: Mapped[str] = mapped_column(String(50), nullable=False) # NEW_CONCEPT_ENGLISH
+    title: Mapped[str] = mapped_column(String(200), nullable=False)
+    source_id: Mapped[Optional[str]] = mapped_column(String(100), nullable=True)
+    metadata_json: Mapped[Optional[dict]] = mapped_column(JSONB, nullable=True)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=text("now()"))
+    updated_at: Mapped[Optional[datetime]] = mapped_column(DateTime(timezone=True), onupdate=text("now()"))
+
+
+class Book(Base):
+    """课本。edition 区分版本（current / 1985），不同 edition 是不同课本，绝不混同。
+
+    表名 course_books：public.books 已被教材出版域（textbook compilation）占用，
+    本模型是通用课程内容链的一部分，未来 K12 课本也投影到同一张表。
+    """
+
+    __tablename__ = "course_books"
+    __table_args__ = (
+        UniqueConstraint("course_id", "edition", "book_key", name="uq_book_course_edition_key"),
+    )
+
+    id: Mapped[str] = mapped_column(String(100), primary_key=True)
+    course_id: Mapped[str] = mapped_column(String(100), ForeignKey("courses.id"), nullable=False)
+    book_key: Mapped[str] = mapped_column(String(50), nullable=False) # NCE1..NCE4
+    title: Mapped[str] = mapped_column(String(200), nullable=False)
+    level: Mapped[Optional[str]] = mapped_column(String(50), nullable=True)
+    edition: Mapped[str] = mapped_column(String(50), nullable=False) # CURRENT / 1985
+    source_url: Mapped[Optional[str]] = mapped_column(String(500), nullable=True)
+    source_hash: Mapped[Optional[str]] = mapped_column(String(64), nullable=True)
+    source_metadata: Mapped[Optional[dict]] = mapped_column(JSONB, nullable=True)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=text("now()"))
+    updated_at: Mapped[Optional[datetime]] = mapped_column(DateTime(timezone=True), onupdate=text("now()"))
+
+
+class Lesson(Base):
+    """课。lesson_key 在课本内稳定（NCE 用 unit filename 作为 source identity）。"""
+
+    __tablename__ = "lessons"
+    __table_args__ = (
+        UniqueConstraint("book_id", "lesson_key", name="uq_lesson_book_key"),
+    )
+
+    id: Mapped[str] = mapped_column(String(100), primary_key=True)
+    book_id: Mapped[str] = mapped_column(String(100), ForeignKey("course_books.id"), nullable=False)
+    lesson_key: Mapped[str] = mapped_column(String(200), nullable=False)
+    title: Mapped[str] = mapped_column(String(200), nullable=False)
+    source_order: Mapped[int] = mapped_column(Integer, nullable=False)
+    audio_uri: Mapped[Optional[str]] = mapped_column(String(500), nullable=True)
+    audio_hash: Mapped[Optional[str]] = mapped_column(String(64), nullable=True)
+    audio_duration_ms: Mapped[Optional[int]] = mapped_column(Integer, nullable=True)
+    lrc_uri: Mapped[Optional[str]] = mapped_column(String(500), nullable=True)
+    lrc_hash: Mapped[Optional[str]] = mapped_column(String(64), nullable=True)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=text("now()"))
+    updated_at: Mapped[Optional[datetime]] = mapped_column(DateTime(timezone=True), onupdate=text("now()"))
+
+
+class TimedSentence(Base):
+    """逐句（LRC 行）。end_ms = next.start_ms；末句 end_ms = 真实 audio duration 或 NULL。"""
+
+    __tablename__ = "timed_sentences"
+    __table_args__ = (
+        UniqueConstraint("lesson_id", "source_entry_key", name="uq_sentence_lesson_entry"),
+    )
+
+    id: Mapped[str] = mapped_column(String(100), primary_key=True)
+    lesson_id: Mapped[str] = mapped_column(String(100), ForeignKey("lessons.id"), nullable=False)
+    source_order: Mapped[int] = mapped_column(Integer, nullable=False)
+    start_ms: Mapped[int] = mapped_column(Integer, nullable=False)
+    end_ms: Mapped[Optional[int]] = mapped_column(Integer, nullable=True)
+    english_text: Mapped[Optional[str]] = mapped_column(Text, nullable=True)
+    chinese_text: Mapped[Optional[str]] = mapped_column(Text, nullable=True)
+    raw_text: Mapped[Optional[str]] = mapped_column(Text, nullable=True)
+    source_line: Mapped[Optional[int]] = mapped_column(Integer, nullable=True)
+    source_entry_key: Mapped[str] = mapped_column(String(200), nullable=False)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=text("now()"))
+    updated_at: Mapped[Optional[datetime]] = mapped_column(DateTime(timezone=True), onupdate=text("now()"))
+
+
+class LessonVocabularyMembership(Base):
+    """课 ↔ canonical VocabularyItem。一个词在一课出现 10 次 = 1 条 membership + occurrence_count=10。"""
+
+    __tablename__ = "lesson_vocabulary_memberships"
+    __table_args__ = (
+        UniqueConstraint("lesson_id", "vocabulary_item_id", name="uq_lesson_vocab"),
+    )
+
+    id: Mapped[str] = mapped_column(String(100), primary_key=True)
+    lesson_id: Mapped[str] = mapped_column(String(100), ForeignKey("lessons.id"), nullable=False)
+    vocabulary_item_id: Mapped[str] = mapped_column(String(100), ForeignKey("vocabulary_items.id"), nullable=False)
+    first_sentence_id: Mapped[Optional[str]] = mapped_column(String(100), ForeignKey("timed_sentences.id"), nullable=True)
+    first_occurrence_order: Mapped[Optional[int]] = mapped_column(Integer, nullable=True)
+    occurrence_count: Mapped[int] = mapped_column(Integer, server_default=text("1"), nullable=False)
+    source_order: Mapped[Optional[int]] = mapped_column(Integer, nullable=True)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=text("now()"))
+    updated_at: Mapped[Optional[datetime]] = mapped_column(DateTime(timezone=True), onupdate=text("now()"))
+
+
+class SentenceVocabularyOccurrence(Base):
+    """句 ↔ 词出现记录（token offset 高亮/真实上下文/例句展示用）。"""
+
+    __tablename__ = "sentence_vocabulary_occurrences"
+    __table_args__ = (
+        UniqueConstraint("sentence_id", "vocabulary_item_id", "occurrence_index", name="uq_sentence_vocab_occurrence"),
+    )
+
+    id: Mapped[str] = mapped_column(String(100), primary_key=True)
+    sentence_id: Mapped[str] = mapped_column(String(100), ForeignKey("timed_sentences.id"), nullable=False)
+    vocabulary_item_id: Mapped[str] = mapped_column(String(100), ForeignKey("vocabulary_items.id"), nullable=False)
+    occurrence_index: Mapped[int] = mapped_column(Integer, nullable=False)
+    token_start: Mapped[Optional[int]] = mapped_column(Integer, nullable=True)
+    token_end: Mapped[Optional[int]] = mapped_column(Integer, nullable=True)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=text("now()"))
 
 
 class ReadingPassage(Base):

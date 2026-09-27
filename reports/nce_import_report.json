@@ -1,0 +1,100 @@
+{
+  "import_batch_id": "e0bc1ab1-6853-44dc-9d12-4285e7a10428",
+  "books": [
+    {
+      "book_key": "NCE1",
+      "edition": "CURRENT",
+      "lessons": 72,
+      "timed_sentences": 1514,
+      "unique_vocab": 1356,
+      "reused_existing_vocab": 1356,
+      "new_vocab": 0,
+      "resource_failures": 0
+    },
+    {
+      "book_key": "NCE2",
+      "edition": "CURRENT",
+      "lessons": 96,
+      "timed_sentences": 1429,
+      "unique_vocab": 2724,
+      "reused_existing_vocab": 2724,
+      "new_vocab": 0,
+      "resource_failures": 0
+    },
+    {
+      "book_key": "NCE3",
+      "edition": "CURRENT",
+      "lessons": 60,
+      "timed_sentences": 1725,
+      "unique_vocab": 4637,
+      "reused_existing_vocab": 4637,
+      "new_vocab": 0,
+      "resource_failures": 0
+    },
+    {
+      "book_key": "NCE4",
+      "edition": "CURRENT",
+      "lessons": 48,
+      "timed_sentences": 1377,
+      "unique_vocab": 4399,
+      "reused_existing_vocab": 4399,
+      "new_vocab": 0,
+      "resource_failures": 0
+    },
+    {
+      "book_key": "NCE1(85)",
+      "edition": "1985",
+      "lessons": 72,
+      "timed_sentences": 1310,
+      "unique_vocab": 1513,
+      "reused_existing_vocab": 1513,
+      "new_vocab": 0,
+      "resource_failures": 0
+    },
+    {
+      "book_key": "NCE2(85)",
+      "edition": "1985",
+      "lessons": 96,
+      "timed_sentences": 1792,
+      "unique_vocab": 2656,
+      "reused_existing_vocab": 2656,
+      "new_vocab": 0,
+      "resource_failures": 0
+    },
+    {
+      "book_key": "NCE3(85)",
+      "edition": "1985",
+      "lessons": 55,
+      "timed_sentences": 1916,
+      "unique_vocab": 4174,
+      "reused_existing_vocab": 4174,
+      "new_vocab": 0,
+      "resource_failures": 0
+    },
+    {
+      "book_key": "NCE4(85)",
+      "edition": "1985",
+      "lessons": 60,
+      "timed_sentences": 1954,
+      "unique_vocab": 5204,
+      "reused_existing_vocab": 5204,
+      "new_vocab": 0,
+      "resource_failures": 0
+    }
+  ],
+  "totals": {
+    "books": 8,
+    "lessons": 559,
+    "sentences": 13017,
+    "lesson_vocab_memberships": 26663,
+    "new_vocab": 0,
+    "reused_vocab": 26663,
+    "resource_failures": 0
+  },
+  "cross_source_reuse": {
+    "k12": 4779,
+    "zhongkao": 2449,
+    "gaokao": 4865
+  },
+  "blocked_resources": []
+}
