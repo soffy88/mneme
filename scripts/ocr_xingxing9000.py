@@ -7,7 +7,9 @@ OCR 慢、解析快，解析规则迭代时不必重跑 OCR。
 不写库。本脚本只负责把像素变成文本缓存。
 """
 
+import argparse
 import json
+import os
 import subprocess
 import sys
 import tempfile
@@ -17,7 +19,7 @@ from pathlib import Path
 from pypdf import PdfReader
 
 SRC = Path("/data/soffy/projects/mneme/data/external/vocab_src")
-OUT = Path("/tmp/opencode/ocr_cache")
+OUT = Path(os.environ.get("XIANGXING_OCR_DIR", "/tmp/opencode/ocr_cache"))
 DPI = 200
 
 VOLUMES = [
@@ -66,9 +68,22 @@ def ocr_page(job: tuple[str, int]) -> dict:
 
 
 def main() -> None:
+    ap = argparse.ArgumentParser(description="象形9000 PDF -> OCR 文本缓存")
+    ap.add_argument("--only", nargs="*", metavar="PDF",
+                    help="只处理指定册（文件名片段），缺省处理 VOLUMES 全部")
+    ap.add_argument("--append", action="store_true",
+                    help="追加到已有缓存而非覆盖，用于补跑单册")
+    args = ap.parse_args()
+
     OUT.mkdir(parents=True, exist_ok=True)
+    wanted = VOLUMES
+    if args.only:
+        wanted = [n for n in VOLUMES if any(k in n for k in args.only)]
+        if not wanted:
+            print(f"[stop] --only {args.only} 未匹配到任何册", flush=True)
+            return 1
     jobs: list[tuple[str, int]] = []
-    for name in VOLUMES:
+    for name in wanted:
         if not (SRC / name).exists():
             print(f"[skip] 缺失 {name}", flush=True)
             continue
@@ -78,8 +93,9 @@ def main() -> None:
 
     print(f"[run] 共 {len(jobs)} 页，DPI={DPI}，8 进程", flush=True)
     done = 0
+    mode = "a" if args.append else "w"
     with ProcessPoolExecutor(max_workers=8) as ex, \
-            (OUT / "ocr.jsonl").open("w", encoding="utf-8") as fh:
+            (OUT / "ocr.jsonl").open(mode, encoding="utf-8") as fh:
         futs = {ex.submit(ocr_page, j): j for j in jobs}
         for fut in as_completed(futs):
             try:

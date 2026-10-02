@@ -1446,7 +1446,10 @@ class VocabularyAffix(Base):
         unique=True,  # 每词只存首选分解，避免渲染歧义
     )
     prefix: Mapped[Optional[str]] = mapped_column(String(32))
-    root: Mapped[str] = mapped_column(String(48), nullable=False)
+    # 可空：只被讲清「前缀+后缀」的词（careless = care+less，其 care 被质量门
+    # 判为平凡而落空）没有词根位。NOT NULL 会让整批导入原子失败。见 alembic
+    # b9c8d7e6f5a4。
+    root: Mapped[Optional[str]] = mapped_column(String(48))
     suffix: Mapped[Optional[str]] = mapped_column(String(32))
     meaning_cn: Mapped[Optional[str]] = mapped_column(Text)   # 词根/词缀中文含义，如「说」「能…的」
     origin: Mapped[Optional[str]] = mapped_column(String(120))  # 来源语词，如 拉丁 capere
@@ -1462,6 +1465,53 @@ class VocabularyAffix(Base):
     __table_args__ = (
         Index("ix_vocab_affix_root", "root"),
         Index("ix_vocab_affix_suffix", "suffix"),
+    )
+
+
+class VocabularyXiangxing(Base):
+    """象形9000（百词斩）词条。
+
+    音标是**粗 ASCII 转写**（`['erb]`、`[e'bav]`），不是标准 IPA，与已有的
+    ARPAbet 不是一回事 —— 展示层不能混用，故独立成表，字段名 ipa_ascii 以示区别。
+
+    释义**不覆盖** vocabulary_items.meaning_cn：象形给的是词典详尽义项，课标给的是
+    适合该学段的精简义项，粒度不同而非冲突（与 VocabularyCollocation 同一原则）。
+
+    `ownership_verified` 记录归属是否经例句交叉验证：象形体把形近/音近词分组，
+    组头列多个词而其下只有一条详情块，仅凭行相邻会静默错配。判不出即置 false，
+    留作人工复核而非静默修补。见 alembic c5d6e7f8a9b0。
+    """
+
+    __tablename__ = "vocabulary_xiangxing"
+
+    id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True), primary_key=True, server_default=text("gen_random_uuid()")
+    )
+    vocabulary_item_id: Mapped[str] = mapped_column(
+        String(100),
+        ForeignKey("vocabulary_items.id", ondelete="CASCADE"),
+        nullable=False,
+        unique=True,
+    )
+    ipa_ascii: Mapped[Optional[str]] = mapped_column(String(48))
+    pos: Mapped[Optional[str]] = mapped_column(String(16))
+    meaning_cn: Mapped[str] = mapped_column(Text, nullable=False)
+    example_en: Mapped[Optional[str]] = mapped_column(Text)
+    example_cn: Mapped[Optional[str]] = mapped_column(Text)
+    source_volume: Mapped[str] = mapped_column(String(32), nullable=False)
+    ownership_verified: Mapped[bool] = mapped_column(
+        Boolean, nullable=False, server_default=text("false")
+    )
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), server_default=text("now()")
+    )
+    updated_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), server_default=text("now()"), onupdate=text("now()")
+    )
+
+    __table_args__ = (
+        Index("ix_vocab_xiangxing_item", "vocabulary_item_id"),
+        Index("ix_vocab_xiangxing_verified", "ownership_verified"),
     )
 
 
