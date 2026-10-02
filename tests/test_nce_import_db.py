@@ -497,4 +497,6 @@ def test_alembic_single_head():
     assert result.returncode == 0, result.stderr
     heads = [line for line in result.stdout.splitlines() if "(head)" in line]
     assert len(heads) == 1
-    assert "c3d4e5f6a7b9" in heads[0]
+    # 必须跟着最新的迁移走。新增迁移后改这里，并确认只有一个 head
+    # （多于一个说明有人把 down_revision 指错了，会在部署时炸）。
+    assert "c8d9e0f1a2b3" in heads[0]

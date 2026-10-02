@@ -95,6 +95,10 @@ services:
       SMTP_USER: ${SMTP_USER:-}
       SMTP_PASSWORD: ${SMTP_PASSWORD:-}
       SMTP_FROM: ${SMTP_FROM:-}
+      # 公网注册闸门：默认 0（关闭，fail-safe）。只有在需要有人自助注册时才
+      # 在 .env 里显式设 1。注意 EMAIL_PROVIDER=mock 时验证码是固定 123456
+      # 且 verify_email_code 的 mock 旁路生效，开着就等于把注册开放给任何人。
+      REGISTRATION_OPEN: ${REGISTRATION_OPEN:-0}
       # 环境标记：默认 dev（prod-safety 门不武装，行为不变）。真上线时设成 prod，
       # _assert_prod_safety 才会拒绝"默认JWT密钥/mock短信"启动。此前 MNEME_ENV
       # 只在 .env 里、没进 compose，pydantic 丢弃，那道门永远处于 dev 态形同虚设。

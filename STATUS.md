@@ -118,6 +118,257 @@ veya1.2-vl，OpenAI 兼容端点；Qwen 为显式云端 fallback）/ Docker Comp
 
 ## 🔄 进行中
 
+**Vocab Enrichment（2026-10-02 启动）**：拟增「词汇增强层」（图片/动画/语境）。
+调研后**未按原提案开工**，先纠三处前提（实测库，非推测）：
+
+| 提案假设 | 实测 |
+|---|---|
+| 词库已具备基础词义 | `meaning_cn` 非空仅 **298/24681 = 1.2%** |
+| 已具备逐词 FSRS 状态 | 机制**已实现**(U.19 `knowledge_point=vocab-{id}` 复用 KCMastery)，但 **vocab-* 卡片 = 0** |
+| 标准发音已有 | `phonetic_*` 非空 = **0** |
+
+- 外部图片 provider 集成 = 0；图片生成模型 = 无（仅 VLM 可做排序/描述）。
+- `vendor/oskill/asset_reference_inject.py` 是 hevi 视频 `shot_spec`，**与词汇无关**，无现成挂载点。
+- **已否决**：§4 影视片段（`license_status` 是字段不是授权；给未成年人分发版权片段
+  无授权依据）→ 改为 NCE 真实语境句，已获人决策同意。
+
+**P0 卡点（新发现，原提案未提）**：`backfill_vocab_glosses.py` 无法直接跑 ——
+24,383 个待回填词里 **24,381 没有 example_sentence**，脚本会退化成
+`example_sentence=word`（无上下文），违反 `_vocab_gloss_generate.py` 自述契约
+（「例句由语料库确定性抽取，不是 LLM 编的」）。
+另该脚本 `UPDATE ... WHERE word=%s`，而 `word` **不唯一**（240 个重复词），
+按词更新会把一个义项的释义覆盖到同名的其它行。
+
+**改序后的 P0（待批）**：先从既有语料确定性挖例句 ——
+`timed_sentences` 13,017 条双语句（`english_text`+`chinese_text`+lesson+时间轴）
+经 `sentence_vocabulary_occurrences` 覆盖 **9,809** 个待回填词
+（`bank` 河岸/银行双义均在句中）→ 喂既有生成器（此时才有真上下文）
+→ 同一批句子即 spec §4 获批的「NCE 真实语境」层。剩余 ~14,574 词待定。
+
+**P0.1 ✅（2026-10-02）**：`scripts/backfill_vocab_glosses.py` 两处静默数据损坏已修 ——
+(a) `WHERE word=%s` → `WHERE id=%s`（word 不唯一，240 词重复，按词更新会跨行覆盖）；
+(b) 无 `example_sentence` 的词不再 `ex or w` 拿词本身当例句（违反生成器契约，
+    多义词必错），改为跳过并打印跳过数。写入逻辑抽出 `apply_gloss_batch()` 以便单测，
+新增 `tests/test_backfill_vocab_glosses.py` 6 项，**变异验证**：改回 `WHERE word` → 4 败；
+恢复「只在有 meaning_cn 时对齐」→ 位置错位测试失败。均可复现。
+
+**P0.2 范围待批（关键）**：spec 公式「中考 ∪ 高考 ∪ 教材」实测 = **20,173** 词，
+与 spec 预期「3000~4000」差 6 倍。命中预期区间的是**交集** ∩ = **3,369**。
+且 ∩ 的语境覆盖显著更好：
+
+| 范围 | 词数 | 有 `timed_sentences` 语境 |
+|---|---|---|
+| ∪（spec 写的公式） | 20,173 | 5,601（27.8%） |
+| ∩（spec 的目标数字） |  3,369 | 2,308（**68.5%**） |
+
+`frequency_band` 对 ∩ 内 3,369 词**全部等于 5**，无法用于 Level A/B/C 分层
+（1000/2000/500），需另找判别维度。另：∩ 内 `meaning_cn` 已填充 = 0，全部待生成。
+
+**P0.2 ✅（2026-10-02）**：`scripts/freeze_core_exam_vocab.py` 固化
+`CORE_EXAM_VOCAB_SCOPE = ZHONGKAO ∩ GAOKAO ∩ K12_SYNC` = **3,369** 词，产出
+collection `core-exam-zhongkao-gaokao-k12`（kind=DERIVED / scope=CORE_EXAM /
+stage=UNKNOWN，跨学段）+ 3,369 条 memberships（uuid5 确定性 id + ON CONFLICT
+DO NOTHING）。已上生产并复跑验证幂等：collection=1 / memberships=3369 / dup=0 /
+orphan=0。dry-run 默认，不加 `--apply` 不写库。
+
+**P0.3a ✅（2026-10-02）**：`scripts/extract_vocab_examples.py` 从
+`timed_sentences` 确定性挖掘例句 → **2,308 词**已有 `example_sentence`
+（tier0=2234 / tier1=52 / tier2=22），1,061 词无语境按约定跳过。复跑幂等。
+只写 `example_sentence` 为空的行，按 **id** 更新（word 不唯一）。
+**与原 spec 偏差**：spec 要求「中考/高考教材优先」排序，但实测 559 个 lesson
+**全部是 NCE**（`lesson_key` 形如 `001&002.Excuse Me`）且 `lessons.book_id` 与
+`books` 表**零交集**，故无任何句子带中考/高考来源标注，该优先级无法实现；
+改为按句长分层(30–119 最佳) → occurrence_index → sentence_id 排序。
+
+**核心范围质量发现**：3,369 里有 **598 条是多词短语**（`a bit of` / `according to` /
+`agree with sb.`），真正单词/专名 **2,771**。「核心 3000 词」这个口径需要说明，
+否则验收数字会虚高 17.8%。
+
+**P0.3b 音标（待人决策格式）**：CMUdict 已取得（`data/external/cmudict.dict`，
+3.6MB / 135,166 词，许可明示「research or commercial purpose is completely
+unrestricted」，需致谢）。覆盖核心范围 **2,753/3,369 = 81.7%**；
+616 未命中中 598 是多词短语、18 个是英式拼写(`aeroplane/colourful/maths`)或
+缩略词(`P.E./VCD`)。**格式未定**：现有 `phonetic_*` 列由教材词表填 **IPA**
+（`/ˈæpl/`），而 CMUdict 是 **ARPAbet**（`AE1 P AH0 L`），混写会让同一列出现
+两种记音体系；且前端目前**零处**渲染 phonetic（无消费面）。`phonetic_uk` 应保持
+NULL —— CMUdict 只有美音，编造英音是错的。
+
+**P0.3b ✅（2026-10-02）**：新增 `vocabulary_items.phonetic_arpabet VARCHAR(100)`
+（alembic `a7b8c9d0e1f2`），存 CMUdict **原始 ARPAbet**。**不复用** `phonetic_us`：
+那三列装教材词表的 IPA，混写会出现两套记音体系；`phonetic_uk`/`generic` 保持 NULL
+（CMUdict 只有北美音，编造英音是错的）。`scripts/backfill_vocab_phonetics.py`
+回填核心范围 **2,757/3,369 = 81.8%**（直接 2,753 + 英式变体 4），复跑幂等。
+英式变体用**显式映射表**（不模糊匹配，映射错就是给孩子看错发音），命中自报
+`variant:airplane` 便于审计。612 未命中里绝大多数是多词短语（`hurry up`/`a bit of`）。
+
+⚠️ **过程中我自己踩了一个静默 bug**：CMUdict 解析写成 `rsplit(' ',1)`（按最后
+一个空格切），音标被截到只剩最后一个音素，表现为「核心词几乎全查不到」
+（0.1% 而非 81.7%）。若不复核极易误判成「词典覆盖不了核心词」而放弃这步。
+已加 `tests/test_vocab_phonetics.py` 12 项钉住（变异验证：改回 rsplit → 6 败）。
+
+⚠️ **每次加迁移要改 3 处**（第三个是这次才发现的漂移来源）：
+`services/routers/health.py:13 EXPECTED_MIGRATION_HEAD`（不改 → `/readiness` 503
+→ 容器 unhealthy）、`tests/test_nce_import_db.py:502` 的 head 断言、以及给
+`mneme_test` 补列（`alembic upgrade head` 在测试库上被既有漂移
+`vocabulary_items.language` 挡住，只能单独 ALTER）。建议后续把前两处改成
+「唯一来源」以消除这个重复维护点。
+
+**核心范围当前进度（生产实测）**：3,369 词 / 有例句 2,308 / 有音标 2,757 /
+**有 meaning_cn 仍为 0** → 下一步 P0.4。
+
+**P0.4a ✅（2026-10-02，重大发现改变了 P0.4 做法）**：调查中发现
+`vocabulary_items.canonical_meaning` 已存着**教材词表原文照搬**的多义中文释义
+（来源可追溯：`import_english_k12_vocab.py:169 canonical_meaning=e.definition_raw`
+← `parser.py:50` ← 教材 workbook 单元格；`source=k12_sync`）。样例：
+
+    bank   => "n. 银行；岸；浅滩；储库\nvt. 将…存入银行；倾斜转弯\nvi. 堆积；倾斜转弯"
+    protect=> "vt. 保护，防卫；警戒"
+
+这比「1 条 NCE 例句让 LLM 猜释义」更权威（词典原文 vs 推断）且免费、确定、无幻觉。
+故新增 `scripts/derive_meaning_from_canonical.py`（纯确定性派生，零 LLM），
+**已回填 2,200 词 meaning_cn**，复跑幂等。
+注意 `ai_generated=true` 在这些行上**不是**幻觉标记 —— 那是列默认值且从未被维护
+（核心范围 3,008 条 canonical_meaning 全部 true，0 条 false），别据此判断来源可信度。
+
+- `pos` **默认不写**（需 `--fill-pos`）：pos 是我从词性标签**推断**的，对专名/一词
+  多性明显出错（实测 `Tuesday → "n."`、`cool` 释义混了形容词义却标 `n.`）。
+  `meaning_cn` 是原文照搬可追溯，`pos` 是推断值，不把推断塞进展示字段。
+- 该列 **零消费面**（只有 importer 写、无人读），所以此前一直"沉睡"，本次首次启用。
+- 15 项单测钉住三类静默错误：IPA 被当释义、占位符被当释义、光秃词性标签（`n.`）
+  被当释义——最后一条是写测试时**当场发现**的真实 bug。
+
+**核心范围当前真实完成度（生产实测，务必按维度分开看）**：
+
+| 维度 | 词数 | 占 3,369 |
+|---|---|---|
+| meaning_cn 有值 | 2,200 | 65.3% |
+| NCE 例句有值 | 2,308 | 68.5% |
+| ARPAbet 音标有值 | 2,757 | 81.8% |
+| **释义 + 例句 齐全** | **1,715** | **50.9%** |
+| **释义 + 例句 + 音标 三者齐全** | **1,604** | **47.6%** |
+| 缺释义但有例句 → 可 LLM 生成 | 593 | 17.6% |
+| 缺释义且无例句 → 本阶段无解 | 576 | 17.1% |
+
+⚠️ 单看「音标 81.8%」会严重高估整体完成度，**三者齐全只有 47.6%**。
+好消息：原计划要 LLM 生成的规模从 2,308 缩到 **593**（4× 缩减）。
+807 条 canonical 是 IPA 而非释义（`escape`/`freedom`/`survive` 等，说明那些教材
+表把音标放进了释义列 —— 导入时的列错位，独立数据质量问题，未修）。
+
+**词汇源材料实测（2026-10-02，gdrive `考研成人/英语词汇书`）**：
+用户称 17 份，**实际只存在 14 份**。缺失 6 份含全部考研 5500 系列与
+`100个英语句子背完2000个中考单词` —— 恰好是能补例句缺口的那批。
+
+| 文件 | 文本层 | ∩ 核心 3,369 | 结论 |
+|---|---|---|---|
+| 威威GPT单词本 **.epub** | ✅ 7,948 词条 | **2,517 (74.7%)** | 覆盖率最高，但**内容是 LLM 生成**（其前言自述 ChatGPT），与 P0.4a「教材原文优先」原则冲突 |
+| (英译汉)1600词汇默写版 | ✅ | **1,120 (33.3%)** | 可补 pos，无幻觉风险 |
+| 2022版课标新增词汇 | ❌ 扫描件(10页/610字符) | ? | 含**用法搭配**（当前完全缺失的能力），需 OCR |
+| 1600单词默写（音标词性中文） | ❌ 扫描件(40页/40字符) | ? | 需 OCR |
+| DK×3 / EvI×3 (260MB) | 未测 | 大概率≈0 | 高级 ESL，与中考范围不重叠 |
+| 词根合集 (340页) | ✅ | — | 教学指南非词表 |
+
+⚠️ **opencode 历史会话无词汇内容**：`ses_f0942195effeIUeFTyOiIFL1cy` 就是当前这个
+会话（"sxueji.com首页空白无法进入"）。全库 390 个 session **0 个**标题含
+英语/词汇/单词/音标；含「词根分析/词缀分析」的仅 2 条、含「例句」的 15 条中
+**13 条在当前会话内**，另 2 条是 NCE 任务规格文档。无任何词汇图片资产。
+
+**OCR 已装并可用**（`rapidocr-onnxruntime` pip，无需系统包）。课标 PDF 实测
+10 页/829 文本块/conf 中位数 0.795。但有两个必须先解决的问题：
+1. **多栏表格版式** —— 朴素「先 y 后 x」聚类会把不同栏混到同一行（已实证）；
+2. **OCR 恰好破坏我们要入库的字段** —— `.煮沸;烧开` 丢了 `v`、`adi.成年的`
+   应为 `adj.`、`biologylab` 少空格、`n．& .帮助;援助` 乱码。词性字段出错
+   会直接被学生背下来，属高危。
+
+**词根词缀（用户要求卡片面按 前缀·词根·后缀 显示）**：唯一来源是威威GPT 的
+`词根分析`/`词缀分析` 字段，但那是**自由散文且自相矛盾**（`discover` 先说
+root=`dis-`+`cooperire`，紧接着又说「该单词没有前缀和后缀。中缀是 -ver」），
+需要再做一次结构化抽取 = 多一层 LLM 误差面。
+
+**P1 ✅（2026-10-02）词性回填**：从 `(英译汉)1600词汇单词默写版.pdf`（人工编排的
+固定词表，`pos` 是表里显式标注而非推断，无幻觉风险）确定性回填核心范围
+**1,568 词 pos (46.5%)**，复跑幂等。`scripts/import_pos_from_dictation.py`。
+源表用中文教材缩写 `a`(形容词)/`ad`(副词)，已归一化为 `adj`/`adv`。
+用 **pymupdf** 抽取而非 `pdftotext -layout` —— API 镜像无 poppler，而 pymupdf
+已是 requirements 声明依赖。括号屈折标注 `bad (worse, worst) a` 会额外按裸词
+`bad` 索引一份，否则查 `vocabulary_items.word` 永远 miss。
+
+⚠️ 解析器踩坑两次，都已加测试：第一版用「尾部正则匹配词性」被贪婪匹配吃掉
+单词一部分（`ability n` → pos=`ity n`），解析率只有 **36/1600**；改成逐 token
+摘除后 1484/1600。`&`/`,` 作连接符时须透明摘除，否则 `prep & ad` 只认到 `ad`。
+
+**P2 ✅（2026-10-02）`vocabulary_affixes` 表已建**（alembic `f2a3b4c5d6e7`，
+已上生产；index `ix_vocab_affix_root` / `ix_vocab_affix_suffix`）：
+`prefix`/`root`/`suffix` 三列**分开存**（可按词根反查同根派生词 —— 独立表才建得起
+索引），展示串 `前缀·词根·后缀` 由 `services/vocab_affixes.format_affix_chain()`
+生成、**不落库**。分隔符契约：半角 `·` 两侧各一空格，**缺段不留空占位**
+（`pre · dict ·` 是错的，会在卡片上多出空格子）。15 项测试钉死。
+每词一条（UNIQUE），避免渲染歧义。合规：全局参考数据非学生 PII，FK 带
+ON DELETE CASCADE，故不进 purge 清单（同 vocabulary_items）。
+⚠️ 表已建但**尚无数据** —— 唯一来源是威威GPT 的自由散文词根分析且自相矛盾
+（`discover` 先说 root=`dis-`+`cooperire`，紧接又说「没有前缀和后缀。中缀 -ver」），
+需要再做一次结构化抽取，未做。15 项 affix 测试全绿。
+
+**核心范围当前完成度（生产实测，四维）**：
+
+| 维度 | 词数 | 占 3,369 |
+|---|---|---|
+| meaning_cn | 2,200 | 65.3% |
+| pos | 1,568 | 46.5% |
+| NCE 例句 | 2,308 | 68.5% |
+| ARPAbet 音标 | 2,757 | 81.8% |
+| **释义+词性+例句+音标 四者齐全** | **1,252** | **37.2%** |
+
+（单看任一维度都会高估；四者齐全 37.2% 才是真实完成度。）
+
+**P3 🔶（2026-10-02）课标「用法搭配」抽取器已建，但产出是复核队列、未入库**：
+`scripts/extract_curriculum_collocation.py`。**关键技术决定**：不能用「按 y 聚类
+猜行」—— 第一版这么做，产出 76 条「通过校验」的记录，但**词与释义整体错位**
+（`196 pressure→王子`、`197 prince→公主`、`11 aid→闹钟`），这不是 OCR 噪声而是行
+对齐错误（实测同一记录内 word/meaning/搭配 三块 y 坐标不同：attack y=411 而
+U.攻击 y=384、序号 y=413）。改为**从 PDF 矢量表格线建精确单元格网格**
+（40 水平线 / 12 垂直线，去重后 5 列×约 20 行/页），OCR 块按中心点投影到单元格，
+对齐由表格结构保证。修正后配对正确：`accident→交通事故;意外遭遇`、`account→账户`、
+`breath→（呼吸的)空气;吸气`。
+
+当前产出（10 页）：通过机械校验 **74 条**，提取搭配 **31 条**。拒绝分布：
+`no_chinese_meaning: 81`（列下标硬编码 col==2，部分行错列，**主要剩余缺口**）、
+`pos_not_in_whitelist: 29`、`no_word: 7`、`ocr_junk_in_meaning: 4`。
+
+⚠️ **不进展示层的硬理由**：OCR 中文会出**形近错字**且机械校验拦不住 ——
+`v.攻击;袭击` 被识别成 `U.攻击;秤击`，`adj.` 成 `adi.`。词义单元格还会被塞进
+杂散记号（`n.＆.疼痛`、`& .帮助;援助`），已按「拒绝而非启发式清洗」处理
+（脏数据进复核队列，不静默修补）。给 K-12 学生背的释义错一字就是错的，故
+**必须人工过一遍**才能入库。复核队列：
+`data/external/vocab_src/curriculum_collocations_review.json`。
+
+**P3 ✅（2026-10-02）课标「用法搭配」已入库**（alembic `c8d9e0f1a2b3`，
+表 `vocabulary_collocations`，含 `phrase_en` 反查索引）。66 条搭配 / 59 个词，复跑幂等。
+
+三个静默错误全部定位并钉测试（`tests/test_curriculum_collocation.py` 16 项）：
+1. **行对齐用 y 聚类 → 词义整体错位**（`196 pressure→王子`、`197 prince→公主`）。
+   同一记录三块 y 坐标不同（attack y=411 / U.攻击 y=384 / 序号 y=413）。改为
+   **从 PDF 矢量表格线建单元格**（40 水平线 + 12 垂直线 → 5 列×约 20 行/页），
+   对齐由表格结构保证。
+2. **列下标硬编码 col==2 → 81 行找不到词义**。实测词义列在 c2/c3/c4 之间跳
+   （p1=c2 p2=c4 p4=c3 p5=c2 p6=c3…），因为某些页多检测到一条竖线。改为
+   `profile_columns()` 按**内容特征**判定列角色（数字=序号 / 英文=单词 /
+   首个中文占比过半=词义 / 其右=搭配）。修正后 74→**148 条**，该类拒绝归零。
+3. **一个单元格含多条搭配时只在第一个汉字切** → 第二条的英文混进第一条中文
+   （`traffic accident` 的 phrase_cn 里塞了 `by accident`）。改为拉丁/中文交替切分。
+
+**入库门控（关键）**：OCR 不可全信，但**可用教材词表原文（可追溯）交叉验证**。
+对同一词比对汉字重合度，`<0.30` 不加载进 review 分区。实测 67 条可比对，
+平均覆盖 75.1%，仅 4 条无共同汉字，逐条判读**全部是义项选择差异而非错配**
+（`novel` 课标=长篇小说/教材=新奇的：课标教名词义项；`master` 课标给名词义、
+教材给动词义）。故 OCR 质量**足以入库**。
+
+词义**不覆盖** meaning_cn：课标是「适合该学段的精简义项」，教材是详尽词典释义，
+粒度不同而非冲突（`accident` 课标=交通事故;意外遭遇 / 教材=事故；意外；意外事件；机遇）。
+
+**已知残余**：63 条 `pos_not_in_whitelist` 被拒 —— 正是它们拦住了 OCR 噪声
+（`attack` 的 pos 被读成 `u`、释义 `袭击`→`秤击`）。`u`/`c` 已从词性白名单移除，
+因为它们是语法记号且会放过 `v.` 的误读。
+
 **Aria 数字人全链路**（2026-07-31）：
 - Phase 1 ✅：3D VRM 默认路径 + Director 骨骼指令 + 2D 代码全删
 - Phase 2 ✅：viseme 口型（edge-tts WordBoundary → VRM blendshape）+ MIDI 手指弹琴
@@ -234,6 +485,17 @@ veya1.2-vl，OpenAI 兼容端点；Qwen 为显式云端 fallback）/ Docker Comp
 - **仓库许可证**：尚未选定法律许可证；不能由 agent 擅自添加 SPDX/许可证文本。
 - **U.21 课标标注量产**：需更强模型（当前 qwen2.5vl:7b 错误率 ~5-8%，骨架可接受但量产不够）
 - **ship-gate 四条**：真人 pilot / KU→chunk 精度 / Z 回测 / 测试=生产 CI 收敛
+- **Vocab Enrichment 剩余 ~14,574 词无语境源**：9,809 词可从 `timed_sentences`
+  确定性挖例句；其余需决定扩语料 / 降级为无义项释义 / 暂不覆盖。**不能**用无上下文
+  的 LLM 猜义（`bank` 这类多义词会直接出错）。
+- **Vocab 图片 provider 法务**：Unsplash/Pixabay 等是否允许「持久化 URL + 面向
+  未成年人产品展示」需逐 provider 审 license；`license` 列不等于授权。
+- **CORE_EXAM_VOCAB_SCOPE 取 ∪ 还是 ∩**：spec 公式写 ∪（实测 20,173），目标数字
+  是 ∩（3,369）。二者差 6 倍，需人明确后才能固化范围脚本。
+- **`vendor/oprim` 无法扩展**（阻塞 spec P0.4/P0.5）：`_vocab_gloss_generate.py` 已进
+  `3o-replication-lock.json`（`scripts/check.sh` 会卡），且 `/data/soffy/projects/platform`
+  **不是 git 仓库**，AGENTS.md 要求的「canonical 仓提交 → sync_3o_from_platform」路径
+  当前不可执行。故 senses/confidence 版生成器只能新写（`scripts/`），不能改 vendor。
 
 ---
 

@@ -102,6 +102,20 @@ class LoginEmailReq(BaseModel):
     _v = field_validator("email")(lambda cls, v: _validate_email(v))
 
 
+class LoginPasswordReq(BaseModel):
+    """密码登录请求。密码本身不做格式校验——策略在哈希时统一把关，
+    否则"格式非法"与"密码错误"会给出不同响应，可用于探测。"""
+
+    email: str
+    password: str
+
+    _v = field_validator("email")(lambda cls, v: _validate_email(v))
+
+
+class SetPasswordReq(BaseModel):
+    password: str
+
+
 @router.post("/v1/auth/send-code")
 async def post_send_code(payload: SendCodeInput):
     """POST /v1/auth/send-code — 发送短信验证码，存 Redis TTL=5min，60s防刷。"""
@@ -234,6 +248,39 @@ async def post_login_email(
     return result
 
 
+@router.post("/v1/auth/login-password")
+async def post_login_password(
+    payload: LoginPasswordReq, db: AsyncSession = Depends(get_db)
+):
+    """密码登录（可选通道）。账号不存在与密码错误返回同一 401，避免枚举邮箱。
+
+    未设密码的账号（password_hash IS NULL）同样回 401"邮箱或密码错误"，
+    不会泄露"该账号存在但没密码"。
+    """
+    result = await auth_service.login_password(
+        db=db, email=str(payload.email), password=payload.password
+    )
+    if "error" in result:
+        raise HTTPException(status_code=result["error_code"], detail=result["error"])
+    return result
+
+
+@router.post("/v1/auth/password")
+async def post_set_password(
+    payload: SetPasswordReq,
+    db: AsyncSession = Depends(get_db),
+    user: User = Depends(get_current_user),
+):
+    """为当前登录用户设置/修改密码。需已持有有效 token。"""
+    result = await auth_service.set_password(
+        db=db, user=user, password=payload.password
+    )
+    if "error" in result:
+        raise HTTPException(status_code=result["error_code"], detail=result["error"])
+    await db.commit()
+    return result
+
+
 @router.get("/v1/auth/me")
 async def get_me(user: User = Depends(get_current_user)):
     """当前用户信息。"""
@@ -246,6 +293,8 @@ async def get_me(user: User = Depends(get_current_user)):
         "grade": getattr(user, "grade", None),
         "invite_code": user.invite_code,
         "share_process_with_parent": getattr(user, "share_process_with_parent", False),
+        # 仅本人可见（此路由需 token），供前端决定是否展示"密码登录"入口。
+        "has_password": auth_service.has_password(user),
     }
 
 

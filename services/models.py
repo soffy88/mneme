@@ -131,6 +131,10 @@ class User(Base):
         Boolean, server_default=text("false")
     )  # L6 隐私分层
     invite_code: Mapped[Optional[str]] = mapped_column(String(6), unique=True)
+    # 可选密码登录：bcrypt 哈希。NULL = 未设密码，该账号只走手机/邮箱验证码。
+    # 绝不进任何响应体——auth_service 的 user 字典全部手工构造（不序列ORM对象），
+    # 改动那里时务必继续显式列字段。见 alembic b7c8d9e0f1a2。
+    password_hash: Mapped[Optional[str]] = mapped_column(String(255))
     # U.23 UDL 无障碍：字体/行距/配色/低带宽偏好，跨设备持久化。渲染在 mneme-web
     # 前端，这里只存偏好 + 供后端按需裁剪响应（低带宽模式）。默认空={} = 未设置，
     # 前端按各自默认值展示，不代表"无障碍"。
@@ -1364,6 +1368,10 @@ class VocabularyItem(Base):
     phonetic_uk: Mapped[Optional[str]] = mapped_column(String(100), nullable=True)
     phonetic_us: Mapped[Optional[str]] = mapped_column(String(100), nullable=True)
     phonetic_generic: Mapped[Optional[str]] = mapped_column(String(100), nullable=True)
+    # CMUdict 原始 ARPAbet（AE1 P AH0 L）。**不要**与上面三列的 IPA 混写——
+    # 那三列由教材词表填 IPA，混在一起会让同一批数据出现两套记音体系。存原始
+    # 值，IPA/TTS 未来从它派生。见 alembic a7b8c9d0e1f2。
+    phonetic_arpabet: Mapped[Optional[str]] = mapped_column(String(100), nullable=True)
     
     created_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True), server_default=text("now()")
@@ -1416,6 +1424,86 @@ class VocabularyCollectionMembership(Base):
 
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=text("now()"))
     updated_at: Mapped[Optional[datetime]] = mapped_column(DateTime(timezone=True), onupdate=text("now()"))
+
+class VocabularyAffix(Base):
+    """词根词缀分解（prefix · root · suffix）。
+
+    独立成表而非加在 vocabulary_items 上：同一词根横跨几十个互不相干的单词，
+    「按词根反查同根派生词」是本表的主要用途，独立表才建得起索引。
+    展示串（前缀·词根·后缀）由 services.vocab_affixes.format_affix_chain() 生成，
+    **不落库** —— 落库就退化成不可查询的拼接串了。
+    """
+
+    __tablename__ = "vocabulary_affixes"
+
+    id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True), primary_key=True, server_default=text("gen_random_uuid()")
+    )
+    vocabulary_item_id: Mapped[str] = mapped_column(
+        String(100),
+        ForeignKey("vocabulary_items.id", ondelete="CASCADE"),
+        nullable=False,
+        unique=True,  # 每词只存首选分解，避免渲染歧义
+    )
+    prefix: Mapped[Optional[str]] = mapped_column(String(32))
+    root: Mapped[str] = mapped_column(String(48), nullable=False)
+    suffix: Mapped[Optional[str]] = mapped_column(String(32))
+    meaning_cn: Mapped[Optional[str]] = mapped_column(Text)   # 词根/词缀中文含义，如「说」「能…的」
+    origin: Mapped[Optional[str]] = mapped_column(String(120))  # 来源语词，如 拉丁 capere
+    source: Mapped[str] = mapped_column(String(32), server_default=text("'WLLM'"))
+    confidence: Mapped[Optional[float]] = mapped_column(Float)
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), server_default=text("now()")
+    )
+    updated_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), server_default=text("now()"), onupdate=text("now()")
+    )
+
+    __table_args__ = (
+        Index("ix_vocab_affix_root", "root"),
+        Index("ix_vocab_affix_suffix", "suffix"),
+    )
+
+
+class VocabularyCollocation(Base):
+    """课标「用法搭配」（短语搭配）。
+
+    独立成表而非加在 vocabulary_items 上：搭配要能反查（「哪些词共享
+    `out of breath`」），独立表才建得起索引。
+
+    词义**不在**这里 —— meaning_cn 保持教材词表原文（更完整）；课标给的是适合
+    该学段的精简义项，粒度不同而非冲突，不应覆盖。见 alembic c8d9e0f1a2b3。
+    """
+
+    __tablename__ = "vocabulary_collocations"
+
+    id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True), primary_key=True, server_default=text("gen_random_uuid()")
+    )
+    vocabulary_item_id: Mapped[str] = mapped_column(
+        String(100),
+        ForeignKey("vocabulary_items.id", ondelete="CASCADE"),
+        nullable=False,
+    )
+    phrase_en: Mapped[str] = mapped_column(Text, nullable=False)
+    phrase_cn: Mapped[str] = mapped_column(Text, nullable=False)
+    source: Mapped[str] = mapped_column(String(32), server_default=text("'CURRICULUM_OCR'"))
+    confidence: Mapped[Optional[float]] = mapped_column(Float)
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), server_default=text("now()")
+    )
+    updated_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), server_default=text("now()"), onupdate=text("now()")
+    )
+
+    __table_args__ = (
+        UniqueConstraint(
+            "vocabulary_item_id", "phrase_en", "phrase_cn", name="uq_vocab_collocation"
+        ),
+        Index("ix_vocab_collocation_phrase_en", "phrase_en"),
+        Index("ix_vocab_collocation_item", "vocabulary_item_id"),
+    )
+
 
 class VocabularyImportBatch(Base):
     __tablename__ = "vocabulary_import_batches"

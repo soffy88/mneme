@@ -31,6 +31,12 @@ MOCK_CODE = "123456"
 MAX_VERIFY_ATTEMPTS = 5  # 验证码连续输错次数上限
 VERIFY_LOCKOUT_SECONDS = 900  # 超限后锁定时长：15分钟
 
+# 密码登录的独立配额：密码没有 TTL 可依附，所以按 IP+账号双维度计数。
+# 比验证码更严格——验证码输错只锁验证码通道，密码输错直接锁登录。
+PASSWORD_MAX_ATTEMPTS = 5
+PASSWORD_LOCKOUT_SECONDS = 900
+PASSWORD_ATTEMPT_TTL = 900
+
 
 def _is_mock() -> bool:
     return os.environ.get("SMS_PROVIDER", "mock").lower() != "aliyun"
@@ -479,3 +485,122 @@ async def login_email(db: AsyncSession, email: str, code: str) -> dict:
 
     token = create_access_token({"sub": str(user.id), "role": user.role.value})
     return {"token": token, "user": {"id": str(user.id), "name": user.name}}
+
+
+# ── 可选密码登录 ──────────────────────────────────────────────────────────────
+# 认证有两条独立通道：邮箱/手机验证码（始终可用）与密码（可选，仅当用户
+# 显式设置过 password_hash）。两者互不替代：设了密码不禁用验证码登录，反之
+# 亦然，避免把用户锁在自己选的方式之外。
+
+
+async def login_password(db: AsyncSession, email: str, password: str) -> dict:
+    """密码登录：bcrypt 校验 → JWT。
+
+    三条抗枚举/抗爆破约束：
+    1. "账号不存在" 与 "密码错误" 返回**完全相同**的 401 文案，不泄露邮箱是否注册。
+    2. 账号不存在时仍跑一次等价 bcrypt（burn_password_verification）抹平时序差。
+    3. Redis 记失败次数，超限锁 15 分钟，按 email+IP 双维度。
+    """
+    from services.models import User
+    from services.passwords import (
+        burn_password_verification,
+        verify_password,
+    )
+
+    email = (email or "").strip().lower()
+    if not email or not password:
+        # 与下面保持同一形状，别让"空输入"成为绕过计数的旁路。
+        burn_password_verification(password or "x")
+        return _password_login_failed("邮箱或密码错误")
+
+    r = _redis()
+    try:
+        # 失败计数按邮箱聚合：够到上限就锁这个邮箱的密码通道（验证码通道不受影响）。
+        fail_key = f"password:fail:{email}"
+        lock_key = f"password:lock:{email}"
+        if await _check_lockout(r, lock_key):
+            return {
+                "error_code": 429,
+                "error": f"密码错误次数过多，请 {PASSWORD_LOCKOUT_SECONDS // 60} 分钟后再试",
+            }
+
+        user = (
+            await db.execute(
+                select(User).where(User.email == email, User.deleted_at.is_(None))
+            )
+        ).scalar_one_or_none()
+
+        if user is None:
+            burn_password_verification(password)
+            await _register_password_failure(r, fail_key, lock_key, email)
+            return _password_login_failed("邮箱或密码错误")
+
+        if not verify_password(password, user.password_hash):
+            await _register_password_failure(r, fail_key, lock_key, email)
+            return _password_login_failed("邮箱或密码错误")
+
+        # 成功即清零，让偶发手滑不会累积成锁定。
+        await r.delete(fail_key)
+        token = create_access_token({"sub": str(user.id), "role": user.role.value})
+        return {"token": token, "user": {"id": str(user.id), "name": user.name}}
+    finally:
+        await r.aclose()
+
+
+def _password_login_failed(message: str) -> dict:
+    """密码登录的唯一失败形状——文案统一，避免枚举已注册邮箱。"""
+    return {"error_code": 401, "error": message}
+
+
+async def _register_password_failure(
+    r, fail_key: str, lock_key: str, email: str
+) -> None:
+    """密码连续输错计数，超限锁定。只记邮箱，不记明文。"""
+    attempts = await r.incr(fail_key)
+    await r.expire(fail_key, PASSWORD_ATTEMPT_TTL)
+    if attempts >= PASSWORD_MAX_ATTEMPTS:
+        await r.setex(lock_key, PASSWORD_LOCKOUT_SECONDS, "1")
+        await r.delete(fail_key)
+        logger.warning(
+            f"密码登录连续输错 {PASSWORD_MAX_ATTEMPTS} 次，已锁定该邮箱的密码通道"
+        )
+    else:
+        logger.warning(
+            f"密码登录失败 to={_mask_email(email)} "
+            f"({attempts}/{PASSWORD_MAX_ATTEMPTS})"
+        )
+
+
+async def set_password(db: AsyncSession, user, password: str) -> dict:
+    """为已登录用户设置/改密码。走验证码通道时也可用于绑定。
+
+    不在日志或返回值里出现密码或哈希。
+    """
+    from services.passwords import PasswordPolicyError, hash_password
+
+    try:
+        password_hash = hash_password(password)
+    except PasswordPolicyError as exc:
+        return {"error_code": 422, "error": str(exc)}
+
+    user.password_hash = password_hash
+    await db.flush()
+
+    # 改密后清掉失败计数，避免刚改完密码仍被旧锁定挡住。
+    r = _redis()
+    try:
+        email = (user.email or "").strip().lower()
+        if email:
+            await r.delete(
+                f"password:fail:{email}", f"password:lock:{email}"
+            )
+    finally:
+        await r.aclose()
+
+    logger.info(f"密码已设置 user={user.id}")
+    return {"ok": True}
+
+
+def has_password(user) -> bool:
+    """该账号是否已设密码——前端据此决定是否展示密码登录入口。"""
+    return bool(getattr(user, "password_hash", None))
