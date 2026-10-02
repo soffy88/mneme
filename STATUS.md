@@ -369,6 +369,57 @@ U.攻击 y=384、序号 y=413）。改为**从 PDF 矢量表格线建精确单�
 （`attack` 的 pos 被读成 `u`、释义 `袭击`→`秤击`）。`u`/`c` 已从词性白名单移除，
 因为它们是语法记号且会放过 `v.` 的误读。
 
+**P4 ✅（2026-10-02）词根词缀分解已入库**（alembic `b9c8d7e6f5a4`，
+`scripts/import_vocab_affixes.py`）。核心范围 3,369 词 → **379 条分解**，复跑幂等。
+
+1. **`root` 改可空**（迁移 `b9c8d7e6f5a4`）。原迁移 `f2a3b4c5d6e7` 把 `root` 定为
+   NOT NULL，隐含假设「每个可入门的词都必有词根」。该假设不成立：只被讲清
+   「前缀+后缀」的词（`careless` = care+less，其 care 被质量门判为平凡而落空）
+   会让整个事务**原子失败**（实测 0 行写入）。`format_affix_chain` 本就支持
+   缺失段位，NOT NULL 与之矛盾。
+2. **形态校验挡住 295 条幻觉**：词缀段必须真实重建原词（`pre` 在首 / `able` 在尾 /
+   `fact` 在内），否则 `discover` 的 `cooperire` 这类会被拒。
+3. **一条自己写的过度拒绝规则，已修**：「词根位于词末即判为后缀」会砍掉大批真
+   拉丁词根 —— `predict→dict`、`factory→fact`、`conduct→duct`、`reject→ject`、
+   `inspect→spect`。已移除，只保留「平凡词根」过滤（等于整词/相差≤2），
+   并用 `test_predict_root_dict_is_kept` 钉住防回退。
+4. **归一化去掉连字符**：SEG 允许尾连字符但不允许首连字符，直接存会出现
+   `pre-` 与 `dict` 并存的不一致形态。连字符是书写习惯，由
+   `format_affix_chain` 按位置决定，不混进数据。
+
+留空 2,993 词，原因分布：`explicit_no_affix` 961（散文明确写无词缀）/
+`morphology_mismatch` 295（形态对不上）/ `nothing_extracted` 882 / `no_affix_section` 5。
+
+⚠️ **待处理（诚实标注，非词源）**：这 379 条的权威来源是散文里
+「词根/前缀/后缀」的**标注**，不是历史语言学。散文自身就常把词干/后缀写成
+「词根」（`careless→less`、`chinese→ese`、`colour→col`）。按「单词深度记忆引擎
+V2」自己的标准（*"如果所谓'词根记忆法'只是人为联想，必须明确这是'记忆联想'，
+不是历史词源"*），这些属于**记忆联想**，须与已校验词源分层 —— 见下方
+🚨 Needs Human。
+
+🚨 **Needs Human（2026-10-02）词源 / 联想分层未定，两处都卡住**：
+
+1. **`vocabulary_affixes` 缺 `status` 字段**。379 条里混了两种不同性质的断言
+   （已校验词源 vs 人为联想），当前无字段可区分，展示层无法把猜测与事实同权呈现。
+2. **V2「单词深度记忆引擎」的定位**。它是**设计规格**而非数据源：记忆电影、
+   声音钩子、拼写钩子都是生成式联想，不是事实。若要落地需先定 schema
+   （`verified_etymology` / `disputed` / `mnemonic_only`），并让生成走
+   `services/mcp_router.py` 这一唯一入口（AGENTS.md 红线），而非本地脚本。
+   规模上只应把 §七「长期记忆卡」喂进 FSRS（每词 1 个 KC：释义↔拼写），
+   长文本按需查阅，不作复习材料。
+
+**象形9000（新增素材）已验证可行性**（`scripts/ocr_xingxing9000.py`）：
+- 6 册 PDF 是**纯位图扫描**（600 DPI CCITT G4，**零文本层**），第一册下另有
+  .docx 文本版。
+- OCR 实测可用：RapidOCR 8.5s/页，置信度 0.85–0.94。
+- **归属解析是必须的一步**：象形体把**形近/音近词分组**，组头列多个词、其下
+  只有一条详情块，行相邻会**静默错配**（`absent` 拿到了 `solitary` 的音标释义，
+  `admire` 拿到了 `recognize` 的）。归属由**例句中出现哪个词**判定，判不出就
+  留空（宁缺勿错）。
+- 第一册下（docx）实测：归属确定 885 词 ∩ 核心范围 **263（7.8%）**，
+  全部含音标 + 释义 + 例句 + 译文；剔除 405 个片段词（`SOL`+`ITARY` 这类
+  象形拆字）。
+
 **Aria 数字人全链路**（2026-07-31）：
 - Phase 1 ✅：3D VRM 默认路径 + Director 骨骼指令 + 2D 代码全删
 - Phase 2 ✅：viseme 口型（edge-tts WordBoundary → VRM blendshape）+ MIDI 手指弹琴
