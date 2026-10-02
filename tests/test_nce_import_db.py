@@ -499,4 +499,4 @@ def test_alembic_single_head():
     assert len(heads) == 1
     # 必须跟着最新的迁移走。新增迁移后改这里，并确认只有一个 head
     # （多于一个说明有人把 down_revision 指错了，会在部署时炸）。
-    assert "c5d6e7f8a9b0" in heads[0]
+    assert "a3b4c5d6e7f8" in heads[0]

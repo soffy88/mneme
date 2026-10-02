@@ -1453,6 +1453,13 @@ class VocabularyAffix(Base):
     suffix: Mapped[Optional[str]] = mapped_column(String(32))
     meaning_cn: Mapped[Optional[str]] = mapped_column(Text)   # 词根/词缀中文含义，如「说」「能…的」
     origin: Mapped[Optional[str]] = mapped_column(String(120))  # 来源语词，如 拉丁 capere
+    # 该分解的可信档位。379 条的权威来源只是散文里的「词根/前缀/后缀」**标注**，
+    # 不是历史语言学 —— 散文自身就常把词干/后缀写成「词根」（careless→less、
+    # chinese→ese）。展示层必须据此区分「参考表佐证」与「记忆联想」，不得同权呈现。
+    # 见 alembic a3b4c5d6e7f8。
+    etymology_status: Mapped[str] = mapped_column(
+        String(24), nullable=False, server_default=text("'mnemonic_association'")
+    )
     source: Mapped[str] = mapped_column(String(32), server_default=text("'WLLM'"))
     confidence: Mapped[Optional[float]] = mapped_column(Float)
     created_at: Mapped[datetime] = mapped_column(
@@ -1465,6 +1472,7 @@ class VocabularyAffix(Base):
     __table_args__ = (
         Index("ix_vocab_affix_root", "root"),
         Index("ix_vocab_affix_suffix", "suffix"),
+        Index("ix_vocab_affix_ety_status", "etymology_status"),
     )
 
 

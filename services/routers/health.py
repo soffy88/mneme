@@ -10,7 +10,7 @@ from obase.db import get_db
 from services.readiness import health_payload, readiness_payload
 
 # Must match `alembic heads` (immersive InteractionSource revision).
-EXPECTED_MIGRATION_HEAD = "c5d6e7f8a9b0"
+EXPECTED_MIGRATION_HEAD = "a3b4c5d6e7f8"
 
 router = APIRouter(tags=["health"])
 
