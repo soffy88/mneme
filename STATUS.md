@@ -397,16 +397,24 @@ V2」自己的标准（*"如果所谓'词根记忆法'只是人为联想，必�
 不是历史词源"*），这些属于**记忆联想**，须与已校验词源分层 —— 见下方
 🚨 Needs Human。
 
-🚨 **Needs Human（2026-10-02）词源 / 联想分层未定，两处都卡住**：
+✅ **词源/联想分层已落地**（2026-10-02，alembic `a3b4c5d6e7f8`，
+`services/vocab_affixes.py`）：`vocabulary_affixes.etymology_status` 三档
+`reference_confirmed` 67 / `mnemonic_association` 288 / `disputed` 24。
+展示层契约：`is_source_bearing()` 决定能否当词源讲，`disputed` 默认**不展示**，
+`affix_payload` 不传档位时按最保守档处理。
 
-1. **`vocabulary_affixes` 缺 `status` 字段**。379 条里混了两种不同性质的断言
-   （已校验词源 vs 人为联想），当前无字段可区分，展示层无法把猜测与事实同权呈现。
-2. **V2「单词深度记忆引擎」的定位**。它是**设计规格**而非数据源：记忆电影、
-   声音钩子、拼写钩子都是生成式联想，不是事实。若要落地需先定 schema
-   （`verified_etymology` / `disputed` / `mnemonic_only`），并让生成走
-   `services/mcp_router.py` 这一唯一入口（AGENTS.md 红线），而非本地脚本。
-   规模上只应把 §七「长期记忆卡」喂进 FSRS（每词 1 个 KC：释义↔拼写），
-   长文本按需查阅，不作复习材料。
+参考表（新东方词根词缀大全，`scripts/crossvalidate_affixes.py`）实测价值主要是
+**补全**而非判对错，40 条靠它补上漏段位：`arrive` ar·∅→ar·rive、
+`protect` pro·∅→pro·tect、`technology` ∅·∅·logy→techn·∅·logy。
+`disputed` 24 条**不自动采信任何一方**。注意 `reference_confirmed` 是
+**教学参考级**权威，不是学术词源（OED/etymonline）。
+
+🚨 **Needs Human（2026-10-02）V2「单词深度记忆引擎」的定位**：它是**设计规格**
+而非数据源 —— 记忆电影、声音钩子、拼写钩子都是生成式联想，不是事实。落地需先定
+schema（`verified_etymology` / `disputed` / `mnemonic_only`），并让生成走
+`services/mcp_router.py` 这一唯一入口（AGENTS.md 红线），而非本地脚本。
+规模上只应把 §七「长期记忆卡」喂进 FSRS（每词 1 个 KC：释义↔拼写），
+长文本按需查阅，不作复习材料。**此项未动，等用户定。**
 
 **象形9000 ✅（2026-10-02）已入库**（alembic `c5d6e7f8a9b0`，表
 `vocabulary_xiangxing`，`scripts/parse_xingxing9000.py`）。六册 OCR 976 页 →
