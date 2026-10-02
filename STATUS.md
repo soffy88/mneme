@@ -409,6 +409,18 @@ V2」自己的标准（*"如果所谓'词根记忆法'只是人为联想，必�
 `disputed` 24 条**不自动采信任何一方**。注意 `reference_confirmed` 是
 **教学参考级**权威，不是学术词源（OED/etymonline）。
 
+✅ **前后端已接线**（2026-10-02）：`tool_get_word_enrichment` +
+`POST /mcp/GetWordEnrichment`（mneme `1820693`）；词表页展开时调该接口并渲染分档
+（mneme-web `dbb969c`，`WordEnrichmentPanel.tsx`）。
+
+展示层把 epistemic status 真的渲染出区别，而不只是多传字段：
+`reference_confirmed` 实线边框正常字重；`mnemonic_association` 虚线琥珀边框 +
+「记忆联想」角标 + 一行「别当词源背」；`disputed` **整块不展示**。
+象形侧同样降级：音标标注「近似读音」（粗 ASCII 转写，非标准 IPA），
+`ownership_verified=false` 加「归属待校对」角标（多为 OCR 形近字误读）。
+
+🚨 **Needs Human（2026-10-02）V2「单词深度记忆引擎」的定位**
+
 🚨 **Needs Human（2026-10-02）V2「单词深度记忆引擎」的定位**：它是**设计规格**
 而非数据源 —— 记忆电影、声音钩子、拼写钩子都是生成式联想，不是事实。落地需先定
 schema（`verified_etymology` / `disputed` / `mnemonic_only`），并让生成走
