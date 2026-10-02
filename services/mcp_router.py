@@ -1410,3 +1410,107 @@ async def mcp_get_audit_log(
     if not is_admin(current_user):
         await _ensure_student_access(db, current_user, req.student_id)
     return {"entries": await get_audit_log(db, req.student_id, limit=req.limit)}
+
+
+# ---------------------------------------------------------------------------
+# 词汇增强层（词根词缀 + 象形9000）
+# ---------------------------------------------------------------------------
+
+
+async def tool_get_word_enrichment(db: AsyncSession, word: str) -> dict:
+    """取一个词的增强层：词根词缀分解（含可信档位）+ 象形9000 词条。
+
+    两者都是**全体学生共享的参考内容**（与 books 同性质），不含学生数据，
+    故只需登录，不做 per-student 授权。
+
+    档位是关键：379 条词缀分解的权威来源只是散文里「词根/前缀/后缀」的标注，
+    不是历史语言学（散文自身就常把词干/后缀写成「词根」：careless→less、
+    chinese→ese）。故返回 `is_source_bearing` 供展示层区分「可当词源讲」与
+    「只是记忆联想」，`should_display=False` 的（disputed，与参考表冲突）
+    前端应默认不展示。
+    """
+    from services.vocab_affixes import STATUS_MNEMONIC_ASSOCIATION, affix_payload
+
+    w = word.strip().lower()
+    if not w or len(w) > 64:
+        raise ValueError("word 非法")
+
+    row = (
+        await db.execute(
+            text("""
+        SELECT v.id, v.word, v.meaning_cn, v.pos,
+               a.prefix, a.root, a.suffix, a.meaning_cn, a.origin,
+               a.source, a.confidence, a.etymology_status
+        FROM vocabulary_items v
+        LEFT JOIN vocabulary_affixes a ON a.vocabulary_item_id = v.id
+        WHERE lower(v.word) = :w
+        LIMIT 1
+    """),
+            {"w": w},
+        )
+    ).first()
+    if row is None:
+        return {"word": w, "found": False, "affix": None, "xiangxing": None}
+
+    affix = None
+    if row.prefix or row.root or row.suffix:
+        affix = affix_payload(
+            prefix=row.prefix,
+            root=row.root,
+            suffix=row.suffix,
+            meaning_cn=row.meaning_cn,
+            origin=row.origin,
+            source=row.source,
+            confidence=row.confidence,
+            etymology_status=row.etymology_status or STATUS_MNEMONIC_ASSOCIATION,
+        )
+
+    xr = (
+        await db.execute(
+            text("""
+        SELECT x.ipa_ascii, x.pos, x.meaning_cn, x.example_en, x.example_cn,
+               x.source_volume, x.ownership_verified
+        FROM vocabulary_xiangxing x
+        WHERE x.vocabulary_item_id = :vid
+        LIMIT 1
+    """),
+            {"vid": row.id},
+        )
+    ).first()
+    xiangxing = None
+    if xr is not None:
+        xiangxing = {
+            # 粗 ASCII 转写（['erb]、[e'bav]），不是标准 IPA —— 前端不能与
+            # vocabulary_items 的 ARPAbet 混渲染。字段名 ipa_ascii 已在区分。
+            "ipa_ascii": xr.ipa_ascii,
+            "pos": xr.pos,
+            "meaning_cn": xr.meaning_cn,
+            "example_en": xr.example_en,
+            "example_cn": xr.example_cn,
+            "source_volume": xr.source_volume,
+            # false = 归属未能经例句交叉验证（多为 OCR 形近字），前端应标注或降级
+            "ownership_verified": bool(xr.ownership_verified),
+        }
+
+    return {
+        "word": row.word,
+        "found": True,
+        "meaning_cn": row.meaning_cn,
+        "pos": row.pos,
+        "affix": affix,
+        "xiangxing": xiangxing,
+    }
+
+
+class GetWordEnrichmentReq(BaseModel):
+    word: str
+
+
+@router.post("/GetWordEnrichment")
+async def mcp_get_word_enrichment(
+    req: GetWordEnrichmentReq,
+    db: AsyncSession = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+) -> dict:
+    """共享参考内容（与 books 同性质），只需登录，不做 per-student 授权。"""
+    return await tool_get_word_enrichment(db, req.word)
