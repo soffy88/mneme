@@ -1,0 +1,186 @@
+{
+  "summary": {
+    "collection": "core-exam-zhongkao-gaokao-k12",
+    "pool_single_words": 2761,
+    "trial_size": 5,
+    "seed": 20261003,
+    "applied": false,
+    "generated": 5,
+    "skipped_contract": 0,
+    "verified": 3,
+    "degraded_no_context": 1,
+    "with_context": 4,
+    "image_prompt_coverage": 1.0,
+    "failed_gate_counts": {
+      "FAMILY_TRACEABLE": 1,
+      "HAS_CONTEXT": 1
+    }
+  },
+  "reports": [
+    {
+      "vocabulary_item_id": "02111cbc-5971-5b63-bbf3-dbfd091255dc",
+      "word": "cloud",
+      "pos": "n",
+      "generated": true,
+      "tier": "B",
+      "context_tier": 3,
+      "verified": true,
+      "degraded": false,
+      "quality_score": 1.0,
+      "failed_gates": [],
+      "core_image": "白云像棉花糖漂过蓝天",
+      "recall_question": "什么白色的棉花糖在蓝天飘动？",
+      "image_prompt": "cartoon educational style, clear action, vocabulary learning illustration, fluffy white cloud drifting across blue sky",
+      "animation_candidate": false,
+      "context_evidence": [
+        {
+          "sentence_id": "4a9bd230-325f-53cd-acf8-0a4d31689750",
+          "text": "As she emerged from her drifting cloud of gun smoke,",
+          "lesson": "33. The ‘Vasa’",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "7d1d10c0-dca8-53a9-851a-8f378511f2b8",
+          "text": "you can enjoy the extraordinary sight of unbroken cloud plains that stretch out for miles before you, while the sun shines brilliantly in a clear sky.",
+          "lesson": "44.Speed and Comfort",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "9ac83c5d-ba86-5d99-8fe4-88305c906f3b",
+          "text": "As she emerged from her drifting cloud of gun smoke with the water churned to foam beneath her bow,",
+          "lesson": "27.The vasa",
+          "source": "NCE"
+        }
+      ]
+    },
+    {
+      "vocabulary_item_id": "0b1dd4eb-6117-5dca-89ee-0a23718fd16e",
+      "word": "sand",
+      "pos": "n",
+      "generated": true,
+      "tier": "A",
+      "context_tier": 3,
+      "verified": true,
+      "degraded": false,
+      "quality_score": 1.0,
+      "failed_gates": [],
+      "core_image": "孩子用铲子铲沙堆成塔",
+      "recall_question": "海边男孩用铲子堆什么颗粒物质？",
+      "image_prompt": "Cartoon boy shoveling sand to build castle on beach, waves washing shore, vocabulary learning illustration",
+      "animation_candidate": true,
+      "context_evidence": [
+        {
+          "sentence_id": "0c7bf249-31ef-5689-9f78-278baf518208",
+          "text": "the precious parcel was full of stones and sand!",
+          "lesson": "07.Too Late",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "9da2bc19-ec94-5048-bbcc-271301a0e2d5",
+          "text": "To their surprise, the precious parcel was full of stones and sand.",
+          "lesson": "07. Too Late",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "a988222c-7f5d-50d8-93d0-5e74ced919cc",
+          "text": "such as a sand grain in the rock,",
+          "lesson": "52. Recording an Earthquake",
+          "source": "NCE"
+        }
+      ]
+    },
+    {
+      "vocabulary_item_id": "3ab58a0d-d35f-525d-b682-944a215f4feb",
+      "word": "international",
+      "pos": "n",
+      "generated": true,
+      "tier": "B",
+      "context_tier": 3,
+      "verified": false,
+      "degraded": false,
+      "quality_score": 0.8889,
+      "failed_gates": [
+        "FAMILY_TRACEABLE"
+      ],
+      "core_image": "五环旗下各国运动员握手合影",
+      "recall_question": "奥运开幕式上，五环旗下运动员在做什么？",
+      "image_prompt": "cartoon educational style, clear action, vocabulary learning illustration, five-ring flag, athletes from many countries shaking hands",
+      "animation_candidate": false,
+      "context_evidence": [
+        {
+          "sentence_id": "08abe093-d498-5ef1-b7ad-234d98c0c290",
+          "text": "At the international level, sport is frankly mimic warfare.",
+          "lesson": "06.The Sporting Spirit",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "6e032851-30aa-5df9-b882-e7a1ae82e61d",
+          "text": "Even if one didn't know from concrete examples, the 1936 Olympic Games for instance, that international sporting contests lead to orgies of hatred,",
+          "lesson": "07. The Sporting Spirit",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "cdee3621-14e2-5823-b966-99622c6dfcbf",
+          "text": "At the international level, sport is frankly mimic warfare.",
+          "lesson": "07. The Sporting Spirit",
+          "source": "NCE"
+        }
+      ]
+    },
+    {
+      "vocabulary_item_id": "7e1a7cfa-24ef-58cc-91cc-b99f51bc9b53",
+      "word": "possess",
+      "pos": null,
+      "generated": true,
+      "tier": "A",
+      "context_tier": 3,
+      "verified": true,
+      "degraded": false,
+      "quality_score": 1.0,
+      "failed_gates": [],
+      "core_image": "双手紧握宝箱，眼神坚定",
+      "recall_question": "探险家双手紧握什么不放？",
+      "image_prompt": "cartoon educational style, clear action, vocabulary learning illustration, explorer gripping treasure chest tightly",
+      "animation_candidate": true,
+      "context_evidence": [
+        {
+          "sentence_id": "10fdfde9-7767-5c78-b00f-7cbba10a6f1c",
+          "text": "There are times when we would willingly give everything we possess to save our lives,",
+          "lesson": "27.Nothing to Sell and Nothing to Buy",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "32f1765f-c057-5674-95c8-2677824a9d5b",
+          "text": "one that still does not possess the bomb,",
+          "lesson": "57. Of Man and Galaxies",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "3c261292-3be9-5d4d-a0a4-494a822afa3e",
+          "text": "There are times when we would willingly give everything we possess to save our lives.",
+          "lesson": "27. Nothing to Sell and Nothing to Buy",
+          "source": "NCE"
+        }
+      ]
+    },
+    {
+      "vocabulary_item_id": "e5efac91-63e0-5d6c-ace5-943a1e52cd4b",
+      "word": "weekday",
+      "pos": "n",
+      "generated": true,
+      "tier": "C",
+      "context_tier": 5,
+      "verified": false,
+      "degraded": true,
+      "quality_score": 0.8889,
+      "failed_gates": [
+        "HAS_CONTEXT"
+      ],
+      "core_image": "日历翻到周一至周五，公文包啪地合上",
+      "recall_question": "日历红圈着周一到周五，公文包合上准备去哪？",
+      "image_prompt": "Calendar flipping to Monday-Friday, briefcase snapping shut, cartoon educational style, clear action, vocabulary learning illustration",
+      "animation_candidate": false,
+      "context_evidence": []
+    }
+  ]
+}

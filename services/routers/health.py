@@ -9,8 +9,8 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from obase.db import get_db
 from services.readiness import health_payload, readiness_payload
 
-# Must match `alembic heads` (immersive InteractionSource revision).
-EXPECTED_MIGRATION_HEAD = "a3b4c5d6e7f8"
+# Must match `alembic heads` (vocabulary memory nodes).
+EXPECTED_MIGRATION_HEAD = "e6f7a8b9c0d2"
 
 router = APIRouter(tags=["health"])
 
@@ -40,11 +40,17 @@ async def readiness_check(db: AsyncSession = Depends(get_db)):
 
 
 @router.get("/health/providers")
-async def health_providers():
-    """GET /health/providers — LLM/VLM 是否 mock（pilot / 运维一眼可见）。"""
-    from services.providers.setup import provider_status
+async def health_providers(deep: bool = False):
+    """GET /health/providers — LLM/VLM 装配状态 + 网关可达性（运维一眼可见）。
 
-    return provider_status()
+    默认只做**便宜**的端点探活（~3s）。`?deep=1` 会真发一次最小补全并检查返回
+    内容（3~30s）—— 这是唯一能识破「HTTP 200 但正文是上游错误串」的检查，
+    因为网关把上游故障当正文返回（实测「gpt-5.6-luna 兜底失败」）。
+    监控用默认值；怀疑「文本 LLM 调不通」时手工加 `?deep=1`。
+    """
+    from services.providers.setup import provider_liveness
+
+    return provider_liveness(deep=deep)
 
 
 @router.get("/health/metrics")

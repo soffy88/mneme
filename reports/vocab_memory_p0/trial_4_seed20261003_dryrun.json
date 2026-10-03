@@ -1,0 +1,288 @@
+{
+  "summary": {
+    "collection": "core-exam-zhongkao-gaokao-k12",
+    "pool_single_words": 2066,
+    "trial_size": 4,
+    "seed": 20261003,
+    "applied": false,
+    "generated": 4,
+    "skipped_contract": 0,
+    "call_errors": 0,
+    "verified": 4,
+    "degraded_no_context": 0,
+    "with_context": 4,
+    "image_prompt_coverage": 1.0,
+    "failed_gate_counts": {}
+  },
+  "reports": [
+    {
+      "vocabulary_item_id": "64098126-f62c-5311-ab9c-499e5cc18021",
+      "word": "wet",
+      "pos": "adj",
+      "generated": true,
+      "tier": "A",
+      "context_tier": 3,
+      "verified": true,
+      "degraded": false,
+      "quality_score": 1.0,
+      "failed_gates": [],
+      "core_image": "小孩踩进水坑溅湿鞋",
+      "semantic_core": {
+        "image": "小孩踩进水坑溅湿鞋",
+        "meaning": "潮湿状态",
+        "logic": "下雨 → 地面积水 → 物体变湿"
+      },
+      "scene": "冬夜街灯下，行人撑伞走过积水的马路，鞋底沾满水珠",
+      "family_network": [
+        {
+          "word": "damp",
+          "meaning_cn": null,
+          "vocabulary_item_id": "9fa3d276-bf22-54e3-bb15-5d91374f345f"
+        }
+      ],
+      "sound_hook": "威特 → 味特，闻到水味",
+      "spelling_hook": "w-e-t 三字母，发音同“wet”",
+      "recall_question": "冬夜街灯下行人踩过积水后鞋子怎样？",
+      "answer": "wet",
+      "image_prompt": "Cartoon child stepping into puddle, shoes getting soaked, winter night streetlights",
+      "animation_candidate": true,
+      "context_evidence": [
+        {
+          "sentence_id": "0a8f83df-9af7-5506-a3e1-c50d5eb9a9b9",
+          "text": "There is something comforting about the warm glow shed by advertisements on cold wet winter nights.",
+          "lesson": "41.Illusions of Pastoral Peace",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "288b3281-a452-548f-ada3-4ce4bdd85b8e",
+          "text": "It was also found that although she could perceive things with her fingers this ability ceased the moment her hands were wet.",
+          "lesson": "04.Seeing Hands",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "4170dd19-01bd-5e3e-bbea-2b9744793f9b",
+          "text": "Shivering in their wet clothes, the teenagers looked on while three men dived repeatedly into the water to locate the dish.",
+          "lesson": "43.Fully Insured",
+          "source": "NCE"
+        }
+      ],
+      "input_meaning": {
+        "tier": "canonical",
+        "kind": "gloss",
+        "gloss": "雨天；湿气",
+        "source_column": "meaning_cn",
+        "reason": "meaning_cn 可信释义"
+      },
+      "input_context": "There is something comforting about the warm glow shed by advertisements on cold wet winter nights.",
+      "input_affix_chain": null
+    },
+    {
+      "vocabulary_item_id": "97796991-3761-5e07-b59c-94a9ce0ec6f9",
+      "word": "each",
+      "pos": "adj & pron",
+      "generated": true,
+      "tier": "B",
+      "context_tier": 3,
+      "verified": true,
+      "degraded": false,
+      "quality_score": 1.0,
+      "failed_gates": [],
+      "core_image": "老师依次点每个学生头",
+      "semantic_core": {
+        "image": "老师依次点每个学生头",
+        "meaning": "逐个分派类",
+        "logic": "面对群体 → 逐个指认 → 无一遗漏"
+      },
+      "scene": "哈利波特慢吞吞重读每个音节老师在旁监督",
+      "family_network": [
+        {
+          "word": "each other",
+          "meaning_cn": null,
+          "vocabulary_item_id": "c8e1ec5e-721c-55bd-b552-27d644d23585"
+        },
+        {
+          "word": "either",
+          "meaning_cn": "也（用于否定句或否定词组后）；根本",
+          "vocabulary_item_id": "9d9a9df5-4a92-56d8-8c7d-320e1947884c"
+        },
+        {
+          "word": "every",
+          "meaning_cn": "每一的，每个的；每隔…的",
+          "vocabulary_item_id": "62522365-3e36-5ec6-97ad-5443d1f1ea66"
+        }
+      ],
+      "sound_hook": "依个→each，一个个点",
+      "spelling_hook": "e-a-c-h 四字母对应四学生",
+      "recall_question": "老师用手指逐个点谁的头？",
+      "answer": "each",
+      "image_prompt": "Cartoon teacher tapping student heads one by one, clear action, vocabulary learning illustration",
+      "animation_candidate": false,
+      "context_evidence": [
+        {
+          "sentence_id": "08a60a95-8fbd-5260-ad3f-370ec40d79d8",
+          "text": "and Harry repeated the word, slowly stressing each syllable.",
+          "lesson": "52. Mud Is Mud",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "10351748-7a9e-5a32-bad0-e2b915d899a5",
+          "text": "Nearly everybody enters for the nicest garden competition each year,",
+          "lesson": "08. The Best and the Worst",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "12b4113a-d59f-5d95-8f03-6be27a4ac52d",
+          "text": "looking after each job,",
+          "lesson": "44. The Cost of Government",
+          "source": "NCE"
+        }
+      ],
+      "input_meaning": {
+        "tier": "canonical",
+        "kind": "gloss",
+        "gloss": "每；各自的",
+        "source_column": "meaning_cn",
+        "reason": "meaning_cn 可信释义"
+      },
+      "input_context": "and Harry repeated the word, slowly stressing each syllable.",
+      "input_affix_chain": null
+    },
+    {
+      "vocabulary_item_id": "9a7de465-a79e-559b-bdcb-b3c177db1bc3",
+      "word": "real",
+      "pos": "adj",
+      "generated": true,
+      "tier": "B",
+      "context_tier": 3,
+      "verified": true,
+      "degraded": false,
+      "quality_score": 1.0,
+      "failed_gates": [],
+      "core_image": "演员摘下面具露出真面目",
+      "semantic_core": {
+        "image": "演员摘下面具露出真面目",
+        "meaning": "真实事物类别",
+        "logic": "戴面具→隐藏真相→摘下显现真实"
+      },
+      "scene": "舞台剧中主角摘下华丽面具，观众瞬间看到真实的他",
+      "family_network": [
+        {
+          "word": "reality",
+          "meaning_cn": null,
+          "vocabulary_item_id": "e0b7f34a-1e44-526a-82ed-494f98250ccf"
+        },
+        {
+          "word": "really",
+          "meaning_cn": "实际上，事实上；真正地，真实地；真的吗？（表语气）",
+          "vocabulary_item_id": "c51afc0f-1899-529d-9580-3eabe693f2b8"
+        },
+        {
+          "word": "unreal",
+          "meaning_cn": null,
+          "vocabulary_item_id": "5a610a48-b881-5af4-8a56-60754b153a3d"
+        }
+      ],
+      "sound_hook": "瑞尔像真实",
+      "spelling_hook": "real = re(再) + al(全) → 真实",
+      "recall_question": "摘下面具后观众看到了什么？",
+      "answer": "real",
+      "image_prompt": "cartoon person removing mask revealing true face educational illustration",
+      "animation_candidate": false,
+      "context_evidence": [
+        {
+          "sentence_id": "09321554-6103-5058-91f9-583eb5ba412a",
+          "text": "The real escapist can watch a free film show and sip champagne on some services.",
+          "lesson": "44. Speed and Comfort",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "12a4238f-90e2-50a4-a3a5-dc4ab1954cfc",
+          "text": "But real tramps are not beggars.",
+          "lesson": "27.Nothing to Sell and Nothing to Buy",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "1d20f9f9-98ce-5421-9c38-e6a10b21a184",
+          "text": "For then, man was faced with a real need to understand something about the seasons.",
+          "lesson": "38. The First Calendar",
+          "source": "NCE"
+        }
+      ],
+      "input_meaning": {
+        "tier": "canonical",
+        "kind": "gloss",
+        "gloss": "现实；实数",
+        "source_column": "meaning_cn",
+        "reason": "meaning_cn 可信释义"
+      },
+      "input_context": "The real escapist can watch a free film show and sip champagne on some services.",
+      "input_affix_chain": null
+    },
+    {
+      "vocabulary_item_id": "b008f227-5439-5ea9-a4dd-044c4bd96f48",
+      "word": "stand",
+      "pos": "v",
+      "generated": true,
+      "tier": "A",
+      "context_tier": 3,
+      "verified": true,
+      "degraded": false,
+      "quality_score": 1.0,
+      "failed_gates": [],
+      "core_image": "熊用后腿直立挡住洞口",
+      "semantic_core": {
+        "image": "熊用后腿直立挡住洞口",
+        "meaning": "直立支撑类",
+        "logic": "双脚着地 → 身体重心上移 → 保持直立"
+      },
+      "scene": "洞熊用后腿直立，挡住洞口不让猎人进入",
+      "family_network": [
+        {
+          "word": "standing",
+          "meaning_cn": null,
+          "vocabulary_item_id": "1df6bae5-7adc-5b63-8765-ce499491e4a0"
+        },
+        {
+          "word": "standpoint",
+          "meaning_cn": null,
+          "vocabulary_item_id": "2e7ff99a-1103-5b16-b95c-5635a11e4030"
+        }
+      ],
+      "sound_hook": "站得稳",
+      "spelling_hook": "st(站)+and(安)→站得安稳",
+      "recall_question": "什么动物用后腿直立挡住洞口？",
+      "answer": "stand",
+      "image_prompt": "cartoon bear standing on hind legs blocking cave entrance clear action",
+      "animation_candidate": true,
+      "context_evidence": [
+        {
+          "sentence_id": "0647f81f-4f11-58a4-bd9c-397f6331b3a0",
+          "text": "I would make a very poor show of disputing the ownership of a cave with a bear, and in this I do not think that I stand alone.",
+          "lesson": "45.Of Men and Galaxies",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "0a38d0b2-9820-5184-a43c-5c4165064638",
+          "text": "Strange forms stand in gardens, and outside buildings and shops.",
+          "lesson": "18.Electric Currents in Modern Art",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "1a8c733e-f5aa-52ba-b451-c12540119740",
+          "text": "like adolescents they stand before the mirror,",
+          "lesson": "39.What Every Writer Wants",
+          "source": "NCE"
+        }
+      ],
+      "input_meaning": {
+        "tier": "canonical",
+        "kind": "gloss",
+        "gloss": "站立；立场；看台；停止",
+        "source_column": "meaning_cn",
+        "reason": "meaning_cn 可信释义"
+      },
+      "input_context": "I would make a very poor show of disputing the ownership of a cave with a bear, and in this I do not think that I stand alone.",
+      "input_affix_chain": null
+    }
+  ]
+}

@@ -1,0 +1,1200 @@
+{
+  "summary": {
+    "collection": "core-exam-zhongkao-gaokao-k12",
+    "pool_single_words": 2066,
+    "trial_size": 20,
+    "seed": 20261003,
+    "applied": false,
+    "generated": 18,
+    "skipped_contract": 2,
+    "call_errors": 0,
+    "verified": 16,
+    "degraded_no_context": 0,
+    "with_context": 18,
+    "image_prompt_coverage": 0.9,
+    "failed_gate_counts": {
+      "FAMILY_TRACEABLE": 1,
+      "HAS_ONE_CORE_IMAGE": 1
+    }
+  },
+  "reports": [
+    {
+      "vocabulary_item_id": "04b3e6b5-cfd6-588d-b8f5-c35e45e0fd23",
+      "word": "bed",
+      "pos": "n",
+      "generated": true,
+      "tier": "A",
+      "context_tier": 3,
+      "verified": true,
+      "degraded": false,
+      "quality_score": 1.0,
+      "failed_gates": [],
+      "core_image": "小男孩把被子铺在木床上",
+      "semantic_core": {
+        "image": "小男孩把被子铺在木床上",
+        "meaning": "睡眠用家具类",
+        "logic": "需要休息 → 铺好被子 → 躺下入睡"
+      },
+      "scene": "深夜他把床搬到屋顶，星空下铺好被子准备睡觉",
+      "family_network": [
+        {
+          "word": "bedding",
+          "meaning_cn": null,
+          "vocabulary_item_id": "8eeeda51-02f9-53e0-a5ea-dea894e016a6"
+        },
+        {
+          "word": "bedrock",
+          "meaning_cn": null,
+          "vocabulary_item_id": "58806e8e-b27b-5533-bceb-09c678ec32f0"
+        },
+        {
+          "word": "bedroom",
+          "meaning_cn": "卧室",
+          "vocabulary_item_id": "8bac3f62-0e94-5f17-bf2d-2209e83423c5"
+        }
+      ],
+      "sound_hook": "bed 谐音 ‘别的’ → 别处睡",
+      "spelling_hook": "b 形似床腿，ed 读‘德’",
+      "recall_question": "谁在屋顶铺被子准备睡觉？",
+      "answer": "bed",
+      "image_prompt": "cartoon child spreading blanket on wooden bed frame, roof background, educational illustration",
+      "animation_candidate": true,
+      "context_evidence": [
+        {
+          "sentence_id": "02be1fea-2adc-5891-a603-20aa1e322eb8",
+          "text": "he carried the bed onto the roof of his house.",
+          "lesson": "49. The End of a Dream",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "0821d4c0-ce18-559b-8372-0f3654bd3f91",
+          "text": "A gust of wind swept the bed off the roof and sent it crashing into the courtyard below.",
+          "lesson": "49.The End of a Dream",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "16031477-55ce-5bce-b8c1-47919cb7b973",
+          "text": "Yes, he must remain in bed for another two days.",
+          "lesson": "063. Thank You, Doctor.",
+          "source": "NCE"
+        }
+      ],
+      "input_meaning": {
+        "tier": "canonical",
+        "kind": "gloss",
+        "gloss": "床；基础；河底， 海底",
+        "source_column": "meaning_cn",
+        "reason": "meaning_cn 可信释义"
+      },
+      "input_context": "he carried the bed onto the roof of his house.",
+      "input_affix_chain": null
+    },
+    {
+      "vocabulary_item_id": "1d224bb9-948a-5b51-901d-3cb04ae97c7b",
+      "word": "population",
+      "pos": "n",
+      "generated": true,
+      "tier": "A",
+      "context_tier": 3,
+      "verified": true,
+      "degraded": false,
+      "quality_score": 1.0,
+      "failed_gates": [],
+      "core_image": "广场上挤满举着标牌的人群",
+      "semantic_core": {
+        "image": "广场上挤满举牌的人群",
+        "meaning": "人群总数概念",
+        "logic": "人多 → 需统计 → 形成人口数据"
+      },
+      "scene": "清晨广场集会，志愿者清点每位市民，汇总成人口报告",
+      "family_network": [
+        {
+          "word": "populous",
+          "meaning_cn": null,
+          "vocabulary_item_id": "a8e071f4-3a38-5862-ad3c-77f3b0c561ca"
+        }
+      ],
+      "sound_hook": "波普大叔领着人群",
+      "spelling_hook": "popul-表人群 + -ation名词后缀",
+      "recall_question": "广场上挤满举牌的人群在做什么？",
+      "answer": "population",
+      "image_prompt": "cartoon educational style, clear action, vocabulary learning illustration, crowded square with people holding signs",
+      "animation_candidate": true,
+      "context_evidence": [
+        {
+          "sentence_id": "03a018b3-d187-575d-a2aa-93aa461ad0ac",
+          "text": "This combination of very high density of population,",
+          "lesson": "46. Urban Growth",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "05f597e0-7acf-5665-bc48-4c06cb7eeb44",
+          "text": "She always referred to them as 'the shifting population',",
+          "lesson": "49.The Ideal Servant",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "0c615df9-32f7-5813-9bfa-8a4a647275ef",
+          "text": "so that the rabbit population was unlikely to be completely exterminated.",
+          "lesson": "17.A Man-made Disease",
+          "source": "NCE"
+        }
+      ],
+      "input_meaning": {
+        "tier": "canonical",
+        "kind": "gloss",
+        "gloss": "人口；[生物] 种群，[生物] 群体；全体居民",
+        "source_column": "meaning_cn",
+        "reason": "meaning_cn 可信释义"
+      },
+      "input_context": "This combination of very high density of population,",
+      "input_affix_chain": null
+    },
+    {
+      "vocabulary_item_id": "1e96d7b2-61c8-5042-8b17-97c83d3b7566",
+      "word": "blind",
+      "pos": "adj",
+      "generated": true,
+      "tier": "A",
+      "context_tier": 3,
+      "verified": true,
+      "degraded": false,
+      "quality_score": 1.0,
+      "failed_gates": [],
+      "core_image": "一人拉下百叶窗遮住窗户",
+      "semantic_core": {
+        "image": "一人拉下百叶窗遮住窗户",
+        "meaning": "遮挡视线类",
+        "logic": "拉下百叶窗→光线被切断→视线被遮蔽"
+      },
+      "scene": "晚上路灯亮起，他迅速拉下百叶窗，屋内顿时暗下来，邻居也看不见屋里动静",
+      "family_network": [
+        {
+          "word": "blindfold",
+          "meaning_cn": null,
+          "vocabulary_item_id": "ea02b272-2444-59d8-89a5-eff09a1cac60"
+        },
+        {
+          "word": "blindly",
+          "meaning_cn": null,
+          "vocabulary_item_id": "627b4209-ac73-5859-8b44-7f26a4a50748"
+        },
+        {
+          "word": "blindness",
+          "meaning_cn": null,
+          "vocabulary_item_id": "3360ad10-b9ea-5a21-8c76-256e47a4baf1"
+        }
+      ],
+      "sound_hook": "发音像“不亮”，窗帘一拉屋里不亮",
+      "spelling_hook": "bl+ind→蓝印度窗帘",
+      "recall_question": "有人拉下什么来遮住窗户？",
+      "answer": "blind",
+      "image_prompt": "cartoon educational style, clear action, vocabulary learning illustration, person pulling down a window blind",
+      "animation_candidate": true,
+      "context_evidence": [
+        {
+          "sentence_id": "4a18ce4a-6f8f-517a-8677-11987f4d9fd5",
+          "text": "And though the gleams blind and dazzle,",
+          "lesson": "29. Beauty",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "5eee601e-78a9-57f1-956c-1d40927592d5",
+          "text": "And, though the gleams blind and dazzle, yet do they convey a hint of beauty and serenity",
+          "lesson": "24.Beauty",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "f518a577-d86a-5804-8ce1-e203cf6e7bdd",
+          "text": "Many more people are form blind than color blind.",
+          "lesson": "38. Water and the Traveller",
+          "source": "NCE"
+        }
+      ],
+      "input_meaning": {
+        "tier": "canonical",
+        "kind": "gloss",
+        "gloss": "掩饰，借口；百叶窗",
+        "source_column": "meaning_cn",
+        "reason": "meaning_cn 可信释义"
+      },
+      "input_context": "And though the gleams blind and dazzle,",
+      "input_affix_chain": null
+    },
+    {
+      "vocabulary_item_id": "28eb7a23-08ff-5621-a6a8-a5cdd36557a3",
+      "word": "wind",
+      "generated": false,
+      "reason": "LLM 输出未满足契约（缺项/类型错/解析失败），本词跳过"
+    },
+    {
+      "vocabulary_item_id": "2ee7a819-0091-53ec-b68b-4b76597a1ace",
+      "word": "commitment",
+      "generated": false,
+      "reason": "LLM 输出未满足契约（缺项/类型错/解析失败），本词跳过"
+    },
+    {
+      "vocabulary_item_id": "3abe26db-abb3-5240-ba29-a69ad071a79e",
+      "word": "choose",
+      "pos": "v",
+      "generated": true,
+      "tier": "A",
+      "context_tier": 3,
+      "verified": true,
+      "degraded": false,
+      "quality_score": 1.0,
+      "failed_gates": [],
+      "core_image": "孩子在两盒糖果前伸手犹豫",
+      "semantic_core": {
+        "image": "孩子在两盒糖果前伸手犹豫",
+        "meaning": "做出挑选决定",
+        "logic": "看到两样 → 比较优劣 → 伸手拿定"
+      },
+      "scene": "生日派对前夜，孩子在巧克力与水果糖中纠结，最后果断拿起巧克力",
+      "family_network": [
+        {
+          "word": "choice",
+          "meaning_cn": "选择；选择权；精选品",
+          "vocabulary_item_id": "e8560c4b-7a10-55e9-9549-4246dbfa64c5"
+        }
+      ],
+      "sound_hook": "初主决定",
+      "spelling_hook": "ch‑oo‑se，oo 读长音",
+      "recall_question": "孩子在两盒糖果前伸手犹豫，他在做什么？",
+      "answer": "choose",
+      "image_prompt": "cartoon educational style, clear action, vocabulary learning illustration, child hesitating between two candy boxes, pointing finger",
+      "animation_candidate": true,
+      "context_evidence": [
+        {
+          "sentence_id": "70193d4f-ede5-5e85-b9df-120c3adff5c6",
+          "text": "In a heat wave we choose a midnight birthday party and that is the most exciting of all.",
+          "lesson": "56.Our Neighbour, the River",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "789af96c-adf0-579d-8b1e-4b23f116276e",
+          "text": "we are no longer free to choose the things we want,",
+          "lesson": "26.Wanted a Large Biscuit Tin",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "ae599678-d948-5884-8a46-ec3c4e613e68",
+          "text": "We are asked to choose between various shades of the negative.",
+          "lesson": "10. Creative Men",
+          "source": "NCE"
+        }
+      ],
+      "input_meaning": {
+        "tier": "canonical",
+        "kind": "gloss",
+        "gloss": "选择，决定",
+        "source_column": "meaning_cn",
+        "reason": "meaning_cn 可信释义"
+      },
+      "input_context": "In a heat wave we choose a midnight birthday party and that is the most exciting of all.",
+      "input_affix_chain": null
+    },
+    {
+      "vocabulary_item_id": "40e0e3cc-4ad6-594f-9cd5-f948a5fc0231",
+      "word": "X-ray",
+      "pos": null,
+      "generated": true,
+      "tier": "B",
+      "context_tier": 3,
+      "verified": false,
+      "degraded": false,
+      "quality_score": 0.8889,
+      "failed_gates": [
+        "FAMILY_TRACEABLE"
+      ],
+      "core_image": "医生将透明板对准胸口按下快门",
+      "semantic_core": {
+        "image": "医生将透明板对准胸口按下快门",
+        "meaning": "透视成像手段",
+        "logic": "发射射线 → 穿透人体 → 形成影像"
+      },
+      "scene": "急诊室里，医生把X光机对准病人胸口，屏幕瞬间显出骨折线",
+      "family_network": [],
+      "sound_hook": "“艾克斯”像“爱死”射线",
+      "spelling_hook": "X 代表未知，ray=光线",
+      "recall_question": "医生拿什么透明板对准胸口拍出骨骼影像？",
+      "answer": "X-ray",
+      "image_prompt": "cartoon doctor holding X-ray plate over patient chest, bones visible on screen",
+      "animation_candidate": false,
+      "context_evidence": [
+        {
+          "sentence_id": "3aa280bb-044b-5349-ac4c-3af6fa0bc134",
+          "text": "They also found something which the X-ray plates did not show: a small wax figure of the god Duamutef.",
+          "lesson": "77.A Successful Operation",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "44fb348c-6cb4-5370-838d-510ed7ee3cd4",
+          "text": "As there were strange marks on the X-ray plates taken of the mummy,",
+          "lesson": "77.A Successful Operation",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "4ffefe32-a542-55d0-83b3-fa20a326a90e",
+          "text": "And so balloon-borne instruments can contribute little to either ultraviolet astronomy or X-ray astronomy.",
+          "lesson": "49. Balloon Astronomy",
+          "source": "NCE"
+        }
+      ],
+      "input_meaning": {
+        "tier": "canonical",
+        "kind": "gloss",
+        "gloss": "伦琴射线；X光；X光照片",
+        "source_column": "meaning_cn",
+        "reason": "meaning_cn 可信释义"
+      },
+      "input_context": "They also found something which the X-ray plates did not show: a small wax figure of the god Duamutef.",
+      "input_affix_chain": null
+    },
+    {
+      "vocabulary_item_id": "49f5598d-2a48-54a3-b77b-eddc92093a3b",
+      "word": "encourage",
+      "pos": "v",
+      "generated": true,
+      "tier": "A",
+      "context_tier": 3,
+      "verified": true,
+      "degraded": false,
+      "quality_score": 1.0,
+      "failed_gates": [],
+      "core_image": "教练拍拍肩膀推球员上场",
+      "semantic_core": {
+        "image": "教练拍拍肩膀推球员上场",
+        "meaning": "给予信心支持类",
+        "logic": "看到犹豫 → 拍肩传递力量 → 对方敢于上场"
+      },
+      "scene": "关键罚球前教练跑过来拍拍肩膀大喊加油推上场",
+      "family_network": [
+        {
+          "word": "discourage",
+          "meaning_cn": null,
+          "vocabulary_item_id": "4fc8b9e9-70f3-5842-b0d9-34dab926340d"
+        },
+        {
+          "word": "encouragement",
+          "meaning_cn": null,
+          "vocabulary_item_id": "95948909-529c-5dac-9a2a-b5535168e7ba"
+        },
+        {
+          "word": "encouraging",
+          "meaning_cn": null,
+          "vocabulary_item_id": "6c69437c-efe3-52b6-89d8-babbe518c02a"
+        }
+      ],
+      "sound_hook": "恩师考前喊“加油”，及格在望",
+      "spelling_hook": "en- 使 + courage 勇气 = 使有勇气",
+      "recall_question": "关键时刻教练跑过来拍肩膀把谁推上了场？",
+      "answer": "encourage",
+      "image_prompt": "cartoon educational style, clear action, vocabulary learning illustration, coach patting young player shoulder pushing forward onto bright field",
+      "animation_candidate": true,
+      "context_evidence": [
+        {
+          "sentence_id": "45f5e493-518a-559b-b0c6-e53881b2e64c",
+          "text": "Meanwhile, they should encourage those among us",
+          "lesson": "94. Future Champions",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "d7cd1c23-8edf-5755-befa-a63da7c4a4f4",
+          "text": "Meanwhile, they should encourage those among us who cannot swim five yards before they are gasping for air.",
+          "lesson": "94.Future Champions",
+          "source": "NCE"
+        }
+      ],
+      "input_meaning": {
+        "tier": "canonical",
+        "kind": "gloss",
+        "gloss": "鼓励，怂恿；激励；支持",
+        "source_column": "meaning_cn",
+        "reason": "meaning_cn 可信释义"
+      },
+      "input_context": "Meanwhile, they should encourage those among us",
+      "input_affix_chain": null
+    },
+    {
+      "vocabulary_item_id": "4dcf642f-e458-5178-9c1c-d770ef262472",
+      "word": "title",
+      "pos": null,
+      "generated": true,
+      "tier": "A",
+      "context_tier": 3,
+      "verified": true,
+      "degraded": false,
+      "quality_score": 1.0,
+      "failed_gates": [],
+      "core_image": "法官高举金牌，上面刻着‘首席大法官’",
+      "semantic_core": {
+        "image": "法官高举金牌，上面刻着‘首席大法官’",
+        "meaning": "身份标签",
+        "logic": "需要区分身份 → 设立专用称号 → 大家按称号称呼"
+      },
+      "scene": "法庭开庭前，书记员把写有头衔的牌子递给法官，法官挂在胸前",
+      "family_network": [
+        {
+          "word": "entitle",
+          "meaning_cn": null,
+          "vocabulary_item_id": "19662a3b-7fcd-5562-9135-2fcd3896dc21"
+        },
+        {
+          "word": "subtitle",
+          "meaning_cn": null,
+          "vocabulary_item_id": "fefc6ead-6469-5bf2-bba4-d85f5b929911"
+        }
+      ],
+      "sound_hook": "听‘泰特’像 title，泰特拿牌",
+      "spelling_hook": "ti-tle，tle 常见词尾，直接记忆",
+      "recall_question": "法官胸前挂着什么牌子？",
+      "answer": "title",
+      "image_prompt": "cartoon educational style, clear action, vocabulary learning illustration, judge holding a gold badge with title 'Chief Justice'",
+      "animation_candidate": true,
+      "context_evidence": [
+        {
+          "sentence_id": "0fd0bf01-4627-5f27-a45c-02381634371a",
+          "text": "The official title of the person is 'Justiteombudsman', but the Swedes commonly refer to him as the 'J.O.' or 'Ombudsman'.",
+          "lesson": "53.In the Public Interest",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "64491fea-cd66-514b-a339-86115feb88da",
+          "text": "The official title of the person is",
+          "lesson": "53. In the Public Interest",
+          "source": "NCE"
+        }
+      ],
+      "input_meaning": {
+        "tier": "unusable",
+        "kind": "phonetic",
+        "gloss": null,
+        "source_column": null,
+        "reason": "canonical_meaning 括号开头且内部无汉字 → 读音（音标），不是释义"
+      },
+      "input_context": "The official title of the person is 'Justiteombudsman', but the Swedes commonly refer to him as the 'J.O.' or 'Ombudsman'.",
+      "input_affix_chain": null
+    },
+    {
+      "vocabulary_item_id": "639f5040-da94-5437-99ed-9de1a0549fe8",
+      "word": "deer",
+      "pos": null,
+      "generated": true,
+      "tier": "B",
+      "context_tier": 3,
+      "verified": true,
+      "degraded": false,
+      "quality_score": 1.0,
+      "failed_gates": [],
+      "core_image": "小鹿在晨雾中低头啃草",
+      "semantic_core": {
+        "image": "小鹿在晨雾中低头啃草",
+        "meaning": "反刍动物类",
+        "logic": "鹿群觅食 → 留下蹄印 → 被猎人发现"
+      },
+      "scene": "晨雾弥漫的林间小道，一只斑点小鹿低头啃食嫩草，留下一串清晰蹄印",
+      "family_network": [
+        {
+          "word": "stag",
+          "meaning_cn": null,
+          "vocabulary_item_id": "baa2d9a2-1ba7-5212-b7dd-b8733330219e"
+        }
+      ],
+      "sound_hook": "德儿（deer）像德高望重的长者",
+      "spelling_hook": "deer = d+e+e+r，双e像鹿角",
+      "recall_question": "清晨林间低头啃草留下蹄印的是什么动物？",
+      "answer": "deer",
+      "image_prompt": "cartoon educational style, clear action, vocabulary learning illustration, a spotted fawn grazing in misty forest",
+      "animation_candidate": false,
+      "context_evidence": [
+        {
+          "sentence_id": "25ff34b1-7468-5d38-8f96-ffdc2990687a",
+          "text": "Wherever it went, it left behind it a trail of dead deer and small animals like rabbits.",
+          "lesson": "01.A Puma at Large",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "f056b75f-c7dd-58c4-8caf-2a447f901c89",
+          "text": "Wherever it went, it left behind it a trail of dead deer and small animals like rabbits.",
+          "lesson": "01. A Puma at Large",
+          "source": "NCE"
+        }
+      ],
+      "input_meaning": {
+        "tier": "canonical",
+        "kind": "gloss",
+        "gloss": "鹿",
+        "source_column": "meaning_cn",
+        "reason": "meaning_cn 可信释义"
+      },
+      "input_context": "Wherever it went, it left behind it a trail of dead deer and small animals like rabbits.",
+      "input_affix_chain": null
+    },
+    {
+      "vocabulary_item_id": "64098126-f62c-5311-ab9c-499e5cc18021",
+      "word": "wet",
+      "pos": "adj",
+      "generated": true,
+      "tier": "A",
+      "context_tier": 3,
+      "verified": false,
+      "degraded": false,
+      "quality_score": 0.8889,
+      "failed_gates": [
+        "HAS_ONE_CORE_IMAGE"
+      ],
+      "core_image": "雨水淋湿行人衣",
+      "semantic_core": {
+        "image": "雨水淋湿行人衣",
+        "meaning": "沾水潮湿类",
+        "logic": "雨落衣物 → 纤维吸水 → 变湿"
+      },
+      "scene": "寒冬夜霓虹照湿街，雨水浸透路人大衣",
+      "family_network": [
+        {
+          "word": "damp",
+          "meaning_cn": null,
+          "vocabulary_item_id": "9fa3d276-bf22-54e3-bb15-5d91374f345f"
+        },
+        {
+          "word": "soak",
+          "meaning_cn": null,
+          "vocabulary_item_id": "4fe08f28-ed03-5628-acf8-7160916afd63"
+        }
+      ],
+      "sound_hook": "威特(vet)兽医淋成落汤鸡",
+      "spelling_hook": "w(water水首字母)+et=湿水的",
+      "recall_question": "大雨淋过后，衣服变成了什么样？",
+      "answer": "wet",
+      "image_prompt": "Cartoon style, heavy rain soaking pedestrian's coat, water droplets dripping, vocabulary learning illustration",
+      "animation_candidate": true,
+      "context_evidence": [
+        {
+          "sentence_id": "0a8f83df-9af7-5506-a3e1-c50d5eb9a9b9",
+          "text": "There is something comforting about the warm glow shed by advertisements on cold wet winter nights.",
+          "lesson": "41.Illusions of Pastoral Peace",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "288b3281-a452-548f-ada3-4ce4bdd85b8e",
+          "text": "It was also found that although she could perceive things with her fingers this ability ceased the moment her hands were wet.",
+          "lesson": "04.Seeing Hands",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "4170dd19-01bd-5e3e-bbea-2b9744793f9b",
+          "text": "Shivering in their wet clothes, the teenagers looked on while three men dived repeatedly into the water to locate the dish.",
+          "lesson": "43.Fully Insured",
+          "source": "NCE"
+        }
+      ],
+      "input_meaning": {
+        "tier": "canonical",
+        "kind": "gloss",
+        "gloss": "雨天；湿气",
+        "source_column": "meaning_cn",
+        "reason": "meaning_cn 可信释义"
+      },
+      "input_context": "There is something comforting about the warm glow shed by advertisements on cold wet winter nights.",
+      "input_affix_chain": null
+    },
+    {
+      "vocabulary_item_id": "71e2f80f-f1ea-5034-a39f-e1fe36e9494a",
+      "word": "progress",
+      "pos": "n & v",
+      "generated": true,
+      "tier": "A",
+      "context_tier": 3,
+      "verified": true,
+      "degraded": false,
+      "quality_score": 1.0,
+      "failed_gates": [],
+      "core_image": "宇航员在火星插旗，探测车留下深深车辙",
+      "semantic_core": {
+        "image": "宇航员在火星插旗，探测车留下深深车辙",
+        "meaning": "前行向上类",
+        "logic": "目标在前 → 迈步向前 → 留下脚印"
+      },
+      "scene": "宇航员在火星红沙上艰难行进，身后探测车碾出深深车辙，标记人类探索新高度",
+      "family_network": [
+        {
+          "word": "progressing",
+          "meaning_cn": null,
+          "vocabulary_item_id": "ee57d30e-e6c3-5869-8d1d-de25137ddead"
+        },
+        {
+          "word": "progression",
+          "meaning_cn": null,
+          "vocabulary_item_id": "90d52529-8995-5f1a-aaff-b5ced07d3c41"
+        },
+        {
+          "word": "progressive",
+          "meaning_cn": null,
+          "vocabulary_item_id": "e90bd79e-f97b-59d8-aa81-bf7cb88bc53b"
+        }
+      ],
+      "sound_hook": "谐音“铺格子”，一格格往前走",
+      "spelling_hook": "pro(向前) + gress(两个r像双腿走路) → 向前走",
+      "recall_question": "谁在红色星球上插旗留下车辙？",
+      "answer": "progress",
+      "image_prompt": "Astronaut planting flag on Mars, rover tracks behind, cartoon educational style, clear action, vocabulary learning illustration",
+      "animation_candidate": true,
+      "context_evidence": [
+        {
+          "sentence_id": "330e8e1d-819e-5d51-a8e4-05158af3687e",
+          "text": "Surely because progress of a particular kind is actually taking place around us",
+          "lesson": "22.Knowledge and Progress",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "6d0d9a6a-d890-5882-8002-6a46e7faae80",
+          "text": "Why does the idea of progress loom so large in the modern world?",
+          "lesson": "22.Knowledge and Progress",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "7f6769be-a376-5098-9b28-76f0352bc5e1",
+          "text": "Knowledge and progress",
+          "lesson": "22.Knowledge and Progress",
+          "source": "NCE"
+        }
+      ],
+      "input_meaning": {
+        "tier": "canonical",
+        "kind": "gloss",
+        "gloss": "进步，发展；前进",
+        "source_column": "meaning_cn",
+        "reason": "meaning_cn 可信释义"
+      },
+      "input_context": "Surely because progress of a particular kind is actually taking place around us",
+      "input_affix_chain": null
+    },
+    {
+      "vocabulary_item_id": "76eb8949-dbb4-5668-b094-d3da76430e2e",
+      "word": "wound",
+      "pos": "v & n",
+      "generated": true,
+      "tier": "A",
+      "context_tier": 3,
+      "verified": true,
+      "degraded": false,
+      "quality_score": 1.0,
+      "failed_gates": [],
+      "core_image": "骑士跪地拔出肩头箭矢鲜血喷涌",
+      "semantic_core": {
+        "image": "骑士跪地拔出肩头箭矢鲜血喷涌",
+        "meaning": "身体受损类",
+        "logic": "利器刺穿皮肤 → 组织破裂流血 → 形成伤口需包扎"
+      },
+      "scene": "古堡决斗后骑士跪地拔箭铠甲染红一片",
+      "family_network": [
+        {
+          "word": "injury",
+          "meaning_cn": null,
+          "vocabulary_item_id": "2ba841ec-b018-5681-86ec-8783e867c654"
+        }
+      ],
+      "sound_hook": "音似“吻德”，吻上伤口真疼",
+      "spelling_hook": "w + ound(同sound/round)，伤口圆圆",
+      "recall_question": "骑士跪地拔出扎在肩头的什么？",
+      "answer": "wound",
+      "image_prompt": "cartoon educational style, clear action, vocabulary learning illustration, knight kneeling pulling arrow from shoulder blood dripping",
+      "animation_candidate": true,
+      "context_evidence": [
+        {
+          "sentence_id": "1b7bb7b7-28ae-55fe-8f32-1530a67fea78",
+          "text": "Everything around him was full of her presence, continually reopening the wound.",
+          "lesson": "57.Back in the Old Country",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "305051d9-a7a8-524c-bf9c-0768d9985653",
+          "text": "The stream wound its way across the field and then flowed right under their tent!",
+          "lesson": "27.A Wet Night",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "35f6f8b1-2d37-56e9-843d-d6c7b9894d16",
+          "text": "The snake then wound itself round the wires.",
+          "lesson": "53.Hot Snake",
+          "source": "NCE"
+        }
+      ],
+      "input_meaning": {
+        "tier": "canonical",
+        "kind": "gloss",
+        "gloss": "创伤，伤口",
+        "source_column": "meaning_cn",
+        "reason": "meaning_cn 可信释义"
+      },
+      "input_context": "Everything around him was full of her presence, continually reopening the wound.",
+      "input_affix_chain": null
+    },
+    {
+      "vocabulary_item_id": "79fb547b-0266-5e19-8d44-ad55563d8924",
+      "word": "require",
+      "pos": "v",
+      "generated": true,
+      "tier": "B",
+      "context_tier": 3,
+      "verified": true,
+      "degraded": false,
+      "quality_score": 1.0,
+      "failed_gates": [],
+      "core_image": "裁判举起红牌要求球员离场",
+      "semantic_core": {
+        "image": "裁判举起红牌要求球员离场",
+        "meaning": "要求类",
+        "logic": "比赛出现犯规 → 裁判判定违规 → 裁判要求离场"
+      },
+      "scene": "裁判吹哨后指向替补席，示意违规球员立即下场",
+      "family_network": [
+        {
+          "word": "required",
+          "meaning_cn": null,
+          "vocabulary_item_id": "0ffc3201-b61c-54c4-9221-328d895a841e"
+        },
+        {
+          "word": "requirement",
+          "meaning_cn": null,
+          "vocabulary_item_id": "3614fafa-f642-585f-a421-3397c37af2d5"
+        }
+      ],
+      "sound_hook": "瑞克怀尔 → 瑞克怀尔要求",
+      "spelling_hook": "re- 前缀表“再” + quire 类似 acquire 求得",
+      "recall_question": "裁判吹哨后指向替补席，示意违规球员做什么？",
+      "answer": "require",
+      "image_prompt": "referee blowing whistle pointing to bench, player leaving field",
+      "animation_candidate": false,
+      "context_evidence": [
+        {
+          "sentence_id": "096140f8-f7de-54be-b9dd-94bd545a4c53",
+          "text": "This is not easy, and may require two porpoises working together.",
+          "lesson": "18.Porpoises",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "0f111a31-4190-52af-99c2-387d8ab107a1",
+          "text": "They have nothing to sell and require nothing from others.",
+          "lesson": "27.Nothing to Sell and Nothing to Buy",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "37b00014-aa93-5fb3-a6c1-98f475fdbfa5",
+          "text": "Such undertakings require the precise planning and foresight of military operations.",
+          "lesson": "42. Modern Caveman",
+          "source": "NCE"
+        }
+      ],
+      "input_meaning": {
+        "tier": "canonical",
+        "kind": "gloss",
+        "gloss": "需要；要求；命令",
+        "source_column": "meaning_cn",
+        "reason": "meaning_cn 可信释义"
+      },
+      "input_context": "This is not easy, and may require two porpoises working together.",
+      "input_affix_chain": null
+    },
+    {
+      "vocabulary_item_id": "9f4b24f6-6ad2-5b53-89f3-e349fd34e2ee",
+      "word": "advice",
+      "pos": "n",
+      "generated": true,
+      "tier": "A",
+      "context_tier": 3,
+      "verified": true,
+      "degraded": false,
+      "quality_score": 1.0,
+      "failed_gates": [],
+      "core_image": "老师把便利贴贴在黑板上",
+      "semantic_core": {
+        "image": "老师把便利贴贴在黑板上",
+        "meaning": "建议指导类",
+        "logic": "老师写便利贴→贴黑板→学生读取建议"
+      },
+      "scene": "课堂上老师把写有建议的便利贴贴在黑板，学生纷纷抄录",
+      "family_network": [
+        {
+          "word": "advise",
+          "meaning_cn": "建议；劝告，忠告；通知；警告",
+          "vocabulary_item_id": "c9c2c134-3bee-54e4-ad3d-ef25d84b1453"
+        },
+        {
+          "word": "advisory",
+          "meaning_cn": null,
+          "vocabulary_item_id": "ebd7cebe-e64a-51da-89a5-fba40d8b1b00"
+        },
+        {
+          "word": "counsel",
+          "meaning_cn": null,
+          "vocabulary_item_id": "dead3370-ae8a-5076-8f33-dbaeb4fb798c"
+        }
+      ],
+      "sound_hook": "爱得维斯→爱得建议",
+      "spelling_hook": "ad-表向 + vice拼写",
+      "recall_question": "老师把便利贴贴在黑板上做什么？",
+      "answer": "advice",
+      "image_prompt": "Teacher sticks a sticky note on blackboard, cartoon educational style",
+      "animation_candidate": true,
+      "context_evidence": [
+        {
+          "sentence_id": "10f0be7b-8492-52af-8346-815870e37f99",
+          "text": "That's very good advice!",
+          "lesson": "109&110.A Good Idea",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "2d4799c3-7c0f-5d69-bf56-2bd80e4661e6",
+          "text": "Well, next time you'd better take my advice.",
+          "lesson": "129. Seventy Miles an Hour",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "4c827c5a-4cd0-5e71-8f74-1452dca5bea1",
+          "text": "That's very good advice /ədˈvaɪs/.",
+          "lesson": "109. A Good Idea",
+          "source": "NCE"
+        }
+      ],
+      "input_meaning": {
+        "tier": "canonical",
+        "kind": "gloss",
+        "gloss": "建议；忠告；劝告；通知",
+        "source_column": "meaning_cn",
+        "reason": "meaning_cn 可信释义"
+      },
+      "input_context": "That's very good advice!",
+      "input_affix_chain": null
+    },
+    {
+      "vocabulary_item_id": "a2e7f526-febc-52e1-a465-ad18f9fa826f",
+      "word": "state",
+      "pos": "n",
+      "generated": true,
+      "tier": "A",
+      "context_tier": 3,
+      "verified": true,
+      "degraded": false,
+      "quality_score": 1.0,
+      "failed_gates": [],
+      "core_image": "地图上画红框标出一个州",
+      "semantic_core": {
+        "image": "地图上画红框标出一个州",
+        "meaning": "行政区域或状态",
+        "logic": "划定边界 → 形成行政区 → 称为 state"
+      },
+      "scene": "老师在地图上用红笔圈出一个州，讲解它的政治地位",
+      "family_network": [
+        {
+          "word": "condition",
+          "meaning_cn": "条件；情况；环境；身份",
+          "vocabulary_item_id": "5bd79a70-2d4b-569a-bd3f-5f8bfad9fdaf"
+        },
+        {
+          "word": "nation",
+          "meaning_cn": null,
+          "vocabulary_item_id": "49f95f78-fb6b-5f0f-83e9-0ea56bd9ca3f"
+        },
+        {
+          "word": "province",
+          "meaning_cn": "省；领域；职权",
+          "vocabulary_item_id": "d89e256b-e0ec-5c31-afdf-c412cfdfcf76"
+        }
+      ],
+      "sound_hook": "斯态 → 状态",
+      "spelling_hook": "st(站) + ate(吃) → state",
+      "recall_question": "老师在地图上用红笔圈出的是什么？",
+      "answer": "state",
+      "image_prompt": "Cartoon teacher circling a state on a map with red marker",
+      "animation_candidate": true,
+      "context_evidence": [
+        {
+          "sentence_id": "1698c83a-a795-5b51-b447-bf90a4250487",
+          "text": "In the organization of industrial life the influence of the factory upon the physiological and mental state of the workers has been completely neglected.",
+          "lesson": "16.The Modern City",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "251f81f7-0aa0-5fe4-a383-d983931d4c50",
+          "text": "A parliamentary committee representing all political parties appoints a person who is suitably qualified to investigate private grievances against the State.",
+          "lesson": "53.In the Public Interest",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "3e8a85a8-ca15-5cf9-8864-f1a91f2223ad",
+          "text": "and found our then prevailing primitive state completely uninteresting to their own advanced knowledge.",
+          "lesson": "43.Are There Strangers in Space",
+          "source": "NCE"
+        }
+      ],
+      "input_meaning": {
+        "tier": "canonical",
+        "kind": "gloss",
+        "gloss": "国家；州；情形",
+        "source_column": "meaning_cn",
+        "reason": "meaning_cn 可信释义"
+      },
+      "input_context": "In the organization of industrial life the influence of the factory upon the physiological and mental state of the workers has been completely neglected.",
+      "input_affix_chain": null
+    },
+    {
+      "vocabulary_item_id": "b89b1d3d-cc9c-5bd4-8d5a-620118ce9bba",
+      "word": "fine",
+      "pos": "adj",
+      "generated": true,
+      "tier": "B",
+      "context_tier": 3,
+      "verified": true,
+      "degraded": false,
+      "quality_score": 1.0,
+      "failed_gates": [],
+      "core_image": "交警撕罚单 司机掏钱皱眉",
+      "semantic_core": {
+        "image": "交警撕罚单 司机掏钱皱眉",
+        "meaning": "金钱惩罚类",
+        "logic": "违规发生 → 开具罚单 → 缴纳罚款"
+      },
+      "scene": "司机闯红灯被拦下 接过粉色罚单 无奈掏出百元大钞 交罚款",
+      "family_network": [
+        {
+          "word": "penalty",
+          "meaning_cn": null,
+          "vocabulary_item_id": "da8de54f-2005-5278-8d42-55af186ef5b6"
+        },
+        {
+          "word": "ticket",
+          "meaning_cn": "加标签于；指派；对…开出交通违规罚单",
+          "vocabulary_item_id": "f875167e-b7e4-5f1b-a14e-4beb2d22f261"
+        }
+      ],
+      "sound_hook": "发音 /faɪn/ 像 \"发昏\" → 吃罚单 发昏 了",
+      "spelling_hook": "f-i-n-e 四字母 结尾 e 不发音 记作 fine",
+      "recall_question": "闯红灯被拦下后 司机无奈掏钱应付什么？",
+      "answer": "fine",
+      "image_prompt": "cartoon educational style, clear action, vocabulary learning illustration, traffic police handing pink ticket to driver through car window, driver frowning reaching for wallet, sunny street background",
+      "animation_candidate": false,
+      "context_evidence": [
+        {
+          "sentence_id": "2f4ba07e-29a2-5c18-994c-869cd0deba7e",
+          "text": "Gone is the light from his fine eyes.",
+          "lesson": "24. Going Out for a Walk",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "3af245ab-6278-5f7a-a759-b0e941e1286d",
+          "text": "No, say the Americans: our fowl are fine, we simply clean them in a different way.",
+          "lesson": "08.Trading Standards",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "509f96f2-755d-5007-b910-941424ff9dec",
+          "text": "The EU -- following fine continental traditions -- wants agreement on general principles,",
+          "lesson": "08.Trading Standards",
+          "source": "NCE"
+        }
+      ],
+      "input_meaning": {
+        "tier": "canonical",
+        "kind": "gloss",
+        "gloss": "罚款",
+        "source_column": "meaning_cn",
+        "reason": "meaning_cn 可信释义"
+      },
+      "input_context": "Gone is the light from his fine eyes.",
+      "input_affix_chain": null
+    },
+    {
+      "vocabulary_item_id": "c6a5784d-912d-5f9b-89b4-80687c872334",
+      "word": "lonely",
+      "pos": "adj",
+      "generated": true,
+      "tier": "B",
+      "context_tier": 3,
+      "verified": true,
+      "degraded": false,
+      "quality_score": 1.0,
+      "failed_gates": [],
+      "core_image": "孤灯独照空荡荡小屋",
+      "semantic_core": {
+        "image": "孤灯独照空荡荡小屋",
+        "meaning": "孤独的状态",
+        "logic": "独处 → 无人陪伴 → 感到孤独"
+      },
+      "scene": "夜晚灯塔守夜人独自望着漆黑海面，心中泛起阵阵孤单",
+      "family_network": [
+        {
+          "word": "alone",
+          "meaning_cn": "独自的；单独的；孤独的",
+          "vocabulary_item_id": "f7e1a32f-8ea6-5481-9428-e3fc6120fd6c"
+        },
+        {
+          "word": "loneliness",
+          "meaning_cn": null,
+          "vocabulary_item_id": "4d76963e-e493-5697-a735-39cfb5bb79be"
+        },
+        {
+          "word": "lonesome",
+          "meaning_cn": null,
+          "vocabulary_item_id": "a9bffe60-3993-5eb4-9ef0-6ba12a0599e3"
+        }
+      ],
+      "sound_hook": "老李独自",
+      "spelling_hook": "lone (单独) + -ly (副词后缀) → lonely",
+      "recall_question": "画面中灯塔守夜人独自望着什么？",
+      "answer": "lonely",
+      "image_prompt": "cartoon educational style, lighthouse keeper alone on rocky island at night, looking at dark sea",
+      "animation_candidate": false,
+      "context_evidence": [
+        {
+          "sentence_id": "0899180f-4777-5d3f-a7a5-8cd48b4edb1c",
+          "text": "The man wanted to fly to Rockall, a lonely island in the Atlantic Ocean.",
+          "lesson": "29. Taxi",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "320040d0-c71c-50d2-beba-31a74df0920f",
+          "text": "The man wanted to fly to Rockall, a lonely island in the Atlantic Ocean,",
+          "lesson": "29.Taxi",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "526bd856-2800-5b90-933f-2cbf0085798f",
+          "text": "Captain Fawcett's first passenger was a doctor who flew from Birmingham to a lonely village in the Welsh mountains.",
+          "lesson": "29.Taxi",
+          "source": "NCE"
+        }
+      ],
+      "input_meaning": {
+        "tier": "canonical",
+        "kind": "gloss",
+        "gloss": "寂寞的；偏僻的",
+        "source_column": "meaning_cn",
+        "reason": "meaning_cn 可信释义"
+      },
+      "input_context": "The man wanted to fly to Rockall, a lonely island in the Atlantic Ocean.",
+      "input_affix_chain": null
+    },
+    {
+      "vocabulary_item_id": "c9c2c134-3bee-54e4-ad3d-ef25d84b1453",
+      "word": "advise",
+      "pos": "v",
+      "generated": true,
+      "tier": "B",
+      "context_tier": 3,
+      "verified": true,
+      "degraded": false,
+      "quality_score": 1.0,
+      "failed_gates": [],
+      "core_image": "医生指着X光片建议病人",
+      "semantic_core": {
+        "image": "医生指着X光片建议病人",
+        "meaning": "提出建议类",
+        "logic": "看到问题 → 给出方案 → 对方采纳"
+      },
+      "scene": "牙医看着蛀牙严重的X光片，指着图示建议病人立刻拔牙补牙",
+      "family_network": [
+        {
+          "word": "advice",
+          "meaning_cn": "建议；忠告；劝告；通知",
+          "vocabulary_item_id": "9f4b24f6-6ad2-5b53-89f3-e349fd34e2ee"
+        },
+        {
+          "word": "advisable",
+          "meaning_cn": null,
+          "vocabulary_item_id": "056c0aaf-4187-50e1-b5f1-1ecc8baf7986"
+        },
+        {
+          "word": "adviser",
+          "meaning_cn": null,
+          "vocabulary_item_id": "4184a05b-d33d-52ac-859f-6e6dc27ea86b"
+        }
+      ],
+      "sound_hook": "啊，得对，听你的",
+      "spelling_hook": "ad-向 + vis看 → 看向对方给意见",
+      "recall_question": "医生指着X光片对病人做什么动作？",
+      "answer": "advise",
+      "image_prompt": "Doctor pointing at X-ray film, advising patient, cartoon educational style, clear action, vocabulary learning illustration",
+      "animation_candidate": false,
+      "context_evidence": [
+        {
+          "sentence_id": "f6edcbad-4d58-57ec-a723-504128f1e262",
+          "text": "What does Ann advise her husband to do next time?",
+          "lesson": "129&130.Seventy Miles an Hour",
+          "source": "NCE"
+        }
+      ],
+      "input_meaning": {
+        "tier": "canonical",
+        "kind": "gloss",
+        "gloss": "建议；劝告，忠告；通知；警告",
+        "source_column": "meaning_cn",
+        "reason": "meaning_cn 可信释义"
+      },
+      "input_context": "What does Ann advise her husband to do next time?",
+      "input_affix_chain": null
+    },
+    {
+      "vocabulary_item_id": "cc3dcce8-3b16-568b-b305-8cbbe06675c4",
+      "word": "point",
+      "pos": "v & n",
+      "generated": true,
+      "tier": "B",
+      "context_tier": 3,
+      "verified": true,
+      "degraded": false,
+      "quality_score": 1.0,
+      "failed_gates": [],
+      "core_image": "手指指向远方的星星",
+      "semantic_core": {
+        "image": "手指指向远方的星星",
+        "meaning": "指示标记类",
+        "logic": "看到目标→伸出手指→指向目标"
+      },
+      "scene": "夜空中，孩子伸手指向最亮的星星，许下愿望",
+      "family_network": [
+        {
+          "word": "pointed",
+          "meaning_cn": null,
+          "vocabulary_item_id": "1afe9c56-3ac6-5837-b50f-38aeec718de2"
+        }
+      ],
+      "sound_hook": "point谐音‘扑衣’，手指扑向衣领",
+      "spelling_hook": "p‑o‑i‑n‑t → 派翁内特",
+      "recall_question": "手指正指向哪里？",
+      "answer": "point",
+      "image_prompt": "cartoon hand pointing at star, educational illustration",
+      "animation_candidate": false,
+      "context_evidence": [
+        {
+          "sentence_id": "0257b7cd-0f6f-557e-86b0-f82eb6b9a48c",
+          "text": "There is no sky in June so blue that it does not point forward",
+          "lesson": "29. Beauty",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "10c9997f-4fb9-5be0-b025-ae788da01a40",
+          "text": "a trough (the lowest point), a height (the vertical distance from the trough to the crest),",
+          "lesson": "40.Waves",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "1d2fe924-caad-5846-82d0-20687a02ba65",
+          "text": "This is the point I wish to emphasize.",
+          "lesson": "45.Of Men and Galaxies",
+          "source": "NCE"
+        }
+      ],
+      "input_meaning": {
+        "tier": "canonical",
+        "kind": "gloss",
+        "gloss": "要点；得分；标点；[机] 尖端",
+        "source_column": "meaning_cn",
+        "reason": "meaning_cn 可信释义"
+      },
+      "input_context": "There is no sky in June so blue that it does not point forward",
+      "input_affix_chain": null
+    }
+  ]
+}

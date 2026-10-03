@@ -423,6 +423,12 @@
       "classification": "PROJECT_LAYER4"
     },
     {
+      "element": "oprim._vocab_memory_generate",
+      "local_path": "vendor/oprim/_vocab_memory_generate.py",
+      "local_sha256": "7ba5638e860833b089b706a6074f9aae6322e6840dc53776c8efc9c7d8744403",
+      "classification": "PROJECT_LAYER4"
+    },
+    {
       "element": "oprim._word_frequency_stats",
       "local_path": "vendor/oprim/_word_frequency_stats.py",
       "local_sha256": "3e0b9aaf20010672ca790f00032a6587bf961f3cc4f662854564eaab4aca7b18",

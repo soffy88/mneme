@@ -62,7 +62,16 @@ def _allow_mock() -> bool:
 
 
 def provider_status() -> dict[str, Any]:
-    """当前 default LLM/VLM 类型（无密钥、无内容）。供 /health 与 pilot 冒烟。"""
+    """当前 default LLM/VLM **配置**状态（无密钥、无内容、不发任何请求）。
+
+    供 /health 与 pilot 冒烟。
+
+    ⚠️ **这里刻意不做网络探测。** `configure_llm_providers()` 每次装配都会调本函数
+    打一行日志，若把可达性探针放进来，等于**每次装配都多付 3 秒网络超时**
+    （第一版就踩了这个：`tool_generate_memory_node` 一次生成凭空多 3 秒）。
+    可达性是**活探针**，属于 /health/providers 端点的职责，见
+    `probe_llm_usable()` / `_probe_endpoint_reachable()`。
+    """
     from obase.provider_registry import ProviderRegistry
 
     reg = ProviderRegistry.get()
@@ -82,11 +91,115 @@ def provider_status() -> dict[str, Any]:
         "vlm": vlm_name,
         "llm_is_mock": llm_name in _MOCK_TYPE_NAMES,
         "vlm_is_mock": vlm_name in _MOCK_TYPE_NAMES,
+        # 未探测：可达性要发请求，不属于配置快照。见 /health/providers。
+        "llm_reachable": None,
         "qwen_model": os.environ.get("QWEN_MODEL"),
         "qwen_vl_model": os.environ.get("QWEN_VL_MODEL"),
         "veya_model": os.environ.get("VEYA_MODEL"),
         "veya_vl_model": os.environ.get("VEYA_VL_MODEL"),
     }
+
+
+def provider_liveness(*, deep: bool = False, timeout: float = 3.0) -> dict[str, Any]:
+    """**活探针**：配置 + 网关可达性（+ 可选真实补全）。
+
+    与 :func:`provider_status` 分开，因为它会发网络请求。`/health/providers` 用它；
+    装配路径不要用（会平白多付一次超时）。
+    """
+    status = provider_status()
+    endpoint = _probe_endpoint_reachable(timeout=timeout)
+    status["llm_reachable"] = endpoint["reachable"]
+    status["llm_reachable_detail"] = endpoint["detail"]
+    status["llm_usable_checked"] = "endpoint_only"
+    if status["llm_is_mock"]:
+        # 测试/CI 明确允许 mock：mock 就是「可用」，别报成故障。
+        status["llm_usable"] = True
+        status["llm_usable_detail"] = "mock_allowed"
+        return status
+    if deep:
+        verdict = probe_llm_usable()
+        status["llm_usable"] = bool(verdict["usable"]) and endpoint["reachable"]
+        status["llm_usable_detail"] = verdict["detail"]
+        status["llm_usable_checked"] = "deep"
+    else:
+        status["llm_usable"] = endpoint["reachable"]
+        status["llm_usable_detail"] = "endpoint_only"
+    return status
+
+
+# 网关会用 **HTTP 200** 把上游故障当正文返回，例如 2026-10-03 实测：
+#   {"choices":[{"message":{"content":"gpt-5.6-luna 兜底失败"}}]}
+#   {"choices":[{"message":{"content":"opencode-go rejected the request (HTTP 429): ...
+#      Go usage limit exceeded"}}]}
+# 所以「没抛异常」**不等于**成功 —— 只判异常的探针会把「文本 LLM 调不通」报成健康。
+# 第一版探针就栽在这里：`max_tokens=1` + 只看异常 → 退役别名 veya1.2-128K 显示
+# reachable=true，而它实际每次都返回上面那串兜底失败。
+_GATEWAY_ERROR_MARKERS = (
+    "兜底失败",
+    "rejected the request",
+    "usage limit",
+    "no api-key",
+    "rate_limit",
+    "insufficient_quota",
+    "service unavailable",
+)
+
+
+def _looks_like_gateway_error(text: str | None) -> bool:
+    low = (text or "").lower()
+    return any(m in low for m in _GATEWAY_ERROR_MARKERS)
+
+
+def _probe_endpoint_reachable(timeout: float = 3.0) -> dict[str, Any]:
+    """只探网关端点答不答话（GET /models），不发 token、不看内容。"""
+    base = os.environ.get("VEYA_BASE_URL") or os.environ.get("QWEN_BASE_URL")
+    if not base:
+        return {"reachable": False, "detail": "no_base_url"}
+    url = base.rstrip("/") + "/models"
+    try:
+        import urllib.request
+
+        with urllib.request.urlopen(url, timeout=timeout) as resp:  # noqa: S310
+            code = getattr(resp, "status", 200)
+        return {"reachable": code == 200, "detail": f"http_{code}"}
+    except Exception as exc:  # noqa: BLE001 — 探针失败就是结论
+        return {"reachable": False, "detail": f"{type(exc).__name__}: {exc}"[:200]}
+
+
+def probe_llm_usable(timeout: float = 30.0) -> dict[str, Any]:
+    """真发一次最小补全并**检查内容**。慢（3~30s），故只在显式请求时跑。
+
+    这是唯一能识破「HTTP 200 + 正文是错误串」的检查。
+    """
+    import asyncio
+
+    try:
+        from oprim.llm import llm_complete
+        from obase.provider_registry import ProviderRegistry
+
+        caller = ProviderRegistry.get().llm("default")
+
+        async def _probe() -> str:
+            resp = await llm_complete(
+                [{"role": "user", "content": "Reply with exactly: PONG"}],
+                caller=caller,
+                model=os.environ.get("VEYA_MODEL") or "veya1.2",
+                max_tokens=8,
+            )
+            return resp.text or ""
+
+        text = asyncio.run(asyncio.wait_for(_probe(), timeout=timeout)).strip()
+    except Exception as exc:  # noqa: BLE001
+        return {"usable": False, "detail": f"{type(exc).__name__}: {exc}"[:200], "text": None}
+    if _looks_like_gateway_error(text):
+        return {
+            "usable": False,
+            "detail": "gateway_returned_error_payload",
+            "text": text[:120],
+        }
+    if not text:
+        return {"usable": False, "detail": "empty_completion", "text": None}
+    return {"usable": True, "detail": "ok", "text": text[:40]}
 
 
 def configure_llm_providers() -> str:

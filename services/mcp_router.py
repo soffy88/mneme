@@ -1514,3 +1514,303 @@ async def mcp_get_word_enrichment(
 ) -> dict:
     """共享参考内容（与 books 同性质），只需登录，不做 per-student 授权。"""
     return await tool_get_word_enrichment(db, req.word)
+
+
+# ---------------------------------------------------------------------------
+# 词汇记忆引擎（MemoryNode 生成 + FSRS 复习阶梯）
+# ---------------------------------------------------------------------------
+
+
+async def tool_generate_memory_node(
+    db: AsyncSession,
+    vocabulary_item_id: str,
+    *,
+    persist: bool = False,
+) -> dict:
+    """生成一个词的 MemoryNode：Context Retriever → LLM → Quality Verifier → 装配。
+
+    顺序不可颠倒（MNEME_CORE3000_MEMORY_ENGINE_P0_SPEC.md §2）：先把**真实语境句**
+    取出来再让 LLM 做联想，而不是让 LLM 凭空虚构一个词的记忆。
+
+    `persist=False`（默认）只返回结果不落库 —— 生成是花钱的，落库是对全体学生
+    生效的，两个都不该默认发生。落库只写 `vocabulary_memory_nodes` 一行，**不碰
+    KCMastery**：掌握度只能经 SubmitAnswer 写路径产生。
+
+    Returns
+    -------
+    dict
+        ``{memory_input, node, report, row, persisted}``。``node`` 为 None 表示
+        LLM 输出未过契约（该词本轮跳过，不是失败重试的依据）。
+    """
+    from obase.provider_registry import ProviderRegistry
+    from oprim._vocab_memory_generate import generate_memory_nodes
+    from services.providers.setup import configure_llm_providers
+    from services.vocab_context import load_memory_input, resolve_family
+    from services.vocab_memory import build_memory_node, verify_memory_node
+
+    if not vocabulary_item_id or len(vocabulary_item_id) > 100:
+        raise ValueError("vocabulary_item_id 非法")
+
+    memory_input = await load_memory_input(db, vocabulary_item_id)
+    configure_llm_providers()
+    caller = ProviderRegistry.get().llm("default")
+    model = getattr(caller, "model", None) or "unknown"
+
+    results = await generate_memory_nodes([memory_input["llm_entry"]], caller=caller)
+    node = results[0] if results else None
+    if node is None:
+        return {
+            "memory_input": memory_input,
+            "node": None,
+            "report": None,
+            "row": None,
+            "persisted": False,
+            "reason": "LLM 输出未满足契约（缺项/类型错/解析失败），本词跳过",
+        }
+
+    family_resolved = await resolve_family(
+        db, [f.get("word", "") for f in (node.get("family") or [])]
+    )
+    report = verify_memory_node(
+        node, memory_input=memory_input, family_resolved=family_resolved
+    )
+    row = build_memory_node(
+        node,
+        memory_input=memory_input,
+        report=report,
+        family_resolved=family_resolved,
+        generation_model=model,
+    )
+
+    persisted = False
+    if persist:
+        await _upsert_memory_node(db, row)
+        persisted = True
+
+    return {
+        "memory_input": memory_input,
+        "node": node,
+        "report": report.to_payload(),
+        "row": row,
+        "persisted": persisted,
+    }
+
+
+_UPSERT_MEMORY_NODE_SQL = text(
+    """
+INSERT INTO vocabulary_memory_nodes
+    (vocabulary_item_id, tier, core_image, semantic_core, scene, family_network,
+     sound_hook, spelling_hook, recall_question, answer, image_prompt,
+     animation_candidate, animation_scene, context_tier, context_evidence,
+     context_absence_reason, generation_model, generation_version,
+     quality_score, verified)
+VALUES
+    (:vocabulary_item_id, :tier, :core_image, CAST(:semantic_core AS jsonb), :scene,
+     CAST(:family_network AS jsonb), :sound_hook, :spelling_hook, :recall_question,
+     :answer, :image_prompt, :animation_candidate, :animation_scene, :context_tier,
+     CAST(:context_evidence AS jsonb), :context_absence_reason, :generation_model,
+     :generation_version, :quality_score, :verified)
+ON CONFLICT (vocabulary_item_id) DO UPDATE SET
+    tier = EXCLUDED.tier,
+    core_image = EXCLUDED.core_image,
+    semantic_core = EXCLUDED.semantic_core,
+    scene = EXCLUDED.scene,
+    family_network = EXCLUDED.family_network,
+    sound_hook = EXCLUDED.sound_hook,
+    spelling_hook = EXCLUDED.spelling_hook,
+    recall_question = EXCLUDED.recall_question,
+    answer = EXCLUDED.answer,
+    image_prompt = EXCLUDED.image_prompt,
+    animation_candidate = EXCLUDED.animation_candidate,
+    animation_scene = EXCLUDED.animation_scene,
+    context_tier = EXCLUDED.context_tier,
+    context_evidence = EXCLUDED.context_evidence,
+    context_absence_reason = EXCLUDED.context_absence_reason,
+    generation_model = EXCLUDED.generation_model,
+    generation_version = EXCLUDED.generation_version,
+    quality_score = EXCLUDED.quality_score,
+    verified = EXCLUDED.verified,
+    updated_at = now()
+RETURNING (xmax = 0) AS inserted
+"""
+)
+
+
+async def _upsert_memory_node(db: AsyncSession, row: dict) -> None:
+    """按 vocabulary_item_id upsert（绝不按 word —— word 在本表不唯一）。
+
+    重复生成同一词是**覆盖**而非追加：一张卡只能有一套记忆，否则复习时露出的
+    内容会前后不一致。
+    """
+    import json
+
+    params = dict(row)
+    params["semantic_core"] = json.dumps(row["semantic_core"], ensure_ascii=False)
+    params["family_network"] = json.dumps(row["family_network"], ensure_ascii=False)
+    params["context_evidence"] = json.dumps(row["context_evidence"], ensure_ascii=False)
+    await db.execute(_UPSERT_MEMORY_NODE_SQL, params)
+
+
+async def tool_get_memory_node(
+    db: AsyncSession,
+    vocabulary_item_id: str,
+    *,
+    stage: Optional[str] = None,
+    expanded: int = 0,
+    student_id: Optional[uuid.UUID] = None,
+) -> dict:
+    """取一个词的 MemoryNode + FSRS 复习阶梯。
+
+    `expanded` 让愿意深挖的学生每次多揭一层（人决策：首次全展开，之后分层，
+    想多看可以主动多看），但**不改变 FSRS 调度**。传 `student_id` 时按该学生的
+    fsrs_card_json 推阶段；不给则按首次（learning，全展开）。
+    """
+    from services.vocab_context import _affix, _collocations  # noqa: PLC0415
+    from services.vocab_memory import render_review_ladder
+
+    if not vocabulary_item_id or len(vocabulary_item_id) > 100:
+        raise ValueError("vocabulary_item_id 非法")
+    if expanded < 0 or expanded > 4:
+        raise ValueError("expanded 必须在 0..4")
+
+    row = (
+        await db.execute(
+            text(
+                """
+        SELECT m.*, v.word, v.pos, v.meaning_cn
+        FROM vocabulary_memory_nodes m
+        JOIN vocabulary_items v ON v.id = m.vocabulary_item_id
+        WHERE m.vocabulary_item_id = :vid
+        LIMIT 1
+        """
+            ),
+            {"vid": vocabulary_item_id},
+        )
+    ).first()
+    if row is None:
+        return {"found": False, "vocabulary_item_id": vocabulary_item_id}
+
+    card = None
+    if student_id is not None:
+        from services.vocab_memory import vocab_kc
+
+        card = (
+            await db.execute(
+                text(
+                    """
+            SELECT fsrs_card_json FROM kc_mastery
+            WHERE student_id = :sid AND knowledge_point = :kp
+            """
+                ),
+                {"sid": student_id, "kp": vocab_kc(vocabulary_item_id)},
+            )
+        ).scalar()
+
+    node = {
+        "vocabulary_item_id": row.vocabulary_item_id,
+        "core_image": row.core_image,
+        "semantic_core": row.semantic_core,
+        "scene": row.scene,
+        "family_network": row.family_network,
+        "sound_hook": row.sound_hook,
+        "spelling_hook": row.spelling_hook,
+        "recall_question": row.recall_question,
+        "answer": row.answer,
+        "image_prompt": row.image_prompt,
+        "animation_candidate": row.animation_candidate,
+        "context_evidence": row.context_evidence,
+        "quality_score": row.quality_score,
+        "verified": row.verified,
+    }
+    affix = await _affix(db, vocabulary_item_id)
+    ladder = render_review_ladder(
+        node,
+        stage=stage,
+        card=card,
+        expanded=expanded,
+        facts={
+            "word_origin": affix,
+            "collocations": await _collocations(db, vocabulary_item_id),
+        },
+    )
+    return {
+        "found": True,
+        "word": row.word,
+        "pos": row.pos,
+        "meaning_cn": row.meaning_cn,
+        "tier": row.tier,
+        "context_tier": row.context_tier,
+        "context_absence_reason": row.context_absence_reason,
+        "quality_score": row.quality_score,
+        "verified": row.verified,
+        "generation_model": row.generation_model,
+        "generation_version": row.generation_version,
+        "ladder": ladder,
+    }
+
+
+class GenerateMemoryNodeReq(BaseModel):
+    vocabulary_item_id: str
+    persist: bool = False
+
+
+@router.post("/GenerateMemoryNode")
+async def mcp_generate_memory_node(
+    req: GenerateMemoryNodeReq,
+    db: AsyncSession = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+) -> dict:
+    """生成记忆节点。**落库需 admin** —— 它是对全体学生共享的参考内容。
+
+    只生成不落库（persist=false）任何登录用户都能做；落库会改变所有学生看到的
+    复习卡内容，故按 W5 Part B 的 deny-by-default 判 admin。
+    """
+    if req.persist:
+        from obase.admin_identity import is_admin
+
+        if not is_admin(current_user):
+            raise HTTPException(status_code=403, detail="落库记忆节点需要 admin 权限")
+    result = await tool_generate_memory_node(
+        db, req.vocabulary_item_id, persist=req.persist
+    )
+    if result.get("persisted"):
+        from obase.audit_log import log_usage
+
+        await log_usage(
+            db,
+            actor=current_user,
+            action="generate_memory_node",
+            resource_type="vocabulary_memory_node",
+            resource_id=req.vocabulary_item_id,
+        )
+        await db.commit()
+    return result
+
+
+class GetMemoryNodeReq(BaseModel):
+    vocabulary_item_id: str
+    stage: Optional[str] = None
+    expanded: int = 0
+    student_id: Optional[uuid.UUID] = None
+
+
+@router.post("/GetMemoryNode")
+async def mcp_get_memory_node(
+    req: GetMemoryNodeReq,
+    db: AsyncSession = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+) -> dict:
+    """取记忆节点与复习阶梯。共享参考内容，只需登录。
+
+    传 `student_id` 时按该学生卡片状态推阶段，故需 per-student 授权
+    （与 GetWordEnrichment 不同：那个不涉及任何学生数据，这个要读 KCMastery）。
+    """
+    if req.student_id is not None and req.student_id != current_user.id:
+        await _ensure_student_access(db, current_user, req.student_id)
+    return await tool_get_memory_node(
+        db,
+        req.vocabulary_item_id,
+        stage=req.stage,
+        expanded=req.expanded,
+        student_id=req.student_id,
+    )

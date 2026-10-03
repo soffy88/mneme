@@ -1,0 +1,825 @@
+{
+  "summary": {
+    "mode": "audit_only",
+    "pool_single_words": 2761,
+    "audit_size": 100,
+    "seed": 20261003,
+    "tier_distribution": {
+      "B": 33,
+      "A": 37,
+      "C": 30
+    },
+    "context_tier_distribution": {
+      "3": 70,
+      "5": 30
+    },
+    "context_coverage": 0.7,
+    "mean_sentences_per_word": 1.89,
+    "has_affix": 15,
+    "has_xiangxing": 41,
+    "has_collocations": 4,
+    "llm_called": false
+  },
+  "detail": [
+    {
+      "vocabulary_item_id": "02111cbc-5971-5b63-bbf3-dbfd091255dc",
+      "word": "cloud",
+      "tier": "B",
+      "context_tier": 3,
+      "sentences": 3,
+      "best": "As she emerged from her drifting cloud of gun smoke,"
+    },
+    {
+      "vocabulary_item_id": "037f0fee-dc46-55e3-bf51-e8b004f640dc",
+      "word": "conversation",
+      "tier": "A",
+      "context_tier": 3,
+      "sentences": 3,
+      "best": "'This is a private conversation!'"
+    },
+    {
+      "vocabulary_item_id": "0676c48f-9ac4-53a2-9647-75634e36581a",
+      "word": "credit",
+      "tier": "A",
+      "context_tier": 3,
+      "sentences": 3,
+      "best": "is in credit or is overdrawn."
+    },
+    {
+      "vocabulary_item_id": "06ead768-683f-5ef0-b8fa-6a91c468da0e",
+      "word": "single",
+      "tier": "A",
+      "context_tier": 3,
+      "sentences": 3,
+      "best": "it has never written a single word."
+    },
+    {
+      "vocabulary_item_id": "0b1dd4eb-6117-5dca-89ee-0a23718fd16e",
+      "word": "sand",
+      "tier": "A",
+      "context_tier": 3,
+      "sentences": 3,
+      "best": "the precious parcel was full of stones and sand!"
+    },
+    {
+      "vocabulary_item_id": "0c596198-5b82-5d8c-bb6f-906d850b01fa",
+      "word": "sentence",
+      "tier": "A",
+      "context_tier": 3,
+      "sentences": 3,
+      "best": "What does she mean by 'change' in the last sentence?"
+    },
+    {
+      "vocabulary_item_id": "0cecd896-5e7a-5a53-a97f-38112edabbc5",
+      "word": "helicopter",
+      "tier": "A",
+      "context_tier": 3,
+      "sentences": 3,
+      "best": "It was not long before a helicopter arrived on the scene"
+    },
+    {
+      "vocabulary_item_id": "0e6f6e41-de4e-5efa-9ced-e48822445505",
+      "word": "northwest",
+      "tier": "B",
+      "context_tier": 3,
+      "sentences": 1,
+      "best": "600 miles northwest of Rio de Janeiro."
+    },
+    {
+      "vocabulary_item_id": "0fb5763c-a985-56e2-a2af-baab4c6c0659",
+      "word": "balance",
+      "tier": "C",
+      "context_tier": 5,
+      "sentences": 0,
+      "best": null
+    },
+    {
+      "vocabulary_item_id": "0fbf9208-9588-56d7-af90-41c7b11a5b0c",
+      "word": "shopping",
+      "tier": "B",
+      "context_tier": 3,
+      "sentences": 3,
+      "best": "when she remembered that she had gone shopping after the home help had left and she knew that she had turned both keys in their locks."
+    },
+    {
+      "vocabulary_item_id": "1107ced0-5ce6-5b62-a0a5-e20d047875b9",
+      "word": "who",
+      "tier": "B",
+      "context_tier": 3,
+      "sentences": 3,
+      "best": "in short, whether or not they wholly alienate landowners and those who live in the countryside."
+    },
+    {
+      "vocabulary_item_id": "143b9f75-9048-5ae9-a1e0-02516abe0d84",
+      "word": "tourist",
+      "tier": "A",
+      "context_tier": 3,
+      "sentences": 2,
+      "best": "He was a tourist."
+    },
+    {
+      "vocabulary_item_id": "14de8700-8c47-5b59-8aac-db813c072cff",
+      "word": "crayon",
+      "tier": "C",
+      "context_tier": 5,
+      "sentences": 0,
+      "best": null
+    },
+    {
+      "vocabulary_item_id": "1709eebc-a0a2-57ae-8692-07efc2f1bf34",
+      "word": "poster",
+      "tier": "C",
+      "context_tier": 5,
+      "sentences": 0,
+      "best": null
+    },
+    {
+      "vocabulary_item_id": "2151319e-fa2b-5589-bcac-dec3f4c06282",
+      "word": "opportunity",
+      "tier": "B",
+      "context_tier": 3,
+      "sentences": 3,
+      "best": "When one seriously studies the social orders that have had the opportunity to develop autonomously,"
+    },
+    {
+      "vocabulary_item_id": "23a9fd94-fc99-596c-9e72-4d8846be2c5b",
+      "word": "anymore",
+      "tier": "B",
+      "context_tier": 3,
+      "sentences": 2,
+      "best": "and now he is not worried anymore."
+    },
+    {
+      "vocabulary_item_id": "2613f2c8-9caf-5398-a2e9-586faa147238",
+      "word": "enjoyable",
+      "tier": "A",
+      "context_tier": 3,
+      "sentences": 2,
+      "best": "Visits to really remote villages are seldom enjoyable."
+    },
+    {
+      "vocabulary_item_id": "26c96bbb-91a8-5341-b3df-a85a163e123b",
+      "word": "remaining",
+      "tier": "C",
+      "context_tier": 5,
+      "sentences": 0,
+      "best": null
+    },
+    {
+      "vocabulary_item_id": "2baaeb1f-e1d1-5dc3-9b66-7a09195f4128",
+      "word": "regular",
+      "tier": "B",
+      "context_tier": 3,
+      "sentences": 3,
+      "best": "The only regular visitors to the monastery in winter are parties of skiers who go there at Christmas and Easter."
+    },
+    {
+      "vocabulary_item_id": "31311002-a5a4-5f18-a309-94ae9cfb7d14",
+      "word": "Toronto",
+      "tier": "C",
+      "context_tier": 5,
+      "sentences": 0,
+      "best": null
+    },
+    {
+      "vocabulary_item_id": "32fcc0de-3481-5d0a-82c6-e5b84efcee1c",
+      "word": "seven",
+      "tier": "A",
+      "context_tier": 3,
+      "sentences": 3,
+      "best": "for during the party it capsized and sank in seven feet of water."
+    },
+    {
+      "vocabulary_item_id": "338f28ed-30f4-52a8-afd3-6f6fc90309eb",
+      "word": "pressure",
+      "tier": "A",
+      "context_tier": 3,
+      "sentences": 3,
+      "best": "Once we get down to the oil, it usually flows to the surface because great pressure either from gas or water, is pushing it."
+    },
+    {
+      "vocabulary_item_id": "3415fafe-d5bd-5516-9dc7-14a248fa8a71",
+      "word": "tasty",
+      "tier": "C",
+      "context_tier": 5,
+      "sentences": 0,
+      "best": null
+    },
+    {
+      "vocabulary_item_id": "3ab58a0d-d35f-525d-b682-944a215f4feb",
+      "word": "international",
+      "tier": "B",
+      "context_tier": 3,
+      "sentences": 3,
+      "best": "At the international level, sport is frankly mimic warfare."
+    },
+    {
+      "vocabulary_item_id": "3abf157e-7f7e-53a5-833c-f1464d29adae",
+      "word": "slice",
+      "tier": "C",
+      "context_tier": 5,
+      "sentences": 0,
+      "best": null
+    },
+    {
+      "vocabulary_item_id": "3b9aede6-99b4-55bd-ad12-ec6f2cc67827",
+      "word": "annoy",
+      "tier": "B",
+      "context_tier": 3,
+      "sentences": 1,
+      "best": "Burglar alarms going off at any time of the day or night serve only to annoy passers-by and actually assist burglars to burgle."
+    },
+    {
+      "vocabulary_item_id": "44d7edf8-76b8-59bf-83ee-09f4703c4346",
+      "word": "eighteen",
+      "tier": "B",
+      "context_tier": 3,
+      "sentences": 3,
+      "best": "I was only five when my father had taken me abroad, and that was eighteen years ago."
+    },
+    {
+      "vocabulary_item_id": "46e83641-6097-5468-a4b3-9582d296457e",
+      "word": "box",
+      "tier": "A",
+      "context_tier": 3,
+      "sentences": 3,
+      "best": "My nephew George has a money box,"
+    },
+    {
+      "vocabulary_item_id": "4815253c-07c2-5578-9b97-5b11ae8cefed",
+      "word": "teenager",
+      "tier": "A",
+      "context_tier": 3,
+      "sentences": 2,
+      "best": "When I was a teenager, I felt that I was just young and uncertain --"
+    },
+    {
+      "vocabulary_item_id": "489065c9-1a4b-545e-8e1c-90a281776de8",
+      "word": "shell",
+      "tier": "B",
+      "context_tier": 3,
+      "sentences": 3,
+      "best": "by pulling his feet under his shell, and the game is over."
+    },
+    {
+      "vocabulary_item_id": "4b92b42a-ccc5-5f54-bff4-d0ade790eac4",
+      "word": "seat",
+      "tier": "A",
+      "context_tier": 3,
+      "sentences": 3,
+      "best": "I had a very good seat."
+    },
+    {
+      "vocabulary_item_id": "4ee6e7d0-06a1-5c9a-9111-21031f245767",
+      "word": "astronaut",
+      "tier": "A",
+      "context_tier": 3,
+      "sentences": 1,
+      "best": "and an astronaut will attempt to leave the stationary spaceship"
+    },
+    {
+      "vocabulary_item_id": "4fe2ee18-af5d-538a-9f44-78baa3cee9ea",
+      "word": "gatekeeper",
+      "tier": "C",
+      "context_tier": 5,
+      "sentences": 0,
+      "best": null
+    },
+    {
+      "vocabulary_item_id": "53e5155e-4d0d-5a59-9bbc-71a13962db1d",
+      "word": "pot",
+      "tier": "B",
+      "context_tier": 3,
+      "sentences": 3,
+      "best": "Cave exploration, or pot holing as it has come to be known,"
+    },
+    {
+      "vocabulary_item_id": "573cafcd-78e6-5f0e-885b-ec83fa1ed1bb",
+      "word": "specially",
+      "tier": "B",
+      "context_tier": 3,
+      "sentences": 3,
+      "best": "had been specially built for him."
+    },
+    {
+      "vocabulary_item_id": "574d67e1-7d9a-58cc-9131-8dd691721db2",
+      "word": "cheat",
+      "tier": "C",
+      "context_tier": 5,
+      "sentences": 0,
+      "best": null
+    },
+    {
+      "vocabulary_item_id": "5773bc46-76af-58a5-92c9-4f72e845bab1",
+      "word": "soon",
+      "tier": "B",
+      "context_tier": 3,
+      "sentences": 3,
+      "best": "He will soon visit Darwin."
+    },
+    {
+      "vocabulary_item_id": "596561ea-9740-5065-883a-b0640d8cbdd6",
+      "word": "ridge",
+      "tier": "C",
+      "context_tier": 5,
+      "sentences": 0,
+      "best": null
+    },
+    {
+      "vocabulary_item_id": "5bfe843b-b57c-5879-b160-816b25b62c28",
+      "word": "poem",
+      "tier": "C",
+      "context_tier": 5,
+      "sentences": 0,
+      "best": null
+    },
+    {
+      "vocabulary_item_id": "5d4c460f-9714-538e-99e7-0b0130a2d946",
+      "word": "dinosaur",
+      "tier": "C",
+      "context_tier": 5,
+      "sentences": 0,
+      "best": null
+    },
+    {
+      "vocabulary_item_id": "5df2326c-26fb-567a-b922-83ed5a56d9b9",
+      "word": "bow",
+      "tier": "A",
+      "context_tier": 3,
+      "sentences": 3,
+      "best": "with the water churned to foam beneath her bow,"
+    },
+    {
+      "vocabulary_item_id": "5ff8dfe7-a53e-58af-bb25-27e567ac00b3",
+      "word": "blow",
+      "tier": "A",
+      "context_tier": 3,
+      "sentences": 2,
+      "best": "the prisoner knocked him to the ground with a sharp blow."
+    },
+    {
+      "vocabulary_item_id": "624fa5e4-fb84-5396-b7b1-68545a71e72e",
+      "word": "Macao",
+      "tier": "C",
+      "context_tier": 5,
+      "sentences": 0,
+      "best": null
+    },
+    {
+      "vocabulary_item_id": "6ba470bb-90f8-5373-b117-c36e9b2ea1b0",
+      "word": "goal",
+      "tier": "A",
+      "context_tier": 3,
+      "sentences": 2,
+      "best": "They had a single aim, a solitary goal: the top."
+    },
+    {
+      "vocabulary_item_id": "6c1bbcd2-d574-5a82-a3ac-9f579bd8bac5",
+      "word": "study",
+      "tier": "B",
+      "context_tier": 3,
+      "sentences": 3,
+      "best": "to study his image in the sight of those who do not know him, can be his undoing."
+    },
+    {
+      "vocabulary_item_id": "6f5225f9-54a2-5e4b-92e0-3732cfe75171",
+      "word": "opening",
+      "tier": "A",
+      "context_tier": 3,
+      "sentences": 3,
+      "best": "The expensive shops in a famous arcade near Piccadilly were just opening."
+    },
+    {
+      "vocabulary_item_id": "704c4da7-7d17-5638-bd00-12c85703c752",
+      "word": "appetite",
+      "tier": "B",
+      "context_tier": 3,
+      "sentences": 3,
+      "best": "a bad temper and an enormous appetite."
+    },
+    {
+      "vocabulary_item_id": "711433e8-1d4f-59db-a6df-a723f150d752",
+      "word": "labor",
+      "tier": "A",
+      "context_tier": 3,
+      "sentences": 3,
+      "best": "And in fact, there is a surplus of food grown even by this small proportion of the American labor force."
+    },
+    {
+      "vocabulary_item_id": "7250334b-242f-5b7e-9f4b-00bf3f6de8d2",
+      "word": "door",
+      "tier": "A",
+      "context_tier": 3,
+      "sentences": 3,
+      "best": "The sudden movement of the door made it sway slightly and it gave me the impression that it was about to leap out at me."
+    },
+    {
+      "vocabulary_item_id": "72acfbb7-823c-55d0-9ac8-d854c690aff8",
+      "word": "review",
+      "tier": "C",
+      "context_tier": 5,
+      "sentences": 0,
+      "best": null
+    },
+    {
+      "vocabulary_item_id": "74579785-a591-5c2e-831a-f15b703413a4",
+      "word": "speaker",
+      "tier": "C",
+      "context_tier": 5,
+      "sentences": 0,
+      "best": null
+    },
+    {
+      "vocabulary_item_id": "74c7ec4d-96c7-5123-848f-357841502f72",
+      "word": "imagine",
+      "tier": "A",
+      "context_tier": 3,
+      "sentences": 3,
+      "best": "Imagine a star up to twenty times larger, brighter and hotter than our own sun."
+    },
+    {
+      "vocabulary_item_id": "77b5616d-7247-50a4-b07b-09be07a43b2b",
+      "word": "airplane",
+      "tier": "B",
+      "context_tier": 3,
+      "sentences": 1,
+      "best": "We have enriched our lives by creating physical mobility through the motor car, the jet airplane, and other means of mechanical transport."
+    },
+    {
+      "vocabulary_item_id": "78ee8bc4-4767-5931-9e68-2e9e756af3f7",
+      "word": "baker",
+      "tier": "B",
+      "context_tier": 3,
+      "sentences": 3,
+      "best": "She knew that it must be the baker."
+    },
+    {
+      "vocabulary_item_id": "7981a7dc-d0cf-5a57-98c9-b6285e4cabdb",
+      "word": "concert",
+      "tier": "C",
+      "context_tier": 5,
+      "sentences": 0,
+      "best": null
+    },
+    {
+      "vocabulary_item_id": "7b6be072-93f4-57c1-ab12-2489bb85d50f",
+      "word": "sell",
+      "tier": "B",
+      "context_tier": 3,
+      "sentences": 3,
+      "best": "They have nothing to sell and require nothing from others."
+    },
+    {
+      "vocabulary_item_id": "7bd2b55a-1f3f-5d59-8fde-b91774a0755d",
+      "word": "cousin",
+      "tier": "B",
+      "context_tier": 3,
+      "sentences": 2,
+      "best": "My cousin Harry keeps a large, curiously shaped bottle on permanent display in his study."
+    },
+    {
+      "vocabulary_item_id": "7e1a7cfa-24ef-58cc-91cc-b99f51bc9b53",
+      "word": "possess",
+      "tier": "A",
+      "context_tier": 3,
+      "sentences": 3,
+      "best": "There are times when we would willingly give everything we possess to save our lives,"
+    },
+    {
+      "vocabulary_item_id": "7e963f67-9e0d-5e57-b387-aa8f56ce1506",
+      "word": "copy",
+      "tier": "B",
+      "context_tier": 3,
+      "sentences": 3,
+      "best": "and the usual copy of the letter,"
+    },
+    {
+      "vocabulary_item_id": "851ca54a-2c69-5cb2-b0c0-31bfcdafe014",
+      "word": "grandfather",
+      "tier": "A",
+      "context_tier": 3,
+      "sentences": 3,
+      "best": "The instrument was bought by my grandfather many years ago."
+    },
+    {
+      "vocabulary_item_id": "8ba82451-2e6b-5356-b88e-f75b2c22078c",
+      "word": "lift",
+      "tier": "B",
+      "context_tier": 3,
+      "sentences": 3,
+      "best": "In the lift her thoughts were on lunch and a good rest;"
+    },
+    {
+      "vocabulary_item_id": "8f2aa073-2036-5252-8027-2d06a9bb26f3",
+      "word": "embarrassed",
+      "tier": "A",
+      "context_tier": 3,
+      "sentences": 3,
+      "best": "Sally was amused /əˈmjuːzd/, but I was very embarrassed /ɪmˈbærəst/."
+    },
+    {
+      "vocabulary_item_id": "95fae289-2ce6-526f-abf8-7b636f5fb312",
+      "word": "dish",
+      "tier": "B",
+      "context_tier": 3,
+      "sentences": 3,
+      "best": "The pie committee decided that the best way to transport the dish would be by canal so they insured it for the trip."
+    },
+    {
+      "vocabulary_item_id": "9839d69b-909e-59f8-850a-750ec05c2630",
+      "word": "beside",
+      "tier": "A",
+      "context_tier": 3,
+      "sentences": 3,
+      "best": "Who's that beside her?"
+    },
+    {
+      "vocabulary_item_id": "9b99d0d8-5054-59bf-912b-ed0495dcadf8",
+      "word": "perform",
+      "tier": "A",
+      "context_tier": 3,
+      "sentences": 2,
+      "best": "it is extremely difficult to estimate the true value of the services which people perform for us."
+    },
+    {
+      "vocabulary_item_id": "9cf8dcca-c35f-5513-88a9-dff1c782b013",
+      "word": "kilometre",
+      "tier": "C",
+      "context_tier": 5,
+      "sentences": 0,
+      "best": null
+    },
+    {
+      "vocabulary_item_id": "a6da82ea-e8bb-524d-ae2b-d5e750275149",
+      "word": "flashlight",
+      "tier": "C",
+      "context_tier": 5,
+      "sentences": 0,
+      "best": null
+    },
+    {
+      "vocabulary_item_id": "a94258f8-8b36-5d55-919e-054b38dbc0bc",
+      "word": "yourselves",
+      "tier": "B",
+      "context_tier": 3,
+      "sentences": 2,
+      "best": "I'm sure you will enjoy yourselves."
+    },
+    {
+      "vocabulary_item_id": "af3d92e8-24a6-5c4b-ad22-135d8f4ab2fb",
+      "word": "get",
+      "tier": "B",
+      "context_tier": 3,
+      "sentences": 3,
+      "best": "Fifteen policemen had to push very hard to get him off the main street."
+    },
+    {
+      "vocabulary_item_id": "b4cfdaf3-2366-585c-b3b2-a092b28efca0",
+      "word": "mystery",
+      "tier": "B",
+      "context_tier": 3,
+      "sentences": 3,
+      "best": "How it came about that snakes manufactured poison is a mystery."
+    },
+    {
+      "vocabulary_item_id": "b5f1a6d2-dd40-5d26-8ea4-c70222fb465e",
+      "word": "prince",
+      "tier": "C",
+      "context_tier": 5,
+      "sentences": 0,
+      "best": null
+    },
+    {
+      "vocabulary_item_id": "b70c04d7-6b4b-576e-9083-8394e46ccb67",
+      "word": "weekly",
+      "tier": "A",
+      "context_tier": 3,
+      "sentences": 3,
+      "best": "A recent article in a weekly newspaper, for instance,"
+    },
+    {
+      "vocabulary_item_id": "b71295ff-7c59-576b-b7b1-e627182461f6",
+      "word": "download",
+      "tier": "C",
+      "context_tier": 5,
+      "sentences": 0,
+      "best": null
+    },
+    {
+      "vocabulary_item_id": "b7ddd296-be03-5267-94bd-84f7c1e9f2a5",
+      "word": "inn",
+      "tier": "B",
+      "context_tier": 3,
+      "sentences": 3,
+      "best": "the pie committee went to a local inn to celebrate."
+    },
+    {
+      "vocabulary_item_id": "b842b121-9fc9-52c0-b27b-bc3a1986c617",
+      "word": "someday",
+      "tier": "C",
+      "context_tier": 5,
+      "sentences": 0,
+      "best": null
+    },
+    {
+      "vocabulary_item_id": "ba282f23-b959-5466-8d23-8cbeba4db771",
+      "word": "southern",
+      "tier": "A",
+      "context_tier": 3,
+      "sentences": 2,
+      "best": "Mary and her husband Dimitri lived in the tiny village of Perachora in southern Greece."
+    },
+    {
+      "vocabulary_item_id": "bb00a18f-df87-53ff-84b1-12abbf64403a",
+      "word": "exciting",
+      "tier": "A",
+      "context_tier": 3,
+      "sentences": 3,
+      "best": "It was very different from modern car races, but no less exciting."
+    },
+    {
+      "vocabulary_item_id": "bb7b7289-f84d-5c70-be25-5374b86154d2",
+      "word": "room",
+      "tier": "A",
+      "context_tier": 3,
+      "sentences": 3,
+      "best": "'I left the money in my room,' I said, 'and it's not there now. '"
+    },
+    {
+      "vocabulary_item_id": "bcb6715e-6889-58b1-913a-4b5e5afaf9a6",
+      "word": "Monday",
+      "tier": "B",
+      "context_tier": 3,
+      "sentences": 3,
+      "best": "Can you come at 10 a.m. on Monday, April 24th?"
+    },
+    {
+      "vocabulary_item_id": "bd57607c-1ec6-58ff-a19c-8985aaa5e7c9",
+      "word": "handsome",
+      "tier": "A",
+      "context_tier": 3,
+      "sentences": 2,
+      "best": "One of the most handsome cars was a Rolls-Royce Silver Ghost."
+    },
+    {
+      "vocabulary_item_id": "bde3c713-e8e3-5f76-8ca7-82eccba52903",
+      "word": "equal",
+      "tier": "B",
+      "context_tier": 3,
+      "sentences": 3,
+      "best": "and another group were disturbed for an equal period of time but when they were not exhibiting eye-movements,"
+    },
+    {
+      "vocabulary_item_id": "bdeb8bf4-fab4-5a11-982e-1dae41f67c55",
+      "word": "homeland",
+      "tier": "C",
+      "context_tier": 5,
+      "sentences": 0,
+      "best": null
+    },
+    {
+      "vocabulary_item_id": "be896d33-436c-5b7c-bd47-4fbd28213793",
+      "word": "feeling",
+      "tier": "A",
+      "context_tier": 3,
+      "sentences": 3,
+      "best": "A feeling for the value of human life has become deeper and more widespread."
+    },
+    {
+      "vocabulary_item_id": "c01b744f-8e79-5afa-8205-1d649b72a0f0",
+      "word": "bamboo",
+      "tier": "C",
+      "context_tier": 5,
+      "sentences": 0,
+      "best": null
+    },
+    {
+      "vocabulary_item_id": "c2162006-7856-5077-a4c6-e096d49fb573",
+      "word": "replace",
+      "tier": "B",
+      "context_tier": 3,
+      "sentences": 2,
+      "best": "no judgment from outside which can replace the judgment from within."
+    },
+    {
+      "vocabulary_item_id": "c82e3a52-c9ea-5f7f-ae91-fda97461ab0b",
+      "word": "question",
+      "tier": "A",
+      "context_tier": 3,
+      "sentences": 3,
+      "best": "Listen to the tape then answer this question."
+    },
+    {
+      "vocabulary_item_id": "c8f25e70-9865-501d-864d-4da7b9877301",
+      "word": "melt",
+      "tier": "C",
+      "context_tier": 5,
+      "sentences": 0,
+      "best": null
+    },
+    {
+      "vocabulary_item_id": "ca8fd200-77dd-556e-bcd8-21fd733c6973",
+      "word": "icy",
+      "tier": "B",
+      "context_tier": 3,
+      "sentences": 3,
+      "best": "To protect themselves from the icy water, they had to wear special rubber suits."
+    },
+    {
+      "vocabulary_item_id": "ceb18447-9868-555c-956c-f3b07add6e31",
+      "word": "wheel",
+      "tier": "B",
+      "context_tier": 3,
+      "sentences": 3,
+      "best": "One man stayed at the wheel while two others with black stockings over their faces jumped out and smashed the window of the shop with iron bars."
+    },
+    {
+      "vocabulary_item_id": "dd0ab1b5-ec03-50fd-b6bc-e5b3077dd3b3",
+      "word": "seafood",
+      "tier": "C",
+      "context_tier": 5,
+      "sentences": 0,
+      "best": null
+    },
+    {
+      "vocabulary_item_id": "ddb81833-ead2-567d-9886-74ba9709b844",
+      "word": "parrot",
+      "tier": "A",
+      "context_tier": 3,
+      "sentences": 2,
+      "best": "But George's parrot /ˈpærət/, Henry, was still there."
+    },
+    {
+      "vocabulary_item_id": "e5efac91-63e0-5d6c-ace5-943a1e52cd4b",
+      "word": "weekday",
+      "tier": "C",
+      "context_tier": 5,
+      "sentences": 0,
+      "best": null
+    },
+    {
+      "vocabulary_item_id": "e99513c0-429e-52b4-8e94-bee4abee4433",
+      "word": "because",
+      "tier": "A",
+      "context_tier": 3,
+      "sentences": 3,
+      "best": "On the B.B.C. you can hear the clock when it is actually striking because microphones are connected to the clock tower."
+    },
+    {
+      "vocabulary_item_id": "e9b32935-252c-5ece-a2f6-e53f6ef9bad8",
+      "word": "agent",
+      "tier": "C",
+      "context_tier": 5,
+      "sentences": 0,
+      "best": null
+    },
+    {
+      "vocabulary_item_id": "eca0f2f9-748b-5b23-9de3-f3e0ffba1510",
+      "word": "delete",
+      "tier": "C",
+      "context_tier": 5,
+      "sentences": 0,
+      "best": null
+    },
+    {
+      "vocabulary_item_id": "f03ca34a-49b4-52c7-bb7d-4988f796a2d5",
+      "word": "responsible",
+      "tier": "B",
+      "context_tier": 3,
+      "sentences": 3,
+      "best": "But if no one can be trusted to act in a loyal and responsible manner"
+    },
+    {
+      "vocabulary_item_id": "f553ebfa-775f-5b53-bdf4-c50b0605ae50",
+      "word": "mostly",
+      "tier": "C",
+      "context_tier": 5,
+      "sentences": 0,
+      "best": null
+    },
+    {
+      "vocabulary_item_id": "f6497425-8a08-58fc-9cd5-57c80261894d",
+      "word": "messy",
+      "tier": "C",
+      "context_tier": 5,
+      "sentences": 0,
+      "best": null
+    },
+    {
+      "vocabulary_item_id": "fb7174f7-f66b-5e7d-b73d-8403becf00a2",
+      "word": "yesterday",
+      "tier": "A",
+      "context_tier": 3,
+      "sentences": 3,
+      "best": "But he went to the station yesterday and now he is not worried any more."
+    },
+    {
+      "vocabulary_item_id": "fcc2afc9-63f3-5828-9b5e-dc0d9725cd63",
+      "word": "performance",
+      "tier": "A",
+      "context_tier": 3,
+      "sentences": 3,
+      "best": "Though computers are capable of learning from their mistakes and improving on their performance,"
+    }
+  ]
+}

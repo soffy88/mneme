@@ -51,10 +51,14 @@ from sqlalchemy import text  # noqa: E402
 
 CORE_COLLECTION = "core-exam-zhongkao-gaokao-k12"
 
-# 占位符/空值——没有内容可派生
-PLACEHOLDERS = {"", "无", "-", "—", "/", "n/a", "N/A", "null", "NULL"}
-# 明显不是中文释义的（IPA 等）
-_IPA_RE = re.compile(r"^[\[（(]")
+# 占位符与「是读音还是释义」的判定**不再本地实现** —— 统一走
+# services.vocab_meaning（单源红线：两个互相矛盾的判定正是本仓要防的漂移）。
+# 旧规则是 `_IPA_RE = ^[\[（(]`，它把 `[法] 法案`、`(使)远离`、`[人名] 齐珀`
+# 这类**带方括号义项标签的释义**误判成音标丢掉（全表 11 条至今 meaning_cn 为空）。
+from services.vocab_meaning import (  # noqa: E402
+    PLACEHOLDERS,
+    is_phonetic_transcription,
+)
 
 # 行首词性标签：n. / vt. / vi. / adj. / adv. / prep. / conj. / pron. / det. /
 # int. / aux. / num. / art. / abbr. / pl. / link v. / mod. 等。
@@ -95,8 +99,9 @@ def derive(canonical: str | None) -> tuple[str | None, str | None]:
     text_all = canonical.strip()
     if text_all in PLACEHOLDERS:
         return None, None
-    if _IPA_RE.match(text_all):
-        # 形如 [ˈeərən] / （...）——是音标不是释义
+    if is_phonetic_transcription(text_all):
+        # 形如 [ˈeərən]（括号开头且内部无汉字）——是读音不是释义。
+        # 注意不能只看「括号开头」：`[法] 法案` / `(使)远离` 是带义项标签的释义。
         return None, None
 
     for line in text_all.split("\n"):
@@ -156,7 +161,7 @@ async def run(collection: str, apply: bool, fill_pos: bool) -> None:
             if canonical.strip() in PLACEHOLDERS:
                 stats["empty"] += 1
                 continue
-            if _IPA_RE.match(canonical.strip()):
+            if is_phonetic_transcription(canonical.strip()):
                 stats["ipa_only"] += 1
                 continue
             gloss, pos = derive(canonical)

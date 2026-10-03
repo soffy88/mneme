@@ -1,0 +1,117 @@
+{
+  "summary": {
+    "collection": "core-exam-zhongkao-gaokao-k12",
+    "pool_single_words": 2761,
+    "trial_size": 3,
+    "seed": 20261003,
+    "applied": false,
+    "generated": 3,
+    "skipped_contract": 0,
+    "verified": 0,
+    "degraded_no_context": 1,
+    "with_context": 2,
+    "image_prompt_coverage": 1.0,
+    "failed_gate_counts": {
+      "ANSWER_MATCHES_WORD": 3,
+      "HAS_CONTEXT": 1
+    }
+  },
+  "reports": [
+    {
+      "vocabulary_item_id": "02111cbc-5971-5b63-bbf3-dbfd091255dc",
+      "word": "cloud",
+      "pos": "n",
+      "generated": true,
+      "tier": "B",
+      "context_tier": 3,
+      "verified": false,
+      "degraded": false,
+      "quality_score": 0.8889,
+      "failed_gates": [
+        "ANSWER_MATCHES_WORD"
+      ],
+      "core_image": "白云像棉花糖被风推着跑",
+      "recall_question": "谁在骑着云霄飞车穿过天空？",
+      "image_prompt": "cartoon educational style, clear action, vocabulary learning illustration, uncle Cloud riding roller coaster through fluffy clouds",
+      "animation_candidate": false,
+      "context_evidence": [
+        {
+          "sentence_id": "4a9bd230-325f-53cd-acf8-0a4d31689750",
+          "text": "As she emerged from her drifting cloud of gun smoke,",
+          "lesson": "33. The ‘Vasa’",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "7d1d10c0-dca8-53a9-851a-8f378511f2b8",
+          "text": "you can enjoy the extraordinary sight of unbroken cloud plains that stretch out for miles before you, while the sun shines brilliantly in a clear sky.",
+          "lesson": "44.Speed and Comfort",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "9ac83c5d-ba86-5d99-8fe4-88305c906f3b",
+          "text": "As she emerged from her drifting cloud of gun smoke with the water churned to foam beneath her bow,",
+          "lesson": "27.The vasa",
+          "source": "NCE"
+        }
+      ]
+    },
+    {
+      "vocabulary_item_id": "0b1dd4eb-6117-5dca-89ee-0a23718fd16e",
+      "word": "sand",
+      "pos": "n",
+      "generated": true,
+      "tier": "A",
+      "context_tier": 3,
+      "verified": false,
+      "degraded": false,
+      "quality_score": 0.8889,
+      "failed_gates": [
+        "ANSWER_MATCHES_WORD"
+      ],
+      "core_image": "孩子用铲子挖沙堆筑城堡",
+      "recall_question": "孩子手中的铲子正在挖什么松散的东西？",
+      "image_prompt": "cartoon educational style, clear action, vocabulary learning illustration, a child digging a sandcastle with a shovel on beach",
+      "animation_candidate": true,
+      "context_evidence": [
+        {
+          "sentence_id": "0c7bf249-31ef-5689-9f78-278baf518208",
+          "text": "the precious parcel was full of stones and sand!",
+          "lesson": "07.Too Late",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "9da2bc19-ec94-5048-bbcc-271301a0e2d5",
+          "text": "To their surprise, the precious parcel was full of stones and sand.",
+          "lesson": "07. Too Late",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "a988222c-7f5d-50d8-93d0-5e74ced919cc",
+          "text": "such as a sand grain in the rock,",
+          "lesson": "52. Recording an Earthquake",
+          "source": "NCE"
+        }
+      ]
+    },
+    {
+      "vocabulary_item_id": "e5efac91-63e0-5d6c-ace5-943a1e52cd4b",
+      "word": "weekday",
+      "pos": "n",
+      "generated": true,
+      "tier": "C",
+      "context_tier": 5,
+      "verified": false,
+      "degraded": true,
+      "quality_score": 0.7778,
+      "failed_gates": [
+        "ANSWER_MATCHES_WORD",
+        "HAS_CONTEXT"
+      ],
+      "core_image": "日历前五格亮灯，周末两格灰暗",
+      "recall_question": "日历上前五个发光的方块代表什么？",
+      "image_prompt": "cartoon educational style, clear action, vocabulary learning illustration, a wall calendar with Monday to Friday glowing bright yellow, Saturday and Sunday dim grey, alarm clock ringing on Monday",
+      "animation_candidate": false,
+      "context_evidence": []
+    }
+  ]
+}

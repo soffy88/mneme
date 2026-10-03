@@ -2669,3 +2669,89 @@ CI 常驻的判分准确率回归门，堵死"构造桩题掩盖真实数据判�
   analytics、demo isolation；增加 FREE/PRO server-side entitlements 与 provider-neutral
   billing boundary、readiness command、tests 和文档。无真实用户、收入、留存、learning-effect
   或 product-market-fit 证据。
+
+---
+
+## CORE3000 词汇记忆引擎（Vocabulary Memory Engine P0）
+
+> 工程规格 = `MNEME_CORE3000_MEMORY_ENGINE_P0_SPEC.md`（**重定基线后的可执行契约**）。
+> 「VOCABULARY MEMORY ENGINE SPEC v1.0」是意图来源，不是执行契约 —— 按它字面实现
+> 会得到一批进不了产品链的数据（无教材例句源、无图片 provider、影视片段已否决、
+> 核心词实为 2,761 单词而非 3,000）。所有数字均来自 2026-10-03 生产实测。
+
+- [x] **CME-P0.0 实测基线 + 纠正两个错误前提** ✅ 2026-10-03：
+  核心范围 3,369 = **2,761 单词 + 608 短语**（验收分母改为 2,761，单词口径）；
+  语境源**只有 NCE**（559 lesson 全 NCE、`lessons.book_id ∩ books` = 0、
+  `reading_passages` 仅 41 行）→ 教材优先第 1/2 层与 `EXAMPLE_COVERAGE≥95%` 不可达；
+  图片 provider = 0 → `IMAGE_COVERAGE` 不可达；`frequency_band` 恒 = 5 不能分层。
+  ⚠️ 纠正：曾按「461 词有 canonical_meaning」推断可确定性补释义，**实测可派生 = 0**
+  （807 条是 IPA 占了释义列的导入列错位 bug，361 条是占位符）→ `meaning_cn` 停在 2,200。
+
+- [x] **CME-P0.1 schema** ✅：`vocabulary_memory_nodes`（alembic `e6f7a8b9c0d2`）。
+  **只存 LLM 生成的联想层**；无 etymology / root_logic / collocations（单源红线，读既有表）、
+  无 media_reference（2026-10-02 已否决）、无 image_url（provider=0，存恒 NULL 列等于做假）。
+  CHECK 强制 `context_tier∈[1,5]` / `quality_score∈[0,1]` / tier=5 必须写 `context_absence_reason`。
+  全局参考数据非学生 PII → **不进** `purge_service._STUDENT_TABLES`。
+- [x] **CME-P0.2 Context Retriever** ✅：`services/vocab_context.py`，5 层 tier 可插拔、
+  tier 1/2/4 **显式返回 unavailable + 原因**（不静默降级冒充有语境）。确定性分层
+  A=有语境+锚点 / B=有语境 / C=无语境。全量实测 **A=1,050 / B=1,016 / C=695**，
+  语境覆盖率 **74.83%**，平均 2.06 句/词。
+- [x] **CME-P0.3 LLM 生成 pipeline** ✅：`vendor/oprim/_vocab_memory_generate.py`
+  （单次 LLM 调用 = oprim；lock 记为 `PROJECT_LAYER4`，与既有 `_vocab_gloss_generate` 同处置）。
+  **契约里没有 etymology 字段 = 不可能编造词源**，比事后跑 `ETYMOLOGY_CONFIRMED` 门禁强。
+  任一必填字段缺失 → 整个词降级为 `None`，不返回半成品。
+- [x] **CME-P0.4 Quality Verifier** ✅：`services/vocab_memory.py`，**9 条**确定性门禁
+  （原 spec 4 条）。新增 `NO_ANSWER_LEAK`（回忆问印答案 = 主动回忆作废）、
+  `NO_ECHO_OF_EVIDENCE`、`FAMILY_TRACEABLE`、`NOT_DISPUTED_SOURCE`。
+  无语境记 `DEGRADED_NO_CONTEXT` + `verified=false`，**绝不记 PASS**（假绿会让
+  「教材优先」静默消失）。门禁不过也落库但保留现场，**不启发式修补**。
+- [x] **CME-P0.5 FSRS 复习阶梯** ✅：**每词 1 张卡 / 1 个 KC**（沿用 `vocab-{id}`，
+  不动 mastery 写路径）。阶梯是卡内分阶段揭示，不是 4 张卡。按 2026-10-03 人决策：
+  **首次（learning）全展开不做下拉折叠**（第一次最重要，目标是完全理解），
+  之后逐层揭示；`expanded` 让想深挖的学生多看一层但**不改调度**。
+- [x] **CME-P0.6 接线 + runner + 测试** ✅：`tool_/POST` 两件套 `GenerateMemoryNode`
+  （落库需 **admin** —— 对全体学生生效的共享内容）/ `GetMemoryNode`（传 student_id
+  才读 KCMastery，故需 per-student 授权）。`scripts/generate_vocab_memory_nodes.py`
+  默认 dry-run、确定性 seed、`--audit-only` 输入侧审计。**50 项测试 + 6 处变异验证**
+  （改坏任一门禁/分层/阶梯 → 对应测试失败，已复现）。
+- [x] **CME-P0.7 输入侧审计（实跑）** ✅：全量 2,761 与 100 词样本（seed=20261003，
+  tier A=37/B=33/C=30，语境覆盖 70%）均落 `reports/vocab_memory_p0/`。
+- [x] **CME-P0.8 100 词真实生成试跑** ✅ 2026-10-03：范围 = `CORE_EXAM_VOCAB` ∩ 有真实
+  NCE 例句（池 2,066），seed=20261003，模型 **`veya1.2`**，dry-run 未落库。
+  生成 **99/100**（1 词未过契约已拒收未入库）、**9 门禁全过 89/100 = 89%**、
+  调用错误 **0**、降级 0、false-etymology **0**（结构保证：契约无 etymology 字段）。
+  失败门分布 `FAMILY_TRACEABLE` ×6、`HAS_ONE_CORE_IMAGE` ×4。
+  ⚠️ **「9 门禁 100% 全过」未达成（实为 89%）**，按 ≥85% 的 P0 口径达标，但**不写 QUALIFIED**。
+- [x] **CME-P0.9 20 词人工抽查** ✅ 2026-10-03：覆盖高频具体/抽象/多义/动词/易混
+  （advice↔advise、wind↔wound）。四个发现见 spec §3.4，其中
+  `HAS_ONE_CORE_IMAGE` 下限误杀**已修**（8→5，重跑 4/4 全过 + 回归测试 + 变异验证）。
+- [x] **CME-P1.5 meaning 列污染判定** ✅：真实状态 = 全表 9,855 条以 `[（(` 开头，
+  其中 **9,844** 无汉字=真音标、**11** 有汉字=被旧规则**误拒**的释义（`[法] 法案`/
+  `(使)远离`/`[人名] 齐珀` 等）。根因：教材词表把方括号**同时**用于义项标签与音标。
+  唯一判定源 `services/vocab_meaning.py`（canonical/legacy/unusable 三档）；
+  Context Retriever 只把可信释义交给 LLM（音标一律变 `None`）；
+  `derive_meaning_from_canonical.py` 改引用同一判定，消除两个矛盾规则。
+  15+41 项测试 + 4 处变异验证。**未修历史数据**（按人决策）。
+- [ ] **CME-P1.6 `meaning_cn` 多义项截断（需人决策）** 🚨：`canonical_meaning` 是多义项，
+  但 `meaning_cn` 常只留第一行 → `blind`→百叶窗（漏「盲的」）、`wet`→雨天（漏「潮湿」）、
+  `fine`→罚款（漏「好的」）。实测 **1,288** 词多义项、**1,190** 词 `meaning_cn`
+  不足 canonical 一半；另 **490** 词 `pos` 与首义项不符（`pos` 来自默写表另一来源）。
+  学生会记住**冷门义项**。修它等于改「学生看到的权威释义」→ 需人决策。
+- [ ] **CME-P1.7 画面与语境句义项对齐（需决策）**：`blind` 的 NCE 句是动词义，
+  生成画面是名词义 —— Context Retriever 给了句子但无机制强制一致，多义词上
+  第 1 层与第 4 层会讲两个意思。
+- [ ] **CME-P1.8 `MEANING_AUTHORITY` 门禁（需决策）**：9 条门禁没有一条要求
+  「输入释义可信」→ `title`（canonical 是纯音标、unusable）仍 `verified=true`。
+  加门会拒掉「靠语境救回来」的好节点；不加则存在「语义核心由模型发明、无教材出处」
+  的卡片，与「教材原文优先」有张力。
+- [ ] **CME-P1.9 生产容器 → Veya 可达性**：Veya 只 bind 宿主 `127.0.0.1:8791`，
+  容器内 `host.docker.internal:8791` connection refused。按人决策不改 listener，
+  需另决（compose `network_mode: host` 或独立网络）。另 `.env` 的 `VEYA_MODEL`
+  是否从退役别名 `veya1.2-128K` 换成实测可用的 `veya1.2`（**改 .env 需确认**）。
+- [ ] **CME-P1 教材例句层**：解锁 tier 1/2（需非 NCE 教材句导入器 + 打通
+  `lessons.book_id ↔ books` + 句级 `source_scope` 标注），`EXAMPLE_COVERAGE` 才可能上 95%。
+- [ ] **CME-P1 图片/动画**：需先选定图片 provider + 成本上限，`IMAGE_COVERAGE` 才可测。
+- [ ] **CME-P1.5 修 IPA 列错位**：`vocabulary_items.canonical_meaning` 里 807 条装的是音标
+  （导入时列错位），挡住 `derive_meaning_from_canonical` 的确定性补齐。
+- [ ] **CME-P2 扩到 3,369**：前置 = P0.8 通过率 + 教材层 + 无语境 695 词的处置决策 +
+  608 条短语是否需要 MemoryNode。

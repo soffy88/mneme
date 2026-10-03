@@ -1563,6 +1563,85 @@ class VocabularyCollocation(Base):
     )
 
 
+class VocabularyMemoryNode(Base):
+    """词汇记忆节点 —— LLM 生成的**联想层**，一词一条。
+
+    本表**只**存生成内容。词源 / 词根 / 搭配 / 释义一律留在各自既有表，渲染时
+    读原表，不复制：复制即多一份会漂移的第二来源，且 vocabulary_affixes 已带
+    reference_confirmed / mnemonic_association / disputed 三档可信度，扁平字段
+    会把「可当词源讲」与「只是记忆联想」抹平。见
+    MNEME_CORE3000_MEMORY_ENGINE_P0_SPEC.md §4。
+
+    故本表**没有** etymology / root_logic / collocations 列，也**没有**
+    media_reference（2026-10-02 因未成年 + 版权否决）与 image_url（图片 provider
+    集成数为 0，存恒 NULL 的 URL 列等于给「图片覆盖率 0%」做假）。见 alembic
+    e6f7a8b9c0d2。
+
+    `context_tier` 落**实际取到的层**（1..5），不是最高可用层；tier=5（无真实
+    语境）时 `context_absence_reason` 必填（DB CHECK 强制）。`context_evidence`
+    存 sentence_id 而非句子文本 —— 句在 timed_sentences，改了不会读到旧句。
+    """
+
+    __tablename__ = "vocabulary_memory_nodes"
+
+    id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True), primary_key=True, server_default=text("gen_random_uuid()")
+    )
+    vocabulary_item_id: Mapped[str] = mapped_column(
+        String(100),
+        ForeignKey("vocabulary_items.id", ondelete="CASCADE"),
+        nullable=False,
+        unique=True,  # 一词一条，避免渲染歧义（重跑走 upsert）
+    )
+    # A=有语境+记忆锚点 / B=有语境 / C=无语境。确定性判定，不用 frequency_band
+    # （核心范围内该列恒等于 5，无区分度）。
+    tier: Mapped[str] = mapped_column(String(1), nullable=False)
+    core_image: Mapped[str] = mapped_column(Text, nullable=False)
+    semantic_core: Mapped[dict] = mapped_column(JSONB, nullable=False)
+    scene: Mapped[Optional[str]] = mapped_column(Text, nullable=True)
+    family_network: Mapped[list] = mapped_column(
+        JSONB, nullable=False, server_default=text("'[]'::jsonb")
+    )
+    sound_hook: Mapped[Optional[str]] = mapped_column(Text, nullable=True)
+    spelling_hook: Mapped[Optional[str]] = mapped_column(Text, nullable=True)
+    recall_question: Mapped[str] = mapped_column(Text, nullable=False)
+    answer: Mapped[str] = mapped_column(String(100), nullable=False)
+    # 只出 prompt，不出 URL：外部图片 provider 集成数为 0。
+    image_prompt: Mapped[Optional[str]] = mapped_column(Text, nullable=True)
+    animation_candidate: Mapped[bool] = mapped_column(
+        Boolean, nullable=False, server_default=text("false")
+    )
+    animation_scene: Mapped[Optional[str]] = mapped_column(Text, nullable=True)
+    context_tier: Mapped[int] = mapped_column(Integer, nullable=False)
+    context_evidence: Mapped[list] = mapped_column(
+        JSONB, nullable=False, server_default=text("'[]'::jsonb")
+    )
+    context_absence_reason: Mapped[Optional[str]] = mapped_column(Text, nullable=True)
+    generation_model: Mapped[Optional[str]] = mapped_column(String(64), nullable=True)
+    generation_version: Mapped[str] = mapped_column(
+        String(16), nullable=False, server_default=text("'p0'")
+    )
+    quality_score: Mapped[float] = mapped_column(
+        Float, nullable=False, server_default=text("0")
+    )
+    verified: Mapped[bool] = mapped_column(
+        Boolean, nullable=False, server_default=text("false")
+    )
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), server_default=text("now()")
+    )
+    updated_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), server_default=text("now()"), onupdate=text("now()")
+    )
+
+    __table_args__ = (
+        Index("ix_vocab_memory_node_item", "vocabulary_item_id"),
+        Index("ix_vocab_memory_node_tier", "tier"),
+        # 未过质量门的也要能查出来做人工复核/重跑
+        Index("ix_vocab_memory_node_unverified", "verified"),
+    )
+
+
 class VocabularyImportBatch(Base):
     __tablename__ = "vocabulary_import_batches"
 

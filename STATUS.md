@@ -118,6 +118,97 @@ veya1.2-vl，OpenAI 兼容端点；Qwen 为显式云端 fallback）/ Docker Comp
 
 ## 🔄 进行中
 
+**词汇记忆引擎 P0（2026-10-03 启动，工程规格 `MNEME_CORE3000_MEMORY_ENGINE_P0_SPEC.md`）**
+
+按「VOCABULARY MEMORY ENGINE SPEC v1.0」实现之前先做了生产实测，因为那份 spec
+按字面实现会产出**一批进不了产品链的数据**。四处前提与仓库现实不符：
+
+| spec 主张 | 实测 | 处置 |
+|---|---|---|
+| Context Priority 第 1/2 层「当前教材句/Lesson 句」 | 559 lesson **全 NCE**；`lessons.book_id ∩ books` = **0**；`reading_passages` 仅 **41** 行 | 保留 tier 接口但**显式标 unavailable + 原因**，不静默降级 |
+| 第 4 层「高质量公共语料」 | 无库 | 同上 |
+| `IMAGE_COVERAGE≥80%` / `ANIMATION≥10%` | 图片 provider 集成 = **0**，无生图模型 | 改为 `IMAGE_PROMPT_COVERAGE`，图片生成另开 epic |
+| §8 影视片段 | 2026-10-02 已因未成年+版权**被人决策否决** | **不建 media 列**（不复活） |
+| 核心 3000 词 | 3,369 = **2,761 单词 + 608 短语** | 验收分母 = 2,761，单词口径 |
+
+✅ **已交付（P0.0–P0.7）**：`vocabulary_memory_nodes`（alembic `e6f7a8b9c0d2`）、
+Context Retriever（`services/vocab_context.py`）、生成 oprim
+（`vendor/oprim/_vocab_memory_generate.py`）、9 条质量门禁
+（`services/vocab_memory.py`）、FSRS 复习阶梯、`/mcp/GenerateMemoryNode` +
+`/mcp/GetMemoryNode`、试跑 runner（默认 dry-run）、**50 项测试 + 6 处变异验证**。
+
+四个值得记住的设计决定（都偏离原 spec，理由在 spec §1.3）：
+
+1. **LLM 契约里没有 etymology 字段** → 结构上不可能编造词源。词源读既有
+   `vocabulary_affixes.etymology_status` 三档。比跑 `ETYMOLOGY_CONFIRMED` 门禁强。
+2. **MemoryNode 只存联想层**，不复制词源/词根/搭配（单源红线）—— 复制即多一份会
+   漂移的第二来源，且会把「可当词源讲」与「只是记忆联想」抹平。
+3. **每词 1 张卡**，四级阶梯是卡内分阶段揭示而非 4 张卡；按人决策**首次全展开不做
+   下拉折叠**（第一次最重要，目标是完全理解），`expanded` 可多看一层但不改调度。
+4. **无语境记 `DEGRADED_NO_CONTEXT` + `verified=false`，绝不记 PASS** —— 假绿会让
+   「教材优先」这条产品承诺静默消失。
+
+**输入侧审计已实跑**（`--audit-only`，纯确定性，不依赖模型）：全量 2,761 单词
+tier **A=1,050 / B=1,016 / C=695**、语境覆盖 **74.83%**、平均 2.06 句/词；
+100 词样本（seed=20261003）tier A=37/B=33/C=30、语境覆盖 70%（≈总体，代表性好）。
+
+**🚨 P0.8 已不再是「无模型」阻塞 —— 根因是模型名退役（§2.9）**
+
+`.env` 的 `VEYA_MODEL=veya1.2-128K` 是网关注释里写明的**已退役别名**（「§11 要求废弃
+拼写仍可解析 —— 现在解析到 `veya-free`」），而 `veya-free` 的上游 `gpt-5.6-luna` 与
+全部 `opencode-go/*` **配额耗尽**（HTTP 429）。实测 **`veya1.2` 可用**（真实补全返回
+正常），`veya1.1` / `veya-deepseek-v4-flash-nv` 亦可用。
+
+**探针设计教训（已修）**：网关会用 **HTTP 200** 把上游故障当正文返回
+（`{"content":"gpt-5.6-luna 兜底失败"}`）。第一版 `/health/providers` 探针只判
+「有没有抛异常」，于是把**调不通报成健康**。现在分两层：默认 ~3s 端点探活；
+`?deep=1` 真发一次最小补全并**检查返回内容**是否命中 `_GATEWAY_ERROR_MARKERS`。
+实测：退役别名 `reachable=true / usable=false`；`veya1.2` `usable=true`。
+
+⚠️ **但生产仍调不通**：Veya 只 bind 宿主 `127.0.0.1:8791`，api 容器内
+`host.docker.internal:8791` connection refused。按人决策**不改生产 listener**，
+故容器侧可达性需另决（compose `network_mode: host` 或独立网络方案）。
+
+**✅ CME-P0.8 100 词真实试跑已跑通**（模型 `veya1.2`，dry-run，报告
+`reports/vocab_memory_p0/trial_100_seed20261003_dryrun.json`）：
+生成 99/100（1 词未过契约已拒收）、**9 门禁全过 89/100 = 89%**、调用错误 **0**、
+降级 0、false-etymology **0**（结构保证）。未落库。
+
+**✅ 20 词人工抽查完成，四个发现**（详见 spec §3.4）：
+1. `HAS_ONE_CORE_IMAGE` 下限 8 **误杀**（4/4 全是 7 字好画面）→ **已修**（下限 5），
+   重跑该 4 词 4/4 全过，已加回归测试 + 变异验证。
+2. **`meaning_cn` 系统性只截首个义项**：`blind`→百叶窗（漏「盲的」）、`wet`→雨天
+   （漏「潮湿」）、`fine`→罚款（漏「好的」）。实测 **1,288** 词多义项，
+   **1,190** 词的 `meaning_cn` 不足 canonical 一半；另 **490** 词 `pos` 与首义项不符。
+   → 修它等于改「学生看到的权威释义」，**需人决策**（`CME-P1.6`），未动。
+3. **画面可能与语境句不是同一义项**：`blind` 的 NCE 句是动词义，画面是名词义。
+   无机制强制对齐 → 多义词上第 1 层与第 4 层讲两个意思（P1 需加义项对齐门）。
+4. **无权威释义仍可 verified**：`title` 的 canonical 是纯音标 → `unusable`，
+   节点仍 `verified=true`。9 条门禁里没有一条要求「输入释义可信」→ **需人决策**
+   加不加 `MEANING_AUTHORITY`。
+
+**另修两处工程缺陷**：① `resolve_stage` 按字符串 state + `card["reps"]` 写，
+而 py-fsrs 的 Card **没有 reps**、state 是 **int** → 接真卡即 `AttributeError`；
+测试夹具已全换成生产真卡形状。② 试跑 runner 一次 LLM 超时就中断整轮
+（100 词跑到第 38 个崩，前面结果全丢）→ 已加逐词隔离 + `-u` 实时输出。
+
+⚠️ **迁移发布注意**：新迁移 `e6f7a8b9c0d2` 目前**只在 `mneme_test`** 应用过，
+活库 `mneme` 仍在 `a3b4c5d6e7f8`（`/readiness` 现为 200，正常）。**不要单独对活库
+跑 alembic** —— 活进程里的 `EXPECTED_MIGRATION_HEAD` 还是旧值，一跑迁移
+`/readiness` 立刻 503 → 容器 unhealthy。正确顺序是**发布重启**（容器启动命令自带
+`alembic upgrade head`，迁移自动应用后新代码期望值正好对上）。
+
+⚠️ 另注：`mneme_test` 是手工补列出来的（`alembic upgrade head` 被既有漂移
+`vocabulary_items.language` 挡住），**NCE 三表 `lessons`/`timed_sentences`/
+`sentence_vocabulary_occurrences` 在测试库里不存在**。本次为此在
+`tests/test_vocab_memory_db.py` 里幂等补建这三张表，没去「修」整个漂移（独立 epic）。
+
+🚨 **Needs Human（2026-10-03）`./scripts/check.sh` 的 ruff / mypy 步骤在 HEAD 上
+已经红了**（非本次改动引入，已用 `git stash` 确认那些文件与 HEAD 一致）：ruff 95 项
+（其中 27 项来自未跟踪的 `.veya/` 工作树目录），mypy 20 项集中在
+`services/learning_engine.py` 与 `services/routers/learning.py`。按「不drive-by 改
+adjacent 代码」未动它们 —— 但这意味着**当前不能声称质量门全绿**。
+
 **Vocab Enrichment（2026-10-02 启动）**：拟增「词汇增强层」（图片/动画/语境）。
 调研后**未按原提案开工**，先纠三处前提（实测库，非推测）：
 

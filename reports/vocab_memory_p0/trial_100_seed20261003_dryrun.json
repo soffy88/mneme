@@ -1,0 +1,3510 @@
+{
+  "summary": {
+    "collection": "core-exam-zhongkao-gaokao-k12",
+    "pool_single_words": 2066,
+    "trial_size": 100,
+    "seed": 20261003,
+    "applied": false,
+    "generated": 99,
+    "skipped_contract": 1,
+    "call_errors": 0,
+    "verified": 89,
+    "degraded_no_context": 0,
+    "with_context": 99,
+    "image_prompt_coverage": 0.99,
+    "failed_gate_counts": {
+      "FAMILY_TRACEABLE": 6,
+      "HAS_ONE_CORE_IMAGE": 4
+    }
+  },
+  "reports": [
+    {
+      "vocabulary_item_id": "02ebd099-7527-5bbd-8405-631689de0d6a",
+      "word": "neighbor",
+      "pos": null,
+      "generated": true,
+      "tier": "B",
+      "context_tier": 3,
+      "verified": true,
+      "degraded": false,
+      "quality_score": 1.0,
+      "failed_gates": [],
+      "core_image": "邻居探身篱笆递个大苹果",
+      "recall_question": "谁探身过篱笆塞给你一个红苹果？",
+      "image_prompt": "cartoon educational style, clear action, vocabulary learning illustration, friendly neighbor leaning over white picket fence handing shiny red apple, sunny suburban backyard",
+      "animation_candidate": false,
+      "context_evidence": [
+        {
+          "sentence_id": "2559f3ed-6ba2-5ad7-9934-da76fa4edc8c",
+          "text": "Later a neighbor told me about him.",
+          "lesson": "06. Percy Buttons",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "9edc53f3-688d-524b-9e30-3c70ad9cc8f5",
+          "text": "Dimitri found out that his neighbor, Aleko, had suddenly acquired a new lamb.",
+          "lesson": "16. Mary Had a Little Lamb",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "c560b4d3-6dac-5a10-aed7-cd86f870fd4f",
+          "text": "Our neighbor, Captain Charles Ellison, will sail from Portsmouth tomorrow.",
+          "lesson": "12. Goodbye and Good Luck",
+          "source": "NCE"
+        }
+      ]
+    },
+    {
+      "vocabulary_item_id": "04b3e6b5-cfd6-588d-b8f5-c35e45e0fd23",
+      "word": "bed",
+      "pos": "n",
+      "generated": true,
+      "tier": "A",
+      "context_tier": 3,
+      "verified": true,
+      "degraded": false,
+      "quality_score": 1.0,
+      "failed_gates": [],
+      "core_image": "男孩把床搬上屋顶晒太阳",
+      "recall_question": "谁把家具搬上了屋顶？",
+      "image_prompt": "cartoon boy carrying a bed onto a rooftop, sunny, vocabulary illustration",
+      "animation_candidate": true,
+      "context_evidence": [
+        {
+          "sentence_id": "02be1fea-2adc-5891-a603-20aa1e322eb8",
+          "text": "he carried the bed onto the roof of his house.",
+          "lesson": "49. The End of a Dream",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "0821d4c0-ce18-559b-8372-0f3654bd3f91",
+          "text": "A gust of wind swept the bed off the roof and sent it crashing into the courtyard below.",
+          "lesson": "49.The End of a Dream",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "16031477-55ce-5bce-b8c1-47919cb7b973",
+          "text": "Yes, he must remain in bed for another two days.",
+          "lesson": "063. Thank You, Doctor.",
+          "source": "NCE"
+        }
+      ]
+    },
+    {
+      "vocabulary_item_id": "094c2544-67bf-5bb4-9b3c-59f802e8ad68",
+      "word": "hat",
+      "pos": "n",
+      "generated": true,
+      "tier": "A",
+      "context_tier": 3,
+      "verified": true,
+      "degraded": false,
+      "quality_score": 1.0,
+      "failed_gates": [],
+      "core_image": "大风吹走帽子飞上天空",
+      "recall_question": "什么被大风吹飞上了天空？",
+      "image_prompt": "cartoon educational style, clear action, vocabulary learning illustration: hat blown away by wind",
+      "animation_candidate": true,
+      "context_evidence": [
+        {
+          "sentence_id": "00349a5a-67c8-5775-aa1d-139f57c41f8e",
+          "text": "when she suddenly noticed a big hole in her husband's hat.",
+          "lesson": "95.A Fantasy",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "17d4b8be-a19e-5598-8265-1c2c1158d40b",
+          "text": "We had been in the hat shop for half an hour, and my wife was still in front of the mirror.",
+          "lesson": "41. Do You Call That a Hat",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "59b766b5-16ce-5077-ab97-852a0c630a40",
+          "text": "That is a lovely hat!",
+          "lesson": "013&014.A New Dress",
+          "source": "NCE"
+        }
+      ]
+    },
+    {
+      "vocabulary_item_id": "09551146-ad74-56dd-8483-63d525eda52d",
+      "word": "heavily",
+      "pos": null,
+      "generated": true,
+      "tier": "A",
+      "context_tier": 3,
+      "verified": true,
+      "degraded": false,
+      "quality_score": 1.0,
+      "failed_gates": [],
+      "core_image": "铁球砸碎玻璃桌面",
+      "recall_question": "什么砸碎了玻璃桌面？",
+      "image_prompt": "cartoon educational style, clear action, vocabulary learning illustration, giant iron ball smashing glass table, debris flying",
+      "animation_candidate": true,
+      "context_evidence": [
+        {
+          "sentence_id": "1954b77e-257c-56c6-9a6e-3b6cc9ca9207",
+          "text": "Narrowly academic examinations and tests were felt quite rightly to be heavily weighted in favor of children",
+          "lesson": "17. Intelligence",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "20105956-13fb-5b99-87c1-27b56d5d5928",
+          "text": "It was raining heavily, and they found that a stream had formed in the field.",
+          "lesson": "27. A Wet Night",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "6697b00b-aa81-5885-a3a3-85eb91fe6887",
+          "text": "Two factors weigh heavily against the effectiveness of scientific research in industry.",
+          "lesson": "15.Secrecy in Industry",
+          "source": "NCE"
+        }
+      ]
+    },
+    {
+      "vocabulary_item_id": "0a0fe5f1-7809-5cc7-9fd3-9fd559edfa3e",
+      "word": "diet",
+      "pos": null,
+      "generated": true,
+      "tier": "B",
+      "context_tier": 3,
+      "verified": true,
+      "degraded": false,
+      "quality_score": 1.0,
+      "failed_gates": [],
+      "core_image": "营养师拿电子秤称半颗葡萄",
+      "recall_question": "营养师用电子秤称半颗葡萄，这种严格的规定食谱叫什么？",
+      "image_prompt": "cartoon educational style, clear action, vocabulary learning illustration, nutritionist weighing half a grape on digital scale, overweight man watching sadly",
+      "animation_candidate": false,
+      "context_evidence": [
+        {
+          "sentence_id": "2a8cacad-82f9-5570-9791-9d76f52da8b8",
+          "text": "He explained that his diet was so strict that he had to reward himself occasionally.",
+          "lesson": "51.Reward for Virtue",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "89968c67-1314-5ea9-9831-64568c0d06f6",
+          "text": "Why did Hugh's diet not work?",
+          "lesson": "51.Reward for Virtue",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "94144b98-77e1-5d49-92c8-9e0a621e46ec",
+          "text": "He explained that his diet was so strict",
+          "lesson": "51. Reward for Virtue",
+          "source": "NCE"
+        }
+      ]
+    },
+    {
+      "vocabulary_item_id": "0f422c1d-77da-5693-899f-07ff3dfd4e41",
+      "word": "than",
+      "pos": "conj",
+      "generated": true,
+      "tier": "A",
+      "context_tier": 3,
+      "verified": true,
+      "degraded": false,
+      "quality_score": 1.0,
+      "failed_gates": [],
+      "core_image": "天平左边砝码压低右边",
+      "recall_question": "天平左边砝码压低右边，连接比较双方的关键连词是？",
+      "image_prompt": "Cartoon balance scale, left heavy weight pressing down right side up, clear comparison action, vocabulary learning illustration",
+      "animation_candidate": true,
+      "context_evidence": [
+        {
+          "sentence_id": "027810c4-04b9-59f9-b8fd-8a70bdeef9f7",
+          "text": "By having to sleep in the open, he gets far closer to the world of nature than most of us ever do.",
+          "lesson": "27.Nothing to Sell and Nothing to Buy",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "02cae524-289e-5381-92dd-9bae3e76ea72",
+          "text": "But more often than not, the greater part of the journey is spent on narrow, bumpy roads,",
+          "lesson": "44. Speed and Comfort",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "05ea2677-9ae7-577a-97d8-0477dc545c05",
+          "text": "The manufacturers had to pay more money than they had anticipated,",
+          "lesson": "26. Wanted: A Large Biscuit Tin",
+          "source": "NCE"
+        }
+      ]
+    },
+    {
+      "vocabulary_item_id": "11a1e117-66a5-563c-9aca-4bc841e69fb7",
+      "word": "gradually",
+      "pos": null,
+      "generated": true,
+      "tier": "A",
+      "context_tier": 3,
+      "verified": true,
+      "degraded": false,
+      "quality_score": 1.0,
+      "failed_gates": [],
+      "core_image": "小苗在阳光下一天天长高",
+      "recall_question": "幼苗每天怎么变高？",
+      "image_prompt": "A tiny seedling grows taller each day, cartoon educational style",
+      "animation_candidate": true,
+      "context_evidence": [
+        {
+          "sentence_id": "05c24389-efc3-5e08-baf4-5b288a3cce60",
+          "text": "is to make your interests gradually wider and more impersonal,",
+          "lesson": "11.How to Grow Old",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "1b92b24f-6817-5d75-bb29-afe7265379a5",
+          "text": "The time I spent at exercises gradually diminished.",
+          "lesson": "50.New Year Resolutions",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "24901d79-3478-59d4-a1ab-692da16d23da",
+          "text": "Gradually, the river grows wider.",
+          "lesson": "14. How to Grow Old",
+          "source": "NCE"
+        }
+      ]
+    },
+    {
+      "vocabulary_item_id": "11abd0c3-ce44-57d4-8275-cfc92987e504",
+      "word": "short",
+      "pos": "adj",
+      "generated": true,
+      "tier": "A",
+      "context_tier": 3,
+      "verified": true,
+      "degraded": false,
+      "quality_score": 1.0,
+      "failed_gates": [],
+      "core_image": "剪刀剪断长绳只剩一小段",
+      "recall_question": "剪刀剪断后绳子变成了什么？",
+      "image_prompt": "cartoon scissors cutting a long rope leaving a tiny piece",
+      "animation_candidate": true,
+      "context_evidence": [
+        {
+          "sentence_id": "0a5342d4-62bd-5156-ae2f-5411857c3a57",
+          "text": "Erna intends to take short rests every two hours.",
+          "lesson": "36. Across the Channel",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "2b892473-00ac-5d7f-a3f2-cdb78d0d0077",
+          "text": "Travellers on short trips to areas with water supplies of uncertain quality",
+          "lesson": "38.Water and the Traveller",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "2b9d3626-46c3-5bc0-ba6b-e8aee62630f9",
+          "text": "Her eyes were fixed on her plate and in a short time,",
+          "lesson": "40.Food and Talk",
+          "source": "NCE"
+        }
+      ]
+    },
+    {
+      "vocabulary_item_id": "13b8f4bf-92e2-5d46-ab26-471072422d97",
+      "word": "bookcase",
+      "pos": null,
+      "generated": true,
+      "tier": "A",
+      "context_tier": 3,
+      "verified": true,
+      "degraded": false,
+      "quality_score": 1.0,
+      "failed_gates": [],
+      "core_image": "木板拼成格子装书",
+      "recall_question": "木板拼成格子装书的家具叫什么？",
+      "image_prompt": "Cartoon wooden bookcase with grid compartments, books neatly placed inside, carpenter hammering nearby, vocabulary learning illustration",
+      "animation_candidate": true,
+      "context_evidence": [
+        {
+          "sentence_id": "4d33950d-4a78-5744-a636-8be3f455a730",
+          "text": "The curious bottle which now adorns the bookcase in his study was his first and last purchase of rare cosmetics.",
+          "lesson": "52.Mud is Mud",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "4ead17c2-f73f-517a-831b-1f4dcbba8660",
+          "text": "I'm making a bookcase.",
+          "lesson": "037&038.Making a Bookcase",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "7dc26543-b9c7-51b9-a731-ef938e325297",
+          "text": "This bookcase isn't for me.",
+          "lesson": "037&038.Making a Bookcase",
+          "source": "NCE"
+        }
+      ]
+    },
+    {
+      "vocabulary_item_id": "151d7261-439d-59de-bb69-9e913cd25bbd",
+      "word": "let",
+      "pos": "v",
+      "generated": true,
+      "tier": "B",
+      "context_tier": 3,
+      "verified": true,
+      "degraded": false,
+      "quality_score": 1.0,
+      "failed_gates": [],
+      "core_image": "老师打开门让学生进教室",
+      "recall_question": "谁打开门让学生进教室？",
+      "image_prompt": "Cartoon teacher opening classroom door letting students enter bright colors",
+      "animation_candidate": false,
+      "context_evidence": [
+        {
+          "sentence_id": "0468daa5-4c50-5aee-be74-b276cd766d1a",
+          "text": "He won't let me make another film.",
+          "lesson": "135. The Latest Report",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "0dc16f52-a171-5de2-894f-0224306ccccb",
+          "text": "She said her future husband would not let her make another film.",
+          "lesson": "135&136.The Latest Report",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "14228238-b3a3-5b16-90d9-1b7cdce1e2f1",
+          "text": "Let me introduce /ˌɪntrəˈdjuːs/ him to you.",
+          "lesson": "135. The Latest Report",
+          "source": "NCE"
+        }
+      ]
+    },
+    {
+      "vocabulary_item_id": "15428199-aca8-5834-a778-dfea03c688eb",
+      "word": "news",
+      "pos": "n",
+      "generated": true,
+      "tier": "A",
+      "context_tier": 3,
+      "verified": true,
+      "degraded": false,
+      "quality_score": 1.0,
+      "failed_gates": [],
+      "core_image": "报童骑车抛报纸落在门廊",
+      "recall_question": "晨雾中骑车抛报纸的报童在传递什么？",
+      "image_prompt": "cartoon newsboy on bicycle throwing newspapers onto porches at dawn, clear action, vocabulary learning illustration",
+      "animation_candidate": true,
+      "context_evidence": [
+        {
+          "sentence_id": "09fd3d34-0422-55f2-8c8c-ac65b704b8db",
+          "text": "Karen Marsh, sensational /senˈseɪʃənl/ news by our reporter /rɪˈpɔːtə/ Alan Jones.",
+          "lesson": "133. Sensational News",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "14fa4b64-96ed-59b2-910c-c6e275263e14",
+          "text": "'To end our special news bulletin,'",
+          "lesson": "76.April Fools' Day",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "660e844a-d409-5ee4-afb1-d5342607f029",
+          "text": "To end our special news bulletin,",
+          "lesson": "76. April Fools' Day",
+          "source": "NCE"
+        }
+      ]
+    },
+    {
+      "vocabulary_item_id": "16a8138c-d217-5edc-9066-ea2359576779",
+      "word": "better",
+      "pos": null,
+      "generated": true,
+      "tier": "B",
+      "context_tier": 3,
+      "verified": true,
+      "degraded": false,
+      "quality_score": 1.0,
+      "failed_gates": [],
+      "core_image": "小孩盯画拍手，大人抓耳挠腮",
+      "recall_question": "画廊里谁拍手叫好赢过博士？",
+      "image_prompt": "cartoon educational style, clear action, vocabulary learning illustration, little girl clapping happily at abstract painting, confused professor scratching head beside her",
+      "animation_candidate": false,
+      "context_evidence": [
+        {
+          "sentence_id": "0c51249a-41bb-5869-b524-245e43a07f30",
+          "text": "I think that young children often appreciate modern pictures better than anyone else.",
+          "lesson": "26. The Best Art Critics",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "0db3fe1e-982e-57ca-bfec-29b20a2affbc",
+          "text": "'Thirteen is not as good as one, but it's better than nothing.",
+          "lesson": "02.Thirteen Equals One",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "10c8d374-25f8-5c08-b1b9-51371bb635d9",
+          "text": "he and his friends are better than the present gang.",
+          "lesson": "47. Modern Plato",
+          "source": "NCE"
+        }
+      ]
+    },
+    {
+      "vocabulary_item_id": "1a4fc9ec-f22e-538f-ab62-d446253394a5",
+      "word": "thick",
+      "pos": "adj",
+      "generated": true,
+      "tier": "A",
+      "context_tier": 3,
+      "verified": true,
+      "degraded": false,
+      "quality_score": 1.0,
+      "failed_gates": [],
+      "core_image": "大雪压弯树枝，积雪没靴面",
+      "recall_question": "清晨踩下去陷到膝盖的是什么？",
+      "image_prompt": "Heavy snow covering ground knee-deep, bending branches, cartoon educational style, clear action, vocabulary learning illustration",
+      "animation_candidate": true,
+      "context_evidence": [
+        {
+          "sentence_id": "066df260-1d14-5f30-8dcd-73c8a0265917",
+          "text": "Snow lay thick on the ground.",
+          "lesson": "75. SOS",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "2357b705-27dc-51d7-94b6-1f11efa0c23d",
+          "text": "His answer was to lift the vessel out of the water by making it ride on a cushion of air no more than one or two feet thick.",
+          "lesson": "35. The Hovercraft",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "3bffe62c-f504-5147-9fc2-4e33cf89499b",
+          "text": "After chipping through a wall which was eighteen inches thick,",
+          "lesson": "35.Justice was Done",
+          "source": "NCE"
+        }
+      ]
+    },
+    {
+      "vocabulary_item_id": "1b0fa7be-df7c-5a5e-8e54-5f3793b97631",
+      "word": "week",
+      "pos": "n",
+      "generated": true,
+      "tier": "A",
+      "context_tier": 3,
+      "verified": true,
+      "degraded": false,
+      "quality_score": 1.0,
+      "failed_gates": [],
+      "core_image": "周一到周日撕下七张日历页",
+      "recall_question": "营地里撕下七页日历后发生了什么？",
+      "image_prompt": "A knight tearing seven calendar pages marked Mon-Sun in a medieval camp, cartoon educational style",
+      "animation_candidate": true,
+      "context_evidence": [
+        {
+          "sentence_id": "093f6033-aeac-5ef7-a6a1-b3246d9cd6e2",
+          "text": "Alfred stayed in the camp a week before he returned to Athelney.",
+          "lesson": "09.Royal Espionage",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "09411def-8deb-59ec-beda-e7dfd064870e",
+          "text": "Last week Mrs. Mills went to London.",
+          "lesson": "073&074.The Way to King Street",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "09aa0b53-b6a1-58fa-9865-75288e3620b5",
+          "text": "Alfred stayed in the camp a week",
+          "lesson": "11. Royal Espionage",
+          "source": "NCE"
+        }
+      ]
+    },
+    {
+      "vocabulary_item_id": "1d224bb9-948a-5b51-901d-3cb04ae97c7b",
+      "word": "population",
+      "pos": "n",
+      "generated": true,
+      "tier": "A",
+      "context_tier": 3,
+      "verified": true,
+      "degraded": false,
+      "quality_score": 1.0,
+      "failed_gates": [],
+      "core_image": "调查员手持表格在广场数人头",
+      "recall_question": "谁在广场上逐个点击记录人数？",
+      "image_prompt": "cartoon educational style, clear action, vocabulary learning illustration, surveyor counting crowds in a busy square",
+      "animation_candidate": true,
+      "context_evidence": [
+        {
+          "sentence_id": "03a018b3-d187-575d-a2aa-93aa461ad0ac",
+          "text": "This combination of very high density of population,",
+          "lesson": "46. Urban Growth",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "05f597e0-7acf-5665-bc48-4c06cb7eeb44",
+          "text": "She always referred to them as 'the shifting population',",
+          "lesson": "49.The Ideal Servant",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "0c615df9-32f7-5813-9bfa-8a4a647275ef",
+          "text": "so that the rabbit population was unlikely to be completely exterminated.",
+          "lesson": "17.A Man-made Disease",
+          "source": "NCE"
+        }
+      ]
+    },
+    {
+      "vocabulary_item_id": "1e96d7b2-61c8-5042-8b17-97c83d3b7566",
+      "word": "blind",
+      "pos": "adj",
+      "generated": true,
+      "tier": "A",
+      "context_tier": 3,
+      "verified": true,
+      "degraded": false,
+      "quality_score": 1.0,
+      "failed_gates": [],
+      "core_image": "拉下百叶窗遮住真相",
+      "recall_question": "什么动作让屋内瞬间变暗？",
+      "image_prompt": "cartoon educational style, clear action, vocabulary learning illustration: person pulling down window blinds to block bright sunlight",
+      "animation_candidate": true,
+      "context_evidence": [
+        {
+          "sentence_id": "4a18ce4a-6f8f-517a-8677-11987f4d9fd5",
+          "text": "And though the gleams blind and dazzle,",
+          "lesson": "29. Beauty",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "5eee601e-78a9-57f1-956c-1d40927592d5",
+          "text": "And, though the gleams blind and dazzle, yet do they convey a hint of beauty and serenity",
+          "lesson": "24.Beauty",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "f518a577-d86a-5804-8ce1-e203cf6e7bdd",
+          "text": "Many more people are form blind than color blind.",
+          "lesson": "38. Water and the Traveller",
+          "source": "NCE"
+        }
+      ]
+    },
+    {
+      "vocabulary_item_id": "28eb7a23-08ff-5621-a6a8-a5cdd36557a3",
+      "word": "wind",
+      "pos": "n",
+      "generated": true,
+      "tier": "A",
+      "context_tier": 3,
+      "verified": true,
+      "degraded": false,
+      "quality_score": 1.0,
+      "failed_gates": [],
+      "core_image": "老人转动发条，钟表滴答走",
+      "recall_question": "谁在深夜拧紧座钟的发条？",
+      "image_prompt": "cartoon educational style, clear action, vocabulary learning illustration, grandfather winding a clock",
+      "animation_candidate": true,
+      "context_evidence": [
+        {
+          "sentence_id": "03ec8b1e-b48d-5453-9e30-4e462ab982e3",
+          "text": "and slipping through a medium that seems to help its passage even when the wind is adverse.",
+          "lesson": "28. Bird Flight",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "0821d4c0-ce18-559b-8372-0f3654bd3f91",
+          "text": "A gust of wind swept the bed off the roof and sent it crashing into the courtyard below.",
+          "lesson": "49.The End of a Dream",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "1722239f-8a12-50b0-955e-3d100238dba2",
+          "text": "Oddly shaped forms that are suspended from the ceiling and move in response to a gust of wind are quite familiar to everybody.",
+          "lesson": "18. Electric Currents in Modern Art",
+          "source": "NCE"
+        }
+      ]
+    },
+    {
+      "vocabulary_item_id": "2ba2d7eb-0c0f-5aa6-940b-603d01d3513b",
+      "word": "electric",
+      "pos": "adj",
+      "generated": true,
+      "tier": "B",
+      "context_tier": 3,
+      "verified": true,
+      "degraded": false,
+      "quality_score": 1.0,
+      "failed_gates": [],
+      "core_image": "闪电劈开夜空照亮实验室",
+      "recall_question": "什么自然现象在夜空劈开并照亮实验室？",
+      "image_prompt": "cartoon educational style, clear action, lightning striking a laboratory at night",
+      "animation_candidate": false,
+      "context_evidence": [
+        {
+          "sentence_id": "18cafca3-dbcd-5c29-b761-664d5673816f",
+          "text": "These peculiar forms not only seemed designed to shock people emotionally, but to give them electric shocks as well!",
+          "lesson": "18.Electric Currents in Modern Art",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "62a9f517-b545-5789-880f-0a85c71d280a",
+          "text": "There is an electric cooker in the kitchen.",
+          "lesson": "025&026.Mrs. Smith's Kitchen",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "6c29d3e1-b63b-5185-834b-5ac99e262abf",
+          "text": "He noticed the remains of a snake which was wound around the electric wires of a 16,000 volt power line.",
+          "lesson": "53. Hot Snake",
+          "source": "NCE"
+        }
+      ]
+    },
+    {
+      "vocabulary_item_id": "2ee7a819-0091-53ec-b68b-4b76597a1ace",
+      "word": "commitment",
+      "pos": null,
+      "generated": true,
+      "tier": "A",
+      "context_tier": 3,
+      "verified": true,
+      "degraded": false,
+      "quality_score": 1.0,
+      "failed_gates": [],
+      "core_image": "把沉重锁链锁在自己手腕，扔掉钥匙",
+      "recall_question": "少年骑士为何要把誓言焊死在盔甲上？",
+      "image_prompt": "Cartoon knight kneeling welding heavy lock onto own armor chest, glowing oath text, determined face, educational illustration",
+      "animation_candidate": true,
+      "context_evidence": [
+        {
+          "sentence_id": "98ad4f6f-9ca4-5d57-a05f-76da4ddd2c57",
+          "text": "and they have not a dreary commitment to mean ambitions or love of comfort.",
+          "lesson": "05.Youth",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "9c17ca1a-e05c-526e-857c-dbd8fbc368b0",
+          "text": "and they have not a dreary commitment to mean ambitions or love of comfort.",
+          "lesson": "06. Youth",
+          "source": "NCE"
+        }
+      ]
+    },
+    {
+      "vocabulary_item_id": "2ef53ef6-6b28-5076-90e5-e0532d3b4e50",
+      "word": "successful",
+      "pos": "adj",
+      "generated": true,
+      "tier": "A",
+      "context_tier": 3,
+      "verified": true,
+      "degraded": false,
+      "quality_score": 1.0,
+      "failed_gates": [],
+      "core_image": "登顶者插旗俯瞰云海",
+      "recall_question": "暴风雪中是谁在山巅插起了旗帜？",
+      "image_prompt": "A climber planting a flag on a snowy mountain peak at sunrise, clear success pose, cartoon educational style",
+      "animation_candidate": true,
+      "context_evidence": [
+        {
+          "sentence_id": "041a8ea5-1136-5589-8f5c-8a72f2f0c5a4",
+          "text": "Some plays are so successful that they run for years on end.",
+          "lesson": "22.By Heart",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "04534ae4-745c-5964-a89f-13f118d4b03a",
+          "text": "A recent case concerns Jane Butlin whose fiance, John, runs a successful furniture business.",
+          "lesson": "07.Mutilated Ladies",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "1b0774ae-33c3-533f-bc58-5956f3f6112e",
+          "text": "Instead of becoming a doctor, however, he became a successful writer of detective stories.",
+          "lesson": "24.A Skeleton in the Cupboard",
+          "source": "NCE"
+        }
+      ]
+    },
+    {
+      "vocabulary_item_id": "32fcc0de-3481-5d0a-82c6-e5b84efcee1c",
+      "word": "seven",
+      "pos": "num",
+      "generated": true,
+      "tier": "A",
+      "context_tier": 3,
+      "verified": true,
+      "degraded": false,
+      "quality_score": 1.0,
+      "failed_gates": [],
+      "core_image": "七只小鸭排成一行过马路",
+      "recall_question": "画面里有几只小鸭排成一行过马路？",
+      "image_prompt": "Seven cute ducks line up crossing a road, cartoon educational style",
+      "animation_candidate": true,
+      "context_evidence": [
+        {
+          "sentence_id": "16f527d8-18ed-5501-af8b-cf82caa593cd",
+          "text": "for during the party it capsized and sank in seven feet of water.",
+          "lesson": "43.Fully Insured",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "24a952ab-7276-5365-9bd9-6fa0e9c7921c",
+          "text": "He had traveled only seven miles across the Channel when his engine failed and he was forced to land on the sea.",
+          "lesson": "20. Pioneer Pilots",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "253e57f9-1aba-59d7-840a-52985cea3fbc",
+          "text": "I counted seven old cars and three old refrigerators.",
+          "lesson": "143&144.A Walk Through the Woods",
+          "source": "NCE"
+        }
+      ]
+    },
+    {
+      "vocabulary_item_id": "33dd5418-dd6c-5e24-ba63-3e9ec10d2066",
+      "word": "dishonest",
+      "pos": null,
+      "generated": true,
+      "tier": "B",
+      "context_tier": 3,
+      "verified": true,
+      "degraded": false,
+      "quality_score": 1.0,
+      "failed_gates": [],
+      "core_image": "孩子把真话塞进抽屉锁上",
+      "recall_question": "谁把真话锁进了抽屉？",
+      "image_prompt": "Cartoon child locking truth in drawer, dishonest concept",
+      "animation_candidate": false,
+      "context_evidence": [
+        {
+          "sentence_id": "933d24b9-bdc3-50c2-b191-5379273ead68",
+          "text": "Spoken lies are invariably tiresome and may actually be dishonest.",
+          "lesson": "37. What Every Writer Wants",
+          "source": "NCE"
+        }
+      ]
+    },
+    {
+      "vocabulary_item_id": "39288148-c64b-5cc4-ab6b-ca9a0db3f046",
+      "word": "small",
+      "pos": "adj",
+      "generated": true,
+      "tier": "B",
+      "context_tier": 3,
+      "verified": true,
+      "degraded": false,
+      "quality_score": 1.0,
+      "failed_gates": [],
+      "core_image": "一只老鼠钻进火柴盒",
+      "recall_question": "什么东西被老鼠钻进用来藏身？",
+      "image_prompt": "cartoon educational style, clear action, vocabulary learning illustration, mouse squeezing into matchbox",
+      "animation_candidate": false,
+      "context_evidence": [
+        {
+          "sentence_id": "00a2953a-386a-584c-b0dd-ef987f6b4ca9",
+          "text": "Mrs. Richards quickly hid in the small storeroom under the stairs.",
+          "lesson": "13. It's Only Me",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "00ce26fd-5613-55a0-b490-2921a13b760f",
+          "text": "I haven't any small pads /pædz/; I only have large ones.",
+          "lesson": "059. Is That All",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "0139ade0-d3b4-54b4-80ac-a7b28d7df3d2",
+          "text": "And across the rivers great and small, stretched the fish weirs, usually made of stakes and nets or basket work.",
+          "lesson": "50. British Canals",
+          "source": "NCE"
+        }
+      ]
+    },
+    {
+      "vocabulary_item_id": "3abe26db-abb3-5240-ba29-a69ad071a79e",
+      "word": "choose",
+      "pos": "v",
+      "generated": true,
+      "tier": "A",
+      "context_tier": 3,
+      "verified": true,
+      "degraded": false,
+      "quality_score": 1.0,
+      "failed_gates": [],
+      "core_image": "手持两颗糖果在天平上左右摇摆",
+      "recall_question": "孩子在天平上左右摇摆拿着什么？",
+      "image_prompt": "child balancing two candies on scale, hesitating, cartoon educational style",
+      "animation_candidate": true,
+      "context_evidence": [
+        {
+          "sentence_id": "70193d4f-ede5-5e85-b9df-120c3adff5c6",
+          "text": "In a heat wave we choose a midnight birthday party and that is the most exciting of all.",
+          "lesson": "56.Our Neighbour, the River",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "789af96c-adf0-579d-8b1e-4b23f116276e",
+          "text": "we are no longer free to choose the things we want,",
+          "lesson": "26.Wanted a Large Biscuit Tin",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "ae599678-d948-5884-8a46-ec3c4e613e68",
+          "text": "We are asked to choose between various shades of the negative.",
+          "lesson": "10. Creative Men",
+          "source": "NCE"
+        }
+      ]
+    },
+    {
+      "vocabulary_item_id": "40e0e3cc-4ad6-594f-9cd5-f948a5fc0231",
+      "word": "X-ray",
+      "pos": null,
+      "generated": true,
+      "tier": "B",
+      "context_tier": 3,
+      "verified": false,
+      "degraded": false,
+      "quality_score": 0.8889,
+      "failed_gates": [
+        "FAMILY_TRACEABLE"
+      ],
+      "core_image": "医生把手放在荧光屏前透视骨骼",
+      "recall_question": "急诊室里护士把受伤手臂放进什么设备？",
+      "image_prompt": "Cartoon doctor placing arm in X-ray machine, glowing bones visible",
+      "animation_candidate": false,
+      "context_evidence": [
+        {
+          "sentence_id": "3aa280bb-044b-5349-ac4c-3af6fa0bc134",
+          "text": "They also found something which the X-ray plates did not show: a small wax figure of the god Duamutef.",
+          "lesson": "77.A Successful Operation",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "44fb348c-6cb4-5370-838d-510ed7ee3cd4",
+          "text": "As there were strange marks on the X-ray plates taken of the mummy,",
+          "lesson": "77.A Successful Operation",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "4ffefe32-a542-55d0-83b3-fa20a326a90e",
+          "text": "And so balloon-borne instruments can contribute little to either ultraviolet astronomy or X-ray astronomy.",
+          "lesson": "49. Balloon Astronomy",
+          "source": "NCE"
+        }
+      ]
+    },
+    {
+      "vocabulary_item_id": "435e4427-60a6-501d-b639-1dc89efd4f43",
+      "word": "manager",
+      "pos": "n",
+      "generated": true,
+      "tier": "B",
+      "context_tier": 3,
+      "verified": true,
+      "degraded": false,
+      "quality_score": 1.0,
+      "failed_gates": [],
+      "core_image": "会议室里经理拍板签字定方案",
+      "recall_question": "会议室里谁拍板签字定乾坤？",
+      "image_prompt": "Cartoon manager signing document decisively in smoky meeting room, clear action, vocabulary learning illustration",
+      "animation_candidate": false,
+      "context_evidence": [
+        {
+          "sentence_id": "0725dfe8-f780-5317-a987-6accbd5b8bee",
+          "text": "The manager was sympathetic, but he could do nothing.",
+          "lesson": "24.It Could be Worse",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "115a0230-61c6-59ab-9a6b-dde990b3d496",
+          "text": "John went to see his bank manager who sent the remains of wallet and the money",
+          "lesson": "07.Mutilated Ladies",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "2c918a03-8e79-5e35-ab5a-fa30576ff06e",
+          "text": "and requested to see the manager.",
+          "lesson": "31. A Lovable Eccentric",
+          "source": "NCE"
+        }
+      ]
+    },
+    {
+      "vocabulary_item_id": "43956fc2-c012-55eb-ac69-c65e96573f69",
+      "word": "science",
+      "pos": "n",
+      "generated": true,
+      "tier": "A",
+      "context_tier": 3,
+      "verified": true,
+      "degraded": false,
+      "quality_score": 1.0,
+      "failed_gates": [],
+      "core_image": "白大褂调整显微镜聚焦细胞核",
+      "recall_question": "白大褂正在调整什么仪器观察细胞？",
+      "image_prompt": "Cartoon scientist in white coat adjusting microscope focusing on cell nucleus, vocabulary learning illustration",
+      "animation_candidate": true,
+      "context_evidence": [
+        {
+          "sentence_id": "04e96afa-5989-5e48-a460-2e10abf7be43",
+          "text": "among historians of science a new and more sophisticated picture has emerged.",
+          "lesson": "32.Galileo Reborn",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "0fc9a14d-11d0-5c61-a0b8-97ab8e8ede7b",
+          "text": "There is a great technological explosion around us, generated by science.",
+          "lesson": "56. Technological Explosion",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "108fd073-7c15-55b0-9d21-8cf78e9f9317",
+          "text": "in collaboration with the United States Navy, the National Science Foundation,",
+          "lesson": "49. Balloon Astronomy",
+          "source": "NCE"
+        }
+      ]
+    },
+    {
+      "vocabulary_item_id": "4488bc2d-447e-565b-99e7-e910740868d2",
+      "word": "list",
+      "pos": "n & v",
+      "generated": true,
+      "tier": "A",
+      "context_tier": 3,
+      "verified": true,
+      "degraded": false,
+      "quality_score": 1.0,
+      "failed_gates": [],
+      "core_image": "职员举着夹板逐行勾选货物",
+      "recall_question": "夹板上的红笔正在对着每一行做什么？",
+      "image_prompt": "cartoon educational style, clear action, vocabulary learning illustration, clerk holding clipboard checking off items with red pen",
+      "animation_candidate": true,
+      "context_evidence": [
+        {
+          "sentence_id": "095579a2-0d8c-5282-b3d0-6d541deafebb",
+          "text": "The list included most of the things Herbert loves:",
+          "lesson": "51. Reward for Virtue",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "24ab275f-69db-515e-95e9-edee8f727e04",
+          "text": "I'm making a shopping /ˈʃɒpɪŋ/ list /lɪst/, Tom.",
+          "lesson": "079. Carol's Shopping List",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "29080536-5dcc-5b8b-a23d-4de3f3797a0d",
+          "text": "First of all, he wrote out a long list of all the foods which were forbidden.",
+          "lesson": "51. Reward for Virtue",
+          "source": "NCE"
+        }
+      ]
+    },
+    {
+      "vocabulary_item_id": "45a4bd55-f72b-5ac7-8e75-c78c96e4056f",
+      "word": "girl",
+      "pos": "n",
+      "generated": true,
+      "tier": "B",
+      "context_tier": 3,
+      "verified": true,
+      "degraded": false,
+      "quality_score": 1.0,
+      "failed_gates": [],
+      "core_image": "清晨女孩提书包冲向校门",
+      "recall_question": "画面里背书包奔跑的是谁？",
+      "image_prompt": "cartoon girl carrying backpack running toward school gate",
+      "animation_candidate": false,
+      "context_evidence": [
+        {
+          "sentence_id": "03b5cb32-7157-554e-abda-e5e064912911",
+          "text": "This explanation evidently conveyed something to the girl, who searched shelf after shelf.",
+          "lesson": "52. Mud Is Mud",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "068c113b-0664-5cc0-803a-c11283f399e7",
+          "text": "Why did the young girl miss the train?",
+          "lesson": "60.Too Early and Too Late",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "0a0838ab-84ef-5306-ad3f-5c5e1ee04652",
+          "text": "'Certainly,' the girl said,",
+          "lesson": "19.Sold Out",
+          "source": "NCE"
+        }
+      ]
+    },
+    {
+      "vocabulary_item_id": "49f5598d-2a48-54a3-b77b-eddc92093a3b",
+      "word": "encourage",
+      "pos": "v",
+      "generated": true,
+      "tier": "A",
+      "context_tier": 3,
+      "verified": true,
+      "degraded": false,
+      "quality_score": 1.0,
+      "failed_gates": [],
+      "core_image": "教练拍拍队员肩膀递水",
+      "recall_question": "教练拍肩递水想给队员传递什么？",
+      "image_prompt": "cartoon educational style, clear action, vocabulary learning illustration, coach patting player shoulder handing water bottle, encouraging gesture, bright gym lighting",
+      "animation_candidate": true,
+      "context_evidence": [
+        {
+          "sentence_id": "45f5e493-518a-559b-b0c6-e53881b2e64c",
+          "text": "Meanwhile, they should encourage those among us",
+          "lesson": "94. Future Champions",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "d7cd1c23-8edf-5755-befa-a63da7c4a4f4",
+          "text": "Meanwhile, they should encourage those among us who cannot swim five yards before they are gasping for air.",
+          "lesson": "94.Future Champions",
+          "source": "NCE"
+        }
+      ]
+    },
+    {
+      "vocabulary_item_id": "4c210aa1-1615-541d-91f0-49741ec9d1df",
+      "word": "piece",
+      "pos": "n",
+      "generated": true,
+      "tier": "A",
+      "context_tier": 3,
+      "verified": true,
+      "degraded": false,
+      "quality_score": 1.0,
+      "failed_gates": [],
+      "core_image": "小孩把拼图碎片拼成完整画面",
+      "recall_question": "拼图碎片拼合后形成什么？",
+      "image_prompt": "Cartoon child fitting puzzle piece into complete picture bright colors",
+      "animation_candidate": true,
+      "context_evidence": [
+        {
+          "sentence_id": "0390efb9-f587-5b1d-a4ee-2a2e0166f4dd",
+          "text": "Both the police and the workmen were grateful to the student for this piece of advance information.",
+          "lesson": "40. Who's Who?",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "06e0bfdf-64f0-58c7-ba86-202c16460520",
+          "text": "Give me that piece, please.",
+          "lesson": "049&050.At the Butcher's",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "10d1152c-6511-52e8-9710-42385518e0aa",
+          "text": "This is a nice piece.",
+          "lesson": "049&050.At the Butcher's",
+          "source": "NCE"
+        }
+      ]
+    },
+    {
+      "vocabulary_item_id": "4c8870f6-b40a-5195-a662-ca4b3e352d54",
+      "word": "slow",
+      "pos": "adj & adv",
+      "generated": true,
+      "tier": "A",
+      "context_tier": 3,
+      "verified": true,
+      "degraded": false,
+      "quality_score": 1.0,
+      "failed_gates": [],
+      "core_image": "蜗牛背重壳艰难爬树枝",
+      "recall_question": "什么词形容蜗牛背重壳爬行的速度？",
+      "image_prompt": "A cute snail carrying a heavy shell crawling slowly on a tree branch, cartoon educational style, clear action, vocabulary learning illustration",
+      "animation_candidate": true,
+      "context_evidence": [
+        {
+          "sentence_id": "130cfc98-96d3-5aaf-b1dd-45e4ca5f3818",
+          "text": "All this was comparatively slow until, with the coming of science,",
+          "lesson": "22.Knowledge and Progress",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "1b482143-f821-534f-bac8-985cb4b87a75",
+          "text": "After millennia of growth so slow that each generation hardly noticed it,",
+          "lesson": "46. Urban Growth",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "324dad42-bf4d-548d-bc0a-1afdfa96069f",
+          "text": "He showed that the average individual's sleep cycle is punctuated with peculiar bursts of eye-movements, some drifting and slow, others jerky and rapid.",
+          "lesson": "19.The Stuff of Dreams",
+          "source": "NCE"
+        }
+      ]
+    },
+    {
+      "vocabulary_item_id": "4dcf642f-e458-5178-9c1c-d770ef262472",
+      "word": "title",
+      "pos": null,
+      "generated": true,
+      "tier": "A",
+      "context_tier": 3,
+      "verified": true,
+      "degraded": false,
+      "quality_score": 1.0,
+      "failed_gates": [],
+      "core_image": "法官把金属牌别在胸前",
+      "recall_question": "法官胸前别着什么金属牌？",
+      "image_prompt": "cartoon judge pinning shiny title badge on chest, vocabulary learning illustration",
+      "animation_candidate": true,
+      "context_evidence": [
+        {
+          "sentence_id": "0fd0bf01-4627-5f27-a45c-02381634371a",
+          "text": "The official title of the person is 'Justiteombudsman', but the Swedes commonly refer to him as the 'J.O.' or 'Ombudsman'.",
+          "lesson": "53.In the Public Interest",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "64491fea-cd66-514b-a339-86115feb88da",
+          "text": "The official title of the person is",
+          "lesson": "53. In the Public Interest",
+          "source": "NCE"
+        }
+      ]
+    },
+    {
+      "vocabulary_item_id": "584a7c97-e6fd-5054-a9b7-8f6fbb28d3dc",
+      "word": "million",
+      "pos": null,
+      "generated": true,
+      "tier": "A",
+      "context_tier": 3,
+      "verified": true,
+      "degraded": false,
+      "quality_score": 1.0,
+      "failed_gates": [],
+      "core_image": "巨大存钱猪炸裂，金币淹没街道",
+      "recall_question": "什么巨大的物体炸裂让金币淹没了街道？",
+      "image_prompt": "Giant pink piggy bank exploding, gold coins flooding street like tsunami, cartoon educational style",
+      "animation_candidate": true,
+      "context_evidence": [
+        {
+          "sentence_id": "0c0b21c4-d65d-52a1-832c-d669a6020d0f",
+          "text": "'Last year, we paid £1.5 million on 21,000 claims.'",
+          "lesson": "07.Mutilated Ladies",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "204de8e8-2cf7-5e11-92d8-a18d0b52f4e1",
+          "text": "namely 6 million million miles.",
+          "lesson": "54. Are There Strangers in Space",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "31b9bc66-ee6f-5303-94aa-ec8b9897dc1a",
+          "text": "That is something like 6 million spiders of different kinds on a football pitch.",
+          "lesson": "02. Spare That Spider",
+          "source": "NCE"
+        }
+      ]
+    },
+    {
+      "vocabulary_item_id": "5ad1688e-2bd8-50fd-9364-ecdb1e549a8a",
+      "word": "marry",
+      "pos": "v",
+      "generated": true,
+      "tier": "A",
+      "context_tier": 3,
+      "verified": true,
+      "degraded": false,
+      "quality_score": 1.0,
+      "failed_gates": [],
+      "core_image": "新郎把戒指套进新娘手指",
+      "recall_question": "牧师见证下谁把戒指套进新娘手指？",
+      "image_prompt": "cartoon educational style, clear action, vocabulary learning illustration, groom sliding ring onto bride's finger, priest witnessing",
+      "animation_candidate": true,
+      "context_evidence": [
+        {
+          "sentence_id": "f2d2658e-f20b-5f11-9453-60d24ff11820",
+          "text": "He did not marry again and I was brought up without a woman's care; but I lacked for nothing, for he was both father and mother to me.",
+          "lesson": "57.Back in the Old Country",
+          "source": "NCE"
+        }
+      ]
+    },
+    {
+      "vocabulary_item_id": "5cfba308-197f-571a-970f-2b28cb83d913",
+      "word": "positive",
+      "pos": null,
+      "generated": true,
+      "tier": "A",
+      "context_tier": 3,
+      "verified": true,
+      "degraded": false,
+      "quality_score": 1.0,
+      "failed_gates": [],
+      "core_image": "主角指太阳穴重重点头喊“百分百确定”",
+      "recall_question": "主角见到钟楼做了什么动作表示“绝对认得”？",
+      "image_prompt": "Cartoon character tapping temple nodding firmly, speech bubble says 100%, foggy clock tower background, cartoon educational style, clear action, vocabulary learning illustration",
+      "animation_candidate": true,
+      "context_evidence": [
+        {
+          "sentence_id": "58bea70e-d297-5e91-9a45-f671001fd240",
+          "text": "so that I was positive I should recognize it as familiar territory.",
+          "lesson": "57.Back in the Old Country",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "890958ec-6856-5858-b62f-9720637f5a52",
+          "text": "that it is a positive advantage to them not to keep them secret.",
+          "lesson": "15.Secrecy in Industry",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "9b028ad6-0622-575c-b8aa-eda2624bcf82",
+          "text": "Some of the bigger firms are engaged in researches which are of such general and fundamental nature that it is a positive advantage to them not to keep them secret.",
+          "lesson": "18. Secrecy in Industry",
+          "source": "NCE"
+        }
+      ]
+    },
+    {
+      "vocabulary_item_id": "5d052f33-a363-5263-9b71-74f1248f1cfd",
+      "word": "direction",
+      "pos": "n",
+      "generated": true,
+      "tier": "A",
+      "context_tier": 3,
+      "verified": true,
+      "degraded": false,
+      "quality_score": 1.0,
+      "failed_gates": [],
+      "core_image": "指南针指针转向北方",
+      "recall_question": "指南针指针转向哪里？",
+      "image_prompt": "cartoon educational style, clear action, vocabulary learning illustration, compass needle turning north",
+      "animation_candidate": true,
+      "context_evidence": [
+        {
+          "sentence_id": "198e45c1-33e4-5b30-a52b-eddddce3dc2d",
+          "text": "and the direction from which it came.",
+          "lesson": "42.Recording an Earthquake",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "53572216-4602-580d-b947-8aabda2a9071",
+          "text": "the cities are suddenly racing off in every direction.",
+          "lesson": "46. Urban Growth",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "67af44f6-7d02-544a-8581-051cb636616e",
+          "text": "and the direction from which it came.",
+          "lesson": "52. Recording an Earthquake",
+          "source": "NCE"
+        }
+      ]
+    },
+    {
+      "vocabulary_item_id": "5d24843c-1ba8-5de7-8836-bd3f724e85ba",
+      "word": "planet",
+      "pos": "n",
+      "generated": true,
+      "tier": "A",
+      "context_tier": 3,
+      "verified": true,
+      "degraded": false,
+      "quality_score": 1.0,
+      "failed_gates": [],
+      "core_image": "宇航员在火星表面插旗",
+      "recall_question": "谁在红色星球上插旗帜？",
+      "image_prompt": "Astronaut planting flag on red planet surface cartoon educational style",
+      "animation_candidate": true,
+      "context_evidence": [
+        {
+          "sentence_id": "073871f5-59c5-579c-ae72-c2c7a641d048",
+          "text": "the message to its home planet is barely halfway there.",
+          "lesson": "54. Are There Strangers in Space",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "08c99494-ba6b-589f-a4f9-04a48392f735",
+          "text": "might well retransmit them back to its home planet,",
+          "lesson": "54. Are There Strangers in Space",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "09bf2fb8-f392-576a-aba7-e54a8c444cd9",
+          "text": "If we were able to discover lowly forms of life like bacteria on another planet, it would completely change our view of ourselves.",
+          "lesson": "55.From the Earth Greetings",
+          "source": "NCE"
+        }
+      ]
+    },
+    {
+      "vocabulary_item_id": "5d2505a0-c5fe-5bac-bcd3-7df2faa12810",
+      "word": "survey",
+      "pos": null,
+      "generated": true,
+      "tier": "A",
+      "context_tier": 3,
+      "verified": true,
+      "degraded": false,
+      "quality_score": 1.0,
+      "failed_gates": [],
+      "core_image": "调查员拿着问卷在街头逐户敲门",
+      "recall_question": "谁穿马甲拿着彩色问卷在街头敲门？",
+      "image_prompt": "Cartoon surveyor holding clipboard knocking doors bright street clear action",
+      "animation_candidate": true,
+      "context_evidence": [
+        {
+          "sentence_id": "15e0ef9b-c137-53c0-8e75-5258f6d5f406",
+          "text": "A recent survey of the effects of noise revealed (surprisingly?)",
+          "lesson": "47.Too High a Price",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "84f729b5-6559-50d7-97db-2161ed486674",
+          "text": "D. E. Broadbent, Non-Auditory Effects of Noise, from Science Survey.",
+          "lesson": "31. Non-Auditory Effects of Noise",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "a60c30fc-d0e5-501f-8b28-980e5d8dba86",
+          "text": "The noise pollution survey revealed a rather surprising and possibly amusing old-fashioned source of noise.",
+          "lesson": "47.Too High a Price",
+          "source": "NCE"
+        }
+      ]
+    },
+    {
+      "vocabulary_item_id": "5dcf5d98-382e-5062-9143-3c64263b547c",
+      "word": "fashion",
+      "pos": null,
+      "generated": true,
+      "tier": "A",
+      "context_tier": 3,
+      "verified": true,
+      "degraded": false,
+      "quality_score": 1.0,
+      "failed_gates": [],
+      "core_image": "T台上模特快速换装，灯光闪烁",
+      "recall_question": "模特在T台快速换装后，观众会做什么？",
+      "image_prompt": "cartoon educational style, model quickly changes outfits on runway, bright lights, audience watching",
+      "animation_candidate": true,
+      "context_evidence": [
+        {
+          "sentence_id": "66c71d7f-1cab-5fb1-9e1d-c0c4ca7cf6b5",
+          "text": "However, a new type of humor, which stems largely from America, has recently come into fashion.",
+          "lesson": "29. Funny or Not",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "904b9ba6-9632-5566-a364-00723a025d02",
+          "text": "However, a new type of humour, which stems largely from U.S., has recently come into fashion.",
+          "lesson": "29.Funny or Not",
+          "source": "NCE"
+        }
+      ]
+    },
+    {
+      "vocabulary_item_id": "6056556c-abb2-589b-a661-a1007993979c",
+      "word": "although",
+      "pos": "conj",
+      "generated": true,
+      "tier": "A",
+      "context_tier": 3,
+      "verified": true,
+      "degraded": false,
+      "quality_score": 1.0,
+      "failed_gates": [],
+      "core_image": "跛脚企鹅坚持跳完舞",
+      "recall_question": "跛脚企鹅腿脚不便却坚持做什么？",
+      "image_prompt": "A limping penguin dancing happily in heavy rain holding an umbrella, cartoon educational style, clear action, vocabulary learning illustration",
+      "animation_candidate": true,
+      "context_evidence": [
+        {
+          "sentence_id": "288b3281-a452-548f-ada3-4ce4bdd85b8e",
+          "text": "It was also found that although she could perceive things with her fingers this ability ceased the moment her hands were wet.",
+          "lesson": "04.Seeing Hands",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "2ad660cb-5f19-5e48-834a-f602c43fd974",
+          "text": "Although Campbell reached a speed of over 304 miles per hour,",
+          "lesson": "72. A Car Called Bluebird",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "2dc2b4a1-ce31-5406-9b2b-2941cdfdfb50",
+          "text": "although what impression any other civilization would thus get from us is best left unsaid.",
+          "lesson": "54. Are There Strangers in Space",
+          "source": "NCE"
+        }
+      ]
+    },
+    {
+      "vocabulary_item_id": "639f5040-da94-5437-99ed-9de1a0549fe8",
+      "word": "deer",
+      "pos": null,
+      "generated": true,
+      "tier": "B",
+      "context_tier": 3,
+      "verified": true,
+      "degraded": false,
+      "quality_score": 1.0,
+      "failed_gates": [],
+      "core_image": "小鹿在月光下跃过溪流",
+      "recall_question": "月光下什么动物跃过溪流？",
+      "image_prompt": "cartoon educational style, clear action, vocabulary learning illustration, a small deer leaping over a moonlit stream",
+      "animation_candidate": false,
+      "context_evidence": [
+        {
+          "sentence_id": "25ff34b1-7468-5d38-8f96-ffdc2990687a",
+          "text": "Wherever it went, it left behind it a trail of dead deer and small animals like rabbits.",
+          "lesson": "01.A Puma at Large",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "f056b75f-c7dd-58c4-8caf-2a447f901c89",
+          "text": "Wherever it went, it left behind it a trail of dead deer and small animals like rabbits.",
+          "lesson": "01. A Puma at Large",
+          "source": "NCE"
+        }
+      ]
+    },
+    {
+      "vocabulary_item_id": "64098126-f62c-5311-ab9c-499e5cc18021",
+      "word": "wet",
+      "pos": "adj",
+      "generated": true,
+      "tier": "A",
+      "context_tier": 3,
+      "verified": false,
+      "degraded": false,
+      "quality_score": 0.8889,
+      "failed_gates": [
+        "HAS_ONE_CORE_IMAGE"
+      ],
+      "core_image": "拧湿毛巾水滴答",
+      "recall_question": "拧干毛巾时手里滴落的是什么？",
+      "image_prompt": "cartoon educational style, clear action, vocabulary learning illustration, hands wringing a wet towel, water droplets falling",
+      "animation_candidate": true,
+      "context_evidence": [
+        {
+          "sentence_id": "0a8f83df-9af7-5506-a3e1-c50d5eb9a9b9",
+          "text": "There is something comforting about the warm glow shed by advertisements on cold wet winter nights.",
+          "lesson": "41.Illusions of Pastoral Peace",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "288b3281-a452-548f-ada3-4ce4bdd85b8e",
+          "text": "It was also found that although she could perceive things with her fingers this ability ceased the moment her hands were wet.",
+          "lesson": "04.Seeing Hands",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "4170dd19-01bd-5e3e-bbea-2b9744793f9b",
+          "text": "Shivering in their wet clothes, the teenagers looked on while three men dived repeatedly into the water to locate the dish.",
+          "lesson": "43.Fully Insured",
+          "source": "NCE"
+        }
+      ]
+    },
+    {
+      "vocabulary_item_id": "64d42b3c-9539-5dd8-9dc3-885b72043dd9",
+      "word": "old",
+      "pos": "adj",
+      "generated": true,
+      "tier": "B",
+      "context_tier": 3,
+      "verified": true,
+      "degraded": false,
+      "quality_score": 1.0,
+      "failed_gates": [],
+      "core_image": "白发老奶奶拄拐杖喂鸽子",
+      "recall_question": "白发拄拐杖喂鸽子的是谁？",
+      "image_prompt": "An elderly grandmother with white hair feeding pigeons using a cane",
+      "animation_candidate": false,
+      "context_evidence": [
+        {
+          "sentence_id": "035ef597-9dbd-5011-bf63-b262be809575",
+          "text": "a dear old lady who had always been so kind to everybody, had, in her youth, poisoned every one of her five husbands.",
+          "lesson": "24.A Skeleton in the Cupboard",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "03bee338-af36-5c96-9ae4-9ae2876e3da5",
+          "text": "The man who, in old age, can see his life in this way, will not suffer from the fear of death.",
+          "lesson": "14. How to Grow Old",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "049d75d4-aeeb-525c-8590-622f8f75dd2d",
+          "text": "Some old people are oppressed by the fear of death.",
+          "lesson": "14. How to Grow Old",
+          "source": "NCE"
+        }
+      ]
+    },
+    {
+      "vocabulary_item_id": "650c0f11-7fda-5b62-a6fe-f47003fa820c",
+      "word": "downstairs",
+      "pos": "adv",
+      "generated": true,
+      "tier": "B",
+      "context_tier": 3,
+      "verified": true,
+      "degraded": false,
+      "quality_score": 1.0,
+      "failed_gates": [],
+      "core_image": "扔下行李箱冲下楼梯",
+      "recall_question": "扔下行李箱后，主角往哪个方向冲去？",
+      "image_prompt": "cartoon boy dropping suitcase running down stairs urgently, vocabulary learning illustration",
+      "animation_candidate": false,
+      "context_evidence": [
+        {
+          "sentence_id": "1ec377ba-32d0-5a4e-9603-f5740d2e08ff",
+          "text": "Dropping my suit, I dashed downstairs to tell George.",
+          "lesson": "24.A Skeleton in the Cupboard",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "27aa89a3-d87b-5bea-8431-e168a78dafa3",
+          "text": "After putting it on, Mrs. Richards went downstairs.",
+          "lesson": "13.It's Only Me",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "5365064d-22ef-597c-9233-3f90ec5d1691",
+          "text": "Now let's go downstairs and have a cup of tea.'",
+          "lesson": "02.Thirteen Equals One",
+          "source": "NCE"
+        }
+      ]
+    },
+    {
+      "vocabulary_item_id": "6ab1df02-4bab-5f8e-9e3a-67272bd0067c",
+      "word": "enjoy",
+      "pos": "v",
+      "generated": true,
+      "tier": "A",
+      "context_tier": 3,
+      "verified": true,
+      "degraded": false,
+      "quality_score": 1.0,
+      "failed_gates": [],
+      "core_image": "孩子大口啃西瓜甜汁流嘴角",
+      "recall_question": "烈日下全家围坐啃什么水果笑声不断？",
+      "image_prompt": "cartoon educational style, clear action, vocabulary learning illustration, happy child eating huge watermelon slice, juice dripping, big smile",
+      "animation_candidate": true,
+      "context_evidence": [
+        {
+          "sentence_id": "048527ca-f72b-523c-b050-0edea30b9016",
+          "text": "We always enjoy ourselves, Mum.",
+          "lesson": "065&066.Not a Baby",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "07d8d132-d07a-5dec-a95c-557fd5632190",
+          "text": "meet interesting people and enjoy good food--always assuming, of course, that the sea is calm.",
+          "lesson": "44.Speed and Comfort",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "096e7302-de7d-5fb5-96db-669407abfc97",
+          "text": "'if you ate more and talked less, we would both enjoy our dinner!'",
+          "lesson": "40.Food and Talk",
+          "source": "NCE"
+        }
+      ]
+    },
+    {
+      "vocabulary_item_id": "6fda27cb-4bc7-5903-95cd-b4914ea0f996",
+      "word": "French",
+      "pos": null,
+      "generated": true,
+      "tier": "B",
+      "context_tier": 3,
+      "verified": true,
+      "degraded": false,
+      "quality_score": 1.0,
+      "failed_gates": [],
+      "core_image": "埃菲尔铁塔前用法语打招呼",
+      "recall_question": "游客在埃菲尔铁塔前用什么语言打招呼？",
+      "image_prompt": "Tourist greeting at Eiffel Tower in French, cartoon educational style",
+      "animation_candidate": false,
+      "context_evidence": [
+        {
+          "sentence_id": "0508ab2f-7f31-53db-b6ba-1890581e9e91",
+          "text": "I said good morning to him in French and he replied in the same language.",
+          "lesson": "14.Do You Speak English",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "1156c085-6f52-5e79-b52b-9c33cd31f6cd",
+          "text": "and it was to be part of the French army and under the control of the war minister.",
+          "lesson": "53. The French Foreign Legion",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "28bb5f44-3af2-50ed-b9c0-312fa301ed06",
+          "text": "I think I failed the French paper.",
+          "lesson": "103&104.The French Test",
+          "source": "NCE"
+        }
+      ]
+    },
+    {
+      "vocabulary_item_id": "6fdc2c63-bded-55ae-b6fc-282012513847",
+      "word": "tall",
+      "pos": "adj",
+      "generated": true,
+      "tier": "B",
+      "context_tier": 3,
+      "verified": true,
+      "degraded": false,
+      "quality_score": 1.0,
+      "failed_gates": [],
+      "core_image": "长颈鹿伸长脖子摘树叶",
+      "recall_question": "哪种动物踮起前蹄够最高树叶？",
+      "image_prompt": "cartoon educational style clear action vocabulary learning illustration giraffe stretching neck to reach top leaves",
+      "animation_candidate": false,
+      "context_evidence": [
+        {
+          "sentence_id": "15b7244b-9098-5dac-b977-859ee2aa5f04",
+          "text": "It has to be tall because it is like a giant block and tackle and we have to lower into the ground",
+          "lesson": "13.The Search for Oil",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "18fb26b4-8c7e-5634-a077-2e91659a0470",
+          "text": "In the center of the hall, there were a number of tall structures which contained colored lights.",
+          "lesson": "18. Electric Currents in Modern Art",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "6a44707d-789f-57d6-8462-cd0830c2148f",
+          "text": "Of course, New York is the ideal place for such an interesting study, because there is no shortage of tall buildings.",
+          "lesson": "09.Flying Cats",
+          "source": "NCE"
+        }
+      ]
+    },
+    {
+      "vocabulary_item_id": "700cc0ee-ff4b-5046-b62d-4761d73d0e67",
+      "word": "ache",
+      "pos": "n",
+      "generated": true,
+      "tier": "A",
+      "context_tier": 3,
+      "verified": true,
+      "degraded": false,
+      "quality_score": 1.0,
+      "failed_gates": [],
+      "core_image": "老人月光下揉膝呻吟痛苦",
+      "recall_question": "月光下谁在揉膝盖呻吟？",
+      "image_prompt": "An elderly person rubbing knee under moonlight, grimacing in pain, cartoon educational style",
+      "animation_candidate": true,
+      "context_evidence": [
+        {
+          "sentence_id": "8b39b36c-0400-50ba-886f-9003a034d87a",
+          "text": "when sleep will not come and all the old wounds begin to ache,",
+          "lesson": "10. Creative Men",
+          "source": "NCE"
+        }
+      ]
+    },
+    {
+      "vocabulary_item_id": "71e2f80f-f1ea-5034-a39f-e1fe36e9494a",
+      "word": "progress",
+      "pos": "n & v",
+      "generated": true,
+      "tier": "A",
+      "context_tier": 3,
+      "verified": true,
+      "degraded": false,
+      "quality_score": 1.0,
+      "failed_gates": [],
+      "core_image": "宇航员踏出飞船，脚印延伸向星空",
+      "recall_question": "谁在飞船外留下延伸的脚印？",
+      "image_prompt": "Astronaut stepping out of spaceship, footprints stretching toward stars, cartoon educational style",
+      "animation_candidate": true,
+      "context_evidence": [
+        {
+          "sentence_id": "330e8e1d-819e-5d51-a8e4-05158af3687e",
+          "text": "Surely because progress of a particular kind is actually taking place around us",
+          "lesson": "22.Knowledge and Progress",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "6d0d9a6a-d890-5882-8002-6a46e7faae80",
+          "text": "Why does the idea of progress loom so large in the modern world?",
+          "lesson": "22.Knowledge and Progress",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "7f6769be-a376-5098-9b28-76f0352bc5e1",
+          "text": "Knowledge and progress",
+          "lesson": "22.Knowledge and Progress",
+          "source": "NCE"
+        }
+      ]
+    },
+    {
+      "vocabulary_item_id": "7574345b-a3b8-5538-9a5d-53580b09f89b",
+      "word": "both",
+      "pos": "pron & adj",
+      "generated": true,
+      "tier": "A",
+      "context_tier": 3,
+      "verified": true,
+      "degraded": false,
+      "quality_score": 1.0,
+      "failed_gates": [],
+      "core_image": "双手各托一个苹果高举",
+      "recall_question": "果农双手高举两个苹果想表达什么意思？",
+      "image_prompt": "Farmer holding up one apple in each hand, smiling, cartoon educational style, clear action, vocabulary learning illustration",
+      "animation_candidate": true,
+      "context_evidence": [
+        {
+          "sentence_id": "0292db1e-0aaa-5f91-8f2b-a5ba8e1c2c22",
+          "text": "So, ask businesses on both sides of the Atlantic, why have two lots of tests where one would do?",
+          "lesson": "08.Trading Standards",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "0390efb9-f587-5b1d-a4ee-2a2e0166f4dd",
+          "text": "Both the police and the workmen were grateful to the student for this piece of advance information.",
+          "lesson": "40. Who's Who?",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "096e7302-de7d-5fb5-96db-669407abfc97",
+          "text": "'if you ate more and talked less, we would both enjoy our dinner!'",
+          "lesson": "40.Food and Talk",
+          "source": "NCE"
+        }
+      ]
+    },
+    {
+      "vocabulary_item_id": "76eb8949-dbb4-5668-b094-d3da76430e2e",
+      "word": "wound",
+      "pos": "v & n",
+      "generated": true,
+      "tier": "A",
+      "context_tier": 3,
+      "verified": true,
+      "degraded": false,
+      "quality_score": 1.0,
+      "failed_gates": [],
+      "core_image": "刀划破手臂，鲜血直流",
+      "recall_question": "刀划破手臂时什么红色液体流出？",
+      "image_prompt": "cartoon educational style, clear action, vocabulary learning illustration, knife cutting arm with red blood flowing",
+      "animation_candidate": true,
+      "context_evidence": [
+        {
+          "sentence_id": "1b7bb7b7-28ae-55fe-8f32-1530a67fea78",
+          "text": "Everything around him was full of her presence, continually reopening the wound.",
+          "lesson": "57.Back in the Old Country",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "305051d9-a7a8-524c-bf9c-0768d9985653",
+          "text": "The stream wound its way across the field and then flowed right under their tent!",
+          "lesson": "27.A Wet Night",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "35f6f8b1-2d37-56e9-843d-d6c7b9894d16",
+          "text": "The snake then wound itself round the wires.",
+          "lesson": "53.Hot Snake",
+          "source": "NCE"
+        }
+      ]
+    },
+    {
+      "vocabulary_item_id": "79698b20-e261-56f6-aad6-e407d8cdeca5",
+      "word": "no",
+      "pos": "adv & adj",
+      "generated": true,
+      "tier": "B",
+      "context_tier": 3,
+      "verified": true,
+      "degraded": false,
+      "quality_score": 1.0,
+      "failed_gates": [],
+      "core_image": "老师举红叉牌拦住冲进教室的小狗",
+      "recall_question": "老师举起什么手势拦住闯入的小狗？",
+      "image_prompt": "Teacher holding red cross sign blocking puppy entering classroom, cartoon educational style",
+      "animation_candidate": false,
+      "context_evidence": [
+        {
+          "sentence_id": "0257b7cd-0f6f-557e-86b0-f82eb6b9a48c",
+          "text": "There is no sky in June so blue that it does not point forward",
+          "lesson": "29. Beauty",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "03a9a3c9-38d9-5dcb-8699-f38788b447eb",
+          "text": "no form of transport could be worse.",
+          "lesson": "44. Speed and Comfort",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "061a9129-b1e9-5815-b383-79f7d63b9641",
+          "text": "Jasper has put up no parking signs outside his gate,",
+          "lesson": "28. No Parking",
+          "source": "NCE"
+        }
+      ]
+    },
+    {
+      "vocabulary_item_id": "79fb547b-0266-5e19-8d44-ad55563d8924",
+      "word": "require",
+      "pos": "v",
+      "generated": true,
+      "tier": "B",
+      "context_tier": 3,
+      "verified": true,
+      "degraded": false,
+      "quality_score": 1.0,
+      "failed_gates": [],
+      "core_image": "教练举起哨子示意全队集合",
+      "recall_question": "教练举起什么示意全队集合？",
+      "image_prompt": "Coach blows whistle, team gathers, cartoon educational style",
+      "animation_candidate": false,
+      "context_evidence": [
+        {
+          "sentence_id": "096140f8-f7de-54be-b9dd-94bd545a4c53",
+          "text": "This is not easy, and may require two porpoises working together.",
+          "lesson": "18.Porpoises",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "0f111a31-4190-52af-99c2-387d8ab107a1",
+          "text": "They have nothing to sell and require nothing from others.",
+          "lesson": "27.Nothing to Sell and Nothing to Buy",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "37b00014-aa93-5fb3-a6c1-98f475fdbfa5",
+          "text": "Such undertakings require the precise planning and foresight of military operations.",
+          "lesson": "42. Modern Caveman",
+          "source": "NCE"
+        }
+      ]
+    },
+    {
+      "vocabulary_item_id": "7a0e125a-83d6-5cfd-a639-af3c1d56da3c",
+      "word": "instance",
+      "pos": null,
+      "generated": true,
+      "tier": "B",
+      "context_tier": 3,
+      "verified": false,
+      "degraded": false,
+      "quality_score": 0.8889,
+      "failed_gates": [
+        "FAMILY_TRACEABLE"
+      ],
+      "core_image": "老师举起一张卡片展示例子",
+      "recall_question": "老师举起什么让学生记下？",
+      "image_prompt": "teacher holds up a card showing an example, students nod",
+      "animation_candidate": false,
+      "context_evidence": [
+        {
+          "sentence_id": "2b391a29-758c-5ab3-8b5a-24f9d763cb69",
+          "text": "and, in another instance, wearing stockings and slippers,",
+          "lesson": "04.Seeing Hands",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "51a7e149-d4cf-582b-bcc9-e4389de21711",
+          "text": "In the first instance, we would be looking for plant life, rather than 'little green men'.",
+          "lesson": "55.From the Earth Greetings",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "ca23d978-b941-5e93-96e9-f7c766f8aa09",
+          "text": "And in another instance, wearing stockings and slippers, to make out with her foot the outlines and colors of a picture hidden under a carpet.",
+          "lesson": "04. Seeing Hands",
+          "source": "NCE"
+        }
+      ]
+    },
+    {
+      "vocabulary_item_id": "7b8515b5-bc0c-578e-b6e0-526153daf98e",
+      "word": "came",
+      "pos": null,
+      "generated": true,
+      "tier": "B",
+      "context_tier": 3,
+      "verified": true,
+      "degraded": false,
+      "quality_score": 1.0,
+      "failed_gates": [],
+      "core_image": "小红帽推开奶奶家门",
+      "recall_question": "童话里谁推门喊到达？",
+      "image_prompt": "Little Red Riding Hood pushes open door arriving grandma house cartoon educational style clear action vocabulary learning illustration",
+      "animation_candidate": false,
+      "context_evidence": [
+        {
+          "sentence_id": "0008a571-0989-504b-b8be-36b815519dc1",
+          "text": "It now came straight towards them at a tremendous speed.",
+          "lesson": "86. Out of Control",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "0c2cca6a-77c1-5cb1-bc8a-8121746f58b0",
+          "text": "Dreams of finding lost treasure almost came true recently.",
+          "lesson": "55. Not a Gold Mine",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "0e2c5123-9913-55d9-82ae-26c14798391c",
+          "text": "I was having dinner at a restaurant when Tony Steele came in.",
+          "lesson": "11.One Good Turn Deserves Another",
+          "source": "NCE"
+        }
+      ]
+    },
+    {
+      "vocabulary_item_id": "7d594947-ca79-5d97-b820-986271b66504",
+      "word": "Scotland",
+      "pos": null,
+      "generated": true,
+      "tier": "B",
+      "context_tier": 3,
+      "verified": true,
+      "degraded": false,
+      "quality_score": 1.0,
+      "failed_gates": [],
+      "core_image": "高地风笛手吹响苏格兰风笛",
+      "recall_question": "谁在高地吹响风笛？",
+      "image_prompt": "A kilted piper playing bagpipes on misty Scottish highlands",
+      "animation_candidate": false,
+      "context_evidence": [
+        {
+          "sentence_id": "28930f28-a2a6-5a24-8c92-30d04876415e",
+          "text": "He says he's just arrived in Scotland.",
+          "lesson": "101&102.A Card From Jimmy",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "32a508ee-04d3-5bad-9267-c3c42403a4ae",
+          "text": "I have just arrived in Scotland,",
+          "lesson": "101. A Card From Jimmy",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "86125270-9564-51d7-938c-eb5de2c30ddb",
+          "text": "'I have just arrived in Scotland and I'm staying at a Youth Hostel.'",
+          "lesson": "101&102.A Card From Jimmy",
+          "source": "NCE"
+        }
+      ]
+    },
+    {
+      "vocabulary_item_id": "804d485b-1b6d-57d3-b275-45e037304b32",
+      "word": "badly",
+      "generated": false,
+      "reason": "LLM 输出未满足契约（缺项/类型错/解析失败），本词跳过"
+    },
+    {
+      "vocabulary_item_id": "8095e219-9264-50aa-b03f-38f71d9f861a",
+      "word": "steep",
+      "pos": null,
+      "generated": true,
+      "tier": "B",
+      "context_tier": 3,
+      "verified": true,
+      "degraded": false,
+      "quality_score": 1.0,
+      "failed_gates": [],
+      "core_image": "登山者垂直攀爬近乎垂直的悬崖",
+      "recall_question": "登山者正在做什么？",
+      "image_prompt": "Climber scaling near-vertical cliff, cartoon educational style",
+      "animation_candidate": false,
+      "context_evidence": [
+        {
+          "sentence_id": "0bcd7fd6-a6d2-54aa-9663-1020289ad0ff",
+          "text": "The slope averages about 1 in 30, but contains steep,",
+          "lesson": "30.Exploring the Sea-Floor",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "1bc66a10-20f7-5d6a-82d2-2de7e1c91531",
+          "text": "they climbed down the steep sides of the cave until they came to a narrow corridor.",
+          "lesson": "42.Modern Cavemen",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "783e7c56-03e5-5d94-aae3-c6a1f97fdd09",
+          "text": "The path led to a tiny village perched on the steep sides of a mountain.",
+          "lesson": "48.The Silent Village",
+          "source": "NCE"
+        }
+      ]
+    },
+    {
+      "vocabulary_item_id": "8cac6ade-eef9-54b8-afb3-7525bc645176",
+      "word": "beach",
+      "pos": "n",
+      "generated": true,
+      "tier": "B",
+      "context_tier": 3,
+      "verified": false,
+      "degraded": false,
+      "quality_score": 0.8889,
+      "failed_gates": [
+        "FAMILY_TRACEABLE"
+      ],
+      "core_image": "赤脚踩进湿沙留下脚印",
+      "recall_question": "赤脚踩进湿沙会留下什么？",
+      "image_prompt": "cartoon educational style child walking barefoot on wet sand leaving footprints sunny beach",
+      "animation_candidate": false,
+      "context_evidence": [
+        {
+          "sentence_id": "10965606-6084-579d-b85e-37cd092a72c6",
+          "text": "The hovercraft traveled first over the water, then mounted the beach, climbed up the dunes and sat down on a road.",
+          "lesson": "35. The Hovercraft",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "3d5bc917-3710-5501-8611-4f7ebe7da1b8",
+          "text": "The hovercraft travelled first over the water, then mounted the beach, climbed up the dunes, and sat down on a road.",
+          "lesson": "29.The Hovercraft",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "77a53902-bbe3-5761-bcfb-9d9ff076a35f",
+          "text": "but the means of escape from holiday hell, if the beach proves too crowded, the local weather too inclement,",
+          "lesson": "59. The Great Escape",
+          "source": "NCE"
+        }
+      ]
+    },
+    {
+      "vocabulary_item_id": "8e4a4511-64a8-52cf-9f2b-6f7a1b5ab365",
+      "word": "sugar",
+      "pos": "n",
+      "generated": true,
+      "tier": "B",
+      "context_tier": 3,
+      "verified": true,
+      "degraded": false,
+      "quality_score": 1.0,
+      "failed_gates": [],
+      "core_image": "小手把糖块放进茶杯搅拌",
+      "recall_question": "早餐时妈妈往粥里撒了什么白色颗粒？",
+      "image_prompt": "Cartoon child stirring a spoonful of white sugar into a steaming cup of tea",
+      "animation_candidate": false,
+      "context_evidence": [
+        {
+          "sentence_id": "0c45a3e4-ede6-5dbf-ad24-a913a239ffab",
+          "text": "Do you want /wɒnt/ any sugar?",
+          "lesson": "047. A Cup of Coffee",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "1961b08f-2135-50f8-8c5c-e4314bbd5f08",
+          "text": "A new telescope over twice the size was recently built at Sugar Grove in West Virginia.",
+          "lesson": "55. From the Earth, Greetings",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "1a849fed-66cb-5295-b488-b687c0270350",
+          "text": "What about some sugar?",
+          "lesson": "109&110.A Good Idea",
+          "source": "NCE"
+        }
+      ]
+    },
+    {
+      "vocabulary_item_id": "8ec1218a-17cb-51dd-ab69-7ad565f6313e",
+      "word": "dentist",
+      "pos": "n",
+      "generated": true,
+      "tier": "A",
+      "context_tier": 3,
+      "verified": true,
+      "degraded": false,
+      "quality_score": 1.0,
+      "failed_gates": [],
+      "core_image": "牙医拿着镊子拔掉蛀牙",
+      "recall_question": "谁拿着镊子在拔蛀牙？",
+      "image_prompt": "cartoon dentist pulling a decayed tooth with forceps, bright clinic, educational illustration",
+      "animation_candidate": true,
+      "context_evidence": [
+        {
+          "sentence_id": "0596e2ae-e3b9-5520-acb9-d4c79c295584",
+          "text": "'But I'm going to the dentist.'",
+          "lesson": "68. Persistent",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "4f55ab83-0345-5a27-811b-2ac4ff1102cd",
+          "text": "My dentist had just pulled out one of my teeth and had told me to rest for a while.",
+          "lesson": "48. Did You Want to Tell Me Something",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "5feeb592-6839-52b0-a7b3-02ab580f4fdf",
+          "text": "Can't the dentist /ˈdentɪst/ see me now?",
+          "lesson": "077. Terrible Toothache",
+          "source": "NCE"
+        }
+      ]
+    },
+    {
+      "vocabulary_item_id": "9308bac1-0e17-54c2-93b6-f78c9d258b37",
+      "word": "fascinating",
+      "pos": null,
+      "generated": true,
+      "tier": "A",
+      "context_tier": 3,
+      "verified": true,
+      "degraded": false,
+      "quality_score": 1.0,
+      "failed_gates": [],
+      "core_image": "魔术师抽出彩带让观众目不转睛",
+      "recall_question": "魔术师抽出什么让观众目不转睛？",
+      "image_prompt": "magician pulls colorful ribbon, audience stares wide-eyed, cartoon educational style",
+      "animation_candidate": true,
+      "context_evidence": [
+        {
+          "sentence_id": "cd4d30ac-41ea-5352-bc5e-23d1ff20302c",
+          "text": "At the same time, however, insects are strangely fascinating.",
+          "lesson": "54.Instinct or Cleverness",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "ec4a028a-3882-570b-9805-29be31afca7f",
+          "text": "It is fascinating and encouraging to observe the development of this immense process.",
+          "lesson": "56. Technological Explosion",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "f8944107-43e2-5a9e-8aae-29e1f520f0df",
+          "text": "insects are strangely fascinating.",
+          "lesson": "54. Instinct or Cleverness?",
+          "source": "NCE"
+        }
+      ]
+    },
+    {
+      "vocabulary_item_id": "9458373f-eb83-5f54-919f-3755db57cc46",
+      "word": "Wednesday",
+      "pos": "n",
+      "generated": true,
+      "tier": "B",
+      "context_tier": 3,
+      "verified": true,
+      "degraded": false,
+      "quality_score": 1.0,
+      "failed_gates": [],
+      "core_image": "日历翻到中间页，红笔圈住周三",
+      "recall_question": "日历中间那页被红笔圈住的是哪一天？",
+      "image_prompt": "calendar page flipped to middle, red pen circling Wednesday, cartoon educational style, clear action, vocabulary learning illustration",
+      "animation_candidate": false,
+      "context_evidence": [
+        {
+          "sentence_id": "0cb0c7a9-6b64-5eb5-b524-d1527a9fc8b4",
+          "text": "Last Wednesday, I went for a walk in the woods.",
+          "lesson": "143&144.A Walk Through the Woods",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "0e1c5942-1fbe-52cc-9dd7-6b6d42ed379f",
+          "text": "Last Wednesday, I went for a walk in the woods /wʊdz/.",
+          "lesson": "143. A Walk Through the Woods",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "386e1010-30fa-5cb5-adbc-48a590b8462d",
+          "text": "On Wednesday evening, we went to the Town Hall.",
+          "lesson": "09.A Cold Welcome",
+          "source": "NCE"
+        }
+      ]
+    },
+    {
+      "vocabulary_item_id": "95652cea-3f5e-54c3-bc81-5a044ac1559c",
+      "word": "plus",
+      "pos": null,
+      "generated": true,
+      "tier": "B",
+      "context_tier": 3,
+      "verified": true,
+      "degraded": false,
+      "quality_score": 1.0,
+      "failed_gates": [],
+      "core_image": "天平给大望远镜加个小砝码",
+      "recall_question": "画面中“望远镜___控制台”填什么词？",
+      "image_prompt": "cartoon educational style, clear action, vocabulary learning illustration, telescope and control panel on giant scale, plus sign floating between",
+      "animation_candidate": false,
+      "context_evidence": [
+        {
+          "sentence_id": "9cccd332-e41b-5dc8-bdc5-7ffa967d6828",
+          "text": "The telescope plus its controls weighs three and a half tons.",
+          "lesson": "49. Balloon Astronomy",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "af020af8-dcd6-5895-b5a7-e29c819e6b54",
+          "text": "25 percent of the total child population of 11 plus,",
+          "lesson": "17. Intelligence",
+          "source": "NCE"
+        }
+      ]
+    },
+    {
+      "vocabulary_item_id": "97796991-3761-5e07-b59c-94a9ce0ec6f9",
+      "word": "each",
+      "pos": "adj & pron",
+      "generated": true,
+      "tier": "B",
+      "context_tier": 3,
+      "verified": false,
+      "degraded": false,
+      "quality_score": 0.8889,
+      "failed_gates": [
+        "HAS_ONE_CORE_IMAGE"
+      ],
+      "core_image": "老师逐个发糖果",
+      "recall_question": "魔法课上教授如何检查学生药剂？",
+      "image_prompt": "Teacher checking potion bottles one by one, pointing at each student, cartoon educational style, clear action, vocabulary learning illustration",
+      "animation_candidate": false,
+      "context_evidence": [
+        {
+          "sentence_id": "08a60a95-8fbd-5260-ad3f-370ec40d79d8",
+          "text": "and Harry repeated the word, slowly stressing each syllable.",
+          "lesson": "52. Mud Is Mud",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "10351748-7a9e-5a32-bad0-e2b915d899a5",
+          "text": "Nearly everybody enters for the nicest garden competition each year,",
+          "lesson": "08. The Best and the Worst",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "12b4113a-d59f-5d95-8f03-6be27a4ac52d",
+          "text": "looking after each job,",
+          "lesson": "44. The Cost of Government",
+          "source": "NCE"
+        }
+      ]
+    },
+    {
+      "vocabulary_item_id": "97dd05e0-d2dc-5281-82ed-d562ccd9a4b2",
+      "word": "road",
+      "pos": "n",
+      "generated": true,
+      "tier": "A",
+      "context_tier": 3,
+      "verified": true,
+      "degraded": false,
+      "quality_score": 1.0,
+      "failed_gates": [],
+      "core_image": "送奶工骑车穿过弯曲公路",
+      "recall_question": "清晨雾里送奶工骑车经过的是什么？",
+      "image_prompt": "cartoon educational style, a milkman cycling on a winding road through mist",
+      "animation_candidate": true,
+      "context_evidence": [
+        {
+          "sentence_id": "05c04326-188c-5575-bd77-20e43538a52e",
+          "text": "The place consisted of a straggling unmade road",
+          "lesson": "48. The Silent Village",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "080b3e19-d18e-56c9-b96f-ebbd3655d0ee",
+          "text": "I see far ahead on the other side of the hedge bordering the high road,",
+          "lesson": "24. Going Out for a Walk",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "0ca6bb03-c7fe-5332-a8d9-37b299243f5e",
+          "text": "Frank smiled when he remembered his hard early years and the long road to success.",
+          "lesson": "31.Success Story",
+          "source": "NCE"
+        }
+      ]
+    },
+    {
+      "vocabulary_item_id": "999427ed-998b-5f56-9dfb-28e7a8bf1dff",
+      "word": "surprise",
+      "pos": "n & v",
+      "generated": true,
+      "tier": "A",
+      "context_tier": 3,
+      "verified": true,
+      "degraded": false,
+      "quality_score": 1.0,
+      "failed_gates": [],
+      "core_image": "孩子打开礼物盒瞬间瞪大眼睛",
+      "recall_question": "打开礼物盒时，孩子眼睛怎么变了？",
+      "image_prompt": "cartoon child opening gift box, eyes widening, confetti burst",
+      "animation_candidate": true,
+      "context_evidence": [
+        {
+          "sentence_id": "00e5f113-4c5e-5171-bd8a-989534cb7f12",
+          "text": "Indeed they can have a delightful surprise when they find something useful which they did not know they owned.",
+          "lesson": "59.Collecting",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "074331a2-8a7d-5003-9bc6-c9f5bb23dfc3",
+          "text": "To his surprise she said she hadn't.",
+          "lesson": "63.She Was Not Amused",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "0a06058b-5e12-535f-8412-d1f6979a1d04",
+          "text": "Imagine their surprise and delight when they broke open the packing cases",
+          "lesson": "66.Sweet as Honey",
+          "source": "NCE"
+        }
+      ]
+    },
+    {
+      "vocabulary_item_id": "9a7de465-a79e-559b-bdcb-b3c177db1bc3",
+      "word": "real",
+      "pos": "adj",
+      "generated": true,
+      "tier": "B",
+      "context_tier": 3,
+      "verified": false,
+      "degraded": false,
+      "quality_score": 0.8889,
+      "failed_gates": [
+        "HAS_ONE_CORE_IMAGE"
+      ],
+      "core_image": "火烧假花露真蕊",
+      "recall_question": "火烧假花后灰烬中绽出什么？",
+      "image_prompt": "cartoon educational style, clear action, vocabulary learning illustration, magnifying glass burning fake flower revealing real golden pistil",
+      "animation_candidate": false,
+      "context_evidence": [
+        {
+          "sentence_id": "09321554-6103-5058-91f9-583eb5ba412a",
+          "text": "The real escapist can watch a free film show and sip champagne on some services.",
+          "lesson": "44. Speed and Comfort",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "12a4238f-90e2-50a4-a3a5-dc4ab1954cfc",
+          "text": "But real tramps are not beggars.",
+          "lesson": "27.Nothing to Sell and Nothing to Buy",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "1d20f9f9-98ce-5421-9c38-e6a10b21a184",
+          "text": "For then, man was faced with a real need to understand something about the seasons.",
+          "lesson": "38. The First Calendar",
+          "source": "NCE"
+        }
+      ]
+    },
+    {
+      "vocabulary_item_id": "9da9784d-f0f0-5ba9-abbd-8a491caf2b6f",
+      "word": "elbow",
+      "pos": null,
+      "generated": true,
+      "tier": "B",
+      "context_tier": 3,
+      "verified": false,
+      "degraded": false,
+      "quality_score": 0.8889,
+      "failed_gates": [
+        "FAMILY_TRACEABLE"
+      ],
+      "core_image": "弯曲手臂撞翻咖啡杯",
+      "recall_question": "弯曲手臂撞翻杯子的关节叫什么？",
+      "image_prompt": "cartoon arm bending, elbow hitting coffee cup, educational illustration",
+      "animation_candidate": false,
+      "context_evidence": [
+        {
+          "sentence_id": "e9b89259-2ac1-58a0-b543-c79be4bea3f7",
+          "text": "by moving her elbow over a child's game of Lotto she was able to describe the figures and colours printed on it;",
+          "lesson": "04.Seeing Hands",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "2b2193c6-ea7f-527c-8f5e-7024b53e6dc4",
+          "text": "During these tests, she was able to read a newspaper through an opaque screen, and, stranger still, by moving her elbow over a child's game of lotto, she was able to describe the figures and colors printed on it.",
+          "lesson": "04. Seeing Hands",
+          "source": "NCE"
+        }
+      ]
+    },
+    {
+      "vocabulary_item_id": "9f4b24f6-6ad2-5b53-89f3-e349fd34e2ee",
+      "word": "advice",
+      "pos": "n",
+      "generated": true,
+      "tier": "A",
+      "context_tier": 3,
+      "verified": true,
+      "degraded": false,
+      "quality_score": 1.0,
+      "failed_gates": [],
+      "core_image": "老船长指着海图指路",
+      "recall_question": "大雾中老船长指着海图做什么？",
+      "image_prompt": "Old captain pointing at sea chart guiding ship through fog, cartoon educational style, clear action, vocabulary learning illustration",
+      "animation_candidate": true,
+      "context_evidence": [
+        {
+          "sentence_id": "10f0be7b-8492-52af-8346-815870e37f99",
+          "text": "That's very good advice!",
+          "lesson": "109&110.A Good Idea",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "2d4799c3-7c0f-5d69-bf56-2bd80e4661e6",
+          "text": "Well, next time you'd better take my advice.",
+          "lesson": "129. Seventy Miles an Hour",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "4c827c5a-4cd0-5e71-8f74-1452dca5bea1",
+          "text": "That's very good advice /ədˈvaɪs/.",
+          "lesson": "109. A Good Idea",
+          "source": "NCE"
+        }
+      ]
+    },
+    {
+      "vocabulary_item_id": "9f5add2f-ce52-5884-b8f2-265cafd29a40",
+      "word": "unable",
+      "pos": null,
+      "generated": true,
+      "tier": "A",
+      "context_tier": 3,
+      "verified": true,
+      "degraded": false,
+      "quality_score": 1.0,
+      "failed_gates": [],
+      "core_image": "小孩试图提重箱子却纹丝不动",
+      "recall_question": "画面里的小孩为什么举不起箱子？",
+      "image_prompt": "cartoon child struggling to lift heavy box, unable to move, educational illustration",
+      "animation_candidate": true,
+      "context_evidence": [
+        {
+          "sentence_id": "188e9e02-39e5-5c45-b7cb-025abf51c948",
+          "text": "Not only was the meal well below the usual standard, but Bessie seemed unable to walk steadily.",
+          "lesson": "49.The Ideal Servant",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "2e47038a-50ca-50da-96bc-59246861113e",
+          "text": "Despite her great age, she was very graceful indeed, but, so far, the archaeologists have been unable to discover her identity.",
+          "lesson": "03.An Unknown Goddess",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "4b08d278-3b8e-5a5f-a17e-aab050b780ce",
+          "text": "Until recently, scientists have been unable to devise a drill which would be capable of cutting through hard rock at great depths.",
+          "lesson": "47. Through the Earth's Crust",
+          "source": "NCE"
+        }
+      ]
+    },
+    {
+      "vocabulary_item_id": "a04161a8-5d13-53a4-ba56-920ecb3cf964",
+      "word": "top",
+      "pos": "n",
+      "generated": true,
+      "tier": "B",
+      "context_tier": 3,
+      "verified": false,
+      "degraded": false,
+      "quality_score": 0.8889,
+      "failed_gates": [
+        "FAMILY_TRACEABLE"
+      ],
+      "core_image": "小船桅杆顶端飘着红旗",
+      "recall_question": "桅杆最顶端飘着什么颜色的旗帜？",
+      "image_prompt": "cartoon educational style, clear action, vocabulary learning illustration, small boat mast top with red flag",
+      "animation_candidate": false,
+      "context_evidence": [
+        {
+          "sentence_id": "24dcffa4-ed23-51e4-be00-2a7de42a23d7",
+          "text": "He will be in his small boat, Top Sail.",
+          "lesson": "12. Goodbye and Good Luck",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "264ca78f-2f0e-58bd-be61-7ccf26955720",
+          "text": "They had a single aim, a solitary goal: the top.",
+          "lesson": "03. Matterhorn Man",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "26839f41-1c8f-5336-8134-633e0e216e7e",
+          "text": "They had a single aim, a solitary goal -- the top!",
+          "lesson": "03.Matterhorn Man",
+          "source": "NCE"
+        }
+      ]
+    },
+    {
+      "vocabulary_item_id": "a2e6a627-ca94-57df-978d-868610a844f0",
+      "word": "recently",
+      "pos": "adv",
+      "generated": true,
+      "tier": "B",
+      "context_tier": 3,
+      "verified": true,
+      "degraded": false,
+      "quality_score": 1.0,
+      "failed_gates": [],
+      "core_image": "日历翻到今天，红圈标记刚刚",
+      "recall_question": "日历上被红笔重重圈住的日期，代表什么时间概念？",
+      "image_prompt": "Cartoon calendar page flipping to today, big red circle marking the date, clear action, vocabulary learning illustration",
+      "animation_candidate": false,
+      "context_evidence": [
+        {
+          "sentence_id": "0c2cca6a-77c1-5cb1-bc8a-8121746f58b0",
+          "text": "Dreams of finding lost treasure almost came true recently.",
+          "lesson": "55. Not a Gold Mine",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "137e237c-eccb-507d-942a-aa0a637606b1",
+          "text": "Recently, there has again been great interest in the idea of a Channel Tunnel.",
+          "lesson": "64. The Channel Tunnel",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "1961b08f-2135-50f8-8c5c-e4314bbd5f08",
+          "text": "A new telescope over twice the size was recently built at Sugar Grove in West Virginia.",
+          "lesson": "55. From the Earth, Greetings",
+          "source": "NCE"
+        }
+      ]
+    },
+    {
+      "vocabulary_item_id": "a2e7f526-febc-52e1-a465-ad18f9fa826f",
+      "word": "state",
+      "pos": "n",
+      "generated": true,
+      "tier": "A",
+      "context_tier": 3,
+      "verified": true,
+      "degraded": false,
+      "quality_score": 1.0,
+      "failed_gates": [],
+      "core_image": "地图上一个州亮起红灯",
+      "recall_question": "地图上哪个区域亮起了红灯？",
+      "image_prompt": "A cartoon map highlights one state glowing red, clear action, vocabulary learning illustration",
+      "animation_candidate": true,
+      "context_evidence": [
+        {
+          "sentence_id": "1698c83a-a795-5b51-b447-bf90a4250487",
+          "text": "In the organization of industrial life the influence of the factory upon the physiological and mental state of the workers has been completely neglected.",
+          "lesson": "16.The Modern City",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "251f81f7-0aa0-5fe4-a383-d983931d4c50",
+          "text": "A parliamentary committee representing all political parties appoints a person who is suitably qualified to investigate private grievances against the State.",
+          "lesson": "53.In the Public Interest",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "3e8a85a8-ca15-5cf9-8864-f1a91f2223ad",
+          "text": "and found our then prevailing primitive state completely uninteresting to their own advanced knowledge.",
+          "lesson": "43.Are There Strangers in Space",
+          "source": "NCE"
+        }
+      ]
+    },
+    {
+      "vocabulary_item_id": "a352bebd-a8b1-5791-b240-50cad55d1707",
+      "word": "officer",
+      "pos": "n",
+      "generated": true,
+      "tier": "A",
+      "context_tier": 3,
+      "verified": true,
+      "degraded": false,
+      "quality_score": 1.0,
+      "failed_gates": [],
+      "core_image": "警察吹哨指挥车流",
+      "recall_question": "谁在十字路口吹哨指挥车辆？",
+      "image_prompt": "cartoon police officer blowing whistle directing traffic, educational illustration",
+      "animation_candidate": true,
+      "context_evidence": [
+        {
+          "sentence_id": "01dbd409-8e3a-51af-a1ff-7120a62cc069",
+          "text": "I'm afraid I didn't, officer.",
+          "lesson": "129. Seventy Miles an Hour",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "0a20d75f-1f87-566f-8534-db5517b80c37",
+          "text": "In another chest which contained the belongings of a ship's officer,",
+          "lesson": "32.A Lost Ship",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "10724009-ee5b-5cba-b13e-16445061a822",
+          "text": "The Ordnance officer ordered all the port cannon to be heaved to starboard",
+          "lesson": "27.The vasa",
+          "source": "NCE"
+        }
+      ]
+    },
+    {
+      "vocabulary_item_id": "a6837dec-2745-511b-8132-2b0d332ed3cf",
+      "word": "social",
+      "pos": "adj",
+      "generated": true,
+      "tier": "A",
+      "context_tier": 3,
+      "verified": true,
+      "degraded": false,
+      "quality_score": 1.0,
+      "failed_gates": [],
+      "core_image": "人群围成圈举杯碰杯欢笑",
+      "recall_question": "画面中大家围成一圈举杯碰杯是在做什么？",
+      "image_prompt": "cartoon educational style, clear action, vocabulary learning illustration: diverse people forming a circle, clinking glasses, smiling",
+      "animation_candidate": true,
+      "context_evidence": [
+        {
+          "sentence_id": "198ee97a-39e2-592b-8b84-e0e034962e35",
+          "text": "The coming of automation is bound to have important social consequences.",
+          "lesson": "51. Automation",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "261fd83d-14f5-572c-90c3-1b45b2c8243d",
+          "text": "When one seriously studies the social orders that have had the opportunity to develop autonomously,",
+          "lesson": "55. Patterns of Culture",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "3b99ec62-bbad-572a-beaa-d12c3181589e",
+          "text": "They disregard social conventions without being conscious that they are doing anything extraordinary.",
+          "lesson": "31.A Lovable Eccentric",
+          "source": "NCE"
+        }
+      ]
+    },
+    {
+      "vocabulary_item_id": "a7382d5f-912f-58e4-861d-a9ee5b085a16",
+      "word": "staff",
+      "pos": null,
+      "generated": true,
+      "tier": "B",
+      "context_tier": 3,
+      "verified": false,
+      "degraded": false,
+      "quality_score": 0.8889,
+      "failed_gates": [
+        "FAMILY_TRACEABLE"
+      ],
+      "core_image": "经理手持指挥棒指挥员工搬家具",
+      "recall_question": "经理手里拿着什么指挥大家搬家具？",
+      "image_prompt": "cartoon manager waving baton directing employees throwing furniture out window",
+      "animation_candidate": false,
+      "context_evidence": [
+        {
+          "sentence_id": "1e3d2f88-b86e-5a2b-a699-468e286a1f23",
+          "text": "He and his staff began throwing furniture out of the window.",
+          "lesson": "06.Smash and Grab",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "28fc9bb9-60a9-58cd-ad4f-316462f16dcd",
+          "text": "He and his staff began throwing furniture out of the window.",
+          "lesson": "06. Smash and Grab",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "3d63cf42-65db-5358-a104-514561ddc427",
+          "text": "in that she never allowed her domestic staff to work more than eight hours a day, she was extremely difficult to please.",
+          "lesson": "49.The Ideal Servant",
+          "source": "NCE"
+        }
+      ]
+    },
+    {
+      "vocabulary_item_id": "ac8c29b7-2c11-5a44-9341-6fabdf7459bb",
+      "word": "welcome",
+      "pos": "adj",
+      "generated": true,
+      "tier": "A",
+      "context_tier": 3,
+      "verified": true,
+      "degraded": false,
+      "quality_score": 1.0,
+      "failed_gates": [],
+      "core_image": "主人推开大门笑迎客",
+      "recall_question": "暴雨夜谁推门端热茶笑迎旅人？",
+      "image_prompt": "cartoon educational style, clear action, vocabulary learning illustration, host opening door widely smiling welcoming guest",
+      "animation_candidate": true,
+      "context_evidence": [
+        {
+          "sentence_id": "1be6b4b1-ddd0-570b-9cfa-a5c40367fb52",
+          "text": "refused to welcome the New Year.",
+          "lesson": "09. A Cold Welcome",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "224afa91-91f2-52ad-9938-84806965efb0",
+          "text": "What does 'a cold welcome' refer to?",
+          "lesson": "09.A Cold Welcome",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "3b918beb-cea1-505c-96bc-7e9f9608561f",
+          "text": "The big clock refused to welcome the New Year.",
+          "lesson": "09.A Cold Welcome",
+          "source": "NCE"
+        }
+      ]
+    },
+    {
+      "vocabulary_item_id": "b008f227-5439-5ea9-a4dd-044c4bd96f48",
+      "word": "stand",
+      "pos": "v",
+      "generated": true,
+      "tier": "A",
+      "context_tier": 3,
+      "verified": false,
+      "degraded": false,
+      "quality_score": 0.8889,
+      "failed_gates": [
+        "HAS_ONE_CORE_IMAGE"
+      ],
+      "core_image": "脚生根顶住狂风",
+      "recall_question": "狂风中少年为何能纹丝不动？",
+      "image_prompt": "Cartoon educational style, clear action, vocabulary learning illustration. A determined teenager standing firm like a tree root, resisting strong wind, feet planted deep.",
+      "animation_candidate": true,
+      "context_evidence": [
+        {
+          "sentence_id": "0647f81f-4f11-58a4-bd9c-397f6331b3a0",
+          "text": "I would make a very poor show of disputing the ownership of a cave with a bear, and in this I do not think that I stand alone.",
+          "lesson": "45.Of Men and Galaxies",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "0a38d0b2-9820-5184-a43c-5c4165064638",
+          "text": "Strange forms stand in gardens, and outside buildings and shops.",
+          "lesson": "18.Electric Currents in Modern Art",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "1a8c733e-f5aa-52ba-b451-c12540119740",
+          "text": "like adolescents they stand before the mirror,",
+          "lesson": "39.What Every Writer Wants",
+          "source": "NCE"
+        }
+      ]
+    },
+    {
+      "vocabulary_item_id": "b89b1d3d-cc9c-5bd4-8d5a-620118ce9bba",
+      "word": "fine",
+      "pos": "adj",
+      "generated": true,
+      "tier": "B",
+      "context_tier": 3,
+      "verified": true,
+      "degraded": false,
+      "quality_score": 1.0,
+      "failed_gates": [],
+      "core_image": "交警递红罚单司机签字",
+      "recall_question": "交警手里拿着什么颜色的单子塞给闯红灯的司机？",
+      "image_prompt": "cartoon educational style, traffic police handing pink ticket to driver through car window, red light background",
+      "animation_candidate": false,
+      "context_evidence": [
+        {
+          "sentence_id": "2f4ba07e-29a2-5c18-994c-869cd0deba7e",
+          "text": "Gone is the light from his fine eyes.",
+          "lesson": "24. Going Out for a Walk",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "3af245ab-6278-5f7a-a759-b0e941e1286d",
+          "text": "No, say the Americans: our fowl are fine, we simply clean them in a different way.",
+          "lesson": "08.Trading Standards",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "509f96f2-755d-5007-b910-941424ff9dec",
+          "text": "The EU -- following fine continental traditions -- wants agreement on general principles,",
+          "lesson": "08.Trading Standards",
+          "source": "NCE"
+        }
+      ]
+    },
+    {
+      "vocabulary_item_id": "bdcccb46-64b7-5efc-a257-8ef49ad4e868",
+      "word": "brother",
+      "pos": "n",
+      "generated": true,
+      "tier": "B",
+      "context_tier": 3,
+      "verified": true,
+      "degraded": false,
+      "quality_score": 1.0,
+      "failed_gates": [],
+      "core_image": "大哥牵着弟弟过红灯马路",
+      "recall_question": "谁牵着弟弟过红灯马路？",
+      "image_prompt": "cartoon educational style, clear action, vocabulary learning illustration: older boy holding younger boy's hand crossing street",
+      "animation_candidate": false,
+      "context_evidence": [
+        {
+          "sentence_id": "04cbc008-ce44-5e66-8330-2bb0cc0bb1db",
+          "text": "A long-lost brother who was presumed dead, was really alive all the time,",
+          "lesson": "36. A Chance in a Million",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "2157aaa3-fe6b-5cba-9293-ba0c5b7436d3",
+          "text": "My brother has never been abroad before, so he is finding this trip very exciting.",
+          "lesson": "04. An Exciting Trip",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "2860a3f8-c48a-5949-ba9e-70c9a3327b50",
+          "text": "I have just received a letter from my brother Tim.",
+          "lesson": "04. An Exciting Trip",
+          "source": "NCE"
+        }
+      ]
+    },
+    {
+      "vocabulary_item_id": "c0405622-3b61-5f88-9cbd-01ce27a978dd",
+      "word": "so",
+      "pos": "adv & conj",
+      "generated": true,
+      "tier": "B",
+      "context_tier": 3,
+      "verified": true,
+      "degraded": false,
+      "quality_score": 1.0,
+      "failed_gates": [],
+      "core_image": "小猫踢倒牛奶盒，牛奶洒地",
+      "recall_question": "小猫踢倒牛奶后地板湿了，用什么词把前因后果连起来？",
+      "image_prompt": "cartoon cat knocks over milk, floor wet, arrow linking cause and effect, vocabulary illustration",
+      "animation_candidate": false,
+      "context_evidence": [
+        {
+          "sentence_id": "0038d404-3d96-5aaf-af42-cbd0b3b412a2",
+          "text": "The pie committee decided that the best way to transport the dish would be by canal so they insured it for the trip.",
+          "lesson": "43.Fully Insured",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "006fc642-03f9-517c-a4e4-06d3b913aa31",
+          "text": "Their sleeping bags were warm and comfortable, so they all slept soundly.",
+          "lesson": "27. A Wet Night",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "0189a539-d3c5-508a-90dd-c2986fa973a8",
+          "text": "The sides of the dish were so smooth",
+          "lesson": "43. Fully Insured",
+          "source": "NCE"
+        }
+      ]
+    },
+    {
+      "vocabulary_item_id": "c6a5784d-912d-5f9b-89b4-80687c872334",
+      "word": "lonely",
+      "pos": "adj",
+      "generated": true,
+      "tier": "B",
+      "context_tier": 3,
+      "verified": true,
+      "degraded": false,
+      "quality_score": 1.0,
+      "failed_gates": [],
+      "core_image": "孤独灯塔在暴风雨中独自闪烁",
+      "recall_question": "灯塔守望者在暴风雨中独自做什么？",
+      "image_prompt": "A lone lighthouse keeper watches stormy sea, looking isolated, cartoon educational style",
+      "animation_candidate": false,
+      "context_evidence": [
+        {
+          "sentence_id": "0899180f-4777-5d3f-a7a5-8cd48b4edb1c",
+          "text": "The man wanted to fly to Rockall, a lonely island in the Atlantic Ocean.",
+          "lesson": "29. Taxi",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "320040d0-c71c-50d2-beba-31a74df0920f",
+          "text": "The man wanted to fly to Rockall, a lonely island in the Atlantic Ocean,",
+          "lesson": "29.Taxi",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "526bd856-2800-5b90-933f-2cbf0085798f",
+          "text": "Captain Fawcett's first passenger was a doctor who flew from Birmingham to a lonely village in the Welsh mountains.",
+          "lesson": "29.Taxi",
+          "source": "NCE"
+        }
+      ]
+    },
+    {
+      "vocabulary_item_id": "c9c2c134-3bee-54e4-ad3d-ef25d84b1453",
+      "word": "advise",
+      "pos": "v",
+      "generated": true,
+      "tier": "B",
+      "context_tier": 3,
+      "verified": true,
+      "degraded": false,
+      "quality_score": 1.0,
+      "failed_gates": [],
+      "core_image": "老师把指南针递给迷路学生",
+      "recall_question": "谁把指南针递给迷路的学生？",
+      "image_prompt": "Teacher handing compass to lost student, cartoon educational style",
+      "animation_candidate": false,
+      "context_evidence": [
+        {
+          "sentence_id": "f6edcbad-4d58-57ec-a723-504128f1e262",
+          "text": "What does Ann advise her husband to do next time?",
+          "lesson": "129&130.Seventy Miles an Hour",
+          "source": "NCE"
+        }
+      ]
+    },
+    {
+      "vocabulary_item_id": "cc3dcce8-3b16-568b-b305-8cbbe06675c4",
+      "word": "point",
+      "pos": "v & n",
+      "generated": true,
+      "tier": "B",
+      "context_tier": 3,
+      "verified": true,
+      "degraded": false,
+      "quality_score": 1.0,
+      "failed_gates": [],
+      "core_image": "指针稳稳指向红色靶心中心",
+      "recall_question": "老师用什么工具在黑板上标出重点？",
+      "image_prompt": "cartoon teacher pointing laser at blackboard, students watching, clear action",
+      "animation_candidate": false,
+      "context_evidence": [
+        {
+          "sentence_id": "0257b7cd-0f6f-557e-86b0-f82eb6b9a48c",
+          "text": "There is no sky in June so blue that it does not point forward",
+          "lesson": "29. Beauty",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "10c9997f-4fb9-5be0-b025-ae788da01a40",
+          "text": "a trough (the lowest point), a height (the vertical distance from the trough to the crest),",
+          "lesson": "40.Waves",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "1d2fe924-caad-5846-82d0-20687a02ba65",
+          "text": "This is the point I wish to emphasize.",
+          "lesson": "45.Of Men and Galaxies",
+          "source": "NCE"
+        }
+      ]
+    },
+    {
+      "vocabulary_item_id": "ce5b637f-f871-5dfc-aa42-2a308d3f4ccb",
+      "word": "medicine",
+      "pos": "n",
+      "generated": true,
+      "tier": "B",
+      "context_tier": 3,
+      "verified": true,
+      "degraded": false,
+      "quality_score": 1.0,
+      "failed_gates": [],
+      "core_image": "医生把亮色糖浆倒入勺子",
+      "recall_question": "医生把什么颜色的液体倒进勺子喂病人？",
+      "image_prompt": "cartoon doctor pouring bright syrup into spoon for patient, educational illustration",
+      "animation_candidate": false,
+      "context_evidence": [
+        {
+          "sentence_id": "05c512d9-66bc-52a2-8585-6c18864fac03",
+          "text": "our confidence in the curative properties of the bottle of medicine remains the same as theirs.",
+          "lesson": "34. Patients and Doctors",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "06cf3b4e-ef69-5bc8-aea6-c8e3f3a5c5f3",
+          "text": "But a medicine that had worked so well in one form of illness would surely be of equal benefit in another.",
+          "lesson": "34. Patients and Doctors",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "0de89371-b6f1-5f11-b7bb-4f483800500e",
+          "text": "The great advantage of taking medicine is that it makes no demands on the taker beyond that of putting up for a moment with a disgusting taste,",
+          "lesson": "34. Patients and Doctors",
+          "source": "NCE"
+        }
+      ]
+    },
+    {
+      "vocabulary_item_id": "ce5bfa08-b2f8-5888-b6d3-ec452ef43fd6",
+      "word": "sixty",
+      "pos": "num",
+      "generated": true,
+      "tier": "B",
+      "context_tier": 3,
+      "verified": true,
+      "degraded": false,
+      "quality_score": 1.0,
+      "failed_gates": [],
+      "core_image": "六十只彩色气球飞上蓝天",
+      "recall_question": "画面里有多少只气球飞上蓝天？",
+      "image_prompt": "cartoon educational style, clear action, vocabulary learning illustration, sixty colorful balloons rising into blue sky",
+      "animation_candidate": false,
+      "context_evidence": [
+        {
+          "sentence_id": "3e6a333e-f7db-5cab-96e9-6c1cf7615d19",
+          "text": "The day after the birth of the five children, an aeroplane arrived in Aberdeen bringing sixty reporters and photographers.",
+          "lesson": "45.The Power of the Press",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "aa4d0455-ee11-5b65-90ed-e744e315e368",
+          "text": "The modern weather models work with a grid of points of the order of sixty miles apart,",
+          "lesson": "14.The Butterfly Effect",
+          "source": "NCE"
+        }
+      ]
+    },
+    {
+      "vocabulary_item_id": "d0b51363-4003-585e-ae89-9426cd0ff4bc",
+      "word": "minute",
+      "pos": "n",
+      "generated": true,
+      "tier": "A",
+      "context_tier": 3,
+      "verified": true,
+      "degraded": false,
+      "quality_score": 1.0,
+      "failed_gates": [],
+      "core_image": "秒针走过一格，列车准时发车",
+      "recall_question": "秒针走过一格后，列车做什么？",
+      "image_prompt": "cartoon educational style, clear action, vocabulary learning illustration, a second hand ticking one notch, train departing on time",
+      "animation_candidate": true,
+      "context_evidence": [
+        {
+          "sentence_id": "22a041fc-682c-5602-b12d-4ce81fb2f9be",
+          "text": "If you are catching a train, it is always better to be comfortably early than even a fraction of a minute too late.",
+          "lesson": "60.Too Early and Too Late",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "26673a6a-b6a4-5b2a-ac8d-df2f9f0586c9",
+          "text": "Can you come here a minute please, Bob?",
+          "lesson": "045&046.The Boss's Letter",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "316f30d7-72a3-5285-9c07-beafa567579f",
+          "text": "Can you come here a minute /ˈmɪnɪt/, please, Bob?",
+          "lesson": "045. The Boss's Letter",
+          "source": "NCE"
+        }
+      ]
+    },
+    {
+      "vocabulary_item_id": "de975618-0ccf-5cb6-adfe-0883ad2c1402",
+      "word": "description",
+      "pos": null,
+      "generated": true,
+      "tier": "A",
+      "context_tier": 3,
+      "verified": true,
+      "degraded": false,
+      "quality_score": 1.0,
+      "failed_gates": [],
+      "core_image": "学生对着雕塑口述轮廓记在笔记本",
+      "recall_question": "画面中谁正在把雕塑的轮廓用语言记下来？",
+      "image_prompt": "Student narrates sculpture contours into notebook, cartoon educational illustration",
+      "animation_candidate": true,
+      "context_evidence": [
+        {
+          "sentence_id": "6d8479b7-7a4d-5084-862a-d4a1a829b7f6",
+          "text": "And the sensitive observer of sculpture must also learn to feel shape simply as shape, not as description or reminiscence.",
+          "lesson": "31.The Sculptor Speaks",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "74d5cc0e-a369-50cf-95f3-16b7ae4eb90f",
+          "text": "not as description or reminiscence.",
+          "lesson": "38. Water and the Traveller",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "f77dc0ea-0ed5-57ec-bfc1-36ef7dd61c0d",
+          "text": "If you recognize yourself in this description,",
+          "lesson": "48.Planning a Share Portfolio",
+          "source": "NCE"
+        }
+      ]
+    },
+    {
+      "vocabulary_item_id": "e3981855-e9f8-58d8-96b0-efb58735ec2b",
+      "word": "thing",
+      "pos": "n",
+      "generated": true,
+      "tier": "B",
+      "context_tier": 3,
+      "verified": true,
+      "degraded": false,
+      "quality_score": 1.0,
+      "failed_gates": [],
+      "core_image": "裁判举起红牌判罚点球",
+      "recall_question": "裁判手中的红牌代表比赛中的什么？",
+      "image_prompt": "cartoon educational style, clear action, vocabulary learning illustration, referee holding red card pointing to penalty spot, dynamic pose",
+      "animation_candidate": false,
+      "context_evidence": [
+        {
+          "sentence_id": "01275e60-5368-5540-94ec-7a8f68036143",
+          "text": "It is a good thing my Aunt Harriet died years ago.",
+          "lesson": "49. The Ideal Servant",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "0f55f96a-96db-5f91-8e86-215f754a085c",
+          "text": "The curious thing was that the lake was not marked on the map.",
+          "lesson": "57.Back in the Old Country",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "1678e49c-6d11-5296-acab-f53e2114cd1b",
+          "text": "it is the easiest thing in the world to give up smoking.",
+          "lesson": "78. The Last One",
+          "source": "NCE"
+        }
+      ]
+    },
+    {
+      "vocabulary_item_id": "e7a32c1e-f241-5e76-84be-0ae209e7efa8",
+      "word": "fourth",
+      "pos": null,
+      "generated": true,
+      "tier": "B",
+      "context_tier": 3,
+      "verified": true,
+      "degraded": false,
+      "quality_score": 1.0,
+      "failed_gates": [],
+      "core_image": "机械师敲击第四个发动机微笑",
+      "recall_question": "机械师敲击第几号发动机时露出满意笑容？",
+      "image_prompt": "cartoon mechanic tapping fourth engine in row, smiling, numbered labels, educational illustration",
+      "animation_candidate": false,
+      "context_evidence": [
+        {
+          "sentence_id": "a18cc9aa-f572-5969-b63e-03024218c88b",
+          "text": "and found that the fourth engine was sweet as honey--still in perfect condition.",
+          "lesson": "66.Sweet as Honey",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "c0ce9ed0-0bc8-5429-abeb-c1b51e2bdc05",
+          "text": "No. He must be her fourth or fifth.",
+          "lesson": "127. A Famous Actress",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "e1b5b1ca-223f-58f3-8c13-3a9a2420882f",
+          "text": "He must be her fourth or fifth.",
+          "lesson": "127&128.A Famous Actress",
+          "source": "NCE"
+        }
+      ]
+    },
+    {
+      "vocabulary_item_id": "f25dbc55-1abd-57f9-a663-dd02ce51a705",
+      "word": "sweet",
+      "pos": "n & adj",
+      "generated": true,
+      "tier": "A",
+      "context_tier": 3,
+      "verified": true,
+      "degraded": false,
+      "quality_score": 1.0,
+      "failed_gates": [],
+      "core_image": "小孩舔冰淇淋笑，手指沾糖",
+      "recall_question": "孩子舔着什么东西露出笑容？",
+      "image_prompt": "cartoon child licking ice cream, smiling, fingers sticky, bright colors",
+      "animation_candidate": true,
+      "context_evidence": [
+        {
+          "sentence_id": "5839ebf0-f7e1-5683-80c2-30621d003629",
+          "text": "On his way to the sweet shop, he dropped his fifty pence and it bounced along the pavement and then disappeared down a drain.",
+          "lesson": "15.Fifty Pence Worth of Trouble",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "5d6eb9cc-d5ef-5848-baa2-b41149a736af",
+          "text": "George was not too upset by his experience because the lady who owns the sweet shop heard about his troubles and rewarded him with a large box of chocolates.",
+          "lesson": "15.Fifty Pence Worth of Trouble",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "6add05f7-c26c-5b67-a585-843709675e88",
+          "text": "On his way to the sweet shop,",
+          "lesson": "15. Sixpence Worth of Trouble",
+          "source": "NCE"
+        }
+      ]
+    },
+    {
+      "vocabulary_item_id": "fa4b3ee9-8034-51f1-b47d-725001244af9",
+      "word": "juice",
+      "pos": "n",
+      "generated": true,
+      "tier": "B",
+      "context_tier": 3,
+      "verified": true,
+      "degraded": false,
+      "quality_score": 1.0,
+      "failed_gates": [],
+      "core_image": "榨汁机把西瓜压成红汁喷出",
+      "recall_question": "榨汁机把水果压成什么颜色的液体喷出？",
+      "image_prompt": "cartoon educational style, a juicer squeezing watermelon, red liquid spraying",
+      "animation_candidate": false,
+      "context_evidence": [
+        {
+          "sentence_id": "604abba0-e8ce-5d8e-99eb-eef375aee76f",
+          "text": "capturing one plum after another and taking the juice and taste out of them.",
+          "lesson": "10. Creative Men",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "6e75693b-2323-5865-a7c6-a8b957b954e1",
+          "text": "Over the periods their saliva, a mild, digestive juice like our own, was converted into a poison that defies analysis even today.",
+          "lesson": "20.Snake Poison",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "b7af8e23-e70a-5b96-9a21-e2908c8add99",
+          "text": "Over the periods, their saliva, a mild digestive juice just like our own, was converted into a poison that defies analysis even today.",
+          "lesson": "25. Snake Poison",
+          "source": "NCE"
+        }
+      ]
+    },
+    {
+      "vocabulary_item_id": "fa57163c-1a93-52e0-9cf6-bf39972c22ed",
+      "word": "quick",
+      "pos": "adj & adv",
+      "generated": true,
+      "tier": "B",
+      "context_tier": 3,
+      "verified": true,
+      "degraded": false,
+      "quality_score": 1.0,
+      "failed_gates": [],
+      "core_image": "兔子闪电般冲过终点线",
+      "recall_question": "什么动物在枪响瞬间像箭一样冲过终点？",
+      "image_prompt": "Cartoon rabbit sprinting across finish line, bright colors, educational illustration",
+      "animation_candidate": false,
+      "context_evidence": [
+        {
+          "sentence_id": "05bf59ff-352b-5ddf-928f-e55d27fa9b40",
+          "text": "The ants had been quick to find an answer to my thoroughly unscientific methods.",
+          "lesson": "54. Instinct or Cleverness?",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "47ba7c23-c322-5f9d-89f0-81463dc13c23",
+          "text": "He offered to train Mendoza and his young pupil was quick to learn.",
+          "lesson": "21.Daniel Mendoza",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "5a8959bb-26dc-5064-9771-4c6948b61cb0",
+          "text": "The ants had been quick to find an answer to my thoroughly unscientific methods!",
+          "lesson": "54.Instinct or Cleverness",
+          "source": "NCE"
+        }
+      ]
+    },
+    {
+      "vocabulary_item_id": "fbb4ff16-60b9-591c-b41d-1eab4d4656ae",
+      "word": "trade",
+      "pos": "n",
+      "generated": true,
+      "tier": "A",
+      "context_tier": 3,
+      "verified": true,
+      "degraded": false,
+      "quality_score": 1.0,
+      "failed_gates": [],
+      "core_image": "集市上商人推车互换货物",
+      "recall_question": "集市上商人推车互换货物，这动作叫什么？",
+      "image_prompt": "Cartoon merchants exchanging silk and gold coins on busy market street, handshake deal, vocabulary learning illustration",
+      "animation_candidate": true,
+      "context_evidence": [
+        {
+          "sentence_id": "694e3ff6-ebef-57c6-a664-0184b1112a76",
+          "text": "They hope to finish in time for a trade summit between America and the EU on May 28th.",
+          "lesson": "08.Trading Standards",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "d9a9ac89-08c5-5359-9455-8f0ca300fcd0",
+          "text": "These days, it is differences in national regulations, far more than tariffs, that put sand in the wheels of trade between rich countries.",
+          "lesson": "08.Trading Standards",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "eaa735a0-27ca-5b3d-b82c-f975523b53bb",
+          "text": "It is unusual now for father to pursue his trade or other employment at home.",
+          "lesson": "08. Employment of Family",
+          "source": "NCE"
+        }
+      ]
+    },
+    {
+      "vocabulary_item_id": "fd47e882-7c72-55a0-8c5d-d3f032c91786",
+      "word": "Sweden",
+      "pos": null,
+      "generated": true,
+      "tier": "A",
+      "context_tier": 3,
+      "verified": true,
+      "degraded": false,
+      "quality_score": 1.0,
+      "failed_gates": [],
+      "core_image": "维京长船劈开波罗的海薄冰",
+      "recall_question": "哪艘长船劈开薄冰驶向极光之国？",
+      "image_prompt": "Viking longship breaking Baltic ice under aurora, cartoon educational style, clear action, vocabulary learning illustration",
+      "animation_candidate": true,
+      "context_evidence": [
+        {
+          "sentence_id": "255ac51a-fb13-5d7c-8ed1-d248d8ff3da0",
+          "text": "She was intended to play a leading role in the growing might of Sweden.",
+          "lesson": "27.The vasa",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "7a8d2d32-8e0f-5eea-bb1b-09a19924a112",
+          "text": "From the 17th century Empire of Sweden, the story of a galleon that sank at the start of her maiden voyage in 1628",
+          "lesson": "33. The ‘Vasa’",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "83c1e0a2-8396-5fad-9879-9a3aa4a8b130",
+          "text": "She was intended to play a leading role in the growing might of Sweden.",
+          "lesson": "33. The ‘Vasa’",
+          "source": "NCE"
+        }
+      ]
+    },
+    {
+      "vocabulary_item_id": "fd73383c-1cd5-5a5d-9666-0282e5e424aa",
+      "word": "TV",
+      "pos": null,
+      "generated": true,
+      "tier": "B",
+      "context_tier": 3,
+      "verified": true,
+      "degraded": false,
+      "quality_score": 1.0,
+      "failed_gates": [],
+      "core_image": "家人围坐沙发盯着荧屏",
+      "recall_question": "寒冬夜里全家围着什么发光屏幕看电影？",
+      "image_prompt": "family sitting on sofa watching glowing TV screen, winter night, cartoon style",
+      "animation_candidate": false,
+      "context_evidence": [
+        {
+          "sentence_id": "94bc90fe-fadf-5ba2-bf7f-e37d3e67bd51",
+          "text": "My friend fails to mention the long and friendless winter evenings in front of the TV--virtually the only form of entertainment.",
+          "lesson": "41.Illusions of Pastoral Peace",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "bbcfa28e-56c1-5825-8920-9039c896b2e3",
+          "text": "that by the end of the 20th century, computers would be as common in people's homes as TV sets?",
+          "lesson": "51.Predicting the Future",
+          "source": "NCE"
+        }
+      ]
+    },
+    {
+      "vocabulary_item_id": "fdf28b49-921d-53cf-8843-1edd5f3cd29d",
+      "word": "silent",
+      "pos": "adj",
+      "generated": true,
+      "tier": "A",
+      "context_tier": 3,
+      "verified": true,
+      "degraded": false,
+      "quality_score": 1.0,
+      "failed_gates": [],
+      "core_image": "大钟锈住指针不再敲响",
+      "recall_question": "百年大钟为何午夜也不敲响了？",
+      "image_prompt": "cartoon educational style, clear action, vocabulary learning illustration, giant antique clock with rusted frozen hands, no sound waves, quiet night background",
+      "animation_candidate": true,
+      "context_evidence": [
+        {
+          "sentence_id": "7cff3cad-6dc5-51bd-9fce-8402972b0933",
+          "text": "The big clock which used to strike the hours day and night was damaged many years ago and has been silent ever since.",
+          "lesson": "02.Thirteen Equals One",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "99f62748-177d-5d18-9bb9-859591677814",
+          "text": "was damaged during the war and has been silent ever since.",
+          "lesson": "02. Thirteen Equals One",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "b3afa639-728b-54bf-bd83-7e54d45617bb",
+          "text": "Why was the village silent?",
+          "lesson": "48.The Silent Village",
+          "source": "NCE"
+        }
+      ]
+    },
+    {
+      "vocabulary_item_id": "fe71042f-dff8-52c4-baf8-c6fffb32b419",
+      "word": "fruit",
+      "pos": "n",
+      "generated": true,
+      "tier": "A",
+      "context_tier": 3,
+      "verified": true,
+      "degraded": false,
+      "quality_score": 1.0,
+      "failed_gates": [],
+      "core_image": "农夫轻扭手腕摘下沉甸甸水蜜桃汁水滴落",
+      "recall_question": "农夫轻扭手腕从枝头摘下了什么沉甸甸的东西？",
+      "image_prompt": "cartoon educational style, clear action, vocabulary learning illustration, farmer hand twisting picking ripe peach juice dripping tree branch",
+      "animation_candidate": true,
+      "context_evidence": [
+        {
+          "sentence_id": "42fd4fbd-9b3b-5c42-abad-3c067c2979b0",
+          "text": "And the only fruit of the combination of industry",
+          "lesson": "13. Oxford",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "c094aa58-6262-5255-a14a-642b5728b916",
+          "text": "Ripe fruit falls from the trees and you never have to work.",
+          "lesson": "12.Life on a Desert Island",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "f4b42e5b-d970-5940-ac65-bb6bf82e624b",
+          "text": "Ripe fruit falls from the trees and you never have to work.",
+          "lesson": "12. Life on a Desert Island",
+          "source": "NCE"
+        }
+      ]
+    }
+  ]
+}
