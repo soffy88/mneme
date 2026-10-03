@@ -50,7 +50,7 @@ async def health_providers(deep: bool = False):
     """
     from services.providers.setup import provider_liveness
 
-    return provider_liveness(deep=deep)
+    return await provider_liveness(deep=deep)
 
 
 @router.get("/health/metrics")

@@ -100,14 +100,22 @@ def provider_status() -> dict[str, Any]:
     }
 
 
-def provider_liveness(*, deep: bool = False, timeout: float = 3.0) -> dict[str, Any]:
+async def provider_liveness(*, deep: bool = False, timeout: float = 3.0) -> dict[str, Any]:
     """**活探针**：配置 + 网关可达性（+ 可选真实补全）。
 
     与 :func:`provider_status` 分开，因为它会发网络请求。`/health/providers` 用它；
     装配路径不要用（会平白多付一次超时）。
+
+    **必须是 async**：本函数由 async 的路由处理器调用。第一版用同步的
+    `asyncio.run()` 包探针，结果在生产实测里直接抛
+    `RuntimeError: asyncio.run() cannot be called from a running event loop`
+    —— 也就是 deep 探针从来没真正跑过。同步的 urllib 探活走
+    `asyncio.to_thread`，否则会把事件循环堵住 3 秒。
     """
+    import asyncio
+
     status = provider_status()
-    endpoint = _probe_endpoint_reachable(timeout=timeout)
+    endpoint = await asyncio.to_thread(_probe_endpoint_reachable, timeout)
     status["llm_reachable"] = endpoint["reachable"]
     status["llm_reachable_detail"] = endpoint["detail"]
     status["llm_usable_checked"] = "endpoint_only"
@@ -117,7 +125,7 @@ def provider_liveness(*, deep: bool = False, timeout: float = 3.0) -> dict[str, 
         status["llm_usable_detail"] = "mock_allowed"
         return status
     if deep:
-        verdict = probe_llm_usable()
+        verdict = await probe_llm_usable()
         status["llm_usable"] = bool(verdict["usable"]) and endpoint["reachable"]
         status["llm_usable_detail"] = verdict["detail"]
         status["llm_usable_checked"] = "deep"
@@ -166,10 +174,12 @@ def _probe_endpoint_reachable(timeout: float = 3.0) -> dict[str, Any]:
         return {"reachable": False, "detail": f"{type(exc).__name__}: {exc}"[:200]}
 
 
-def probe_llm_usable(timeout: float = 30.0) -> dict[str, Any]:
+async def probe_llm_usable(timeout: float = 30.0) -> dict[str, Any]:
     """真发一次最小补全并**检查内容**。慢（3~30s），故只在显式请求时跑。
 
     这是唯一能识破「HTTP 200 + 正文是错误串」的检查。
+
+    **async**：由 async 路由处理器 await（见 :func:`provider_liveness` 的说明）。
     """
     import asyncio
 
@@ -188,7 +198,16 @@ def probe_llm_usable(timeout: float = 30.0) -> dict[str, Any]:
             )
             return resp.text or ""
 
-        text = asyncio.run(asyncio.wait_for(_probe(), timeout=timeout)).strip()
+        text = (await asyncio.wait_for(_probe(), timeout=timeout)).strip()
+    except asyncio.TimeoutError:
+        # 单独说清楚：空消息的 "TimeoutError: " 对运维毫无信息。
+        # 实测有的模型能回内容但要 68~90s（veya-deepseek-v4-flash-nv），
+        # 那不叫「可用」——学习产品里的生成必须能同步等得起。
+        return {
+            "usable": False,
+            "detail": f"timeout_after_{timeout:g}s_slow_or_unreachable",
+            "text": None,
+        }
     except Exception as exc:  # noqa: BLE001
         return {"usable": False, "detail": f"{type(exc).__name__}: {exc}"[:200], "text": None}
     if _looks_like_gateway_error(text):
