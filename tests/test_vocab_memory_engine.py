@@ -108,6 +108,15 @@ def _memory_input(**over):
         "context_flat": "The team abandoned the project.",
         "affix": None,
         "tier": "B",
+        "meaning": {
+            "tier": "canonical",
+            "kind": "gloss",
+            "gloss": "放弃；抛弃",
+            "source_column": "meaning_cn",
+            "gloss_source": "meaning_cn",
+            "primary_sense": {"order": 0, "pos": "verb", "raw_pos": "vt.", "text": "放弃；抛弃"},
+            "primary_sense_reason": "fixture",
+        },
     }
     base.update(over)
     return base
@@ -321,8 +330,56 @@ def test_gate_no_false_root_detects_contradiction_only():
 
 
 def test_every_gate_name_is_covered_by_the_report():
-    assert len(vm.ALL_GATES) == 9
-    assert len({g.name for g in _report(_good_node()).gates}) == 9
+    assert len(vm.ALL_GATES) == 10
+    assert len({g.name for g in _report(_good_node()).gates}) == 10
+
+
+def test_gate_meaning_authority_rejects_unusable_gloss():
+    """无权威释义（纯音标/占位/空）→ 拒收。
+
+    起因：20 词人工审查里 `title` 的 canonical 是纯音标 → unusable，
+    节点却 verified=true。「语义核心由模型发明、无教材出处」与教材原文优先冲突。
+    """
+    mi = _memory_input(
+        meaning={"tier": "unusable", "kind": "phonetic", "gloss": None,
+                 "source_column": None, "gloss_source": None, "primary_sense": None}
+    )
+    assert "MEANING_AUTHORITY" in _report(_good_node(), mi).failed_gates
+
+
+def test_gate_meaning_authority_rejects_absent_gloss_even_if_tier_looks_fine():
+    """空 gloss 必须拒收 —— 哪怕 tier 字段写着 canonical。
+
+    这条是**结构防御**：正常路径下 gloss 为空必然伴随 tier=unusable
+    （classify_meaning_source 保证），但门禁不能依赖调用方守约。写之前
+    做过变异验证：只把 `if not gloss` 那一支短路掉时，本测试是唯一能抓住的 ——
+    另外两个分支（unusable / 无来源列）会各自把当时的用例挡住，掩盖这个漏洞。
+    """
+    mi = _memory_input(
+        meaning={"tier": "canonical", "kind": "gloss", "gloss": None,
+                 "source_column": "meaning_cn", "gloss_source": "meaning_cn",
+                 "primary_sense": None}
+    )
+    assert "MEANING_AUTHORITY" in _report(_good_node(), mi).failed_gates
+
+
+def test_gate_meaning_authority_rejects_untraceable_gloss():
+    mi = _memory_input(
+        meaning={"tier": "canonical", "kind": "gloss", "gloss": "放弃",
+                 "source_column": None, "gloss_source": None, "primary_sense": None}
+    )
+    assert "MEANING_AUTHORITY" in _report(_good_node(), mi).failed_gates
+
+
+def test_gate_meaning_authority_accepts_pos_selected_sense():
+    mi = _memory_input(
+        meaning={"tier": "legacy", "kind": "gloss", "gloss": "盲目的；瞎的",
+                 "source_column": "canonical_meaning",
+                 "gloss_source": "canonical_meaning(pos-selected sense)",
+                 "primary_sense": {"order": 1, "pos": "adj", "raw_pos": "adj.",
+                                   "text": "盲目的；瞎的"}}
+    )
+    assert "MEANING_AUTHORITY" not in _report(_good_node(), mi).failed_gates
 
 
 # ---------------------------------------------------------------------------
@@ -636,7 +693,11 @@ def test_load_memory_input_prefers_meaning_cn_over_polluted_canonical():
 
 
 def test_load_memory_input_marks_labelled_gloss_as_legacy_not_unusable():
-    """`[法] 法案` 是带义项标签的释义 —— 可用，但标为 legacy 让人知道未派生。"""
+    """`[法] 法案` 是带义项标签的释义 —— 可用，但标为 legacy 让人知道未派生。
+
+    义项选择会**剥掉方括号领域标签**再喂给 LLM：`[法]` 是词性/领域标注，不是释义的
+    一部分，留着只会干扰模型。原文仍完整保留在 `canonical_meaning` 里，可追溯。
+    """
     item = SimpleNamespace(
         id="v1", word="bill", pos=None, meaning_cn=None,
         phonetic_arpabet=None, example_sentence=None,
@@ -644,8 +705,32 @@ def test_load_memory_input_marks_labelled_gloss_as_legacy_not_unusable():
     )
     db = FakeDB(sentences=[], item=item)
     out = asyncio.run(vc.load_memory_input(db, "v1"))
-    assert out["meaning_cn"] == "[法] 法案；广告；账单"
+    assert out["meaning_cn"] == "法案；广告；账单"
     assert out["meaning"]["tier"] == "legacy"
+    assert out["meaning"]["gloss_source"] == "canonical_meaning(pos-selected sense)"
+
+
+def test_load_memory_input_prefers_pos_selected_sense_over_truncated_meaning_cn():
+    """CME-P1.6 的核心修复：`blind` 的 meaning_cn 只截了首义项（百叶窗）。
+
+    `canonical_meaning` 有 adj. 义项、`pos` 列是 adj（默写表的策展值）→ 喂给 LLM 的
+    必须是「盲目的；瞎的」，否则记忆卡会锚在**百叶窗**上。
+    """
+    item = SimpleNamespace(
+        id="v1", word="blind", pos="adj", meaning_cn="掩饰，借口；百叶窗",
+        phonetic_arpabet=None, example_sentence=None,
+        canonical_meaning=(
+            "n. 掩饰，借口；百叶窗\nadj. 盲目的；瞎的\n"
+            "vt. 使失明；使失去理智\nadv. 盲目地；看不见地"
+        ),
+    )
+    db = FakeDB(sentences=[], item=item)
+    out = asyncio.run(vc.load_memory_input(db, "v1"))
+    assert out["meaning_cn"] == "盲目的；瞎的"
+    assert out["llm_entry"]["meaning_cn"] == "盲目的；瞎的"
+    assert out["meaning"]["primary_sense"]["pos"] == "adj"
+    # meaning_cn 本身**不被改写** —— 它是「教材原文可追溯」的载体
+    assert item.meaning_cn == "掩饰，借口；百叶窗"
 
 
 def test_load_memory_input_raises_on_unknown_id():

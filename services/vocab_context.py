@@ -28,6 +28,7 @@ from dataclasses import dataclass, field
 from typing import Any
 
 from services.vocab_meaning import classify_meaning_source
+from services.vocab_senses import select_primary_sense
 
 TIER_CURRENT_LESSON = 1
 TIER_CURRENT_BOOK = 2
@@ -222,6 +223,11 @@ async def load_memory_input(
     meaning = classify_meaning_source(
         meaning_cn=row.meaning_cn, canonical_meaning=row.canonical_meaning
     )
+    # 义项选择（CME-P1.6）：meaning_cn 常常只截了 canonical_meaning 的**第一个**义项，
+    # 于是 `blind` 变成「百叶窗」、`wet` 变成「雨天」、`fine` 变成「罚款」—— 学生
+    # 记住的是冷门义项。用 pos 列（默写表的策展值）选出主义项，**不覆盖 meaning_cn**
+    # （那是「教材原文可追溯」的载体），只影响喂给 LLM 的那一份。
+    primary_sense, sense_reason = select_primary_sense(row.canonical_meaning, row.pos)
 
     bundle = await retrieve_context(db, vocabulary_item_id, limit=limit)
     # example_sentence 是 P0.3a 从同一批 timed_sentences 确定性抽取的，重复来源
@@ -250,13 +256,22 @@ async def load_memory_input(
     best = bundle.best
     # 只把「判定为可信释义」的那一份给 LLM。meaning.gloss 为 None 时明确传 None，
     # 让 prompt 走「未标注」分支 —— 而不是把音标塞进去让模型自己猜。
-    gloss = meaning.gloss
+    # 主义项优先；取不到才回落到 meaning_cn 的判定结果。
+    gloss = primary_sense.text if primary_sense else meaning.gloss
+    meaning_payload = meaning.to_payload()
+    meaning_payload["primary_sense"] = primary_sense.to_payload() if primary_sense else None
+    meaning_payload["primary_sense_reason"] = sense_reason
+    meaning_payload["gloss_source"] = (
+        "canonical_meaning(pos-selected sense)"
+        if primary_sense
+        else meaning.source_column
+    )
     return {
         "vocabulary_id": row.id,
         "word": row.word,
         "pos": row.pos,
         "meaning_cn": gloss,
-        "meaning": meaning.to_payload(),
+        "meaning": meaning_payload,
         "phonetic_arpabet": row.phonetic_arpabet,
         "context": bundle.to_payload(),
         "context_flat": best.text if best else None,

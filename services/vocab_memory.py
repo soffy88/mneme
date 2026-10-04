@@ -34,6 +34,13 @@ GATE_HAS_CONTEXT = "HAS_CONTEXT"
 GATE_FAMILY_TRACEABLE = "FAMILY_TRACEABLE"
 GATE_NO_FALSE_ROOT = "NO_FALSE_ROOT"
 GATE_NOT_DISPUTED_SOURCE = "NOT_DISPUTED_SOURCE"
+# 第 10 条（2026-10-03 人授权「自己定」后加）：输入释义必须有权威出处。
+# 加它的直接起因：20 词人工审查里 `title` 的 canonical 是纯音标（unusable），
+# 节点却仍 verified=true —— 9 条门禁没有一条要求「释义可信」，于是出现了
+# 「语义核心由模型发明、无教材出处」的卡片，与「教材原文优先」有张力。
+# 代价要说清：会拒掉那些「靠语境句救回来」的节点（title 的画面其实不错）。
+# 这是取舍，不是白捡 —— 故门禁名与理由都写在 spec §3.4 ④。
+GATE_MEANING_AUTHORITY = "MEANING_AUTHORITY"
 
 ALL_GATES: tuple[str, ...] = (
     GATE_HAS_ONE_CORE_IMAGE,
@@ -45,6 +52,7 @@ ALL_GATES: tuple[str, ...] = (
     GATE_FAMILY_TRACEABLE,
     GATE_NO_FALSE_ROOT,
     GATE_NOT_DISPUTED_SOURCE,
+    GATE_MEANING_AUTHORITY,
 )
 
 # 核心画面太短撑不起记忆，太长学生读不完。
@@ -266,6 +274,29 @@ def verify_memory_node(
         )
     else:
         gates.append(GateResult(GATE_NOT_DISPUTED_SOURCE, True))
+
+    # 10. MEANING_AUTHORITY —— 释义必须有权威出处（教材原文），且已选出主义项。
+    meaning = memory_input.get("meaning") or {}
+    tier = meaning.get("tier")
+    primary = meaning.get("primary_sense")
+    if not meaning.get("gloss"):
+        gates.append(
+            GateResult(GATE_MEANING_AUTHORITY, False, "无可用释义（音标/占位符/空）")
+        )
+    elif tier == "unusable":
+        gates.append(
+            GateResult(GATE_MEANING_AUTHORITY, False, f"释义档位 unusable（{meaning.get('kind')}）")
+        )
+    elif primary is None and not meaning.get("source_column"):
+        gates.append(GateResult(GATE_MEANING_AUTHORITY, False, "释义无来源列，无法追溯"))
+    else:
+        gates.append(
+            GateResult(
+                GATE_MEANING_AUTHORITY,
+                True,
+                f"{meaning.get('gloss_source') or meaning.get('source_column')}",
+            )
+        )
 
     return QualityReport(word=word, gates=gates)
 
