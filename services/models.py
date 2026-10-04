@@ -1642,6 +1642,51 @@ class VocabularyMemoryNode(Base):
     )
 
 
+class VocabularyDerivedGloss(Base):
+    """从**真实语料句**派生的中文释义（有出处，但不是教材原文）。
+
+    为什么独立成表而不写进 `vocabulary_items.meaning_cn`：那一列承载「教材词表
+    原文」的可追溯性。实测 461 个核心单词（有 NCE 真实句）没有中文释义，其中 459 个
+    的 `canonical_meaning` 装的是**纯音标**，确定性派生完全走不通。把 LLM 释义写进
+    那一列会**一次性丢掉出处信息** —— 这正是词根那侧已经踩过并解决的问题
+    （`VocabularyAffix.etymology_status` 专门分三档，而不是把记忆联想塞进释义）。
+
+    `source_sentence_id` 记下「用了哪一句」，释义可回溯到 `timed_sentences` 的具体行。
+    `source_kind` 目前只有 `corpus_llm`（DB CHECK 强制）—— 将来若引入别的派生方式
+    需要显式放开 CHECK，而不是悄悄复用这一档。
+
+    合规：全局参考数据，非学生 PII（同 vocabulary_items），FK CASCADE → 不进 purge 清单。
+    见 alembic d7e8f9a0b1c2。
+    """
+
+    __tablename__ = "vocabulary_derived_glosses"
+
+    id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True), primary_key=True, server_default=text("gen_random_uuid()")
+    )
+    vocabulary_item_id: Mapped[str] = mapped_column(
+        String(100),
+        ForeignKey("vocabulary_items.id", ondelete="CASCADE"),
+        nullable=False,
+        unique=True,  # 一词一条，避免渲染时「两个释义挑哪个」的歧义
+    )
+    gloss: Mapped[str] = mapped_column(Text, nullable=False)
+    source_kind: Mapped[str] = mapped_column(
+        String(24), nullable=False, server_default=text("'corpus_llm'")
+    )
+    # 「用了哪一句」——只存 id，句子本身在 timed_sentences（改了不会读到旧句）
+    source_sentence_id: Mapped[Optional[str]] = mapped_column(String(100))
+    model: Mapped[Optional[str]] = mapped_column(String(64))
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), server_default=text("now()")
+    )
+    updated_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), server_default=text("now()"), onupdate=text("now()")
+    )
+
+    __table_args__ = (Index("ix_vocab_derived_gloss_item", "vocabulary_item_id"),)
+
+
 class VocabularyImportBatch(Base):
     __tablename__ = "vocabulary_import_batches"
 

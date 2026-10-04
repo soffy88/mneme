@@ -1,0 +1,44 @@
+{
+  "summary": {
+    "collection": "core-exam-zhongkao-gaokao-k12",
+    "targets": 8,
+    "applied": false,
+    "written": 0,
+    "degraded_no_gloss": 0,
+    "skipped_no_context": 0
+  },
+  "details": [
+    {
+      "word": "phrase",
+      "gloss": "短语；词组"
+    },
+    {
+      "word": "being",
+      "gloss": "处于（be的现在分词）"
+    },
+    {
+      "word": "type",
+      "gloss": "打字"
+    },
+    {
+      "word": "suffering",
+      "gloss": "痛苦；苦难"
+    },
+    {
+      "word": "sharp",
+      "gloss": "猛烈的；狠狠的"
+    },
+    {
+      "word": "code",
+      "gloss": "准则；规范"
+    },
+    {
+      "word": "credit",
+      "gloss": "存款余款；贷方"
+    },
+    {
+      "word": "alike",
+      "gloss": "同样地；两者都"
+    }
+  ]
+}

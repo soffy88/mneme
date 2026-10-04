@@ -44,7 +44,7 @@ class FakeDB:
     """按 SQL 里出现的表名分派结果。记录调用以便断言排序/参数。"""
 
     def __init__(self, sentences=None, item=None, affix=None, collocations=None,
-                 xiangxing=None, anchor=(False, False), family=None):
+                 xiangxing=None, anchor=(False, False), family=None, derived_gloss=None):
         self.sentences = sentences if sentences is not None else []
         self.item = item
         self.affix = affix
@@ -52,6 +52,7 @@ class FakeDB:
         self.xiangxing = xiangxing
         self.anchor = anchor
         self.family = family if family is not None else []
+        self.derived_gloss = derived_gloss
         self.calls: list[tuple[str, dict]] = []
 
     async def execute(self, stmt, params=None):
@@ -65,6 +66,8 @@ class FakeDB:
             return FakeResult([SimpleNamespace(a=self.anchor[0], x=self.anchor[1])])
         if "vocabulary_affixes" in sql:
             return FakeResult([self.affix] if self.affix else [])
+        if "vocabulary_derived_glosses" in sql:
+            return FakeResult([self.derived_gloss] if self.derived_gloss else [])
         if "vocabulary_collocations" in sql:
             return FakeResult(self.collocations)
         if "vocabulary_xiangxing" in sql:
@@ -737,3 +740,50 @@ def test_load_memory_input_raises_on_unknown_id():
     db = FakeDB(sentences=[], item=None)
     with pytest.raises(KeyError):
         asyncio.run(vc.load_memory_input(db, "nope"))
+
+def test_load_memory_input_falls_back_to_derived_gloss_when_textbook_has_only_ipa():
+    """CME-P1.12：`diet` 的真实库内状态（meaning_cn 空 + canonical 是 `[ˈdaɪət]`）。
+
+    有派生释义时，引擎拿到的应是 `derived_from_corpus` 档，而不是「没有释义」。
+    没有它，第 10 条门禁 MEANING_AUTHORITY 会把这些词全部拒收（实测 16/100）。
+    """
+    item = SimpleNamespace(
+        id="v1", word="diet", pos=None, meaning_cn=None,
+        phonetic_arpabet="DA1 AY2 AH0 T", example_sentence=None,
+        canonical_meaning="[ˈdaɪət]",
+    )
+    db = FakeDB(
+        sentences=[],
+        item=item,
+        derived_gloss=SimpleNamespace(gloss="饮食；节食", source_sentence_id="s7"),
+    )
+    out = asyncio.run(vc.load_memory_input(db, "v1"))
+    assert out["meaning_cn"] == "饮食；节食"
+    assert out["llm_entry"]["meaning_cn"] == "饮食；节食"
+    assert out["meaning"]["tier"] == "derived_from_corpus"
+    # 出处可回溯到具体某一句
+    assert out["derived_gloss"]["source_sentence_id"] == "s7"
+    # 音标仍有正确去处，不是把读音丢掉就完了
+    assert out["phonetic_arpabet"] == "DA1 AY2 AH0 T"
+
+
+def test_textbook_gloss_still_wins_over_derived():
+    """教材两列能给出释义时，派生释义**不参与**（派生档位低于 canonical/legacy）。
+
+    注意实际生效的是**义项选择**：`canonical_meaning` 有 `n. 饮食` 且 pos=n →
+    主义项就是「饮食」，它连 `meaning_cn` 都会盖过（义项选择优先于 meaning_cn，
+    见 `test_load_memory_input_prefers_pos_selected_sense_over_truncated_meaning_cn`）。
+    这里要钉的是「派生释义没被用上」这一条。
+    """
+    item = SimpleNamespace(
+        id="v1", word="diet", pos="n", meaning_cn="饮食；食物",
+        phonetic_arpabet=None, example_sentence=None, canonical_meaning="n. 饮食",
+    )
+    db = FakeDB(
+        sentences=[], item=item,
+        derived_gloss=SimpleNamespace(gloss="节食", source_sentence_id="s7"),
+    )
+    out = asyncio.run(vc.load_memory_input(db, "v1"))
+    assert out["meaning"]["tier"] in ("canonical", "legacy")
+    assert out["meaning"]["gloss_source"] == "canonical_meaning(pos-selected sense)"
+    assert "节食" not in (out["meaning_cn"] or "")

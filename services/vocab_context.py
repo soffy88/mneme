@@ -220,8 +220,21 @@ async def load_memory_input(
 
     # 释义必须先过判定闸：教材词表把音标和释义写进同一列（实测全表 9,844 条真音标、
     # 11 条带义项标签的释义被旧规则误拒），LLM 绝不能拿到读音当中文意思。
+    derived = (
+        await db.execute(
+            text(
+                """
+        SELECT gloss, source_sentence_id FROM vocabulary_derived_glosses
+        WHERE vocabulary_item_id = :vid LIMIT 1
+        """
+            ),
+            {"vid": vocabulary_item_id},
+        )
+    ).first()
     meaning = classify_meaning_source(
-        meaning_cn=row.meaning_cn, canonical_meaning=row.canonical_meaning
+        meaning_cn=row.meaning_cn,
+        canonical_meaning=row.canonical_meaning,
+        derived_gloss=derived.gloss if derived else None,
     )
     # 义项选择（CME-P1.6）：meaning_cn 常常只截了 canonical_meaning 的**第一个**义项，
     # 于是 `blind` 变成「百叶窗」、`wet` 变成「雨天」、`fine` 变成「罚款」—— 学生
@@ -278,6 +291,11 @@ async def load_memory_input(
         "affix": affix,
         "xiangxing": xiangxing,
         "collocations": collocations,
+        "derived_gloss": (
+            {"gloss": derived.gloss, "source_sentence_id": derived.source_sentence_id}
+            if derived
+            else None
+        ),
         "tier": await assign_tier(db, vocabulary_item_id, has_context=bundle.has_context),
         "llm_entry": {
             "word": row.word,

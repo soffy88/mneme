@@ -10,7 +10,7 @@ from obase.db import get_db
 from services.readiness import health_payload, readiness_payload
 
 # Must match `alembic heads` (vocabulary memory nodes).
-EXPECTED_MIGRATION_HEAD = "e6f7a8b9c0d2"
+EXPECTED_MIGRATION_HEAD = "d7e8f9a0b1c2"
 
 router = APIRouter(tags=["health"])
 

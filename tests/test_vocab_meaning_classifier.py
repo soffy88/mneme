@@ -25,6 +25,7 @@ from services.vocab_meaning import (
     KIND_PHONETIC,
     KIND_PLACEHOLDER,
     TIER_CANONICAL,
+    TIER_DERIVED,
     TIER_LEGACY,
     TIER_UNUSABLE,
     classify_canonical_meaning,
@@ -184,3 +185,50 @@ def test_verdict_payload_is_serialisable():
 
     v = classify_meaning_source(meaning_cn="放弃", canonical_meaning=None)
     assert json.loads(json.dumps(v.to_payload()))["tier"] == TIER_CANONICAL
+
+# ── derived_from_corpus 档（CME-P1.12）─────────────────────────────────────
+# 461 个核心单词有 NCE 真实句但没有中文释义，其中 459 个 canonical 是纯音标 →
+# 确定性派生走不通。用既有 oprim 从**真实例句**派生，存独立表
+# vocabulary_derived_glosses（alembic d7e8f9a0b1c2），出处显式可回溯。
+
+
+def test_canonical_wins_over_derived():
+    v = classify_meaning_source(
+        meaning_cn="放弃；抛弃", canonical_meaning="vt. 放弃", derived_gloss="弃绝"
+    )
+    assert v.tier == TIER_CANONICAL
+    assert v.gloss == "放弃；抛弃"
+
+
+def test_legacy_wins_over_derived():
+    """canonical_meaning 能给出释义时优先用它 —— 它是教材原文，比派生更权威。"""
+    v = classify_meaning_source(
+        meaning_cn=None, canonical_meaning="vt. 保护，防卫", derived_gloss="守卫"
+    )
+    assert v.tier == TIER_LEGACY
+    assert v.gloss == "vt. 保护，防卫"
+
+
+def test_derived_used_when_textbook_columns_are_phonetics():
+    """`diet` 的真实库内状态：meaning_cn 空、canonical 是 `[ˈdaɪət]`。"""
+    v = classify_meaning_source(
+        meaning_cn=None, canonical_meaning="[ˈdaɪət]", derived_gloss="饮食；节食"
+    )
+    assert v.tier == TIER_DERIVED
+    assert v.kind == KIND_GLOSS
+    assert v.gloss == "饮食；节食"
+    assert v.source_column == "vocabulary_derived_glosses"
+
+
+def test_derived_is_still_unusable_when_absent():
+    v = classify_meaning_source(meaning_cn=None, canonical_meaning="[ˈdaɪət]")
+    assert v.tier == TIER_UNUSABLE
+    assert v.gloss is None
+
+
+def test_derived_gloss_itself_checked_for_phonetic_pollution():
+    """派生列也可能被污染 —— 同样要挡住，不能因为「有出处」就免检。"""
+    v = classify_meaning_source(
+        meaning_cn=None, canonical_meaning="[ˈdaɪət]", derived_gloss="[ˈdaɪət]"
+    )
+    assert v.usable is False

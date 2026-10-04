@@ -1,0 +1,45 @@
+{
+  "summary": {
+    "collection": "core-exam-zhongkao-gaokao-k12",
+    "targets": 461,
+    "applied": true,
+    "written": 8,
+    "degraded_no_gloss": 0,
+    "skipped_no_context": 0,
+    "call_errors": 57
+  },
+  "details": [
+    {
+      "word": "sixth",
+      "gloss": "第六的"
+    },
+    {
+      "word": "diet",
+      "gloss": "日常饮食；节食"
+    },
+    {
+      "word": "root",
+      "gloss": "根；扎根"
+    },
+    {
+      "word": "disturb",
+      "gloss": "干扰；损害"
+    },
+    {
+      "word": "disease",
+      "gloss": "疾病"
+    },
+    {
+      "word": "command",
+      "gloss": "掌控；支配"
+    },
+    {
+      "word": "sat",
+      "gloss": "坐下（sit的过去式）"
+    },
+    {
+      "word": "helicopter",
+      "gloss": "直升机"
+    }
+  ]
+}

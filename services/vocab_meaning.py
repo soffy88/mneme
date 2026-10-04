@@ -55,6 +55,9 @@ _PHONETIC_MARKERS = frozenset({"音标", "读音", "发音", "phonetic", "ipa"})
 # 判定档位。
 TIER_CANONICAL = "canonical"  # meaning_cn 有可信释义 —— 权威
 TIER_LEGACY = "legacy"        # 只有 canonical_meaning 能给出释义 —— 可用但未派生
+# 从真实语料句派生（LLM，但例句是调用方从 timed_sentences 确定性抽的、不是模型编的）。
+# 低于 canonical（不是教材原文），高于 unusable（有出处、可回溯到具体某一句）。
+TIER_DERIVED = "derived_from_corpus"
 TIER_UNUSABLE = "unusable"    # 音标 / 占位符 / 空 —— 绝不可当释义用
 
 KIND_GLOSS = "gloss"
@@ -127,14 +130,23 @@ def classify_canonical_meaning(canonical_meaning: str | None) -> MeaningVerdict:
 
 
 def classify_meaning_source(
-    *, meaning_cn: str | None, canonical_meaning: str | None
+    *,
+    meaning_cn: str | None,
+    canonical_meaning: str | None,
+    derived_gloss: str | None = None,
 ) -> MeaningVerdict:
     """决定「这个词的释义取自哪一列」，并给出可信档位。
 
-    优先级：`meaning_cn`（权威，已由受审计的派生/生成路径写入）→
-    `canonical_meaning`（legacy，未派生）。**任何情况下都不会返回音标**。
+    优先级：`meaning_cn`（canonical，教材原文）→ `canonical_meaning`（legacy，
+    未派生）→ `derived_gloss`（derived_from_corpus，从真实语料句派生）。
+    **任何情况下都不会返回音标。**
 
     这是 Context Retriever 的唯一入口：LLM 拿到的 `meaning_cn` 一定不是读音。
+
+    `derived_gloss` 来自 `vocabulary_derived_glosses`（见 alembic d7e8f9a0b1c2）。
+    它排在最后：只在**教材两列都给不出释义**时才用（实测 461 个核心单词属此类，
+    其中 459 个 canonical 是纯音标）。派生释义不是教材原文，所以档位低于 canonical，
+    展示层可以据此标注。
     """
     mc = (meaning_cn or "").strip()
     if mc:
@@ -150,7 +162,30 @@ def classify_meaning_source(
             )
         return MeaningVerdict(TIER_CANONICAL, KIND_GLOSS, mc, "meaning_cn", "meaning_cn 可信释义")
 
-    return classify_canonical_meaning(canonical_meaning)
+    legacy = classify_canonical_meaning(canonical_meaning)
+    if legacy.usable:
+        return legacy
+
+    dg = (derived_gloss or "").strip()
+    # 派生列**同样**要挡音标污染：不能因为「有出处」就免检。
+    # 这不是杞人忧天 —— 派生释义来自模型，模型把读音当释义写出来完全可能。
+    if dg and is_phonetic_transcription(dg):
+        return MeaningVerdict(
+            TIER_UNUSABLE,
+            KIND_PHONETIC,
+            None,
+            "vocabulary_derived_glosses",
+            "派生释义疑似音标（污染），已拒用",
+        )
+    if dg:
+        return MeaningVerdict(
+            TIER_DERIVED,
+            KIND_GLOSS,
+            dg,
+            "vocabulary_derived_glosses",
+            "从真实语料句派生（例句确定性抽取，非教材原文）",
+        )
+    return legacy
 
 
 __all__ = [
@@ -160,6 +195,7 @@ __all__ = [
     "KIND_PLACEHOLDER",
     "PLACEHOLDERS",
     "TIER_CANONICAL",
+    "TIER_DERIVED",
     "TIER_LEGACY",
     "TIER_UNUSABLE",
     "MeaningVerdict",
