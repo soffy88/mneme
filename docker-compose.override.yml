@@ -1,5 +1,10 @@
 # 本地 dev override：代码目录挂载，保持与生产相同的仓内 chat loop。
 # 用 override 文件而非改 docker-compose.yml（后者混有会话前无关改动）。
+#
+# ⚠️ 这里曾**硬编码** VEYA_BASE_URL / VEYA_MODEL（2026-10-03 修）。override 的优先级
+# 高于 docker-compose.yml 里的 `${VEYA_BASE_URL}` 插值，于是 `.env` 改了也不生效 ——
+# 容器里一直是 `veya1.2-128K`（网关侧已退役的别名）+ 一个容器根本连不上的地址。
+# 「改了 .env 没生效」的第一现场就是这里。现在改成从 `.env` 插值，**单一来源**。
 services:
   api:
     volumes:
@@ -7,6 +12,7 @@ services:
     environment:
       PYTHONPATH: /app/vendor:/app:/app/packages/mneme-core:/app/packages/mneme-agent:/app/packages/event-schema
       MNEME_LLM: veya
-      VEYA_BASE_URL: http://host.docker.internal:8791/v1
-      VEYA_MODEL: veya1.2-128K
-      VEYA_VL_MODEL: veya1.2-vl
+      VEYA_BASE_URL: ${VEYA_BASE_URL:-http://172.22.0.1:8792/v1}
+      VEYA_MODEL: ${VEYA_MODEL:-veya1.2,veya-glm5.1-nv,veya-kimi-k2.6-nv,veya-deepseek-v4-flash-nv}
+      VEYA_VL_MODEL: ${VEYA_VL_MODEL:-veya1.2-vl}
+

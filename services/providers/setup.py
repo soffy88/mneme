@@ -135,29 +135,6 @@ async def provider_liveness(*, deep: bool = False, timeout: float = 3.0) -> dict
     return status
 
 
-# 网关会用 **HTTP 200** 把上游故障当正文返回，例如 2026-10-03 实测：
-#   {"choices":[{"message":{"content":"gpt-5.6-luna 兜底失败"}}]}
-#   {"choices":[{"message":{"content":"opencode-go rejected the request (HTTP 429): ...
-#      Go usage limit exceeded"}}]}
-# 所以「没抛异常」**不等于**成功 —— 只判异常的探针会把「文本 LLM 调不通」报成健康。
-# 第一版探针就栽在这里：`max_tokens=1` + 只看异常 → 退役别名 veya1.2-128K 显示
-# reachable=true，而它实际每次都返回上面那串兜底失败。
-_GATEWAY_ERROR_MARKERS = (
-    "兜底失败",
-    "rejected the request",
-    "usage limit",
-    "no api-key",
-    "rate_limit",
-    "insufficient_quota",
-    "service unavailable",
-)
-
-
-def _looks_like_gateway_error(text: str | None) -> bool:
-    low = (text or "").lower()
-    return any(m in low for m in _GATEWAY_ERROR_MARKERS)
-
-
 def _probe_endpoint_reachable(timeout: float = 3.0) -> dict[str, Any]:
     """只探网关端点答不答话（GET /models），不发 token、不看内容。"""
     base = os.environ.get("VEYA_BASE_URL") or os.environ.get("QWEN_BASE_URL")
@@ -182,6 +159,8 @@ async def probe_llm_usable(timeout: float = 30.0) -> dict[str, Any]:
     **async**：由 async 路由处理器 await（见 :func:`provider_liveness` 的说明）。
     """
     import asyncio
+
+    from services.providers.veya_caller import looks_like_gateway_error
 
     try:
         from oprim.llm import llm_complete
@@ -210,7 +189,7 @@ async def probe_llm_usable(timeout: float = 30.0) -> dict[str, Any]:
         }
     except Exception as exc:  # noqa: BLE001
         return {"usable": False, "detail": f"{type(exc).__name__}: {exc}"[:200], "text": None}
-    if _looks_like_gateway_error(text):
+    if looks_like_gateway_error(text):
         return {
             "usable": False,
             "detail": "gateway_returned_error_payload",
