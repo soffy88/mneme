@@ -2753,7 +2753,21 @@ CI 常驻的判分准确率回归门，堵死"构造桩题掩盖真实数据判�
   是 `docker-compose.override.yml` 硬编码遮蔽了插值** —— 已改为从 `.env` 插值。
   ⚠️ 附带坑：`VEYA_BASE_URL` 改成 bridge 地址后必须在 `NO_PROXY` 写**字面 IP**
   （httpx 不支持 CIDR，curl 支持），否则宿主侧脚本全 502。
-- [ ] ~~**CME-P1.6 `meaning_cn` 多义项截断（需人决策）**~~：`canonical_meaning` 是多义项，
+- [x] **CME-P1.12 给「有语境无释义」词补派生释义** ✅ 2026-10-04（机制完成，**批量受上游阻塞**）：
+  新增 `vocabulary_derived_glosses`（alembic `d7e8f9a0b1c2`）+ `derived_from_corpus` 第四档。
+  **不写 `meaning_cn`**（那是教材原文的载体，写进去就丢出处）。461 词目标，
+  实跑 written **8** / call_errors **57**（58 批里 57 批整批失败）—— 瓶颈是**上游可用性**
+  在跑的过程中塌了，与改动无关。脚本幂等，补齐命令：
+  `python scripts/derive_glosses_from_corpus.py --apply`。
+  ⚠️ 已实测的**可信度边界**：例句不是模型编的（确定性抽取），但**义项由语料句决定**
+  —— `credit → 存款余款；贷方`（会计窄义项）、`type → 打字`。该档位低于教材原文，
+  展示层应可标注。派生列同样要挡音标污染（写测试时发现这个缺口）。
+- [x] **CME-P1.13 OPD 义项锚点** ✅ 2026-10-04，**结论是不做**：纠正先前 36.3% 的高估
+  （那是粗糙正则把 `a`/`an`/`and` 算进去），正规解析后真实覆盖 **13.4%（369 词）**；
+  且义项问题最严重的 `blind`/`wet`/`fine`/`deer`/`credit`/`type` **一个都不在 OPD**。
+  它收的 `blind` 是 `mini-blinds`（主题 A Bedroom）—— 按它选义项会把 `blind`
+  **钉死在「百叶窗」冷门义项**上，比现状更糟。故不建表、不入库，版权面归零。
+  解析器保留为可复现测量工具，负面结论有测试钉住。：`canonical_meaning` 是多义项，
   但 `meaning_cn` 常只留第一行 → `blind`→百叶窗（漏「盲的」）、`wet`→雨天（漏「潮湿」）、
   `fine`→罚款（漏「好的」）。实测 **1,288** 词多义项、**1,190** 词 `meaning_cn`
   不足 canonical 一半；另 **490** 词 `pos` 与首义项不符（`pos` 来自默写表另一来源）。
