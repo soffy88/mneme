@@ -683,6 +683,65 @@ quality=1.0、0 条门禁失败、语境证据 `That's very good advice!`。
 ⚠️ 在恢复之前，**记忆引擎的批量生成基本不可用**（`CME-P1.12` 的 453 词补齐因此只完成 8）。
 单点 `space-bunny-free` 不足以支撑批量作业。
 
+## 📍 「用本地的 veya-nim」—— 查证结论：本机没有可用的本地 NIM，本地 LLM 也不可用
+
+按要求查了「本地 veya-nim」，结论是**这条路走不通**，证据如下（全部实测，非推断）。
+
+### 1. 没有本地 NIM
+
+- 网关里 `veya-nim` / `veya-*-nv` 这 5 个别名代理的是
+  **`https://integrate.api.nvidia.com/v1/chat/completions`** —— NVIDIA **云端**，
+  不是本地（`veya/obase/llm.py:250`）。
+- **本机没有 NIM 凭据**：`veya-backend` 的 `NVIDIA_NIM_API_KEY=` **为空**；
+  它指向的 `VEYA_NVIDIA_NIM_KEYS_FILE=/home/soffy/projects/stratum/aii/.pipeline_keys.json`
+  里是 **stratum/aii 的其它 pipeline key**（`econ`/`math_en`/`advmath_*`/`learning`…），
+  **不是 NIM key**。
+- **mneme 实际对话的那个网关进程**（宿主 pid 2983）**完全没有** `NIM_KEY_POOL` /
+  `NIM_KEYS_FILE` / `NIM_API_KEY` 环境变量 —— 这是所有 `-nv` 别名全挂的直接原因。
+- 本地**无** NIM / vLLM / triton 镜像（`docker images` 无命中），也没有 NIM 容器。
+
+### 2. 本地确实有真模型，但**只有 CPU，且慢到不可用**
+
+Ollama 在跑 `qwen2.5:7b`（4.7GB）、`qwen2.5vl:3b`、`qwen2.5:0.5b` —— 是真模型不是
+mock，而且 `OllamaCaller` 代码路径现成（其 docstring 原文就是「如 DeepSeek 余额不足时」）。
+但实测：
+
+| 模型 | 实测 | 结论 |
+|---|---|---|
+| `qwen2.5:7b` | 38 tok / **208s**、51 tok / **199s**（≈4 tok/s，热机同样慢） | 记忆契约每词需 400~800 tok → **20~70 分钟/词**，批量与交互都不可行 |
+| `qwen2.5:0.5b` | 28s，但让它「数到20」输出**「四十二」** | 连基本指令都做不到，质量不足以用于教学内容 |
+
+### 3. 根因是 GPU 掉卡（硬件层）
+
+`/dev/nvidia0` 节点存在、驱动已加载（595.91.07，RTX 3080），但：
+
+    $ nvidia-smi -L
+    Unable to determine the device handle for gpu 0000:05:00.0: Unknown Error
+    No devices were found
+
+`/proc/driver/nvidia/gpus/0000:05:00.0/power` 显示 `Runtime D3 status: Disabled by default`
+—— 典型的「掉卡」状态，于是 Ollama 全部 **CPU-only**（`/api/ps` 的 `size_vram: 0`）。
+
+**经典修复（我没有执行 —— 生产机 + 需 root + 会打断 GPU 上的 echomimic 等负载）**：
+
+```bash
+rmmod nvidia_uvm && modprobe nvidia_uvm          # 最小改动，先试这个
+# 不行再：rmmod nvidia_uvm nvidia_drm nvidia_modeset nvidia && modprobe nvidia
+nvidia-smi -L                                     # 验证
+```
+
+GPU 恢复后：Ollama 会自动 GPU offload，`qwen2.5:7b` 速度提升约两个数量级。
+
+### 4. 已做好的准备工作（GPU 一恢复就能一键切换）
+
+- 新增 `systemd --user` 单元 **`ollama-relay.service`**（桥接 `172.22.0.1:11435`
+  → `127.0.0.1:11434`，与 `veya-relay` 同构，只绑 bridge 不对外）。
+  已验证 **容器 → relay → ollama：HTTP 200**，看得到三个模型。
+- `.env` 里留了注释：GPU 恢复后把 `OLLAMA_BASE_URL` 改成 relay 地址、
+  `MNEME_LLM=ollama` 即可，**无需改代码**。
+- **当前不切**：`MNEME_LLM` 保持 `veya`（`space-bunny-free` 至少能回），
+  切到 ollama 只会把 2s 的调用变成 200s 的超时。
+
 ## ✅ 近期完成（倒序，仅列最近一批）
 
 - **Blueprint 仓内实现收口**（2026-08-25）：Event v2 双写默认部署开关、fail-closed
