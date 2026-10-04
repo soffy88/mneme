@@ -124,11 +124,35 @@ async def provider_liveness(*, deep: bool = False, timeout: float = 3.0) -> dict
         status["llm_usable"] = True
         status["llm_usable_detail"] = "mock_allowed"
         return status
+    # 候选名单与「实际服务的是哪个」——单点可用时这是最关键的一条信息
+    # （2026-10-04 实测 28 个上游里只剩 space-bunny-free 间歇可用）。
+    try:
+        from obase.provider_registry import ProviderRegistry
+
+        caller = ProviderRegistry.get().llm("default")
+        inner = getattr(caller, "caller", caller)
+        candidates = getattr(inner, "models", None)
+        if candidates:
+            status["llm_model_candidates"] = list(candidates)
+        status["llm_model_serving"] = getattr(inner, "last_good_model", None)
+    except Exception:  # noqa: BLE001 — 诊断信息取不到不影响主结论
+        pass
+
     if deep:
         verdict = await probe_llm_usable()
         status["llm_usable"] = bool(verdict["usable"]) and endpoint["reachable"]
         status["llm_usable_detail"] = verdict["detail"]
         status["llm_usable_checked"] = "deep"
+        # 探测之后才知道是哪个模型答的
+        try:
+            from obase.provider_registry import ProviderRegistry
+
+            inner = getattr(ProviderRegistry.get().llm("default"), "caller", None)
+            serving = getattr(inner, "last_good_model", None)
+            if serving:
+                status["llm_model_serving"] = serving
+        except Exception:  # noqa: BLE001
+            pass
     else:
         status["llm_usable"] = endpoint["reachable"]
         status["llm_usable_detail"] = "endpoint_only"

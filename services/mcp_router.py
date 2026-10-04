@@ -55,6 +55,8 @@ from services.models import (
 )
 from services.progress_assembler import build_learning_progress
 
+from services.errors import LlmUnavailableError
+
 router = APIRouter(prefix="/mcp", tags=["mcp"])
 
 
@@ -1556,7 +1558,17 @@ async def tool_generate_memory_node(
     caller = ProviderRegistry.get().llm("default")
     model = getattr(caller, "model", None) or "unknown"
 
-    results = await generate_memory_nodes([memory_input["llm_entry"]], caller=caller)
+    try:
+        results = await generate_memory_nodes([memory_input["llm_entry"]], caller=caller)
+    except Exception as exc:  # noqa: BLE001 — 统一翻译成「LLM 不可用」
+        raise LlmUnavailableError(
+            "文本 LLM 不可用：已按顺序尝试 "
+            f"{getattr(caller, 'models', None) or [getattr(caller, 'model', '?')]}，"
+            f"全部失败（{type(exc).__name__}）。这不是重试能解决的——"
+            "请查 GET /health/providers?deep=1 的 llm_model_candidates / "
+            "llm_reachable_detail，以及上游网关的 provider 健康（额度 402 / key 403 / 配额 429）。",
+            candidates=list(getattr(caller, "models", None) or []),
+        ) from exc
     node = results[0] if results else None
     if node is None:
         return {
@@ -1770,9 +1782,13 @@ async def mcp_generate_memory_node(
 
         if not is_admin(current_user):
             raise HTTPException(status_code=403, detail="落库记忆节点需要 admin 权限")
-    result = await tool_generate_memory_node(
-        db, req.vocabulary_item_id, persist=req.persist
-    )
+    try:
+        result = await tool_generate_memory_node(
+            db, req.vocabulary_item_id, persist=req.persist
+        )
+    except LlmUnavailableError as exc:
+        # 生成必须有真模型；没有就明说缺什么，别用桩数据或静默半成品顶上
+        raise HTTPException(status_code=exc.status_code, detail=exc.detail) from exc
     if result.get("persisted"):
         from obase.audit_log import log_usage
 

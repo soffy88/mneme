@@ -787,3 +787,91 @@ def test_textbook_gloss_still_wins_over_derived():
     assert out["meaning"]["tier"] in ("canonical", "legacy")
     assert out["meaning"]["gloss_source"] == "canonical_meaning(pos-selected sense)"
     assert "节食" not in (out["meaning_cn"] or "")
+
+
+# ── LLM 不可用时的失败形态（2026-10-04）─────────────────────────────────
+# 实测 28 个上游只剩 space-bunny-free 间歇可用（gmi 402 / opencode-go 403+429 /
+# nvidia-nim 超时）。此时必须**快速失败并说清缺什么**，而不是抛栈里的 oprim 异常
+# 或用桩数据顶替。
+
+
+def test_llm_unavailable_is_translated_into_an_actionable_error():
+    """生成链路上的 LLM 故障 → LlmUnavailableError（503），带候选名单与处置提示。"""
+    import services.mcp_router as mr
+    from services.errors import LlmUnavailableError
+
+    class _Boom:
+        models = ["a", "b"]
+
+        model = "a"
+
+    class _Reg:
+        @staticmethod
+        def get():
+            class _P:
+                @staticmethod
+                def llm(_name=None):
+                    return _Boom()
+
+            return _P()
+
+    import obase.provider_registry as pr
+    import services.providers.setup as ps
+    orig_reg, orig_cfg = pr.ProviderRegistry, ps.configure_llm_providers
+    pr.ProviderRegistry = _Reg
+    ps.configure_llm_providers = lambda: None
+    import oprim._vocab_memory_generate as mg
+
+    async def _boom(entries, **kw):
+        raise RuntimeError("all VEYA_MODEL candidates failed: a: x | b: y")
+
+    orig_gen = mg.generate_memory_nodes
+    mg.generate_memory_nodes = _boom
+    try:
+        import asyncio as _a
+        from types import SimpleNamespace as _SN
+
+        item = _SN(
+            id="v1", word="abandon", pos="v", meaning_cn="放弃",
+            phonetic_arpabet=None, example_sentence="They abandoned it.",
+            canonical_meaning="vt. 放弃",
+        )
+        db = FakeDB(sentences=[_SN(
+            id="s0", english_text="They abandoned it.", chinese_text=None, title="L1"
+        )], item=item)
+
+        with pytest.raises(LlmUnavailableError) as ei:
+            _a.run(mr.tool_generate_memory_node(db, "v1"))
+        assert ei.value.status_code == 503
+        assert "['a', 'b']" in ei.value.detail
+        assert "health/providers" in ei.value.detail, "必须告诉运维去哪儿看"
+        assert ei.value.candidates == ["a", "b"]
+    finally:
+        pr.ProviderRegistry = orig_reg
+        ps.configure_llm_providers = orig_cfg
+        mg.generate_memory_nodes = orig_gen
+
+
+def test_generate_route_maps_llm_unavailable_to_503(monkeypatch):
+    """路由层必须把 LlmUnavailableError 映射成 **503**（不是 500）。
+
+    这条单列是因为上一条只测了 tool 层：把路由里的
+    `except LlmUnavailableError` 改成别的异常，tool 层测试**照样全绿**
+    （变异验证时确实漏了一次）。而 503 与 500 的处置完全不同 ——
+    503 表示「上游没有可用模型，别重试」，500 会让人以为是代码 bug。
+    """
+    import services.mcp_router as mr
+    from fastapi import HTTPException
+    from services.errors import LlmUnavailableError
+
+    async def _raise(*_a, **_kw):
+        raise LlmUnavailableError("没有可用模型", candidates=["x"])
+
+    monkeypatch.setattr(mr, "tool_generate_memory_node", _raise)
+    # 只需要一个带 id 的对象；_ensure_student_access 不会被调用（persist=false）
+    user = SimpleNamespace(id=None)
+    req = mr.GenerateMemoryNodeReq(vocabulary_item_id="v1", persist=False)
+    with pytest.raises(HTTPException) as ei:
+        asyncio.run(mr.mcp_generate_memory_node(req, db=object(), current_user=user))
+    assert ei.value.status_code == 503
+    assert "没有可用模型" in ei.value.detail

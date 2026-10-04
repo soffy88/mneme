@@ -637,6 +637,52 @@ quality=1.0、0 条门禁失败、语境证据 `That's very good advice!`。
   按它选义项会把 `blind` **钉死在「百叶窗」这个冷门义项上**，比现状更糟。
   解析器保留（是一次可复现的测量工具，且负面结论有用测试钉住）。
 
+## 🚨 上游 LLM 全线失效（2026-10-04 完整诊断）—— 需充值/换 key，我无法从代码侧修复
+
+`GET /v1/free-pool`（网关自带诊断端点）实测：**28 个已知上游只剩 2 个 active**。
+
+| provider | 错误 | 性质 | 谁能修 |
+|---|---|---|---|
+| opencode-go 计量池 | HTTP **429** `GoUsageLimitError` | workspace **月度配额耗尽** | 充值/等下月 |
+| opencode-go 大部分 `-free` | HTTP **403** Forbidden | **key 权限范围不足** | 换 key |
+| `gmi-serving` | HTTP **402** Payment Required | **余额耗尽** | 充值 |
+| `bai`（×4） | ConnectTimeout | 服务不可达 | 换供应商 |
+| `nvidia-nim`（全部） | 超时 / 10ms 立即失败 | 别名与凭据均不可用 | 查 NIM key 轮换 |
+| `openrouter` | 18 unhealthy / 2 healthy | 部分可用 | — |
+
+逐一实测 `-free` 家族后：**只有 `opencode-go/space-bunny-free` 能回**（≈2s，且仍间歇失败），
+其余 `big-pickle`/`nemotron-3.5-lightning-free`/`mimo-*`/`ling-*`/`muse-spark-*`/
+`longcat-*`/`fledge-alpha-free` 全部 **403**。`.veya/model-state.json`（machine-maintained，
+`updated_at 2026-09-26`）列了 33 个 healthy，但那是 8 天前的快照，与实测不符 ——
+**该文件不能当现状用**。
+
+### 已做的（代码侧能做的都做了）
+
+1. **`VEYA_MODEL` 名单回退**（`VeyaTextCaller`）：按序尝试、**检查返回内容**才判定失败
+   （网关的故障是 HTTP 200 + 正文错误串）、全失败时抛异常并带每个候选的原因。
+2. **`/health/providers?deep=1` 现在报 `llm_model_serving`** —— 单点可用时这是最关键的
+   一条信息（此前只能说「不可用」，说不出是谁在服务）。生产实测：
+   `llm_reachable=true, llm_usable=true, llm_model_serving=opencode-go/space-bunny-free`。
+3. **LLM 不可用时快速失败并说清缺什么**：新增 `services.errors.LlmUnavailableError`
+   （503），`/mcp/GenerateMemoryNode` 映射成 503 + 候选名单 + 处置指引，
+   不再抛栈里的 `LLMOprimError` 让人以为是代码 bug。503 与 500 处置完全不同。
+4. `.env` 的 `VEYA_MODEL` 改为以实测可用的模型打头。
+
+### 我做不了的（需要你）
+
+按性价比排序：
+
+1. **配 `QWEN_API_KEY`** —— 最快最省。DashScope 有便宜额度，且国内直连，
+   `.env` 里 `MNEME_LLM=qwen` 已接好（`configure_llm_providers` 的 qwen 分支现成）。
+   当前 `QWEN_API_KEY` 为空、`DASHSCOPE_API_KEY` 未设，这是**唯一一条代码侧已就绪、
+   只差一个 key** 的路。
+2. **给 gmi-serving 充值**（402）。
+3. **换 opencode-go 的 key**（403 权限范围）或等月度配额重置（429）。
+4. 恢复后只需把更可靠的模型加到 `VEYA_MODEL` 名单**前面**，无需改代码。
+
+⚠️ 在恢复之前，**记忆引擎的批量生成基本不可用**（`CME-P1.12` 的 453 词补齐因此只完成 8）。
+单点 `space-bunny-free` 不足以支撑批量作业。
+
 ## ✅ 近期完成（倒序，仅列最近一批）
 
 - **Blueprint 仓内实现收口**（2026-08-25）：Event v2 双写默认部署开关、fail-closed
