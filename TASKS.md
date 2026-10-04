@@ -2732,7 +2732,28 @@ CI 常驻的判分准确率回归门，堵死"构造桩题掩盖真实数据判�
   Context Retriever 只把可信释义交给 LLM（音标一律变 `None`）；
   `derive_meaning_from_canonical.py` 改引用同一判定，消除两个矛盾规则。
   15+41 项测试 + 4 处变异验证。**未修历史数据**（按人决策）。
-- [ ] **CME-P1.6 `meaning_cn` 多义项截断（需人决策）** 🚨：`canonical_meaning` 是多义项，
+- [x] **CME-P1.6 `meaning_cn` 多义项截断** ✅ 2026-10-04（人授权「自己定」后判定为该修）：
+  **读时纯函数，不建表不写库**（`services/vocab_senses.py`）。完整义项本就在
+  `canonical_meaning` 里，缺的只是「读时怎么选」；建表只会多一份会漂移的第二来源。
+  用 `pos` 列（默写表的**策展值**，而 meaning_cn 是派生值）选主义项：
+  `blind`→adj 盲目的；瞎的、`wet`→adj 潮湿的；有雨的、`fine`→adj 好的；优良的。
+  **`meaning_cn` 本身不改写**（教材原文可追溯的载体，测试钉住 DB 原值不动）；
+  音标守卫复用 P1.5 唯一源（不挡会把 `[ˈtaɪt(ə)l` 当义项）。8 项新测试 + 3 处变异验证。
+- [x] **CME-P1.8 `MEANING_AUTHORITY` 门禁** ✅ 2026-10-04：加为**第 10 条**门禁
+  （门禁 9 → 10）。起因是 `title`（canonical 为纯音标 → unusable）仍 verified=true。
+  取舍已写明：会拒掉「靠语境句救回来」的节点。8 项测试；变异验证时发现「只短路第一支」
+  一度 54 项全绿（另两支各自挡住用例掩盖了漏洞），补结构防御用例后才钉住。
+- [x] **CME-P1.10 容器 → Veya 可达性** ✅ 2026-10-04：`scripts/veya_relay.py`
+  （纯 stdlib，**只 bind docker bridge 172.22.0.1**，脚本与 systemd 单元双重拒绝
+  `0.0.0.0`）+ `systemd --user` 单元 `veya-relay.service`（可一键回滚）。
+  **未修改 Veya 自身 listener**（按人决策）。
+- [x] **CME-P1.11 模型名单回退 + override 遮蔽修复** ✅ 2026-10-04：
+  `VEYA_MODEL` 支持逗号分隔**按序回退**（实测可用模型分钟级漂移）；回退必须
+  **检查返回内容**（网关故障是 HTTP 200 + 正文错误串）。**真正让「改了 .env 没生效」的
+  是 `docker-compose.override.yml` 硬编码遮蔽了插值** —— 已改为从 `.env` 插值。
+  ⚠️ 附带坑：`VEYA_BASE_URL` 改成 bridge 地址后必须在 `NO_PROXY` 写**字面 IP**
+  （httpx 不支持 CIDR，curl 支持），否则宿主侧脚本全 502。
+- [ ] ~~**CME-P1.6 `meaning_cn` 多义项截断（需人决策）**~~：`canonical_meaning` 是多义项，
   但 `meaning_cn` 常只留第一行 → `blind`→百叶窗（漏「盲的」）、`wet`→雨天（漏「潮湿」）、
   `fine`→罚款（漏「好的」）。实测 **1,288** 词多义项、**1,190** 词 `meaning_cn`
   不足 canonical 一半；另 **490** 词 `pos` 与首义项不符（`pos` 来自默写表另一来源）。

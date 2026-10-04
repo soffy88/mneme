@@ -276,6 +276,37 @@ is_phonetic_transcription(t) := 括号开头 且 (内部无汉字 或 整体只�
 
 ### 2.9 真实 LLM 打通（2026-10-03）
 
+**最终根因有四层，逐层剥出来的**（前一层修完才露出下一层）：
+
+1. **模型名退役**（第一层）：`.env` 的 `veya1.2-128K` 是网关注释里写明的**已退役别名**。
+2. **容器连不上宿主 loopback**（第二层）：网关只 bind `127.0.0.1:8791`，容器在 bridge
+   网络里 → `host.docker.internal:8791` connection refused。加 `scripts/veya_relay.py`
+   （纯 stdlib，**只 bind docker bridge 网关 172.22.0.1**，脚本与 systemd 单元双重拒绝
+   `0.0.0.0`，故局域网/公网不可达），配 `systemd --user` 单元 `veya-relay.service`
+   （`systemctl --user disable --now` 可一键回滚）。**未修改 Veya 自身 listener**（人决策）。
+3. **`docker-compose.override.yml` 硬编码遮蔽 `.env`**（第三层 ← 「改了 .env 没生效」的真凶）：
+   override 里写死 `VEYA_MODEL: veya1.2-128K` 与 `host.docker.internal:8791`，而 override
+   优先级高于 `docker-compose.yml` 的 `${...}` 插值。改为从 `.env` 插值，恢复单一来源。
+4. **可用模型会漂移**（第四层）：同一分钟内 `veya1.2` 一度返回「兜底失败」、稍后恢复；
+   `veya-glm5.1-nv` ≈4.2s、`veya-kimi-k2.6-nv` ≈14s、`veya-deepseek-v4-flash-nv` 68~90s、
+   `veya-m3-nv`/`veya-qwen3.5-397b-nv`/`veya-nim` 超时。故 `VEYA_MODEL` 改为
+   **逗号分隔的按序回退名单**；关键点是回退必须**检查返回内容**（网关的故障是
+   HTTP 200 + 正文错误串，只判状态码则每个模型都「成功」、回退永不触发）。
+
+**附带的宿主侧坑**：`VEYA_BASE_URL` 改成 bridge 地址后，它不在默认 `no_proxy` 里，
+宿主机脚本的 httpx 会把 LLM 请求发给 `127.0.0.1:7890` 代理 → 502。且 **httpx 的
+`NO_PROXY` 不支持 CIDR**（curl 支持），必须写**字面 IP** `172.22.0.1`。
+容器内没有 proxy 变量，不受影响。
+
+**效果**：`/health/providers?deep=1` 从 `reachable=false, usable=false` 变为
+`reachable=true, usable=true`；**收口项 7 的「API 实际生成 1 个 MemoryNode」由失败转通过**
+（容器内真实生成 `advice` → 核心画面「老医生把处方塞进病人手心」、answer=advice、
+quality=1.0、0 条门禁失败、语境证据 `That's very good advice!`、模型 `veya1.2`）。
+
+<details><summary>初版排查记录（保留原始测得的数据）</summary>
+
+
+
 **根因不是连通性，是模型名。** 网关自己的注释写明：`veya1.2-128K` 是**已退役别名**，
 「§11 要求废弃拼写仍可解析 —— 现在解析到 `veya-free`」，而 `.env` 里配的正是这个退役名。
 
@@ -286,6 +317,8 @@ is_phonetic_transcription(t) := 括号开头 且 (内部无汉字 或 整体只�
 | `veya1.1` / `veya-deepseek-v4-flash-nv` | ✅ | ✅ 可用 |
 | `gpt-5.6-luna` / `opencode-go/*` | ✅ | ❌ HTTP 429 配额耗尽 |
 | Qwen 云 fallback | — | ❌ `QWEN_API_KEY` 为空 |
+
+</details>
 
 **探针设计教训**：网关会用 **HTTP 200** 把上游故障当正文返回
 （`{"content":"gpt-5.6-luna 兜底失败"}`）。第一版探针只判「有没有抛异常」，
@@ -362,7 +395,7 @@ Review 档内用**已排定间隔**当重复次数代理（py-fsrs 不存次数�
 |---|---|---|
 | 核心范围分母 | **2,761 单词**（608 短语单列） | 试跑池 = 有语境 2,066 |
 | 试跑范围 | `CORE_EXAM_VOCAB` ∩ 有真实教材/NCE 例句（`--require-context`） | 100 |
-| 9 条门禁全过 | 目标 100%；P0 口径 ≥85% | **89%** |
+| 10 条门禁全过 | 目标 100%；P0 口径 ≥85% | 见 §3.3 |
 | false-etymology | **0** | **0**（结构保证，非门禁筛出） |
 | empty-context | **0** | **0** |
 | malformed node | **0** 入库 | 生成侧 1（未入库） |
@@ -370,7 +403,7 @@ Review 档内用**已排定间隔**当重复次数代理（py-fsrs 不存次数�
 | FSRS | 一词一 node、一 KCMastery、一 KC | 契约测试覆盖 |
 | **图片 / 动画** | **已从 P0 门禁移除** → 后续 Enrichment Layer（§2.2） | — |
 
-### 3.3 100 词真实试跑结果（2026-10-03，模型 `veya1.2`，dry-run）
+### 3.3 100 词真实试跑结果（2026-10-03）
 
 范围：`CORE_EXAM_VOCAB` ∩ 有真实 NCE 例句（2,066 池）抽 100，seed=20261003。
 报告 `reports/vocab_memory_p0/trial_100_seed20261003_dryrun.json`。
@@ -401,7 +434,7 @@ P0 口径达标，但不能写成 QUALIFIED。
 `wet`→「拧湿毛巾水滴答」。10 次拒收里 4 次是误杀。下限降到 5，重跑这 4 词
 **4/4 全过**。已加回归测试 + 变异验证（改回 8 → 失败）。
 
-**② `meaning_cn` 系统性只截了第一个义项（数据问题，未修，需人决策）。**
+**② `meaning_cn` 系统性只截了第一个义项 —— ✅ 已修（派生，不落库）。**
 `canonical_meaning` 是多义项的，但 `meaning_cn` 常常只留第一行：
 
 | 词 | `meaning_cn`（引擎实际吃到的） | `canonical_meaning` 完整义项 | 后果 |
@@ -415,8 +448,13 @@ P0 口径达标，但不能写成 QUALIFIED。
 另有 **490** 词 `pos` 与 canonical 首义项不一致（`pos` 来自另一来源：
 `import_pos_from_dictation.py` 的默写表）。
 
-→ 这不是引擎的 bug，但会让**最常用的义项**缺席，学生记住的是冷门义项。
-修它等于改「学生看到的权威释义」，**需人决策**（TASKS `CME-P1.6`）。
+→ 修法（人授权「自己定」后判定为该修）：**读时纯函数，不建表不写库**
+（`services/vocab_senses.py`）。完整义项本来就在 `canonical_meaning` 里，缺的只是
+「读时怎么选」；建表只会多一份会漂移的第二来源、还要一次迁移。用 `pos` 列
+（默写表的**策展值**，而 `meaning_cn` 是派生值）选主义项。
+**`meaning_cn` 本身不被改写** —— 它是「教材原文可追溯」的载体，改它等于悄悄改掉
+学生看到的权威释义；义项选择只影响喂给 LLM 的那一份（测试钉住 DB 原值不动）。
+音标守卫复用 §2.8 的唯一源（不挡会把 `[ˈtaɪt(ə)l` 当义项 —— `title` 就是这样）。
 
 **③ 记忆画面可能与语境句不是同一个义项。** `blind` 的 NCE 真实句是
 `And though the gleams blind and dazzle`（**动词**义「使眩目」），而生成的画面是
@@ -424,7 +462,7 @@ P0 口径达标，但不能写成 QUALIFIED。
 与该句的义项一致** —— 于是第 1 层（画面）与第 4 层（真实句）在讲两个意思。
 多义词上这是结构性问题，需在 P1 解决（义项对齐门）。
 
-**④ 无权威释义时仍可生成 verified 节点（门禁缺口）。** `title` 的
+**④ 无权威释义时仍可生成 verified 节点 —— ✅ 已修（加第 10 条门禁）。** `title` 的
 `canonical_meaning` 是纯音标 `[ˈtaɪt(ə)l]` → 判定 `unusable`，但节点仍
 `verified=true`（模型靠 NCE 句推的，画面「法官高举金牌」其实不错）。
 9 条门禁里**没有一条**要求「输入释义可信」。这道门加不加要人决策：
@@ -478,7 +516,7 @@ vocabulary_memory_nodes ← **只存 LLM 生成的联想层**          （P0 新
 
 ---
 
-## 5. 质量门禁（9 条，全部确定性）
+## 5. 质量门禁（10 条，全部确定性）
 
 | 门禁 | 判定 | 不过怎么办 |
 |---|---|---|
@@ -491,6 +529,7 @@ vocabulary_memory_nodes ← **只存 LLM 生成的联想层**          （P0 新
 | `FAMILY_TRACEABLE` | `family_network` 每个成员能在 `vocabulary_items` 查到 | 丢弃该成员；全丢则拒收 |
 | `NO_FALSE_ROOT` | 生成的 root 叙述与 `vocabulary_affixes` 不矛盾 | 矛盾则丢弃生成值，回落到存储值 |
 | `NOT_DISPUTED_SOURCE` | 引用的 `etymology_status` 不是 `disputed` | `disputed` 不进 MemoryNode 展示 |
+| `MEANING_AUTHORITY` | 输入释义有权威出处（教材原文）且能追溯来源列；空/音标/占位符一律拒 | 拒收 |
 
 **关键设计**：`NO_FALSE_ROOT` 与 `NOT_DISPUTED_SOURCE` 是**读取既有分档**而非重新判定。
 P0 不生成任何词源（§1.3），所以 `NO_FALSE_ROOT` 实际退化为「LLM 的 root_logic 若与

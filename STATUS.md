@@ -556,6 +556,80 @@ schema（`verified_etymology` / `disputed` / `mnemonic_only`），并让生成�
 - 63 aria tests green, tsc+build clean。
 - 容器：mneme-fay（Flask GUI :5001, WS human :10002, WS web :10003）
 
+**✅ 收口项 7 部署完成（2026-10-04）**
+
+commit `af0d35f` / `5316fb9` / `a18303a` / `66bc3a5`；部署走既有 `docker compose up -d`
+路径，**未手工跑 alembic**（启动命令自带 `alembic upgrade head`，迁移自动进）。
+活库 `alembic_version = e6f7a8b9c0d2`、`vocabulary_memory_nodes` 已建、
+`/readiness` 200（database/migrations/storage 全 true）、`/mcp/*MemoryNode` 路由已上线、
+未鉴权调用返回 401。全量 1751 passed / 14 skipped / cov 80.45%。
+
+**✅ 「API 实际生成 1 个 MemoryNode」由失败转为通过** —— 这是收口项 7 唯一原本不过的
+一步。根因**有四层**，前一层修完才露出下一层：
+
+1. **模型名退役**：`.env` 的 `veya1.2-128K` 是网关注释写明的已退役别名。
+2. **容器连不上宿主 loopback**：网关只 bind `127.0.0.1:8791` → 新增
+   `scripts/veya_relay.py`（纯 stdlib，**只 bind docker bridge 172.22.0.1**，
+   脚本 + systemd 单元双重拒绝 `0.0.0.0`，局域网/公网不可达）+ `systemd --user`
+   单元 `veya-relay.service`（`systemctl --user disable --now` 可一键回滚）。
+   按人决策**未改 Veya 自身 listener**。
+3. **`docker-compose.override.yml` 硬编码遮蔽 `.env`** ← 「改了 .env 没生效」的真凶：
+   override 优先级高于 `docker-compose.yml` 的 `${...}` 插值，容器里一直是退役别名 +
+   连不上的地址。改为从 `.env` 插值，恢复单一来源。
+4. **可用模型会漂移**：同一分钟内 `veya1.2` 一度「兜底失败」、稍后恢复。
+   `VEYA_MODEL` 改为**逗号分隔按序回退名单**；回退必须**检查返回内容**（网关的故障是
+   HTTP 200 + 正文错误串，只判状态码则回退永不触发）。
+
+⚠️ **宿主侧附带坑**：`VEYA_BASE_URL` 改成 bridge 地址后不在默认 `no_proxy` 里 →
+httpx 会走 `127.0.0.1:7890` 代理 → 502。且 **httpx 的 `NO_PROXY` 不支持 CIDR**
+（curl 支持），必须写**字面 IP** `172.22.0.1`。容器内无 proxy 变量，不受影响。
+生产实测：`/health/providers?deep=1` 由 `reachable=false, usable=false` → `true/true`；
+容器内真实生成 `advice` → 核心画面「老医生把处方塞进病人手心」、answer=advice、
+quality=1.0、0 条门禁失败、语境证据 `That's very good advice!`。
+
+**✅ CME-P1.6 义项截断已修（派生，不落库）** + **✅ 加第 10 条门禁 `MEANING_AUTHORITY`**
+
+`meaning_cn` 常只截 `canonical_meaning` 的首个义项 → 记忆画面照**冷门义项**生成
+（`blind`→百叶窗、`wet`→雨天、`fine`→罚款）。修法是**读时纯函数**
+（`services/vocab_senses.py`）：不建表不写库（完整义项本就在 canonical 里，建表只会
+多一份会漂移的第二来源）；用 `pos` 列（默写表的**策展值**）选主义项。
+**`meaning_cn` 本身不改写** —— 它是「教材原文可追溯」的载体；测试钉住 DB 原值不动。
+音标守卫复用 P1.5 的唯一源（不挡会把 `[ˈtaɪt(ə)l` 当义项 —— `title` 就是这样）。
+
+⚠️ **过程中踩到一次「变异没被抓住」**：把 `MEANING_AUTHORITY` 的第一支短路掉时
+54 项测试全绿 —— 因为另两支（unusable / 无来源列）各自挡住了当时的用例，掩盖了
+「tier 写着 canonical 但 gloss 为空」这个漏洞。补了该结构防御用例后才钉住。
+
+**📉 加第 10 条门禁 + 义项选择后的同种子重测（100 词，可直接对比）**
+
+| 指标 | 修前（9 门禁） | 修后（10 门禁） |
+|---|---|---|
+| verified | 89/100 | **73/100** |
+| `HAS_ONE_CORE_IMAGE` 拒收 | 4 | **0** ← 我那个下限误杀修好了 |
+| `MEANING_AUTHORITY` 拒收 | —（门禁不存在） | **16** |
+| `FAMILY_TRACEABLE` 拒收 | 6 | 6 |
+| 生成成功 / 调用错误 | 99 / 0 | 95 / 2 |
+
+**通过率下降不是质量回归，是把一个静默漏洞变成了可见的计数。** 那 16 个词的
+`canonical_meaning` 是**纯音标**（`[ˈdaɪət]`、`[ɪˈlektrɪk]`、`[kəˈmɪtmənt]`）、
+`meaning_cn` 为空 —— 修前它们照样 `verified=true`，但卡片里的中文释义是**模型编的、
+无教材出处**。第 10 条门禁正是为此而加，现在它们被如实拒收。
+
+**可回收量已量化**：核心范围里「**有 NCE 真实句 + 无中文释义**」= **461 词**
+（其中 459 的 canonical 就是纯音标），「无语境 + 无释义」= 315 词。
+这 461 词**有真实语境句**，正好满足既有 `oprim._vocab_gloss_generate` 的契约
+（「例句由语料库确定性抽取，不是 LLM 编的」）→ 走既有生成器补释义即可，
+零编造、可复现。这是下一步最有价值的一步（`CME-P1.12`），能把大部分这 16 个拒收转成通过。
+
+**📌 素材实测结论（用户已授权入库）**：`gdrive:英语优先/`
+- **100句**（新东方）：99 句 / 1,127 去重词（「7000」是营销口径）→ 命中核心 2,761
+  仅 492（17.8%），救到 695 无语境词只 31（4.5%）。**建议不接**：句中位 22 词、
+  雅思语域，给中考学生是负收益。
+- **OPD 牛津图解词典3rd**：文本层 293/295 页，按主题图面板组织
+  （`A Kitchen: 1. cabinet 2. shelf…`）→ 命中 1,002（36.3%，含噪声）、救到 243 个
+  无语境词、命中 514 个义项截断词。**价值在义项锚定**（知道词被**画成**哪个义项）。
+  按最小版权面入库方向：**只放词 + 主题标签，不存释义文本、不存插图**。
+
 ## ✅ 近期完成（倒序，仅列最近一批）
 
 - **Blueprint 仓内实现收口**（2026-08-25）：Event v2 双写默认部署开关、fail-closed
