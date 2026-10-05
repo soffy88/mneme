@@ -41,7 +41,10 @@ _SYSTEM = """你是中学英语单词记忆卡的编创者，服务 12-18 岁学
 2. **语义核心**：image 是同一画面的中文表述；meaning 是「放手类」这类
    **上位概念**（6-15 字），不是词典释义抄写；logic 是 3 步因果链，用 → 连接。
 3. **记忆场景**：把画面放进一个更长的故事场景（15-40 字）。
-4. **家族词**：真实存在的派生词或近义词，**最多 3 个**，给中文义。
+4. **家族词**：**只能**从该单词的「库内同族候选」清单里挑，最多 3 个，并给中文义。
+   - 清单非空：只允许输出清单里的词，**不得**自行添加清单外的词。
+   - 清单为空（`[]`）：说明这个词（多为专有名词或缩写，如 Canada / CD）**本来就没有
+     同族词**。此时 `family` 必须输出 `[]`。交空数组是正确答案，编一个词才是错的。
 5. **声音钩子**：用中文谐音或音节联想把这个词的发音挂到画面上（≤20 字）。
 6. **拼写钩子**：按词根/前缀/词缀或词形拆解帮记拼写（≤25 字）。
    不得凭空编造词根——只说你有把握的部分。
@@ -52,12 +55,26 @@ _SYSTEM = """你是中学英语单词记忆卡的编创者，服务 12-18 岁学
 9. **图片 prompt**：英文，20 词以内，`cartoon educational style, clear action,
    vocabulary learning illustration` 风格描述画面主体与动作。
 
-严禁：编造词源、编造例句、输出目标词以外的英文句子。
+严禁：编造词源、编造例句、输出目标词以外的英文句子、**编造库内不存在的家族词**。
 只输出 JSON 数组，与输入一一对应、顺序不变、长度相同：
 [{"word": "...", "core_image": "...", "semantic_core": {"image": "...",
   "meaning": "...", "logic": "..."}, "scene": "...", "family": [{"word": "...",
   "meaning_cn": "..."}], "sound_hook": "...", "spelling_hook": "...",
   "recall_question": "...", "answer": "...", "image_prompt": "..."}]"""
+
+
+def _render_family_candidates(candidates: Any) -> str:
+    """把库内同族候选渲染成 prompt 里的一行。
+
+    **空清单要显式说「本来就没有」**，不能渲染成「无」——模型看到「无」会去猜，
+    而空清单的正确答案就是交空数组。这个区别是 FAMILY_TRACEABLE 的成败所在。
+    """
+    items = [c for c in (candidates or []) if isinstance(c, dict) and c.get("word")]
+    if not items:
+        return "[]（该词无库内同族词，family 请输出空数组）"
+    return "[" + ", ".join(
+        f"{c['word']}（{(c.get('meaning_cn') or '无释义').strip()}）" for c in items
+    ) + "]"
 
 
 def _valid(d: Any) -> bool:
@@ -96,9 +113,15 @@ async def generate_memory_nodes(
     ----------
     entries : list[dict]
         每项 ``{"word": str, "pos": str|None, "meaning_cn": str|None,
-        "context": str|None, "affix_hint": str|None}``。
+        "context": str|None, "affix_hint": str|None,
+        "family_candidates": list[dict]|None}``。
         ``context`` 是调用方从语料库确定性抽取的**真实句**；``affix_hint`` 是
         调用方从 ``vocabulary_affixes`` 读到的既有分解（可能为空）。
+
+        ``family_candidates`` 是调用方用**确定性算法**（词干前缀 ∪ 同词根）算出的
+        库内真实同族词（见 ``services.vocab_context.family_candidates``）。给了它，
+        模型就不必凭「英语里真实存在」去猜 —— 那正是 100 词试跑里
+        FAMILY_TRACEABLE 唯一拒收来源。**空列表是合法输入**（专有名词/缩写）。
     caller : Any
         LLM 调用者（注入）。
     model : str
@@ -117,13 +140,14 @@ async def generate_memory_nodes(
     from oprim.llm import llm_complete
 
     listing = "\n".join(
-        "{i}. 单词: {w}\n   词性: {p}\n   释义: {m}\n   真实语境句: {c}\n   已知词根拆解: {a}".format(
+        "{i}. 单词: {w}\n   词性: {p}\n   释义: {m}\n   真实语境句: {c}\n   已知词根拆解: {a}\n   库内同族候选: {f}".format(
             i=i + 1,
             w=e.get("word"),
             p=e.get("pos") or "未标注",
             m=e.get("meaning_cn") or "未标注",
             c=e.get("context") or "无（请勿编造例句，只做画面联想）",
             a=e.get("affix_hint") or "无（请勿编造词根）",
+            f=_render_family_candidates(e.get("family_candidates")),
         )
         for i, e in enumerate(entries)
     )

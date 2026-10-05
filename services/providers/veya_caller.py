@@ -7,17 +7,11 @@ Veya gateway 由宿主机常驻进程提供，容器内通过
 
 from __future__ import annotations
 
-import asyncio
 import json
 import os
 from typing import Any
 
 from obase.provider_timeout import provider_httpx_timeout
-
-
-# 传输类错误的重试次数与间隔。刻意**不**对「上游错误串」重试（换模型才对）。
-_MAX_ATTEMPTS = 2
-_RETRY_BACKOFF_SECONDS = 1.0
 
 
 def _base_url() -> str:
@@ -133,30 +127,22 @@ class VeyaTextCaller:
                     "max_tokens": max_tokens,
                     **extras,
                 }
-                # 传输类错误（超时/连接重置）**可能是瞬时的** —— 实测同一端点
-                # 同一个模型上一秒失败、下一秒就成功。所以重试；默认 2 次。
-                # 而「HTTP 200 + 正文错误串」重试同一个模型**没有意义**
-                # （配额/权限不会自己好），必须立刻换下一个 —— 两类错误要分开处理。
-                content = ""
-                data: dict[str, Any] | None = None
-                for attempt in range(_MAX_ATTEMPTS):
-                    try:
-                        response = await client.post(
-                            f"{self.base_url}/chat/completions",
-                            headers=self._auth_headers(),
-                            json=payload,
-                        )
-                        response.raise_for_status()
-                        data = response.json()
-                        content = data["choices"][0]["message"].get("content") or ""
-                        break
-                    except Exception as exc:  # noqa: BLE001 — 重试后换模型
-                        if attempt + 1 < _MAX_ATTEMPTS:
-                            await asyncio.sleep(_RETRY_BACKOFF_SECONDS)
-                            continue
-                        attempts.append(f"{candidate}: {type(exc).__name__}")
-                        content = ""
-                if data is None:
+                # 每个模型名只试一次，失败就换下一个。**这里刻意不做重试**：
+                # `services/providers/reliability.py` 已把所有传输类错误分类成
+                # retryable（timeout / connect / 5xx / 429，见 _classify_exception）
+                # 并带 max_retries=2 重投整条链。再叠一层只会让最坏耗时成倍相乘
+                # —— 曾经把单个词的等待推到几十分钟（实测卡在第 95 词 4 分钟）。
+                try:
+                    response = await client.post(
+                        f"{self.base_url}/chat/completions",
+                        headers=self._auth_headers(),
+                        json=payload,
+                    )
+                    response.raise_for_status()
+                    data = response.json()
+                    content = data["choices"][0]["message"].get("content") or ""
+                except Exception as exc:  # noqa: BLE001 — 换下一个模型试
+                    attempts.append(f"{candidate}: {type(exc).__name__}")
                     continue
                 if looks_like_gateway_error(content):
                     # HTTP 200 但正文是上游错误串 —— 换一个模型，这不算成功

@@ -303,6 +303,11 @@ async def load_memory_input(
             "meaning_cn": gloss,
             "context": best.text if best else None,
             "affix_hint": (affix or {}).get("chain"),
+            # 库内真实同族候选。空列表是**合法且常见**的结果（专有名词/缩写），
+            # prompt 据此要求模型交空数组，而不是编一个继任词。见 family_candidates。
+            "family_candidates": await family_candidates(
+                db, row.word, vocabulary_item_id=vocabulary_item_id
+            ),
         },
     }
 
@@ -424,6 +429,123 @@ async def assign_tier(db: Any, vocabulary_item_id: str, *, has_context: bool) ->
     return "A" if (n and (n.a or n.x)) else "B"
 
 
+# 屈折/派生后缀，长 → 短。剥到不能再剥为止，得到「词干」。
+# 刻意**只**用这个封闭清单，不用 Porter/Snowball：那些算法会把 `unhappiness`
+# 一路剥到 `unhapp`，制造出噪声前缀。词干只用来找**候选**，最终仍由
+# `resolve_family` 校验，所以过一点也无妨。
+_INFLECTIONAL_SUFFIXES: tuple[str, ...] = (
+    "iness", "ingly", "edly", "ing", "ies", "ied", "ers", "est", "ness",
+    "tion", "sion", "ment", "able", "ible", "less", "ful", "ous", "ive",
+    "ise", "ize", "ity", "er", "ed", "ly", "al", "es", "s",
+)
+# 刻意**不含** `y`：`happy` 剥掉 y 变成 `happ`，于是 `happen`/`happen to`
+# 全被当成同族词（实测）。`y` 在这些派生里是词干的一部分，不是屈折。
+# 少给几个候选只是让模型多交一次空数组；给错候选会直接污染 family。
+
+# 词干短于此值就没有可用前缀信号（`CD`/`DJ`/`Dr` 这类缩写）。
+_MIN_STEM_LEN = 4
+
+
+def _stem(word: str) -> str:
+    """确定性词干：按后缀长度从长到短剥，剥到不再变化为止。"""
+    w = word.lower().strip()
+    changed = True
+    while changed:
+        changed = False
+        for suffix in _INFLECTIONAL_SUFFIXES:
+            if len(w) - len(suffix) >= _MIN_STEM_LEN and w.endswith(suffix):
+                w = w[: -len(suffix)]
+                changed = True
+                break
+    return w
+
+
+async def family_candidates(
+    db: Any,
+    word: str,
+    *,
+    vocabulary_item_id: str | None = None,
+    limit: int = 6,
+) -> list[dict[str, Any]]:
+    """库里**真实存在**的同族候选词（确定性，不问 LLM）。
+
+    为什么需要这个：`FAMILY_TRACEABLE` 要求 family 成员可在库内检索到，但 LLM
+    无从得知库里有哪些词，于是会去提 `ravine`/`canyon` 这类**英语里真实、库里没有**
+    的词 —— 100 词试跑里它成了唯一的拒收来源（实测 2/14）。
+    与其放宽门禁（那等于放弃「family 不得编造」的原意），不如**把清单给它**：
+    模型只在候选里挑，挑不出就交空数组。
+
+    两个信号取并集（都确定性）：
+
+    1. **词干前缀** —— 剥掉屈折后缀后同前缀，且比词干长。`valley` → `valleys`。
+    2. **同词根** —— `vocabulary_affixes.root` 相同。
+
+    专有名词与缩写（Canada / CD / December）**本来就没有同族词**，此时返回空
+    列表、由 prompt 明确要求交空数组 —— 这比逼模型编一个继任词更诚实。
+    """
+    from sqlalchemy import text
+
+    target = (word or "").strip().lower()
+    if not target:
+        return []
+
+    found: dict[str, dict[str, Any]] = {}
+
+    stem = _stem(target)
+    if len(stem) >= _MIN_STEM_LEN:
+        rows = (
+            await db.execute(
+                text(
+                    """
+            SELECT DISTINCT ON (lower(v.word)) v.id, v.word, v.meaning_cn
+            FROM vocabulary_items v
+            WHERE lower(v.word) LIKE :prefix || '%'
+              AND length(v.word) > :plen
+              AND lower(v.word) <> :target
+              -- 库里混有 `care about` / `happen to do sth.` 这类**短语**。
+              -- 家族词必须是单个词，否则模型会挑中短语当派生词。
+              AND v.word !~ '\\s'
+            ORDER BY lower(v.word), length(v.word), v.id
+            LIMIT :limit
+            """
+                ),
+                {"prefix": stem, "plen": len(stem), "target": target, "limit": limit},
+            )
+        ).all()
+        for r in rows:
+            found.setdefault(r.word.lower(), {"word": r.word, "meaning_cn": r.meaning_cn})
+
+    if vocabulary_item_id:
+        rows = (
+            await db.execute(
+                text(
+                    """
+            SELECT DISTINCT ON (lower(v.word)) v.id, v.word, v.meaning_cn
+            FROM vocabulary_affixes a
+            JOIN vocabulary_items v ON v.id = a.vocabulary_item_id
+            WHERE lower(a.root) = (
+                    SELECT lower(a2.root) FROM vocabulary_affixes a2
+                    WHERE a2.vocabulary_item_id = :vid
+                      AND btrim(coalesce(a2.root, '')) <> ''
+                    LIMIT 1
+                )
+              AND v.id <> :vid
+              AND lower(v.word) <> :target
+              AND v.word !~ '\\s'
+            ORDER BY lower(v.word), v.id
+            LIMIT :limit
+            """
+                ),
+                {"vid": vocabulary_item_id, "target": target, "limit": limit},
+            )
+        ).all()
+        for r in rows:
+            found.setdefault(r.word.lower(), {"word": r.word, "meaning_cn": r.meaning_cn})
+
+    # 前缀信号先入，词根信号后补；各自 SQL 内已定序，这里保持插入序 = 确定性。
+    return list(found.values())[:limit]
+
+
 async def resolve_family(db: Any, words: list[str]) -> list[dict[str, Any]]:
     """把 LLM 给的 family 词解析成库内真实词。查不到的一律丢弃（spec §5 FAMILY_TRACEABLE）。
 
@@ -465,5 +587,6 @@ __all__ = [
     "retrieve_context",
     "load_memory_input",
     "assign_tier",
+    "family_candidates",
     "resolve_family",
 ]

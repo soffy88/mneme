@@ -17,6 +17,7 @@ from types import SimpleNamespace
 
 import pytest
 
+import oprim._vocab_memory_generate as mg
 from services import vocab_context as vc
 from services import vocab_memory as vm
 
@@ -44,7 +45,8 @@ class FakeDB:
     """按 SQL 里出现的表名分派结果。记录调用以便断言排序/参数。"""
 
     def __init__(self, sentences=None, item=None, affix=None, collocations=None,
-                 xiangxing=None, anchor=(False, False), family=None, derived_gloss=None):
+                 xiangxing=None, anchor=(False, False), family=None, derived_gloss=None,
+                 fam_candidates=None, fam_root_candidates=None):
         self.sentences = sentences if sentences is not None else []
         self.item = item
         self.affix = affix
@@ -53,7 +55,15 @@ class FakeDB:
         self.anchor = anchor
         self.family = family if family is not None else []
         self.derived_gloss = derived_gloss
+        self.fam_candidates = fam_candidates if fam_candidates is not None else []
+        self.fam_root_candidates = (
+            fam_root_candidates if fam_root_candidates is not None else []
+        )
         self.calls: list[tuple[str, dict]] = []
+
+    @staticmethod
+    def _cand(word: str, meaning_cn: str | None = None):
+        return SimpleNamespace(id=f"id-{word}", word=word, meaning_cn=meaning_cn)
 
     async def execute(self, stmt, params=None):
         sql = str(stmt)
@@ -64,6 +74,12 @@ class FakeDB:
         # 锚点 EXISTS 查询必须排在 vocabulary_affixes 之前，否则会走进 _affix 分支
         if "EXISTS(SELECT 1 FROM vocabulary_affixes" in sql:
             return FakeResult([SimpleNamespace(a=self.anchor[0], x=self.anchor[1])])
+        # family_candidates 的**词根**查询也含 vocabulary_affixes，必须排在通用
+        # `vocabulary_affixes` 分支前面，否则会返回 affix 命名空间（没有 .word）。
+        if "FROM vocabulary_affixes a" in sql:
+            return FakeResult(self.fam_root_candidates)
+        if "LIKE :prefix" in sql:
+            return FakeResult(self.fam_candidates)
         if "vocabulary_affixes" in sql:
             return FakeResult([self.affix] if self.affix else [])
         if "vocabulary_derived_glosses" in sql:
@@ -922,3 +938,109 @@ def test_generate_route_maps_llm_unavailable_to_503(monkeypatch):
         asyncio.run(mr.mcp_generate_memory_node(req, db=object(), current_user=user))
     assert ei.value.status_code == 503
     assert "没有可用模型" in ei.value.detail
+
+
+# --------------------------------------------------------------------------
+# family_candidates —— FAMILY_TRACEABLE 的输入侧（2026-10-04）
+#
+# 这批测试盯的是**两件实测踩到的事**，不是接口形状：
+#   1. 剥 `y` 会让 `happy` 的词干变成 `happ`，把 `happen`/`happen to` 收成同族词；
+#   2. 库里混着 `care about` 这类**短语**，不挡掉模型会挑中它们当派生词。
+# 两条都各自钉一个回归用例，因为它们都是「看起来能跑、结果悄悄错了」的类型。
+# --------------------------------------------------------------------------
+
+
+def test_stem_keeps_y_because_it_is_part_of_the_root():
+    """`happy` 剥掉 y → `happ` → 误收 `happen`（实测）。y 必须留着。"""
+    assert vc._stem("happy") == "happy"
+    assert vc._stem("valleys") == "valley"
+    assert vc._stem("careful") == "care"
+    assert vc._stem("quickly") == "quick"
+
+
+def test_family_candidates_empty_word_never_queries():
+    db = FakeDB()
+    assert asyncio.run(vc.family_candidates(db, "")) == []
+    assert db.calls == []
+
+
+def test_family_candidates_short_stem_never_queries():
+    """词干短于 4 的缩写（CD/DJ）没有前缀信号，别去查库。"""
+    db = FakeDB()
+    assert asyncio.run(vc.family_candidates(db, "CD")) == []
+    assert db.calls == []
+
+
+def test_family_candidates_excludes_phrases_and_self():
+    """SQL 自身挡短语与自身；参数必须真的把 stem 传进去。"""
+    db = FakeDB(fam_candidates=[FakeDB._cand("valleys", "山谷")])
+    out = asyncio.run(vc.family_candidates(db, "valley"))
+    assert [c["word"] for c in out] == ["valleys"]
+    like_sql, like_params = next(
+        (s, p) for s, p in db.calls if "LIKE :prefix" in s
+    )
+    assert like_params["prefix"] == "valley"
+    assert like_params["target"] == "valley"
+    # 短语过滤写在 SQL 里（库里 `care about` 这类混着）
+    assert "!~ '\\s'" in like_sql or "!~ '\\\\s'" in like_sql
+
+
+def test_family_candidates_merges_root_signal_deterministically():
+    """词干前缀先入、词根信号后补；同词小写去重，顺序稳定。"""
+    db = FakeDB(
+        fam_candidates=[FakeDB._cand("valleys", "山谷")],
+        fam_root_candidates=[FakeDB._cand("valleys", "重复"), FakeDB._cand("vale", "谷")],
+    )
+    out = asyncio.run(vc.family_candidates(db, "valley", vocabulary_item_id="v1"))
+    assert [c["word"] for c in out] == ["valleys", "vale"], out
+
+
+def test_family_candidates_respects_limit():
+    db = FakeDB(fam_candidates=[FakeDB._cand(f"valley{i}") for i in range(9)])
+    out = asyncio.run(vc.family_candidates(db, "valley", limit=4))
+    assert len(out) == 4
+
+
+def test_load_memory_input_hands_llm_real_family_candidates():
+    """模型无从得知库里有哪些词 —— 候选必须由确定性算法喂进去。"""
+    item = SimpleNamespace(
+        id="v1", word="valley", pos="n.", meaning_cn="山谷",
+        phonetic_arpabet=None, example_sentence="They walked down the valley.",
+        canonical_meaning=None,
+    )
+    db = FakeDB(
+        sentences=[], item=item,
+        fam_candidates=[FakeDB._cand("valleys", "山谷（复数）")],
+    )
+    out = asyncio.run(vc.load_memory_input(db, "v1"))
+    assert out["llm_entry"]["family_candidates"] == [
+        {"word": "valleys", "meaning_cn": "山谷（复数）"}
+    ]
+
+
+def test_load_memory_input_gives_empty_family_list_for_proper_nouns():
+    """专有名词本来就没有同族词，空清单是**合法输入**，交空数组才对。"""
+    item = SimpleNamespace(
+        id="v1", word="Canada", pos="n.", meaning_cn="加拿大",
+        phonetic_arpabet=None, example_sentence="Canada is very cold.",
+        canonical_meaning=None,
+    )
+    db = FakeDB(sentences=[], item=item, fam_candidates=[])
+    out = asyncio.run(vc.load_memory_input(db, "v1"))
+    assert out["llm_entry"]["family_candidates"] == []
+
+
+def test_render_family_candidates_says_empty_loudly():
+    """空清单渲染成「无」会诱导模型去猜；必须显式说明交空数组。"""
+    assert "[]" in mg._render_family_candidates([])
+    assert "空数组" in mg._render_family_candidates([])
+    assert "valleys" in mg._render_family_candidates(
+        [{"word": "valleys", "meaning_cn": "山谷"}]
+    )
+
+
+def test_prompt_forbids_inventing_family_words():
+    """prompt 必须同时给出「只能从清单里挑」和「严禁编造清单外词」。"""
+    assert "库内同族候选" in mg._SYSTEM
+    assert "只能" in mg._SYSTEM
+    assert "编造库内不存在的家族词" in mg._SYSTEM
