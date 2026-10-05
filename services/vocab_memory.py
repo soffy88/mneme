@@ -139,6 +139,36 @@ class QualityReport:
         }
 
 
+# 疑问词结尾（无问号时也算问句）。刻意**不含**「吗」——「你会记得吗」是反问，
+# 但作为主动回忆问太软；含它会让门禁形同虚设。
+_QUESTION_TAILS = (
+    "什么", "怎么", "为什么", "为何", "哪", "谁", "多少", "几",
+    "何时", "何地", "如何", "是否",
+)
+
+
+def _looks_like_question(text: str) -> bool:
+    """是不是一个问句：问号结尾，或**含**疑问词。
+
+    一开始写成「疑问词必须在**结尾**」，实测立刻暴露假阴性 ——
+    「这是哪一步」「这是什么步骤」都是问句，但结尾分别是「步」「骤」。
+    中文问句的疑问词可以在句中，所以改成「含」。
+
+    为什么敢放宽到「含」：这道门禁要守的是「**有没有主动回忆问**」，
+    而文本仍会作为回忆提示原样展示 —— 误放行的代价只是提示语气弱一点，
+    远小于把好问题误杀（`spread` 那次）。真陈述句不含任何疑问词，仍会被拒。
+
+    刻意**不含**「吗」：「你会记得吗」是反问，作为主动回忆钩子太软，
+    含它会让这道门禁形同虚设。
+    """
+    q = text.strip()
+    if not q:
+        return False
+    if q.endswith(("？", "?")):
+        return True
+    return any(t in q for t in _QUESTION_TAILS)
+
+
 def verify_memory_node(
     node: dict[str, Any],
     *,
@@ -180,11 +210,22 @@ def verify_memory_node(
         gates.append(GateResult(GATE_HAS_ONE_CORE_IMAGE, True))
 
     # 2. HAS_RECALL_HOOK
+    #
+    # 判据是「**有没有主动回忆问**」，不是「标没标问号」。原实现只认 `？`/`?`
+    # 结尾，于是 100 词试跑里 `spread` 被拒 —— 它的问句是
+    # 「把画卷向两边拉展的动作叫什么」，是个好问题，只是漏了问号。
+    # 这和 `HAS_ONE_CORE_IMAGE` 下限 8（4/4 误杀，下限已降到 5）是同一类错误：
+    # **门禁在测格式，不是在测记忆质量**。故改为「问号 **或** 疑问词结尾」。
+    #
+    # prompt 仍然要求以 `？` 结尾（那是期望的输出格式），门禁只兜底实质 ——
+    # 这正是 `build_memory_node` 拒绝「启发式修补」之后的正确分工。
     q = (node.get("recall_question") or "").strip()
     if not q:
         gates.append(GateResult(GATE_HAS_RECALL_HOOK, False, "recall_question 为空"))
-    elif not q.endswith(("？", "?")):
-        gates.append(GateResult(GATE_HAS_RECALL_HOOK, False, "recall_question 不是问句"))
+    elif not _looks_like_question(q):
+        gates.append(
+            GateResult(GATE_HAS_RECALL_HOOK, False, f"recall_question 不是问句: {q[:20]}")
+        )
     else:
         gates.append(GateResult(GATE_HAS_RECALL_HOOK, True))
 

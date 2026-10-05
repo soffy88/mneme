@@ -305,8 +305,16 @@ def test_seven_character_core_images_are_accepted():
 
 
 def test_gate_recall_hook_requires_a_question():
-    assert "HAS_RECALL_HOOK" in _report(
+    """改判据后：**含疑问词但漏问号**的问句必须放过（那是 `spread` 的误杀）。
+
+    原断言写的正是「漏问号即拒」，即旧契约本身。收紧到真陈述句才拒 ——
+    见 `test_declarative_recall_text_is_still_rejected`。
+    """
+    assert "HAS_RECALL_HOOK" not in _report(
         _good_node(recall_question="船长松开缆绳弃船是什么动作")
+    ).failed_gates
+    assert "HAS_RECALL_HOOK" in _report(
+        _good_node(recall_question="船长松开缆绳弃船逃离")
     ).failed_gates
 
 
@@ -1169,25 +1177,32 @@ def test_confusable_candidates_short_word_never_queries():
 
 
 def test_confusable_candidates_keeps_only_near_spelling_and_sorts_by_distance():
-    """判据是**真算**编辑距离，不是「像不像」。
+    """判据是**真算**编辑距离，不是「像不像」，且上限是 **1**。
 
-    `adapt`→`adopt` 与 `adapt`→`adept` 都是 1（各差一个字母）；`adapt`→`adult`
-    是 2（d→u、p→l，**仍在上限内，该收**）；`adapt`→`alert` 是 3，超过上限必须剔除。
-    同距离按字母序 —— `adept` 在 `adopt` 前，这是文档承诺的 tie-break，不是 bug。
+    上限从 2 收到 1 是被 100 词试跑的数据逼的：距离=1 的易混对实测 100% 真，
+    距离≥2 的多数是噪声（`offer`/`coffee`、`boss`/`Boys`）。
+
+    `adapt`→`adopt`、`adapt`→`adept` 都是 1，必须收；`adapt`→`adult` 是 2、
+    `adapt`→`alert` 是 3，都必须剔。同距离按字母序（`adept` 先于 `adopt`）——
+    这是文档承诺的 tie-break，不是 bug。
     """
     db = FakeDB(confusables=[_cand("adopt"), _cand("adult"), _cand("adept"), _cand("alert")])
     out = asyncio.run(vc.confusable_candidates(db, "adapt"))
     words = [c["word"] for c in out]
-    assert words == ["adept", "adopt", "adult"], words
-    assert "alert" not in words, "距离 3 > 上限 2，必须剔除"
+    assert words == ["adept", "adopt"], words
+    assert "adult" not in words, "距离 2 已超上限 1 —— 收进来就是噪声"
+    assert "alert" not in words
     sql, params = db.calls[0]
     assert params["target"] == "adapt"
     assert params["lo"] == 4 and params["hi"] == 6, "长度差必须 ≤1"
 
 
 def test_confusable_candidates_respects_limit():
-    db = FakeDB(confusables=[_cand(f"ada{i}") for i in range(9)])
-    assert len(asyncio.run(vc.confusable_candidates(db, "adapt", limit=3))) == 3
+    # `adapt0`..`adapt8` 对 `adapt` 的距离是 1（尾部多一个字符），都应收
+    db = FakeDB(confusables=[_cand(f"adapt{i}") for i in range(9)])
+    out = asyncio.run(vc.confusable_candidates(db, "adapt", limit=3))
+    assert len(out) == 3
+    assert [c["word"] for c in out] == ["adapt0", "adapt1", "adapt2"]
 
 
 def test_gate_rejects_confusable_outside_the_candidate_list():
@@ -1264,3 +1279,46 @@ def test_empty_confusables_layer_does_not_cost_a_reveal():
     out = vm.render_review_ladder(node, stage=vm.STAGE_LEARNING)
     assert "confusables" not in [ly["key"] for ly in out["layers"]]
     assert out["hidden_count"] == 0
+
+
+# --------------------------------------------------------------------------
+# HAS_RECALL_HOOK 误杀（2026-10-05 100 词试跑实测）
+#
+# 原判据只认 `？`/`?` 结尾，于是 `spread` 被拒 —— 它的问句是
+# 「把画卷向两边拉展的动作叫什么」。那是个好问题，只是漏了问号。
+# 与 `HAS_ONE_CORE_IMAGE` 下限 8（4/4 误杀，下限已降到 5）是同一类错误：
+# **门禁在测格式，不是在测记忆质量**。
+# --------------------------------------------------------------------------
+
+_REAL_FALSE_KILL = "把画卷向两边拉展的动作叫什么"  # spread，逐字取自试跑报告
+
+
+def test_recall_question_without_question_mark_still_passes():
+    node = {**_good_node(), "recall_question": _REAL_FALSE_KILL}
+    assert vm.GATE_HAS_RECALL_HOOK not in _report(node).failed_gates
+
+
+def test_declarative_recall_text_is_still_rejected():
+    """放松不等于放水：**真陈述句**仍必须被拒，否则这道门禁形同虚设。
+
+    `什么动物在跑` 原本被我列进这里，但那是**臆想的断言**而不是实测数据 ——
+    它也可以合理读成「什么动物在跑？」。含疑问词就放过，是有意的取舍：
+    这道门禁守的是「有没有主动回忆问」，不是标点。
+    """
+    for text in ("这是弃船的画面", "记忆卡片", "船长松开缆绳弃船逃离", "你会记得吗"):
+        node = {**_good_node(), "recall_question": text}
+        assert vm.GATE_HAS_RECALL_HOOK in _report(node).failed_gates, text
+
+
+def test_looks_like_question_covers_the_documented_tails():
+    for text in (
+        "把画卷向两边拉展的动作叫什么",
+        "船长松开缆绳弃船是什么动作？",
+        "这是哪一步",
+        "他是谁",
+        "发生了多少",
+        "这是否弃船",
+    ):
+        assert vm._looks_like_question(text), text
+    for text in ("这是弃船的画面", "记忆卡片", "", "你会记得吗"):
+        assert not vm._looks_like_question(text), text

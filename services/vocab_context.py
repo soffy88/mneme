@@ -576,9 +576,18 @@ def _edit_distance_le(a: str, b: str, cap: int) -> int:
     return prev[-1]
 
 
-# 形近判定：长度差 ≤1 且编辑距离 ≤2。**刻意保守** —— 易混点宁可少收也不误收：
-# 收进来一个其实不混淆的词，学生会记一条没用还占位的规则。
-_CONFUSABLE_MAX_EDIT = 2
+# 形近判定：长度差 ≤1 且**编辑距离 ≤1**。
+#
+# 上限从 2 收紧到 1 是被 100 词试跑的数据逼出来的（2026-10-05）：那轮产出 115 条
+# 易混对，按距离拆开看 —— 距离=1 的 63 条**实测 100% 是真易混**
+# （chance/change、honour/honor、valley/alley、gold/cold、beer/bee、
+#  prevent/present、shake/shade、Germany/German…），而距离≥2 的 52 条**多数是噪声**
+# （offer/coffee、influence/influenza、honour/colour、boss/Boys、Paris/parish）。
+#
+# 代价是丢掉 `retire/entire` 这类少数真易混（距离 2）；收益是精度从约 45% 提到
+# 接近 100%。**易混点宁可少收也不误收** —— 收一条不混淆的对照规则，学生会拿它
+# 当真的记一辈子，而它本来什么也没教会。
+_CONFUSABLE_MAX_EDIT = 1
 _CONFUSABLE_MIN_LEN = 4
 
 
@@ -594,12 +603,12 @@ async def confusable_candidates(
     提升为最高优先级）都要求引擎讲清易混词，但模型无从得知库里有哪些词，
     凭英语世界知识作答会去编造「其实不混淆」的对照词。
 
-    判据只有一条：**形近**（长度差 ≤1 且编辑距离 ≤2）。`affect`/`effect`
+    判据只有一条：**形近**（长度差 ≤1 且编辑距离 ≤1）。`affect`/`effect`
     只差首字母、`adapt`/`adopt` 差一个字母、`desert`/`dessert` 插一个字母
     —— 全部命中。
 
-    **覆盖是局部的**：音近（`affect`/`effect` 这类同尾）、同义近义、
-    跨词性混淆本判据抓不到。这是诚实边界，不假装覆盖全 —— 门禁
+    **覆盖是局部的**：音近、同义近义、跨词性混淆本判据抓不到（`retire`/`entire`
+    这类距离 2 的真易混也会被丢掉）。这是诚实边界，不假装覆盖全 —— 门禁
     ``CONFUSABLES_GROUNDED`` 只要求「给出的都能在候选里查到」，
     **不要求**「该有的都找到了」。
     """

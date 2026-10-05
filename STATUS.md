@@ -950,6 +950,32 @@ API 也返回，但不在 `LAYER_ORDER` 里」** —— `sound_hook` / `spelling
    `str()` 得到 `"{'word': 'effect'}"`，于是**每个**候选都判不通过。
    测试没先跑全就会漏。
 
+### 100 词重测结果（seed 20261004，11 门禁，`Agents-A1`，dry-run）
+
+生成成功 88（3 词未满足契约、9 次调用失败）→ **verified 87**。
+quality 均值 **0.999**（87/88 满分，最低 0.91）。失败明细：
+**内容拒收仅 1 次**（`HAS_RECALL_HOOK`），其余 9 次全是端点抖动。
+
+| | 修复前 | 本次 |
+|---|---|---|
+| 通过 | 77/94 = 82% | **87/100 = 87%** |
+| `FAMILY_TRACEABLE` 拒收 | 6 | **0** |
+| 调用失败 | 10 | 9 |
+
+**两处据实测数据收紧**（本条 commit）：
+
+1. `HAS_RECALL_HOOK` 只认 `？`/`?` 结尾 → 漏问号的好问题被拒（`spread`
+   的「把画卷向两边拉展的动作叫什么」）。**门禁在测标点格式，不是在测记忆质量**
+   —— 与 `HAS_ONE_CORE_IMAGE` 下限 8（4/4 误杀）是同一类错误，第二次出现。
+   改为「问号 **或含**疑问词」。放弃只看结尾的写法：实测「这是哪一步」
+   「这是什么步骤」都是问句但结尾是「步」「骤」。
+2. 易混候选 `_CONFUSABLE_MAX_EDIT` **2 → 1**。依据是那轮 115 条易混对按距离
+   拆开：距离=1 的实测 **100% 是真易混**（`chance/change`、`honour/honor`、
+   `valley/alley`、`gold/cold`、`beer/bee`、`prevent/present`、`shake/shade`），
+   距离≥2 的多数是噪声（`offer/coffee`、`boss/Boys`、`Paris/parish`、
+   `influence/influenza`）。收紧后剩 63 条，其中**同词变形噪声 6 条**
+   （`effort/efforts`、`drug/drugs`…）→ **精度约 90%**。
+
 ### 诚实边界
 
 - 易混候选判据**只有形近**：音近（`affect`/`effect` 靠 -ect 同尾侥幸命中）、

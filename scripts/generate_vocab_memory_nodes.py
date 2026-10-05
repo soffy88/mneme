@@ -174,6 +174,9 @@ async def run(limit: int, seed: int, apply: bool, audit_only: bool = False,
                 "semantic_core": result["row"]["semantic_core"],
                 "scene": result["row"]["scene"],
                 "family_network": result["row"]["family_network"],
+                # 易混词（2026-10-05）。带上它，审 20 词时才看得到
+                # 「学生到底会被教哪一组对照词」。
+                "confusable_words": result["row"].get("confusable_words") or [],
                 "sound_hook": result["row"]["sound_hook"],
                 "spelling_hook": result["row"]["spelling_hook"],
                 "recall_question": result["row"]["recall_question"],
