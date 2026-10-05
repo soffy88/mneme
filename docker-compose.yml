@@ -129,6 +129,12 @@ services:
       VEYA_BASE_URL: ${VEYA_BASE_URL:-http://host.docker.internal:8791/v1}
       VEYA_API_KEY: ${VEYA_API_KEY:-}
       VEYA_MODEL: ${VEYA_MODEL:-veya1.2-128K}
+      # 第二个**独立端点**（2026-10-04）。Veya 侧 28 个上游只剩 2 个可用时，
+      # 「同端点换模型名」救不了 —— 必须有独立端点做端点级冗余。公网直连，无需 relay。
+      # Agents-A1 是推理模型：max_tokens 要覆盖思考+回答；答案在 content。
+      INTERN_AI_BASE_URL: ${INTERN_AI_BASE_URL:-https://discovery-api.intern-ai.org.cn/v1}
+      INTERN_AI_API_KEY: ${INTERN_AI_API_KEY:-}
+      INTERN_AI_MODEL: ${INTERN_AI_MODEL:-Agents-A1}
       VEYA_VL_MODEL: ${VEYA_VL_MODEL:-veya1.2-vl}
       # 云端 Qwen 保留为显式 fallback（MNEME_LLM=qwen 时使用）。
       DASHSCOPE_API_KEY: ${DASHSCOPE_API_KEY:-}
@@ -211,6 +217,12 @@ services:
       VEYA_BASE_URL: ${VEYA_BASE_URL:-http://host.docker.internal:8791/v1}
       VEYA_API_KEY: ${VEYA_API_KEY:-}
       VEYA_MODEL: ${VEYA_MODEL:-veya1.2-128K}
+      # 第二个**独立端点**（2026-10-04）。Veya 侧 28 个上游只剩 2 个可用时，
+      # 「同端点换模型名」救不了 —— 必须有独立端点做端点级冗余。公网直连，无需 relay。
+      # Agents-A1 是推理模型：max_tokens 要覆盖思考+回答；答案在 content。
+      INTERN_AI_BASE_URL: ${INTERN_AI_BASE_URL:-https://discovery-api.intern-ai.org.cn/v1}
+      INTERN_AI_API_KEY: ${INTERN_AI_API_KEY:-}
+      INTERN_AI_MODEL: ${INTERN_AI_MODEL:-Agents-A1}
       VEYA_VL_MODEL: ${VEYA_VL_MODEL:-veya1.2-vl}
       DASHSCOPE_API_KEY: ${DASHSCOPE_API_KEY:-}
       QWEN_BASE_URL: ${QWEN_BASE_URL:-}
@@ -306,6 +318,12 @@ services:
       VEYA_BASE_URL: ${VEYA_BASE_URL:-http://host.docker.internal:8791/v1}
       VEYA_API_KEY: ${VEYA_API_KEY:-}
       VEYA_MODEL: ${VEYA_MODEL:-veya1.2-128K}
+      # 第二个**独立端点**（2026-10-04）。Veya 侧 28 个上游只剩 2 个可用时，
+      # 「同端点换模型名」救不了 —— 必须有独立端点做端点级冗余。公网直连，无需 relay。
+      # Agents-A1 是推理模型：max_tokens 要覆盖思考+回答；答案在 content。
+      INTERN_AI_BASE_URL: ${INTERN_AI_BASE_URL:-https://discovery-api.intern-ai.org.cn/v1}
+      INTERN_AI_API_KEY: ${INTERN_AI_API_KEY:-}
+      INTERN_AI_MODEL: ${INTERN_AI_MODEL:-Agents-A1}
       VEYA_VL_MODEL: ${VEYA_VL_MODEL:-veya1.2-vl}
     depends_on:
       redis:
@@ -332,6 +350,12 @@ services:
       VEYA_BASE_URL: ${VEYA_BASE_URL:-http://host.docker.internal:8791/v1}
       VEYA_API_KEY: ${VEYA_API_KEY:-}
       VEYA_MODEL: ${VEYA_MODEL:-veya1.2-128K}
+      # 第二个**独立端点**（2026-10-04）。Veya 侧 28 个上游只剩 2 个可用时，
+      # 「同端点换模型名」救不了 —— 必须有独立端点做端点级冗余。公网直连，无需 relay。
+      # Agents-A1 是推理模型：max_tokens 要覆盖思考+回答；答案在 content。
+      INTERN_AI_BASE_URL: ${INTERN_AI_BASE_URL:-https://discovery-api.intern-ai.org.cn/v1}
+      INTERN_AI_API_KEY: ${INTERN_AI_API_KEY:-}
+      INTERN_AI_MODEL: ${INTERN_AI_MODEL:-Agents-A1}
       VEYA_VL_MODEL: ${VEYA_VL_MODEL:-veya1.2-vl}
       PYTHONUNBUFFERED: "1"
     ports:

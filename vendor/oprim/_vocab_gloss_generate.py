@@ -53,7 +53,7 @@ async def generate_vocab_glosses(
         caller=caller,
         system=_SYSTEM,
         model=model,
-        max_tokens=4096,
+        max_tokens=16384,
     )
 
     raw = resp.text.strip()

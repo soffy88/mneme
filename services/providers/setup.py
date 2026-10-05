@@ -193,11 +193,14 @@ async def probe_llm_usable(timeout: float = 30.0) -> dict[str, Any]:
         caller = ProviderRegistry.get().llm("default")
 
         async def _probe() -> str:
+            # ⚠️ max_tokens 必须给**推理模型**留余量。Agents-A1 光是「say PONG」的
+            # 思考就吃掉 173 个 token；给 8 的话 content 为空、finish_reason=length，
+            # 于是探针会把**能正常生成**的端点报成 unusable（实测踩过）。
             resp = await llm_complete(
                 [{"role": "user", "content": "Reply with exactly: PONG"}],
                 caller=caller,
                 model=os.environ.get("VEYA_MODEL") or "veya1.2",
-                max_tokens=8,
+                max_tokens=2048,
             )
             return resp.text or ""
 
@@ -249,10 +252,22 @@ def configure_llm_providers() -> str:
     backend = os.environ.get("MNEME_LLM", "").lower()
 
     if backend == "veya":
+        from services.providers.internai_caller import FallbackTextCaller, InternAiTextCaller
         from services.providers.veya_caller import VeyaTextCaller, VeyaVLCaller
 
         registry = ProviderRegistry.get()
-        registry.register_llm("default", VeyaTextCaller(), replace=True)
+        # 端点级冗余：Veya 整条上游链挂掉时（2026-10-04 就是这种形态），
+        # 同端点换模型名救不了 —— 必须有一个**独立端点**兜底。
+        # Discovery API 是公网直连，不需要 relay。
+        # 顺序 = 实测可靠性，不是有无。Discovery API 在前：它稳定（≈24s/次，
+        # 推理模型）；Veya 的 space-bunny-free 虽快（≈2s）但**单点且间歇失效**，
+        # 排前面会让每次调用先浪费 ~10s 在失败回退上（实测 34s vs 24s）。
+        chain = []
+        if (os.environ.get("INTERN_AI_API_KEY") or "").strip():
+            chain.append(InternAiTextCaller())
+        chain.append(VeyaTextCaller())
+        text_caller = chain[0] if len(chain) == 1 else FallbackTextCaller(chain)
+        registry.register_llm("default", text_caller, replace=True)
         registry.register_llm("veya", VeyaTextCaller(), replace=True)
         registry.register_vlm("default", VeyaVLCaller(), replace=True)
         registry.register_vlm("veya-vl", VeyaVLCaller(), replace=True)
@@ -298,6 +313,26 @@ def configure_llm_providers() -> str:
         _install_reliability_wrappers(backend)
         _CONFIGURATION_SIGNATURE = signature
         return "qwen-missing-key-mock"
+
+    if backend == "internai":
+        # 显式只用 Discovery API（不挂 Veya）。适合 Veya 侧配额/权限出问题时快速切换。
+        from services.providers.internai_caller import InternAiTextCaller
+
+        if not (os.environ.get("INTERN_AI_API_KEY") or "").strip():
+            msg = (
+                "MNEME_LLM=internai 但 INTERN_AI_API_KEY 缺失——"
+                "拒绝装配成「能生成但其实调不通」的 provider。"
+            )
+            if not _allow_mock():
+                logger.error(msg)
+                raise RuntimeError(msg)
+            logger.warning(msg + " 当前允许 mock。")
+        registry = ProviderRegistry.get()
+        registry.register_llm("default", InternAiTextCaller(), replace=True)
+        registry.register_llm("internai", InternAiTextCaller(), replace=True)
+        _install_reliability_wrappers(backend)
+        _CONFIGURATION_SIGNATURE = signature
+        return "internai"
 
     if backend == "ollama":
         from services.providers.ollama_caller import OllamaCaller

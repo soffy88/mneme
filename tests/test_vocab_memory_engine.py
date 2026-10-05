@@ -181,6 +181,53 @@ def test_oprim_validates_nested_semantic_core():
     assert mod._valid(broken2) is False
 
 
+def test_oprim_reports_truncation_distinctly_from_bad_json(monkeypatch):
+    """推理模型被 max_tokens 截断时，失败原因必须写成 truncated_by_max_tokens。
+
+    不区分的后果很具体：Agents-A1 在 8192 下返回 HTTP 200 + 半截 JSON，
+    表现得像「模型格式不对」，于是会有人去调 prompt，而真因是预算不足。
+    """
+    mod = _load_oprim()
+
+    class _Resp:
+        def __init__(self, text, stop_reason):
+            self.text = text
+            self.stop_reason = stop_reason
+
+    def _run(monkeypatch, raw, stop_reason):
+        async def _fake_complete(*_a, **kw):
+            return _Resp(raw, stop_reason)
+
+        monkeypatch.setattr("oprim.llm.llm_complete", _fake_complete)
+        return asyncio.run(
+            mod.generate_memory_nodes([{"word": "abandon"}], caller=object())
+        )
+
+    entries = [{"word": "abandon"}]
+    # 截断
+    monkeypatch.setattr("oprim.llm.llm_complete",
+                        lambda *a, **kw: _async(_Resp('[{"word": "abandon", "core_image": "x', "length")))
+    out = _run(monkeypatch, '[{"word": "abandon", "core_image": "x', "length")
+    assert out[0]["__failed__"] is True
+    assert out[0]["reason"] == "truncated_by_max_tokens"
+    assert out[0]["stop_reason"] == "length"
+    # 合法 JSON 但字段缺失
+    out2 = _run(monkeypatch, '[{"word": "abandon"}]', "stop")
+    assert out2[0]["__failed__"] is True
+    assert out2[0]["reason"] == "missing_or_invalid_fields"
+    # 坏 JSON
+    out3 = _run(monkeypatch, "not json at all", "stop")
+    assert out3[0]["reason"].startswith("json_parse_error")
+    assert entries  # 保底
+
+
+def _async(resp):
+    async def _f(*_a, **_kw):
+        return resp
+
+    return _f
+
+
 def test_oprim_degrades_whole_word_on_any_missing_field():
     """任一必填字段缺失 → **整个词**为 None，不返回半成品。
 

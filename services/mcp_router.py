@@ -1569,7 +1569,16 @@ async def tool_generate_memory_node(
             "llm_reachable_detail，以及上游网关的 provider 健康（额度 402 / key 403 / 配额 429）。",
             candidates=list(getattr(caller, "models", None) or []),
         ) from exc
-    node = results[0] if results else None
+    raw = results[0] if results else None
+    # oprim 在失败时返回带 __failed__ 的诊断 dict（区分「被 max_tokens 截断」与
+    # 「JSON 解析失败」）。必须先摘出来，否则会被当成节点去装配。
+    fail_reason = None
+    node = raw
+    if isinstance(raw, dict) and raw.get("__failed__"):
+        fail_reason = raw.get("reason")
+        node = None
+    elif raw is None:
+        fail_reason = "LLM 未返回任何内容"
     if node is None:
         return {
             "memory_input": memory_input,
@@ -1577,7 +1586,7 @@ async def tool_generate_memory_node(
             "report": None,
             "row": None,
             "persisted": False,
-            "reason": "LLM 输出未满足契约（缺项/类型错/解析失败），本词跳过",
+            "reason": f"LLM 输出未满足契约，本词跳过：{fail_reason}",
         }
 
     family_resolved = await resolve_family(

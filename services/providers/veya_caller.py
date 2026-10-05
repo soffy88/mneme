@@ -7,11 +7,17 @@ Veya gateway 由宿主机常驻进程提供，容器内通过
 
 from __future__ import annotations
 
+import asyncio
 import json
 import os
 from typing import Any
 
 from obase.provider_timeout import provider_httpx_timeout
+
+
+# 传输类错误的重试次数与间隔。刻意**不**对「上游错误串」重试（换模型才对）。
+_MAX_ATTEMPTS = 2
+_RETRY_BACKOFF_SECONDS = 1.0
 
 
 def _base_url() -> str:
@@ -80,6 +86,11 @@ class VeyaTextCaller:
     异常/状态码的话每个模型都会「成功」，回退永远不触发。
     """
 
+    def _auth_headers(self) -> dict[str, str]:
+        """鉴权头。**抽成方法**是为了让换端点的子类（`InternAiTextCaller`）能覆写，
+        而不必把下面整套回退 + 内容校验逻辑复制一份。"""
+        return _headers()
+
     def __init__(self, model: str | None = None) -> None:
         self.base_url = _base_url()
         raw = model or os.environ.get("VEYA_MODEL", "veya1.2-128K")
@@ -122,17 +133,30 @@ class VeyaTextCaller:
                     "max_tokens": max_tokens,
                     **extras,
                 }
-                try:
-                    response = await client.post(
-                        f"{self.base_url}/chat/completions",
-                        headers=_headers(),
-                        json=payload,
-                    )
-                    response.raise_for_status()
-                    data = response.json()
-                    content = data["choices"][0]["message"].get("content") or ""
-                except Exception as exc:  # noqa: BLE001 — 换下一个模型试
-                    attempts.append(f"{candidate}: {type(exc).__name__}")
+                # 传输类错误（超时/连接重置）**可能是瞬时的** —— 实测同一端点
+                # 同一个模型上一秒失败、下一秒就成功。所以重试；默认 2 次。
+                # 而「HTTP 200 + 正文错误串」重试同一个模型**没有意义**
+                # （配额/权限不会自己好），必须立刻换下一个 —— 两类错误要分开处理。
+                content = ""
+                data: dict[str, Any] | None = None
+                for attempt in range(_MAX_ATTEMPTS):
+                    try:
+                        response = await client.post(
+                            f"{self.base_url}/chat/completions",
+                            headers=self._auth_headers(),
+                            json=payload,
+                        )
+                        response.raise_for_status()
+                        data = response.json()
+                        content = data["choices"][0]["message"].get("content") or ""
+                        break
+                    except Exception as exc:  # noqa: BLE001 — 重试后换模型
+                        if attempt + 1 < _MAX_ATTEMPTS:
+                            await asyncio.sleep(_RETRY_BACKOFF_SECONDS)
+                            continue
+                        attempts.append(f"{candidate}: {type(exc).__name__}")
+                        content = ""
+                if data is None:
                     continue
                 if looks_like_gateway_error(content):
                     # HTTP 200 但正文是上游错误串 —— 换一个模型，这不算成功
@@ -140,7 +164,11 @@ class VeyaTextCaller:
                     continue
                 self.last_good_model = candidate
                 self.model = candidate
-                return {"content": content, "usage": _usage(data)}
+                return {
+                    "content": content,
+                    "usage": _usage(data),
+                    "finish_reason": (data.get("choices") or [{}])[0].get("finish_reason"),
+                }
 
         # 名单全废：抛一个把每个模型的失败原因都带上的异常，便于一眼定位
         raise RuntimeError(

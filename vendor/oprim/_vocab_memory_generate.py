@@ -88,7 +88,7 @@ async def generate_memory_nodes(
     *,
     caller: Any,
     model: str = "claude-sonnet-4-6",
-    max_tokens: int = 8192,
+    max_tokens: int = 16384,
 ) -> list[dict]:
     """批量生成记忆节点。
 
@@ -142,19 +142,44 @@ async def generate_memory_nodes(
             raw = raw[4:]
     raw = raw.strip()
 
+    # 「为什么没解析出来」必须能说清。推理模型被 max_tokens 截断时，HTTP 是 200、
+    # 正文是**半截 JSON**（实测 Agents-A1 在 8192 下就断在字符串中间）。若只报
+    # 「契约未过」，会被误判成 prompt/模型质量问题，而真正的原因是预算不足。
+    truncated = str(getattr(resp, "stop_reason", "") or "").lower() == "length"
+
     try:
         data = json.loads(raw)
         if not isinstance(data, list):
             data = []
-    except json.JSONDecodeError:
+    except json.JSONDecodeError as exc:
         data = []
+        parse_error = str(exc)
+    else:
+        parse_error = None
 
     by_word = {d.get("word"): d for d in data if isinstance(d, dict)}
 
     out: list[dict | None] = []
     for e in entries:
         d = by_word.get(e.get("word"))
-        out.append(d if d is not None and _valid(d) else None)
+        ok = d is not None and _valid(d)
+        if ok:
+            out.append(d)
+        else:
+            # 附上诊断信息；None 的语义仍是「本词跳过」，这里只增加可观测性
+            out.append(
+                {
+                    "__failed__": True,
+                    "word": e.get("word"),
+                    "reason": (
+                        "truncated_by_max_tokens" if truncated
+                        else ("json_parse_error: " + (parse_error or "")[:80] if parse_error
+                              else "missing_or_invalid_fields")
+                    ),
+                    "stop_reason": getattr(resp, "stop_reason", None),
+                    "raw_len": len(raw),
+                }
+            )
     return out
 
 

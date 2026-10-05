@@ -14,5 +14,11 @@ services:
       MNEME_LLM: veya
       VEYA_BASE_URL: ${VEYA_BASE_URL:-http://172.22.0.1:8792/v1}
       VEYA_MODEL: ${VEYA_MODEL:-veya1.2,veya-glm5.1-nv,veya-kimi-k2.6-nv,veya-deepseek-v4-flash-nv}
+      # 第二个**独立端点**（2026-10-04）。Veya 侧 28 个上游只剩 2 个可用时，
+      # 「同端点换模型名」救不了 —— 必须有独立端点做端点级冗余。公网直连，无需 relay。
+      # Agents-A1 是推理模型：max_tokens 要覆盖思考+回答；答案在 content。
+      INTERN_AI_BASE_URL: ${INTERN_AI_BASE_URL:-https://discovery-api.intern-ai.org.cn/v1}
+      INTERN_AI_API_KEY: ${INTERN_AI_API_KEY:-}
+      INTERN_AI_MODEL: ${INTERN_AI_MODEL:-Agents-A1}
       VEYA_VL_MODEL: ${VEYA_VL_MODEL:-veya1.2-vl}
 

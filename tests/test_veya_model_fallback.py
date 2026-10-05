@@ -142,12 +142,64 @@ def test_falls_back_past_transport_error(monkeypatch):
         async def post(self, url, headers=None, json=None):
             calls.append(json["model"])
             if json["model"] == "a":
+                # a 每次都传输失败 —— 重试耗尽后才换 b
                 raise RuntimeError("connection refused")
             return _Resp({"choices": [{"message": {"content": "OK"}}], "usage": {}})
 
     _stub_httpx(monkeypatch, _C)
     assert _call(c, monkeypatch)["content"] == "OK"
-    assert calls == ["a", "b"]
+    # a 被重试到耗尽（_MAX_ATTEMPTS 次）才换 b —— 传输类错误可能是瞬时的
+    assert calls == ["a", "a", "b"], calls
+
+
+def test_transport_error_is_retried_on_same_model(monkeypatch):
+    """传输类错误重试：实测同一端点同一模型上一秒失败、下一秒就成功。"""
+    monkeypatch.setenv("VEYA_MODEL", "a")
+    c = VeyaTextCaller()
+    calls = []
+
+    class _C:
+        async def __aenter__(self):
+            return self
+
+        async def __aexit__(self, *a):
+            return False
+
+        async def post(self, url, headers=None, json=None):
+            calls.append(1)
+            if len(calls) == 1:
+                raise RuntimeError("timeout")
+            return _Resp({"choices": [{"message": {"content": "OK"}}], "usage": {}})
+
+    _stub_httpx(monkeypatch, _C)
+    assert _call(c, monkeypatch)["content"] == "OK"
+    assert len(calls) == 2, "第一次传输失败应重试同模型，而不是直接放弃"
+
+
+def test_error_payload_is_not_retried_on_same_model(monkeypatch):
+    """错误串重试**没有意义**（配额/权限不会自己好），必须立刻换模型。"""
+    monkeypatch.setenv("VEYA_MODEL", "a,b")
+    c = VeyaTextCaller()
+    calls = []
+
+    class _C:
+        async def __aenter__(self):
+            return self
+
+        async def __aexit__(self, *a):
+            return False
+
+        async def post(self, url, headers=None, json=None):
+            calls.append(json["model"])
+            if json["model"] == "a":
+                return _Resp(
+                    {"choices": [{"message": {"content": "兜底失败"}}], "usage": {}}
+                )
+            return _Resp({"choices": [{"message": {"content": "OK"}}], "usage": {}})
+
+    _stub_httpx(monkeypatch, _C)
+    assert _call(c, monkeypatch)["content"] == "OK"
+    assert calls == ["a", "b"], "错误串不应触发对 a 的重试"
 
 
 def test_all_candidates_failing_raises_with_reasons(monkeypatch):
