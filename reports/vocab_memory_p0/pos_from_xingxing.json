@@ -1,0 +1,189 @@
+{
+  "generated_at": "2026-10-05T07:38:32.858532+00:00",
+  "summary": {
+    "sources": [
+      "/data/soffy/projects/mneme/data/external/vocab_src/xingxing/第一册  上[vxia.net].pdf",
+      "/data/soffy/projects/mneme/data/external/vocab_src/xingxing/第一册  下.docx",
+      "/data/soffy/projects/mneme/data/external/vocab_src/xingxing/第一册  下.pdf",
+      "/data/soffy/projects/mneme/data/external/vocab_src/xingxing/第三册  上[vxia.net].pdf",
+      "/data/soffy/projects/mneme/data/external/vocab_src/xingxing/第三册  下.pdf",
+      "/data/soffy/projects/mneme/data/external/vocab_src/xingxing/第二册  下.pdf",
+      "/data/soffy/projects/mneme/data/external/vocab_src/xingxing/第二册 上.pdf"
+    ],
+    "parsed_entries": 1268,
+    "core_words": 2761,
+    "pos_gaps": 987,
+    "matched_gaps": 0,
+    "gap_coverage_pct": 0.0,
+    "applied": false,
+    "conflicts_skipped": 33
+  },
+  "conflicts": [
+    {
+      "word": "atlantic",
+      "existing": "n & adj",
+      "source": "adj"
+    },
+    {
+      "word": "bag",
+      "existing": "n",
+      "source": "v"
+    },
+    {
+      "word": "brush",
+      "existing": "v & n",
+      "source": "n"
+    },
+    {
+      "word": "cheer",
+      "existing": "n & v",
+      "source": "v"
+    },
+    {
+      "word": "cotton",
+      "existing": "n & adj",
+      "source": "n"
+    },
+    {
+      "word": "cow",
+      "existing": "n",
+      "source": "v"
+    },
+    {
+      "word": "cry",
+      "existing": "n & v",
+      "source": "v"
+    },
+    {
+      "word": "international",
+      "existing": "n",
+      "source": "adj"
+    },
+    {
+      "word": "japanese",
+      "existing": "n & adj",
+      "source": "adj"
+    },
+    {
+      "word": "joke",
+      "existing": "n & v",
+      "source": "n"
+    },
+    {
+      "word": "kick",
+      "existing": "v & n",
+      "source": "v"
+    },
+    {
+      "word": "knock",
+      "existing": "v & n",
+      "source": "v"
+    },
+    {
+      "word": "lock",
+      "existing": "n & v",
+      "source": "n"
+    },
+    {
+      "word": "magic",
+      "existing": "adj",
+      "source": "n"
+    },
+    {
+      "word": "metal",
+      "existing": "n & adj",
+      "source": "n"
+    },
+    {
+      "word": "normal",
+      "existing": "adj",
+      "source": "n"
+    },
+    {
+      "word": "pull",
+      "existing": "v & n",
+      "source": "v"
+    },
+    {
+      "word": "purple",
+      "existing": "adj & n",
+      "source": "adj"
+    },
+    {
+      "word": "push",
+      "existing": "n & v",
+      "source": "v"
+    },
+    {
+      "word": "repair",
+      "existing": "n & v",
+      "source": "n"
+    },
+    {
+      "word": "research",
+      "existing": "n",
+      "source": "v"
+    },
+    {
+      "word": "row",
+      "existing": "v",
+      "source": "n"
+    },
+    {
+      "word": "score",
+      "existing": "n & v",
+      "source": "n"
+    },
+    {
+      "word": "seventh",
+      "existing": "num",
+      "source": "n"
+    },
+    {
+      "word": "shout",
+      "existing": "n & v",
+      "source": "v"
+    },
+    {
+      "word": "smell",
+      "existing": "n & v",
+      "source": "n"
+    },
+    {
+      "word": "standard",
+      "existing": "n & adj",
+      "source": "n"
+    },
+    {
+      "word": "sweep",
+      "existing": "v",
+      "source": "n"
+    },
+    {
+      "word": "telephone",
+      "existing": "n & v",
+      "source": "v"
+    },
+    {
+      "word": "test",
+      "existing": "v & n",
+      "source": "n"
+    },
+    {
+      "word": "tie",
+      "existing": "v & n",
+      "source": "n"
+    },
+    {
+      "word": "upstairs",
+      "existing": "adv",
+      "source": "adj"
+    },
+    {
+      "word": "use",
+      "existing": "n & v",
+      "source": "num"
+    }
+  ],
+  "details": []
+}
