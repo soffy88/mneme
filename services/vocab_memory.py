@@ -397,19 +397,38 @@ STAGE_REVIEW_EARLY = "review_early"
 STAGE_REVIEW_MID = "review_mid"
 STAGE_REVIEW_LATE = "review_late"
 
+# 层序：1 画面 → 2 语义/场景/回忆问 → 3 声音 → 4 拼写 → 5 词族 →
+# 6 词源 + 搭配 → 7 真实语境句。即 spec §二 那条链
+# 「单词→声音→画面→故事→词根→词族→含义」在展示面上的落位。
+#
+# **顺序不是随意的**：sound_hook / spelling_hook 天然含目标单词
+# （实测输出形如「Wet 谐音"伟特"」），所以它们**必须**排在 semantic_core 之后 ——
+# 放前面会把答案提前漏给学生，`NO_ANSWER_LEAK` 门禁管不住跨层泄漏。
+#
+# 注意层 6 的内容**不在** MemoryNode 里（单源红线），渲染时由调用方从既有表取，
+# 这里只声明「这一层存在，由 facts 提供」。
+LAYER_ORDER = (
+    "core_image",
+    "semantic_core",
+    "sound_hook",
+    "spelling_hook",
+    "family_network",
+    "word_origin",
+    "context_sentence",
+)
+
 # 每阶段默认露到第几层。首次（learning）= 全展开：2026-10-03 人决策「第一次最重要，
 # 目标是完全理解，所以首次不做下拉折叠」。
+#
+# learning = len(LAYER_ORDER)：层数会随 spec §二 的连接补齐而变，写死 4 就会在
+# 某次加层后悄悄把「首次全展开」变成「首次只露一半」。
 STAGE_MAX_LAYER: dict[str, int] = {
-    STAGE_LEARNING: 4,
+    STAGE_LEARNING: len(LAYER_ORDER),
     STAGE_REVIEW_EARLY: 3,
     STAGE_REVIEW_MID: 3,
     STAGE_REVIEW_LATE: 2,
 }
 
-# 层序：1 画面 → 2 语义 → 3 词根/词源 + 搭配 → 4 真实语境句。
-# 注意层 3 的内容**不在** MemoryNode 里（单源红线），渲染时由调用方从既有表取，
-# 这里只声明「这一层存在，由 facts 提供」。
-LAYER_ORDER = ("core_image", "semantic_core", "word_origin", "context_sentence")
 
 
 # py-fsrs 的 State 枚举值。**不能假设 state 是字符串** —— 实测线上
@@ -509,6 +528,18 @@ def resolve_stage(card: Any) -> str:
     return STAGE_REVIEW_LATE
 
 
+def _is_empty_layer(content: dict[str, Any]) -> bool:
+    """某一层是否「什么都没有」，用来决定要不要占一次揭示。
+
+    判据是**全空**：所有值都是 None / 空串 / 空列表。全空的层对学生没有信息量，
+    却会消耗 `expanded` 的揭示预算 —— 那比内容更贵。
+    """
+    return all(
+        v is None or (isinstance(v, (str, list, dict)) and not v) for v in content.values()
+    )
+
+
+
 def render_review_ladder(
     node: dict[str, Any],
     *,
@@ -552,6 +583,9 @@ def render_review_ladder(
             "scene": node.get("scene"),
             "recall_question": node.get("recall_question"),
         },
+        "sound_hook": {"sound_hook": node.get("sound_hook")},
+        "spelling_hook": {"spelling_hook": node.get("spelling_hook")},
+        "family_network": {"family_network": node.get("family_network") or []},
         # disputed 档位不进展示面（与 vocab_affixes.should_display 同规则）。
         "word_origin": {
             "word_origin": None if origin is None or not origin.get("should_display", True) else origin,
@@ -560,9 +594,16 @@ def render_review_ladder(
         "context_sentence": {"context_evidence": node.get("context_evidence") or []},
     }
 
+    # 空层**跳过**，不占一次「再看一层」。否则一个没有 sound_hook 的词会让
+    # 学生按一次展开只看到空白 —— 揭示预算比内容更贵。
+    #
+    # 层号在过滤**之后**重新连续编号：客户端按 layer 序号做「展开第 N 层」，
+    # 留空洞（比如只有 [1,2,7]）会让它以为还有 5 层没露。稳定身份由 `key` 负责。
     layers = [
-        {"layer": i + 1, "key": key, "content": payloads[key]}
-        for i, key in enumerate(LAYER_ORDER)
+        {"layer": n, "key": key, "content": payloads[key]}
+        for n, key in enumerate(
+            (k for k in LAYER_ORDER if not _is_empty_layer(payloads[k])), start=1
+        )
     ]
     return {
         "stage": st,

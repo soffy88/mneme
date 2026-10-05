@@ -530,11 +530,19 @@ def _node_row():
 
 
 def test_first_exposure_shows_everything():
-    """人决策：第一次最重要，目标是完全理解，所以首次**不做下拉折叠**。"""
+    """人决策：第一次最重要，目标是完全理解，所以首次**不做下拉折叠**。
+
+    断言写成「相对 LAYER_ORDER 的有序子集」而不是 `== list(vm.LAYER_ORDER)`：
+    层数会随 spec §二 的连接补齐而变（已从 4 增到 7），而全空的层会被跳过
+    （见 test_empty_layer_is_skipped_and_costs_no_reveal），所以要求逐项相等
+    会在两种正常情况下误报。真正要守的是：**没��任何东西被藏起来，且顺序不乱**。
+    """
     out = vm.render_review_ladder(_node_row(), stage=vm.STAGE_LEARNING)
     assert out["hidden_count"] == 0
     assert out["all_shown"] is True
-    assert [ly["key"] for ly in out["layers"]] == list(vm.LAYER_ORDER)
+    keys = [ly["key"] for ly in out["layers"]]
+    assert keys == [k for k in vm.LAYER_ORDER if k in keys]
+    assert [ly["layer"] for ly in out["layers"]] == list(range(1, len(keys) + 1))
 
 
 def test_late_review_hides_context_sentence_until_answer():
@@ -553,10 +561,79 @@ def test_expanded_reveals_more_without_changing_schedule():
 
 
 def test_disputed_word_origin_never_renders():
+    """disputed 档的词源**不出现在渲染结果的任何位置**。
+
+    原来这条断言写成「找到 word_origin 层，再看它是 None」。加了「空层跳过」之后
+    那种写法会因 StopIteration 失败 —— 但那不是泄漏，是整层没了。真正要守的性质
+    是「disputed 内容不渲染」，所以这里直接查全量结果，与该层是否存在无关。
+    这样以后再调层序也不会把保护弄丢。
+    """
     facts = {"word_origin": {"chain": "dis·cover", "should_display": False}}
     out = vm.render_review_ladder(_node_row(), stage=vm.STAGE_LEARNING, facts=facts)
-    origin_layer = next(ly for ly in out["layers"] if ly["key"] == "word_origin")
-    assert origin_layer["content"]["word_origin"] is None
+    assert "dis·cover" not in str(out["layers"])
+    for ly in out["layers"]:
+        if ly["key"] == "word_origin":
+            assert ly["content"]["word_origin"] is None
+
+
+def test_collocations_keep_the_origin_layer_alive_when_origin_is_disputed():
+    """disputed 只该压住**词源**，不该连带压掉同一层的搭配。"""
+    facts = {
+        "word_origin": {"chain": "dis·cover", "should_display": False},
+        "collocations": [{"phrase_en": "discover a method", "phrase_cn": "发现一种方法"}],
+    }
+    out = vm.render_review_ladder(_node_row(), stage=vm.STAGE_LEARNING, facts=facts)
+    layer = next(ly for ly in out["layers"] if ly["key"] == "word_origin")
+    assert layer["content"]["word_origin"] is None
+    assert layer["content"]["collocations"][0]["phrase_en"] == "discover a method"
+
+
+# --------------------------------------------------------------------------
+# spec §二 的 7 个连接（2026-10-05 审计后补齐）
+#
+# 审计发现：sound_hook / spelling_hook / family_network **生成了、存了、API 也返回**，
+# 但**不在 LAYER_ORDER 里** —— 学生永远看不到。而 spec 明说最终要形成
+# 「单词→声音→画面→故事→词根→词族→含义」这条链，声音与词族两环实际断着。
+# --------------------------------------------------------------------------
+
+_HOOKED = {
+    "sound_hook": "Wet 谐音\"伟特\"，伟人遇雨被淋湿",
+    "spelling_hook": "w 像微波，e 像圆眼",
+    "family_network": [{"word": "valleys", "meaning_cn": "山谷"}],
+}
+
+
+def test_all_seven_connections_reach_the_student():
+    """7 个连接齐全时，7 层**全部**到达展示面（词源这层要有 facts 才不空）。"""
+    node = {**_node_row(), **_HOOKED}
+    facts = {"word_origin": {"chain": "vale·ley", "should_display": True}}
+    out = vm.render_review_ladder(node, stage=vm.STAGE_LEARNING, facts=facts)
+    assert [ly["key"] for ly in out["layers"]] == list(vm.LAYER_ORDER)
+    blob = str(out["layers"])
+    for probe in ("Wet 谐音", "w 像微波", "valleys"):
+        assert probe in blob
+
+
+def test_hooks_are_ordered_after_semantics_so_the_answer_is_not_leaked_early():
+    """声音/拼写钩子**天然含目标单词**（实测输出形如「Wet 谐音…」）。
+
+    `NO_ANSWER_LEAK` 门禁只检查 recall_question 内部有没有藏目标词，**管不到
+    跨层泄漏** —— 声音钩子放在语义层之前，等于在学生作答前就把词念给它听了。
+    """
+    keys = list(vm.LAYER_ORDER)
+    for hook in ("sound_hook", "spelling_hook"):
+        assert keys.index(hook) > keys.index("semantic_core")
+
+
+def test_empty_layer_is_skipped_and_costs_no_reveal():
+    """全空的层不该占掉一次「再看一层」—— 揭示预算比内容更贵。"""
+    node = {**_node_row(), "sound_hook": None, "spelling_hook": None, "family_network": []}
+    out = vm.render_review_ladder(node, stage=vm.STAGE_LEARNING)
+    keys = [ly["key"] for ly in out["layers"]]
+    assert "sound_hook" not in keys and "spelling_hook" not in keys
+    assert out["hidden_count"] == 0, "跳过的层不该被算成「隐藏」"
+    # 层号必须连续，不能因为跳过而留空洞
+    assert [ly["layer"] for ly in out["layers"]] == list(range(1, len(keys) + 1))
 
 
 # 下面的卡片形状**取自生产 kc_mastery.fsrs_card_json 真实行**（2026-10-03 查询），
