@@ -46,7 +46,7 @@ class FakeDB:
 
     def __init__(self, sentences=None, item=None, affix=None, collocations=None,
                  xiangxing=None, anchor=(False, False), family=None, derived_gloss=None,
-                 fam_candidates=None, fam_root_candidates=None):
+                 fam_candidates=None, fam_root_candidates=None, confusables=None):
         self.sentences = sentences if sentences is not None else []
         self.item = item
         self.affix = affix
@@ -59,6 +59,7 @@ class FakeDB:
         self.fam_root_candidates = (
             fam_root_candidates if fam_root_candidates is not None else []
         )
+        self.confusables = confusables if confusables is not None else []
         self.calls: list[tuple[str, dict]] = []
 
     @staticmethod
@@ -90,6 +91,9 @@ class FakeDB:
             return FakeResult([self.xiangxing] if self.xiangxing else [])
         if "SELECT v.id, v.word, v.pos, v.meaning_cn" in sql:
             return FakeResult([self.item] if self.item else [])
+        # confusable_candidates 的查询没有编号/ANY 特征，用 length(...) BETWEEN 认
+        if "length(v.word) BETWEEN" in sql:
+            return FakeResult(self.confusables)
         if "lower(v.word) = ANY" in sql:
             return FakeResult(self.family)
         raise AssertionError(f"未预期的 SQL: {sql[:120]}")
@@ -152,6 +156,7 @@ def _good_node(**over):
         "sound_hook": "啊·班等——放弃",
         "spelling_hook": "a-ban-don，ban 是班级，don 是.done",
         "recall_question": "船长松开缆绳弃船是什么动作？",
+        "confusables": [],
         "answer": "abandon",
         "image_prompt": "A captain letting go of the ship ropes in a storm, cartoon educational style",
     }
@@ -261,17 +266,18 @@ def test_oprim_degrades_whole_word_on_any_missing_field():
 # ---------------------------------------------------------------------------
 
 
-def _report(node, memory_input=None, family_resolved=None):
+def _report(node, memory_input=None, family_resolved=None, confusable_candidates=None):
     return vm.verify_memory_node(
         node,
         memory_input=memory_input or _memory_input(),
         family_resolved=[{"word": "abandoned", "vocabulary_item_id": "v2"}]
         if family_resolved is None
         else family_resolved,
+        confusable_candidates=confusable_candidates or [],
     )
 
 
-def test_all_nine_gates_pass_on_a_clean_node():
+def test_all_gates_pass_on_a_clean_node():
     rep = _report(_good_node())
     assert rep.failed_gates == []
     assert rep.score == 1.0
@@ -396,8 +402,8 @@ def test_gate_no_false_root_detects_contradiction_only():
 
 
 def test_every_gate_name_is_covered_by_the_report():
-    assert len(vm.ALL_GATES) == 10
-    assert len({g.name for g in _report(_good_node()).gates}) == 10
+    assert len(vm.ALL_GATES) == 11
+    assert len({g.name for g in _report(_good_node()).gates}) == len(vm.ALL_GATES)
 
 
 def test_gate_meaning_authority_rejects_unusable_gloss():
@@ -525,6 +531,7 @@ def _node_row():
         "semantic_core": {"image": "x", "meaning": "y", "logic": "z"},
         "scene": "暴风雨",
         "recall_question": "船长松开缆绳弃船是什么动作？",
+        "confusables": [],
         "context_evidence": [{"sentence_id": "s0", "text": "The team abandoned the project."}],
     }
 
@@ -600,17 +607,22 @@ _HOOKED = {
     "sound_hook": "Wet 谐音\"伟特\"，伟人遇雨被淋湿",
     "spelling_hook": "w 像微波，e 像圆眼",
     "family_network": [{"word": "valleys", "meaning_cn": "山谷"}],
+    "confusable_words": [{"word": "web", "meaning_cn": "网"}],
 }
 
 
 def test_all_seven_connections_reach_the_student():
-    """7 个连接齐全时，7 层**全部**到达展示面（词源这层要有 facts 才不空）。"""
+    """spec §二 的连接齐全时，每一层都到达展示面（词源这层要有 facts 才不空）。
+
+    层数已从 4 增到 8：core_image / semantic_core / sound_hook / spelling_hook /
+    family_network / confusables / word_origin / context_sentence。
+    """
     node = {**_node_row(), **_HOOKED}
     facts = {"word_origin": {"chain": "vale·ley", "should_display": True}}
     out = vm.render_review_ladder(node, stage=vm.STAGE_LEARNING, facts=facts)
     assert [ly["key"] for ly in out["layers"]] == list(vm.LAYER_ORDER)
     blob = str(out["layers"])
-    for probe in ("Wet 谐音", "w 像微波", "valleys"):
+    for probe in ("Wet 谐音", "w 像微波", "valleys", "web"):
         assert probe in blob
 
 
@@ -1121,3 +1133,134 @@ def test_prompt_forbids_inventing_family_words():
     assert "库内同族候选" in mg._SYSTEM
     assert "只能" in mg._SYSTEM
     assert "编造库内不存在的家族词" in mg._SYSTEM
+
+
+# --------------------------------------------------------------------------
+# 易混词（spec §五 ⚠️易混点 / §九 学习者自报混淆词）—— 2026-10-05
+#
+# 核心命题与 FAMILY_TRACEABLE 同源：**模型不知道库里有哪些词**，凭英语世界
+# 知识作答会去编「其实不混淆」的对照词，而学生会把那条规则记一辈子。
+# 所以清单由确定性判据（形近：长度差 ≤1 且编辑距离 ≤2）算出，模型只在清单里挑。
+# --------------------------------------------------------------------------
+
+from types import SimpleNamespace as _SN  # noqa: E402
+
+
+def _cand(word: str, meaning_cn: str | None = None, pos: str | None = None):
+    return _SN(id=f"id-{word}", word=word, meaning_cn=meaning_cn, pos=pos)
+
+
+def test_edit_distance_le_basics():
+    assert vc._edit_distance_le("affect", "effect", 2) == 1
+    assert vc._edit_distance_le("adapt", "adopt", 2) == 1
+    assert vc._edit_distance_le("desert", "dessert", 2) == 1
+    assert vc._edit_distance_le("wet", "wet", 2) == 0
+    # 超过 cap 时提前返回 cap+1（不是精确距离）—— 只用于判「是否形近」
+    assert vc._edit_distance_le("abc", "xyzxyz", 2) == 3
+    # 长度差 > cap 直接出局，不必算
+    assert vc._edit_distance_le("a", "abcdef", 2) == 3
+
+
+def test_confusable_candidates_short_word_never_queries():
+    """短于 4 的词没有可用形近信号，别去查库。"""
+    db = FakeDB()
+    assert asyncio.run(vc.confusable_candidates(db, "wet")) == []
+    assert db.calls == []
+
+
+def test_confusable_candidates_keeps_only_near_spelling_and_sorts_by_distance():
+    """判据是**真算**编辑距离，不是「像不像」。
+
+    `adapt`→`adopt` 与 `adapt`→`adept` 都是 1（各差一个字母）；`adapt`→`adult`
+    是 2（d→u、p→l，**仍在上限内，该收**）；`adapt`→`alert` 是 3，超过上限必须剔除。
+    同距离按字母序 —— `adept` 在 `adopt` 前，这是文档承诺的 tie-break，不是 bug。
+    """
+    db = FakeDB(confusables=[_cand("adopt"), _cand("adult"), _cand("adept"), _cand("alert")])
+    out = asyncio.run(vc.confusable_candidates(db, "adapt"))
+    words = [c["word"] for c in out]
+    assert words == ["adept", "adopt", "adult"], words
+    assert "alert" not in words, "距离 3 > 上限 2，必须剔除"
+    sql, params = db.calls[0]
+    assert params["target"] == "adapt"
+    assert params["lo"] == 4 and params["hi"] == 6, "长度差必须 ≤1"
+
+
+def test_confusable_candidates_respects_limit():
+    db = FakeDB(confusables=[_cand(f"ada{i}") for i in range(9)])
+    assert len(asyncio.run(vc.confusable_candidates(db, "adapt", limit=3))) == 3
+
+
+def test_gate_rejects_confusable_outside_the_candidate_list():
+    """模型编了一个库内/候选外的对照词 → 拒收。"""
+    mi = _memory_input(llm_entry={"confusable_candidates": [{"word": "effect"}]})
+    node = {**_good_node(), "confusables": [{"word": "affect", "distinguish_cn": "…"}]}
+    rep = _report(node, memory_input=mi, confusable_candidates=[{"word": "effect"}])
+    assert vm.GATE_CONFUSABLES_GROUNDED in rep.failed_gates
+
+
+def test_gate_accepts_confusable_inside_the_candidate_list():
+    mi = _memory_input(llm_entry={"confusable_candidates": [{"word": "effect"}]})
+    node = {**_good_node(), "confusables": [{"word": "effect", "distinguish_cn": "名=结果"}]}
+    rep = _report(node, memory_input=mi, confusable_candidates=[{"word": "effect"}])
+    assert vm.GATE_CONFUSABLES_GROUNDED not in rep.failed_gates
+    assert rep.failed_gates == [], f"其余门禁也该过: {rep.failed_gates}"
+
+
+def test_learner_declared_confusion_is_grounded_without_being_in_candidates():
+    """spec §九：学习者自报的混淆词是**学生自己的经验**，不要求库内/候选内。"""
+    mi = _memory_input(
+        llm_entry={
+            "confusable_candidates": [{"word": "adopt"}],
+            "learner_confused_with": "effect",
+        }
+    )
+    node = {**_good_node(), "confusables": [{"word": "effect", "distinguish_cn": "…"}]}
+    rep = _report(node, memory_input=mi, confusable_candidates=[{"word": "adopt"}])
+    assert vm.GATE_CONFUSABLES_GROUNDED not in rep.failed_gates
+
+
+def test_gate_passes_when_no_confusables_offered():
+    """没有易混对照词**不是缺陷** —— 库内无形近词时不该硬凑。"""
+    rep = _report(
+        {**_good_node(), "confusables": []},
+        memory_input=_memory_input(llm_entry={"confusable_candidates": []}),
+        confusable_candidates=[],
+    )
+    assert vm.GATE_CONFUSABLES_GROUNDED not in rep.failed_gates
+
+
+def test_load_memory_input_gives_learner_confusion_to_the_llm():
+    item = _SN(
+        id="v1", word="affect", pos="v.", meaning_cn="影响",
+        phonetic_arpabet=None, example_sentence="It will affect you.",
+        canonical_meaning=None,
+    )
+    db = FakeDB(sentences=[], item=item, confusables=[_cand("effect", "结果")])
+    out = asyncio.run(vc.load_memory_input(db, "v1", learner_confused_with="Effect"))
+    entry = out["llm_entry"]
+    assert entry["learner_confused_with"] == "Effect"
+    assert [c["word"] for c in entry["confusable_candidates"]] == ["effect"]
+
+
+def test_prompt_demands_confusables_come_from_the_list():
+    assert "库内形近易混候选" in mg._SYSTEM
+    assert "编造清单外的易混词" in mg._SYSTEM
+    assert "confusables" in mg._SYSTEM
+    # 空清单必须显式说明，否则模型会去猜
+    assert "confusables 请输出空数组" in mg._render_confusable_candidates([])
+
+
+def test_confusables_reach_the_student_as_their_own_layer():
+    node = {**_node_row(), "confusable_words": [_cand("effect", "结果")]}
+    facts = {"word_origin": {"chain": "a·ffect", "should_display": True}}
+    out = vm.render_review_ladder(node, stage=vm.STAGE_LEARNING, facts=facts)
+    keys = [ly["key"] for ly in out["layers"]]
+    assert "confusables" in keys
+    assert "effect" in str(out["layers"])
+
+
+def test_empty_confusables_layer_does_not_cost_a_reveal():
+    node = {**_node_row(), "confusable_words": []}
+    out = vm.render_review_ladder(node, stage=vm.STAGE_LEARNING)
+    assert "confusables" not in [ly["key"] for ly in out["layers"]]
+    assert out["hidden_count"] == 0

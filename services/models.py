@@ -1602,6 +1602,13 @@ class VocabularyMemoryNode(Base):
     family_network: Mapped[list] = mapped_column(
         JSONB, nullable=False, server_default=text("'[]'::jsonb")
     )
+    # 易混词（spec §五 ⚠️易混点 / §九）。存**已可追溯**的那些：门禁
+    # CONFUSABLES_GROUNDED 保证给出的都在确定性候选内，这里再过滤一次是为了让
+    # verified=False 的现场也干净（门禁不过的行仍会落库供人工复核）。
+    # 空列表是合法且常见的结果 —— 判据只有形近，库内无形近词时不该硬凑对照词。
+    confusable_words: Mapped[list] = mapped_column(
+        JSONB, nullable=False, server_default=text("'[]'::jsonb")
+    )
     sound_hook: Mapped[Optional[str]] = mapped_column(Text, nullable=True)
     spelling_hook: Mapped[Optional[str]] = mapped_column(Text, nullable=True)
     recall_question: Mapped[str] = mapped_column(Text, nullable=False)

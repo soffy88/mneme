@@ -195,6 +195,7 @@ async def load_memory_input(
     vocabulary_item_id: str,
     *,
     limit: int = 3,
+    learner_confused_with: str | None = None,
 ) -> dict[str, Any]:
     """组装 oprim._vocab_memory_generate 的输入契约（spec §1.1）。
 
@@ -308,6 +309,11 @@ async def load_memory_input(
             "family_candidates": await family_candidates(
                 db, row.word, vocabulary_item_id=vocabulary_item_id
             ),
+            # 形近易混候选（确定性）。空列表同样是合法输入 —— 库内没有形近词时
+            # 不该硬凑一个对照词。learner_confused_with 是学习者自报的混淆词，
+            # 属其自身经验，**不要求**库内存在，但会被显式标成学习者声明。
+            "confusable_candidates": await confusable_candidates(db, row.word),
+            "learner_confused_with": learner_confused_with,
         },
     }
 
@@ -546,6 +552,92 @@ async def family_candidates(
     return list(found.values())[:limit]
 
 
+def _edit_distance_le(a: str, b: str, cap: int) -> int:
+    """Levenshtein 距离，超过 ``cap`` 提前返回 ``cap + 1``。
+
+    提前截断是因为这里只关心「是否形近」，不是精确距离 —— 全量词表两两比较
+    时这个截断省掉大量无谓的计算。
+    """
+    if abs(len(a) - len(b)) > cap:
+        return cap + 1
+    prev = list(range(len(b) + 1))
+    for i, ca in enumerate(a, start=1):
+        cur = [i]
+        best = i
+        for j, cb in enumerate(b, start=1):
+            cost = 0 if ca == cb else 1
+            val = min(prev[j] + 1, cur[j - 1] + 1, prev[j - 1] + cost)
+            cur.append(val)
+            if val < best:
+                best = val
+        if best > cap:
+            return cap + 1
+        prev = cur
+    return prev[-1]
+
+
+# 形近判定：长度差 ≤1 且编辑距离 ≤2。**刻意保守** —— 易混点宁可少收也不误收：
+# 收进来一个其实不混淆的词，学生会记一条没用还占位的规则。
+_CONFUSABLE_MAX_EDIT = 2
+_CONFUSABLE_MIN_LEN = 4
+
+
+async def confusable_candidates(
+    db: Any,
+    word: str,
+    *,
+    limit: int = 4,
+) -> list[dict[str, Any]]:
+    """库里与 ``word`` **形近**的真实词（确定性，不问 LLM）。
+
+    为什么需要：spec §五 ⚠️易混点 与 §九（"我总把 affect 和 effect 搞混"
+    提升为最高优先级）都要求引擎讲清易混词，但模型无从得知库里有哪些词，
+    凭英语世界知识作答会去编造「其实不混淆」的对照词。
+
+    判据只有一条：**形近**（长度差 ≤1 且编辑距离 ≤2）。`affect`/`effect`
+    只差首字母、`adapt`/`adopt` 差一个字母、`desert`/`dessert` 插一个字母
+    —— 全部命中。
+
+    **覆盖是局部的**：音近（`affect`/`effect` 这类同尾）、同义近义、
+    跨词性混淆本判据抓不到。这是诚实边界，不假装覆盖全 —— 门禁
+    ``CONFUSABLES_GROUNDED`` 只要求「给出的都能在候选里查到」，
+    **不要求**「该有的都找到了」。
+    """
+    from sqlalchemy import text
+
+    target = (word or "").strip().lower()
+    if len(target) < _CONFUSABLE_MIN_LEN:
+        return []
+    rows = (
+        await db.execute(
+            text(
+                """
+        SELECT DISTINCT ON (lower(v.word)) v.word, v.meaning_cn, v.pos
+        FROM vocabulary_items v
+        WHERE lower(v.word) <> :target
+          AND length(v.word) BETWEEN :lo AND :hi
+          AND v.word ~ '^[A-Za-z][A-Za-z-]*$'
+        ORDER BY lower(v.word)
+        """
+            ),
+            {
+                "target": target,
+                "lo": len(target) - 1,
+                "hi": len(target) + 1,
+            },
+        )
+    ).all()
+    out: list[tuple[int, str, dict[str, Any]]] = []
+    for r in rows:
+        w = (r.word or "").strip().lower()
+        dist = _edit_distance_le(target, w, _CONFUSABLE_MAX_EDIT)
+        if dist <= _CONFUSABLE_MAX_EDIT:
+            out.append((dist, w, {"word": r.word, "meaning_cn": r.meaning_cn, "pos": r.pos}))
+    # 距离近的在前；同距离按单词序，保证确定性
+    out.sort(key=lambda t: (t[0], t[1]))
+    return [d for _dist, _w, d in out[:limit]]
+
+
 async def resolve_family(db: Any, words: list[str]) -> list[dict[str, Any]]:
     """把 LLM 给的 family 词解析成库内真实词。查不到的一律丢弃（spec §5 FAMILY_TRACEABLE）。
 
@@ -587,6 +679,7 @@ __all__ = [
     "retrieve_context",
     "load_memory_input",
     "assign_tier",
+    "confusable_candidates",
     "family_candidates",
     "resolve_family",
 ]

@@ -1528,11 +1528,16 @@ async def tool_generate_memory_node(
     vocabulary_item_id: str,
     *,
     persist: bool = False,
+    learner_confused_with: str | None = None,
 ) -> dict:
     """生成一个词的 MemoryNode：Context Retriever → LLM → Quality Verifier → 装配。
 
     顺序不可颠倒（MNEME_CORE3000_MEMORY_ENGINE_P0_SPEC.md §2）：先把**真实语境句**
     取出来再让 LLM 做联想，而不是让 LLM 凭空虚构一个词的记忆。
+
+    `learner_confused_with` 是学习者自报的混淆词（spec §九）。给了就会**提升为
+    最高优先级**：进 llm_entry，prompt 要求把它排在易混清单第一位，且不受
+    「必须在确定性候选内」的限制（那是学生自己的经验）。
 
     `persist=False`（默认）只返回结果不落库 —— 生成是花钱的，落库是对全体学生
     生效的，两个都不该默认发生。落库只写 `vocabulary_memory_nodes` 一行，**不碰
@@ -1553,7 +1558,12 @@ async def tool_generate_memory_node(
     if not vocabulary_item_id or len(vocabulary_item_id) > 100:
         raise ValueError("vocabulary_item_id 非法")
 
-    memory_input = await load_memory_input(db, vocabulary_item_id)
+    # spec §九：学习者自报「我总把 X 和 Y 搞混」时，该信息提升为最高优先级 ——
+    # 传下去进 llm_entry，prompt 要求把它排在易混清单第一位。空白视同未提出。
+    _conf = (learner_confused_with or "").strip() or None
+    memory_input = await load_memory_input(
+        db, vocabulary_item_id, learner_confused_with=_conf
+    )
     configure_llm_providers()
     caller = ProviderRegistry.get().llm("default")
     model = getattr(caller, "model", None) or "unknown"
@@ -1592,8 +1602,30 @@ async def tool_generate_memory_node(
     family_resolved = await resolve_family(
         db, [f.get("word", "") for f in (node.get("family") or [])]
     )
+    # 易混词走与 family 一样的两道工序：先用**确定性候选**给模型当清单
+    # （load_memory_input 已放进 llm_entry），再用库内检索把落库的那份收窄到
+    # 「真实存在且在候选内」。不查库直接落模型输出 = 把编造的对照词写进库。
+    confusable_candidates = list(memory_input["llm_entry"].get("confusable_candidates") or [])
+    learner_conf = (memory_input["llm_entry"].get("learner_confused_with") or "").strip()
+    confusable_resolved = await resolve_family(
+        db,
+        [
+            c.get("word", "")
+            for c in (node.get("confusables") or [])
+            if isinstance(c, dict) and (c.get("word") or "").strip()
+        ],
+    )
+    # 只保留在候选内的（学习者自报的那个词可能不在库内/候选内，它由门禁单独放行）
+    _allowed = {str(c.get("word", "")).strip().lower() for c in confusable_candidates}
+    _allowed.add(learner_conf.lower())
+    confusable_resolved = [
+        r for r in confusable_resolved if str(r.get("word", "")).strip().lower() in _allowed
+    ]
     report = verify_memory_node(
-        node, memory_input=memory_input, family_resolved=family_resolved
+        node,
+        memory_input=memory_input,
+        family_resolved=family_resolved,
+        confusable_candidates=confusable_candidates,
     )
     row = build_memory_node(
         node,
@@ -1601,6 +1633,7 @@ async def tool_generate_memory_node(
         report=report,
         family_resolved=family_resolved,
         generation_model=model,
+        confusable_resolved=confusable_resolved,
     )
 
     persisted = False
@@ -1623,13 +1656,14 @@ INSERT INTO vocabulary_memory_nodes
     (vocabulary_item_id, tier, core_image, semantic_core, scene, family_network,
      sound_hook, spelling_hook, recall_question, answer, image_prompt,
      animation_candidate, animation_scene, context_tier, context_evidence,
-     context_absence_reason, generation_model, generation_version,
-     quality_score, verified)
+     context_absence_reason, confusable_words, generation_model,
+     generation_version, quality_score, verified)
 VALUES
     (:vocabulary_item_id, :tier, :core_image, CAST(:semantic_core AS jsonb), :scene,
      CAST(:family_network AS jsonb), :sound_hook, :spelling_hook, :recall_question,
      :answer, :image_prompt, :animation_candidate, :animation_scene, :context_tier,
-     CAST(:context_evidence AS jsonb), :context_absence_reason, :generation_model,
+     CAST(:context_evidence AS jsonb), :context_absence_reason,
+     CAST(:confusable_words AS jsonb), :generation_model,
      :generation_version, :quality_score, :verified)
 ON CONFLICT (vocabulary_item_id) DO UPDATE SET
     tier = EXCLUDED.tier,
@@ -1637,6 +1671,7 @@ ON CONFLICT (vocabulary_item_id) DO UPDATE SET
     semantic_core = EXCLUDED.semantic_core,
     scene = EXCLUDED.scene,
     family_network = EXCLUDED.family_network,
+    confusable_words = EXCLUDED.confusable_words,
     sound_hook = EXCLUDED.sound_hook,
     spelling_hook = EXCLUDED.spelling_hook,
     recall_question = EXCLUDED.recall_question,
@@ -1669,6 +1704,11 @@ async def _upsert_memory_node(db: AsyncSession, row: dict) -> None:
     params["semantic_core"] = json.dumps(row["semantic_core"], ensure_ascii=False)
     params["family_network"] = json.dumps(row["family_network"], ensure_ascii=False)
     params["context_evidence"] = json.dumps(row["context_evidence"], ensure_ascii=False)
+    # 新增 JSONB 列时**必须**在这里补一行 json.dumps：漏了不会在导入时报错，
+    # 而是等到真落库那一刻抛 asyncpg 的「'list' object has no attribute 'encode'」。
+    params["confusable_words"] = json.dumps(
+        row.get("confusable_words") or [], ensure_ascii=False
+    )
     await db.execute(_UPSERT_MEMORY_NODE_SQL, params)
 
 
@@ -1733,6 +1773,7 @@ async def tool_get_memory_node(
         "semantic_core": row.semantic_core,
         "scene": row.scene,
         "family_network": row.family_network,
+        "confusable_words": row.confusable_words,
         "sound_hook": row.sound_hook,
         "spelling_hook": row.spelling_hook,
         "recall_question": row.recall_question,

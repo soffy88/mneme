@@ -45,21 +45,29 @@ _SYSTEM = """你是中学英语单词记忆卡的编创者，服务 12-18 岁学
    - 清单非空：只允许输出清单里的词，**不得**自行添加清单外的词。
    - 清单为空（`[]`）：说明这个词（多为专有名词或缩写，如 Canada / CD）**本来就没有
      同族词**。此时 `family` 必须输出 `[]`。交空数组是正确答案，编一个词才是错的。
-5. **声音钩子**：用中文谐音或音节联想把这个词的发音挂到画面上（≤20 字）。
-6. **拼写钩子**：按词根/前缀/词缀或词形拆解帮记拼写（≤25 字）。
+5. **易混词**：**只能**从该单词的「库内形近易混候选」清单里挑，**最多 2 个**，
+   并给出「一秒区分」的判断方法。
+   - 清单非空：只允许输出清单里的词。若清单里没有真正值得区分的，输出 `[]` 即可 ——
+     **宁可空，也不要硬凑**（收一条不混淆的对照规则只是占位）。
+   - 清单为空：`confusables` 输出 `[]`。
+   - 若输入给出「学习者自报混淆词」，**必须**把它排在第一位，并让区分方法直接针对它。
+6. **声音钩子**：用中文谐音或音节联想把这个词的发音挂到画面上（≤20 字）。
+7. **拼写钩子**：按词根/前缀/词缀或词形拆解帮记拼写（≤25 字）。
    不得凭空编造词根——只说你有把握的部分。
-7. **主动回忆问**：一个问句（以？结尾），问画面或动作，**严禁包含目标单词本身**。
-8. **answer**：**就是目标单词本身**，照抄输入里给出的英文单词（原形，一个词，不加
+8. **主动回忆问**：一个问句（以？结尾），问画面或动作，**严禁包含目标单词本身**。
+9. **answer**：**就是目标单词本身**，照抄输入里给出的英文单词（原形，一个词，不加
    句号、不加解释、不写中文）。它是学生作答时要回忆的那个词 —— 不是对回忆问的
    文字回答。例如单词 `abandon` → answer 就是 `abandon`。
-9. **图片 prompt**：英文，20 词以内，`cartoon educational style, clear action,
+10. **图片 prompt**：英文，20 词以内，`cartoon educational style, clear action,
    vocabulary learning illustration` 风格描述画面主体与动作。
 
-严禁：编造词源、编造例句、输出目标词以外的英文句子、**编造库内不存在的家族词**。
+严禁：编造词源、编造例句、输出目标词以外的英文句子、**编造库内不存在的家族词**、
+**编造清单外的易混词**。
 只输出 JSON 数组，与输入一一对应、顺序不变、长度相同：
 [{"word": "...", "core_image": "...", "semantic_core": {"image": "...",
   "meaning": "...", "logic": "..."}, "scene": "...", "family": [{"word": "...",
-  "meaning_cn": "..."}], "sound_hook": "...", "spelling_hook": "...",
+  "meaning_cn": "..."}], "confusables": [{"word": "...", "distinguish_cn": "..."}],
+  "sound_hook": "...", "spelling_hook": "...",
   "recall_question": "...", "answer": "...", "image_prompt": "..."}]"""
 
 
@@ -72,6 +80,16 @@ def _render_family_candidates(candidates: Any) -> str:
     items = [c for c in (candidates or []) if isinstance(c, dict) and c.get("word")]
     if not items:
         return "[]（该词无库内同族词，family 请输出空数组）"
+    return "[" + ", ".join(
+        f"{c['word']}（{(c.get('meaning_cn') or '无释义').strip()}）" for c in items
+    ) + "]"
+
+
+def _render_confusable_candidates(candidates: Any) -> str:
+    """渲染形近易混候选。空清单同样要**显式说明**（同 family：空 = 无需硬凑）。"""
+    items = [c for c in (candidates or []) if isinstance(c, dict) and c.get("word")]
+    if not items:
+        return "[]（库内无形近词，confusables 请输出空数组）"
     return "[" + ", ".join(
         f"{c['word']}（{(c.get('meaning_cn') or '无释义').strip()}）" for c in items
     ) + "]"
@@ -140,7 +158,7 @@ async def generate_memory_nodes(
     from oprim.llm import llm_complete
 
     listing = "\n".join(
-        "{i}. 单词: {w}\n   词性: {p}\n   释义: {m}\n   真实语境句: {c}\n   已知词根拆解: {a}\n   库内同族候选: {f}".format(
+        "{i}. 单词: {w}\n   词性: {p}\n   释义: {m}\n   真实语境句: {c}\n   已知词根拆解: {a}\n   库内同族候选: {f}\n   库内形近易混候选: {x}\n   学习者自报混淆词: {lc}".format(
             i=i + 1,
             w=e.get("word"),
             p=e.get("pos") or "未标注",
@@ -148,6 +166,8 @@ async def generate_memory_nodes(
             c=e.get("context") or "无（请勿编造例句，只做画面联想）",
             a=e.get("affix_hint") or "无（请勿编造词根）",
             f=_render_family_candidates(e.get("family_candidates")),
+            x=_render_confusable_candidates(e.get("confusable_candidates")),
+            lc=(e.get("learner_confused_with") or "无（学习者未提出混淆点）"),
         )
         for i, e in enumerate(entries)
     )

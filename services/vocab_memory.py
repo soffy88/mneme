@@ -41,6 +41,11 @@ GATE_NOT_DISPUTED_SOURCE = "NOT_DISPUTED_SOURCE"
 # 代价要说清：会拒掉那些「靠语境句救回来」的节点（title 的画面其实不错）。
 # 这是取舍，不是白捡 —— 故门禁名与理由都写在 spec §3.4 ④。
 GATE_MEANING_AUTHORITY = "MEANING_AUTHORITY"
+# 第 11 条（2026-10-05）：易混词必须可追溯到确定性候选。
+# 与 FAMILY_TRACEABLE 同源的问题：模型不知道库里有哪些词，会编对照词。
+# 只查「给出的都查得到」，**不查**「该有的都找到了」—— 候选判据只有形近，
+# 音近/近义抓不到，拿缺漏去拒收一个可能有价值的节点是本末倒置。
+GATE_CONFUSABLES_GROUNDED = "CONFUSABLES_GROUNDED"
 
 ALL_GATES: tuple[str, ...] = (
     GATE_HAS_ONE_CORE_IMAGE,
@@ -53,6 +58,7 @@ ALL_GATES: tuple[str, ...] = (
     GATE_NO_FALSE_ROOT,
     GATE_NOT_DISPUTED_SOURCE,
     GATE_MEANING_AUTHORITY,
+    GATE_CONFUSABLES_GROUNDED,
 )
 
 # 核心画面太短撑不起记忆，太长学生读不完。
@@ -137,9 +143,10 @@ def verify_memory_node(
     node: dict[str, Any],
     *,
     memory_input: dict[str, Any],
-    family_resolved: list[dict[str, Any]] | None = None,
+    family_resolved: list[dict] | None = None,
+    confusable_candidates: list[dict] | None = None,
 ) -> QualityReport:
-    """跑 9 条门禁。纯函数、无 IO，可完整单测。
+    """跑 ``len(ALL_GATES)`` 条门禁。纯函数、无 IO，可完整单测。
 
     Parameters
     ----------
@@ -251,7 +258,52 @@ def verify_memory_node(
             )
         )
 
-    # 8. NO_FALSE_ROOT —— 生成的拼写钩子若与存储分解矛盾则丢弃生成值。
+    # 8. CONFUSABLES_GROUNDED —— 易混词必须落在确定性候选里（spec §五 ⚠️ / §九）。
+    #
+    # 与 FAMILY_TRACEABLE 同一逻辑：模型无从得知库里有哪些词，凭英语世界知识
+    # 作答会去编「其实不混淆」的对照词，而学生会把那条规则记一辈子。
+    #
+    # **只管「给出的都查得到」，不管「该有的都找到了」** —— 候选判据只有形近
+    # （编辑距离 ≤2），音近/近义抓不到。所以缺漏不该拒收，编造才拒收。
+    # 学习者自报的混淆词例外：那是学生自己的经验，不要求库内存在。
+    raw_conf = [
+        c.get("word")
+        for c in (node.get("confusables") or [])
+        if isinstance(c, dict) and (c.get("word") or "").strip()
+    ]
+    learner_conf = ((memory_input.get("llm_entry") or {}).get("learner_confused_with") or "").strip()
+    if not raw_conf:
+        gates.append(
+            GateResult(
+                GATE_CONFUSABLES_GROUNDED,
+                True,
+                "无易混对照词" + ("（库内无形近候选）" if not learner_conf else ""),
+            )
+        )
+    else:
+        allowed = set()
+        for c in confusable_candidates or []:
+            # 候选是 dict（{"word", "meaning_cn", "pos"}）。**必须取 word 键** ——
+            # 直接 str(dict) 会得到 "{'word': 'effect'}"，于是每个候选都判不通过。
+            w = c.get("word") if isinstance(c, dict) else c
+            if str(w or "").strip():
+                allowed.add(str(w).strip().lower())
+        allowed.add(learner_conf.lower())
+        ungrounded = [w for w in raw_conf if w.strip().lower() not in allowed]
+        if ungrounded:
+            gates.append(
+                GateResult(
+                    GATE_CONFUSABLES_GROUNDED,
+                    False,
+                    f"非候选内的易混词: {ungrounded}",
+                )
+            )
+        else:
+            gates.append(
+                GateResult(GATE_CONFUSABLES_GROUNDED, True, f"{len(raw_conf)} 个均可追溯")
+            )
+
+    # 9. NO_FALSE_ROOT —— 生成的拼写钩子若与存储分解矛盾则丢弃生成值。
     #    P0 的 memory node 不落 root_logic 列，所以这一步实际是「不许生成值污染
     #    既有 379 条分档数据」。
     affix = memory_input.get("affix") or {}
@@ -345,6 +397,7 @@ def build_memory_node(
     report: QualityReport,
     family_resolved: list[dict[str, Any]] | None,
     generation_model: str | None,
+    confusable_resolved: list[dict[str, Any]] | None = None,
     generation_version: str = "p0",
 ) -> dict[str, Any]:
     """装配落库行。**不做启发式修补**：门禁不过就带 verified=False 落库，
@@ -369,6 +422,9 @@ def build_memory_node(
         "semantic_core": node.get("semantic_core") or {},
         "scene": (node.get("scene") or "").strip() or None,
         "family_network": family_resolved or [],
+        # 只落**可追溯**的那些：门禁已经拒掉清单外的，这里再过滤一次是为了让
+        # verified=False 的现场也干净（门禁不过的行仍会落库供人工复核）。
+        "confusable_words": confusable_resolved or [],
         "sound_hook": (node.get("sound_hook") or "").strip() or None,
         "spelling_hook": (node.get("spelling_hook") or "").strip() or None,
         "recall_question": (node.get("recall_question") or "").strip(),
@@ -413,6 +469,7 @@ LAYER_ORDER = (
     "sound_hook",
     "spelling_hook",
     "family_network",
+    "confusables",
     "word_origin",
     "context_sentence",
 )
@@ -586,6 +643,7 @@ def render_review_ladder(
         "sound_hook": {"sound_hook": node.get("sound_hook")},
         "spelling_hook": {"spelling_hook": node.get("spelling_hook")},
         "family_network": {"family_network": node.get("family_network") or []},
+        "confusables": {"confusable_words": node.get("confusable_words") or []},
         # disputed 档位不进展示面（与 vocab_affixes.should_display 同规则）。
         "word_origin": {
             "word_origin": None if origin is None or not origin.get("should_display", True) else origin,

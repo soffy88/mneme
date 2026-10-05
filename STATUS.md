@@ -133,7 +133,7 @@ veya1.2-vl，OpenAI 兼容端点；Qwen 为显式云端 fallback）/ Docker Comp
 
 ✅ **已交付（P0.0–P0.7）**：`vocabulary_memory_nodes`（alembic `e6f7a8b9c0d2`）、
 Context Retriever（`services/vocab_context.py`）、生成 oprim
-（`vendor/oprim/_vocab_memory_generate.py`）、9 条质量门禁
+（`vendor/oprim/_vocab_memory_generate.py`）、**11** 条质量门禁
 （`services/vocab_memory.py`）、FSRS 复习阶梯、`/mcp/GenerateMemoryNode` +
 `/mcp/GetMemoryNode`、试跑 runner（默认 dry-run）、**50 项测试 + 6 处变异验证**。
 
@@ -169,10 +169,21 @@ tier **A=1,050 / B=1,016 / C=695**、语境覆盖 **74.83%**、平均 2.06 句/�
 `host.docker.internal:8791` connection refused。按人决策**不改生产 listener**，
 故容器侧可达性需另决（compose `network_mode: host` 或独立网络方案）。
 
-**✅ CME-P0.8 100 词真实试跑已跑通**（模型 `veya1.2`，dry-run，报告
-`reports/vocab_memory_p0/trial_100_seed20261003_dryrun.json`）：
-生成 99/100（1 词未过契约已拒收）、**9 门禁全过 89/100 = 89%**、调用错误 **0**、
-降级 0、false-etymology **0**（结构保证）。未落库。
+**⚠️ CME-P0.8 100 词真实试跑（dry-run，报告
+`reports/vocab_memory_p0/trial_100_seed20261003_dryrun.json`）**
+
+**下面这组数字已过时**，不要当现状引用（2026-10-05 更正）：
+
+- 当时：模型 `veya1.2`、**9** 道门禁、通过 **89/100**、调用错误 0。
+- 之后三件事让它失效：① 2026-10-03 加了第 10 道 `MEANING_AUTHORITY`；
+  ② 主端点换成 `Agents-A1`（`veya1.2` 已退役）；③ Veya 侧 28 个上游只剩 2 个可用。
+- 同 seed（20261004）、10 道门禁、`Agents-A1` 的**重测实测：94 词跑完，
+  OK 77 = 82%**，拒收 7（`FAMILY_TRACEABLE` 6 + `HAS_RECALL_HOOK` 1），
+  **调用失败 10**。`FAMILY_TRACEABLE` 已由 `7b3295f` 修（把库内真实同族候选
+  喂给模型，**不放宽门禁**），修后同 seed 重跑尚未完成。
+
+**`vocabulary_memory_nodes` 至今 0 行** —— 所有生成只在 dry-run 验证过，从未落库。
+「引擎可用」与「数据已生产」是两件事，别混。
 
 **✅ 20 词人工抽查完成，四个发现**（详见 spec §3.4）：
 1. `HAS_ONE_CORE_IMAGE` 下限 8 **误杀**（4/4 全是 7 字好画面）→ **已修**（下限 5），
@@ -192,11 +203,19 @@ tier **A=1,050 / B=1,016 / C=695**、语境覆盖 **74.83%**、平均 2.06 句/�
 测试夹具已全换成生产真卡形状。② 试跑 runner 一次 LLM 超时就中断整轮
 （100 词跑到第 38 个崩，前面结果全丢）→ 已加逐词隔离 + `-u` 实时输出。
 
-⚠️ **迁移发布注意**：新迁移 `e6f7a8b9c0d2` 目前**只在 `mneme_test`** 应用过，
-活库 `mneme` 仍在 `a3b4c5d6e7f8`（`/readiness` 现为 200，正常）。**不要单独对活库
-跑 alembic** —— 活进程里的 `EXPECTED_MIGRATION_HEAD` 还是旧值，一跑迁移
-`/readiness` 立刻 503 → 容器 unhealthy。正确顺序是**发布重启**（容器启动命令自带
+⚠️ **迁移发布注意（2026-10-05 复现并加强）**：活库与测试库都要到 head，且
+**不要单独对活库跑 alembic**。
+
+`EXPECTED_MIGRATION_HEAD`（`services/routers/health.py:13`）是**硬编码常量**，
+`/readiness` 靠 `revision == EXPECTED_MIGRATION_HEAD` 判定。加迁移时若只加文件、
+忘了改这个常量，就会出现 **alembic 报「upgrade 成功」而 `/readiness` 503**
+—— 迁移本身是对的，红的是健康检查。这不是臆想的坑：加
+`f2a8b4c6d8e1`（confusable_words）时当场撞到。
+
+正确顺序：**改代码 → 改 `EXPECTED_MIGRATION_HEAD` → 发布重启**（容器启动命令自带
 `alembic upgrade head`，迁移自动应用后新代码期望值正好对上）。
+测试库 `mneme_test` 与活库 `mneme` 是**两个库**，都要升到 head，否则
+`tests/test_vocab_memory_db.py` 会报 `column ... does not exist`。
 
 ⚠️ 另注：`mneme_test` 是手工补列出来的（`alembic upgrade head` 被既有漂移
 `vocabulary_items.language` 挡住），**NCE 三表 `lessons`/`timed_sentences`/
@@ -882,3 +901,58 @@ GPU 恢复后：Ollama 会自动 GPU offload，`qwen2.5:7b` 速度提升约两�
 | W5(A–C) | Partners 渠道+心跳 / 多用户授权审计 / CLI+Agent-native | ✅ |
 | Cornell | 交互式康奈尔笔记（本地+云同步） | ✅ |
 | Aria | 数字人全链路（Director/3D/VRM/EchoMimic/感知/手势/口型） | ✅ |
+
+---
+
+## 词汇记忆引擎 V2 spec 完成度审核 + 补齐（2026-10-05）
+
+审核对象：`单词深度记忆引擎 V2`（7 个连接 / 事实准确性 / 频率 / 输出结构 /
+主动回忆 / 长期卡 / 质量控制 / 特殊规则）。
+
+### 审核结论
+
+**做得比 spec 强**：§三 事实准确性（契约里**根本没有 etymology 字段** →
+物理上不可能编造词源；`etymology_status` 三档；`disputed` 不进展示面）、
+§八 质量控制（spec 是人工自检清单，实现是 **11 道可执行门禁** + 变异验证）。
+
+**最实质的缺口（已修）**：spec §二 的 7 个连接里，**3 个「生成了、存了、
+API 也返回，但不在 `LAYER_ORDER` 里」** —— `sound_hook` / `spelling_hook` /
+`family_network`，学生永远看不到，而 spec 明说要形成
+「单词→声音→画面→故事→词根→词族→含义」这条链。`ac0c5a2` 已补齐，
+并因此把层数从 4 增到 8。
+
+**完全未实现**：⚠️易混点（`CONFUSABLES_GROUNDED` 已补，见下）、🎯意义演化、
+🧩词缀价值+高频例词、🧩最终记忆压缩 5 项、频率等级 🔴🔵⚪（**有意否决**：
+`frequency_band` 实测核心范围内恒等于 5，无区分度）、§九「用户说记不住/易混
+→ 提升为最高优先级」（`learner_confused_with` 已补）、「模板是工具不是格式牢笼」
+的弹性输出。
+
+### 已补：⚠️易混词（第 11 道门禁）
+
+**问题与 `FAMILY_TRACEABLE` 同源**：模型不知道库里有哪些词，会编「其实不混淆」
+的对照词，而学生会把那条规则记一辈子。
+
+- 候选由**确定性判据**算出：长度差 ≤1 且**编辑距离 ≤2**。实测
+  `affect→effect`、`adapt→adopt`、`desert→dessert` 全部命中；`abandon`/`wet`
+  正确返回空。
+- 门禁 `CONFUSABLES_GROUNDED` **只查「给出的都查得到」，不查「该有的都找到了」**
+  —— 判据只有形近，音近/近义抓不到，拿缺漏去拒收一个可能有价值的节点是本末倒置。
+- 空候选是合法结果：prompt 明确要求输出 `[]`，**宁可空也不硬凑**。
+- `learner_confused_with`（spec §九）进 `llm_entry`，prompt 要求排在易混清单
+  第一位，且**不受候选限制**（那是学生自己的经验）。
+
+### 本轮撞到的三个工程坑（都已修 + 都有测试钉住）
+
+1. **`_upsert_memory_node` 漏 `json.dumps`**：新增 JSONB 列时不在那里加一行，
+   导入期不报错，等到真落库才抛 asyncpg `'list' object has no attribute 'encode'`。
+2. **`EXPECTED_MIGRATION_HEAD` 忘了改** → alembic 成功而 `/readiness` 503（见上）。
+3. **门禁里 `allowed` 直接 `str(dict)`**：候选是 `{"word": ...}`，
+   `str()` 得到 `"{'word': 'effect'}"`，于是**每个**候选都判不通过。
+   测试没先跑全就会漏。
+
+### 诚实边界
+
+- 易混候选判据**只有形近**：音近（`affect`/`effect` 靠 -ect 同尾侥幸命中）、
+  同义近义、跨词性混淆**抓不到**。
+- `vocabulary_memory_nodes` **仍 0 行**；P0 **仍 NOT QUALIFIED**（需
+  10/11 门禁下的 100 词重跑 + 20 词人工审查）。
