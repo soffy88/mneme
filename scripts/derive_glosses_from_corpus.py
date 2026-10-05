@@ -138,9 +138,17 @@ async def run(limit: int, apply: bool) -> dict:
                 glosses = await generate_vocab_glosses(entries, caller=caller)
             except Exception as exc:  # noqa: BLE001 — 要的是覆盖，不是中断
                 call_errors += 1
+                # 必须打 cause 链：`restore_llm` 会把底层异常包成
+                # LLMOprimError("LLM call failed", cause=...)，只打类型名
+                # 会把「超时」和「JSON 截断」显示成同一个东西（实测踩过）。
+                chain = []
+                cur: BaseException | None = exc
+                while cur is not None:
+                    chain.append(f"{type(cur).__name__}: {cur}")
+                    cur = cur.__cause__
                 print(
                     f"  [{start + 1}-{start + len(batch)}/{len(targets)}] "
-                    f"LLM 调用失败：{type(exc).__name__}，跳过本批"
+                    f"LLM 调用失败，跳过本批 ← " + " | caused by ← ".join(chain[:4])
                 )
                 continue
             # 位置对齐必须在**每个**返回项上推进，包括要丢弃的 ——
