@@ -1563,6 +1563,40 @@ class VocabularyCollocation(Base):
     )
 
 
+class VocabularyDictionaryGloss(Base):
+    """词典来源的中文释义 —— 独立于「教材原文」与「语料派生」两档。
+
+    存在的理由：`vocabulary_derived_glosses` 的 CHECK 约束锁死 `source_kind='corpus_llm'`，
+    且其溯源串被硬编码成「从真实语料句派生」。词典来源塞进去那句话就是假的，
+    溯源必须是真的。
+
+    **本表没有 frequency 列**：源数据（EchoType `coca20000.json`）实测是**严格字母序**，
+    文件名里的 COCA 只说明词表出处，不含 rank。
+    """
+
+    __tablename__ = "vocabulary_dictionary_glosses"
+
+    id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True), primary_key=True, server_default=text("gen_random_uuid()")
+    )
+    vocabulary_item_id: Mapped[str] = mapped_column(
+        String(100),
+        ForeignKey("vocabulary_items.id", ondelete="CASCADE"),
+        nullable=False,
+        unique=True,
+    )
+    gloss: Mapped[str] = mapped_column(Text, nullable=False)
+    source: Mapped[str] = mapped_column(String(64), nullable=False)
+    # 源文件里的行号，用于回溯到具体那一条
+    source_ref: Mapped[Optional[str]] = mapped_column(String(64), nullable=True)
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), server_default=text("now()"), nullable=False
+    )
+    updated_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), server_default=text("now()"), nullable=False, onupdate=text("now()")
+    )
+
+
 class VocabularyMemoryNode(Base):
     """词汇记忆节点 —— LLM 生成的**联想层**，一词一条。
 

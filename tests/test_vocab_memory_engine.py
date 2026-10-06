@@ -46,7 +46,8 @@ class FakeDB:
 
     def __init__(self, sentences=None, item=None, affix=None, collocations=None,
                  xiangxing=None, anchor=(False, False), family=None, derived_gloss=None,
-                 fam_candidates=None, fam_root_candidates=None, confusables=None):
+                 fam_candidates=None, fam_root_candidates=None, confusables=None,
+                 dict_gloss=None):
         self.sentences = sentences if sentences is not None else []
         self.item = item
         self.affix = affix
@@ -60,6 +61,7 @@ class FakeDB:
             fam_root_candidates if fam_root_candidates is not None else []
         )
         self.confusables = confusables if confusables is not None else []
+        self.dict_gloss = dict_gloss
         self.calls: list[tuple[str, dict]] = []
 
     @staticmethod
@@ -85,6 +87,10 @@ class FakeDB:
             return FakeResult([self.affix] if self.affix else [])
         if "vocabulary_derived_glosses" in sql:
             return FakeResult([self.derived_gloss] if self.derived_gloss else [])
+        # 词典来源释义（2026-10-05）。必须排在 derived 之前 —— 两张表名不同，
+        # 但都出现在「非教材释义」的语义位上，顺序错了会让测试测错档位。
+        if "vocabulary_dictionary_glosses" in sql:
+            return FakeResult([self.dict_gloss] if self.dict_gloss else [])
         if "vocabulary_collocations" in sql:
             return FakeResult(self.collocations)
         if "vocabulary_xiangxing" in sql:

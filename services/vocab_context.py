@@ -232,10 +232,25 @@ async def load_memory_input(
             {"vid": vocabulary_item_id},
         )
     ).first()
+    # 词典来源释义（vocabulary_dictionary_glosses）。排在 legacy 之后、
+    # derived 之前 —— 词典释义比「从单句模型派生」可靠，但都不是教材原文。
+    dictionary = (
+        await db.execute(
+            text(
+                """
+        SELECT gloss, source FROM vocabulary_dictionary_glosses
+        WHERE vocabulary_item_id = :vid LIMIT 1
+        """
+            ),
+            {"vid": vocabulary_item_id},
+        )
+    ).first()
     meaning = classify_meaning_source(
         meaning_cn=row.meaning_cn,
         canonical_meaning=row.canonical_meaning,
         derived_gloss=derived.gloss if derived else None,
+        dictionary_gloss=dictionary.gloss if dictionary else None,
+        dictionary_source=dictionary.source if dictionary else None,
     )
     # 义项选择（CME-P1.6）：meaning_cn 常常只截了 canonical_meaning 的**第一个**义项，
     # 于是 `blind` 变成「百叶窗」、`wet` 变成「雨天」、`fine` 变成「罚款」—— 学生

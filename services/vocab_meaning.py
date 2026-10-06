@@ -57,6 +57,7 @@ TIER_CANONICAL = "canonical"  # meaning_cn 有可信释义 —— 权威
 TIER_LEGACY = "legacy"        # 只有 canonical_meaning 能给出释义 —— 可用但未派生
 # 从真实语料句派生（LLM，但例句是调用方从 timed_sentences 确定性抽的、不是模型编的）。
 # 低于 canonical（不是教材原文），高于 unusable（有出处、可回溯到具体某一句）。
+TIER_DICTIONARY = "dictionary"  # 词典来源释义 —— 低于教材，高于模型派生
 TIER_DERIVED = "derived_from_corpus"
 TIER_UNUSABLE = "unusable"    # 音标 / 占位符 / 空 —— 绝不可当释义用
 
@@ -134,11 +135,14 @@ def classify_meaning_source(
     meaning_cn: str | None,
     canonical_meaning: str | None,
     derived_gloss: str | None = None,
+    dictionary_gloss: str | None = None,
+    dictionary_source: str | None = None,
 ) -> MeaningVerdict:
     """决定「这个词的释义取自哪一列」，并给出可信档位。
 
     优先级：`meaning_cn`（canonical，教材原文）→ `canonical_meaning`（legacy，
-    未派生）→ `derived_gloss`（derived_from_corpus，从真实语料句派生）。
+    未派生）→ `dictionary_gloss`（dictionary，词典来源）→
+    `derived_gloss`（derived_from_corpus，从真实语料句派生）。
     **任何情况下都不会返回音标。**
 
     这是 Context Retriever 的唯一入口：LLM 拿到的 `meaning_cn` 一定不是读音。
@@ -165,6 +169,27 @@ def classify_meaning_source(
     legacy = classify_canonical_meaning(canonical_meaning)
     if legacy.usable:
         return legacy
+
+    # 词典来源夹在 legacy 与 derived 之间：词典释义比「从单句模型派生」可靠，
+    # 但仍不是教材原文（spec 要求「教材原文优先」）。
+    dict_g = (dictionary_gloss or "").strip()
+    if dict_g:
+        # 派生列/词典列**同样**要挡音标污染：不能因为「有出处」就免检。
+        if is_phonetic_transcription(dict_g):
+            return MeaningVerdict(
+                TIER_UNUSABLE,
+                KIND_PHONETIC,
+                None,
+                "vocabulary_dictionary_glosses",
+                "词典释义疑似音标（污染），已拒用",
+            )
+        return MeaningVerdict(
+            TIER_DICTIONARY,
+            KIND_GLOSS,
+            dict_g,
+            "vocabulary_dictionary_glosses",
+            f"词典来源释义（{dictionary_source or 'unknown'}），非教材原文",
+        )
 
     dg = (derived_gloss or "").strip()
     # 派生列**同样**要挡音标污染：不能因为「有出处」就免检。
@@ -195,6 +220,7 @@ __all__ = [
     "KIND_PLACEHOLDER",
     "PLACEHOLDERS",
     "TIER_CANONICAL",
+    "TIER_DICTIONARY",
     "TIER_DERIVED",
     "TIER_LEGACY",
     "TIER_UNUSABLE",

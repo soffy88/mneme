@@ -950,6 +950,34 @@ API 也返回，但不在 `LAYER_ORDER` 里」** —— `sound_hook` / `spelling
    `str()` 得到 `"{'word': 'effect'}"`，于是**每个**候选都判不通过。
    测试没先跑全就会漏。
 
+### EchoType 词表实测（2026-10-05）—— 今日最大单笔收益
+
+`gdrive` 无关；源是 GitHub `Talljack/echo-type`（MIT）的 `public/wordbooks/`，
+42 个词书共 13.5 MiB。`coca20000.json` 实测与核心 2761 词**重合 93.3%（2,575）**。
+
+| 用途 | 实测收益 |
+|---|---|
+| `pos` 缺口 | **987 → 163**（写入 824 条；对比《象形9000》209、《中考1600词》29） |
+| 词典释义（只填当前**完全无可用释义**的词） | **+274** 条 → 新档位 `TIER_DICTIONARY` |
+
+那 274 个词此前**完全没有可用释义**，也就是说它们过不了 `MEANING_AUTHORITY`、
+**根本生成不了记忆节点**。现在 274/274 都拿到 `meaning_cn`。
+
+**⚠️ 这个文件没有词频信息。** 文件名里的 `coca20000` 只说明**词表来自 COCA**，
+不代表保留了 rank —— 实测 17,631 条是**严格字母序**（`words == sorted(words)`）：
+`aback`=1、`abandon`=2、`water`=17178、`zulu`=17631。**不要**用它做 spec §四 的
+频率等级，`water`（最常用词之一）会被标成低频。
+
+**两个 schema 陷阱**：① 所有词书都是 `{"word", "sentence"}`，但 `sentence` 语义
+**随文件而变** —— `gaokao2026` 里是英文例句，`oxford3000` 里是中文释义。
+② `vocabulary_derived_glosses.source_kind` 有 CHECK 约束锁死 `'corpus_llm'`、
+`model` 列存的是模型名、溯源串被硬编码成「从真实语料句派生」—— 对词典来源全是假的，
+所以词典释义另立 `vocabulary_dictionary_glosses`（alembic `b3e9d1f5a7c2`）与
+`TIER_DICTIONARY` 档位，排在 legacy 之后、derived 之前。
+
+**未采用**：`gaokao2026.json` 的 3,671 条英文例句是**生成的**、不是教材原文，
+按红线只能作展示用例句，**绝不能进 `context_evidence`**。
+
 ### 教辅 PDF 资源实测（2026-10-05）
 
 `gdrive:K12教育/{小学,初中,其他}` 英语学科 198/120/52 个文件（17 GB）+
