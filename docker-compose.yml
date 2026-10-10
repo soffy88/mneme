@@ -33,7 +33,7 @@ services:
       - mneme_redis_data:/data
 
   minio:
-    image: minio/minio
+    image: pgsty/minio:RELEASE.2026-08-04T00-00-00Z  # minio/minio 已从 Docker Hub 下架
     restart: always
     ports:
       - "127.0.0.1:9002:9000"
