@@ -118,6 +118,87 @@ veya1.2-vl，OpenAI 兼容端点；Qwen 为显式云端 fallback）/ Docker Comp
 
 ## 🔄 进行中
 
+**教材英语语境句接入（2026-10-06 启动）—— 解记忆节点的真瓶颈**
+
+上一节实测出的结论：**卡点是语境句不是释义**（666 词有释义但无任何语境句，
+被 `retrieve_context` 的 `has_context=False` 挡在门外，`to_payload()` 里连
+`meaning` 字段都不带）。教材句是那批词唯一**有出处、可回溯、且不是生成的**
+来源（EchoType 词表的英文例句实测是生成的，一律不进 `context_evidence`）。
+
+已交付：
+
+| 组件 | 位置 |
+|---|---|
+| 页图抓取（FreePEP 同款，必须带 `Referer` 否则 403） | `scripts/fetch_pep_pages.py` |
+| OCR + **句子筛选门禁** | `scripts/ocr_pep_pages.py` + 17 项测试 |
+| 落库（教材/句/词→句关联） | `scripts/import_textbook_sentences_pep.py` |
+| schema（独立表 + `license_status`） | alembic `pep1a2b3c4d5e` |
+| Context Priority **tier 2 启用**（教材优先于 NCE） | `services/vocab_context.py` |
+
+**教材来源盘点**：`textbooks` 68 本但**英语 0 本**（math 26/数学 20/chinese 12/
+physics 9/history 1）—— 这是之前「语料只有 NCE」的真正原因。FreePEP 的
+`pep_catalog.json` 有 780 本，英语 58 条，剔盲校/低视力版后 **32 本可用**
+（初中 6 + 高中 7 + 小学 8 的两套平行版本）。
+
+⚠️ **人教社页图是 300 DPI 位图、零文本层**（实测），所以
+`textbook_files.has_text_layer` 必须记 `false`，文本靠 RapidOCR
+（实测 9.4s/页，英语识别质量可用）。
+
+⚠️ **我上一轮报的「外推 ~2,060 个词」是错的，必须更正**：那是拿 12 页**未经
+门禁**的 OCR token 集合直接外推的。走完门禁后的真实产出：
+
+| | 179 页（3 本） | **564 页（5 本，实测）** |
+|---|---|---|
+| OCR 原始句 | 2,578 | 7,290 |
+| 门禁后保留 | 1,318（51%） | **2,875（39%）** |
+| 新覆盖的无语境词 | 142 | **204** |
+| 仍无语境 | 553 | **491** |
+
+**所以「多抓几本书」这条路的收益是次线性的**，不是线性 —— 门禁越严、句子越短，
+每页能贡献的词越少。可生成记忆节点的词 **2066 → 2270**（+204，+9.9%）。
+
+门禁拒收统计（564 页）：`LAYOUT_MERGE` 1141 / `IMPERATIVE_TASK` 1157 /
+`LOW_CONFIDENCE` 1052 / `SHORT_OR_JUNK` 693 / `HAS_CJK` 199 / `NOT_PROSE` 173。
+**61% 的原始句被拒** —— 教材页面上真正是「课文句子」的比例本就这么低。
+
+**教材来源盘点**：`textbooks` 68 本但**英语 0 本**（math 26/数学 20/chinese 12/
+physics 9/history 1）—— 这是之前「语料只有 NCE」的真正原因。FreePEP 的
+`pep_catalog.json` 有 780 本，英语 58 条，剔盲校/低视力版后 **32 本可用**
+（初中 6 + 高中 7 + 小学 8 的两套平行版本）。已接入 5 本初中
+（七上 140 页 / 七下 132 / 八上 150 / 八下 82 / 九全一册 60）；高中 7 本仍在下载。
+
+⚠️ **人教社页图是 300 DPI 位图、零文本层**（实测），所以
+`textbook_files.has_text_layer` 必须记 `false`，文本靠 RapidOCR
+（实测 9.4s/页，英语识别质量可用）。**原始 box（含置信度）落盘缓存**在
+`data/external/pep_pages/_boxes/`，改门禁后重新筛是秒级，不必重跑 OCR。
+
+**踩过的三个坑（都有测试钉住）**：
+1. **水印**：OCR 每页都吐 `人民龙育出版社`（对「人民教育出版社」的误读）→
+   不剔则每页 `has_cjk=True`，全书零产出。字面量枚举不够（还见过 `人民意育
+   出版社`），按模式认。
+2. **词数用 `[A-Za-z]` 数出的是字母个数**：`Why do you like?` 被数成 12 而不是 4，
+   于是 4 词碎片压线通过。必须用能整词匹配的模式。
+3. ⚠️ **句 ID 若由 `sentence_index` 派生，门禁一收紧就全体错位**：实测门禁收紧后
+   g7b 保留句 435→333，`ON CONFLICT DO NOTHING` 一个都匹配不上，**被拒的
+   ~1,200 句继续留在库里被 tier 2 取用**。改为按 `(textbook_id, page, 句文本)`
+   哈希，并加「以本次输入为准」的 prune（`NOT (id = ANY(...))`），才真正幂等
+   —— 重复跑实测「清理 0 / 写入 0」。
+
+**人决策：OCR 丢词这类损伤不做 LLM 校对（选项 a）**。语料是真实出版物、句子是
+真实的，只是偶有 OCR 掉词（如 `She an online class in her room.` 原句应为
+`She takes…`）。**确定性方法检测不出语法缺词**，故接受。判分与掌握度链路不受影响
+（LLM 不参与语料构建）。
+
+**版权**：按人决策直接接入，但每行带 `license_status='unlicensed'`，
+**按整本教材下架不需要数据迁移**：`DELETE FROM textbook_sentences WHERE
+textbook_id='pep-en-g7b'`（CASCADE 连带删关联行）。
+
+**尚未解决**：TTS/ASR/发音评测。项目内三把 key 实测都无音频权限 ——
+`INTERN_AI`（主力 LLM）10 个模型零个支持 audio；`DASHSCOPE` 绑的那个 MaaS
+端点 `/models` 列得出 `qwen3-tts-flash`/`qwen3-asr-flash`，但调用全部
+`AccessDenied.Unpurchased`；`VEYA` 63 个模型全 text/vision。故「听」这条
+链路在拿到有 entitlement 的 key 之前无法接通。
+
 **词汇记忆引擎 P0（2026-10-03 启动，工程规格 `MNEME_CORE3000_MEMORY_ENGINE_P0_SPEC.md`）**
 
 按「VOCABULARY MEMORY ENGINE SPEC v1.0」实现之前先做了生产实测，因为那份 spec
@@ -977,6 +1058,79 @@ API 也返回，但不在 `LAYER_ORDER` 里」** —— `sound_hook` / `spelling
 
 **未采用**：`gaokao2026.json` 的 3,671 条英文例句是**生成的**、不是教材原文，
 按红线只能作展示用例句，**绝不能进 `context_evidence`**。
+
+🚨 **上面那条记录的溯源标签是错的（2026-10-06 更正）**：本地
+`data/external/vocab_src/gaokao2026.json` 与上游 `public/wordbooks/senior-high.json`
+**逐字节相同**（3,671 条）。也就是说它并不是一个独立的「gaokao2026」资源，
+而是 `senior-high` 换了名字。而且 `cet4` 的 4,370 条例句里有 **2,015 条与这份
+已知生成集完全一致** —— 说明「生成」不是这一个文件的属性，是这批词表共同的
+来源特征。**结论不变（英文例句一律不进 `context_evidence`），但依据从
+「该文件生成」升级为「这批词表的例句都是生成的」，覆盖面更大。**
+
+### EchoType 词表第二批：红宝书 + 牛津5000（2026-10-06）
+
+`hongbaoshu.json`（4,770）+ `oxford5000.json`（5,497），
+`scripts/import_dict_from_hongbaoshu_oxford.py`（26 项测试），**已入库**：
+**pos +32**、**词典释义 +11**。
+
+⚠️ **上一轮我报的「能补 544/930 条释义」是错的**，已更正：那两个数只统计
+`meaning_cn` 为空，没排除已有 `canonical_meaning` / `derived_gloss` / 上一轮
+已写的词典释义。真实缺口按 `classify_meaning_source(...).usable` 算是 **197 条**，
+且其中 **186 条其实 coca20k 那一轮已经写过词典释义**（靠 `ON CONFLICT DO
+NOTHING` 才没被覆盖）。实际新写 **11 条**。剩余无任何可用释义的核心词
+**197 → 29**（`geese`/`knives`/`rode`/`dvd`/`pc`/`policewoman` 等变体与复合词，
+不在这两个词表里）。
+
+**那 11 条是真价值**：它们的 `canonical_meaning` 装的是**音标**
+（`accent` → `[ˈæksent]`），也就是说学生现在看到的是一串音标而不是释义。
+
+两个源的坑都按**拒绝**而非清洗处理，各钉了测试：
+
+1. **`oxford5000` 的 `adv.` 被抽取器截断成 `ad` + `v.`**（371 条，行首），
+   句中也有一批（`seventh`：`…七分之一的ad\nv. 居第七位地`）。按行首词性标签解析
+   会把 `abroad` 标成**动词**。实测打开「猜回 adv.」的修复只多拿 22 条释义 /
+   2 条 pos，收益远小于给孩子看错词性的风险 → **不修复，一律拒**。
+2. **`hongbaoshu` 词性组在句尾**（`放弃， 放置不管 (vt.)`）**且 277 条多词性**
+   （`(noun, vt.)`）→ 取第一个；另有 1,069 条形如 `艺术 (n.) - 创造性表现`。
+3. **源数据粘接的百科尾巴**：`抵销Balance天秤星座`、`回形针CLIPabbr. Cellular
+   Logic Image Processor…`、`摩托车动 词:motorcycle`、`复 数: grandchildren`
+   → 尾部派生词段（`时态:`/`名 词:`/`动 词:`/`复 数:`）截掉，长串英文与
+   中英粘连**整条拒**。
+4. **`vt. & vi.` 里的 `& vi.` 会漏进释义** —— 这是我自己的 bug，已剥掉。
+
+**源优先级**：重名时 `hongbaoshu` 赢（红宝书是中学词表，简洁干净）。
+oxford5000 义项更全但更 formal 且带上述污染；实测它独有贡献
+**13/32 的 pos、24/197 的释义**，故保留而按门禁筛，不整源弃用。
+
+**已知残留（确定性方法修不了）**：源数据丢分隔符造成的**义项粘连**无法机械检测
+（`锦标赛，冠军赛冠军的地位…`、`滑行，滑落幻灯片`），全库约 2 条，
+只能靠人工审查抓 —— 与「教辅 PDF 翻译错误」同一类残留。
+
+**这些词表仍然填不上什么**：**没有词频**（41 个词书全是严格字母序），
+修不了 `frequency_band`；**英文例句是生成的**，填不了 Context Priority 的
+tier 1/2/4；`nce1-4` 比库里既有的真实 NCE 语料（559 lesson / 13,017 句）更差。
+
+#### 🔴 释义缺口已关，但**记忆节点的真瓶颈不是释义**（2026-10-06 实测）
+
+`vocabulary_memory_nodes` 至今 **0 行**。实测把「释义够不够」和「能不能生成」
+分开算（核心 2,761 单词口径）：
+
+| | 词数 |
+|---|---|
+| 有可用释义（任一档位） | **2,732** |
+| ├─ **且**有真实语境句 → 记忆节点可生成 | **2,066** |
+| └─ **但无语境句** → 仍被 `retrieve_context` 挡在门外 | **666** |
+| 无任何可用释义 | 29 |
+
+`retrieve_context` 在 `has_context=False` 时**提前返回**，`to_payload()` 里根本
+不带 `meaning` 字段（实测 `bush`：tier=5、`degradation_reason` 齐全、`meaning`
+键不存在）。所以上一轮补的 11 条词典释义虽然让 `classify_meaning_source`
+判为 usable，**仍然产不出记忆节点**。
+
+**结论：真正的卡点是 666 个词缺「真实语境句」，不是缺释义。** 释义这条路
+（词典/教辅/LLM 派生）已经走到头了 —— 再灌词表收益趋零。要动节点数，
+必须先解 2026-10-02 那个 🚨 Needs Human（V2 记忆引擎定位）**并且**给 tier 3
+补语境源（唯二路径：导入真实教材句，或把 `reading_passages` 从 41 行做成语料库）。
 
 ### 教辅 PDF 资源实测（2026-10-05）
 

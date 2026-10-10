@@ -1,0 +1,93 @@
+{
+  "summary": {
+    "collection": "core-exam-zhongkao-gaokao-k12",
+    "pool_single_words": 2066,
+    "trial_size": 1,
+    "seed": 20261003,
+    "applied": false,
+    "generated": 1,
+    "skipped_contract": 0,
+    "call_errors": 0,
+    "verified": 1,
+    "degraded_no_context": 0,
+    "with_context": 1,
+    "image_prompt_coverage": 1.0,
+    "failed_gate_counts": {}
+  },
+  "reports": [
+    {
+      "vocabulary_item_id": "1e96d7b2-61c8-5042-8b17-97c83d3b7566",
+      "word": "blind",
+      "pos": "adj",
+      "generated": true,
+      "tier": "A",
+      "context_tier": 3,
+      "verified": true,
+      "degraded": false,
+      "quality_score": 1.0,
+      "failed_gates": [],
+      "core_image": "蒙眼人伸手乱挡，眼前没有光",
+      "semantic_core": {
+        "image": "用物体遮住双眼看方向的人",
+        "meaning": "视觉受阻无法看清的状态",
+        "logic": "眼被遮盖 → 光线阻断 → 视觉全失"
+      },
+      "scene": "一个人在浓雾里戴上眼罩，完全看不见前路的景象",
+      "family_network": [
+        {
+          "word": "blindly",
+          "meaning_cn": null,
+          "vocabulary_item_id": "627b4209-ac73-5859-8b44-7f26a4a50748"
+        },
+        {
+          "word": "blindness",
+          "meaning_cn": null,
+          "vocabulary_item_id": "3360ad10-b9ea-5a21-8c76-256e47a4baf1"
+        }
+      ],
+      "sound_hook": "布 (Bu) 淋 (Lin) 的 (De) 丁 (Ding)",
+      "spelling_hook": "b 耳 l 杆 i 点 n 门 d 腹",
+      "recall_question": "用手遮住眼睛导致看不见外界的状态叫什么？",
+      "answer": "blind",
+      "image_prompt": "cartoon educational style, clear action, vocabulary learning illustration, A man with eyepatch",
+      "animation_candidate": true,
+      "context_evidence": [
+        {
+          "sentence_id": "4a18ce4a-6f8f-517a-8677-11987f4d9fd5",
+          "text": "And though the gleams blind and dazzle,",
+          "lesson": "29. Beauty",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "5eee601e-78a9-57f1-956c-1d40927592d5",
+          "text": "And, though the gleams blind and dazzle, yet do they convey a hint of beauty and serenity",
+          "lesson": "24.Beauty",
+          "source": "NCE"
+        },
+        {
+          "sentence_id": "f518a577-d86a-5804-8ce1-e203cf6e7bdd",
+          "text": "Many more people are form blind than color blind.",
+          "lesson": "38. Water and the Traveller",
+          "source": "NCE"
+        }
+      ],
+      "input_meaning": {
+        "tier": "canonical",
+        "kind": "gloss",
+        "gloss": "掩饰，借口；百叶窗",
+        "source_column": "meaning_cn",
+        "reason": "meaning_cn 可信释义",
+        "primary_sense": {
+          "order": 1,
+          "pos": "adj",
+          "raw_pos": "adj.",
+          "text": "盲目的；瞎的"
+        },
+        "primary_sense_reason": "pos 列='adj' → 命中第 1 个义项（adj.）",
+        "gloss_source": "canonical_meaning(pos-selected sense)"
+      },
+      "input_context": "And though the gleams blind and dazzle,",
+      "input_affix_chain": null
+    }
+  ]
+}

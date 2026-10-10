@@ -5,40 +5,41 @@
     "applied": false,
     "written": 0,
     "degraded_no_gloss": 0,
-    "skipped_no_context": 0
+    "skipped_no_context": 0,
+    "call_errors": 0
   },
   "details": [
     {
-      "word": "phrase",
-      "gloss": "短语；词组"
+      "word": "operation",
+      "gloss": "需要大量计划的行动"
     },
     {
-      "word": "being",
-      "gloss": "处于（be的现在分词）"
+      "word": "journalist",
+      "gloss": "专门从事新闻工作的人"
     },
     {
-      "word": "type",
-      "gloss": "打字"
+      "word": "experiment",
+      "gloss": "为验证想法的试验"
     },
     {
-      "word": "suffering",
-      "gloss": "痛苦；苦难"
+      "word": "elderly",
+      "gloss": "年纪较大的年长者"
     },
     {
-      "word": "sharp",
-      "gloss": "猛烈的；狠狠的"
+      "word": "beg",
+      "gloss": "向他人乞求施舍"
     },
     {
-      "word": "code",
-      "gloss": "准则；规范"
+      "word": "tenth",
+      "gloss": "表示顺序的第十个"
     },
     {
-      "word": "credit",
-      "gloss": "存款余款；贷方"
+      "word": "comic",
+      "gloss": "带有滑稽幽默感的"
     },
     {
-      "word": "alike",
-      "gloss": "同样地；两者都"
+      "word": "bet",
+      "gloss": "身体感觉更好的"
     }
   ]
 }

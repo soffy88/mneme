@@ -1,45 +1,45 @@
 {
   "summary": {
     "collection": "core-exam-zhongkao-gaokao-k12",
-    "targets": 461,
+    "targets": 8,
     "applied": true,
     "written": 8,
     "degraded_no_gloss": 0,
     "skipped_no_context": 0,
-    "call_errors": 57
+    "call_errors": 0
   },
   "details": [
     {
-      "word": "sixth",
-      "gloss": "第六的"
+      "word": "operation",
+      "gloss": "一次重大行动"
     },
     {
-      "word": "diet",
-      "gloss": "日常饮食；节食"
+      "word": "journalist",
+      "gloss": "新闻工作者"
     },
     {
-      "word": "root",
-      "gloss": "根；扎根"
+      "word": "experiment",
+      "gloss": "简单的科学试验"
     },
     {
-      "word": "disturb",
-      "gloss": "干扰；损害"
+      "word": "elderly",
+      "gloss": "年纪较大的"
     },
     {
-      "word": "disease",
-      "gloss": "疾病"
+      "word": "beg",
+      "gloss": "向人乞求财物"
     },
     {
-      "word": "command",
-      "gloss": "掌控；支配"
+      "word": "tenth",
+      "gloss": "次序上的第十"
     },
     {
-      "word": "sat",
-      "gloss": "坐下（sit的过去式）"
+      "word": "comic",
+      "gloss": "滑稽幽默的"
     },
     {
-      "word": "helicopter",
-      "gloss": "直升机"
+      "word": "bet",
+      "gloss": "身体状况好转的"
     }
   ]
 }

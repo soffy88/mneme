@@ -1,0 +1,941 @@
+{
+  "generated_at": "2026-10-05T14:49:40.207309+00:00",
+  "summary": {
+    "sources": [
+      "DAY 1 A Young Officer and an Old Soldier-每天一篇故事，21天搞定中考英语1600词.pdf",
+      "DAY 10 The Proper Way to Give Gifts -每天一篇故事，21天搞定中考英语1600词.pdf",
+      "DAY 11 My Collection of Sea Shells-每天一篇故事，21天搞定中考英语1600词.pdf",
+      "DAY 12 Why Shouldn&#39;t We Smoke-每天一篇故事，21天搞定中考英语1600词.pdf",
+      "DAY 13 The Jobs of Tomorrow-每天一篇故事，21天搞定中考英语1600词.pdf",
+      "DAY 14 Buying a House-每天一篇故事，21天搞定中考英语1600词.pdf",
+      "DAY 15 A Careless Couple-每天一篇故事，21天搞定中考英语1600词.pdf",
+      "DAY 16 At Sea in a Small Boat-每天一篇故事，21天搞定中考英语1600词.pdf",
+      "DAY 17 Very Pleased to Meet You-每天一篇故事，21天搞定中考英语1600词.pdf",
+      "DAY 18 Making Electricity-每天一篇故事，21天搞定中考英语1600词.pdf",
+      "DAY 19 One Real Man-每天一篇故事，21天搞定中考英语1600词.pdf",
+      "DAY 2 Sam and Tod-每天一篇故事，21天搞定中考英语1600词.pdf",
+      "DAY 20 Where Is My Pet Dog-每天一篇故事，21天搞定中考英语1600词.pdf",
+      "DAY 21 Why Shouldn&#39;t We Smoke-每天一篇故事，21天搞定中考英语1600词.pdf",
+      "DAY 3 A Black Umbrella-每天一篇故事，21天搞定中考英语1600词.pdf",
+      "DAY 4 The “Deaf” Wife-每天一篇故事，21天搞定中考英语1600词.pdf",
+      "DAY 5 Living like a Pig-每天一篇故事，21天搞定中考英语1600词.pdf",
+      "DAY 6 A Competition of Lying-每天一篇故事，21天搞定中考英语1600词.pdf",
+      "DAY 7 Say it with Flowers-每天一篇故事，21天搞定中考英语1600词.pdf",
+      "DAY 8 Jane Came Home Too Late-每天一篇故事，21天搞定中考英语1600词.pdf",
+      "DAY 9 Breakfast Is Important-每天一篇故事，21天搞定中考英语1600词.pdf"
+    ],
+    "core_vocab": 2761,
+    "kept": 163,
+    "unlinked_no_head_word": 22,
+    "skipped_not_a_phrase": 566,
+    "applied": true,
+    "rows_inserted": 0
+  },
+  "details": [
+    {
+      "vocabulary_item_id": "bec63e75-8936-5643-9812-33201160f140",
+      "phrase_en": "look in",
+      "phrase_cn": "查看"
+    },
+    {
+      "vocabulary_item_id": "f0a276da-a55d-5a90-bd0a-174db425984a",
+      "phrase_en": "look around",
+      "phrase_cn": "环顾"
+    },
+    {
+      "vocabulary_item_id": "dbc4d0fb-02d1-518d-b905-0526b4bdb01f",
+      "phrase_en": "at last",
+      "phrase_cn": "最后"
+    },
+    {
+      "vocabulary_item_id": "cba8aecb-6ee5-590b-9fc2-3b040dfecc7a",
+      "phrase_en": "wait a moment",
+      "phrase_cn": "稍等片刻"
+    },
+    {
+      "vocabulary_item_id": "07c1cff3-a79b-53e2-b152-72af23b6d3e1",
+      "phrase_en": "speak to sb.",
+      "phrase_cn": "和某人说话"
+    },
+    {
+      "vocabulary_item_id": "99486041-f92a-5d5b-bb4c-40d7eb5837b6",
+      "phrase_en": "get change for ten pence",
+      "phrase_cn": "换取10便士零钱"
+    },
+    {
+      "vocabulary_item_id": "12449b6c-3ead-5f79-aa7b-0c743c971876",
+      "phrase_en": "give a gift",
+      "phrase_cn": ".送礼"
+    },
+    {
+      "vocabulary_item_id": "26a3f285-9ecb-5e1b-81d4-bacf67c4c6d1",
+      "phrase_en": "express good wishes",
+      "phrase_cn": "表达良好的祝愿"
+    },
+    {
+      "vocabulary_item_id": "1ab2a6b9-ce10-5c4b-9d41-e7569982c368",
+      "phrase_en": "unexpected good results",
+      "phrase_cn": "意想不到的效果"
+    },
+    {
+      "vocabulary_item_id": "c020f2fe-c398-5a47-9eb8-b6a55ef146f6",
+      "phrase_en": "in communication with",
+      "phrase_cn": "与.....交往时"
+    },
+    {
+      "vocabulary_item_id": "8cac6ade-eef9-54b8-afb3-7525bc645176",
+      "phrase_en": "go to the beach",
+      "phrase_cn": ".去海滩"
+    },
+    {
+      "vocabulary_item_id": "0c29d872-54f9-5fa6-9807-7f78049f8700",
+      "phrase_en": "dig in",
+      "phrase_cn": "挖掘......"
+    },
+    {
+      "vocabulary_item_id": "a90bcba8-667a-524a-ba89-c9fa66f79505",
+      "phrase_en": "so far",
+      "phrase_cn": "到目前为止"
+    },
+    {
+      "vocabulary_item_id": "c5d2071d-7dba-5bc9-a8ba-3b6d1ef2a636",
+      "phrase_en": "be like",
+      "phrase_cn": "像......"
+    },
+    {
+      "vocabulary_item_id": "aa1d7f34-985c-5620-a2c1-ed8b65182429",
+      "phrase_en": "remember sth.",
+      "phrase_cn": "记得......"
+    },
+    {
+      "vocabulary_item_id": "d1449285-e8fc-5900-a550-112d32b61287",
+      "phrase_en": "to begin with",
+      "phrase_cn": ".首先"
+    },
+    {
+      "vocabulary_item_id": "191876d0-bb1f-532d-94ba-e85b32fe38de",
+      "phrase_en": "a lot of",
+      "phrase_cn": "大多数"
+    },
+    {
+      "vocabulary_item_id": "729dba16-cd3e-525f-8c27-89f93c251466",
+      "phrase_en": "secondhand smoke",
+      "phrase_cn": "吸二手烟"
+    },
+    {
+      "vocabulary_item_id": "57ee27ed-09c7-5cba-8b05-db885afd3582",
+      "phrase_en": "in front of",
+      "phrase_cn": "在......前面"
+    },
+    {
+      "vocabulary_item_id": "ea644eb2-8f30-5dc3-8bb4-af4d3e8dee50",
+      "phrase_en": "most det.",
+      "phrase_cn": "最"
+    },
+    {
+      "vocabulary_item_id": "ea644eb2-8f30-5dc3-8bb4-af4d3e8dee50",
+      "phrase_en": "most importantly",
+      "phrase_cn": ".最重要的"
+    },
+    {
+      "vocabulary_item_id": "79ad2e27-d1cb-5038-8a0d-757c307c7414",
+      "phrase_en": "health problems",
+      "phrase_cn": "健康问题"
+    },
+    {
+      "vocabulary_item_id": "04db0490-81c8-5614-923f-74010b07443c",
+      "phrase_en": "for example",
+      "phrase_cn": "比如"
+    },
+    {
+      "vocabulary_item_id": "48c6dc45-445e-5e31-9c07-495e1bbadf4d",
+      "phrase_en": "it’s time to do",
+      "phrase_cn": "到做......的时候了"
+    },
+    {
+      "vocabulary_item_id": "8d18bb0c-be9f-5f88-b423-f7768aec83f9",
+      "phrase_en": "interest sb.",
+      "phrase_cn": "......让......感兴趣"
+    },
+    {
+      "vocabulary_item_id": "fc5eaaa1-1af2-51e9-93e3-43b460af61be",
+      "phrase_en": "work with",
+      "phrase_cn": "和......合作、工作"
+    },
+    {
+      "vocabulary_item_id": "c6855317-b1c7-501c-beb8-0377fd7cb041",
+      "phrase_en": "need and want",
+      "phrase_cn": "需求"
+    },
+    {
+      "vocabulary_item_id": "678af91a-552b-5b53-bb13-92c97a237c7e",
+      "phrase_en": "decide to do",
+      "phrase_cn": "决定做某事"
+    },
+    {
+      "vocabulary_item_id": "9b473476-37cf-559f-829d-859d7e98526b",
+      "phrase_en": "result from",
+      "phrase_cn": "源于......"
+    },
+    {
+      "vocabulary_item_id": "161bad47-ce6c-5bcd-9e76-80314d0258e9",
+      "phrase_en": "good and services",
+      "phrase_cn": "商品和服务"
+    },
+    {
+      "vocabulary_item_id": "e2015bf5-1e6e-53c3-940f-415b91981e1c",
+      "phrase_en": "poor memory",
+      "phrase_cn": "记性差"
+    },
+    {
+      "vocabulary_item_id": "8e13546d-60cf-5961-9e5c-baf51dcedd01",
+      "phrase_en": "compare with",
+      "phrase_cn": "与......相比"
+    },
+    {
+      "vocabulary_item_id": "64e05c78-5287-524d-9b57-d53897c89114",
+      "phrase_en": "quite different",
+      "phrase_cn": "十分不同"
+    },
+    {
+      "vocabulary_item_id": "79062368-7a35-535b-b5ac-b5934f067fc0",
+      "phrase_en": "be careful in",
+      "phrase_cn": "在......细心"
+    },
+    {
+      "vocabulary_item_id": "aa1d7f34-985c-5620-a2c1-ed8b65182429",
+      "phrase_en": "remember to do",
+      "phrase_cn": "记得做某事"
+    },
+    {
+      "vocabulary_item_id": "b5f38d62-589e-51c2-bf9d-357bb7954943",
+      "phrase_en": "cause trouble",
+      "phrase_cn": "引起麻烦"
+    },
+    {
+      "vocabulary_item_id": "5311e5c1-1688-5c69-9c6a-6665d94b5c01",
+      "phrase_en": "so much",
+      "phrase_cn": "太多"
+    },
+    {
+      "vocabulary_item_id": "472adf27-60c0-5112-9e25-1c48b7fe83fe",
+      "phrase_en": "plan to",
+      "phrase_cn": "计划......"
+    },
+    {
+      "vocabulary_item_id": "9d2c4355-4da7-5cec-9f4f-18ec826eb936",
+      "phrase_en": "fly to",
+      "phrase_cn": "飞往......"
+    },
+    {
+      "vocabulary_item_id": "84f78d95-9739-5274-8085-05ed0d5e103d",
+      "phrase_en": "tell sb. not to do",
+      "phrase_cn": "告诉某人不要做某事"
+    },
+    {
+      "vocabulary_item_id": "4f046680-875f-5f57-a05c-b4a0df40cde8",
+      "phrase_en": "forget to do",
+      "phrase_cn": "忘记做某事"
+    },
+    {
+      "vocabulary_item_id": "23965d98-850b-56a8-ba2c-a6ebe8f77c9c",
+      "phrase_en": "in the morning",
+      "phrase_cn": "在早上"
+    },
+    {
+      "vocabulary_item_id": "4fb62bd6-7b6c-596d-a303-8a4df0e92728",
+      "phrase_en": "post office",
+      "phrase_cn": "邮局"
+    },
+    {
+      "vocabulary_item_id": "c6855317-b1c7-501c-beb8-0377fd7cb041",
+      "phrase_en": "want to",
+      "phrase_cn": "想要"
+    },
+    {
+      "vocabulary_item_id": "a176916a-1f71-5431-bbfa-ed0bf7b4b123",
+      "phrase_en": "sea water",
+      "phrase_cn": "海水"
+    },
+    {
+      "vocabulary_item_id": "191876d0-bb1f-532d-94ba-e85b32fe38de",
+      "phrase_en": "a lot of",
+      "phrase_cn": "大量的"
+    },
+    {
+      "vocabulary_item_id": "a176916a-1f71-5431-bbfa-ed0bf7b4b123",
+      "phrase_en": "rain water",
+      "phrase_cn": "雨水"
+    },
+    {
+      "vocabulary_item_id": "77d98aa4-6d95-5502-b869-942cf143b743",
+      "phrase_en": "think about",
+      "phrase_cn": "认为"
+    },
+    {
+      "vocabulary_item_id": "04b3e6b5-cfd6-588d-b8f5-c35e45e0fd23",
+      "phrase_en": "warm bed",
+      "phrase_cn": "温暖的床"
+    },
+    {
+      "vocabulary_item_id": "d67b07e6-ad46-5b2b-9f8a-b7e519250c13",
+      "phrase_en": "during prp.",
+      "phrase_cn": "在......期间"
+    },
+    {
+      "vocabulary_item_id": "fc5eaaa1-1af2-51e9-93e3-43b460af61be",
+      "phrase_en": "work in",
+      "phrase_cn": "在...工作"
+    },
+    {
+      "vocabulary_item_id": "25b9d79b-2762-5924-82f2-00731a7027ca",
+      "phrase_en": "of course",
+      "phrase_cn": "当然"
+    },
+    {
+      "vocabulary_item_id": "c6c2e50d-99ea-54bb-9671-d46702d00044",
+      "phrase_en": "at a dance",
+      "phrase_cn": "在一次舞会上"
+    },
+    {
+      "vocabulary_item_id": "09537ef9-155e-5ada-bf88-28b12dbee7d8",
+      "phrase_en": "play the piano",
+      "phrase_cn": "弹钢琴"
+    },
+    {
+      "vocabulary_item_id": "48c6dc45-445e-5e31-9c07-495e1bbadf4d",
+      "phrase_en": "have a good time",
+      "phrase_cn": "玩得开心"
+    },
+    {
+      "vocabulary_item_id": "bf0ff23d-8d37-5a0e-818f-b45825eebd96",
+      "phrase_en": "go abroad",
+      "phrase_cn": "去国外"
+    },
+    {
+      "vocabulary_item_id": "7caa22a0-fb05-521c-a5de-0766c7833cbb",
+      "phrase_en": "write to",
+      "phrase_cn": "写给......"
+    },
+    {
+      "vocabulary_item_id": "b8548694-f53c-53e1-8d9d-a3780212730c",
+      "phrase_en": "each other",
+      "phrase_cn": "相互"
+    },
+    {
+      "vocabulary_item_id": "f8071beb-d3b1-55ba-b54d-6b3b2b4eadd2",
+      "phrase_en": "foreign country",
+      "phrase_cn": "外国"
+    },
+    {
+      "vocabulary_item_id": "377bbf86-8bf4-510e-b0dc-eca5266c11b8",
+      "phrase_en": "one from another",
+      "phrase_cn": "一个接一个"
+    },
+    {
+      "vocabulary_item_id": "2fb23f80-53e7-5afc-b2e1-f184a07f7923",
+      "phrase_en": "be wounded",
+      "phrase_cn": "受伤"
+    },
+    {
+      "vocabulary_item_id": "5d39dfef-901e-5a74-a880-d00601d6e029",
+      "phrase_en": "go there",
+      "phrase_cn": "去那里"
+    },
+    {
+      "vocabulary_item_id": "3fb9818c-3382-5a19-a559-bbc2b2741011",
+      "phrase_en": "that’s all right",
+      "phrase_cn": "那就对了"
+    },
+    {
+      "vocabulary_item_id": "e99513c0-429e-52b4-8e94-bee4abee4433",
+      "phrase_en": "Because of",
+      "phrase_cn": "由于"
+    },
+    {
+      "vocabulary_item_id": "817ddec9-d188-5a26-b903-528fa1a074cc",
+      "phrase_en": "turn on",
+      "phrase_cn": "打开"
+    },
+    {
+      "vocabulary_item_id": "a588ade9-ec95-5194-b92d-32f43ec516eb",
+      "phrase_en": "come from",
+      "phrase_cn": "来自"
+    },
+    {
+      "vocabulary_item_id": "eb065829-9743-5f51-85d8-9c6e357a5fa7",
+      "phrase_en": "power plants",
+      "phrase_cn": "发电厂"
+    },
+    {
+      "vocabulary_item_id": "f3ce0271-af27-52a0-b35c-aa0bdf2ce9c7",
+      "phrase_en": "produce electricity",
+      "phrase_cn": "发电"
+    },
+    {
+      "vocabulary_item_id": "f3ce0271-af27-52a0-b35c-aa0bdf2ce9c7",
+      "phrase_en": "make electricity",
+      "phrase_cn": "做某事对于某人来说是很困难的"
+    },
+    {
+      "vocabulary_item_id": "58cd2f2d-6752-5c9a-b1ae-5966cc0551f3",
+      "phrase_en": "heat from underground",
+      "phrase_cn": "发电"
+    },
+    {
+      "vocabulary_item_id": "da2965db-7ac8-5d66-a79f-b92f77d9a5ad",
+      "phrase_en": "It is easy for sb. to do sth.",
+      "phrase_cn": "地热"
+    },
+    {
+      "vocabulary_item_id": "6cef7182-9aeb-55dc-8fde-8ba8435906c9",
+      "phrase_en": "kingdom brought before him. He warned",
+      "phrase_cn": "参考译文："
+    },
+    {
+      "vocabulary_item_id": "84f78d95-9739-5274-8085-05ed0d5e103d",
+      "phrase_en": "that any man who did not tell the",
+      "phrase_cn": "在古代的一个王国里，所有的男人都由妻子统"
+    },
+    {
+      "vocabulary_item_id": "b90a3839-764a-59a3-b253-938ff4a516dc",
+      "phrase_en": "truth would be seriously punished.",
+      "phrase_cn": "治。国王不相信这一点，为了证明这不是真的，"
+    },
+    {
+      "vocabulary_item_id": "81803881-8e8f-5708-aaab-d53882a6d93a",
+      "phrase_en": "Then he asked all the men who",
+      "phrase_cn": "便把全国所有的男人都召来，并警告说，任何"
+    },
+    {
+      "vocabulary_item_id": "bc67bc49-a61a-5cd8-b2a5-96091f7156dd",
+      "phrase_en": "followed their wives' orders to step to",
+      "phrase_cn": "不说实话者将受到严重的惩罚。"
+    },
+    {
+      "vocabulary_item_id": "9f55cb22-4d3e-572f-93e9-fff4a7ea1ebe",
+      "phrase_en": "the right side.",
+      "phrase_cn": "子男人站到右边。"
+    },
+    {
+      "vocabulary_item_id": "211d4c7f-67ca-5011-bab7-a00bd0e1f59b",
+      "phrase_en": "In order to",
+      "phrase_cn": "为了"
+    },
+    {
+      "vocabulary_item_id": "9f55cb22-4d3e-572f-93e9-fff4a7ea1ebe",
+      "phrase_en": "the right side",
+      "phrase_cn": "右边"
+    },
+    {
+      "vocabulary_item_id": "161bad47-ce6c-5bcd-9e76-80314d0258e9",
+      "phrase_en": "It’s good to",
+      "phrase_cn": "对...好"
+    },
+    {
+      "vocabulary_item_id": "b008f227-5439-5ea9-a4dd-044c4bd96f48",
+      "phrase_en": "stand on",
+      "phrase_cn": "站在..."
+    },
+    {
+      "vocabulary_item_id": "9f55cb22-4d3e-572f-93e9-fff4a7ea1ebe",
+      "phrase_en": "the right side of",
+      "phrase_cn": "...的右边"
+    },
+    {
+      "vocabulary_item_id": "f56c4003-2cfc-577e-90c9-38bbc07bae89",
+      "phrase_en": "come the reply",
+      "phrase_cn": "回答"
+    },
+    {
+      "vocabulary_item_id": "6964e38e-4343-5b40-9dd9-f60bb55ada16",
+      "phrase_en": "leave home",
+      "phrase_cn": "回家"
+    },
+    {
+      "vocabulary_item_id": "e8a0c1d3-cb94-53fa-82d6-d06c2d493e87",
+      "phrase_en": "keep out of crowds",
+      "phrase_cn": "聚众、扎堆"
+    },
+    {
+      "vocabulary_item_id": "5084093e-90bd-55e9-acc7-1622937ea18e",
+      "phrase_en": "dare to",
+      "phrase_cn": "敢于..."
+    },
+    {
+      "vocabulary_item_id": "11a4b507-df65-5538-bd54-b24d8dcb1e08",
+      "phrase_en": "go against",
+      "phrase_cn": "反对、反驳..."
+    },
+    {
+      "vocabulary_item_id": "c0b56090-420d-518d-ad7f-9e77d83a54d1",
+      "phrase_en": "go down",
+      "phrase_cn": "下沉"
+    },
+    {
+      "vocabulary_item_id": "c5db0426-1552-56ab-bfdc-02c5866ebc75",
+      "phrase_en": "be able to do sth.",
+      "phrase_cn": "能够做某事"
+    },
+    {
+      "vocabulary_item_id": "8a0c1cef-378d-50f6-8017-4fd7d9ab79ec",
+      "phrase_en": "try one’s best to do",
+      "phrase_cn": "尽某人最大努力做某事"
+    },
+    {
+      "vocabulary_item_id": "04041264-4dfc-572c-b281-13fc2ada410f",
+      "phrase_en": "from then on",
+      "phrase_cn": "从那以后"
+    },
+    {
+      "vocabulary_item_id": "3fb9818c-3382-5a19-a559-bbc2b2741011",
+      "phrase_en": "right int.",
+      "phrase_cn": "是的"
+    },
+    {
+      "vocabulary_item_id": "b4a24648-8aed-5216-90fe-effe61047df3",
+      "phrase_en": "ten years ago",
+      "phrase_cn": "十年前"
+    },
+    {
+      "vocabulary_item_id": "a9b9f30f-24e2-540d-b26d-b2272ef68459",
+      "phrase_en": "go on a tour",
+      "phrase_cn": "去观光旅行"
+    },
+    {
+      "vocabulary_item_id": "a588ade9-ec95-5194-b92d-32f43ec516eb",
+      "phrase_en": "come over",
+      "phrase_cn": "过来"
+    },
+    {
+      "vocabulary_item_id": "48c6dc45-445e-5e31-9c07-495e1bbadf4d",
+      "phrase_en": "At that time",
+      "phrase_cn": "那个时候"
+    },
+    {
+      "vocabulary_item_id": "d8974327-3e1c-5b6f-8c33-70d66c1091b8",
+      "phrase_en": "speak English",
+      "phrase_cn": "讲英语"
+    },
+    {
+      "vocabulary_item_id": "cc3dcce8-3b16-568b-b305-8cbbe06675c4",
+      "phrase_en": "point to",
+      "phrase_cn": "指着"
+    },
+    {
+      "vocabulary_item_id": "bac96882-b952-5cec-964f-b9a395d010e8",
+      "phrase_en": "walk away with",
+      "phrase_cn": "和...一起走开"
+    },
+    {
+      "vocabulary_item_id": "c56eb0e0-628e-58c4-946a-97d9cceda003",
+      "phrase_en": "without any difficulty",
+      "phrase_cn": "没费吹灰之力"
+    },
+    {
+      "vocabulary_item_id": "37371f13-21f3-5c8e-85d9-3ce971ad5f41",
+      "phrase_en": "half an hour",
+      "phrase_cn": "半小时"
+    },
+    {
+      "vocabulary_item_id": "e746151b-f63f-5603-b195-ee314bc2584a",
+      "phrase_en": "return with",
+      "phrase_cn": "和...一起回来"
+    },
+    {
+      "vocabulary_item_id": "d1449285-e8fc-5900-a550-112d32b61287",
+      "phrase_en": "To begin with",
+      "phrase_cn": "开始"
+    },
+    {
+      "vocabulary_item_id": "191876d0-bb1f-532d-94ba-e85b32fe38de",
+      "phrase_en": "a lot of",
+      "phrase_cn": "很多的"
+    },
+    {
+      "vocabulary_item_id": "c8627e53-6b6d-52ce-8add-2723e9e3b590",
+      "phrase_en": "doctor visits",
+      "phrase_cn": "看医生"
+    },
+    {
+      "vocabulary_item_id": "ba56e050-7909-504e-8217-5fe210aa4d3e",
+      "phrase_en": "it is bad for sb.",
+      "phrase_cn": "对某人来说有害"
+    },
+    {
+      "vocabulary_item_id": "36857cf3-1e64-554e-94bb-0ceb0d7cb3c6",
+      "phrase_en": "It isn't polite for sb. to do sth.",
+      "phrase_cn": "对某人来说做...是不礼貌的"
+    },
+    {
+      "vocabulary_item_id": "57ee27ed-09c7-5cba-8b05-db885afd3582",
+      "phrase_en": "in front of",
+      "phrase_cn": "在...前面"
+    },
+    {
+      "vocabulary_item_id": "04db0490-81c8-5614-923f-74010b07443c",
+      "phrase_en": "For example",
+      "phrase_cn": "比如"
+    },
+    {
+      "vocabulary_item_id": "54d26924-673d-5b7b-84b3-a38a651cf621",
+      "phrase_en": "give up",
+      "phrase_cn": "放弃"
+    },
+    {
+      "vocabulary_item_id": "48c6dc45-445e-5e31-9c07-495e1bbadf4d",
+      "phrase_en": "it's time to do sth.",
+      "phrase_cn": "到了该做某事的时候了"
+    },
+    {
+      "vocabulary_item_id": "04bac7f0-89ec-5861-a06f-e08fa4c9a1fb",
+      "phrase_en": "of coffee.",
+      "phrase_cn": "了一份三明治和一杯咖啡。﻿"
+    },
+    {
+      "vocabulary_item_id": "373f54f8-50f8-5df0-aa2e-b48dde5d3044",
+      "phrase_en": "buy sb. sth.",
+      "phrase_cn": "给某人买某物"
+    },
+    {
+      "vocabulary_item_id": "0fbf9208-9588-56d7-af90-41c7b11a5b0c",
+      "phrase_en": "go shopping",
+      "phrase_cn": "去逛街"
+    },
+    {
+      "vocabulary_item_id": "bec63e75-8936-5643-9812-33201160f140",
+      "phrase_en": "look for",
+      "phrase_cn": "寻找"
+    },
+    {
+      "vocabulary_item_id": "678af91a-552b-5b53-bb13-92c97a237c7e",
+      "phrase_en": "decide to do sth.",
+      "phrase_cn": "决定做某事"
+    },
+    {
+      "vocabulary_item_id": "902466bc-9b78-5d77-adfe-268c8701793d",
+      "phrase_en": "born as one of its baby pigs. You’ll",
+      "phrase_cn": "recognize(认出) me by a mark on my"
+    },
+    {
+      "vocabulary_item_id": "77d98aa4-6d95-5502-b869-942cf143b743",
+      "phrase_en": "be unhappy about",
+      "phrase_cn": "对......不满"
+    },
+    {
+      "vocabulary_item_id": "6aa8e81f-3640-5562-8ab5-a90ccaddaab5",
+      "phrase_en": "modern education",
+      "phrase_cn": "现代教育"
+    },
+    {
+      "vocabulary_item_id": "4ef14360-873e-5cce-8793-790e451cbf8a",
+      "phrase_en": "right and wrong",
+      "phrase_cn": "是非"
+    },
+    {
+      "vocabulary_item_id": "740cd12d-7feb-5bf2-88b3-bacc5540d3ed",
+      "phrase_en": "take a walk",
+      "phrase_cn": "散步"
+    },
+    {
+      "vocabulary_item_id": "f0a276da-a55d-5a90-bd0a-174db425984a",
+      "phrase_en": "stand around",
+      "phrase_cn": "围着......站"
+    },
+    {
+      "vocabulary_item_id": "54d26924-673d-5b7b-84b3-a38a651cf621",
+      "phrase_en": "go up to",
+      "phrase_cn": "凑上前去"
+    },
+    {
+      "vocabulary_item_id": "84f78d95-9739-5274-8085-05ed0d5e103d",
+      "phrase_en": "tell lies",
+      "phrase_cn": "说谎"
+    },
+    {
+      "vocabulary_item_id": "30aec365-2c1e-5a0b-afd4-5b0d47f36a4d",
+      "phrase_en": "keep the cat",
+      "phrase_cn": "养猫"
+    },
+    {
+      "vocabulary_item_id": "1a2ed0a7-11ff-5888-898a-719fdcbe24d3",
+      "phrase_en": "a good chance",
+      "phrase_cn": "一个好机会"
+    },
+    {
+      "vocabulary_item_id": "d0cc4e8a-2d20-57f7-93f9-992c89847b93",
+      "phrase_en": "belong to",
+      "phrase_cn": "属于"
+    },
+    {
+      "vocabulary_item_id": "27c83210-ea92-546e-8f68-d840007265e9",
+      "phrase_en": "quite adu.",
+      "phrase_cn": "十分"
+    },
+    {
+      "vocabulary_item_id": "33504b59-818b-5595-a181-ffe19aef71cd",
+      "phrase_en": "give sb. sth.",
+      "phrase_cn": "给某人某物"
+    },
+    {
+      "vocabulary_item_id": "2b5a8167-2316-52cf-a19e-a4332111dcc5",
+      "phrase_en": "be in love",
+      "phrase_cn": "热恋中"
+    },
+    {
+      "vocabulary_item_id": "d457b615-1132-5f34-84a5-9fed8465aa17",
+      "phrase_en": "full of",
+      "phrase_cn": "充满"
+    },
+    {
+      "vocabulary_item_id": "4cd2fbdf-88e8-5f34-ade8-aeb16698d9e3",
+      "phrase_en": "strange things",
+      "phrase_cn": "送东西给某人"
+    },
+    {
+      "vocabulary_item_id": "b17eae06-fed8-5b67-99ff-209d8ccd78d0",
+      "phrase_en": "send sth. to sb.",
+      "phrase_cn": "在街上"
+    },
+    {
+      "vocabulary_item_id": "da1658ad-435c-58a3-a02f-bb11fc9d3f0f",
+      "phrase_en": "on the street",
+      "phrase_cn": "每日一篇故事"
+    },
+    {
+      "vocabulary_item_id": "cc8760e4-6841-5368-97ce-8f5397e6b665",
+      "phrase_en": "get home late",
+      "phrase_cn": "回家晚了"
+    },
+    {
+      "vocabulary_item_id": "7250334b-242f-5b7e-9f4b-00bf3f6de8d2",
+      "phrase_en": "knock at the door",
+      "phrase_cn": "敲门"
+    },
+    {
+      "vocabulary_item_id": "b008f227-5439-5ea9-a4dd-044c4bd96f48",
+      "phrase_en": "stand by",
+      "phrase_cn": "依靠着站"
+    },
+    {
+      "vocabulary_item_id": "a588ade9-ec95-5194-b92d-32f43ec516eb",
+      "phrase_en": "come in",
+      "phrase_cn": "进来"
+    },
+    {
+      "vocabulary_item_id": "219d3e7b-db9c-51d7-8b2f-8ac16c8b85b8",
+      "phrase_en": "get cold",
+      "phrase_cn": "觉得冷"
+    },
+    {
+      "vocabulary_item_id": "c153b424-1e47-56c0-9938-330bc54ec5d0",
+      "phrase_en": "stay out",
+      "phrase_cn": "停留"
+    },
+    {
+      "vocabulary_item_id": "50ff4a5c-bea7-5c9d-83ad-4aa6f0f7651b",
+      "phrase_en": "any det.",
+      "phrase_cn": "任何"
+    },
+    {
+      "vocabulary_item_id": "77d98aa4-6d95-5502-b869-942cf143b743",
+      "phrase_en": "worry about",
+      "phrase_cn": "担心"
+    },
+    {
+      "vocabulary_item_id": "8b1157a4-485e-5351-bf85-b0b562483b62",
+      "phrase_en": "look after",
+      "phrase_cn": "照顾"
+    },
+    {
+      "vocabulary_item_id": "607de83c-46c8-5cad-ac21-c9cb81b01c81",
+      "phrase_en": "please int.",
+      "phrase_cn": "请"
+    },
+    {
+      "vocabulary_item_id": "28304e45-f446-5a82-9988-497a8bbbfbf1",
+      "phrase_en": "get a watch",
+      "phrase_cn": "戴一块表"
+    },
+    {
+      "vocabulary_item_id": "48c6dc45-445e-5e31-9c07-495e1bbadf4d",
+      "phrase_en": "a long time",
+      "phrase_cn": "很长时间"
+    },
+    {
+      "vocabulary_item_id": "9dc18310-305d-5229-970d-580268699b3f",
+      "phrase_en": "look after myself",
+      "phrase_cn": "照顾好我自己"
+    },
+    {
+      "vocabulary_item_id": "bd8b47d1-a276-54fc-991e-ebdba0ac5923",
+      "phrase_en": "a good breakfast",
+      "phrase_cn": "吃好早餐"
+    },
+    {
+      "vocabulary_item_id": "f578f217-b90a-5aac-b5a2-14be0584108f",
+      "phrase_en": "keep well",
+      "phrase_cn": "保持健康"
+    },
+    {
+      "vocabulary_item_id": "6b5d3c8c-b712-5719-8bbe-b24735cfe93f",
+      "phrase_en": "be necessary for",
+      "phrase_cn": "对...有必要"
+    },
+    {
+      "vocabulary_item_id": "79ad2e27-d1cb-5038-8a0d-757c307c7414",
+      "phrase_en": "good health",
+      "phrase_cn": "好身体"
+    },
+    {
+      "vocabulary_item_id": "64e05c78-5287-524d-9b57-d53897c89114",
+      "phrase_en": "different kinds of",
+      "phrase_cn": "为了"
+    },
+    {
+      "vocabulary_item_id": "211d4c7f-67ca-5011-bab7-a00bd0e1f59b",
+      "phrase_en": "in order to",
+      "phrase_cn": "保持好身体"
+    },
+    {
+      "vocabulary_item_id": "79ad2e27-d1cb-5038-8a0d-757c307c7414",
+      "phrase_en": "keep a good health",
+      "phrase_cn": "等等"
+    },
+    {
+      "vocabulary_item_id": "3d633fbb-e916-5d9b-93b5-cf7fdeef0f06",
+      "phrase_en": "feel lively",
+      "phrase_cn": "每日一篇故事"
+    },
+    {
+      "vocabulary_item_id": "c153b424-1e47-56c0-9938-330bc54ec5d0",
+      "phrase_en": "step out",
+      "phrase_cn": "走出去"
+    },
+    {
+      "vocabulary_item_id": "a3df7849-3295-5f2c-b345-8a72a1ef87e4",
+      "phrase_en": "feel wonderful",
+      "phrase_cn": "感到美妙无比"
+    },
+    {
+      "vocabulary_item_id": "71ef7093-fe3a-5c0b-805a-5bf40f6fa69c",
+      "phrase_en": "as fast as",
+      "phrase_cn": "和......一样快"
+    },
+    {
+      "vocabulary_item_id": "f578f217-b90a-5aac-b5a2-14be0584108f",
+      "phrase_en": "as well",
+      "phrase_cn": "也"
+    },
+    {
+      "vocabulary_item_id": "48c6dc45-445e-5e31-9c07-495e1bbadf4d",
+      "phrase_en": "take longer time to do",
+      "phrase_cn": "花更长时间做某事"
+    },
+    {
+      "vocabulary_item_id": "e7ebe123-7db4-54ec-ab92-54011227b6de",
+      "phrase_en": "provide energy",
+      "phrase_cn": "提供能量"
+    },
+    {
+      "vocabulary_item_id": "f1b2d418-bed7-5a1c-8213-812ee73be131",
+      "phrase_en": "body operation",
+      "phrase_cn": "身体运作"
+    },
+    {
+      "vocabulary_item_id": "c0b56090-420d-518d-ad7f-9e77d83a54d1",
+      "phrase_en": "slow down",
+      "phrase_cn": "慢下来"
+    }
+  ],
+  "unlinked": [
+    {
+      "phrase_en": "let’s do sth.",
+      "phrase_cn": "让我们做某事"
+    },
+    {
+      "phrase_en": "have to",
+      "phrase_cn": "不得不"
+    },
+    {
+      "phrase_en": "might aux.",
+      "phrase_cn": "也许"
+    },
+    {
+      "phrase_en": "be older",
+      "phrase_cn": "年龄增长"
+    },
+    {
+      "phrase_en": "must aux.",
+      "phrase_cn": "必须"
+    },
+    {
+      "phrase_en": "must aux.",
+      "phrase_cn": "必须"
+    },
+    {
+      "phrase_en": "one of",
+      "phrase_cn": "其中之一"
+    },
+    {
+      "phrase_en": "be allowed to",
+      "phrase_cn": "被允许做"
+    },
+    {
+      "phrase_en": "be seriously punished",
+      "phrase_cn": "被严重惩罚"
+    },
+    {
+      "phrase_en": "followed sb.' orders to",
+      "phrase_cn": "服从某人的命令"
+    },
+    {
+      "phrase_en": "moved to",
+      "phrase_cn": "搬到....."
+    },
+    {
+      "phrase_en": "may aux.",
+      "phrase_cn": "也许"
+    },
+    {
+      "phrase_en": "be going to be",
+      "phrase_cn": "将会是......"
+    },
+    {
+      "phrase_en": "over there",
+      "phrase_cn": "在那边"
+    },
+    {
+      "phrase_en": "have a competiton",
+      "phrase_cn": "进行比赛"
+    },
+    {
+      "phrase_en": "the biggest",
+      "phrase_cn": "最大的"
+    },
+    {
+      "phrase_en": "should aux.",
+      "phrase_cn": "应该"
+    },
+    {
+      "phrase_en": "waite for",
+      "phrase_cn": "等待"
+    },
+    {
+      "phrase_en": "may aux.",
+      "phrase_cn": "也许"
+    },
+    {
+      "phrase_en": "and so on",
+      "phrase_cn": "充满活力"
+    },
+    {
+      "phrase_en": "may aux.",
+      "phrase_cn": "也许"
+    },
+    {
+      "phrase_en": "must aux.",
+      "phrase_cn": "必须"
+    }
+  ]
+}
