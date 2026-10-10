@@ -112,6 +112,14 @@ def sync(check: bool) -> list[str]:
             try:
                 canonical = git_file(repo, item["commit"], rel)
             except (subprocess.CalledProcessError, FileNotFoundError) as exc:
+                # 平台仓不在本机（GitHub CI 等）：--check 时退回校验锁文件里已记录的
+                # canonical_sha256 —— 仍能抓到 vendor 被改动，只是不重新取平台源。
+                recorded = entry.get("canonical_sha256")
+                if check and not repo.exists() and recorded:
+                    local_hash = digest(local.read_bytes()) if local.exists() else ""
+                    if local_hash != recorded:
+                        errors.append(f"{name}:{rel}: vendored content differs from lock")
+                    continue
                 errors.append(f"{name}:{rel}: canonical SHA/path unavailable ({exc})")
                 continue
             local_hash = digest(local.read_bytes()) if local.exists() else ""
