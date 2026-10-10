@@ -28,10 +28,8 @@ from services.models import (
     VocabularyCollection,
     VocabularyCollectionMembership,
     VocabularyImportBatch,
-    VocabularyItem,
 )
 
-from scripts.nce_importer.manifest import NCEManifestLoader
 from scripts.nce_importer.planner import (
     CourseImportPlan,
     PlannedBook,
