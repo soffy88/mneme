@@ -48,6 +48,9 @@ def test_prod_with_default_jwt_secret_and_mock_channels_refuses_to_start(monkeyp
     monkeypatch.setenv("REDIS_URL", "redis://prod-redis:6379/4")
     monkeypatch.setenv("MINIO_ENDPOINT", "https://prod-storage.example")
     monkeypatch.setenv("MINIO_BUCKET", "mneme-production")
+    # 不继承运行环境（CI 注入 minioadmin）——默认凭据本身就会被 preflight 拒绝。
+    monkeypatch.setenv("MINIO_ACCESS_KEY", "prod-access-key")
+    monkeypatch.setenv("MINIO_SECRET_KEY", "prod-secret-key-not-default")
     monkeypatch.setenv("GIT_SHA", "a" * 40)
     monkeypatch.setenv("RELEASE_VERSION", "v0.1.0-rc4")
 
@@ -71,6 +74,9 @@ def test_prod_with_real_secret_and_aliyun_sms_starts_cleanly(monkeypatch):
     monkeypatch.setenv("REDIS_URL", "redis://prod-redis:6379/4")
     monkeypatch.setenv("MINIO_ENDPOINT", "https://prod-storage.example")
     monkeypatch.setenv("MINIO_BUCKET", "mneme-production")
+    # 不继承运行环境（CI 注入 minioadmin）——默认凭据本身就会被 preflight 拒绝。
+    monkeypatch.setenv("MINIO_ACCESS_KEY", "prod-access-key")
+    monkeypatch.setenv("MINIO_SECRET_KEY", "prod-secret-key-not-default")
     monkeypatch.setenv("GIT_SHA", "a" * 40)
     monkeypatch.setenv("RELEASE_VERSION", "v0.1.0-rc4")
 
@@ -90,6 +96,9 @@ def test_prod_with_real_secret_and_smtp_email_starts_cleanly(monkeypatch):
     monkeypatch.setenv("REDIS_URL", "redis://prod-redis:6379/4")
     monkeypatch.setenv("MINIO_ENDPOINT", "https://prod-storage.example")
     monkeypatch.setenv("MINIO_BUCKET", "mneme-production")
+    # 不继承运行环境（CI 注入 minioadmin）——默认凭据本身就会被 preflight 拒绝。
+    monkeypatch.setenv("MINIO_ACCESS_KEY", "prod-access-key")
+    monkeypatch.setenv("MINIO_SECRET_KEY", "prod-secret-key-not-default")
     monkeypatch.setenv("GIT_SHA", "a" * 40)
     monkeypatch.setenv("RELEASE_VERSION", "v0.1.0-rc4")
 
@@ -109,6 +118,9 @@ def test_prod_with_only_one_problem_still_refuses(monkeypatch):
     monkeypatch.setenv("REDIS_URL", "redis://prod-redis:6379/4")
     monkeypatch.setenv("MINIO_ENDPOINT", "https://prod-storage.example")
     monkeypatch.setenv("MINIO_BUCKET", "mneme-production")
+    # 不继承运行环境（CI 注入 minioadmin）——默认凭据本身就会被 preflight 拒绝。
+    monkeypatch.setenv("MINIO_ACCESS_KEY", "prod-access-key")
+    monkeypatch.setenv("MINIO_SECRET_KEY", "prod-secret-key-not-default")
     monkeypatch.setenv("GIT_SHA", "a" * 40)
     monkeypatch.setenv("RELEASE_VERSION", "v0.1.0-rc4")
 
