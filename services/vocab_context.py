@@ -58,6 +58,14 @@ TIER_UNAVAILABLE_REASON: dict[int, str] = {
     TIER_PUBLIC_CORPUS: "无语料库（reading_passages 仅 41 行，不构成语料）",
 }
 
+# tier 1 与 tier 4 仍不可用。**tier 2（教材课本句）已于 2026-10-06 接入** ——
+# 人教社英语教材 OCR 句（alembic pep1a2b3c4d5e）。tier 1 需要「当前课」这个
+# 概念（课程链），tier 4 需要公共语料库，两者都没有，故仍显式标不可用。
+#
+# ⚠️ 别把 tier 2 也留在这里：那会让调用方以为「这个学生学的教材里没有这个词」，
+# 而事实是教材句已经在库里 —— 那是**假的**不可用。
+_UNAVAILABLE_TIERS = [TIER_CURRENT_LESSON, TIER_PUBLIC_CORPUS]
+
 # 句长最佳区间，与 scripts/extract_vocab_examples.py 同源：太短没有记忆锚点，
 # 太长学生读不完也不构成「一个用法」。
 _SENTENCE_MIN_LEN = 20
@@ -118,9 +126,10 @@ class ContextBundle:
         }
 
 
-# tier 1/2 今天永远不可用。写成数据而非 if/else，是为了让「接入教材源」这件事
-# 只需要改这一处 + 给两个 tier 加查询，而不是散落在各处 if 里。
-_ALL_UNAVAILABLE = [TIER_CURRENT_LESSON, TIER_CURRENT_BOOK, TIER_PUBLIC_CORPUS]
+# tier 1/4 今天仍不可用；tier 2 已于 2026-10-06 接入教材句（见 _UNAVAILABLE_TIERS）。
+# 写成数据而非 if/else，是为了让「再接入一类语料」这件事只需要改这一处 +
+# 加一个查询，而不是散落在各处 if 里。
+_ALL_UNAVAILABLE = list(_UNAVAILABLE_TIERS)
 
 
 async def retrieve_context(
@@ -129,16 +138,95 @@ async def retrieve_context(
     *,
     limit: int = 3,
 ) -> ContextBundle:
-    """取一个词的语境包。逐层降级，取到即止；全程只读、无 LLM。"""
+    """取一个词的语境包。逐层降级，取到即止；全程只读、无 LLM。
+
+    顺序 = **教材优先**（spec 的 Context Priority）：tier 2 教材原文 → tier 3 NCE
+    → tier 5 显式降级。教材排在 NCE 前面不是随便定的 —— 教材句是这个学段这个
+    学科的真实材料，而 NCE 是另一套教材。
+    """
     if limit < 1:
         raise ValueError("limit 必须 >= 1")
+
+    sentences = await _textbook_sentences(db, vocabulary_item_id, limit=limit)
+    if sentences:
+        return ContextBundle(
+            tier=TIER_CURRENT_BOOK,
+            sentences=sentences,
+            unavailable_tiers=list(_UNAVAILABLE_TIERS),
+        )
 
     sentences = await _nce_sentences(db, vocabulary_item_id, limit=limit)
     if sentences:
         return ContextBundle(
-            tier=TIER_NCE, sentences=sentences, unavailable_tiers=list(_ALL_UNAVAILABLE)
+            tier=TIER_NCE, sentences=sentences, unavailable_tiers=list(_UNAVAILABLE_TIERS)
         )
-    return ContextBundle(tier=TIER_NONE, sentences=[], unavailable_tiers=list(_ALL_UNAVAILABLE))
+    return ContextBundle(
+        tier=TIER_NONE, sentences=[], unavailable_tiers=list(_UNAVAILABLE_TIERS)
+    )
+
+
+async def _textbook_sentences(
+    db: Any, vocabulary_item_id: str, *, limit: int
+) -> list[ContextSentence]:
+    """tier 1/2 层：从 ``textbook_sentences`` 取**教材原文**真实句。
+
+    2026-10-06 接入。数据源是人教社英语教材（页图 OCR，alembic
+    ``pep1a2b3c4d5e``）。实测这层解掉的是真瓶颈：核心 2,761 词里有 **666 个
+    词**此前有释义但**没有任何语境句**，被 ``has_context=False`` 挡在门外。
+
+    与 tier 3（NCE）的区别不只是排序：**教材句有出处、可回溯、且不是生成的**。
+    EchoType 那批词表的英文例句实测是生成的（``senior-high`` 与 ``gaokao2026``
+    逐字节相同），按红线一律不进 ``context_evidence``；NCE 虽是真实出版物，
+    但不是这个学段这个学科的教材 —— 顺序不能变。
+
+    排序与 tier 3 同口径：句长在偏好区间 [_SENTENCE_MIN_LEN, _SENTENCE_MAX_LEN]
+    的排前，超界的仍取用（有胜于无），只是排在后面。
+    """
+    from sqlalchemy import text
+
+    rows = (
+        await db.execute(
+            text(
+                """
+        SELECT s.id, s.english_text, t.book_name, s.license_status
+        FROM textbook_sentence_occurrences o
+        JOIN textbook_sentences s ON s.id = o.sentence_id
+        JOIN textbooks t ON t.id = s.textbook_id
+        WHERE o.vocabulary_item_id = :vid
+          AND t.subject = 'english'
+          AND s.english_text IS NOT NULL
+          AND btrim(s.english_text) <> ''
+        ORDER BY
+          CASE WHEN length(s.english_text) BETWEEN :lo AND :hi THEN 0
+               WHEN length(s.english_text) BETWEEN :lo2 AND :lo THEN 1
+               ELSE 2 END,
+          o.occurrence_index,
+          s.textbook_id,
+          s.id
+        LIMIT :limit
+        """
+            ),
+            {
+                "vid": vocabulary_item_id,
+                "lo": _SENTENCE_MIN_LEN,
+                "hi": _SENTENCE_MAX_LEN,
+                "lo2": 10,
+                "limit": limit,
+            },
+        )
+    ).all()
+    return [
+        ContextSentence(
+            text=r.english_text.strip(),
+            chinese_text=None,
+            # source 带上教材名 + 授权状态：调用方能一眼看出这是教材原文而非
+            # 生成语料，而 license_status 让「可下架」这件事在数据层就可见。
+            source=f"TEXTBOOK:{r.book_name}:{r.license_status}",
+            lesson=r.book_name or None,
+            sentence_id=str(r.id),
+        )
+        for r in rows
+    ]
 
 
 async def _nce_sentences(db: Any, vocabulary_item_id: str, *, limit: int) -> list[ContextSentence]:

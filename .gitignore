@@ -52,3 +52,7 @@ data/ku_verification_report.json
 
 # Added by code-review-graph
 .code-review-graph/
+
+# Veya agent runtime state (not source)
+.veya/
+.veya-project/

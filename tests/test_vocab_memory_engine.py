@@ -47,8 +47,13 @@ class FakeDB:
     def __init__(self, sentences=None, item=None, affix=None, collocations=None,
                  xiangxing=None, anchor=(False, False), family=None, derived_gloss=None,
                  fam_candidates=None, fam_root_candidates=None, confusables=None,
-                 dict_gloss=None):
+                 dict_gloss=None, textbook_sentences=None):
         self.sentences = sentences if sentences is not None else []
+        # 教材原文句（tier 2，2026-10-06 接入）。默认空 = 回落到 NCE，
+        # 与「接入前」的行为一致，便于逐条加新断言。
+        self.textbook_sentences = (
+            textbook_sentences if textbook_sentences is not None else []
+        )
         self.item = item
         self.affix = affix
         self.collocations = collocations if collocations is not None else []
@@ -74,6 +79,10 @@ class FakeDB:
         self.calls.append((sql, params))
         if "timed_sentences" in sql:
             return FakeResult(self.sentences)
+        # 教材原文句（tier 2）。必须排在 timed_sentences 之前 —— 两条查询都是
+        # 「取这个词的语境句」，但 tier 2 优先级更高，顺序错了会测错降级行为。
+        if "textbook_sentence_occurrences" in sql:
+            return FakeResult(self.textbook_sentences)
         # 锚点 EXISTS 查询必须排在 vocabulary_affixes 之前，否则会走进 _affix 分支
         if "EXISTS(SELECT 1 FROM vocabulary_affixes" in sql:
             return FakeResult([SimpleNamespace(a=self.anchor[0], x=self.anchor[1])])
@@ -745,15 +754,22 @@ def test_retriever_falls_back_to_nce_tier():
     assert bundle.best.lesson == "Lesson 0"
 
 
-def test_retriever_reports_textbook_tier_as_unavailable():
-    """tier 1/2 今天没有源，必须**显式**说明，否则「教材优先」静默消失。"""
+def test_retriever_reports_remaining_unavailable_tiers_explicitly():
+    """tier 1（当前课）与 tier 4（公共语料）仍无源，必须**显式**说明。
+
+    ⚠️ tier 2（教材课本句）**不再**不可用 —— 2026-10-06 起人教社英语教材 OCR 句
+    已接入（alembic ``pep1a2b3c4d5e``）。若把它继续留在 unavailable 里，调用方
+    会以为「教材里没有这个词」，而事实是教材句已在库里 —— 那是**假的**不可用，
+    且会让「教材优先」这条产品承诺静默消失。
+    """
     db = FakeDB(sentences=_sent(1))
     bundle = asyncio.run(vc.retrieve_context(db, "v1"))
     payload = bundle.to_payload()
-    assert payload["textbook_tier_available"] is False
+    assert payload["textbook_tier_available"] is False  # tier 1 仍不可用
     tiers = {u["tier"] for u in payload["unavailable_tiers"]}
     assert vc.TIER_CURRENT_LESSON in tiers
-    assert vc.TIER_CURRENT_BOOK in tiers
+    assert vc.TIER_PUBLIC_CORPUS in tiers
+    assert vc.TIER_CURRENT_BOOK not in tiers, "tier 2 已接入教材句，不该再报不可用"
     assert all(u["reason"] for u in payload["unavailable_tiers"])
 
 
@@ -1328,3 +1344,59 @@ def test_looks_like_question_covers_the_documented_tails():
         assert vm._looks_like_question(text), text
     for text in ("这是弃船的画面", "记忆卡片", "", "你会记得吗"):
         assert not vm._looks_like_question(text), text
+
+
+# --------------------------------------------------------------------------
+# tier 2：教材原文句（2026-10-06 接入，人教社英语教材 OCR，alembic pep1a2b3c4d5e）
+# --------------------------------------------------------------------------
+
+
+def _tb_sent(n: int = 2):
+    return [
+        SimpleNamespace(
+            id=f"pep-{i}",
+            english_text=f"I play the piano three times a week, sentence {i}. " * 2,
+            book_name="义务教育教科书 英语 七年级下册",
+            license_status="unlicensed",
+        )
+        for i in range(n)
+    ]
+
+
+def test_textbook_sentences_take_priority_over_nce():
+    """教材优先于 NCE —— spec 的 Context Priority，不是随便定的顺序。
+
+    教材句是这个学段这个学科的真实材料；NCE 是另一套教材。所以两者都有时
+    必须取教材，且 tier 报 2 而不是 3。
+    """
+    db = FakeDB(sentences=_sent(3), textbook_sentences=_tb_sent(2))
+    bundle = asyncio.run(vc.retrieve_context(db, "v1"))
+    assert bundle.tier == vc.TIER_CURRENT_BOOK
+    assert bundle.best.source.startswith("TEXTBOOK:")
+    assert "义务教育教科书" in bundle.best.source
+
+
+def test_textbook_source_carries_license_status():
+    """溯源串必须让「可下架」这件事在数据层就可见。
+
+    教材正文是受版权保护、面向未成年人的内容，接入时按人决策不追授权，但
+    `license_status` 留在 source 里 —— 下架按整本 `DELETE` 即可，无需迁移。
+    """
+    db = FakeDB(textbook_sentences=_tb_sent(1))
+    bundle = asyncio.run(vc.retrieve_context(db, "v1"))
+    assert "unlicensed" in bundle.best.source
+
+
+def test_falls_back_to_nce_when_no_textbook_sentence():
+    db = FakeDB(sentences=_sent(3), textbook_sentences=[])
+    bundle = asyncio.run(vc.retrieve_context(db, "v1"))
+    assert bundle.tier == vc.TIER_NCE
+    assert bundle.best.source == "NCE"
+
+
+def test_textbook_tier_is_not_reported_unavailable_when_it_has_data():
+    """取到了教材句，却还在 unavailable_tiers 里报 tier 2 不可用 = 自相矛盾。"""
+    db = FakeDB(textbook_sentences=_tb_sent(1))
+    payload = asyncio.run(vc.retrieve_context(db, "v1")).to_payload()
+    tiers = {u["tier"] for u in payload["unavailable_tiers"]}
+    assert vc.TIER_CURRENT_BOOK not in tiers
