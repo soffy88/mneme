@@ -4,15 +4,11 @@ import sys
 import uuid
 import hashlib
 import json
-from datetime import datetime
 import asyncio
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy import select, text
 from sqlalchemy.dialects.postgresql import insert
 
-import services
 from services.models import VocabularyItem, VocabularyCollection, VocabularyCollectionMembership, VocabularyImportBatch
 from obase.db import SessionLocal
 

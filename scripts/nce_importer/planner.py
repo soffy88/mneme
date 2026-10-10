@@ -14,8 +14,8 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from .audio import mp3_duration_ms
 from .extractor import VocabularyExtractor
-from .lrc import LRCParseResult, check_timestamp_order, parse_lrc
-from .manifest import BookManifest, NCE_SERIES, NCE_SCOPE, SourceManifest
+from .lrc import LRCParseResult, check_timestamp_order
+from .manifest import NCE_SERIES, NCE_SCOPE, SourceManifest
 from .normalizer import normalize_raw_text, normalize_sentence_text
 from .resolver import CanonicalVocabularyResolver, ResolvedVocab
 

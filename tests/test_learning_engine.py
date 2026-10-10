@@ -6,10 +6,7 @@ task-selection / classification logic of services/learning_engine.py.
 
 from __future__ import annotations
 
-import uuid
-from datetime import datetime, timedelta, timezone
 
-import pytest
 
 from services.learning_engine import LearningEngine, TaskType, _kp
 from services.learning_scoring import (

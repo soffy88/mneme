@@ -1,5 +1,3 @@
-import re
-from typing import Optional, Tuple, Dict
 from .models import VocabularyCollectionMeta
 
 PUBLISHER_MAP = {

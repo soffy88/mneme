@@ -3,7 +3,6 @@ stable identity, tokenization, audio duration, validator gates."""
 
 from __future__ import annotations
 
-import json
 import os
 import uuid
 
@@ -159,7 +158,7 @@ def test_lrc_comments_and_empty_lines_skipped():
 def test_lrc_timestamp_ordering_sorted():
     text = "[00:10.00]Second | 第二\n[00:02.00]First | 第一\n"
     result = parse_lrc(text)
-    assert [l.start_ms for l in result.lines] == [2000, 10000]
+    assert [line.start_ms for line in result.lines] == [2000, 10000]
     assert check_timestamp_order(result.lines) == []
 
 

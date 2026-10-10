@@ -1,6 +1,6 @@
 from openpyxl import load_workbook
 import warnings
-from typing import List, Generator
+from typing import Generator
 from .models import ParsedVocabularyEntry
 
 def parse_workbook(filepath: str, schema: str) -> Generator[ParsedVocabularyEntry, None, None]:

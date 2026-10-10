@@ -11,8 +11,7 @@ Select at most 1–3 contexts. Textbook context always outranks NCE (SPEC §14).
 
 from __future__ import annotations
 
-import uuid
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from typing import List, Optional, Set
 
 from sqlalchemy import select
@@ -24,7 +23,6 @@ from services.models import (
     Lesson,
     LessonVocabularyMembership,
     TimedSentence,
-    VocabularyItem,
 )
 
 

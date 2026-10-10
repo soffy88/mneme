@@ -39,7 +39,7 @@ class LRCParseResult:
 
 
 def parse_lrc(lrc_text: str) -> LRCParseResult:
-    lines: List[LRCLLine] = []
+    lines: List[LRCLine] = []
     skipped_meta = 0
     skipped_empty = 0
     skipped_invalid = 0

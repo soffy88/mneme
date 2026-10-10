@@ -5,8 +5,8 @@ image was pushed to GHCR and no production deployment was performed.
 
 ## RC8 root-cause matrix
 
-The exact RC8 JSON results are `rc8-api-trivy.json` and
-`rc8-frontend-trivy.json`. Every Critical/High finding is in the Debian OS
+The exact RC8 JSON results are `outputs/security/rc8-api-trivy.json` and
+`outputs/security/rc8-frontend-trivy.json`. Every Critical/High finding is in the Debian OS
 target; Python/Node findings are zero. Thus each finding is
 `introduced_by_base_image=YES`, `package_runtime_required=YES` in the sense
 that the package is present in the final runtime filesystem, and

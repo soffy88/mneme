@@ -14,7 +14,6 @@ import argparse
 import asyncio
 import os
 import sys
-import uuid
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
@@ -198,7 +197,7 @@ async def run_async(args) -> int:
                 status="SUCCESS",
                 vocab_created=stats.vocab_created,
                 vocab_existing=stats.vocab_existing,
-                report_path=f"reports/nce_import_report.json",
+                report_path="reports/nce_import_report.json",
             )
             db.add(batch)
             await db.commit()

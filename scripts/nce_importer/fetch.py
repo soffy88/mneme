@@ -7,7 +7,7 @@ they are never silently turned into a PASS.
 import asyncio
 import hashlib
 from dataclasses import dataclass, field
-from typing import Dict, List, Optional
+from typing import List, Optional
 
 import aiohttp
 

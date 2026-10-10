@@ -6,7 +6,7 @@ All ids are stable uuid5, so a second apply is a no-op (idempotent).
 """
 
 import uuid
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from typing import Dict, List
 
 from sqlalchemy.dialects.postgresql import insert
@@ -22,7 +22,7 @@ from services.models import (
     VocabularyItem,
 )
 
-from .planner import CourseImportPlan, PlannedOccurrence
+from .planner import CourseImportPlan
 
 
 @dataclass

@@ -12,8 +12,8 @@ database and `--scanners vuln --severity CRITICAL,HIGH`.
 | `mneme-api@sha256:0e2ee0e0048e1c91b05f2aa3e9366f1c313d6e6a15d19b07e33a0936a4736c79` | 3 Critical / 53 High | Debian 13.6 OS packages |
 | `mneme-web@sha256:ad2ae640a77d0d3cca9abcbe2cf59aa4d7d90e35dba7223d13b956608522a404` | 3 Critical / 84 High | Debian 13.4 OS packages |
 
-The API result is machine-readable in `rc7-api-trivy.json`; the frontend
-result is in `rc7-frontend-trivy.json`. Trivy produced zero findings in the
+The API result is machine-readable in `outputs/security/rc7-api-trivy.json`; the frontend
+result is in `outputs/security/rc7-frontend-trivy.json`. Trivy produced zero findings in the
 API `python-pkg`, `node-pkg`, and Rust binary targets. The API Critical matrix
 is three `perl-base` findings at `5.40.1-6`, all with fixed version
 `5.40.1-6+deb13u1`: CVE-2026-13221, CVE-2026-42496, and CVE-2026-8376.
@@ -31,8 +31,8 @@ libacl. The raw JSON records installed/fixed versions and CVE IDs per item.
 | `mneme-api` | `sha256:52b6f0f0d00b7ba5bb83694939bae06e66ec9ec82168f6322e050d81a39b73af` | 5 Critical / 57 High | Debian 12.15 OS packages |
 | `mneme-web` | `sha256:b8b9173fc4adbf90932cbec22af343d65225aa40c49b993707e15a107c658cf8` | 6 Critical / 58 High | Debian 12.13 OS packages |
 
-Machine-readable results are `rc8-api-trivy.json` and
-`rc8-frontend-trivy.json`. No RC8 runtime Python or Node vulnerability was
+Machine-readable results are `outputs/security/rc8-api-trivy.json` and
+`outputs/security/rc8-frontend-trivy.json`. No RC8 runtime Python or Node vulnerability was
 reported in these scans; the remaining findings are in the image OS layer.
 Several packages have a fixed version in the database, while many current
 entries have `FixedVersion` unavailable. This is not accepted as a blanket

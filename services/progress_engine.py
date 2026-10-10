@@ -10,7 +10,6 @@ from __future__ import annotations
 
 import uuid
 from dataclasses import dataclass
-from typing import Optional
 
 from sqlalchemy import func, select
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -18,7 +17,6 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from services.models import (
     KCMastery,
     LessonVocabularyMembership,
-    UserBookProgress,
     UserLessonProgress,
     VocabularyCollection,
     VocabularyCollectionMembership,
@@ -123,7 +121,7 @@ class ProgressEngine:
             )
         ).scalar() or 0
         # book_id here is the course_books.id; count lessons via book join
-        from services.models import Book, Lesson
+        from services.models import Lesson
 
         total_lessons = (
             await self._db.execute(
