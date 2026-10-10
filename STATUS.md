@@ -62,9 +62,14 @@ veya1.2-vl，OpenAI 兼容端点；Qwen 为显式云端 fallback）/ Docker Comp
 | Aria 数字人 | `services/aria_director.py` / `services/aria_media.py` / `services/aria_perception.py` |
 | 教材 PDF **离线源**（未接入流水线） | [TapXWorld/ChinaTextbook](https://github.com/TapXWorld/ChinaTextbook) — 小初高/大学 PDF 聚合；>50MB 分片需 tools 合并；**勿整仓 submodule**；入库仍走 `scripts/import_textbooks.py` + 本地/挂载 books |
 
+## ⚠️ 2026-10-10 审计结论（未决项见「需人决策」）
+
+- 已修：`/v1/learning/*` 本人调用 500（错误 `await` 同步鉴权函数）；迁移 `pep1a2b3c4d5e` 入库；质量门清零；测试隔离（e2e 不再 DROP Alembic 表）。
+- 未决：①`api.sxueji.com` 实际由 `mneme-api-1`（bind-mount 本工作区、无 reload）服务，代码改动需重启该容器才生效；`mneme-production-*`（rc4 镜像、迁移 `7b2c3d4e5f6a`）只跑健康检查，二选一；②近 7 天零业务请求、`learning_events` 仅 1 行——真人 pilot 仍是第一 ship-gate；③人教社页图抓取入库需确认授权（`license_status`）；④`fix/security-compliance-20260628` 内容已被后续提交取代，以 `-s ours` 记为已合并。
+
 ## 当前状态
 
-- **测试**（2026-08-25，宿主 pytest → `mneme_test`，Alembic 迁移后）：`1229 passed / 14 skipped`，`coverage=82.23%`；`./scripts/check.sh` 完整质量门干净通过。
+- **测试**（2026-10-10 审计后复跑，宿主 pytest → `mneme_test`，迁移到 `pep1a2b3c4d5e`）：`1853 passed / 17 skipped / 0 failed`，`coverage=80.67%`；Ruff 0、Mypy `197 source files` 0 错误。（8/25 的 1229 passed 记录已过时；10-10 审计前质量门实为红：ruff 68 / mypy 22 / 2 failed。）
 - **质量门**：Ruff 0、vendor edu closure 98 项、红线 smoke 44 项、Mypy `157 source files` 0 错误；迁移只对 `mneme_test` fail-closed 执行。
 - **前端**：`apps/mneme-studio` 的 `npm ci && npm run build` 已通过；`npm audit --audit-level=moderate` 当前为 0 vulnerabilities，审计已加入 CI。
 - **代码审查图（CRG）**：code-review-graph 已接入 opencode（`opencode.jsonc` MCP + 全局 crg-plugin 钩子），
