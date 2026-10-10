@@ -98,9 +98,10 @@ async def enriched_words():
             )
             await db.execute(
                 text(
-                    "INSERT INTO vocabulary_xiangxing (vocabulary_item_id, ipa_ascii, pos, "
+                    "INSERT INTO vocabulary_xiangxing (id, vocabulary_item_id, ipa_ascii, pos, "
                     "meaning_cn, example_en, source_volume, ownership_verified) "
-                    "VALUES (:v, '[tst]', 'n', '测试释义', 'A zzxiangxing test.', 'TEST', :ok)"
+                    "VALUES (gen_random_uuid(), :v, '[tst]', 'n', '测试释义', "
+                    "'A zzxiangxing test.', 'TEST', :ok)"
                 ),
                 {"v": vid, "ok": verified},
             )
