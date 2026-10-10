@@ -33,6 +33,7 @@ echo "  pg   -> $PG_FILE ($(du -h "$PG_FILE" | cut -f1))"
 # --- MinIO（对象 + 桶元数据一起快照）---
 MINIO_DIR="$BACKUP_DIR/minio/data_${TS}"
 docker cp mneme-minio-1:/data "$MINIO_DIR"
+touch "$MINIO_DIR"  # docker cp 保留容器内旧 mtime，不 touch 会被下面的轮转当场删掉
 echo "  minio-> $MINIO_DIR ($(du -sh "$MINIO_DIR" | cut -f1))"
 
 # --- 轮转：删除 KEEP_DAYS 天前的备份 ---
