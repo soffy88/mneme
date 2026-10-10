@@ -21,9 +21,9 @@ ROOT = Path(__file__).resolve().parents[1]
 MANIFEST = ROOT / "3o-replication-lock.json"
 PLATFORM = Path("/data/soffy/projects/platform/3O")
 DEFAULTS = {
-    "oprim": {"sha": "651f7e37855fd4deff2bd3621fd2999e9058223e", "files": ["echo_loop.py"]},
-    "oskill": {"sha": "96b0521b85d086eda94de2a5454e756c71c55499", "files": ["echo_loop_skill.py"]},
-    "omodul": {"sha": "1bb87b87556f3f53f81fc24ab8b453b12875089f", "files": ["echo_loop_session.py", "_base.py", "_fingerprint.py"]},
+    "oprim": {"sha": "d567f08489607ad82d3cc80c383534b9753b963c", "files": ["echo_loop.py", "solid_geometry.py"]},
+    "oskill": {"sha": "3fc72f51f31847ca851bb4112b2c7efe305bc88a", "files": ["echo_loop_skill.py", "solid_geometry_skill.py"]},
+    "omodul": {"sha": "536ab84d78f584c5b2c0c0542f38cc90d0191793", "files": ["echo_loop_session.py", "_base.py", "_fingerprint.py", "solid_geometry_lesson.py"]},
     "obase": {"sha": "87be8400b05284e1ba347cdec56dfbd55eadc511", "files": ["cognitive_types.py"]},
     "oservi": {"sha": "d0809e59609473ecd33c033790ebd39eee835218", "files": []},
 }
