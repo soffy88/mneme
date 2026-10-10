@@ -20,6 +20,7 @@ from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from services.learning_scoring import (
+    ScoreResult,
     FSRSRating,
     Score,
     TaskType,
@@ -34,7 +35,6 @@ from services.models import (
     KCMastery,
     LearningSession,
     LearningSessionItem,
-    Lesson,
     LessonVocabularyMembership,
     TimedSentence,
     VocabularyItem,
@@ -161,8 +161,6 @@ class LearningEngine:
         sentence: str = "",
     ) -> ScoreResult:
         if task_type == TaskType.EN_TO_ZH:
-            from services.learning_scoring import ScoreResult
-
             return score_en_to_zh(expected, answer, aliases)
         if task_type == TaskType.ZH_TO_EN:
             return score_zh_to_en(expected, answer)
@@ -249,13 +247,13 @@ class LearningEngine:
         """NCE context reinforcement: vocab in NCE lessons not already in session."""
         if limit <= 0:
             return []
-        rows = (
-            await self._db.execute(
-                select(LessonVocabularyMembership.vocabulary_item_id)
-                .where(LessonVocabularyMembership.vocabulary_item_id.notin_(list(exclude_vocab)) if exclude_vocab else True)
-                .distinct()
-                .limit(limit)
+        stmt = select(LessonVocabularyMembership.vocabulary_item_id)
+        if exclude_vocab:
+            stmt = stmt.where(
+                LessonVocabularyMembership.vocabulary_item_id.notin_(list(exclude_vocab))
             )
+        rows = (
+            await self._db.execute(stmt.distinct().limit(limit))
         ).all()
         return [SessionItem(r[0], TaskType.CONTEXT_CLOZE, "NCE") for r in rows]
 
@@ -303,7 +301,7 @@ class LearningEngine:
             TaskType(item.task_type),
             expected=expected,
             answer=answer,
-            sentence=sentence.english_text if sentence else "",
+            sentence=(sentence.english_text or "") if sentence else "",
         )
         rating = derive_fsrs_rating(
             score_result.score, used_hint=used_hint, latency_ms=latency_ms

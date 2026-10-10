@@ -262,7 +262,7 @@ def configure_llm_providers() -> str:
         # 顺序 = 实测可靠性，不是有无。Discovery API 在前：它稳定（≈24s/次，
         # 推理模型）；Veya 的 space-bunny-free 虽快（≈2s）但**单点且间歇失效**，
         # 排前面会让每次调用先浪费 ~10s 在失败回退上（实测 34s vs 24s）。
-        chain = []
+        chain: list[Any] = []
         if (os.environ.get("INTERN_AI_API_KEY") or "").strip():
             chain.append(InternAiTextCaller())
         chain.append(VeyaTextCaller())

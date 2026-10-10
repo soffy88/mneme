@@ -330,7 +330,7 @@ def verify_memory_node(
             if str(w or "").strip():
                 allowed.add(str(w).strip().lower())
         allowed.add(learner_conf.lower())
-        ungrounded = [w for w in raw_conf if w.strip().lower() not in allowed]
+        ungrounded = [w for w in raw_conf if w and w.strip().lower() not in allowed]
         if ungrounded:
             gates.append(
                 GateResult(
