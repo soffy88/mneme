@@ -7,7 +7,6 @@ LearningEngine / ContextEngine / ProgressEngine — never in the router.
 
 from __future__ import annotations
 
-from datetime import date
 from uuid import UUID
 
 from fastapi import APIRouter, Body, Depends, HTTPException, Query
@@ -32,7 +31,7 @@ async def get_learning_plan(
     db: AsyncSession = Depends(get_db),
     current_user: User = Depends(get_current_user),
 ):
-    await _ensure_student_self(current_user, student_id)
+    _ensure_student_self(current_user, student_id)
     from sqlalchemy import select
 
     plan = (
@@ -72,7 +71,7 @@ async def update_learning_plan(
     db: AsyncSession = Depends(get_db),
     current_user: User = Depends(get_current_user),
 ):
-    await _ensure_student_self(current_user, student_id)
+    _ensure_student_self(current_user, student_id)
     from sqlalchemy import select
 
     plan = (
@@ -107,7 +106,7 @@ async def get_today(
     db: AsyncSession = Depends(get_db),
     current_user: User = Depends(get_current_user),
 ):
-    await _ensure_student_self(current_user, student_id)
+    _ensure_student_self(current_user, student_id)
     engine = LearningEngine(db)
     due = await engine.get_due_reviews(student_id)
     from sqlalchemy import select
@@ -220,9 +219,8 @@ async def create_session(
     db: AsyncSession = Depends(get_db),
     current_user: User = Depends(get_current_user),
 ):
-    await _ensure_student_self(current_user, student_id)
+    _ensure_student_self(current_user, student_id)
     engine = LearningEngine(db)
-    plan = None
     from sqlalchemy import select
 
     plan_row = (
@@ -257,7 +255,7 @@ async def create_session(
                 self.session_id = sid
                 self.items = items
 
-        built = _Empty(session.id, [])
+        built = _Empty(session.id, [])  # type: ignore[assignment]
     await db.commit()
     return {
         "session_id": str(built.session_id),
@@ -398,7 +396,7 @@ async def get_due_reviews(
     db: AsyncSession = Depends(get_db),
     current_user: User = Depends(get_current_user),
 ):
-    await _ensure_student_self(current_user, student_id)
+    _ensure_student_self(current_user, student_id)
     engine = LearningEngine(db)
     due = await engine.get_due_reviews(student_id)
     return {"due": due, "count": len(due)}
@@ -412,7 +410,7 @@ async def get_progress(
     db: AsyncSession = Depends(get_db),
     current_user: User = Depends(get_current_user),
 ):
-    await _ensure_student_self(current_user, student_id)
+    _ensure_student_self(current_user, student_id)
     engine = ProgressEngine(db)
     zhongkao = await engine.exam_coverage("ZHONGKAO")
     gaokao = await engine.exam_coverage("GAOKAO")
@@ -441,7 +439,7 @@ async def get_book_progress(
     db: AsyncSession = Depends(get_db),
     current_user: User = Depends(get_current_user),
 ):
-    await _ensure_student_self(current_user, student_id)
+    _ensure_student_self(current_user, student_id)
     engine = ProgressEngine(db)
     bp = await engine.book_progress(book_id)
     return {
@@ -462,7 +460,7 @@ async def get_exam_progress(
     db: AsyncSession = Depends(get_db),
     current_user: User = Depends(get_current_user),
 ):
-    await _ensure_student_self(current_user, student_id)
+    _ensure_student_self(current_user, student_id)
     engine = ProgressEngine(db)
     cov = await engine.exam_coverage(scope)
     return {
