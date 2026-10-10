@@ -44,7 +44,7 @@ jobs:
             --publish 9002:9000 \
             --env MINIO_ROOT_USER=minioadmin \
             --env MINIO_ROOT_PASSWORD=minioadmin \
-            minio/minio server /data --console-address ":9001"
+            pgsty/minio:RELEASE.2026-08-04T00-00-00Z server /data --console-address ":9001"
           for attempt in $(seq 1 30); do
             if curl --fail --silent http://localhost:9002/minio/health/live; then
               exit 0
