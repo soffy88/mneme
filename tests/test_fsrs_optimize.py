@@ -128,8 +128,13 @@ async def test_invalid_candidate_scored_inf_not_crash(db):
 @pytest.mark.asyncio
 async def test_insufficient_reviews_not_stored(db):
     s, sids = db
+    # reconstruct_review_logs 读全库：mneme_test 里其它测试残留的复习对会抬高计数，
+    # 所以门槛按「种子前基线 + 30」取，只验证本测试新增的 4 对不足以落库。
+    baseline = evaluate_weights(await reconstruct_review_logs(s), None)[1]
     await _seed(s, sids, n_students=2)  # 仅 4 复习对
-    result = await select_best_weights(s, [None], cohort=COHORT, min_reviews=30)
+    result = await select_best_weights(
+        s, [None], cohort=COHORT, min_reviews=baseline + 30
+    )
     await s.commit()
     assert result["stored"] is False
 

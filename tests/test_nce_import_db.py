@@ -497,6 +497,8 @@ def test_alembic_single_head():
     assert result.returncode == 0, result.stderr
     heads = [line for line in result.stdout.splitlines() if "(head)" in line]
     assert len(heads) == 1
-    # 必须跟着最新的迁移走。新增迁移后改这里，并确认只有一个 head
-    # （多于一个说明有人把 down_revision 指错了，会在部署时炸）。
-    assert "b3e9d1f5a7c2" in heads[0]
+    # 唯一 head 必须与 readiness 期望的迁移一致（health.EXPECTED_MIGRATION_HEAD），
+    # 否则部署后 /readiness 会一直 503（2026-10 实际发生过）。
+    from services.routers.health import EXPECTED_MIGRATION_HEAD
+
+    assert EXPECTED_MIGRATION_HEAD in heads[0]

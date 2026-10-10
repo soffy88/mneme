@@ -14,7 +14,6 @@ LearningEvents append, FSRS evolves, progress updates.
 from __future__ import annotations
 
 import uuid
-from datetime import datetime, timedelta, timezone
 
 import pytest
 from sqlalchemy import select, text
@@ -25,16 +24,12 @@ import services  # noqa: F401 — vendor-first path setup
 from services.models import (
     Book,
     Course,
-    KCMastery,
     Lesson,
     LessonVocabularyMembership,
     LearningPlan,
     TimedSentence,
-    User,
-    UserRole,
     VocabularyCollection,
     VocabularyCollectionMembership,
-    VocabularyItem,
 )
 
 from scripts.nce_importer.resolver import get_vid
@@ -114,7 +109,6 @@ async def e2e_session():
         LearningSessionItem,
         UserBookProgress,
         UserLessonProgress,
-        VocabularyCollectionMembership,
     )
 
     course_tables = [
@@ -277,7 +271,10 @@ async def e2e_session():
                 "timed_sentences", "lessons", "course_books", "courses",
                 "vocabulary_collection_memberships", "vocabulary_collections",
             ]:
-                await conn.execute(text(f"DROP TABLE IF EXISTS {t} CASCADE"))
+                # 只清数据、不删表：这些表归 Alembic 管，DROP 会让 mneme_test
+                # 停在 head 却缺表，后续测试随机 UndefinedTable（2026-10-10 审计）。
+                if (await conn.execute(text(f"SELECT to_regclass('{t}')"))).scalar():
+                    await conn.execute(text(f"TRUNCATE TABLE {t} CASCADE"))
         await engine.dispose()
 
 
@@ -387,6 +384,10 @@ async def test_session_resume(e2e_session):
     await session.commit()
     # different session, but item prompts for the same lesson are deterministic
     assert len(built.items) > 0
+    assert built2.session_id != built.session_id
+    assert [(i.task_type.value, i.context_source) for i in built2.items] == [
+        (r[0], r[1]) for r in items_before
+    ]
 
 
 async def test_answer_idempotency(e2e_session):
@@ -404,7 +405,6 @@ async def test_answer_idempotency(e2e_session):
     assert r1.score.value == "CORRECT"
 
     # second submit on same item → rejected (item already ANSWERED)
-    from sqlalchemy import select
 
     from services.models import LearningSessionItem
 
