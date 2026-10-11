@@ -362,3 +362,39 @@ export const mcp = {
       policy_decision_id: policyDecisionId,
     }),
 };
+
+// ── 交互实验室（确定性教学内核，见 app/lab）────────────────────────────────
+async function eduFetch(path: string, payload: unknown, accept: string): Promise<Response> {
+  const token = getToken();
+  const res = await fetch(`${API_BASE}${path}`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Accept: accept,
+      ...(token ? { Authorization: `Bearer ${token}` } : {}),
+    },
+    body: JSON.stringify(payload),
+  });
+  if (!res.ok) {
+    if (res.status === 401 && typeof window !== "undefined") redirectToLogin();
+    const raw = await res.text();
+    let message = raw;
+    try {
+      const detail = (JSON.parse(raw) as { detail?: unknown }).detail;
+      if (typeof detail === "string") message = detail;
+      else if (Array.isArray(detail)) message = "题目参数不合法";
+    } catch {
+      /* 非 JSON 错误体：原样显示 */
+    }
+    throw new Error(message);
+  }
+  return res;
+}
+
+export async function eduPost<T>(path: string, payload: unknown): Promise<T> {
+  return (await (await eduFetch(path, payload, "application/json")).json()) as T;
+}
+
+export async function eduPostHtml(path: string, payload: unknown): Promise<string> {
+  return (await eduFetch(path, payload, "text/html")).text();
+}

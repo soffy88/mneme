@@ -3,3 +3,10 @@ Copyright 2026 WY (@akokoi1)
 https://github.com/wy51ai/edulab
 
 This product includes software developed by WY (@akokoi1).
+
+---
+Modifications by Mneme (2026-10): lesson.html is used as a server-side template;
+CDN references (cdnjs/unpkg three.js 0.160.0, jsdelivr MathJax 3 CHTML) were
+replaced with self-hosted copies under /v1/edu-assets/ (MathJax switched to the
+SVG output build). The geometry kernel was rewritten as 3O elements
+(oprim.solid_geometry / oskill.solid_geometry_skill / omodul.solid_geometry_lesson).

@@ -1,0 +1,15 @@
+edulab
+Copyright 2026 WY (@akokoi1)
+https://github.com/wy51ai/edulab
+
+This product includes software developed by WY (@akokoi1).
+
+---
+Modifications by Mneme (2026-10): board.html (from skills/edu-analytic-geometry/template)
+is used as a server-side template; CDN references (Tailwind Play CDN, jsdelivr KaTeX
+0.16.8) were replaced with self-hosted copies under /v1/edu-assets/. The analytic
+kernel was rewritten as 3O elements (oprim.conic_analysis / oskill.conic_chord_skill /
+omodul.conic_chord_lesson) with chord-validity, union ranges and an independent
+float cross-check. The chemistry balancing kernel (skills/edu-chem-reaction) was
+rewritten as oprim.chemical_equation / oskill.equation_balancing_skill /
+omodul.equation_balancing_lesson.

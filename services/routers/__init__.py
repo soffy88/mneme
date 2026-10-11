@@ -10,8 +10,11 @@ def register_domain_routers(app: FastAPI) -> None:
     from services.routers import (
         aria,
         auth,
+        chemistry,
         cognitive,
+        conic_geometry,
         cornell,
+        edu_assets,
         geometry,
         health,
         immersive,
@@ -55,5 +58,8 @@ def register_domain_routers(app: FastAPI) -> None:
         immersive,
         learning,
         geometry,
+        conic_geometry,
+        chemistry,
+        edu_assets,
     ):
         app.include_router(mod.router)
