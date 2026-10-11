@@ -90,6 +90,38 @@ def test_validate_report_only_keeps_retrieved_citations():
     assert rep["dropped_refs"] == ["S9"]
 
 
+@pytest.mark.parametrize("q,topic", [
+    ("勾股定理的证明方法", "勾股定理"),
+    ("牛顿第二定律在生活中的例子", "牛顿第二定律"),
+    ("什么是光合作用？", "光合作用"),
+])
+def test_topic_queries_add_core_topic(q, topic):
+    qs = svc.topic_queries(q)
+    assert qs[0] == q and topic in qs
+
+
+def test_topic_queries_no_duplicate_for_bare_topic():
+    assert svc.topic_queries("勾股定理") == ["勾股定理"]
+
+
+async def test_retrieve_merges_question_first_and_caps(monkeypatch):
+    import services.knowledge_hub_search as khs
+
+    def hit(cid, score):
+        return {"chunk_id": cid, "pdf_id": "p", "page_number": 1, "content": f"内容{cid}",
+                "textbook_meta": {"book_name": "书"}, "score": score, "verified": False}
+
+    async def fake_search(db, *, query, top_k, min_score):
+        if query == "勾股定理的证明方法":
+            return {"results": [hit("a", 0.8)]}
+        return {"results": [hit("a", 0.99), *[hit(f"t{i}", 0.9) for i in range(8)]]}
+
+    monkeypatch.setattr(khs, "search_knowledge_base", fake_search)
+    srcs = await svc.retrieve_sources(None, "勾股定理的证明方法", k=4)
+    assert [s["chunk_id"] for s in srcs] == ["a", "t0", "t1", "t2"]
+    assert [s["id"] for s in srcs] == ["S1", "S2", "S3", "S4"]
+
+
 def test_validate_report_handles_garbage_shapes():
     rep = svc.validate_report({"sections": ["x", {"points": "y"}], "summary": 3}, SOURCES)
     assert rep["sections"] == [] and rep["summary"] is None

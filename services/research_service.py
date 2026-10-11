@@ -123,14 +123,44 @@ def _clean(s: str) -> str:
     return re.sub(r"\s+", " ", s or "").strip()
 
 
+# 问句里的功能词/泛化词：切掉它们剩下的最长片段通常就是主题词（「勾股定理」「牛顿第二定律」）。
+_QUESTION_SPLIT = re.compile(
+    r"[，。？！?!、,\s]|的|在|是|哪些|什么|怎么|怎样|如何|为什么|为何|吗|呢|"
+    r"例子|举例|方法|证明|应用|生活|区别|介绍|讲解|解释|理解"
+)
+
+
+def topic_queries(question: str, *, max_extra: int = 1) -> list[str]:
+    """原问题 + 主题词子查询。
+
+    词面检索（embedding 不可用时的兜底）对长问句只命中寥寥一两条（2026-10-11 实测
+    「勾股定理的证明方法」只回 1 条，而「勾股定理」回 6 条），所以补一个主题词查询
+    扩大候选面；原问题的结果始终排在前面。
+    """
+    q = _clean(question)
+    parts = sorted({p for p in _QUESTION_SPLIT.split(q) if p and len(p) >= 3},
+                   key=lambda p: (-len(p), q.find(p)))
+    extra = [p for p in parts if p != q][:max_extra]
+    return [q, *extra]
+
+
 async def retrieve_sources(db: AsyncSession, question: str, *, k: int | None = None) -> list[dict]:
-    """检索本地教材切片 → 编号来源 S1..Sn（只取有内容、分数>0 的切片，去重）。"""
+    """检索本地教材切片 → 编号来源 S1..Sn（只取有内容、分数>0 的切片，去重）。
+
+    原问题的命中在前，主题词子查询的命中补在后面，总数不超过 k。
+    """
     from services.knowledge_hub_search import search_knowledge_base
 
-    result = await search_knowledge_base(db, query=question, top_k=k or top_k(), min_score=0.0)
+    limit = k or top_k()
+    hits: list[dict] = []
+    for sub in topic_queries(question):
+        result = await search_knowledge_base(db, query=sub, top_k=limit, min_score=0.0)
+        hits.extend(result.get("results") or [])
     sources: list[dict] = []
     seen: set[str] = set()
-    for r in result.get("results") or []:
+    for r in hits:
+        if len(sources) >= limit:
+            break
         content = _clean(str(r.get("content") or ""))
         cid = str(r.get("chunk_id") or "")
         if not content or not cid or cid in seen or float(r.get("score") or 0) <= 0:
@@ -528,5 +558,6 @@ __all__ = [
     "list_research",
     "per_user_daily_limit",
     "retrieve_sources",
+    "topic_queries",
     "validate_report",
 ]
