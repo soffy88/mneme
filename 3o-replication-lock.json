@@ -3,7 +3,7 @@
   "packages": {
     "oprim": {
       "repo": "/data/soffy/projects/platform/3O/oprim",
-      "commit": "86f680643448730fcbfc0419332e9c834c92fb31",
+      "commit": "ac723026bc06a25cf54120976aac9d72e2b8e105",
       "version": "3.23.0",
       "closure": [
         {
@@ -81,7 +81,7 @@
     },
     "oskill": {
       "repo": "/data/soffy/projects/platform/3O/oskill",
-      "commit": "eb3b248b2173ae354f5764bfd59e6030d0f95712",
+      "commit": "a6d817847b442d9ac56645133f00afd18b0d8ef8",
       "version": "4.14.0",
       "closure": [
         {
@@ -159,7 +159,7 @@
     },
     "omodul": {
       "repo": "/data/soffy/projects/platform/3O/omodul",
-      "commit": "1bf65400307b7bc3b57b729b474007aa14c23aaa",
+      "commit": "3dd1f8388fe88c8473531f8db20fd62360149c72",
       "version": "1.49.0",
       "closure": [
         {
@@ -429,7 +429,7 @@
       "classification": "EXACT_CANONICAL_COPY",
       "canonical_repo": "/data/soffy/projects/platform/3O/omodul",
       "canonical_path": "_base.py",
-      "canonical_sha": "1bf65400307b7bc3b57b729b474007aa14c23aaa",
+      "canonical_sha": "3dd1f8388fe88c8473531f8db20fd62360149c72",
       "canonical_version": "1.49.0",
       "canonical_sha256": "dc7f2e0446dd55ac00449fe0fd390c62f8e201982f0b93f6951a02a0004bbd4c",
       "exact_match": true
@@ -441,7 +441,7 @@
       "classification": "EXACT_CANONICAL_COPY",
       "canonical_repo": "/data/soffy/projects/platform/3O/omodul",
       "canonical_path": "_fingerprint.py",
-      "canonical_sha": "1bf65400307b7bc3b57b729b474007aa14c23aaa",
+      "canonical_sha": "3dd1f8388fe88c8473531f8db20fd62360149c72",
       "canonical_version": "1.49.0",
       "canonical_sha256": "b278aadb5bd3d711eff670dbc71d8f9a660a6df5e1fbee18aebf7e14d08b5167",
       "exact_match": true
@@ -477,7 +477,7 @@
       "classification": "EXACT_CANONICAL_COPY",
       "canonical_repo": "/data/soffy/projects/platform/3O/omodul",
       "canonical_path": "conic_chord_lesson.py",
-      "canonical_sha": "1bf65400307b7bc3b57b729b474007aa14c23aaa",
+      "canonical_sha": "3dd1f8388fe88c8473531f8db20fd62360149c72",
       "canonical_version": "1.49.0",
       "canonical_sha256": "690c3c7bf1f0820fd0bb9ec63bb8cc02ba900c43c159645f0c3c8f97451d0400",
       "exact_match": true
@@ -507,7 +507,7 @@
       "classification": "EXACT_CANONICAL_COPY",
       "canonical_repo": "/data/soffy/projects/platform/3O/omodul",
       "canonical_path": "echo_loop_session.py",
-      "canonical_sha": "1bf65400307b7bc3b57b729b474007aa14c23aaa",
+      "canonical_sha": "3dd1f8388fe88c8473531f8db20fd62360149c72",
       "canonical_version": "1.49.0",
       "canonical_sha256": "a8b884e4582547a6cef4474d1d2868c41ef0a3d4c3ddaeae11f0ec7b93d03fe3",
       "exact_match": true
@@ -519,7 +519,7 @@
       "classification": "EXACT_CANONICAL_COPY",
       "canonical_repo": "/data/soffy/projects/platform/3O/omodul",
       "canonical_path": "equation_balancing_lesson.py",
-      "canonical_sha": "1bf65400307b7bc3b57b729b474007aa14c23aaa",
+      "canonical_sha": "3dd1f8388fe88c8473531f8db20fd62360149c72",
       "canonical_version": "1.49.0",
       "canonical_sha256": "cdb7e63d085381e6d6f8698d410d389407068d76fcf1b2e15dfb9138c9a2538b",
       "exact_match": true
@@ -531,7 +531,7 @@
       "classification": "EXACT_CANONICAL_COPY",
       "canonical_repo": "/data/soffy/projects/platform/3O/omodul",
       "canonical_path": "generate_lesson_page.py",
-      "canonical_sha": "1bf65400307b7bc3b57b729b474007aa14c23aaa",
+      "canonical_sha": "3dd1f8388fe88c8473531f8db20fd62360149c72",
       "canonical_version": "1.49.0",
       "canonical_sha256": "347d2b1824d874001c7878dd8ac899dde59e24c25431fd08b1065e61bc804d73",
       "exact_match": true
@@ -540,7 +540,13 @@
       "element": "omodul.instant_solve",
       "local_path": "vendor/omodul/instant_solve.py",
       "local_sha256": "2e60d850d77b9ad03795f7dd4ca9f30c7f33d255124d0f6b0ae1d8ef67673595",
-      "classification": "PROJECT_LAYER4"
+      "classification": "EXACT_CANONICAL_COPY",
+      "canonical_repo": "/data/soffy/projects/platform/3O/omodul",
+      "canonical_path": "instant_solve.py",
+      "canonical_sha": "3dd1f8388fe88c8473531f8db20fd62360149c72",
+      "canonical_version": "1.49.0",
+      "canonical_sha256": "2e60d850d77b9ad03795f7dd4ca9f30c7f33d255124d0f6b0ae1d8ef67673595",
+      "exact_match": true
     },
     {
       "element": "omodul.paper",
@@ -549,7 +555,7 @@
       "classification": "EXACT_CANONICAL_COPY",
       "canonical_repo": "/data/soffy/projects/platform/3O/omodul",
       "canonical_path": "paper.py",
-      "canonical_sha": "1bf65400307b7bc3b57b729b474007aa14c23aaa",
+      "canonical_sha": "3dd1f8388fe88c8473531f8db20fd62360149c72",
       "canonical_version": "1.49.0",
       "canonical_sha256": "282b097b14cb18000f32ab8804ce2196a57ce9d2602b0ce2ae6b1eac9c2a5f03",
       "exact_match": true
@@ -573,7 +579,7 @@
       "classification": "EXACT_CANONICAL_COPY",
       "canonical_repo": "/data/soffy/projects/platform/3O/omodul",
       "canonical_path": "solid_geometry_lesson.py",
-      "canonical_sha": "1bf65400307b7bc3b57b729b474007aa14c23aaa",
+      "canonical_sha": "3dd1f8388fe88c8473531f8db20fd62360149c72",
       "canonical_version": "1.49.0",
       "canonical_sha256": "43fed51a8971ba5d6ec97370f13023708a14e43cb672f3fb96debfef351ff228",
       "exact_match": true
@@ -588,7 +594,13 @@
       "element": "omodul.speaking_practice_workflow",
       "local_path": "vendor/omodul/speaking_practice_workflow.py",
       "local_sha256": "3a22b9b8cad7782466af44fec22c0f226af4d65685dee942c6c15edb89b3b3c1",
-      "classification": "PROJECT_LAYER4"
+      "classification": "EXACT_CANONICAL_COPY",
+      "canonical_repo": "/data/soffy/projects/platform/3O/omodul",
+      "canonical_path": "speaking_practice_workflow.py",
+      "canonical_sha": "3dd1f8388fe88c8473531f8db20fd62360149c72",
+      "canonical_version": "1.49.0",
+      "canonical_sha256": "3a22b9b8cad7782466af44fec22c0f226af4d65685dee942c6c15edb89b3b3c1",
+      "exact_match": true
     },
     {
       "element": "omodul.visualize_concept",
@@ -615,7 +627,7 @@
       "classification": "EXACT_CANONICAL_COPY",
       "canonical_repo": "/data/soffy/projects/platform/3O/oprim",
       "canonical_path": "_mneme_speech_types.py",
-      "canonical_sha": "86f680643448730fcbfc0419332e9c834c92fb31",
+      "canonical_sha": "ac723026bc06a25cf54120976aac9d72e2b8e105",
       "canonical_version": "3.23.0",
       "canonical_sha256": "cbcc1fb5193a7aaa3a9af7bdfa4c006f32dd05110aa7ae4e73622ded87a3feca",
       "exact_match": true
@@ -669,7 +681,7 @@
       "classification": "EXACT_CANONICAL_COPY",
       "canonical_repo": "/data/soffy/projects/platform/3O/oprim",
       "canonical_path": "answer_judge.py",
-      "canonical_sha": "86f680643448730fcbfc0419332e9c834c92fb31",
+      "canonical_sha": "ac723026bc06a25cf54120976aac9d72e2b8e105",
       "canonical_version": "3.23.0",
       "canonical_sha256": "9397df575c029a8d173ca9b767c3dc24d0693309986cff436448b5df83c8cc23",
       "exact_match": true
@@ -693,7 +705,7 @@
       "classification": "EXACT_CANONICAL_COPY",
       "canonical_repo": "/data/soffy/projects/platform/3O/oprim",
       "canonical_path": "calibration.py",
-      "canonical_sha": "86f680643448730fcbfc0419332e9c834c92fb31",
+      "canonical_sha": "ac723026bc06a25cf54120976aac9d72e2b8e105",
       "canonical_version": "3.23.0",
       "canonical_sha256": "9a186899c845f1b0f3944322451e45b3376a220f1ada0f02efac6f691b9de9ba",
       "exact_match": true
@@ -705,7 +717,7 @@
       "classification": "EXACT_CANONICAL_COPY",
       "canonical_repo": "/data/soffy/projects/platform/3O/oprim",
       "canonical_path": "chemical_equation.py",
-      "canonical_sha": "86f680643448730fcbfc0419332e9c834c92fb31",
+      "canonical_sha": "ac723026bc06a25cf54120976aac9d72e2b8e105",
       "canonical_version": "3.23.0",
       "canonical_sha256": "8fff1ca52e59f1c87da82ac1eadd6bfd7d3b64f047ffeade331602dfcb9f0a8d",
       "exact_match": true
@@ -729,7 +741,7 @@
       "classification": "EXACT_CANONICAL_COPY",
       "canonical_repo": "/data/soffy/projects/platform/3O/oprim",
       "canonical_path": "compute_peer_percentile.py",
-      "canonical_sha": "86f680643448730fcbfc0419332e9c834c92fb31",
+      "canonical_sha": "ac723026bc06a25cf54120976aac9d72e2b8e105",
       "canonical_version": "3.23.0",
       "canonical_sha256": "0cf61d657f3e7136994f2b5b819391764d37bbd01455b1ceed90dc3f26535e0e",
       "exact_match": true
@@ -741,7 +753,7 @@
       "classification": "EXACT_CANONICAL_COPY",
       "canonical_repo": "/data/soffy/projects/platform/3O/oprim",
       "canonical_path": "conic_analysis.py",
-      "canonical_sha": "86f680643448730fcbfc0419332e9c834c92fb31",
+      "canonical_sha": "ac723026bc06a25cf54120976aac9d72e2b8e105",
       "canonical_version": "3.23.0",
       "canonical_sha256": "fcb6a8524dfa51dacdd3bd8199a9a768d3cf8fdcaa0a9d7376a0de256c9b3cda",
       "exact_match": true
@@ -765,7 +777,7 @@
       "classification": "EXACT_CANONICAL_COPY",
       "canonical_repo": "/data/soffy/projects/platform/3O/oprim",
       "canonical_path": "echo_loop.py",
-      "canonical_sha": "86f680643448730fcbfc0419332e9c834c92fb31",
+      "canonical_sha": "ac723026bc06a25cf54120976aac9d72e2b8e105",
       "canonical_version": "3.23.0",
       "canonical_sha256": "1fdd37a9a1ca43ba0029dbc3d9ed0b7f134ce63a829fe912a71e5a33a929551f",
       "exact_match": true
@@ -825,7 +837,7 @@
       "classification": "EXACT_CANONICAL_COPY",
       "canonical_repo": "/data/soffy/projects/platform/3O/oprim",
       "canonical_path": "learning_metrics.py",
-      "canonical_sha": "86f680643448730fcbfc0419332e9c834c92fb31",
+      "canonical_sha": "ac723026bc06a25cf54120976aac9d72e2b8e105",
       "canonical_version": "3.23.0",
       "canonical_sha256": "4422864ffa991c0c5eab826562791934a2bfaf38b4f77d65f9e5cf29893c7ead",
       "exact_match": true
@@ -867,7 +879,7 @@
       "classification": "EXACT_CANONICAL_COPY",
       "canonical_repo": "/data/soffy/projects/platform/3O/oprim",
       "canonical_path": "solid_geometry.py",
-      "canonical_sha": "86f680643448730fcbfc0419332e9c834c92fb31",
+      "canonical_sha": "ac723026bc06a25cf54120976aac9d72e2b8e105",
       "canonical_version": "3.23.0",
       "canonical_sha256": "b5021f51e863ec1ca0feeebc2789336d56a76bf2e7f67f433ffd0e9e7b3760a5",
       "exact_match": true
@@ -945,7 +957,7 @@
       "classification": "EXACT_CANONICAL_COPY",
       "canonical_repo": "/data/soffy/projects/platform/3O/oskill",
       "canonical_path": "cold_start_single.py",
-      "canonical_sha": "eb3b248b2173ae354f5764bfd59e6030d0f95712",
+      "canonical_sha": "a6d817847b442d9ac56645133f00afd18b0d8ef8",
       "canonical_version": "4.14.0",
       "canonical_sha256": "f9385a4a1b4a2d32a031169a5d17fd0cb8b8f71179f64469e5875468b07d58e1",
       "exact_match": true
@@ -957,7 +969,7 @@
       "classification": "EXACT_CANONICAL_COPY",
       "canonical_repo": "/data/soffy/projects/platform/3O/oskill",
       "canonical_path": "conic_chord_skill.py",
-      "canonical_sha": "eb3b248b2173ae354f5764bfd59e6030d0f95712",
+      "canonical_sha": "a6d817847b442d9ac56645133f00afd18b0d8ef8",
       "canonical_version": "4.14.0",
       "canonical_sha256": "f0d57b724811c21067ea9d6c8e678ebc1d408f2f26e21632f86119a0882997ae",
       "exact_match": true
@@ -969,7 +981,7 @@
       "classification": "EXACT_CANONICAL_COPY",
       "canonical_repo": "/data/soffy/projects/platform/3O/oskill",
       "canonical_path": "equation_balancing_skill.py",
-      "canonical_sha": "eb3b248b2173ae354f5764bfd59e6030d0f95712",
+      "canonical_sha": "a6d817847b442d9ac56645133f00afd18b0d8ef8",
       "canonical_version": "4.14.0",
       "canonical_sha256": "ea05e7af9f82c4480f7a8187c3e0d9bab08ca9e98fccada79b0dd5403c80e38f",
       "exact_match": true
@@ -999,7 +1011,7 @@
       "classification": "EXACT_CANONICAL_COPY",
       "canonical_repo": "/data/soffy/projects/platform/3O/oskill",
       "canonical_path": "interleave_select.py",
-      "canonical_sha": "eb3b248b2173ae354f5764bfd59e6030d0f95712",
+      "canonical_sha": "a6d817847b442d9ac56645133f00afd18b0d8ef8",
       "canonical_version": "4.14.0",
       "canonical_sha256": "41bb47e9a3a88cb5a3708dfeb2555aaf46d1e1e3e14ea48b58d7131ca61912ad",
       "exact_match": true
@@ -1011,7 +1023,7 @@
       "classification": "EXACT_CANONICAL_COPY",
       "canonical_repo": "/data/soffy/projects/platform/3O/oskill",
       "canonical_path": "ku_extract_pipeline.py",
-      "canonical_sha": "eb3b248b2173ae354f5764bfd59e6030d0f95712",
+      "canonical_sha": "a6d817847b442d9ac56645133f00afd18b0d8ef8",
       "canonical_version": "4.14.0",
       "canonical_sha256": "29062d808cc83f343341da1618177081a856e58ac387bf15db0840ee8926bbe7",
       "exact_match": true
@@ -1023,7 +1035,7 @@
       "classification": "EXACT_CANONICAL_COPY",
       "canonical_repo": "/data/soffy/projects/platform/3O/oskill",
       "canonical_path": "longitudinal_pattern.py",
-      "canonical_sha": "eb3b248b2173ae354f5764bfd59e6030d0f95712",
+      "canonical_sha": "a6d817847b442d9ac56645133f00afd18b0d8ef8",
       "canonical_version": "4.14.0",
       "canonical_sha256": "bd714b1f93188652be910ed8e64601db240db32fd60c01fa810622783e57ffe5",
       "exact_match": true
@@ -1035,7 +1047,7 @@
       "classification": "EXACT_CANONICAL_COPY",
       "canonical_repo": "/data/soffy/projects/platform/3O/oskill",
       "canonical_path": "metacog_scaffold.py",
-      "canonical_sha": "eb3b248b2173ae354f5764bfd59e6030d0f95712",
+      "canonical_sha": "a6d817847b442d9ac56645133f00afd18b0d8ef8",
       "canonical_version": "4.14.0",
       "canonical_sha256": "f819a4191c8799b77a5f5f61c96f582fb5badb4e5e66f9a87523fa2d9baea8ce",
       "exact_match": true
@@ -1065,7 +1077,7 @@
       "classification": "EXACT_CANONICAL_COPY",
       "canonical_repo": "/data/soffy/projects/platform/3O/oskill",
       "canonical_path": "solid_geometry_skill.py",
-      "canonical_sha": "eb3b248b2173ae354f5764bfd59e6030d0f95712",
+      "canonical_sha": "a6d817847b442d9ac56645133f00afd18b0d8ef8",
       "canonical_version": "4.14.0",
       "canonical_sha256": "0bb18b75c5c077a7d705b51654b318bc18586734b7d26fc11ff708307482d344",
       "exact_match": true
@@ -1077,7 +1089,7 @@
       "classification": "EXACT_CANONICAL_COPY",
       "canonical_repo": "/data/soffy/projects/platform/3O/oskill",
       "canonical_path": "solve_and_visualize.py",
-      "canonical_sha": "eb3b248b2173ae354f5764bfd59e6030d0f95712",
+      "canonical_sha": "a6d817847b442d9ac56645133f00afd18b0d8ef8",
       "canonical_version": "4.14.0",
       "canonical_sha256": "c410f6a5c200894695fb48c09868eedf61cba6ed74a7837529cc3d3e44c25c7d",
       "exact_match": true
