@@ -29,6 +29,7 @@ def register_domain_routers(app: FastAPI) -> None:
         operator,
         practice,
         progress,
+        related_labs,
         review,
         socratic,
         subjects,
@@ -61,5 +62,6 @@ def register_domain_routers(app: FastAPI) -> None:
         conic_geometry,
         chemistry,
         edu_assets,
+        related_labs,
     ):
         app.include_router(mod.router)

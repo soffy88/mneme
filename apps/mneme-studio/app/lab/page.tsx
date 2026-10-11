@@ -12,6 +12,7 @@
 import React, { useState } from "react";
 import { OButton, OCard, OCardHeader, OCardTitle } from "@helios/blocks";
 import { MathText } from "@/components/MathText";
+import { RelatedLabsCatalog, RelatedLabsFor } from "@/components/RelatedLabs";
 import { eduPost, eduPostHtml, getToken, redirectToLogin } from "@/lib/mcp";
 
 type Tab = "solid" | "conic" | "chem";
@@ -400,6 +401,10 @@ export default function LabPage() {
       {tab === "solid" && <GeometryLab key="solid" kind="solid" />}
       {tab === "conic" && <GeometryLab key="conic" kind="conic" />}
       {tab === "chem" && <ChemLab />}
+      {tab === "solid" && <RelatedLabsFor key="rl-solid" kcId="GDMATH-SOLID" limit={1} />}
+      {tab === "conic" && <RelatedLabsFor key="rl-conic" kcId="GDMATH-CONIC" limit={1} />}
+      {tab === "chem" && <RelatedLabsFor key="rl-chem" q="离子方程式 配平 氧化还原" subject="chemistry" limit={1} />}
+      <RelatedLabsCatalog />
     </main>
   );
 }

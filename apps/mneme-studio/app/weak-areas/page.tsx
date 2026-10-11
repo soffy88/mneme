@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { OCard, OEmptyState } from "@helios/blocks";
 import { ProductNav } from "@/components/ProductNav";
+import { RelatedLabsFor } from "@/components/RelatedLabs";
 import { getStudentId, getToken, mcp, redirectToLogin } from "@/lib/mcp";
 
 type WeakItem = { knowledge_ref: string; label: string; observed_pattern?: string | null; confidence?: number | null; supporting_evidence: string[]; recommended_repair_action?: string | null };
@@ -24,6 +25,7 @@ export default function WeakAreasPage() {
             {item.observed_pattern && <div className="text-sm">Observed pattern: {item.observed_pattern}</div>}
             <div className="text-sm">Repair: {item.recommended_repair_action ?? "diagnostic repair"}</div>
             <div className="text-xs text-gray-500">Evidence: {item.supporting_evidence.join(", ")}</div>
+            <RelatedLabsFor q={item.label} kcId={item.knowledge_ref} />
           </div>
         </OCard>
       ))}

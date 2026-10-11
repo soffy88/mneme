@@ -398,3 +398,36 @@ export async function eduPost<T>(path: string, payload: unknown): Promise<T> {
 export async function eduPostHtml(path: string, payload: unknown): Promise<string> {
   return (await eduFetch(path, payload, "text/html")).text();
 }
+
+// ── 相关实验外链（WeduLab，见 components/RelatedLabs）──────────────────────
+export interface RelatedLab {
+  slug: string;
+  title: string;
+  subject: string;
+  subject_label: string;
+  stages: string[];
+  topics: string[];
+  url: string;
+}
+
+async function relatedGet(path: string): Promise<RelatedLab[]> {
+  const res = await fetch(`${API_BASE}${path}`);
+  if (!res.ok) throw new Error(`related-labs ${res.status}`);
+  const body = (await res.json()) as { labs?: RelatedLab[] };
+  // 只接受 https://wedulab.com/labs/ 外链，防御性过滤
+  return (body.labs ?? []).filter((l) => typeof l.url === "string" && l.url.startsWith("https://wedulab.com/labs/"));
+}
+
+export function fetchRelatedLabs(): Promise<RelatedLab[]> {
+  return relatedGet("/v1/related-labs");
+}
+
+export function matchRelatedLabs(opts: { q?: string; kcId?: string; subject?: string; limit?: number }): Promise<RelatedLab[]> {
+  const p = new URLSearchParams();
+  if (opts.q) p.set("q", opts.q.slice(0, 500));
+  if (opts.kcId) p.set("kc_id", opts.kcId.slice(0, 64));
+  if (opts.subject) p.set("subject", opts.subject);
+  p.set("limit", String(opts.limit ?? 3));
+  if (!opts.q && !opts.kcId) return Promise.resolve([]);
+  return relatedGet(`/v1/related-labs/match?${p.toString()}`);
+}
