@@ -9,7 +9,7 @@
 // 交互课是服务端渲染的自包含 HTML，放进 sandbox iframe（只给 allow-scripts，
 // 不给 allow-same-origin，拿不到本页 localStorage 里的登录 token）。
 
-import { useState } from "react";
+import React, { useState } from "react";
 import { OButton, OCard, OCardHeader, OCardTitle } from "@helios/blocks";
 import { MathText } from "@/components/MathText";
 import { eduPost, eduPostHtml, getToken, redirectToLogin } from "@/lib/mcp";
@@ -98,11 +98,40 @@ const CHEM_EXAMPLES = [
   "MnO4^- + Fe^2+ + H^+ -> Mn^2+ + Fe^3+ + H2O",
 ];
 
-/** 服务端步骤是带 $..$ 的 HTML；只取纯文本再交给 KaTeX，不把 HTML 插进 DOM。 */
-function htmlToText(html: string): string {
-  if (typeof window === "undefined") return html;
-  const doc = new DOMParser().parseFromString(html.replace(/<br\s*\/?>/gi, "\n"), "text/html");
-  return doc.body.textContent ?? "";
+/**
+ * 服务端步骤是带 $..$ 的 HTML。不用 dangerouslySetInnerHTML：DOMParser 解析后按白名单
+ * 重建 React 元素（属性一律丢弃），文本节点交给 KaTeX。
+ */
+const SAFE_TAGS = new Set([
+  "p", "br", "b", "strong", "i", "em", "span", "div", "ul", "ol", "li",
+  "table", "thead", "tbody", "tr", "td", "th", "sub", "sup", "code",
+]);
+
+function renderNode(node: Node, key: number): React.ReactNode {
+  if (node.nodeType === Node.TEXT_NODE) {
+    return <MathText key={key} text={node.textContent ?? ""} />;
+  }
+  if (node.nodeType !== Node.ELEMENT_NODE) return null;
+  const el = node as Element;
+  const tag = el.tagName.toLowerCase();
+  const children = Array.from(el.childNodes).map((c, i) => renderNode(c, i));
+  if (!SAFE_TAGS.has(tag)) return <span key={key}>{children}</span>;
+  if (tag === "br") return <br key={key} />;
+  const cls: Record<string, string> = {
+    table: "my-2 text-sm border-collapse",
+    td: "border px-2 py-0.5 text-center",
+    th: "border px-2 py-0.5 text-center font-medium",
+    ul: "list-disc pl-5",
+    ol: "list-decimal pl-5",
+    p: "my-1",
+  };
+  return React.createElement(tag, { key, className: cls[tag] }, children.length ? children : undefined);
+}
+
+function SafeHtml({ html }: { html: string }) {
+  if (typeof window === "undefined") return null;
+  const doc = new DOMParser().parseFromString(html, "text/html");
+  return <>{Array.from(doc.body.childNodes).map((n, i) => renderNode(n, i))}</>;
 }
 
 function parseEquation(text: string): { reactants: string[]; products: string[] } | null {
@@ -123,8 +152,8 @@ function Steps({ steps }: { steps: Step[] }) {
           <div className="font-medium">
             {i + 1}. {s.title}
           </div>
-          <div className="whitespace-pre-wrap">
-            <MathText text={htmlToText(s.content)} />
+          <div>
+            <SafeHtml html={s.content} />
           </div>
         </li>
       ))}
@@ -236,7 +265,7 @@ function GeometryLab({ kind }: { kind: "solid" | "conic" }) {
           <iframe
             data-testid="lab-lesson"
             title="交互课"
-            className="h-[720px] w-full rounded-b-lg border-0"
+            className="h-[780px] w-full rounded-b-lg border-0"
             sandbox="allow-scripts"
             srcDoc={lessonHtml}
           />
@@ -348,7 +377,7 @@ export default function LabPage() {
     { id: "chem", label: "化学配平" },
   ];
   return (
-    <main className="mx-auto max-w-4xl p-6 space-y-4" data-testid="lab-root">
+    <main className="mx-auto max-w-6xl p-6 space-y-4" data-testid="lab-root">
       <h1 className="text-2xl font-bold">善学记 · 交互实验室</h1>
       <p className="text-sm text-[var(--o-color-fg-muted,#666)]">
         答案由确定性内核精确计算，并经独立复核；对不上就不出结果，不会给出错误答案。
