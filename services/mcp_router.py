@@ -1880,3 +1880,99 @@ async def mcp_get_memory_node(
         expanded=req.expanded,
         student_id=req.student_id,
     )
+
+
+# ── GetMasteryPath：学习者可见的掌握路径（mastery_path omodul 的首个服务层调用方）──
+# 纯派生/只读（AC.1 定案：advance 零持久化写入）。路径序 = GetPath（章节序）；
+# 每个 KC 的状态完全由既有内核 is_mastered（经 map_summary）判定，**不由 LLM 决定**：
+#   mastered —— is_mastered 为真；
+#   current  —— 路径中第一个未过门的 KC（= next_objective 优先级 3 的那个），唯一可学；
+#   locked   —— current 之后的未过门 KC：current 过门前不开放。
+# review_due 标记 FSRS 到期复习（复习不受锁约束，复习的本就是已学过的 KC）。
+
+
+async def tool_get_mastery_path(
+    db: AsyncSession, student_id: uuid.UUID, now: Optional[float] = None
+) -> dict:
+    from mneme_core.domain.omodul.mastery_path import (
+        MasteryPathConfig,
+        MasteryPathInput,
+        mastery_path,
+    )
+
+    path = await tool_get_path(db, student_id)
+    kc_ids: list[str] = path["kc_ids"]
+    base: dict[str, Any] = {"textbook_id": path["textbook_id"]}
+    if not kc_ids:
+        return {
+            **base,
+            "status": "empty",
+            "nodes": [],
+            "current_kc_id": None,
+            "next": None,
+            "total_mastered": 0,
+            "total_kps": 0,
+            "pending_review_count": 0,
+        }
+
+    ts = now or time.time()
+    prog = await build_learning_progress(db, student_id, kc_ids)
+    result = mastery_path(
+        MasteryPathConfig(), MasteryPathInput(progress=prog, now=ts), None
+    )
+    if result["status"] != "completed" or result["findings"] is None:
+        return {**base, "status": "failed", "error": result["error"], "nodes": []}
+
+    findings = result["findings"]
+    due = {t.knowledge_point_id for t in due_reviews(prog.review_queue, ts)}
+    nodes: list[dict] = []
+    current_kc_id: Optional[str] = None
+    for module in findings["modules"]:
+        for kp in module["knowledge_points"]:
+            if kp["mastered"]:
+                state = "mastered"
+            elif current_kc_id is None:
+                state = "current"
+                current_kc_id = kp["id"]
+            else:
+                state = "locked"
+            nodes.append(
+                {
+                    "kc_id": kp["id"],
+                    "name": kp["name"],
+                    "kc_type": kp["type"],
+                    "state": state,
+                    "n_obs": kp["n_obs"],
+                    "review_due": kp["id"] in due,
+                }
+            )
+    nxt = findings["next"]
+    return {
+        **base,
+        "status": "completed",
+        "nodes": nodes,
+        "current_kc_id": current_kc_id,
+        "next": {
+            "action": nxt["action"],
+            "kc_id": nxt["kc_id"],
+            "kc_name": nxt["kc_name"],
+        },
+        "total_mastered": findings["total_mastered"],
+        "total_kps": findings["total_kps"],
+        "pending_review_count": findings["pending_review_count"],
+    }
+
+
+class GetMasteryPathReq(BaseModel):
+    student_id: uuid.UUID
+    now: Optional[float] = None
+
+
+@router.post("/GetMasteryPath")
+async def mcp_get_mastery_path(
+    req: GetMasteryPathReq,
+    db: AsyncSession = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+) -> dict:
+    await _ensure_student_access(db, current_user, req.student_id)
+    return await tool_get_mastery_path(db, req.student_id, req.now)

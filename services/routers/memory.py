@@ -535,3 +535,64 @@ async def get_next_action(
         await persist_policy_decision(db, PolicyDecision.model_validate(trace))
         await db.commit()
     return result
+
+
+# ── Memory Inspect（学生本人可检视 + 可遗忘）────────────────────────────────
+
+
+class MemoryForgetRequest(BaseModel):
+    student_id: UUID
+    layer: Literal["episodic", "semantic", "claim"]
+    item_id: UUID
+
+
+@router.get("/v2/memory/inspect/{student_id}")
+async def get_memory_inspect(
+    student_id: UUID,
+    limit: int = Query(100, ge=1, le=500),
+    current_user: User = Depends(get_current_user),
+    db: AsyncSession = Depends(get_db),
+):
+    """学生本人查看自己的 episodic/semantic 记忆与 evidence-grounded claims。
+
+    仅本人（家长也不可）：这是学生的私人记忆面，含原始对话流水（P2/P3 过程数据）。
+    claim 的证据明细走既有 GET /v2/memory/evidence/{claim_id}。
+    """
+    _ensure_student_self(current_user, student_id)
+    from services.memory_inspect import inspect_view
+
+    return await inspect_view(db, student_id, limit=limit)
+
+
+@router.post("/v2/memory/forget")
+async def post_memory_forget(
+    req: MemoryForgetRequest,
+    current_user: User = Depends(get_current_user),
+    db: AsyncSession = Depends(get_db),
+):
+    """学生本人遗忘（删除）自己的一条记忆。不存在/非本人 → 404（不泄露他人条目是否存在）。"""
+    _ensure_student_self(current_user, req.student_id)
+    from obase.audit_log import log_usage
+
+    from services.memory_inspect import forget_item
+
+    deleted = await forget_item(
+        db, req.student_id, layer=req.layer, item_id=req.item_id
+    )
+    if not deleted:
+        await db.rollback()
+        raise HTTPException(status_code=404, detail="Memory item not found")
+    # 先提交删除，再写审计：审计写失败（被吞的异常会让事务 aborted）绝不能回滚遗忘本身。
+    await db.commit()
+    try:
+        await log_usage(
+            db,
+            actor=current_user,
+            action="memory_forget",
+            resource_type=f"memory_{req.layer}",
+            resource_id=str(req.item_id),
+        )
+        await db.commit()
+    except Exception:  # noqa: BLE001 — 审计失败不影响已完成的遗忘
+        await db.rollback()
+    return {"forgotten": True, "layer": req.layer, "item_id": str(req.item_id)}

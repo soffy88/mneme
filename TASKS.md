@@ -2790,3 +2790,28 @@ CI 常驻的判分准确率回归门，堵死"构造桩题掩盖真实数据判�
   （导入时列错位），挡住 `derive_meaning_from_canonical` 的确定性补齐。
 - [ ] **CME-P2 扩到 3,369**：前置 = P0.8 通过率 + 教材层 + 无语境 695 词的处置决策 +
   608 条短语是否需要 MemoryNode。
+
+
+## DT-MM · 对标 DeepTutor v1.6：可检视记忆 + 掌握路径 + 错题练习（2026-10-11）
+
+- [x] **DT-MM.1 Memory Inspect（学生本人可检视/可遗忘）**
+  `GET /v2/memory/inspect/{student_id}`（仅本人，`_ensure_student_self`；家长也 403）返回
+  agent.episodic / agent.semantic / memory_claims（含 evidence_count，证据明细走既有
+  `/v2/memory/evidence/{claim_id}`）。`POST /v2/memory/forget {student_id, layer, item_id}`
+  只删本人一条：episodic/semantic 行（`services/memory.py::forget`，SQL 强制 student_id 条件）
+  或一条 claim（边级联；**不删 memory_evidence 证据行**）。不存在/非本人 → 404；删除先提交、
+  再写 `agent.audit_log`（memory_forget）。记忆不进门控：`services/memory_inspect.py` 同
+  `test_memory_no_gating_coupling` 红线（静态断言）。Studio `/memory-inspect`（我的记忆），
+  `/memory` 页加入口。
+- [x] **DT-MM.2 Mastery Path 可视化（mastery_path omodul 首个服务层调用方）**
+  MCP `GetMasteryPath`：GetPath 章节序 → build_learning_progress → `mastery_path` omodul
+  （map_summary + due_reviews）→ 每 KC 状态 mastered（is_mastered）/ current（第一个未过门，
+  唯一可学）/ locked（其后未过门）+ review_due。纯派生零写入（AC.1 定案不变），LLM 不参与。
+  Studio `/path`。注：锁是"学习者可见 + /learn 只跟 NextObjective"层面的；RequestQuestion
+  本身不按路径拒绝 KC（GenerateQuiz/练习复用它，服务端硬锁留待拍板）。
+- [x] **DT-MM.3 错题复习练习（FSRS 到期驱动）**
+  `GET /v2/practice/queue/{student_id}`（仅本人）：kc_mastery FSRS 到期 KC（最久逾期在前）+
+  即将到期 + 本人错题（题干去重计 wrong_count），**不含 correct_answer**（studio 不接触答案
+  的铁律）。Studio `/practice`：每题走既有 RequestQuestion → SubmitAnswer（verdict_guard →
+  process_interaction）唯一守卫写入路径，答后内核重排 FSRS。未做：题目收藏（bookmark）——
+  无数据模型，需新表/迁移，留待拍板。

@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { OCard, OCardHeader, OCardTitle, OEmptyState } from "@helios/blocks";
+import Link from "next/link";
 import { ProductNav } from "@/components/ProductNav";
 import { getStudentId, getToken, mcp, redirectToLogin } from "@/lib/mcp";
 
@@ -21,6 +22,7 @@ export default function MemoryPage() {
     <main className="mx-auto max-w-2xl p-6 space-y-4">
       <h1 className="text-2xl font-bold">Memory</h1>
       <ProductNav />
+      <Link href="/memory-inspect" className="text-sm underline" data-testid="memory-inspect-link">查看并管理 Mneme 记住的全部内容 →</Link>
       {items.length === 0 ? <OEmptyState title="No data yet" description="完成真实学习后，Mneme 会在这里显示 evidence-backed memory。" /> : items.map((item) => (
         <OCard key={item.knowledge_ref ?? item.label}>
           <OCardHeader><OCardTitle>{item.knowledge_ref ?? "Knowledge"}</OCardTitle></OCardHeader>

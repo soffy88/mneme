@@ -347,3 +347,102 @@ async def update(
         },
     )
     return {"topic": topic, "updated": True}
+
+
+# ── 学生可检视/可遗忘（Memory Inspect，对标 DeepTutor Memory 页）──────────────
+# 学生本人查看 agent.* 中**自己的** episodic/semantic 条目，并可删除（遗忘）其中一条。
+# 鉴权（仅本人）在路由层做（_ensure_student_self）；本层所有 SQL 仍强制带
+# student_id 条件——即使上层鉴权漏了，也删不到别人的行（纵深防御）。
+# 红线不变：本层只做读写，不进门控判据（不 import 门控/判分模块）。
+
+_FORGETTABLE_LAYERS = {
+    "episodic": "agent.episodic_memory",
+    "semantic": "agent.semantic_memory",
+}
+
+
+def _iso(value: Any) -> Optional[str]:
+    return value.isoformat() if value is not None else None
+
+
+async def list_for_student(
+    db: AsyncSession, student_id: uuid.UUID, *, limit: int = 100
+) -> dict:
+    """只读：该学生最近的 episodic 流水 + semantic 摘要（各最多 limit 条）。"""
+    episodic = (
+        (
+            await db.execute(
+                text(
+                    "SELECT id, session_id, kind, content, source_ref, created_at "
+                    "FROM agent.episodic_memory "
+                    "WHERE student_id = CAST(:sid AS uuid) "
+                    "ORDER BY created_at DESC LIMIT :limit"
+                ),
+                {"sid": str(student_id), "limit": limit},
+            )
+        )
+        .mappings()
+        .all()
+    )
+    semantic = (
+        (
+            await db.execute(
+                text(
+                    "SELECT id, topic, content, merged_from, updated_at "
+                    "FROM agent.semantic_memory "
+                    "WHERE student_id = CAST(:sid AS uuid) "
+                    "ORDER BY updated_at DESC LIMIT :limit"
+                ),
+                {"sid": str(student_id), "limit": limit},
+            )
+        )
+        .mappings()
+        .all()
+    )
+    return {
+        "episodic": [
+            {
+                "id": str(r["id"]),
+                "session_id": r["session_id"],
+                "kind": r["kind"],
+                "content": r["content"],
+                "source_ref": r["source_ref"],
+                "created_at": _iso(r["created_at"]),
+            }
+            for r in episodic
+        ],
+        "semantic": [
+            {
+                "id": str(r["id"]),
+                "topic": r["topic"],
+                "content": r["content"],
+                "merged_from_count": len(r["merged_from"] or []),
+                "updated_at": _iso(r["updated_at"]),
+            }
+            for r in semantic
+        ],
+    }
+
+
+async def forget(
+    db: AsyncSession, student_id: uuid.UUID, *, layer: str, item_id: uuid.UUID
+) -> bool:
+    """删除该学生自己的一条 episodic/semantic 记录。返回是否真的删到（False=不存在或非本人）。
+
+    不 commit——由调用方（路由）决定事务边界。
+    """
+    table = _FORGETTABLE_LAYERS.get(layer)
+    if table is None:
+        raise ValueError(f"unknown memory layer: {layer!r}")
+    deleted = (
+        await db.execute(
+            # 表名来自内部固定映射（非用户输入），S608 不适用
+            text(
+                f"DELETE FROM {table} "  # noqa: S608
+                "WHERE id = CAST(:id AS uuid) AND student_id = CAST(:sid AS uuid) "
+                "RETURNING id"
+            ),
+            {"id": str(item_id), "sid": str(student_id)},
+        )
+    ).scalar_one_or_none()
+    return deleted is not None

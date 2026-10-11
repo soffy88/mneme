@@ -341,6 +341,109 @@ export interface VisualizeConceptResult {
   diagram_source?: string;
 }
 
+// ── Memory Inspect（/memory-inspect）：学生本人查看 + 遗忘自己的记忆 ────────────
+export type MemoryLayer = "episodic" | "semantic" | "claim";
+
+export interface EpisodicMemoryItem {
+  id: string;
+  session_id: string | null;
+  kind: string;
+  content: unknown;
+  source_ref: string | null;
+  created_at: string | null;
+}
+
+export interface SemanticMemoryItem {
+  id: string;
+  topic: string;
+  content: unknown;
+  merged_from_count: number;
+  updated_at: string | null;
+}
+
+export interface MemoryClaimItem {
+  id: string;
+  claim_type: string;
+  subject_type: string;
+  subject_id: string;
+  knowledge_ref: string | null;
+  claim_text: string;
+  confidence: number | null;
+  evidence_level: string;
+  evidence_count: number;
+  created_at: string | null;
+}
+
+export interface MemoryInspectView {
+  student_id: string;
+  episodic: EpisodicMemoryItem[];
+  semantic: SemanticMemoryItem[];
+  claims: MemoryClaimItem[];
+}
+
+export interface MemoryEvidenceItem {
+  id: string;
+  relation: string;
+  evidence_type: string;
+  knowledge_ref: string | null;
+  source: string | null;
+  occurred_at: string | null;
+  evidence_level: string;
+  payload: unknown;
+}
+
+// ── Mastery Path（/path）：掌握路径，状态全由服务端内核 is_mastered 派生 ────────
+export type PathNodeState = "mastered" | "current" | "locked";
+
+export interface MasteryPathNode {
+  kc_id: string;
+  name: string;
+  kc_type: string;
+  state: PathNodeState;
+  n_obs: number;
+  review_due: boolean;
+}
+
+export interface MasteryPathView {
+  textbook_id: string;
+  status: "completed" | "empty" | "failed";
+  nodes: MasteryPathNode[];
+  current_kc_id: string | null;
+  next: { action: string; kc_id: string | null; kc_name: string | null } | null;
+  total_mastered: number;
+  total_kps: number;
+  pending_review_count: number;
+}
+
+// ── Practice（/practice）：FSRS 到期 KC + 本人错题（**不含答案**）──────────────
+export interface PracticeKc {
+  kc_id: string;
+  name: string;
+  due_at: string;
+  overdue_hours: number;
+  wrong_count: number;
+  sample_wrong_question: string | null;
+}
+
+export interface PracticeWrongQuestion {
+  id: string;
+  ku_id: string | null;
+  ku_name: string | null;
+  question_text: string;
+  has_image: boolean;
+  wrong_count: number;
+  last_wrong_at: string | null;
+  kc_due: boolean;
+}
+
+export interface PracticeQueue {
+  student_id: string;
+  due_count: number;
+  due: PracticeKc[];
+  upcoming: PracticeKc[];
+  wrong_questions: PracticeWrongQuestion[];
+}
+
 // ── 读工具 + 提交（无 PoseQuestion）─────────────────────────────────────────
 export const mcp = {
   // 按学生档案拉学习路径（有内容的 KC、按章节序）。studio 加载时取代写死的默认 KC。
@@ -408,6 +511,24 @@ export const mcp = {
       knowledge_refs: knowledgeRefs,
       policy_decision_id: policyDecisionId,
     }),
+
+  // Memory Inspect：仅本人可读/可删（服务端 _ensure_student_self）。
+  memoryInspect: (studentId: string) =>
+    apiGet<MemoryInspectView>(`/v2/memory/inspect/${studentId}`),
+  memoryEvidence: (claimId: string) =>
+    apiGet<{ claim: Record<string, unknown>; evidence: MemoryEvidenceItem[] }>(`/v2/memory/evidence/${claimId}`),
+  memoryForget: (studentId: string, layer: MemoryLayer, itemId: string) =>
+    apiPost<{ forgotten: boolean }>("/v2/memory/forget", {
+      student_id: studentId, layer, item_id: itemId,
+    }),
+
+  // Mastery Path：只读派生（mastery_path omodul）。前端只渲染状态，不计算掌握度。
+  getMasteryPath: (studentId: string) =>
+    call<MasteryPathView>("GetMasteryPath", { student_id: studentId }),
+
+  // Practice：只读队列（不含答案）；作答仍走 requestQuestion/submitAnswer。
+  practiceQueue: (studentId: string) =>
+    apiGet<PracticeQueue>(`/v2/practice/queue/${studentId}`),
 };
 
 // ── 交互实验室（确定性教学内核，见 app/lab）────────────────────────────────

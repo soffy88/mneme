@@ -127,3 +127,19 @@ async def post_quiz_submit(
         [a.model_dump() for a in body.answers],
         body.time_spent_seconds,
     )
+
+
+@router.get("/v2/practice/queue/{student_id}")
+async def get_practice_queue(
+    student_id: UUID,
+    db: AsyncSession = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+):
+    """Studio /practice 只读队列：FSRS 到期 KC + 即将到期 + 本人错题（不含答案）。
+
+    仅学生本人（错题是过程数据）。练习作答走既有 RequestQuestion/SubmitAnswer 守卫路径。
+    """
+    _ensure_student_self(current_user, student_id)
+    from services.practice_queue_service import practice_queue
+
+    return await practice_queue(db, student_id)
