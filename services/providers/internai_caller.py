@@ -99,12 +99,29 @@ class FallbackTextCaller:
                     f"{type(caller).__name__}: {type(exc).__name__}: {exc}"[:180]
                 )
                 continue
+            if not _has_content(result):
+                # 端点给了 200 但正文为空：同样换下一个端点（不把空串当答案交出去）
+                attempts.append(f"{type(caller).__name__}: empty_content")
+                continue
             self.last_good_model = getattr(caller, "last_good_model", None) or getattr(
                 caller, "model", None
             )
             self.model = self.last_good_model or self.model
             return result
         raise RuntimeError("all text endpoints failed: " + " | ".join(attempts))
+
+    @property
+    def has_reasoning_model(self) -> bool:
+        return any(bool(getattr(c, "has_reasoning_model", False)) for c in self.callers)
+
+
+def _has_content(result: object) -> bool:
+    if not isinstance(result, dict):
+        return False
+    content = result.get("content")
+    if isinstance(content, str):
+        return bool(content.strip()) or bool(result.get("tool_calls"))
+    return content is not None and content != [] and content != {}
 
 
 __all__ = [

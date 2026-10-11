@@ -17,8 +17,11 @@
 
 from __future__ import annotations
 
+import asyncio
+import contextlib
 import logging
 import os
+import tempfile
 import uuid
 from pathlib import Path
 from typing import Any, Awaitable, Callable, Optional
@@ -287,6 +290,59 @@ async def get_compile_status(db: AsyncSession, book_id: str) -> Optional[dict]:
     }
 
 
+def llm_concurrency() -> int:
+    """活书编译同时在途的 LLM 调用上限（跨 job、跨 worker 进程）。
+
+    2026-10-11：omodul.book_compile 按章节 asyncio.gather 并发生成，7 章 = 7 个
+    同时在途的推理模型调用，全部超时 → 共享 provider 的熔断器被打开，其它功能
+    （讲解/批改）跟着一起 30s 不可用。默认 3。
+    """
+    return max(1, min(_env_int("MNEME_BOOK_COMPILE_LLM_CONCURRENCY", 3), 16))
+
+
+def _slots_dir() -> Path:
+    raw = os.environ.get("MNEME_BOOK_COMPILE_SLOT_DIR") or os.path.join(
+        tempfile.gettempdir(), "mneme-book-llm-slots"
+    )
+    path = Path(raw)
+    path.mkdir(parents=True, exist_ok=True)
+    return path
+
+
+@contextlib.asynccontextmanager
+async def llm_slot(poll_seconds: float = 0.5):
+    """跨进程计数信号量：N 个 slot 文件，每次调用持有其中一个的 flock。
+
+    worker 是 prefork（--concurrency=2），进程内 asyncio.Semaphore 管不到另一个
+    子进程；flock 锁跟着打开的文件描述走，进程被杀时内核自动释放，不会泄漏 slot。
+    （同进程内两个 fd 对同一文件 flock 也互斥，所以同一 job 的并发章节同样受限。）
+    """
+    import fcntl
+
+    n = llm_concurrency()
+    root = _slots_dir()
+    fh = None
+    while fh is None:
+        for i in range(n):
+            candidate = open(root / f"slot-{i}.lock", "a+")  # noqa: SIM115 - held across await
+            try:
+                fcntl.flock(candidate.fileno(), fcntl.LOCK_EX | fcntl.LOCK_NB)
+            except OSError:
+                candidate.close()
+                continue
+            fh = candidate
+            break
+        if fh is None:
+            await asyncio.sleep(poll_seconds)
+    try:
+        yield
+    finally:
+        try:
+            fcntl.flock(fh.fileno(), fcntl.LOCK_UN)
+        finally:
+            fh.close()
+
+
 class BudgetCaller:
     """包住生产 caller：按 omodul 同一价格表累计开销，超过上限后拒绝后续调用。
 
@@ -322,9 +378,10 @@ class BudgetCaller:
                 f"单本编译开销已达上限 ${self.cap_usd:.2f}，停止后续生成"
             )
         try:
-            resp = await self.raw(messages=messages, system=system,
-                                  max_tokens=max(max_tokens, self.min_tokens),
-                                  **self.extra_kwargs)
+            async with llm_slot():
+                resp = await self.raw(messages=messages, system=system,
+                                      max_tokens=max(max_tokens, self.min_tokens),
+                                      **self.extra_kwargs)
         except Exception:
             self.failed_calls += 1
             raise
@@ -476,6 +533,8 @@ __all__ = [
     "enqueue_compile",
     "get_compile_status",
     "list_compilable_textbooks",
+    "llm_concurrency",
+    "llm_slot",
     "mark_error",
     "per_user_daily_limit",
     "run_compile_job",

@@ -17,7 +17,7 @@ import random
 import threading
 import time
 from collections import deque
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 from typing import Any, Awaitable, Callable
 
 from obase.provider_timeout import ProviderTimeoutPolicy, provider_timeout_policy
@@ -79,16 +79,22 @@ class ProviderReliabilityConfig:
     input_cost_per_1k_usd: float = 0.0
     output_cost_per_1k_usd: float = 0.0
     window_seconds: float = 86_400.0
+    # Reasoning-model profile (2026-10-11): a reasoning fallback such as
+    # InternAI Agents-A1 routinely needs 60-150s for a long generation.  Only
+    # this explicitly-marked profile may exceed the generic 120s ceiling, and
+    # it has its own hard bound (300s) so an outage still cannot pin a worker.
+    long_running: bool = False
 
     def __post_init__(self) -> None:
         """Keep programmatic configuration subject to the same hard limits."""
 
+        ceiling = 300 if self.long_running else 120
         if not 0 < self.timeout.connect_seconds <= 15:
             raise ValueError("provider connect timeout must be in (0, 15] seconds")
-        if not 0 < self.timeout.read_seconds <= 120:
-            raise ValueError("provider read timeout must be in (0, 120] seconds")
-        if not 0 < self.total_timeout_seconds <= 120:
-            raise ValueError("provider total timeout must be in (0, 120] seconds")
+        if not 0 < self.timeout.read_seconds <= ceiling:
+            raise ValueError(f"provider read timeout must be in (0, {ceiling}] seconds")
+        if not 0 < self.total_timeout_seconds <= ceiling:
+            raise ValueError(f"provider total timeout must be in (0, {ceiling}] seconds")
         if not 0 <= self.max_retries <= 2:
             raise ValueError("provider max retries must be in [0, 2]")
         if not 0 <= self.backoff_base_seconds <= 2:
@@ -193,6 +199,35 @@ class ProviderReliabilityConfig:
             output_cost_per_1k_usd=nonnegative_float(
                 "MNEME_PROVIDER_OUTPUT_COST_PER_1K_USD", 0.0, 10_000.0
             ),
+        )
+
+
+    def for_reasoning(self) -> "ProviderReliabilityConfig":
+        """Same budgets/circuit, but long-running timeouts and at most one retry.
+
+        ``MNEME_REASONING_READ_TIMEOUT_SECONDS`` (default 150) bounds one HTTP
+        read; ``MNEME_REASONING_TOTAL_TIMEOUT_SECONDS`` (default 180) bounds the
+        whole logical call including the chain's fallback endpoint.  A retry of a
+        150s timeout would only double the wait, so retries are capped at 1.
+        """
+
+        def bounded(name: str, default: float) -> float:
+            try:
+                value = float(os.environ.get(name, "") or default)
+            except ValueError:
+                return default
+            return max(30.0, min(value, 300.0))
+
+        read = bounded("MNEME_REASONING_READ_TIMEOUT_SECONDS", 150.0)
+        total = max(read, bounded("MNEME_REASONING_TOTAL_TIMEOUT_SECONDS", 180.0))
+        return replace(
+            self,
+            timeout=ProviderTimeoutPolicy(
+                connect_seconds=self.timeout.connect_seconds, read_seconds=read
+            ),
+            total_timeout_seconds=min(total + self.timeout.connect_seconds, 300.0),
+            max_retries=min(self.max_retries, 1),
+            long_running=True,
         )
 
 

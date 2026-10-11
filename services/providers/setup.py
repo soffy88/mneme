@@ -18,7 +18,11 @@ from typing import Any
 
 from obase.llm import register_default_providers
 from obase.provider_registry import ProviderRegistry
-from services.providers.reliability import ReliableProvider, wrap_provider
+from services.providers.reliability import (
+    ProviderReliabilityConfig,
+    ReliableProvider,
+    wrap_provider,
+)
 
 logger = logging.getLogger(__name__)
 
@@ -387,11 +391,19 @@ def _install_reliability_wrappers(backend: str) -> None:
             model = str(getattr(llm_caller, "model", "unknown"))
             key = (provider, model, "llm")
             if key not in wrappers:
+                # 推理模型（或含推理模型的回退链）用长超时档：否则包装层 65s 就把
+                # 一次正常的 Agents-A1 长生成砍掉，再记一次熔断失败（2026-10-11）。
+                config = (
+                    ProviderReliabilityConfig.from_env().for_reasoning()
+                    if bool(getattr(llm_caller, "has_reasoning_model", False))
+                    else None
+                )
                 wrappers[key] = wrap_provider(
                     llm_caller,
                     provider=provider,
                     model=model,
                     kind="llm",
+                    config=config,
                     # LLM/VLM completion is the only retryable operation in
                     # this contract: it has no Mneme-side write.  Evidence,
                     # mastery and FSRS writes happen only after the caller
