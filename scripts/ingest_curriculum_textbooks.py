@@ -13,8 +13,11 @@ it did not create: a textbook that already has a `ready` file with the same
 filename is skipped; a previous failed/pending row created by this script
 (storage_path under curriculum_standards/) is re-indexed in place.
 
-The mapping below binds PDFs in curriculum_standards/ to existing `textbooks`
-rows (it does not create textbooks).
+The mapping below binds PDFs in curriculum_standards/ to `textbooks` rows. It
+creates only the rows listed in NEW_TEXTBOOKS (chemistry/biology), insert-only.
+On the host (.venv has PyMuPDF) point DATABASE_URL at 127.0.0.1:5433; to skip
+embeddings set OLLAMA_EMBED_URL to an unreachable port and unset OPENAI_API_KEY
+(chunks keep embedding NULL; keyword retrieval still works).
 """
 
 from __future__ import annotations
@@ -71,10 +74,40 @@ MAPPING: list[tuple[str, str, str]] = [
     ("chinese", "TONGBIAN-G12-CHINESE-SBXX", "H_语文_普通高中教科书·语文选择性必修下册.pdf"),
     # history — 统编版
     ("history", "TONGBIAN-G7-HISTORY-S", f"M_历史_{_M22}·中国历史七年级上册.pdf"),
+    # chemistry — 人教版 (SmartEdu; 九年级下册 PDF is token-gated, see download script)
+    ("chemistry", "RENJIAO-G9-CHEMISTRY-S", f"M_化学_{_M22}·化学九年级上册.pdf"),
+    ("chemistry", "RENJIAO-G9-CHEMISTRY-X", "M_化学_(根据2022年版课程标准修订)义务教育教科书·化学九年级下册.pdf"),
+    ("chemistry", "RENJIAO-G10-CHEMISTRY-BX1", "H_化学_普通高中教科书·化学必修第一册.pdf"),
+    ("chemistry", "RENJIAO-G10-CHEMISTRY-BX2", "H_化学_普通高中教科书·化学必修第二册.pdf"),
+    # biology — 人教版 (SmartEdu; 七年级下册/八年级下册 PDFs are token-gated)
+    ("biology", "RENJIAO-G7-BIOLOGY-S", f"M_生物学_{_M22}·生物学七年级上册.pdf"),
+    ("biology", "RENJIAO-G7-BIOLOGY-X", f"M_生物学_{_M22}·生物学七年级下册.pdf"),
+    ("biology", "RENJIAO-G8-BIOLOGY-S", f"M_生物学_{_M22}·生物学八年级上册.pdf"),
+    ("biology", "RENJIAO-G8-BIOLOGY-X", f"M_生物学_{_M22}·生物学八年级下册.pdf"),
+    ("biology", "RENJIAO-G10-BIOLOGY-BX1", "H_生物学_普通高中教科书·生物学必修1分子与细胞.pdf"),
+    ("biology", "RENJIAO-G10-BIOLOGY-BX2", "H_生物学_普通高中教科书·生物学必修2遗传与进化.pdf"),
 ]
 
+# Textbook rows this script may create (insert-only, ON CONFLICT DO NOTHING) when
+# the PDF is present: (grade, edition, book_name). Older subjects' rows came from
+# import_textbooks_subjects.py; chemistry/biology are created here.
+NEW_TEXTBOOKS: dict[str, tuple[str, str, str]] = {
+    "RENJIAO-G9-CHEMISTRY-S": ("G9", "RENJIAO", "人教版化学九年级上册"),
+    "RENJIAO-G9-CHEMISTRY-X": ("G9", "RENJIAO", "人教版化学九年级下册"),
+    "RENJIAO-G10-CHEMISTRY-BX1": ("G10", "RENJIAO", "人教版高中化学必修第一册"),
+    "RENJIAO-G10-CHEMISTRY-BX2": ("G10", "RENJIAO", "人教版高中化学必修第二册"),
+    "RENJIAO-G7-BIOLOGY-S": ("G7", "RENJIAO", "人教版生物学七年级上册"),
+    "RENJIAO-G7-BIOLOGY-X": ("G7", "RENJIAO", "人教版生物学七年级下册"),
+    "RENJIAO-G8-BIOLOGY-S": ("G8", "RENJIAO", "人教版生物学八年级上册"),
+    "RENJIAO-G8-BIOLOGY-X": ("G8", "RENJIAO", "人教版生物学八年级下册"),
+    "RENJIAO-G10-BIOLOGY-BX1": ("G10", "RENJIAO", "人教版高中生物学必修1·分子与细胞"),
+    "RENJIAO-G10-BIOLOGY-BX2": ("G10", "RENJIAO", "人教版高中生物学必修2·遗传与进化"),
+}
 
-async def _ingest_one(textbook_id: str, filename: str, *, dry_run: bool) -> str:
+
+async def _ingest_one(
+    textbook_id: str, filename: str, *, dry_run: bool, subject: str = ""
+) -> str:
     from sqlalchemy import text as sa_text
 
     from obase.db import SessionLocal
@@ -90,8 +123,23 @@ async def _ingest_one(textbook_id: str, filename: str, *, dry_run: bool) -> str:
                 sa_text("SELECT 1 FROM textbooks WHERE id=:id"), {"id": textbook_id}
             )
         ).fetchone()
+        if tb is None and textbook_id in NEW_TEXTBOOKS and not dry_run:
+            grade, edition, book_name = NEW_TEXTBOOKS[textbook_id]
+            await db.execute(
+                sa_text(
+                    "INSERT INTO textbooks (id, subject, grade, edition, book_name)"
+                    " VALUES (:id, :subj, :g, :e, :n) ON CONFLICT (id) DO NOTHING"
+                ),
+                {"id": textbook_id, "subj": subject, "g": grade, "e": edition, "n": book_name},
+            )
+            await db.commit()
+            tb = (textbook_id,)
         if tb is None:
-            return "missing_textbook_row"
+            return (
+                "would_create_textbook_row"
+                if textbook_id in NEW_TEXTBOOKS
+                else "missing_textbook_row"
+            )
         existing = (
             await db.execute(
                 sa_text(
@@ -135,7 +183,7 @@ async def _ingest_one(textbook_id: str, filename: str, *, dry_run: bool) -> str:
 
 async def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__.splitlines()[0])
-    ap.add_argument("--subjects", nargs="*", help="physics english chinese history")
+    ap.add_argument("--subjects", nargs="*", help="physics english chinese history chemistry biology")
     ap.add_argument("--textbook", action="append", help="only these textbook ids")
     ap.add_argument("--dry-run", action="store_true")
     args = ap.parse_args()
@@ -148,7 +196,7 @@ async def main() -> int:
     ]
     for subject, tb_id, fn in rows:
         t0 = time.time()
-        status = await _ingest_one(tb_id, fn, dry_run=args.dry_run)
+        status = await _ingest_one(tb_id, fn, dry_run=args.dry_run, subject=subject)
         print(f"{subject}\t{tb_id}\t{status}\t{time.time() - t0:.0f}s", flush=True)
     return 0
 

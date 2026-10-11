@@ -226,6 +226,21 @@ def get_download_info(session: requests.Session, book_id: str) -> dict | None:
     return None
 
 
+def _ndrv2_pdf_url(session: requests.Session, book_id: str) -> str | None:
+    """ndrv2 detail 里的 PDF URL（带真实文件名），取不到返回 None。"""
+    for mirror in (1, 2, 3):
+        r = get(session, DETAIL_V2_TMPL.format(n=mirror, book_id=book_id), retry=2)
+        if r.status_code != 200:
+            continue
+        try:
+            url = _extract_pdf_url_from_detail(r.json())
+        except Exception:
+            continue
+        if url:
+            return url
+    return None
+
+
 def safe_filename(title: str, stage: str, subject: str) -> str:
     """生成安全文件名：{学段前缀}_{科目}_{标题}.pdf"""
     prefix = STAGE_PREFIX.get(stage, stage or "K")
@@ -285,7 +300,19 @@ def download_book(session: requests.Session, book: dict, out_dir: Path,
         return False
 
     if info["mode"] == "token" and not token:
-        print("[SKIP] 需要 --token（新版书，私有CDN）")
+        # 2026-10: 新版书在 ndrv2 detail 里给出带真实文件名的 r*-ndr-private URL；
+        # 把 "-ndr-private." 换成 "-ndr." 即可匿名下载。ndrs 的 .pkg/pdf.pdf 仍 403。
+        candidates = [_ndrv2_pdf_url(session, book_id), info["url"]]
+        if dry_run:
+            print("[DRY-RUN] mode=token→public-ndr")
+            return True
+        for cand in [c for c in candidates if c]:
+            public_url = cand.replace("-ndr-private.", "-ndr.")
+            for n in (1, 2, 3):
+                mirror_url = re.sub(r"r\d-ndr\.", f"r{n}-ndr.", public_url)
+                if _try_download_url(session, mirror_url, out_path, None):
+                    return True
+        print("[SKIP] 需要 --token（新版书，私有CDN；公开 ndr 镜像不可用）")
         return False
 
     if dry_run:
@@ -323,7 +350,7 @@ def main() -> None:
     parser = argparse.ArgumentParser(description="下载国家智慧教育平台教材PDF")
     parser.add_argument("--subjects", nargs="+",
                         default=["物理", "语文", "英语", "历史"],
-                        help="要下载的学科（默认：物理 语文 英语 历史）")
+                        help="要下载的学科（默认：物理 语文 英语 历史；另有 化学 生物学）")
     parser.add_argument("--out", default="./curriculum_standards",
                         help="输出目录（默认：./curriculum_standards）")
     parser.add_argument("--token", default=None,
@@ -332,6 +359,8 @@ def main() -> None:
                         help="只列出待下载列表，不实际下载")
     parser.add_argument("--delay", type=float, default=0.5,
                         help="每本书下载间隔秒数（默认 0.5）")
+    parser.add_argument("--only", default=None,
+                        help="只下载标题匹配该正则的书（例如 '九年级上册|必修第一册'）")
     parser.add_argument("--all-publishers", action="store_true",
                         help="下载所有出版社版本（默认只下人教版/统编版）")
     args = parser.parse_args()
@@ -347,6 +376,9 @@ def main() -> None:
     # 2. 过滤目标学科 + 出版社
     publishers = None if args.all_publishers else DEFAULT_PUBLISHERS
     books = filter_books(all_books, args.subjects, publishers)
+    if args.only:
+        only_re = re.compile(args.only)
+        books = [b for b in books if only_re.search(b.get("title", ""))]
     pub_note = "（所有出版社）" if args.all_publishers else f"（人教版/统编版，--all-publishers 可获取全部 {len(filter_books(all_books, args.subjects))} 本）"
     print(f"\n→ 目标学科 {args.subjects}，共 {len(books)} 本教材 {pub_note}")
 
