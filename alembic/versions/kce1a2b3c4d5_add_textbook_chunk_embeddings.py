@@ -1,11 +1,11 @@
-"""textbook_chunk_embeddings：按模型分存的 chunk 向量（CPU bge-m3 侧车）
+"""textbook_chunk_embeddings：按模型分存的 chunk 向量（CPU embedding 侧车）
 
 Revision ID: kce1a2b3c4d5
 Revises: rsr1a2b3c4d5
 Create Date: 2026-10-11
 
 RTX 3080 掉卡后旧的 4096 维 qwen3-embedding（textbook_chunks.embedding）无法再
-为新 query 产生同空间向量。新向量（bge-m3，1024 维）存新表，主键 (chunk_id, model)，
+为新 query 产生同空间向量。新向量（CPU 侧车模型，默认 bge-small-zh-v1.5 512 维）存新表，主键 (chunk_id, model)，
 旧列原样保留不动（未经验证前不删旧数据；回退 MNEME_EMBED_BACKEND=legacy 即可）。
 chunk 删除时级联删除。纯教材内容，无学生 PII，不进 purge 清单。
 """

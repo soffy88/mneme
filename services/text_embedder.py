@@ -2,8 +2,9 @@
 
 2026-10-11 背景：RTX 3080 掉卡（Xid 154），Ollama qwen3-embedding（4096 维）整体
 不可用；生产文本 LLM 走 Veya 网关，而网关没有 /embeddings。语义检索因此一直落在
-词面兜底。这里接一个 CPU-only 的 bge-m3 侧车（docker/embedder，compose 服务名
-`embedder`，OpenAI-compatible /v1/embeddings，1024 维，L2 归一化）。
+词面兜底。这里接一个 CPU-only 的 embedding 侧车（docker/embedder，compose 服务名
+`embedder`，OpenAI-compatible /v1/embeddings，L2 归一化）。默认模型
+BAAI/bge-small-zh-v1.5（512 维）；选型与阈值标定见 docs/knowledge_hub_cpu_embedding.md。
 
 后端由环境变量决定（每次调用时读，便于测试 monkeypatch）：
 
@@ -13,7 +14,7 @@
                                     未配置环境的既有行为不变）
                       = "off"     → 不做语义检索（直接词面兜底）
   MNEME_EMBED_URL     = 侧车 base url（默认 http://embedder:8080/v1）
-  MNEME_EMBED_MODEL   = 侧车模型名（默认 bge-m3；同时是新向量表 model 列的值）
+  MNEME_EMBED_MODEL   = 侧车模型名（默认 bge-small-zh-v1.5；同时是新向量表 model 列的值）
 
 CPU 后端的 chunk 向量存在 `textbook_chunk_embeddings`（chunk_id, model 主键），
 不覆盖旧的 4096 维 `textbook_chunks.embedding`——查询与入库必须同一模型，
@@ -34,7 +35,7 @@ logger = logging.getLogger(__name__)
 
 BACKENDS = ("cpu", "legacy", "off")
 DEFAULT_CPU_URL = "http://embedder:8080/v1"
-DEFAULT_CPU_MODEL = "bge-m3"
+DEFAULT_CPU_MODEL = "bge-small-zh-v1.5"
 
 
 def embed_backend() -> str:
@@ -59,16 +60,20 @@ def match_method(model: str) -> str:
 
 
 async def embed_texts_cpu(
-    texts: list[str], *, timeout: float = 30.0
+    texts: list[str], *, timeout: float = 30.0, input_type: str = "passage"
 ) -> Optional[list[list[float]]]:
-    """批量调用 CPU 侧车。失败（连不上/非 200/形状不对）返回 None，不抛异常。"""
+    """批量调用 CPU 侧车。失败（连不上/非 200/形状不对）返回 None，不抛异常。
+
+    input_type="query" 让侧车加该模型的检索指令前缀（bge-*-zh-v1.5 的短 query
+    用法）；chunk 正文用默认 "passage"。KU 名称/描述作为"查询"一侧，也用 query。
+    """
     if not texts:
         return []
     try:
         async with httpx.AsyncClient(timeout=timeout) as client:
             resp = await client.post(
                 f"{cpu_embed_url()}/embeddings",
-                json={"input": texts, "model": cpu_embed_model()},
+                json={"input": texts, "model": cpu_embed_model(), "input_type": input_type},
             )
         if resp.status_code != 200:
             logger.warning("embedder HTTP %s: %s", resp.status_code, resp.text[:200])
@@ -94,7 +99,7 @@ async def embed_query(text: str, *, timeout: float = 10.0) -> tuple[Optional[lis
     if backend == "off":
         return None, None
     if backend == "cpu":
-        vecs = await embed_texts_cpu([text], timeout=timeout)
+        vecs = await embed_texts_cpu([text], timeout=timeout, input_type="query")
         return (vecs[0] if vecs else None), cpu_embed_model()
     from oprim.embed_chunks import embed_text
 

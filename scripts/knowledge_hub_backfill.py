@@ -19,11 +19,11 @@ RTX 3080 coincided with a "GPU fallen off the bus" crash. --sleep adds a pause
 between embedding calls.
 
 CPU backend (2026-10-11, after the GPU died): `--backend cpu` (default when
-MNEME_EMBED_BACKEND=cpu) uses the bge-m3 CPU sidecar (services/text_embedder,
+MNEME_EMBED_BACKEND=cpu) uses the CPU embedding sidecar (default bge-small-zh-v1.5) (services/text_embedder,
 compose service `embedder`). `embed` then inserts into textbook_chunk_embeddings
 (one row per chunk+model, ON CONFLICT DO NOTHING — the old 4096-dim
 textbook_chunks.embedding column is never touched), and `match` scores KUs
-against those vectors and records method=embedding_cosine_bge-m3. Run it inside
+against those vectors and records method=embedding_cosine_bge-small-zh-v1.5. Run it inside
 mneme-api-1 so it can reach the sidecar, niced, e.g.:
 
     docker exec -d mneme-api-1 sh -c 'cd /app && nice -n 15 python \
@@ -306,7 +306,9 @@ async def match_kus_cpu(
         mat = mat / n
         for s in range(0, len(kus), batch):
             part = kus[s : s + batch]
-            vecs = await embed_texts_cpu([_ku_text(k.name, k.description) for k in part], timeout=120)
+            vecs = await embed_texts_cpu(
+                [_ku_text(k.name, k.description) for k in part], timeout=120, input_type="query"
+            )
             if not vecs:
                 stat["failed"] += len(part)
                 if stat["matched"] == 0 and stat["failed"] >= 3 * batch:

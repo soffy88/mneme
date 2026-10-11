@@ -466,7 +466,7 @@ async def tool_search_knowledge_base(
         # 语义路径永远返回 top-k，即使毫不相关（"光合作用"在纯数学语料里也能拿到
         # 0.47 的"最近邻"）。聊天素材宁缺毋滥：低于下限的不给 loop。词面路径
         # 本身要求真实词命中，不受此限。
-        # 下限按打分模型取（旧 qwen3 = KB_FALLBACK_MIN_COSINE 0.58；CPU 侧车 bge-m3
+        # 下限按打分模型取（旧 qwen3 = KB_FALLBACK_MIN_COSINE 0.58；CPU 侧车模型
         # 另行标定，见 knowledge_hub_search.MIN_SCORE_PROFILES）。
         floor = (
             KB_FALLBACK_MIN_COSINE

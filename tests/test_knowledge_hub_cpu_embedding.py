@@ -1,4 +1,4 @@
-"""CPU embedding 侧车（bge-m3）接入：后端配置、兜底、按模型分存的向量、按模型标定的阈值。
+"""CPU embedding 侧车（bge-small-zh-v1.5）接入：后端配置、兜底、按模型分存的向量、按模型标定的阈值。
 
 不起真侧车：services.text_embedder.embed_texts_cpu 用假实现替换，或把 URL 指向
 一个不监听的端口验证"侧车宕 → 词面兜底"。
@@ -7,6 +7,7 @@
 from __future__ import annotations
 
 import importlib.util
+import json
 import uuid
 from pathlib import Path
 
@@ -39,20 +40,15 @@ def _vec_for(text: str) -> list[float]:
     return [0.5, 0.5, 0.0]
 
 
-async def _fake_cpu(texts, *, timeout=30.0):
-    del timeout
+async def _fake_cpu(texts, *, timeout=30.0, input_type="passage"):
+    del timeout, input_type
     return [_vec_for(t) for t in texts]
-
-
-async def _down_cpu(texts, *, timeout=30.0):
-    del texts, timeout
-    return None
 
 
 @pytest.fixture(autouse=True)
 def _cpu_env(monkeypatch):
     monkeypatch.setenv("MNEME_EMBED_BACKEND", "cpu")
-    monkeypatch.setenv("MNEME_EMBED_MODEL", "bge-m3")
+    monkeypatch.setenv("MNEME_EMBED_MODEL", "bge-small-zh-v1.5")
     khs._EMBED_STATE["down_until"] = 0.0
     khs._EMB_CACHE.clear()
     yield
@@ -116,22 +112,22 @@ def test_backend_config(monkeypatch):
     assert te.cpu_embed_url() == "http://embedder:8080/v1"
     monkeypatch.setenv("MNEME_EMBED_URL", "http://x:1/v1/")
     assert te.cpu_embed_url() == "http://x:1/v1"
-    assert te.match_method("bge-m3") == "embedding_cosine_bge-m3"
+    assert te.match_method("bge-small-zh-v1.5") == "embedding_cosine_bge-small-zh-v1.5"
 
 
 def test_min_score_profiles_and_env_override(monkeypatch):
     assert min_score_for("book") == 0.60  # 旧模型 R1 不变
     assert min_score_for("chat") == 0.58
     assert min_score_for("chat", "legacy") == 0.58
-    bge = khs.MIN_SCORE_PROFILES["bge-m3"]
-    assert min_score_for("book", "bge-m3") == bge["book"]
-    assert min_score_for("chat", "bge-m3") == bge["chat"]
+    bge = khs.MIN_SCORE_PROFILES["bge-small-zh-v1.5"]
+    assert min_score_for("book", "bge-small-zh-v1.5") == bge["book"]
+    assert min_score_for("chat", "bge-small-zh-v1.5") == bge["chat"]
     assert bge["book"] >= bge["chat"]  # Book 宁缺毋滥
-    monkeypatch.setenv("KNOWLEDGE_HUB_MIN_SCORE_BGE_M3_CHAT", "0.7")
-    assert min_score_for("chat", "bge-m3") == 0.7
-    monkeypatch.setenv("KNOWLEDGE_HUB_MIN_SCORE_BGE_M3_CHAT", "abc")
-    assert min_score_for("chat", "bge-m3") == bge["chat"]
-    assert khs._model_of_method("embedding_cosine_bge-m3") == "bge-m3"
+    monkeypatch.setenv("KNOWLEDGE_HUB_MIN_SCORE_BGE_SMALL_ZH_V1_5_CHAT", "0.7")
+    assert min_score_for("chat", "bge-small-zh-v1.5") == 0.7
+    monkeypatch.setenv("KNOWLEDGE_HUB_MIN_SCORE_BGE_SMALL_ZH_V1_5_CHAT", "abc")
+    assert min_score_for("chat", "bge-small-zh-v1.5") == bge["chat"]
+    assert khs._model_of_method("embedding_cosine_bge-small-zh-v1.5") == "bge-small-zh-v1.5"
     assert khs._model_of_method("embedding_cosine_qwen3-embedding") is None
     assert khs._model_of_method(None) is None
 
@@ -140,6 +136,7 @@ def test_min_score_profiles_and_env_override(monkeypatch):
 async def test_embed_texts_cpu_parses_openai_shape(monkeypatch):
     def handler(request: httpx.Request) -> httpx.Response:
         assert request.url.path.endswith("/embeddings")
+        assert json.loads(request.content)["input_type"] == "passage"
         return httpx.Response(
             200,
             json={"data": [{"index": 1, "embedding": [0.0, 1.0]}, {"index": 0, "embedding": [1.0, 0.0]}]},
@@ -210,7 +207,7 @@ async def test_cpu_backfill_is_insert_only_and_feeds_semantic_search(monkeypatch
                 {"i": chunk_ids},
             )
         ).fetchall()
-        assert {(r.model, r.dim) for r in rows} == {("bge-m3", 3)} and len(rows) == 3
+        assert {(r.model, r.dim) for r in rows} == {("bge-small-zh-v1.5", 3)} and len(rows) == 3
         # 旧列不动
         assert old == (
             await db.execute(sa_text("SELECT count(*) FROM textbook_chunks WHERE id = ANY(:i) AND embedding IS NOT NULL"), {"i": chunk_ids})
@@ -218,7 +215,7 @@ async def test_cpu_backfill_is_insert_only_and_feeds_semantic_search(monkeypatch
 
         res = await search_knowledge_base(db, query="问乙", top_k=3, min_score=0.5)
     assert "retrieval" not in res
-    assert res["embedding_model"] == "bge-m3"
+    assert res["embedding_model"] == "bge-small-zh-v1.5"
     assert [r["chunk_id"] for r in res["results"]][:1] == [chunk_ids[1]]
     assert res["results"][0]["score"] == 1.0
 
@@ -237,7 +234,7 @@ async def test_cpu_semantic_ignores_vectors_of_other_models(monkeypatch, seeded)
         )
         await db.commit()
         res = await search_knowledge_base(db, query="问甲", top_k=3)
-    # 库里没有 bge-m3 向量（只有 other-model 的）→ 语义不可用 → 词面兜底
+    # 库里没有 bge-small-zh-v1.5 向量（只有 other-model 的）→ 语义不可用 → 词面兜底
     assert res.get("retrieval") == "lexical"
 
 
@@ -245,7 +242,7 @@ async def test_cpu_semantic_ignores_vectors_of_other_models(monkeypatch, seeded)
 async def test_cpu_purpose_threshold_uses_bge_profile(monkeypatch, seeded):
     tb, chunk_ids = seeded
     monkeypatch.setattr(te, "embed_texts_cpu", _fake_cpu)
-    monkeypatch.setitem(khs.MIN_SCORE_PROFILES, "bge-m3", {"book": 0.9, "chat": 0.6})
+    monkeypatch.setitem(khs.MIN_SCORE_PROFILES, "bge-small-zh-v1.5", {"book": 0.9, "chat": 0.6})
     async with SessionLocal() as db:
         await khb.backfill_embeddings_cpu(db, textbook_ids=[tb], batch=8)
         # query 向量 [0.5,0.5,0] 与 甲/乙 cosine≈0.707，与 丙 = 0
@@ -274,13 +271,13 @@ async def test_cpu_match_inserts_unverified_rows_and_kc_threshold_per_method(mon
             )
         ).fetchall()
         assert len(rows) == 4
-        assert all(r.method == "embedding_cosine_bge-m3" and r.verified is False for r in rows)
+        assert all(r.method == "embedding_cosine_bge-small-zh-v1.5" and r.verified is False for r in rows)
         top = {r.ku_id: r.chunk_id for r in rows if r.rank == 1}
         assert top == {f"{tb}-ku-甲": chunk_ids[0], f"{tb}-ku-乙": chunk_ids[1]}
 
-        monkeypatch.setitem(khs.MIN_SCORE_PROFILES, "bge-m3", {"book": 0.5, "chat": 0.4})
+        monkeypatch.setitem(khs.MIN_SCORE_PROFILES, "bge-small-zh-v1.5", {"book": 0.5, "chat": 0.4})
         res = await search_knowledge_base(db, kc_id=f"{tb}-ku-甲", top_k=3, purpose="book")
         assert [r["chunk_id"] for r in res["results"]] == [chunk_ids[0]]  # rank2 cos=0 被滤
-        monkeypatch.setitem(khs.MIN_SCORE_PROFILES, "bge-m3", {"book": 1.01, "chat": 0.4})
+        monkeypatch.setitem(khs.MIN_SCORE_PROFILES, "bge-small-zh-v1.5", {"book": 1.01, "chat": 0.4})
         res = await search_knowledge_base(db, kc_id=f"{tb}-ku-甲", top_k=3, purpose="book")
         assert res["results"] == []

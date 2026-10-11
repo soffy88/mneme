@@ -1,8 +1,8 @@
 """mneme-embedder —— CPU-only 文本 embedding 侧车（OpenAI-compatible /v1/embeddings）。
 
 2026-10-11：RTX 3080 掉卡（Xid 154）后 Ollama qwen3-embedding 不可用，Veya 网关
-没有 /embeddings。这个侧车用 BAAI/bge-m3（中英多语，1024 维，dense = CLS 池化 +
-L2 归一化）在 CPU 上跑，供 knowledge_hub_search 的 query embedding 与
+没有 /embeddings。这个侧车在 CPU 上跑一个 BERT 类 embedding 模型（CLS 池化 + L2
+归一化；默认 BAAI/bge-small-zh-v1.5，512 维，也兼容 bge-m3 等同族模型），供 knowledge_hub_search 的 query embedding 与
 scripts/knowledge_hub_backfill.py 的 chunk/KU 向量化共用——查询与入库必须同一模型。
 
 刻意保持最小：不进 api 镜像（torch CPU 也有数百 MB），单进程单模型，
@@ -24,10 +24,14 @@ from pydantic import BaseModel  # noqa: E402
 from transformers import AutoModel, AutoTokenizer  # noqa: E402
 
 MODEL_DIR = os.environ.get("EMBED_MODEL_DIR", "/model")
-MODEL_NAME = os.environ.get("EMBED_MODEL_NAME", "bge-m3")
+MODEL_NAME = os.environ.get("EMBED_MODEL_NAME", "bge-small-zh-v1.5")
 MAX_LEN = int(os.environ.get("EMBED_MAX_LENGTH", "512"))
-THREADS = int(os.environ.get("EMBED_THREADS", "6"))
+THREADS = int(os.environ.get("EMBED_THREADS", "4"))
 MAX_BATCH = int(os.environ.get("EMBED_MAX_BATCH", "32"))
+# 非对称检索模型的指令前缀：bge-*-zh-v1.5 建议短 query 加检索指令、passage 不加；
+# bge-m3 两侧都不加。input_type 由调用方给（query / passage，默认 passage）。
+QUERY_PREFIX = os.environ.get("EMBED_QUERY_PREFIX", "")
+PASSAGE_PREFIX = os.environ.get("EMBED_PASSAGE_PREFIX", "")
 
 torch.set_num_threads(THREADS)
 _tok = AutoTokenizer.from_pretrained(MODEL_DIR)
@@ -41,6 +45,7 @@ app = FastAPI(title="mneme-embedder")
 class EmbReq(BaseModel):
     input: Union[str, list[str]]
     model: str | None = None
+    input_type: str = "passage"  # 扩展字段（OpenAI 协议没有）：query | passage
 
 
 def _encode(texts: list[str]) -> list[list[float]]:
@@ -65,7 +70,13 @@ def _encode(texts: list[str]) -> list[list[float]]:
 
 @app.get("/health")
 def health() -> dict:
-    return {"status": "ok", "model": MODEL_NAME, "dim": DIM, "threads": THREADS}
+    return {
+        "status": "ok",
+        "model": MODEL_NAME,
+        "dim": DIM,
+        "threads": THREADS,
+        "query_prefix": bool(QUERY_PREFIX),
+    }
 
 
 @app.post("/v1/embeddings")
@@ -73,7 +84,8 @@ def embeddings(req: EmbReq) -> dict:
     texts = [req.input] if isinstance(req.input, str) else list(req.input)
     if not texts or len(texts) > MAX_BATCH:
         raise HTTPException(400, f"input must have 1..{MAX_BATCH} items")
-    texts = [t if t.strip() else " " for t in texts]
+    prefix = QUERY_PREFIX if req.input_type == "query" else PASSAGE_PREFIX
+    texts = [prefix + (t if t.strip() else " ") for t in texts]
     t0 = time.perf_counter()
     vecs = _encode(texts)
     ms = (time.perf_counter() - t0) * 1000

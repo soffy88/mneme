@@ -92,16 +92,16 @@ async def _embed_query(query: str) -> tuple[Optional[list[float]], Optional[str]
 
 # ── 相似度阈值：按"打分模型 × 用途"标定 ─────────────────────────────────────
 # cosine 的量纲随模型变：旧 qwen3-embedding（4096 维）真相关 ~0.62-0.72、无关
-# ~0.44-0.54，于是 Book Engine R1=0.60、tutor 回落素材下限=0.58。bge-m3 的分布
-# 不同，必须单独标定（docs/knowledge_hub_cpu_embedding.md 记录标注集与结果）。
+# ~0.44-0.54，于是 Book Engine R1=0.60、tutor 回落素材下限=0.58。CPU 侧车模型的
+# 分布不同，必须单独标定（docs/knowledge_hub_cpu_embedding.md 记录标注集与结果）。
 #   "book"：Book Engine R1 垃圾兜底（宁缺毋滥）
 #   "chat"：tutor SearchKnowledgeBase 回落素材下限
 # 可用环境变量覆盖：KNOWLEDGE_HUB_MIN_SCORE_<MODEL>_<PURPOSE>，如
-# KNOWLEDGE_HUB_MIN_SCORE_BGE_M3_BOOK=0.6。
+# KNOWLEDGE_HUB_MIN_SCORE_BGE_SMALL_ZH_V1_5_BOOK=0.6。
 LEGACY_MODEL_KEY = "legacy"
 MIN_SCORE_PROFILES: dict[str, dict[str, float]] = {
     LEGACY_MODEL_KEY: {"book": 0.60, "chat": 0.58},
-    "bge-m3": {"book": 0.60, "chat": 0.58},
+    "bge-small-zh-v1.5": {"book": 0.60, "chat": 0.58},
 }
 
 
@@ -249,7 +249,7 @@ async def _search_by_kc_id(
 
     purpose 给定时（"book"/"chat"），阈值按每行的打分模型（method）取标定值——
     数学 KU 的旧 A3 行是 qwen3 量纲，2026-10 补挂的物理/语文/历史/英语行是
-    bge-m3 量纲，同一个数字不能同时套两者。min_score 仍作为额外下限生效。
+    CPU 侧车模型（bge-small-zh-v1.5）量纲，同一个数字不能同时套两者。min_score 仍作为额外下限生效。
     """
     if purpose:
         return await _search_by_kc_id_purpose(db, kc_id, top_k, min_score, purpose)
