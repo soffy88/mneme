@@ -266,14 +266,14 @@ async def test_free_text_falls_back_to_lexical_when_embedding_unavailable(
 
 
 @pytest.mark.asyncio
-async def test_lexical_fallback_uses_cjk_bigrams_for_longer_phrases(monkeypatch):
+async def test_lexical_fallback_uses_cjk_ngrams_for_longer_phrases(monkeypatch):
     async def no_embed(text):
         del text
         return None
 
     monkeypatch.setattr("oprim.embed_chunks.embed_text", no_embed)
     async with SessionLocal() as db:
-        # 整句在库里不存在，但其二元组大部分命中种子 chunk "检索测试内容 N"
+        # 整句在库里不存在，但其三元组过半命中种子 chunk "检索测试内容 N"
         result = await search_knowledge_base(db, query="检索测试内容的意思", top_k=3)
 
     assert result.get("retrieval") == "lexical"
@@ -299,13 +299,20 @@ async def test_lexical_fallback_disabled_when_min_score_set(monkeypatch):
 
 def test_lexical_helpers():
     from services.knowledge_hub_search import (
-        _cjk_bigrams,
+        _clean_ratio,
+        _cjk_ngrams,
+        _is_toc_chunk,
         _lexical_score,
         _lexical_terms,
     )
 
     assert _lexical_terms("勾股定理， 逆定理 a") == ["勾股定理", "逆定理"]
-    assert _cjk_bigrams("一元二次") == ["一元", "元二", "二次"]
+    assert _cjk_ngrams("一元二次", 2) == ["一元", "元二", "二次"]
+    assert _cjk_ngrams("光合作用", 3) == ["光合作", "合作用"]
+    assert _clean_ratio("第二十章 勾股定理 直角三角形，a²+b²=c²。") == 1.0
+    assert _clean_ratio("ᑓ ᄼ5 ᄼ ᄼᑓ ߦ၏ ڏឭ") < 0.6
+    assert _is_toc_chunk("目 录 第十九章 二次根式 １ 第二十章 勾股定理")
+    assert not _is_toc_chunk("第二十章 勾股定理 在西方，人们称勾股定理为毕达哥拉斯定理")
     assert _lexical_score("勾股定理勾股定理", ["勾股定理"]) == round(0.8 + 0.2 * 2 / 5, 4)
     assert _lexical_score("无关", ["勾股定理"]) == 0.0
 
@@ -418,3 +425,18 @@ async def test_embed_timeout_falls_back_to_lexical(monkeypatch):
         res = await search_knowledge_base(db, query="检索测试内容", top_k=3)
     assert res.get("retrieval") == "lexical"
     assert res["results"]
+
+
+@pytest.mark.asyncio
+async def test_lexical_fallback_rejects_partial_ngram_noise(monkeypatch):
+    """库里没有的术语不该靠零散子串凑出结果（2026-10 实测：光合作用 → 物理"作用"）。"""
+
+    async def no_embed(text):
+        del text
+        return None
+
+    monkeypatch.setattr("oprim.embed_chunks.embed_text", no_embed)
+    async with SessionLocal() as db:
+        res = await search_knowledge_base(db, query="测试光合作用", top_k=3)
+    assert res.get("retrieval") == "lexical"
+    assert res["results"] == []

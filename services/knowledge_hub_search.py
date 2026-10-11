@@ -231,15 +231,32 @@ def _lexical_terms(query: str) -> list[str]:
     return seen
 
 
-def _cjk_bigrams(query: str) -> list[str]:
-    """整词无命中时的退路：中文二元组（"一元二次方程的解法" → 一元/元二/...）。"""
+def _cjk_ngrams(query: str, n: int) -> list[str]:
+    """整词无命中时的退路：中文 n 元组（"一元二次方程的解法" n=3 → 一元二/元二次/...）。"""
     chars = "".join(ch for ch in query if _CJK.match(ch))
     grams: list[str] = []
-    for i in range(len(chars) - 1):
-        g = chars[i : i + 2]
+    for i in range(len(chars) - n + 1):
+        g = chars[i : i + n]
         if g not in grams:
             grams.append(g)
     return grams
+
+
+_CLEAN = re.compile(r"[\u4e00-\u9fff\u3000-\u303f\uff00-\uffef\x20-\x7e\s\u00b0-\u00ff\u2010-\u206f\u0391-\u03c9]")
+
+
+def _clean_ratio(content: str) -> float:
+    """可读字符占比。人教版 PDF 部分页字体映射损坏，抽出来是 ᑓᄼ߆ 一类乱码
+    （A2-FONT-SUBSTITUTION-CAVEAT）；这类 chunk 词面命中再多也不是好素材。"""
+    if not content:
+        return 0.0
+    return len(_CLEAN.findall(content)) / len(content)
+
+
+def _is_toc_chunk(content: str) -> bool:
+    """目录页：词面命中多但没有正文（"目 录 第十九章 ... 第二十章 勾股定理 ..."）。"""
+    head = "".join(content[:40].split())
+    return "目录" in head
 
 
 def _lexical_score(content: str, terms: list[str]) -> float:
@@ -290,20 +307,28 @@ async def _search_by_lexical(
     rows = await _candidates(terms)
     min_cov = 0.0
     if not rows:
-        terms = _cjk_bigrams(query)
+        # 4 字以上用三元组（覆盖 >=50%）——二元组太宽："光合作用"的 合作/作用 会
+        # 命中物理/英语里任意"作用"；3 字查询只能用二元组，且要求全部命中。
+        cjk_len = len(_cjk_ngrams(query, 1))
+        if cjk_len >= 4:
+            terms, min_cov = _cjk_ngrams(query, 3), 0.5
+        else:
+            terms, min_cov = _cjk_ngrams(query, 2), 1.0
         rows = await _candidates(terms)
-        min_cov = 0.6
 
     scored = []
     for r in rows:
         content = r.content or ""
-        coverage = (
-            sum(1 for t in terms if t in content) / len(terms) if terms else 0.0
-        )
+        coverage = sum(1 for t in terms if t in content) / len(terms) if terms else 0.0
         if coverage <= 0 or coverage < min_cov:
             continue
-        scored.append((r, _lexical_score(content, terms)))
-    scored.sort(key=lambda x: x[1], reverse=True)
+        score = _lexical_score(content, terms)
+        if _is_toc_chunk(content):
+            score *= 0.5  # 目录页降权：有词无正文
+        score = round(score * _clean_ratio(content), 4)  # 乱码页降权
+        density = sum(content.count(t) * len(t) for t in terms) / max(len(content), 1)
+        scored.append((r, score, density))
+    scored.sort(key=lambda x: (x[1], x[2]), reverse=True)
 
     return [
         _row_to_result(
@@ -320,7 +345,7 @@ async def _search_by_lexical(
             rank=rank,
             verified=False,
         )
-        for rank, (r, score) in enumerate(scored[:top_k], 1)
+        for rank, (r, score, _density) in enumerate(scored[:top_k], 1)
     ]
 
 
