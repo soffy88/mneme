@@ -13,7 +13,9 @@ import React, { useState } from "react";
 import { OButton, OCard, OCardHeader, OCardTitle } from "@helios/blocks";
 import { MathText } from "@/components/MathText";
 import { RelatedLabsCatalog, RelatedLabsFor } from "@/components/RelatedLabs";
-import { eduPost, eduPostHtml, getToken, redirectToLogin } from "@/lib/mcp";
+import { animate, eduPost, eduPostHtml, getToken, redirectToLogin, type AnimKind, type AnimSpec } from "@/lib/mcp";
+import { AnimationPlayer } from "@/components/AnimationPlayer";
+import { encodeAnimParams } from "@/lib/animatePresets";
 
 type Tab = "solid" | "conic" | "chem";
 
@@ -162,11 +164,44 @@ function Steps({ steps }: { steps: Step[] }) {
   );
 }
 
+/** 「步骤动画」：同一份参数走 POST /v1/animate（确定性内核 → 纯数据时间线），内联播放。 */
+function AnimateButton({ kind, params }: { kind: AnimKind; params: unknown }) {
+  const [spec, setSpec] = useState<AnimSpec | null>(null);
+  const [busy, setBusy] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  async function run() {
+    setBusy(true);
+    setError(null);
+    try {
+      setSpec(await animate(kind, params));
+    } catch (e) {
+      setError(e instanceof Error ? e.message : String(e));
+    } finally {
+      setBusy(false);
+    }
+  }
+  return (
+    <OCard data-testid="lab-animate">
+      <div className="p-4 flex flex-wrap items-center gap-3">
+        <OButton data-testid="lab-animate-run" disabled={busy} onClick={() => void run()}>
+          {busy ? "生成中…" : spec ? "重新生成步骤动画" : "🎬 步骤动画"}
+        </OButton>
+        <a className="text-sm underline" href={`/studio/animate?kind=${kind}&params=${encodeAnimParams(params)}`} data-testid="lab-animate-open">
+          在动画页打开
+        </a>
+        {error && <span className="text-sm text-[var(--o-color-danger,#c00)]">{error}</span>}
+      </div>
+      {spec && <AnimationPlayer spec={spec} height={800} />}
+    </OCard>
+  );
+}
+
 function GeometryLab({ kind }: { kind: "solid" | "conic" }) {
   const presets = kind === "solid" ? SOLID_PRESETS : CONIC_PRESETS;
   const base = kind === "solid" ? "/v1/geometry/solid" : "/v1/geometry/conic";
   const [specText, setSpecText] = useState(JSON.stringify(presets[0].spec, null, 2));
   const [result, setResult] = useState<GeometryResult | null>(null);
+  const [solvedSpec, setSolvedSpec] = useState<unknown>(null);
   const [lessonHtml, setLessonHtml] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -193,6 +228,7 @@ function GeometryLab({ kind }: { kind: "solid" | "conic" }) {
         eduPostHtml(`${base}/lesson`, spec),
       ]);
       setResult(r);
+      setSolvedSpec(spec);
       setLessonHtml(html);
     } catch (e) {
       setError(e instanceof Error ? e.message : String(e));
@@ -258,6 +294,10 @@ function GeometryLab({ kind }: { kind: "solid" | "conic" }) {
         </OCard>
       )}
 
+      {result && solvedSpec !== null && (
+        <AnimateButton key={JSON.stringify(solvedSpec)} kind={kind === "solid" ? "solid_geometry" : "conic_chord"} params={solvedSpec} />
+      )}
+
       {lessonHtml && (
         <OCard>
           <OCardHeader>
@@ -279,6 +319,7 @@ function GeometryLab({ kind }: { kind: "solid" | "conic" }) {
 function ChemLab() {
   const [text, setText] = useState(CHEM_EXAMPLES[0]);
   const [result, setResult] = useState<ChemResult | null>(null);
+  const [solved, setSolved] = useState<{ reactants: string[]; products: string[] } | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -297,6 +338,7 @@ function ChemLab() {
     setResult(null);
     try {
       setResult(await eduPost<ChemResult>("/v1/chemistry/equation/balance", parsed));
+      setSolved(parsed);
     } catch (e) {
       setError(e instanceof Error ? e.message : String(e));
     } finally {
@@ -366,6 +408,7 @@ function ChemLab() {
           </div>
         </OCard>
       )}
+      {result && solved && <AnimateButton key={JSON.stringify(solved)} kind="equation_balance" params={solved} />}
     </div>
   );
 }

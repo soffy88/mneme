@@ -30,10 +30,22 @@ import {
 import { MathText } from "@/components/MathText";
 import { CitationNote } from "@/components/CitationNote";
 import { SaveToNotebook } from "@/components/SaveToNotebook";
+import { ImmersiveReader } from "@/components/ImmersiveReader";
+import { readingSources, type ReadingSources } from "@/lib/mcp";
 
 function urlBookId(): string | null {
   if (typeof window === "undefined") return null;
   return new URLSearchParams(window.location.search).get("book_id");
+}
+
+function urlParam(name: string): string | null {
+  if (typeof window === "undefined") return null;
+  return new URLSearchParams(window.location.search).get(name);
+}
+
+// 沉浸阅读：?book_id=X&mode=immersive（活书）或 ?textbook_id=Y（没有活书时读教材原文）
+function isImmersive(): boolean {
+  return urlParam("mode") === "immersive" || !!urlParam("textbook_id");
 }
 
 const CONTENT_TYPE_LABEL: Record<string, string> = {
@@ -328,6 +340,70 @@ function CompileBookPanel() {
   );
 }
 
+
+// ── 沉浸阅读入口：继续读 + 教材原文（没有活书时也能读）──────────────────────
+function ReadPanel() {
+  const [src, setSrc] = useState<ReadingSources | null>(null);
+  const [subject, setSubject] = useState<string>("");
+  const [tid, setTid] = useState<string>("");
+  const [err, setErr] = useState<string | null>(null);
+  useEffect(() => {
+    readingSources().then(setSrc).catch((e) => setErr(errorText(e)));
+  }, []);
+  if (err) return null;
+  if (!src) return null;
+  const subjects = Array.from(new Set(src.textbooks.map((t) => t.subject)));
+  const visible = src.textbooks.filter((t) => !subject || t.subject === subject);
+  const nameOf = (kind: string, id: string): string => {
+    if (kind === "book") return src.books.find((b) => b.book_id === id)?.title ?? id;
+    return src.textbooks.find((t) => t.textbook_id === id)?.book_name ?? id;
+  };
+  const hrefOf = (kind: string, id: string): string =>
+    kind === "book" ? `/studio/book?book_id=${encodeURIComponent(id)}&mode=immersive` : `/studio/book?textbook_id=${encodeURIComponent(id)}`;
+  return (
+    <OCard data-testid="read-panel">
+      <OCardHeader>
+        <OCardTitle>沉浸阅读</OCardTitle>
+      </OCardHeader>
+      <div className="p-4 space-y-3 text-sm">
+        {src.positions.length > 0 && (
+          <div className="space-y-1" data-testid="read-continue">
+            <div className="font-medium">继续读</div>
+            {src.positions.slice(0, 3).map((p) => (
+              <a key={`${p.source_kind}-${p.source_id}`} href={hrefOf(p.source_kind, p.source_id)} className="flex items-center justify-between rounded-lg border px-3 py-2 hover:bg-black/5">
+                <span>{nameOf(p.source_kind, p.source_id)}</span>
+                <span className="text-xs text-[var(--o-color-fg-muted,#888)]">
+                  第 {p.block_index + 1}{p.total_blocks ? ` / ${p.total_blocks}` : ""} 块
+                </span>
+              </a>
+            ))}
+          </div>
+        )}
+        <p className="text-[var(--o-color-fg-muted,#666)]">没有活书的教材，也可以直接一块一块地读原文，读的时候能随时出题检查、让我解释看不懂的句子。</p>
+        <div className="flex gap-2">
+          <select aria-label="原文学科" data-testid="read-subject" className="rounded-lg border p-2" value={subject} onChange={(e) => { setSubject(e.target.value); setTid(""); }}>
+            <option value="">全部学科</option>
+            {subjects.map((s) => (
+              <option key={s} value={s}>{SUBJECT_LABEL[s] ?? s}</option>
+            ))}
+          </select>
+          <select aria-label="原文教材" data-testid="read-textbook" className="flex-1 rounded-lg border p-2" value={tid} onChange={(e) => setTid(e.target.value)}>
+            <option value="">选择教材…</option>
+            {visible.map((t) => (
+              <option key={t.textbook_id} value={t.textbook_id}>
+                {t.book_name}{t.has_book ? "（有活书）" : ""}
+              </option>
+            ))}
+          </select>
+          <a href={tid ? hrefOf("textbook", tid) : undefined} data-testid="read-open" aria-disabled={!tid}>
+            <OButton disabled={!tid}>读原文</OButton>
+          </a>
+        </div>
+      </div>
+    </OCard>
+  );
+}
+
 export default function BookPage() {
   const [books, setBooks] = useState<BookSummary[] | null>(null);
   const [book, setBook] = useState<BookDetail | null>(null);
@@ -338,6 +414,7 @@ export default function BookPage() {
       redirectToLogin();
       return;
     }
+    if (urlParam("textbook_id")) return; // 教材原文沉浸阅读：ImmersiveReader 自己取数据
     void (async () => {
       try {
         const bookId = urlBookId();
@@ -362,6 +439,18 @@ export default function BookPage() {
     );
   }
 
+  const textbookId = urlParam("textbook_id");
+  if (textbookId) {
+    return (
+      <ImmersiveReader
+        source={{ kind: "textbook", textbookId }}
+        onExit={() => {
+          window.location.href = "/studio/book";
+        }}
+      />
+    );
+  }
+
   if (urlBookId() && !book) {
     return (
       <main className="mx-auto max-w-2xl p-6" data-testid="book-root">
@@ -374,9 +463,21 @@ export default function BookPage() {
     return (
       <main className="mx-auto max-w-2xl p-6 space-y-4" data-testid="book-root">
         <h1 className="text-2xl font-bold">善学记 · 活书</h1>
+        <ReadPanel />
         <CompileBookPanel />
         {books === null ? <OEmptyState title="正在加载书单…" description="" /> : <BookList books={books} />}
       </main>
+    );
+  }
+
+  if (isImmersive() && book) {
+    return (
+      <ImmersiveReader
+        source={{ kind: "book", book }}
+        onExit={() => {
+          window.location.href = `/studio/book?book_id=${encodeURIComponent(book.book_id)}`;
+        }}
+      />
     );
   }
 
@@ -385,6 +486,9 @@ export default function BookPage() {
       <header>
         <a href="/studio/book" className="text-sm text-[var(--o-color-fg-muted,#888)]">← 所有的书</a>
         <h1 className="text-2xl font-bold mt-1">{book!.title}</h1>
+        <a href={`/studio/book?book_id=${encodeURIComponent(book!.book_id)}&mode=immersive`} data-testid="book-immersive-link" className="inline-block mt-2">
+          <OButton size="sm">📖 沉浸阅读</OButton>
+        </a>
         {book!.description && <p className="text-sm text-[var(--o-color-fg-muted,#666)] mt-1">{book!.description}</p>}
       </header>
 

@@ -15,6 +15,8 @@ export function ProductNav() {
       <Link href="/progress">Progress</Link>
       <Link href="/immersive">Immersive</Link>
       <Link href="/lab">Lab</Link>
+      <Link href="/animate">Animate</Link>
+      <Link href="/book">Book</Link>
     </nav>
   );
 }

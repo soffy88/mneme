@@ -604,3 +604,131 @@ export function matchRelatedLabs(opts: { q?: string; kcId?: string; subject?: st
 export function chatTurn<T>(payload: unknown): Promise<T> {
   return apiPost<T>("/v1/chat/turn", payload);
 }
+
+// ── Immersive Reading（/v1/reading/*）：阅读来源 + 教材原文块 + 本人阅读位置 ─────
+// 阅读位置只是进度，不是学习证据；"检查一下"仍走 requestQuestion/submitAnswer，
+// "解释这句"仍走 chatTurn —— 前端不新增判分路径。
+export type ReadingSourceKind = "book" | "textbook";
+
+export interface ReadingPosition {
+  source_kind: ReadingSourceKind;
+  source_id: string;
+  block_index: number;
+  block_id: string | null;
+  total_blocks: number | null;
+  updated_at: string | null;
+}
+
+export interface ReadingTextbookSummary {
+  textbook_id: string;
+  subject: string;
+  grade: string;
+  book_name: string;
+  n_chunks: number;
+  has_book: boolean;
+}
+
+export interface ReadingSources {
+  books: (BookSummary & { status: string })[];
+  textbooks: ReadingTextbookSummary[];
+  positions: ReadingPosition[];
+}
+
+export interface ReadingBlock {
+  block_id: string;
+  index: number;
+  block_type: "text";
+  section_title: string | null;
+  page_number: number | null;
+  payload: { text: string };
+  kc_ids: string[];
+}
+
+export interface ReadingTextbookPage {
+  textbook: { textbook_id: string; subject: string; grade: string; book_name: string };
+  total: number;
+  offset: number;
+  blocks: ReadingBlock[];
+}
+
+async function apiPut<T>(path: string, payload: unknown): Promise<T> {
+  const token = getToken();
+  const res = await fetch(`${API_BASE}${path}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+      ...(token ? { Authorization: `Bearer ${token}` } : {}),
+    },
+    body: JSON.stringify(payload),
+  });
+  if (!res.ok) {
+    if (res.status === 401 && typeof window !== "undefined") redirectToLogin();
+    throw new McpError(res.status, await res.text());
+  }
+  return (await res.json()) as T;
+}
+
+export function readingSources(): Promise<ReadingSources> {
+  return apiGet<ReadingSources>("/v1/reading/sources");
+}
+
+export function readingTextbook(textbookId: string, offset: number, limit = 40): Promise<ReadingTextbookPage> {
+  return apiGet<ReadingTextbookPage>(
+    `/v1/reading/textbooks/${encodeURIComponent(textbookId)}?offset=${offset}&limit=${limit}`,
+  );
+}
+
+export function readingPosition(studentId: string, kind: ReadingSourceKind, sourceId: string): Promise<{ position: ReadingPosition | null }> {
+  return apiGet(`/v1/reading/position/${studentId}?source_kind=${kind}&source_id=${encodeURIComponent(sourceId)}`);
+}
+
+export function saveReadingPosition(args: {
+  studentId: string; kind: ReadingSourceKind; sourceId: string;
+  blockIndex: number; blockId?: string | null; totalBlocks?: number | null;
+}): Promise<{ position: ReadingPosition }> {
+  return apiPut("/v1/reading/position", {
+    student_id: args.studentId,
+    source_kind: args.kind,
+    source_id: args.sourceId,
+    block_index: args.blockIndex,
+    block_id: args.blockId ?? null,
+    total_blocks: args.totalBlocks ?? null,
+  });
+}
+
+// ── Animator（POST /v1/animate）：确定性内核编排出的纯数据时间线 ──────────────
+// 播放器是自托管静态脚本（/v1/edu-assets/mneme-animator-1/player.js），在
+// sandbox="allow-scripts" 的 iframe 里按白名单图元画 SVG；时间线里没有任何代码。
+export type AnimKind = "solid_geometry" | "conic_chord" | "equation_balance" | "function_graph";
+
+export interface AnimFrame {
+  title: string;
+  caption: string;
+  readout?: string;
+  show: string[];
+  highlight: string[];
+  set: Record<string, Record<string, unknown>>;
+  camera?: { azimuth: number; elevation: number };
+  duration_ms: number;
+}
+
+export interface AnimSpec {
+  spec_version: "mneme.anim/1";
+  kind: AnimKind;
+  title: string;
+  answer: { label: string; latex: string };
+  canvas: { mode: "2d" | "3d"; view: number[]; target?: number[] };
+  shapes: Record<string, unknown>[];
+  frames: AnimFrame[];
+  fingerprint: string;
+}
+
+export function animate(kind: AnimKind, params: unknown): Promise<AnimSpec> {
+  return eduPost<AnimSpec>("/v1/animate", { kind, params });
+}
+
+/** 自托管教学静态资源的绝对 URL 前缀（sandbox iframe 是 opaque origin，必须写绝对地址）。 */
+export function eduAssetBase(): string {
+  const base = API_BASE || (typeof window !== "undefined" ? window.location.origin : "");
+  return `${base}/v1/edu-assets`;
+}
