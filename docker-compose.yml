@@ -134,6 +134,7 @@ services:
       VEYA_BASE_URL: ${VEYA_BASE_URL:-http://host.docker.internal:8791/v1}
       VEYA_API_KEY: ${VEYA_API_KEY:-}
       VEYA_MODEL: ${VEYA_MODEL:-veya1.2-128K}
+      MNEME_LLM_VEYA_FIRST: ${MNEME_LLM_VEYA_FIRST:-0}
       # 第二个**独立端点**（2026-10-04）。Veya 侧 28 个上游只剩 2 个可用时，
       # 「同端点换模型名」救不了 —— 必须有独立端点做端点级冗余。公网直连，无需 relay。
       # Agents-A1 是推理模型：max_tokens 要覆盖思考+回答；答案在 content。
@@ -257,6 +258,7 @@ services:
       VEYA_BASE_URL: ${VEYA_BASE_URL:-http://host.docker.internal:8791/v1}
       VEYA_API_KEY: ${VEYA_API_KEY:-}
       VEYA_MODEL: ${VEYA_MODEL:-veya1.2-128K}
+      MNEME_LLM_VEYA_FIRST: ${MNEME_LLM_VEYA_FIRST:-0}
       # 第二个**独立端点**（2026-10-04）。Veya 侧 28 个上游只剩 2 个可用时，
       # 「同端点换模型名」救不了 —— 必须有独立端点做端点级冗余。公网直连，无需 relay。
       # Agents-A1 是推理模型：max_tokens 要覆盖思考+回答；答案在 content。
@@ -366,6 +368,7 @@ services:
       VEYA_BASE_URL: ${VEYA_BASE_URL:-http://host.docker.internal:8791/v1}
       VEYA_API_KEY: ${VEYA_API_KEY:-}
       VEYA_MODEL: ${VEYA_MODEL:-veya1.2-128K}
+      MNEME_LLM_VEYA_FIRST: ${MNEME_LLM_VEYA_FIRST:-0}
       # 第二个**独立端点**（2026-10-04）。Veya 侧 28 个上游只剩 2 个可用时，
       # 「同端点换模型名」救不了 —— 必须有独立端点做端点级冗余。公网直连，无需 relay。
       # Agents-A1 是推理模型：max_tokens 要覆盖思考+回答；答案在 content。
@@ -398,6 +401,7 @@ services:
       VEYA_BASE_URL: ${VEYA_BASE_URL:-http://host.docker.internal:8791/v1}
       VEYA_API_KEY: ${VEYA_API_KEY:-}
       VEYA_MODEL: ${VEYA_MODEL:-veya1.2-128K}
+      MNEME_LLM_VEYA_FIRST: ${MNEME_LLM_VEYA_FIRST:-0}
       # 第二个**独立端点**（2026-10-04）。Veya 侧 28 个上游只剩 2 个可用时，
       # 「同端点换模型名」救不了 —— 必须有独立端点做端点级冗余。公网直连，无需 relay。
       # Agents-A1 是推理模型：max_tokens 要覆盖思考+回答；答案在 content。
