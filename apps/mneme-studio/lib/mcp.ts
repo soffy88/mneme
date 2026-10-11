@@ -78,6 +78,19 @@ async function apiGet<T>(path: string): Promise<T> {
   return (await res.json()) as T;
 }
 
+async function apiDelete<T>(path: string): Promise<T> {
+  const token = getToken();
+  const res = await fetch(`${API_BASE}${path}`, {
+    method: "DELETE",
+    headers: token ? { Authorization: `Bearer ${token}` } : {},
+  });
+  if (!res.ok) {
+    if (res.status === 401 && typeof window !== "undefined") redirectToLogin();
+    throw new McpError(res.status, await res.text());
+  }
+  return (await res.json()) as T;
+}
+
 async function apiPost<T>(path: string, payload: unknown): Promise<T> {
   const token = getToken();
   const res = await fetch(`${API_BASE}${path}`, {
@@ -124,6 +137,35 @@ export type ProductEventType =
 export class McpError extends Error {
   constructor(public status: number, public detail: string) {
     super(`MCP ${status}: ${detail}`);
+  }
+}
+
+// 服务端掌握路径锁（RequestQuestion 403 code=path_locked）：学习者请求了 current 之后的
+// 未解锁知识点。前端只把服务端给的 current 知识点展示出来，不自行判定锁状态。
+export interface PathLockedInfo {
+  kc_id: string;
+  kc_name: string | null;
+  current_kc_id: string | null;
+  current_kc_name: string | null;
+  message: string;
+}
+
+export function pathLockedInfo(e: unknown): PathLockedInfo | null {
+  if (!(e instanceof McpError) || e.status !== 403) return null;
+  try {
+    const d = (JSON.parse(e.detail) as { detail?: unknown }).detail as
+      | (Partial<PathLockedInfo> & { code?: string })
+      | undefined;
+    if (!d || typeof d !== "object" || d.code !== "path_locked") return null;
+    return {
+      kc_id: String(d.kc_id ?? ""),
+      kc_name: d.kc_name ?? null,
+      current_kc_id: d.current_kc_id ?? null,
+      current_kc_name: d.current_kc_name ?? null,
+      message: d.message ?? "这个知识点还没解锁，先完成当前知识点吧。",
+    };
+  } catch {
+    return null;
   }
 }
 
@@ -504,6 +546,23 @@ export interface PracticeWrongQuestion {
   wrong_count: number;
   last_wrong_at: string | null;
   kc_due: boolean;
+  bookmarked?: boolean;
+}
+
+// ── 收藏（☆）：题干快照 + KC，**不含答案** ─────────────────────────────────────
+export type BookmarkSource = "posed" | "wrong";
+
+export interface QuestionBookmark {
+  id: string;
+  source: BookmarkSource;
+  question_id: string;
+  wrong_question_id?: string | null;
+  kc_id: string | null;
+  kc_name?: string | null;
+  prompt: string;
+  qtype: string | null;
+  created_at: string | null;
+  kc_due?: boolean;
 }
 
 export interface PracticeQueue {
@@ -512,6 +571,7 @@ export interface PracticeQueue {
   due: PracticeKc[];
   upcoming: PracticeKc[];
   wrong_questions: PracticeWrongQuestion[];
+  bookmarks?: QuestionBookmark[];
 }
 
 // ── 读工具 + 提交（无 PoseQuestion）─────────────────────────────────────────
@@ -599,6 +659,18 @@ export const mcp = {
   // Practice：只读队列（不含答案）；作答仍走 requestQuestion/submitAnswer。
   practiceQueue: (studentId: string) =>
     apiGet<PracticeQueue>(`/v2/practice/queue/${studentId}`),
+
+  // 收藏（☆）：服务端按归属取题干；前端只传 question_id + 来源。
+  addBookmark: (studentId: string, source: BookmarkSource, questionId: string) =>
+    apiPost<QuestionBookmark>("/v2/practice/bookmarks", {
+      student_id: studentId, source, question_id: questionId,
+    }),
+
+  removeBookmark: (bookmarkId: string) =>
+    apiDelete<{ deleted: boolean }>(`/v2/practice/bookmarks/${bookmarkId}`),
+
+  listBookmarks: (studentId: string) =>
+    apiGet<{ bookmarks: QuestionBookmark[] }>(`/v2/practice/bookmarks/${studentId}`),
 };
 
 // ── 交互实验室（确定性教学内核，见 app/lab）────────────────────────────────

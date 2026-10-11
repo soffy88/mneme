@@ -85,6 +85,9 @@ _STUDENT_TABLES: list[tuple[str, str]] = [
     ("user_learner_profiles", "student_id"),
     # 研究报告（/v1/research）：学生的问题 + 报告，FC-2：新表同 PR 入清单。
     ("research_reports", "student_id"),
+    # 题目收藏（/v2/practice/bookmarks）：学生自有，FC-2：新表同 PR 入清单。
+    # 只存 wrong_question_id 值（无 FK），与 wrong_questions 删除顺序无关。
+    ("question_bookmarks", "student_id"),
     # socratic_sessions 先于 wrong_questions（其 question_id 指向 wrong_questions.id）
     ("socratic_sessions", "student_id"),
     # wrong_questions 先于 papers（其 paper_id 指向 papers.id）

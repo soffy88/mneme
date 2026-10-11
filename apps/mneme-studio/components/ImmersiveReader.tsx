@@ -24,6 +24,7 @@ import {
   type BookBlock,
   type BookDetail,
   type ReadingSourceKind,
+  pathLockedInfo,
 } from "@/lib/mcp";
 
 type UnitType = "text" | "figure" | "check" | "cards" | "guided";
@@ -109,7 +110,9 @@ function CheckPanel({ kcIds, studentId }: { kcIds: string[]; studentId: string }
       else setQ({ id: r.question_id, prompt: r.prompt, qtype: r.qtype || "solve" });
       setAttempt((a) => a + 1);
     } catch (e) {
-      setFeedback({ ok: false, msg: e instanceof Error ? e.message : String(e) });
+      // 服务端掌握路径锁：后面的知识点在当前知识点过门前不出新题，友好提示即可。
+      const locked = pathLockedInfo(e);
+      setFeedback({ ok: false, msg: locked ? `${locked.message}（可以继续阅读）` : e instanceof Error ? e.message : String(e) });
     } finally {
       setBusy(false);
     }

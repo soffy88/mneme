@@ -6,11 +6,12 @@ import {
   OEmptyState,
 } from "@helios/blocks";
 import {
-  mcp, getStudentId, getToken, redirectToLogin,
+  mcp, getStudentId, getToken, pathLockedInfo, redirectToLogin,
   type NextStep, type Mastery,
-  type LearnNowView,
+  type LearnNowView, type PathLockedInfo,
 } from "@/lib/mcp";
 import { MathText } from "@/components/MathText";
+import { BookmarkStar } from "@/components/BookmarkStar";
 import Link from "next/link";
 
 // 一套登录：student_id 取自 mneme 登录会话（mneme_user），**不再走 ?student=**。
@@ -50,10 +51,12 @@ export default function LearnPage() {
   const [feedback, setFeedback] = useState<{ ok: boolean; msg: string } | null>(null);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [locked, setLocked] = useState<PathLockedInfo | null>(null);
 
   const refresh = useCallback(async (c: { studentId: string; kcIds: string[] }) => {
     if (!c.studentId || c.kcIds.length === 0) return;
     setError(null);
+    setLocked(null);
     try {
       const s = await mcp.nextObjective(c.studentId, c.kcIds);
       setStep(s);
@@ -72,7 +75,17 @@ export default function LearnPage() {
       } else if (s.has_pending && s.pending_question) {
         setQuestion(s.pending_question);
       } else {
-        const q = await mcp.requestQuestion(c.studentId, s.kc_id);
+        let q;
+        try {
+          q = await mcp.requestQuestion(c.studentId, s.kc_id);
+        } catch (e) {
+          // 服务端路径锁：current 之前不能开新知识点（复习/练习不受影响）。
+          const info = pathLockedInfo(e);
+          if (!info) throw e;
+          setLocked(info);
+          setQuestion(null);
+          return;
+        }
         setQuestion(
           q.error || !q.question_id || !q.prompt
             ? null
@@ -227,6 +240,16 @@ export default function LearnPage() {
             <div className="text-center py-8 text-lg" data-testid="complete">🎉 这些知识点都学完啦！</div>
           )}
 
+          {locked && (
+            <div className="space-y-2 rounded-lg bg-[var(--o-color-bg-subtle,#f6f6f6)] p-4" data-testid="path-locked">
+              <div className="text-sm">🔒 {locked.message}</div>
+              <div className="flex gap-3 text-sm">
+                <button type="button" className="underline" onClick={() => { if (window.location.search) window.location.assign(window.location.pathname); else void refresh(ctx); }}>学当前知识点</button>
+                <Link href="/path" className="underline">看掌握路径</Link>
+              </div>
+            </div>
+          )}
+
           {pq ? (
             <div className="space-y-3" data-testid="question">
               <div
@@ -234,6 +257,9 @@ export default function LearnPage() {
                 data-testid="prompt"
               >
                 <MathText text={pq.prompt} />
+              </div>
+              <div className="flex justify-end">
+                <BookmarkStar studentId={ctx.studentId} source="posed" questionId={pq.question_id} />
               </div>
 
               {pq.qtype === "open" ? (
@@ -257,7 +283,7 @@ export default function LearnPage() {
                 {busy ? "提交中…" : "提交"}
               </OButton>
             </div>
-          ) : action !== "complete" ? (
+          ) : action !== "complete" && !locked ? (
             <div className="text-sm text-[var(--o-color-fg-muted,#888)]" data-testid="waiting">
               老师正在准备下一道题…（点“刷新”看看）
             </div>

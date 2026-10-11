@@ -5,8 +5,9 @@ import Link from "next/link";
 import { OButton, OCard, OCardHeader, OCardTitle, OEmptyState, OTextInput } from "@helios/blocks";
 import { ProductNav } from "@/components/ProductNav";
 import { MathText } from "@/components/MathText";
+import { BookmarkStar } from "@/components/BookmarkStar";
 import {
-  getStudentId, getToken, mcp, redirectToLogin,
+  getStudentId, getToken, mcp, pathLockedInfo, redirectToLogin,
   type PracticeQueue, type PracticeKc,
 } from "@/lib/mcp";
 
@@ -57,7 +58,9 @@ export default function PracticePage() {
         setQuestion({ question_id: q.question_id, prompt: q.prompt, qtype: q.qtype || "solve" });
       }
     } catch (e) {
-      setError(e instanceof Error ? e.message : String(e));
+      const locked = pathLockedInfo(e);
+      if (locked) setFeedback({ ok: false, msg: `${locked.message}（这个知识点还没开始学，先去掌握路径完成当前知识点。）` });
+      else setError(e instanceof Error ? e.message : String(e));
     }
   }, [sid]);
 
@@ -120,6 +123,7 @@ export default function PracticePage() {
             {question ? (
               <div className="space-y-3">
                 <div className="rounded-lg bg-[var(--o-color-bg-subtle,#f6f6f6)] p-4 text-lg" data-testid="practice-prompt"><MathText text={question.prompt} /></div>
+                <div className="flex justify-end"><BookmarkStar studentId={sid} source="posed" questionId={question.question_id} /></div>
                 {question.qtype === "open" ? (
                   <textarea className="w-full min-h-[120px] rounded-lg border p-3" placeholder="用自己的话讲讲你的理解…" value={answer} onChange={(e) => setAnswer(e.target.value)} />
                 ) : (
@@ -195,12 +199,44 @@ export default function PracticePage() {
                 <OEmptyState title="还没有错题" description="答错的题会自动收进这里，并按遗忘曲线安排复习。" />
               ) : queue.wrong_questions.map((w) => (
                 <div key={w.id} className="rounded-lg border p-3 space-y-2">
-                  <div className="text-xs text-[var(--o-color-fg-muted,#888)]">
-                    {w.ku_name ?? "未归类"} · 错 {w.wrong_count} 次{w.kc_due ? " · 到期复习" : ""}{w.last_wrong_at ? ` · ${when(w.last_wrong_at)}` : ""}
+                  <div className="flex items-center justify-between gap-2">
+                    <div className="text-xs text-[var(--o-color-fg-muted,#888)]">
+                      {w.ku_name ?? "未归类"} · 错 {w.wrong_count} 次{w.kc_due ? " · 到期复习" : ""}{w.last_wrong_at ? ` · ${when(w.last_wrong_at)}` : ""}
+                    </div>
+                    <BookmarkStar
+                      studentId={sid}
+                      source="wrong"
+                      questionId={w.id}
+                      bookmarkId={(queue.bookmarks ?? []).find((b) => b.source === "wrong" && b.question_id === w.id)?.id ?? null}
+                      onChange={() => void loadQueue(sid)}
+                    />
                   </div>
                   <div className="text-sm line-clamp-3">{w.has_image ? "（含图题，图片暂无法在此显示）" : <MathText text={w.question_text} />}</div>
                   {w.ku_id && (
                     <OButton size="sm" variant="outline" onClick={() => start([{ kc_id: w.ku_id!, name: w.ku_name ?? w.ku_id!, sample: w.has_image ? null : w.question_text }])}>
+                      练同类题
+                    </OButton>
+                  )}
+                </div>
+              ))}
+            </div>
+          </OCard>
+          <OCard data-testid="practice-bookmarks">
+            <OCardHeader><OCardTitle>我的收藏（{(queue.bookmarks ?? []).length}）</OCardTitle></OCardHeader>
+            <div className="p-4 space-y-3">
+              {(queue.bookmarks ?? []).length === 0 ? (
+                <div className="text-sm text-[var(--o-color-fg-muted,#666)]">做题时点 ☆ 收藏，想反复练的题会出现在这里。</div>
+              ) : (queue.bookmarks ?? []).map((b) => (
+                <div key={b.id} className="rounded-lg border p-3 space-y-2" data-testid="bookmark-item">
+                  <div className="flex items-center justify-between gap-2">
+                    <div className="text-xs text-[var(--o-color-fg-muted,#888)]">
+                      {b.kc_name ?? "未归类"} · {b.source === "wrong" ? "错题" : "练习题"}{b.kc_due ? " · 到期复习" : ""}{b.created_at ? ` · ${when(b.created_at)}` : ""}
+                    </div>
+                    <BookmarkStar studentId={sid} source={b.source} questionId={b.question_id} bookmarkId={b.id} onChange={() => void loadQueue(sid)} />
+                  </div>
+                  <div className="text-sm line-clamp-3"><MathText text={b.prompt} /></div>
+                  {b.kc_id && (
+                    <OButton size="sm" variant="outline" onClick={() => start([{ kc_id: b.kc_id!, name: b.kc_name ?? b.kc_id!, sample: b.prompt }])}>
                       练同类题
                     </OButton>
                   )}

@@ -3,7 +3,9 @@
 只读投影，零写入：
 - due：该学生 FSRS 已到期的 KC（kc_mastery.fsrs_card_json['due'] ≤ now），最久逾期在前；
 - upcoming：尚未到期、最近要到期的 KC；
-- wrong_questions：学生本人的错题（按题干去重计 wrong_count），**不含参考答案**。
+- wrong_questions：学生本人的错题（按题干去重计 wrong_count），**不含参考答案**；
+  bookmarked 标记该错题是否已收藏；
+- bookmarks：学生本人收藏（☆）的题（题干快照 + KC，**不含参考答案**）。
 
 练习本身不在这里：Studio 对每个到期 KC 走既有 RequestQuestion → SubmitAnswer
 （verdict_guard → process_interaction）这一条唯一受守卫的掌握度写入路径，答题后
@@ -37,6 +39,7 @@ async def practice_queue(
     now: Optional[datetime] = None,
     upcoming_limit: int = 10,
     wrong_limit: int = 50,
+    bookmark_limit: int = 100,
 ) -> dict:
     now_ts = (now or datetime.now(timezone.utc)).timestamp()
 
@@ -88,7 +91,16 @@ async def practice_queue(
         }
     wrong = list(deduped.values())
 
-    kc_ids = {kc for kc, _ in schedule} | {w["ku_id"] for w in wrong if w["ku_id"]}
+    from services.bookmark_service import list_bookmarks
+
+    bookmarks = await list_bookmarks(db, student_id, limit=bookmark_limit)
+    bookmarked_wq = {b["wrong_question_id"] for b in bookmarks if b["wrong_question_id"]}
+
+    kc_ids = (
+        {kc for kc, _ in schedule}
+        | {w["ku_id"] for w in wrong if w["ku_id"]}
+        | {b["kc_id"] for b in bookmarks if b["kc_id"]}
+    )
     names: dict[str, str] = {}
     if kc_ids:
         names = {
@@ -141,7 +153,22 @@ async def practice_queue(
                 **w,
                 "ku_name": names.get(w["ku_id"], w["ku_id"]) if w["ku_id"] else None,
                 "kc_due": w["ku_id"] in due_kcs,
+                "bookmarked": w["id"] in bookmarked_wq,
             }
             for w in wrong[:wrong_limit]
+        ],
+        "bookmarks": [
+            {
+                "id": b["id"],
+                "source": b["source"],
+                "question_id": b["question_id"],
+                "kc_id": b["kc_id"],
+                "kc_name": names.get(b["kc_id"], b["kc_id"]) if b["kc_id"] else None,
+                "prompt": b["prompt"],
+                "qtype": b["qtype"],
+                "created_at": b["created_at"],
+                "kc_due": b["kc_id"] in due_kcs if b["kc_id"] else False,
+            }
+            for b in bookmarks
         ],
     }

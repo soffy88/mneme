@@ -1041,6 +1041,8 @@ class GetReviewQueueReq(BaseModel):
 class RequestQuestionReq(BaseModel):
     student_id: uuid.UUID
     kc_id: str
+    # 家长/管理员指派小测（GenerateQuiz 返回）的 quiz_token：卷内 KC 不受路径锁约束。
+    quiz_token: Optional[str] = None
 
 
 class CheckMasteryReq(BaseModel):
@@ -1092,7 +1094,7 @@ async def mcp_generate_quiz(
     current_user: User = Depends(get_current_user),
 ) -> dict:
     await _ensure_student_access(db, current_user, req.student_id)
-    return await tool_generate_quiz(
+    r = await tool_generate_quiz(
         db,
         req.student_id,
         kc_ids=req.kc_ids,
@@ -1100,6 +1102,15 @@ async def mcp_generate_quiz(
         difficulty_curve=req.difficulty_curve,
         exclude_mastered=req.exclude_mastered,
     )
+    if current_user.id != req.student_id and r.get("kc_sequence"):
+        # 他人（绑定家长/管理员）指派的小测：附 quiz_token，学生逐题 RequestQuestion
+        # 带上即不受掌握路径锁约束。学生给自己组卷不发（否则锁可被自签绕过）。
+        from services.path_lock_service import issue_quiz_token
+
+        r["quiz_token"] = issue_quiz_token(
+            req.student_id, list(r["kc_sequence"]), current_user.id
+        )
+    return r
 
 
 @router.post("/NextObjective")
@@ -1254,6 +1265,15 @@ async def mcp_request_question(
     current_user: User = Depends(get_current_user),
 ) -> dict:
     _ensure_student_self(current_user, req.student_id)
+    # 服务端掌握路径锁：学习者自发的新学习不能越过 current 去请求 locked KC 的题。
+    # 复习/练习/错题/收藏/已作答/不在路径上始终放行；env MNEME_PATH_LOCK=0 关闭。
+    from services.path_lock_service import check_path_lock
+
+    decision = await check_path_lock(
+        db, req.student_id, req.kc_id, quiz_token=req.quiz_token
+    )
+    if not decision.allowed:
+        raise HTTPException(status_code=403, detail=decision.rejection_detail())
     r = await tool_request_question(db, req.student_id, req.kc_id)
     await db.commit()
     return r

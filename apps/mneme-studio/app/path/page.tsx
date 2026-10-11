@@ -37,6 +37,7 @@ export default function PathPage() {
   const firstLocked = nodes.findIndex((n) => n.state === "locked");
   const visible = showAllLocked || firstLocked < 0 ? nodes : nodes.slice(0, firstLocked + 3);
   const hidden = nodes.length - visible.length;
+  const currentName = nodes.find((n) => n.kc_id === view?.current_kc_id)?.name ?? null;
   const pct = view && view.total_kps ? Math.round((view.total_mastered / view.total_kps) * 100) : 0;
 
   return (
@@ -86,11 +87,12 @@ export default function PathPage() {
                     <div className="flex-1 min-w-0">
                       <div className={`truncate ${n.state === "current" ? "font-semibold" : ""}`}>{n.name}</div>
                       <div className="text-xs text-[var(--o-color-fg-muted,#888)]">
-                        {st.label}{n.kc_type === "concept" ? " · 概念理解" : ""}{n.n_obs > 0 ? ` · 作答 ${n.n_obs} 次` : ""}{n.review_due ? " · 到期复习" : ""}
+                        {st.label}{n.state === "locked" && currentName && !(n.review_due || n.n_obs > 0) ? ` · 先完成「${currentName}」` : ""}{n.kc_type === "concept" ? " · 概念理解" : ""}{n.n_obs > 0 ? ` · 作答 ${n.n_obs} 次` : ""}{n.review_due ? " · 到期复习" : ""}
                       </div>
                     </div>
                     {n.state === "current" && <Link href="/learn" className="text-sm underline">去学</Link>}
                     {n.state === "mastered" && n.review_due && <Link href="/practice" className="text-sm underline">复习</Link>}
+                    {n.state === "locked" && (n.review_due || n.n_obs > 0) && <Link href="/practice" className="text-sm underline">练习</Link>}
                   </li>
                 );
               })}
@@ -102,7 +104,7 @@ export default function PathPage() {
             )}
           </OCard>
           <div className="text-xs text-[var(--o-color-fg-muted,#888)]">
-            “已掌握”由 Mneme 的认知模型根据你的真实作答判定（证据不足不会提前解锁）；完成当前知识点后，下一个自动解锁。
+            “已掌握”由 Mneme 的认知模型根据你的真实作答判定（证据不足不会提前解锁）；完成当前知识点后，下一个自动解锁（未解锁的知识点服务端不会出新题；复习和错题练习不受限制）。
           </div>
         </>
       )}

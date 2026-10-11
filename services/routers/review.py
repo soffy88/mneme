@@ -6,11 +6,12 @@
 from __future__ import annotations
 
 from datetime import datetime
+from typing import Literal
 from uuid import UUID
 
 from fastapi import APIRouter, Body, Depends, HTTPException, Query
 from obase.db import get_db
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from services.auth_deps import (
@@ -143,3 +144,60 @@ async def get_practice_queue(
     from services.practice_queue_service import practice_queue
 
     return await practice_queue(db, student_id)
+
+
+# ── 题目收藏（☆）：仅学生本人；不写证据、不改掌握度/FSRS；返回体不含答案 ──────────
+
+
+class BookmarkCreate(BaseModel):
+    student_id: UUID
+    source: Literal["posed", "wrong"]
+    question_id: str = Field(min_length=1, max_length=64)
+
+
+@router.post("/v2/practice/bookmarks", status_code=201)
+async def create_bookmark(
+    body: BookmarkCreate,
+    db: AsyncSession = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+):
+    """收藏一道题（幂等）。题干/KC 由服务端按归属取；题不存在或非本人 → 404。"""
+    _ensure_student_self(current_user, body.student_id)
+    from services.bookmark_service import add_bookmark
+
+    bm = await add_bookmark(db, body.student_id, body.source, body.question_id)
+    if bm is None:
+        await db.rollback()
+        raise HTTPException(status_code=404, detail="题目不存在或不属于你")
+    await db.commit()
+    return bm
+
+
+@router.get("/v2/practice/bookmarks/{student_id}")
+async def get_bookmarks(
+    student_id: UUID,
+    db: AsyncSession = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+):
+    """本人收藏列表（新→旧），不含答案。"""
+    _ensure_student_self(current_user, student_id)
+    from services.bookmark_service import list_bookmarks
+
+    return {"student_id": str(student_id), "bookmarks": await list_bookmarks(db, student_id)}
+
+
+@router.delete("/v2/practice/bookmarks/{bookmark_id}")
+async def delete_bookmark(
+    bookmark_id: UUID,
+    db: AsyncSession = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+):
+    """取消收藏：只能删本人的（非本人/不存在一律 404，不泄露存在性）。"""
+    from services.bookmark_service import remove_bookmark
+
+    ok = await remove_bookmark(db, current_user.id, bookmark_id)
+    if not ok:
+        await db.rollback()
+        raise HTTPException(status_code=404, detail="收藏不存在")
+    await db.commit()
+    return {"deleted": True, "id": str(bookmark_id)}
