@@ -101,7 +101,12 @@ async def _embed_query(query: str) -> tuple[Optional[list[float]], Optional[str]
 LEGACY_MODEL_KEY = "legacy"
 MIN_SCORE_PROFILES: dict[str, dict[str, float]] = {
     LEGACY_MODEL_KEY: {"book": 0.60, "chat": 0.58},
-    "bge-small-zh-v1.5": {"book": 0.60, "chat": 0.58},
+    # 2026-10-11 标定（docs/knowledge_hub_cpu_embedding.md）：
+    #   chat 0.55：30 条标注 query 的 top-1 相关命中保留 28/30，12 条语料外 query 的
+    #     top-1 只放过 4/12（0.58 会再丢 2 条真命中，几乎不多挡 off-topic）。
+    #   book 0.65：KU→chunk rank-1 人工抽检 60 条，>=0.65 约 81% 正确（>=0.70 约 85%，
+    #     0.60-0.65 约 58%，<0.60 约 50%）——R1 是垃圾兜底，取 A3 同量级精度的下沿。
+    "bge-small-zh-v1.5": {"book": 0.65, "chat": 0.55},
 }
 
 
