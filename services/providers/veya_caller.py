@@ -8,6 +8,7 @@ Veya gateway 由宿主机常驻进程提供，容器内通过
 from __future__ import annotations
 
 import json
+import asyncio
 import os
 import time
 from typing import Any
@@ -97,7 +98,7 @@ def reasoning_min_tokens() -> int:
 # 超时/连接失败后该模型在本进程冷却一段时间，冷却期内直接跳过（除非全员冷却）。
 _CANDIDATE_COOLDOWN_UNTIL: dict[str, float] = {}
 _COOLDOWN_EXC_NAMES = frozenset(
-    {"ReadTimeout", "ConnectTimeout", "PoolTimeout", "WriteTimeout", "TimeoutException", "ConnectError"}
+    {"TimeoutError", "ReadTimeout", "ConnectTimeout", "PoolTimeout", "WriteTimeout", "TimeoutException", "ConnectError"}
 )
 
 
@@ -177,6 +178,8 @@ class VeyaTextCaller:
         # 单模型时保持原字段名语义（别处会读 caller.model 记审计）
         self.model = self.models[0]
         self.last_good_model: str | None = None
+        # 冷却表是进程级的；新建 caller（重新 configure / 测试）时从零开始
+        _CANDIDATE_COOLDOWN_UNTIL.clear()
 
     async def __call__(
         self,
@@ -225,16 +228,17 @@ class VeyaTextCaller:
                 # retryable（timeout / connect / 5xx / 429，见 _classify_exception）
                 # 并带 max_retries=2 重投整条链。再叠一层只会让最坏耗时成倍相乘
                 # —— 曾经把单个词的等待推到几十分钟（实测卡在第 95 词 4 分钟）。
-                post_kwargs: dict[str, Any] = {}
-                if not is_last and not reasoning:
-                    short = candidate_read_timeout_seconds()
-                    post_kwargs["timeout"] = short
+                short: float | None = (
+                    candidate_read_timeout_seconds() if (not is_last and not reasoning) else None
+                )
                 try:
-                    response = await client.post(
-                        f"{self.base_url}/chat/completions",
-                        headers=self._auth_headers(),
-                        json=payload,
-                        **post_kwargs,
+                    response = await asyncio.wait_for(
+                        client.post(
+                            f"{self.base_url}/chat/completions",
+                            headers=self._auth_headers(),
+                            json=payload,
+                        ),
+                        timeout=short,
                     )
                     response.raise_for_status()
                     data = response.json()
