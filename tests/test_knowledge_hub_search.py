@@ -383,6 +383,13 @@ async def test_free_text_dimension_mismatch_falls_back_to_lexical(
 
 
 @pytest.fixture(autouse=True)
+def _legacy_embed_backend(monkeypatch):
+    """本文件覆盖旧 oprim.embed_chunks 路径；CPU 侧车路径见
+    test_knowledge_hub_cpu_embedding.py。显式钉住，不受运行环境变量影响。"""
+    monkeypatch.setenv("MNEME_EMBED_BACKEND", "legacy")
+
+
+@pytest.fixture(autouse=True)
 def _reset_embed_breaker():
     from services import knowledge_hub_search as khs
 

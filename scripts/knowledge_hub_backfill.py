@@ -17,6 +17,18 @@ inferred, verified=false, and go through the manual review gate
 GPU note (2026-10-11): run with a modest pace; the 8B embedding model on the
 RTX 3080 coincided with a "GPU fallen off the bus" crash. --sleep adds a pause
 between embedding calls.
+
+CPU backend (2026-10-11, after the GPU died): `--backend cpu` (default when
+MNEME_EMBED_BACKEND=cpu) uses the bge-m3 CPU sidecar (services/text_embedder,
+compose service `embedder`). `embed` then inserts into textbook_chunk_embeddings
+(one row per chunk+model, ON CONFLICT DO NOTHING — the old 4096-dim
+textbook_chunks.embedding column is never touched), and `match` scores KUs
+against those vectors and records method=embedding_cosine_bge-m3. Run it inside
+mneme-api-1 so it can reach the sidecar, niced, e.g.:
+
+    docker exec -d mneme-api-1 sh -c 'cd /app && nice -n 15 python \
+        scripts/knowledge_hub_backfill.py embed --backend cpu --batch 16 --sleep 0.2 \
+        > /tmp/kh_embed.log 2>&1'
 """
 
 from __future__ import annotations
@@ -25,6 +37,7 @@ import argparse
 import asyncio
 import os
 import sys
+import time
 import uuid
 from datetime import datetime, timezone
 from pathlib import Path
@@ -174,6 +187,163 @@ async def match_kus(
     return summary
 
 
+async def backfill_embeddings_cpu(
+    db: AsyncSession,
+    *,
+    textbook_ids: Optional[list[str]] = None,
+    limit: Optional[int] = None,
+    dry_run: bool = False,
+    sleep_s: float = 0.0,
+    batch: int = 16,
+) -> dict:
+    """CPU 侧车向量 → textbook_chunk_embeddings（insert-only，旧列不动）。"""
+    from services.text_embedder import cpu_embed_model, embed_texts_cpu
+
+    model = cpu_embed_model()
+    where = (
+        "NOT EXISTS (SELECT 1 FROM textbook_chunk_embeddings e"
+        " WHERE e.chunk_id = tc.id AND e.model = :model)"
+    )
+    params: dict = {"model": model}
+    if textbook_ids:
+        where += " AND tf.textbook_id = ANY(:tbs)"
+        params["tbs"] = textbook_ids
+    sql = (
+        "SELECT tc.id, tc.content FROM textbook_chunks tc "
+        f"JOIN textbook_files tf ON tf.id = tc.file_id WHERE {where} ORDER BY tc.id"
+    )
+    if limit:
+        sql += " LIMIT :lim"
+        params["lim"] = limit
+    rows = (await db.execute(sa_text(sql), params)).fetchall()
+    if dry_run:
+        return {"model": model, "pending": len(rows), "embedded": 0, "failed": 0}
+
+    ok = failed = streak = 0
+    t0 = time.monotonic()
+    for s in range(0, len(rows), batch):
+        part = rows[s : s + batch]
+        vecs = await embed_texts_cpu([r.content for r in part], timeout=120)
+        if not vecs:
+            failed += len(part)
+            streak += 1
+            if streak >= 3:
+                break  # 侧车宕了：停，不硬磨
+            await asyncio.sleep(5)
+            continue
+        streak = 0
+        for r, v in zip(part, vecs):
+            await db.execute(
+                sa_text(
+                    "INSERT INTO textbook_chunk_embeddings (chunk_id, model, dim, embedding,"
+                    " embedded_at) VALUES (:id, :m, :d, :e, now())"
+                    " ON CONFLICT (chunk_id, model) DO NOTHING"
+                ),
+                {"id": r.id, "m": model, "d": len(v), "e": v},
+            )
+        await db.commit()
+        ok += len(part)
+        if (s // batch) % 20 == 0:
+            el = time.monotonic() - t0
+            print(f"embedded {ok}/{len(rows)} in {el:.0f}s ({ok / max(el, 1e-9):.1f}/s)", flush=True)
+        if sleep_s:
+            await asyncio.sleep(sleep_s)
+    return {
+        "model": model,
+        "pending": len(rows),
+        "embedded": ok,
+        "failed": failed,
+        "seconds": round(time.monotonic() - t0, 1),
+    }
+
+
+async def match_kus_cpu(
+    db: AsyncSession,
+    *,
+    textbook_ids: list[str],
+    top_k: int = 3,
+    dry_run: bool = False,
+    sleep_s: float = 0.0,
+    batch: int = 16,
+) -> dict:
+    """A3 式 KU→chunk 挂接（CPU 侧车向量）：只给还没有任何挂接的 KU 插入，
+    verified=false，method=embedding_cosine_<model>；同教材内匹配。"""
+    from services.text_embedder import cpu_embed_model, embed_texts_cpu, match_method
+
+    model = cpu_embed_model()
+    method = match_method(model)
+    summary: dict[str, dict] = {}
+    for tb in textbook_ids:
+        chunks = (
+            await db.execute(
+                sa_text(
+                    "SELECT tc.id, e.embedding FROM textbook_chunk_embeddings e "
+                    "JOIN textbook_chunks tc ON tc.id = e.chunk_id "
+                    "JOIN textbook_files tf ON tf.id = tc.file_id "
+                    "WHERE tf.textbook_id = :tb AND e.model = :m"
+                ),
+                {"tb": tb, "m": model},
+            )
+        ).fetchall()
+        kus = (
+            await db.execute(
+                sa_text(
+                    "SELECT k.id, k.name, k.description FROM knowledge_units k "
+                    "WHERE k.textbook_id = :tb AND NOT EXISTS "
+                    "(SELECT 1 FROM ku_chunk_matches m WHERE m.ku_id = k.id) ORDER BY k.id"
+                ),
+                {"tb": tb},
+            )
+        ).fetchall()
+        stat = {"chunks": len(chunks), "kus_pending": len(kus), "matched": 0, "failed": 0}
+        summary[tb] = stat
+        if dry_run or not chunks or not kus:
+            continue
+        ids = [c.id for c in chunks]
+        mat = np.asarray([c.embedding for c in chunks], dtype=np.float32)
+        n = np.linalg.norm(mat, axis=1, keepdims=True)
+        n[n == 0] = 1.0
+        mat = mat / n
+        for s in range(0, len(kus), batch):
+            part = kus[s : s + batch]
+            vecs = await embed_texts_cpu([_ku_text(k.name, k.description) for k in part], timeout=120)
+            if not vecs:
+                stat["failed"] += len(part)
+                if stat["matched"] == 0 and stat["failed"] >= 3 * batch:
+                    break
+                continue
+            for ku, vec in zip(part, vecs):
+                if len(vec) != mat.shape[1]:
+                    stat["failed"] += 1
+                    continue
+                q = np.asarray(vec, dtype=np.float32)
+                q = q / (float(np.linalg.norm(q)) or 1.0)
+                scores = mat @ q
+                order = np.argsort(-scores, kind="stable")[:top_k]
+                for rank, i in enumerate(order, 1):
+                    await db.execute(
+                        sa_text(
+                            "INSERT INTO ku_chunk_matches (id, ku_id, chunk_id, rank, score,"
+                            " method, created_at, verified) VALUES (:id, :ku, :ch, :rk, :sc,"
+                            " :me, now(), false) ON CONFLICT DO NOTHING"
+                        ),
+                        {
+                            "id": f"kcm_{uuid.uuid4().hex[:16]}",
+                            "ku": ku.id,
+                            "ch": ids[int(i)],
+                            "rk": rank,
+                            "sc": float(scores[int(i)]),
+                            "me": method,
+                        },
+                    )
+                stat["matched"] += 1
+            await db.commit()
+            if sleep_s:
+                await asyncio.sleep(sleep_s)
+        print(tb, stat, flush=True)
+    return summary
+
+
 async def _textbooks_for(db: AsyncSession, subjects: Optional[list[str]]) -> list[str]:
     sql = (
         "SELECT DISTINCT tf.textbook_id FROM textbook_files tf "
@@ -195,7 +365,13 @@ async def main() -> int:
     ap.add_argument("--top-k", type=int, default=3)
     ap.add_argument("--sleep", type=float, default=0.1)
     ap.add_argument("--dry-run", action="store_true")
+    ap.add_argument("--backend", choices=["legacy", "cpu"])
+    ap.add_argument("--batch", type=int, default=16)
     args = ap.parse_args()
+
+    from services.text_embedder import embed_backend
+
+    backend = args.backend or ("cpu" if embed_backend() == "cpu" else "legacy")
 
     from obase.db import SessionLocal
 
@@ -203,7 +379,22 @@ async def main() -> int:
         tbs = args.textbook or (
             await _textbooks_for(db, args.subjects) if args.subjects or args.cmd == "match" else None
         )
-        if args.cmd == "embed":
+        if backend == "cpu" and args.cmd == "embed":
+            print(
+                await backfill_embeddings_cpu(
+                    db, textbook_ids=tbs, limit=args.limit, dry_run=args.dry_run,
+                    sleep_s=args.sleep, batch=args.batch,
+                ),
+                flush=True,
+            )
+        elif backend == "cpu":
+            res3 = await match_kus_cpu(
+                db, textbook_ids=tbs or [], top_k=args.top_k, dry_run=args.dry_run,
+                sleep_s=args.sleep, batch=args.batch,
+            )
+            tot = {k: sum(v[k] for v in res3.values()) for k in ("kus_pending", "matched", "failed")}
+            print("TOTAL", tot, flush=True)
+        elif args.cmd == "embed":
             res = await backfill_embeddings(
                 db, textbook_ids=tbs, limit=args.limit, dry_run=args.dry_run, sleep_s=args.sleep
             )

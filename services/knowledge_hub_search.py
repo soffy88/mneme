@@ -63,14 +63,23 @@ EMBED_COOLDOWN_S = float(os.environ.get("KNOWLEDGE_HUB_EMBED_COOLDOWN_S", "60"))
 _EMBED_STATE: dict[str, float] = {"down_until": 0.0}
 
 
-async def _embed_query(query: str) -> Optional[list[float]]:
-    from oprim.embed_chunks import embed_text
+async def _embed_query(query: str) -> tuple[Optional[list[float]], Optional[str]]:
+    """返回 (query 向量, 模型名)；模型名 None = 旧路径（按维度匹配旧列）。
+
+    后端由 MNEME_EMBED_BACKEND 决定（见 services/text_embedder）；超时与熔断
+    对两种后端一视同仁。
+    """
+    from services.text_embedder import embed_query
 
     now = time.monotonic()
     if _EMBED_STATE["down_until"] > now:
-        return None
+        return None, None
+    model: Optional[str] = None
     try:
-        vec = await asyncio.wait_for(embed_text(query), timeout=QUERY_EMBED_TIMEOUT_S)
+        vec, model = await asyncio.wait_for(
+            embed_query(query, timeout=QUERY_EMBED_TIMEOUT_S),
+            timeout=QUERY_EMBED_TIMEOUT_S,
+        )
     except asyncio.TimeoutError:
         logger.warning(
             "search_knowledge_base: query embedding 超时（>%.0fs）", QUERY_EMBED_TIMEOUT_S
@@ -78,54 +87,109 @@ async def _embed_query(query: str) -> Optional[list[float]]:
         vec = None
     if vec is None:
         _EMBED_STATE["down_until"] = time.monotonic() + EMBED_COOLDOWN_S
-    return vec
+    return vec, model
+
+
+# ── 相似度阈值：按"打分模型 × 用途"标定 ─────────────────────────────────────
+# cosine 的量纲随模型变：旧 qwen3-embedding（4096 维）真相关 ~0.62-0.72、无关
+# ~0.44-0.54，于是 Book Engine R1=0.60、tutor 回落素材下限=0.58。bge-m3 的分布
+# 不同，必须单独标定（docs/knowledge_hub_cpu_embedding.md 记录标注集与结果）。
+#   "book"：Book Engine R1 垃圾兜底（宁缺毋滥）
+#   "chat"：tutor SearchKnowledgeBase 回落素材下限
+# 可用环境变量覆盖：KNOWLEDGE_HUB_MIN_SCORE_<MODEL>_<PURPOSE>，如
+# KNOWLEDGE_HUB_MIN_SCORE_BGE_M3_BOOK=0.6。
+LEGACY_MODEL_KEY = "legacy"
+MIN_SCORE_PROFILES: dict[str, dict[str, float]] = {
+    LEGACY_MODEL_KEY: {"book": 0.60, "chat": 0.58},
+    "bge-m3": {"book": 0.60, "chat": 0.58},
+}
+
+
+def min_score_for(purpose: str, model: Optional[str] = None) -> float:
+    key = model or LEGACY_MODEL_KEY
+    env = f"KNOWLEDGE_HUB_MIN_SCORE_{re.sub(r'[^A-Za-z0-9]', '_', key).upper()}_{purpose.upper()}"
+    if os.environ.get(env):
+        try:
+            return float(os.environ[env])
+        except ValueError:
+            logger.warning("%s=%r 不是数字，忽略", env, os.environ[env])
+    profile = MIN_SCORE_PROFILES.get(key) or MIN_SCORE_PROFILES[LEGACY_MODEL_KEY]
+    return profile[purpose]
+
+
+def _model_of_method(method: Optional[str]) -> Optional[str]:
+    """ku_chunk_matches.method → 打分模型 key（旧 A3 行 = None → legacy 档）。"""
+    if method:
+        for m in MIN_SCORE_PROFILES:
+            if m != LEGACY_MODEL_KEY and method.endswith(m):
+                return m
+    return None
 
 
 # 进程内向量矩阵缓存：每次查询先跑一条廉价指纹 SQL（行数 + 最近 embed/创建时间），
 # 指纹不变就复用已归一化的矩阵，避免每次把全库 4096 维向量从 Postgres 拉一遍
 # （2026-10 实测 4.9k chunk 时单次 ~2s，语料扩到多学科后线性变慢）。
 # 语义与旧实现一致：同一 cosine、同一 min_score 过滤、同一降序排序。
-_EMB_CACHE: dict[int, tuple[tuple, list[str], np.ndarray]] = {}
+_EMB_CACHE: dict[tuple[Optional[str], int], tuple[tuple, list[str], np.ndarray]] = {}
 
 
-async def _embedding_matrix(db: AsyncSession, dim: int) -> tuple[list[str], np.ndarray]:
-    fp_row = (
-        await db.execute(
-            sa_text("""
+def _normalized(ids: list[str], vecs: list, dim: int) -> tuple[list[str], np.ndarray]:
+    if ids:
+        mat = np.asarray(vecs, dtype=np.float32)
+        norms = np.linalg.norm(mat, axis=1, keepdims=True)
+        norms[norms == 0] = 1.0  # 零向量 → 分数 0（同旧 _cosine 行为）
+        return ids, mat / norms
+    return ids, np.zeros((0, dim), dtype=np.float32)
+
+
+async def _embedding_matrix(
+    db: AsyncSession, dim: int, model: Optional[str] = None
+) -> tuple[list[str], np.ndarray]:
+    """model=None：旧列 textbook_chunks.embedding（按维度筛）；
+    model=名字：textbook_chunk_embeddings 里该模型的向量（CPU 侧车）。"""
+    if model is None:
+        fp_sql = """
         SELECT count(*) AS n, max(tc.embedded_at) AS e, max(tc.created_at) AS c,
                count(DISTINCT tc.file_id) AS f
         FROM textbook_chunks tc
         JOIN textbook_files tf ON tf.id = tc.file_id
         WHERE tc.embedding IS NOT NULL
-    """)
-        )
-    ).one()
-    fp = (fp_row.n, fp_row.e, fp_row.c, fp_row.f)
-    cached = _EMB_CACHE.get(dim)
-    if cached is not None and cached[0] == fp:
-        return cached[1], cached[2]
-
-    rows = (
-        await db.execute(
-            sa_text("""
+    """
+        rows_sql = """
         SELECT tc.id, tc.embedding
         FROM textbook_chunks tc
         JOIN textbook_files tf ON tf.id = tc.file_id
         WHERE tc.embedding IS NOT NULL
-    """)
-        )
-    ).fetchall()
-    ids = [r.id for r in rows if len(r.embedding) == dim]
-    if ids:
-        mat = np.asarray(
-            [r.embedding for r in rows if len(r.embedding) == dim], dtype=np.float32
-        )
-        norms = np.linalg.norm(mat, axis=1, keepdims=True)
-        norms[norms == 0] = 1.0  # 零向量 → 分数 0（同旧 _cosine 行为）
-        mat = mat / norms
+    """
+        params: dict = {}
     else:
-        mat = np.zeros((0, dim), dtype=np.float32)
-    _EMB_CACHE[dim] = (fp, ids, mat)
+        fp_sql = """
+        SELECT count(*) AS n, max(e.embedded_at) AS e, max(tc.created_at) AS c,
+               count(DISTINCT tc.file_id) AS f
+        FROM textbook_chunk_embeddings e
+        JOIN textbook_chunks tc ON tc.id = e.chunk_id
+        JOIN textbook_files tf ON tf.id = tc.file_id
+        WHERE e.model = :model
+    """
+        rows_sql = """
+        SELECT tc.id, e.embedding
+        FROM textbook_chunk_embeddings e
+        JOIN textbook_chunks tc ON tc.id = e.chunk_id
+        JOIN textbook_files tf ON tf.id = tc.file_id
+        WHERE e.model = :model
+    """
+        params = {"model": model}
+
+    fp_row = (await db.execute(sa_text(fp_sql), params)).one()
+    fp = (fp_row.n, fp_row.e, fp_row.c, fp_row.f)
+    cached = _EMB_CACHE.get((model, dim))
+    if cached is not None and cached[0] == fp:
+        return cached[1], cached[2]
+
+    rows = (await db.execute(sa_text(rows_sql), params)).fetchall()
+    same = [r for r in rows if len(r.embedding) == dim]
+    ids, mat = _normalized([r.id for r in same], [r.embedding for r in same], dim)
+    _EMB_CACHE[(model, dim)] = (fp, ids, mat)
     return ids, mat
 
 
@@ -171,14 +235,24 @@ def citation_state(result: dict) -> str:
 
 
 async def _search_by_kc_id(
-    db: AsyncSession, kc_id: str, top_k: int, min_score: float
+    db: AsyncSession,
+    kc_id: str,
+    top_k: int,
+    min_score: float,
+    purpose: Optional[str] = None,
 ) -> list[dict]:
     """走 A3 预计算的 ku_chunk_matches（无需实时 embed，确定性、快）。
 
     min_score 在 SQL 里过滤（R1：垃圾兜底，不是质量门——见模块顶部说明），
     rank 仍按数据库里原始 rank 呈现（过滤后可能不连续，如实反映"这是原始
     候选里的第几名"，不重新编号造成"这是完整 top-N"的错觉）。
+
+    purpose 给定时（"book"/"chat"），阈值按每行的打分模型（method）取标定值——
+    数学 KU 的旧 A3 行是 qwen3 量纲，2026-10 补挂的物理/语文/历史/英语行是
+    bge-m3 量纲，同一个数字不能同时套两者。min_score 仍作为额外下限生效。
     """
+    if purpose:
+        return await _search_by_kc_id_purpose(db, kc_id, top_k, min_score, purpose)
     rows = (
         await db.execute(
             sa_text("""
@@ -214,6 +288,51 @@ async def _search_by_kc_id(
         )
         for r in rows
     ]
+
+
+async def _search_by_kc_id_purpose(
+    db: AsyncSession, kc_id: str, top_k: int, min_score: float, purpose: str
+) -> list[dict]:
+    rows = (
+        await db.execute(
+            sa_text("""
+        SELECT tc.id, tc.file_id, tc.page_number, tc.char_start, tc.char_end,
+               tc.content, t.subject, t.grade, t.book_name, kcm.score, kcm.rank,
+               kcm.verified, kcm.method
+        FROM ku_chunk_matches kcm
+        JOIN textbook_chunks tc ON tc.id = kcm.chunk_id
+        JOIN textbook_files tf ON tf.id = tc.file_id
+        LEFT JOIN textbooks t ON t.id = tf.textbook_id
+        WHERE kcm.ku_id = :kc_id
+        ORDER BY kcm.rank
+    """),
+            {"kc_id": kc_id},
+        )
+    ).fetchall()
+    out: list[dict] = []
+    for r in rows:
+        floor = max(min_score, min_score_for(purpose, _model_of_method(r.method)))
+        if r.score < floor:
+            continue
+        out.append(
+            _row_to_result(
+                chunk_id=r.id,
+                pdf_id=r.file_id,
+                page_number=r.page_number,
+                char_start=r.char_start,
+                char_end=r.char_end,
+                content=r.content,
+                subject=r.subject,
+                grade=r.grade,
+                book_name=r.book_name,
+                score=r.score,
+                rank=r.rank,
+                verified=bool(r.verified),
+            )
+        )
+        if len(out) >= top_k:
+            break
+    return out
 
 
 _LEXICAL_CANDIDATE_LIMIT = 400
@@ -350,7 +469,12 @@ async def _search_by_lexical(
 
 
 async def _search_by_free_text(
-    db: AsyncSession, query: str, top_k: int, min_score: float
+    db: AsyncSession,
+    query: str,
+    top_k: int,
+    min_score: float,
+    purpose: Optional[str] = None,
+    meta: Optional[dict] = None,
 ) -> Optional[list[dict]]:
     """实时 embed query + 语料库全量 numpy cosine（复用 embed_chunks.embed_text，
     与 chunk 入库时同一模型——否则向量空间不一致，相似度没有意义）。
@@ -358,13 +482,17 @@ async def _search_by_free_text(
     返回 None 表示"语义检索不可用"（embed 失败或库内向量维度与 query 不符），
     由调用方决定是否走词面兜底；返回 [] 表示语义检索可用但无结果。
     """
-    query_vec = await _embed_query(query)
+    query_vec, model = await _embed_query(query)
     if query_vec is None:
         logger.warning("search_knowledge_base: query embedding 不可用，语义检索跳过")
         return None
+    if meta is not None:
+        meta["embedding_model"] = model or LEGACY_MODEL_KEY
+    if purpose:
+        min_score = max(min_score, min_score_for(purpose, model))
 
     dim = len(query_vec)
-    ids, mat = await _embedding_matrix(db, dim)
+    ids, mat = await _embedding_matrix(db, dim, model)
     if not ids:
         logger.warning(
             "search_knowledge_base: 库内无与 query(%d 维) 同维度的向量"
@@ -431,6 +559,7 @@ async def search_knowledge_base(
     query: Optional[str] = None,
     top_k: int = 3,
     min_score: float = 0.0,
+    purpose: Optional[str] = None,
 ) -> dict:
     """Knowledge Hub 检索主入口。
 
@@ -445,6 +574,11 @@ async def search_knowledge_base(
     embedding 不可用时（embed 服务宕/模型缺失/维度不符），free_text 路径在
     min_score<=0 时退到词面检索，返回值额外带 "retrieval": "lexical"。
 
+    purpose（"book"/"chat"，可选）：按打分模型取标定阈值（见 min_score_for）。
+    换了 embedding 模型后 cosine 量纲变化，调用方传 purpose 就不用自己记
+    每个模型的数字；min_score 仍作为额外下限。free_text 语义结果附带
+    "embedding_model"（"legacy" 或侧车模型名），供调用方按模型解释分数。
+
     返回 {"query_type": "kc_id"|"free_text", "results": [...]}；results 永远是
     列表（找不到内容/embedding 不可用时为空列表，不抛异常——呈现层素材缺失
     不该打断调用方）。每条结果带 "verified" 字段（R3/R4，见 citation_state()）。
@@ -453,16 +587,17 @@ async def search_knowledge_base(
         return {"query_type": None, "results": []}
 
     if kc_id:
-        results = await _search_by_kc_id(db, kc_id, top_k, min_score)
+        results = await _search_by_kc_id(db, kc_id, top_k, min_score, purpose)
         return {"query_type": "kc_id", "results": results}
 
     assert query is not None
-    semantic = await _search_by_free_text(db, query, top_k, min_score)
+    meta: dict = {}
+    semantic = await _search_by_free_text(db, query, top_k, min_score, purpose, meta)
     if semantic is not None:
-        return {"query_type": "free_text", "results": semantic}
+        return {"query_type": "free_text", "results": semantic, **meta}
     # 语义检索不可用：仅在不设阈值（聊天呈现层）时走词面兜底——词面分不是 cosine，
     # 不能拿去对 R1 的 0.60 阈值（Book Engine 场景宁缺毋滥，返回空）。
-    if min_score > 0:
+    if min_score > 0 or purpose == "book":
         return {"query_type": "free_text", "results": []}
     lexical = await _search_by_lexical(db, query, top_k)
     return {"query_type": "free_text", "results": lexical, "retrieval": "lexical"}

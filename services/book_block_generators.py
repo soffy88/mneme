@@ -97,8 +97,10 @@ async def _gather_citations(db: AsyncSession, ku_ids: list[str]) -> list[dict]:
     seen_chunk_ids: set[str] = set()
     citations: list[dict] = []
     for ku_id in ku_ids[:_MAX_CITED_KUS_PER_BLOCK]:
+        # purpose="book"：R1 阈值按每条挂接的打分模型取标定值（旧 qwen3 行 =
+        # R1_MIN_SCORE 0.60；bge-m3 行见 knowledge_hub_search.MIN_SCORE_PROFILES）。
         result = await search_knowledge_base(
-            db, kc_id=ku_id, top_k=2, min_score=R1_MIN_SCORE
+            db, kc_id=ku_id, top_k=2, min_score=0.0, purpose="book"
         )
         for r in result["results"]:
             if r["chunk_id"] in seen_chunk_ids:
