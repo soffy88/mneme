@@ -31,8 +31,10 @@ _log = logging.getLogger(__name__)
 PLACEHOLDER_PREFIX = "bkj_"
 IN_FLIGHT = ("queued", "compiling")
 # 卡在 queued/compiling 超过这么久的行不再视为「在编」（worker 崩溃/重启残留），
-# 不再挡同教材的新提交，也不再计入全站在途预算。
-STALE_AFTER_MINUTES = 120
+# 不再挡同教材的新提交，也不再计入全站在途预算；任务重投（acks_late，Redis
+# visibility_timeout 默认 1h）时允许重新认领。必须 ≥ tasks.compile_book 的
+# time_limit（3500s）：活着的编译不可能超过它，超过的只可能是被杀掉的残留。
+STALE_AFTER_MINUTES = 60
 
 
 class CompileRejected(Exception):
@@ -367,7 +369,8 @@ async def run_compile_job(
 ) -> dict:
     """Celery 任务体：queued → compiling → 调 omodul.book_compile → ready/partial/error。
 
-    幂等：只处理 status=queued 的行（acks_late 重投时不会二次花钱）。
+    幂等：只认领 status=queued 的行（acks_late 重投时不会二次花钱）；例外是
+    compiling 超过 STALE_AFTER_MINUTES 的残留（worker 中途被重启/杀掉），重投时重新认领。
     """
     from omodul.book_compile import BookCompileConfig, BookCompileInput, book_compile
 
@@ -382,9 +385,12 @@ async def run_compile_job(
         async with session_factory() as db:
             claimed = (
                 await db.execute(
-                    text("""
+                    text(f"""
                 UPDATE books SET status = 'compiling', updated_at = now()
-                WHERE id = :id AND status = 'queued'
+                WHERE id = :id AND (
+                    status = 'queued'
+                    OR (status = 'compiling'
+                        AND updated_at <= now() - interval '{STALE_AFTER_MINUTES} minutes'))
                 RETURNING textbook_id
             """),
                     {"id": book_id},

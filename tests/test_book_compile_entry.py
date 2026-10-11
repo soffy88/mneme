@@ -265,6 +265,30 @@ async def test_run_compile_job_adopts_book_under_stable_id(world, tmp_path: Path
 
 
 @pytest.mark.asyncio
+async def test_stale_compiling_row_is_reclaimed_on_redelivery(world, tmp_path: Path):
+    """worker 在编译中途被重启：行卡在 compiling。重投时超过 STALE 的残留可重新认领，
+    没超过的（可能真在跑）不碰。"""
+    book_id = await _queue(world)
+    async with SessionLocal() as db:
+        await db.execute(text("UPDATE books SET status='compiling', updated_at=now() WHERE id=:id"),
+                         {"id": book_id})
+        await db.commit()
+    res = await svc.run_compile_job(book_id, session_factory=SessionLocal,
+                                    caller=_fake_caller(), out_root=tmp_path)
+    assert res["status"] == "skipped"
+    async with SessionLocal() as db:
+        await db.execute(
+            text("UPDATE books SET updated_at = now() - interval '61 minutes' WHERE id=:id"),
+            {"id": book_id})
+        await db.commit()
+        st = await svc.get_compile_status(db, book_id)
+    assert st is not None and st["stale"] is True
+    res = await svc.run_compile_job(book_id, session_factory=SessionLocal,
+                                    caller=_fake_caller(), out_root=tmp_path)
+    assert res["status"] in ("ready", "partial"), res
+
+
+@pytest.mark.asyncio
 async def test_run_compile_job_cost_cap_marks_error(world, tmp_path: Path, monkeypatch):
     monkeypatch.setenv("MNEME_BOOK_COMPILE_MAX_USD", "0.000001")  # 第一次调用之后即超
     book_id = await _queue(world)
