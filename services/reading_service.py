@@ -15,6 +15,7 @@ from __future__ import annotations
 
 import re
 import uuid
+from collections.abc import Sequence
 from typing import Any
 
 from sqlalchemy import text
@@ -82,6 +83,42 @@ def is_readable_chunk(content: str) -> bool:
     if _is_toc_chunk(body) or len(_DOT_LEADER.findall(body)) >= 2:
         return False
     return _clean_ratio(body) >= MIN_CLEAN_RATIO
+
+
+class _Chunk:
+    __slots__ = ("id", "page_number", "section_title", "content")
+
+    def __init__(self, id: str, page_number: Any, section_title: Any, content: str):
+        self.id = id
+        self.page_number = page_number
+        self.section_title = section_title
+        self.content = content
+
+
+def dedupe_overlaps(rows: Sequence[Any]) -> list[_Chunk]:
+    """分块入库时同页相邻 chunk 有重叠（char_start < 上一块 char_end）。重叠部分只保留
+    一次：剩余尾巴并回同页上一块，完全被覆盖的块丢掉——否则沉浸阅读会把同一句读两遍。"""
+    out: list[_Chunk] = []
+    last_key: tuple[Any, Any] | None = None
+    last_end: int | None = None
+    for r in rows:
+        key = (r.file_id, r.page_number)
+        start, end = r.char_start, r.char_end
+        if (
+            out
+            and key == last_key
+            and last_end is not None
+            and start is not None
+            and end is not None
+            and start < last_end
+        ):
+            if end > last_end:
+                out[-1].content += r.content[last_end - start :]
+                last_end = end
+            continue
+        out.append(_Chunk(r.id, r.page_number, r.section_title, r.content))
+        last_key, last_end = key, end
+    return out
 
 
 def _check_source(kind: str, source_id: str) -> None:
@@ -174,7 +211,8 @@ async def textbook_blocks(
     rows = (
         await db.execute(
             text("""
-        SELECT c.id, c.chunk_index, c.page_number, c.section_title, c.content
+        SELECT c.id, c.file_id, c.chunk_index, c.page_number, c.section_title,
+               c.content, c.char_start, c.char_end
         FROM textbook_chunks c
         JOIN textbook_files f ON f.id = c.file_id
         WHERE f.textbook_id = :tid AND f.owner_student_id IS NULL
@@ -183,7 +221,7 @@ async def textbook_blocks(
             {"tid": textbook_id},
         )
     ).fetchall()
-    readable = [r for r in rows if is_readable_chunk(r.content)]
+    readable = [r for r in dedupe_overlaps(rows) if is_readable_chunk(r.content)]
     if not readable:
         return None
     page = readable[offset : offset + limit]

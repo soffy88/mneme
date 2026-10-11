@@ -18,7 +18,12 @@ from obase.auth import create_access_token
 from obase.db import SessionLocal
 from services.main import app
 from services.models import User, UserRole
-from services.reading_service import is_readable_chunk, textbook_blocks, tidy_chunk_text
+from services.reading_service import (
+    dedupe_overlaps,
+    is_readable_chunk,
+    textbook_blocks,
+    tidy_chunk_text,
+)
 
 ROOT = Path(__file__).resolve().parents[1]
 BODY = "物理学是研究物质及其运动规律的科学。人类自古以来就对自然界充满好奇，日出日落、春华秋实。"
@@ -50,6 +55,51 @@ def test_readable_chunk_filter() -> None:
     assert not is_readable_chunk(
         "ᑓᄼ߆ᑓᄼ߆ᑓᄼ߆ᑓᄼ߆ᑓᄼ߆ᑓᄼ߆ᑓᄼ߆ᑓᄼ߆ᑓᄼ߆ᑓᄼ߆ᑓᄼ߆ᑓᄼ߆ᑓᄼ߆ᑓᄼ߆ᑓᄼ߆"
     )
+
+
+def test_dedupe_overlapping_chunks_on_same_page() -> None:
+    from types import SimpleNamespace as R
+
+    rows = [
+        R(
+            id="a",
+            file_id="f",
+            page_number=1,
+            section_title=None,
+            content="0123456789",
+            char_start=0,
+            char_end=10,
+        ),
+        R(
+            id="b",
+            file_id="f",
+            page_number=1,
+            section_title=None,
+            content="789ABC",
+            char_start=7,
+            char_end=13,
+        ),
+        R(
+            id="c",
+            file_id="f",
+            page_number=1,
+            section_title=None,
+            content="9ABC",
+            char_start=9,
+            char_end=13,
+        ),
+        R(
+            id="d",
+            file_id="f",
+            page_number=2,
+            section_title=None,
+            content="xyz",
+            char_start=0,
+            char_end=3,
+        ),
+    ]
+    out = dedupe_overlaps(rows)
+    assert [(c.id, c.content) for c in out] == [("a", "0123456789ABC"), ("d", "xyz")]
 
 
 @pytest.fixture
