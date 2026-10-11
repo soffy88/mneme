@@ -91,6 +91,8 @@ _STUDENT_TABLES: list[tuple[str, str]] = [
     ("reading_notes", "student_id"),
     # highlights 先于 textbook_files（其 file_id 指向 textbook_files.id）
     ("highlights", "student_id"),
+    # 沉浸式阅读的阅读位置（只是进度，非学习证据；FK users ON DELETE CASCADE 之外显式清）
+    ("reading_positions", "student_id"),
     ("papers", "student_id"),
     # Immersive Learning：telemetry/session 先于 media_assets；occurrences /
     # transcripts / segments 无 student_id，靠 media CASCADE 或显式 helper。

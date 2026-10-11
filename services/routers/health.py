@@ -15,7 +15,7 @@ from services.readiness import health_payload, readiness_payload
 # （`migrations = revision == EXPECTED_MIGRATION_HEAD`，而 DB 已经跑到新 head，
 # 两边对不上）。这不是我臆想的坑 —— 加 confusable_words 那次迁移后就撞上了，
 # alembic 报「upgrade 成功」而 readiness 却红。
-EXPECTED_MIGRATION_HEAD = "nbk1a2b3c4d5"
+EXPECTED_MIGRATION_HEAD = "rdp1a2b3c4d5"
 
 router = APIRouter(tags=["health"])
 

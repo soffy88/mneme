@@ -8,6 +8,7 @@ from fastapi import FastAPI
 def register_domain_routers(app: FastAPI) -> None:
     """挂载已拆出的域路由（idempotent：可重复调用，但不推荐）。"""
     from services.routers import (
+        animate,
         aria,
         auth,
         books,
@@ -32,6 +33,7 @@ def register_domain_routers(app: FastAPI) -> None:
         operator,
         practice,
         progress,
+        reading,
         related_labs,
         review,
         socratic,
@@ -69,5 +71,7 @@ def register_domain_routers(app: FastAPI) -> None:
         books,
         notebooks,
         cowriter,
+        reading,
+        animate,
     ):
         app.include_router(mod.router)

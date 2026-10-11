@@ -1,0 +1,16 @@
+/* Mneme Animator player styles (self-hosted). */
+html, body { margin: 0; padding: 0; background: #fff; color: #1f2937;
+  font-family: -apple-system, "PingFang SC", "Noto Sans SC", "Microsoft YaHei", sans-serif; }
+#anim-root { max-width: 860px; margin: 0 auto; padding: 12px 16px 20px; }
+.ma-title { font-size: 16px; font-weight: 600; margin: 4px 0 8px; line-height: 1.5; }
+.ma-stage { width: 100%; height: auto; border: 1px solid #e5e7eb; border-radius: 12px; background: #fcfcfd; }
+.ma-readout { min-height: 22px; margin-top: 6px; font: 600 14px ui-monospace, SFMono-Regular, Menlo, monospace; color: #dc2626; }
+.ma-step-title { font-weight: 600; margin-top: 6px; }
+.ma-caption { font-size: 14px; line-height: 1.7; min-height: 64px; max-height: 190px; overflow: auto; }
+.ma-caption table { border-collapse: collapse; margin: 4px 0; }
+.ma-caption td, .ma-caption th { border: 1px solid #e5e7eb; padding: 2px 8px; text-align: center; }
+.ma-controls { display: flex; align-items: center; gap: 8px; margin-top: 10px; flex-wrap: wrap; }
+.ma-controls button { border: 1px solid #d1d5db; background: #fff; border-radius: 8px; padding: 6px 12px; font-size: 14px; cursor: pointer; }
+.ma-controls button:disabled { opacity: .4; cursor: default; }
+.ma-controls input[type=range] { flex: 1; min-width: 120px; }
+.ma-counter { font-size: 13px; color: #6b7280; min-width: 56px; text-align: right; }
