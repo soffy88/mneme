@@ -110,6 +110,8 @@ services:
       # Learning Event v2 is the canonical append-only fact stream.  The API
       # startup command applies migrations before this flag can write.
       LEARNING_EVENT_V2_DUAL_WRITE_ENABLED: ${LEARNING_EVENT_V2_DUAL_WRITE_ENABLED:-1}
+      # 服务端掌握路径锁（/mcp/RequestQuestion 拒绝 locked KC 的新学习）；0 关闭。
+      MNEME_PATH_LOCK: ${MNEME_PATH_LOCK:-1}
       # 本机 Veya gateway：文本 veya1.2-128K、视觉 veya1.2-vl；
       # gateway 通过 host.docker.internal:8791 暴露 OpenAI-compatible API。
       MNEME_LLM: ${MNEME_LLM:-veya}
