@@ -2882,3 +2882,20 @@ CI 常驻的判分准确率回归门，堵死"构造桩题掩盖真实数据判�
 - [ ] 未做：动画导出视频/GIF（DeepTutor 产出 mp4；我们只做客户端时间线）；物理类内核动画
   （physics_service 暂无步骤结构化输出）；阅读器高亮/笔记与既有 /v1/highlights 打通；
   解释这句的回答不入记忆（chat_turn 现状决定）。
+
+## DT-RS · 推理模型回退可靠性 + 研究报告（DeepTutor Deep Research 儿童安全版，2026-10-11）
+
+- [x] **DT-RS.1 推理模型回退可靠性**（Veya 宕机 → InternAI Agents-A1）
+  实测：max_tokens=600 空 content 6/6（finish=length）；2000/4000 仍有一半为空、最长 63s；
+  `enable_thinking=False` / `chat_template_kwargs` 被端点忽略，`thinking={"type":"disabled"}` 有效。
+  `veya_caller`：推理模型（`MNEME_REASONING_MODELS`，默认 Agents-A1）发 thinking.disabled +
+  max_tokens 下限 8192 + 读超时 150s；空 content（无 tool_calls）算失败换下一个候选；
+  `FallbackTextCaller` 空 content 换下一个端点；`ProviderReliabilityConfig.for_reasoning()` 长超时档
+  （总 ~185s、最多重试 1 次、硬上限 300s，通用档仍 120s）；活书编译 LLM 调用跨进程 flock 并发上限
+  `MNEME_BOOK_COMPILE_LLM_CONCURRENCY=3`。
+- [x] **DT-RS.2 研究报告 /v1/research**：只检索本地 Knowledge Hub（不联网）→ 来源 S1..Sn →
+  一次 LLM（年级/persona 只管语气）→ 校验：引用只能是本次检索切片，无有效引用的论断移入
+  unsupported（「教材中没有找到依据」）；无检索结果不调 LLM（no_sources）；LLM 失败降级为原文摘录
+  （extractive）。每人每天 10 次（admin 豁免）、全站每天 2 USD、输出 1500 tokens。表
+  `research_reports`（alembic rsr1a2b3c4d5，已入 purge 清单）。CLI `mneme research`；Studio `/research`。
+  未做：多轮/子问题分解的「深度」研究（当前单次检索 top-6）；语义检索依赖 embedding（GPU 恢复前为词面兜底）。
