@@ -34,8 +34,9 @@ ROOT = Path(os.environ.get("MNEME_ROOT") or Path(__file__).resolve().parent.pare
 sys.path[:0] = [str(ROOT), str(ROOT / "vendor")]
 
 PDF_DIR = ROOT / "curriculum_standards"
-SEGMENT_CHARS = 9000
+SEGMENT_CHARS = int(os.environ.get("KU_SEGMENT_CHARS", "9000"))
 MIN_SEGMENT_CHARS = 2500
+LLM_TIMEOUT_S = float(os.environ.get("KU_LLM_TIMEOUT_S", "240"))
 _M22 = "（根据2022年版课程标准修订）义务教育教科书"
 
 CATALOG: list[dict[str, str]] = [
@@ -189,11 +190,14 @@ async def llm_extract(caller: Any, subject: str, seg: dict[str, Any], hint: str)
     last: Exception | None = None
     for attempt in range(2):
         try:
-            out = await caller(
-                messages=[{"role": "user", "content": user}],
-                system=system_prompt(subject),
-                max_tokens=8000,
-                enable_thinking=False,
+            out = await asyncio.wait_for(
+                caller(
+                    messages=[{"role": "user", "content": user}],
+                    system=system_prompt(subject),
+                    max_tokens=8000,
+                    enable_thinking=False,
+                ),
+                timeout=LLM_TIMEOUT_S,
             )
             model = str(getattr(caller, "last_good_model", "") or out.get("model") or "")
             return _parse_json(str(out.get("content") or "")), model
