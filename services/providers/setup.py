@@ -269,7 +269,12 @@ def configure_llm_providers() -> str:
         chain: list[Any] = []
         if (os.environ.get("INTERN_AI_API_KEY") or "").strip():
             chain.append(InternAiTextCaller())
-        chain.append(VeyaTextCaller())
+        # MNEME_LLM_VEYA_FIRST=1：Veya（如 veya-free）放链首，InternAI 只做兜底
+        # （2026-10-11 用户指定生产主用 veya-free）。
+        if (os.environ.get("MNEME_LLM_VEYA_FIRST") or "").strip().lower() in {"1", "true", "yes"}:
+            chain.insert(0, VeyaTextCaller())
+        else:
+            chain.append(VeyaTextCaller())
         text_caller = chain[0] if len(chain) == 1 else FallbackTextCaller(chain)
         registry.register_llm("default", text_caller, replace=True)
         registry.register_llm("veya", VeyaTextCaller(), replace=True)
