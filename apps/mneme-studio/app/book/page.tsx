@@ -11,9 +11,22 @@
 // 重新实现选题/判分/FSRS 逻辑——只给一个指向既有 /studio/learn 的入口，避免
 // 建第二条判分路径。
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { OButton, OCard, OCardHeader, OCardTitle, OEmptyState } from "@helios/blocks";
-import { mcp, getToken, redirectToLogin, type BookDetail, type BookSummary, type BookBlock } from "@/lib/mcp";
+import {
+  mcp,
+  getToken,
+  redirectToLogin,
+  McpError,
+  listCompilableTextbooks,
+  compileBook,
+  bookCompileStatus,
+  type BookDetail,
+  type BookSummary,
+  type BookBlock,
+  type CompilableTextbook,
+  type BookCompileStatus,
+} from "@/lib/mcp";
 import { MathText } from "@/components/MathText";
 import { CitationNote } from "@/components/CitationNote";
 
@@ -95,7 +108,7 @@ function BlockView({ block }: { block: BookBlock }) {
 
 function BookList({ books }: { books: BookSummary[] }) {
   if (books.length === 0) {
-    return <OEmptyState title="还没有活书" description="Book Engine 还没编出任何一本书。" />;
+    return <OEmptyState title="还没有活书" description="在上面选一本教材生成第一本活书。" />;
   }
   return (
     <div className="space-y-3" data-testid="book-list">
@@ -113,6 +126,172 @@ function BookList({ books }: { books: BookSummary[] }) {
         </a>
       ))}
     </div>
+  );
+}
+
+
+// ── 生成活书：选教材 → POST /v1/books/compile → 轮询 /v1/books/{id}/status → 打开 ──
+// 编译每本约几毛钱，后端有每人每日限额 + 全站预算；同一本教材正在编时后端直接复用
+// 那个任务（deduplicated）。正在跟踪的任务记在 localStorage，刷新页面后继续轮询。
+const JOB_KEY = "mneme_book_compile_job";
+const SUBJECT_LABEL: Record<string, string> = {
+  math: "数学", chinese: "语文", english: "英语", physics: "物理", chemistry: "化学",
+  biology: "生物", history: "历史", geography: "地理", politics: "政治",
+};
+const STATUS_LABEL: Record<string, string> = {
+  queued: "排队中", compiling: "正在生成（通常几分钟）", ready: "已生成", partial: "已生成（部分内容不完整）", error: "生成失败",
+};
+
+function errorText(e: unknown): string {
+  if (e instanceof McpError) {
+    try {
+      const d = (JSON.parse(e.detail) as { detail?: unknown }).detail;
+      if (typeof d === "string") return d;
+      if (e.status === 429) return "今天的生成额度已用完，明天再来";
+    } catch {
+      /* 非 JSON */
+    }
+  }
+  return e instanceof Error ? e.message : String(e);
+}
+
+function CompileBookPanel() {
+  const [textbooks, setTextbooks] = useState<CompilableTextbook[] | null>(null);
+  const [dailyLimit, setDailyLimit] = useState<number | null>(null);
+  const [subject, setSubject] = useState<string>("");
+  const [textbookId, setTextbookId] = useState<string>("");
+  const [job, setJob] = useState<BookCompileStatus | null>(null);
+  const [busy, setBusy] = useState(false);
+  const [err, setErr] = useState<string | null>(null);
+  const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const poll = useCallback(async (bookId: string) => {
+    try {
+      const st = await bookCompileStatus(bookId);
+      setJob(st);
+      if (st.status === "queued" || st.status === "compiling") {
+        timer.current = setTimeout(() => void poll(bookId), 5000);
+      } else {
+        localStorage.removeItem(JOB_KEY);
+      }
+    } catch (e) {
+      setErr(errorText(e));
+    }
+  }, []);
+
+  useEffect(() => {
+    void (async () => {
+      try {
+        const r = await listCompilableTextbooks();
+        setTextbooks(r.textbooks);
+        setDailyLimit(r.is_admin ? null : r.daily_limit);
+      } catch (e) {
+        setErr(errorText(e));
+      }
+    })();
+    const saved = localStorage.getItem(JOB_KEY);
+    if (saved) void poll(saved);
+    return () => {
+      if (timer.current) clearTimeout(timer.current);
+    };
+  }, [poll]);
+
+  const subjects = Array.from(new Set((textbooks ?? []).map((t) => t.subject)));
+  const visible = (textbooks ?? []).filter((t) => !subject || t.subject === subject);
+
+  async function submit() {
+    if (!textbookId) return;
+    setBusy(true);
+    setErr(null);
+    try {
+      const j = await compileBook(textbookId);
+      localStorage.setItem(JOB_KEY, j.book_id);
+      if (timer.current) clearTimeout(timer.current);
+      await poll(j.book_id);
+    } catch (e) {
+      setErr(errorText(e));
+    } finally {
+      setBusy(false);
+    }
+  }
+
+  const running = job !== null && (job.status === "queued" || job.status === "compiling");
+  const done = job !== null && (job.status === "ready" || job.status === "partial");
+
+  return (
+    <OCard data-testid="compile-panel">
+      <OCardHeader>
+        <OCardTitle>生成活书</OCardTitle>
+      </OCardHeader>
+      <div className="p-4 space-y-3 text-sm">
+        <p className="text-[var(--o-color-fg-muted,#666)]">
+          选一本教材，系统会按它的知识结构编出一本带讲解、例图和配套练习的活书。
+          {dailyLimit !== null && `每人每天最多 ${dailyLimit} 本。`}
+        </p>
+        {textbooks === null ? (
+          <div className="text-[var(--o-color-fg-muted,#888)]">正在加载教材…</div>
+        ) : textbooks.length === 0 ? (
+          <div className="text-[var(--o-color-fg-muted,#888)]">暂时没有可以生成活书的教材。</div>
+        ) : (
+          <>
+            <div className="flex gap-2">
+              <select
+                aria-label="学科"
+                data-testid="compile-subject"
+                className="rounded-lg border p-2"
+                value={subject}
+                onChange={(e) => {
+                  setSubject(e.target.value);
+                  setTextbookId("");
+                }}
+              >
+                <option value="">全部学科</option>
+                {subjects.map((s) => (
+                  <option key={s} value={s}>{SUBJECT_LABEL[s] ?? s}</option>
+                ))}
+              </select>
+              <select
+                aria-label="教材"
+                data-testid="compile-textbook"
+                className="flex-1 rounded-lg border p-2"
+                value={textbookId}
+                onChange={(e) => setTextbookId(e.target.value)}
+              >
+                <option value="">选择教材…</option>
+                {visible.map((t) => (
+                  <option key={t.textbook_id} value={t.textbook_id}>
+                    {t.book_name}（{t.grade}，{t.n_clusters} 章节{t.n_books > 0 ? `，已有 ${t.n_books} 本活书` : ""}）
+                  </option>
+                ))}
+              </select>
+            </div>
+            <OButton data-testid="compile-submit" disabled={!textbookId || busy || running} onClick={() => void submit()}>
+              {busy ? "提交中…" : running ? "生成中…" : "生成活书"}
+            </OButton>
+          </>
+        )}
+        {job && (
+          <div data-testid="compile-status" className="rounded-lg bg-[var(--o-color-bg-subtle,#f6f6f6)] p-3 space-y-1">
+            <div>
+              <span className="font-medium">{job.book_name ?? job.title}</span>：{STATUS_LABEL[job.status] ?? job.status}
+              {job.stale && "（长时间没有进展，可能需要重新提交）"}
+            </div>
+            {done && (
+              <div className="flex items-center gap-2">
+                <span>{job.n_chapters} 章 · {job.n_blocks} 个内容块</span>
+                <a href={`/studio/book?book_id=${job.book_id}`} data-testid="compile-open">
+                  <OButton size="sm">打开这本书</OButton>
+                </a>
+              </div>
+            )}
+            {job.status === "error" && job.error && (
+              <div className="text-[var(--o-color-danger,#c00)]">{job.error}</div>
+            )}
+          </div>
+        )}
+        {err && <div className="text-[var(--o-color-danger,#c00)]" data-testid="compile-error">{err}</div>}
+      </div>
+    </OCard>
   );
 }
 
@@ -162,6 +341,7 @@ export default function BookPage() {
     return (
       <main className="mx-auto max-w-2xl p-6 space-y-4" data-testid="book-root">
         <h1 className="text-2xl font-bold">善学记 · 活书</h1>
+        <CompileBookPanel />
         {books === null ? <OEmptyState title="正在加载书单…" description="" /> : <BookList books={books} />}
       </main>
     );

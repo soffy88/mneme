@@ -247,6 +247,53 @@ export interface BookSummary {
   book_name?: string;
 }
 
+// ── 活书编译入口：POST /v1/books/compile + GET /v1/books/{id}/status ──────────
+export interface CompilableTextbook {
+  textbook_id: string;
+  subject: string;
+  grade: string;
+  book_name: string;
+  edition: string | null;
+  n_clusters: number;
+  n_units: number;
+  n_books: number;
+}
+
+export interface BookCompileJob {
+  book_id: string;
+  status: string;
+  deduplicated: boolean;
+}
+
+export interface BookCompileStatus {
+  book_id: string;
+  textbook_id: string;
+  book_name: string | null;
+  title: string;
+  status: "queued" | "compiling" | "ready" | "partial" | "error" | string;
+  stale: boolean;
+  error: string | null;
+  cost_usd: number;
+  n_chapters: number;
+  n_blocks: number;
+  n_block_errors: number;
+  requested_by_me: boolean;
+  created_at: string | null;
+  updated_at: string | null;
+}
+
+export function listCompilableTextbooks(): Promise<{ textbooks: CompilableTextbook[]; daily_limit: number; is_admin: boolean }> {
+  return apiGet("/v1/books/compile/textbooks");
+}
+
+export function compileBook(textbookId: string): Promise<BookCompileJob> {
+  return apiPost<BookCompileJob>("/v1/books/compile", { textbook_id: textbookId });
+}
+
+export function bookCompileStatus(bookId: string): Promise<BookCompileStatus> {
+  return apiGet<BookCompileStatus>(`/v1/books/${encodeURIComponent(bookId)}/status`);
+}
+
 // ── W4 Solve：自然语言题目 -> 内核真实求解 + LLM 讲解 ─────────────────────
 // answer/steps 是 7 个确定性内核（S0 加固后全经沙箱）的真实输出；narration
 // 是 LLM 纯附加的自然语言讲解，绝不会替换/覆盖 answer/steps（SV-2/SV-4）。

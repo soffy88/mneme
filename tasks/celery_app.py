@@ -21,6 +21,7 @@ celery_app = Celery(
         "tasks.memory_tasks",
         "tasks.partner_heartbeat",
         "tasks.learning_memory_tasks",
+        "tasks.book_tasks",
     ],
 )
 celery_app.conf.update(

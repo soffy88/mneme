@@ -56,3 +56,5 @@ data/ku_verification_report.json
 # Veya agent runtime state (not source)
 .veya/
 .veya-project/
+# 活书编译 trail/report（services/book_compile_service.output_root）
+data/book_compile/

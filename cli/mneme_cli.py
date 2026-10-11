@@ -79,6 +79,15 @@ class MnemeClient:
     def mcp(self, tool_name: str, payload: dict) -> dict:
         return self._request("POST", f"/mcp/{tool_name}", json=payload)
 
+    def book_compile(self, textbook_id: str) -> dict:
+        return self._request("POST", "/v1/books/compile", json={"textbook_id": textbook_id})
+
+    def book_status(self, book_id: str) -> dict:
+        return self._request("GET", f"/v1/books/{book_id}/status")
+
+    def book_textbooks(self) -> dict:
+        return self._request("GET", "/v1/books/compile/textbooks")
+
 
 def _print(obj: Any) -> None:
     print(json.dumps(obj, ensure_ascii=False, indent=2))
@@ -160,6 +169,42 @@ def cmd_audit_log(args: argparse.Namespace) -> None:
     )
 
 
+_BOOK_DONE = ("ready", "partial", "error")
+
+
+def cmd_book_compile(args: argparse.Namespace) -> None:
+    client = MnemeClient(base_url=args.api_base)
+    if args.list:
+        _print(client.book_textbooks())
+        return
+    if not args.textbook_id:
+        raise RuntimeError("需要 --textbook-id（或用 --list 查看可编译的教材）")
+    job = client.book_compile(args.textbook_id)
+    _print(job)
+    if args.wait:
+        _wait_book(client, job["book_id"], args.interval)
+
+
+def _wait_book(client: MnemeClient, book_id: str, interval: float) -> None:
+    import time
+
+    while True:
+        st = client.book_status(book_id)
+        if st.get("status") in _BOOK_DONE:
+            _print(st)
+            return
+        print(f"[{st.get('status')}] {book_id} …", file=sys.stderr)
+        time.sleep(interval)
+
+
+def cmd_book_status(args: argparse.Namespace) -> None:
+    client = MnemeClient(base_url=args.api_base)
+    if args.wait:
+        _wait_book(client, args.book_id, args.interval)
+    else:
+        _print(client.book_status(args.book_id))
+
+
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(prog="mneme", description="善学记命令行客户端")
     parser.add_argument(
@@ -208,6 +253,19 @@ def build_parser() -> argparse.ArgumentParser:
     p_audit.add_argument("--student-id", required=True)
     p_audit.add_argument("--limit", type=int, default=100)
     p_audit.set_defaults(func=cmd_audit_log)
+
+    p_bc = sub.add_parser("book-compile", help="生成一本活书（约 $0.5/本，每人每天有限额）")
+    p_bc.add_argument("--textbook-id", help="教材 id，如 RENJIAO-G1-MATH-S")
+    p_bc.add_argument("--list", action="store_true", help="列出可编译的教材")
+    p_bc.add_argument("--wait", action="store_true", help="提交后轮询直到完成")
+    p_bc.add_argument("--interval", type=float, default=10.0, help="轮询间隔秒数")
+    p_bc.set_defaults(func=cmd_book_compile)
+
+    p_bs = sub.add_parser("book-status", help="查询活书编译状态")
+    p_bs.add_argument("book_id")
+    p_bs.add_argument("--wait", action="store_true", help="轮询直到完成")
+    p_bs.add_argument("--interval", type=float, default=10.0)
+    p_bs.set_defaults(func=cmd_book_status)
 
     return parser
 
