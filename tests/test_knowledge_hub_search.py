@@ -236,3 +236,185 @@ async def test_free_text_results_are_always_unverified():
     for r in result["results"]:
         assert r["verified"] is False
         assert citation_state(r) == "inferred_unverified"
+
+
+@pytest.mark.asyncio
+async def test_free_text_falls_back_to_lexical_when_embedding_unavailable(
+    monkeypatch,
+):
+    """embed 服务不可用（2026-10 生产实况：Ollama 模型缺失）→ 词面兜底仍返回带出处结果。"""
+
+    async def no_embed(text):
+        del text
+        return None
+
+    monkeypatch.setattr("oprim.embed_chunks.embed_text", no_embed)
+    async with SessionLocal() as db:
+        result = await search_knowledge_base(db, query="检索测试内容", top_k=3)
+
+    assert result["query_type"] == "free_text"
+    assert result["retrieval"] == "lexical"
+    assert 1 <= len(result["results"]) <= 3
+    for r in result["results"]:
+        assert "检索测试内容" in r["content"]
+        assert r["provenance"] == "inferred"
+        assert r["verified"] is False
+        assert 0.0 < r["score"] <= 1.0
+    assert [r["rank"] for r in result["results"]] == list(
+        range(1, len(result["results"]) + 1)
+    )
+
+
+@pytest.mark.asyncio
+async def test_lexical_fallback_uses_cjk_bigrams_for_longer_phrases(monkeypatch):
+    async def no_embed(text):
+        del text
+        return None
+
+    monkeypatch.setattr("oprim.embed_chunks.embed_text", no_embed)
+    async with SessionLocal() as db:
+        # 整句在库里不存在，但其二元组大部分命中种子 chunk "检索测试内容 N"
+        result = await search_knowledge_base(db, query="检索测试内容的意思", top_k=3)
+
+    assert result.get("retrieval") == "lexical"
+    assert result["results"], "二元组兜底应召回种子 chunk"
+
+
+@pytest.mark.asyncio
+async def test_lexical_fallback_disabled_when_min_score_set(monkeypatch):
+    """Book Engine 传 R1 阈值时不走词面兜底（词面分不是 cosine，量纲不同）。"""
+
+    async def no_embed(text):
+        del text
+        return None
+
+    monkeypatch.setattr("oprim.embed_chunks.embed_text", no_embed)
+    async with SessionLocal() as db:
+        result = await search_knowledge_base(
+            db, query="检索测试内容", top_k=3, min_score=0.6
+        )
+    assert result["results"] == []
+    assert "retrieval" not in result
+
+
+def test_lexical_helpers():
+    from services.knowledge_hub_search import (
+        _cjk_bigrams,
+        _lexical_score,
+        _lexical_terms,
+    )
+
+    assert _lexical_terms("勾股定理， 逆定理 a") == ["勾股定理", "逆定理"]
+    assert _cjk_bigrams("一元二次") == ["一元", "元二", "二次"]
+    assert _lexical_score("勾股定理勾股定理", ["勾股定理"]) == round(0.8 + 0.2 * 2 / 5, 4)
+    assert _lexical_score("无关", ["勾股定理"]) == 0.0
+
+
+@pytest.mark.asyncio
+async def test_free_text_semantic_uses_cached_matrix_and_refreshes_on_change(
+    monkeypatch, _seed_ku_chunk_matches
+):
+    """语义路径：cosine 排序 + min_score 过滤；chunk 向量变化后缓存指纹失效重载。"""
+    ku_id = _seed_ku_chunk_matches
+    tb_id = ku_id.rsplit("-ku-", 1)[0]
+    ch = [f"{tb_id}-ch-{i}" for i in range(3)]
+
+    async def fake_embed(text):
+        del text
+        return [1.0, 0.0, 0.0]
+
+    monkeypatch.setattr("oprim.embed_chunks.embed_text", fake_embed)
+
+    async def set_emb(vectors):
+        async with SessionLocal() as db:
+            for cid, vec in zip(ch, vectors):
+                await db.execute(
+                    sa_text(
+                        "UPDATE textbook_chunks SET embedding=:e, embedded_at=now()"
+                        " WHERE id=:id"
+                    ),
+                    {"e": vec, "id": cid},
+                )
+            await db.commit()
+
+    await set_emb([[1.0, 0.0, 0.0], [0.0, 1.0, 0.0], [1.0, 1.0, 0.0]])
+    async with SessionLocal() as db:
+        res = await search_knowledge_base(db, query="x", top_k=3, min_score=0.5)
+    assert "retrieval" not in res
+    assert [r["chunk_id"] for r in res["results"]] == [ch[0], ch[2]]
+    assert res["results"][0]["score"] == 1.0
+    assert res["results"][1]["score"] == round(2**-0.5, 4)
+    assert [r["rank"] for r in res["results"]] == [1, 2]
+
+    await set_emb([[0.0, 1.0, 0.0], [1.0, 0.0, 0.0], [0.0, 0.0, 1.0]])
+    async with SessionLocal() as db:
+        res = await search_knowledge_base(db, query="x", top_k=3, min_score=0.5)
+    assert [r["chunk_id"] for r in res["results"]] == [ch[1]]
+
+
+@pytest.mark.asyncio
+async def test_free_text_dimension_mismatch_falls_back_to_lexical(
+    monkeypatch, _seed_ku_chunk_matches
+):
+    ku_id = _seed_ku_chunk_matches
+    tb_id = ku_id.rsplit("-ku-", 1)[0]
+
+    async def fake_embed(text):
+        del text
+        return [1.0, 0.0]  # 2 维 vs 库内 3 维 → 模型不一致
+
+    monkeypatch.setattr("oprim.embed_chunks.embed_text", fake_embed)
+    async with SessionLocal() as db:
+        await db.execute(
+            sa_text("UPDATE textbook_chunks SET embedding=:e WHERE id=:id"),
+            {"e": [1.0, 0.0, 0.0], "id": f"{tb_id}-ch-0"},
+        )
+        await db.commit()
+        res = await search_knowledge_base(db, query="检索测试内容", top_k=3)
+    assert res.get("retrieval") == "lexical"
+    assert res["results"]
+
+
+@pytest.fixture(autouse=True)
+def _reset_embed_breaker():
+    from services import knowledge_hub_search as khs
+
+    khs._EMBED_STATE["down_until"] = 0.0
+    yield
+    khs._EMBED_STATE["down_until"] = 0.0
+
+
+@pytest.mark.asyncio
+async def test_embed_breaker_skips_embedding_during_cooldown(monkeypatch):
+    calls = {"n": 0}
+
+    async def no_embed(text):
+        del text
+        calls["n"] += 1
+        return None
+
+    monkeypatch.setattr("oprim.embed_chunks.embed_text", no_embed)
+    async with SessionLocal() as db:
+        r1 = await search_knowledge_base(db, query="检索测试内容", top_k=3)
+        r2 = await search_knowledge_base(db, query="检索测试内容", top_k=3)
+    assert calls["n"] == 1  # 第二次在冷却期内，不再调用 embed
+    assert r1.get("retrieval") == r2.get("retrieval") == "lexical"
+
+
+@pytest.mark.asyncio
+async def test_embed_timeout_falls_back_to_lexical(monkeypatch):
+    import asyncio
+
+    from services import knowledge_hub_search as khs
+
+    async def slow_embed(text):
+        del text
+        await asyncio.sleep(5)
+        return [1.0, 0.0, 0.0]
+
+    monkeypatch.setattr("oprim.embed_chunks.embed_text", slow_embed)
+    monkeypatch.setattr(khs, "QUERY_EMBED_TIMEOUT_S", 0.05)
+    async with SessionLocal() as db:
+        res = await search_knowledge_base(db, query="检索测试内容", top_k=3)
+    assert res.get("retrieval") == "lexical"
+    assert res["results"]

@@ -18,6 +18,7 @@ from __future__ import annotations
 import re
 import time
 import uuid
+import logging
 from typing import Any, Optional
 
 from fastapi import APIRouter, Depends, HTTPException
@@ -56,6 +57,8 @@ from services.models import (
 from services.progress_assembler import build_learning_progress
 
 from services.errors import LlmUnavailableError
+
+logger = logging.getLogger(__name__)
 
 router = APIRouter(prefix="/mcp", tags=["mcp"])
 
@@ -413,13 +416,61 @@ async def tool_remember_episode(
     )
 
 
-async def tool_search_knowledge_base(query: str, top_k: int = 5) -> dict:
-    """C4：检索 Stratum 知识库素材，供 loop 拼进对话背景（呈现层，不进门控判据）。
+# 2026-10 实测（qwen3-embedding，人教版数学语料）：真相关命中 ~0.62-0.72，
+# 跨学科/无关最近邻 ~0.44-0.54。0.58 介于两者之间，只用于 SearchKnowledgeBase
+# 回落素材过滤，不是正确性保证（同 knowledge_hub_search 模块顶部 A3 说明）。
+KB_FALLBACK_MIN_COSINE = 0.58
 
-    不需要 db——不碰 mneme 任何表，纯代理转发给 rag_client（Stratum 侧才有状态）。
-    Stratum 不可用（无凭据/网络失败）→ results 为空列表，不报错，不阻断对话。
+
+def _hub_result_to_kb_item(r: dict) -> dict:
+    """Knowledge Hub chunk → SearchKnowledgeBase 结果形状（id/title/highlight/score），
+    额外保留出处字段，让 loop 能引用"哪本书第几页"，并标明来源不是 Stratum。"""
+    meta = r.get("textbook_meta") or {}
+    book = meta.get("book_name") or "教材"
+    page = r.get("page_number")
+    return {
+        "id": r["chunk_id"],
+        "title": f"{book} p.{page}" if page is not None else book,
+        "highlight": r.get("content"),
+        "score": r["score"],
+        "source": "mneme_knowledge_hub",
+        "provenance": r.get("provenance", "inferred"),
+        "verified": bool(r.get("verified", False)),
+        "page_number": page,
+        "textbook_meta": meta,
+    }
+
+
+async def tool_search_knowledge_base(
+    query: str, top_k: int = 5, db: Optional[AsyncSession] = None
+) -> dict:
+    """C4：检索知识库素材，供 loop 拼进对话背景（呈现层，不进门控判据）。
+
+    先查 Stratum（rag_client）；Stratum 无结果/不可用且调用方给了 db 时，回落到
+    Mneme 自建 Knowledge Hub（knowledge_hub_search，教材 chunk 带出处）。
+    2026-10 诊断：Stratum service 账号语料库为空（corpus 按用户隔离，0 substrates），
+    故生产中实际由 Knowledge Hub 供给素材。两者都不可用 → results 为空列表，不报错。
     """
-    return {"results": await rag_client.search(query, top_k=top_k)}
+    results = await rag_client.search(query, top_k=top_k)
+    if results or db is None:
+        return {"results": results}
+    try:
+        hub = await knowledge_hub_search.search_knowledge_base(
+            db, query=query, top_k=top_k
+        )
+    except Exception:
+        logger.exception("SearchKnowledgeBase: knowledge hub fallback failed")
+        return {"results": []}
+    hub_results = hub.get("results", [])
+    if hub.get("retrieval") != "lexical":
+        # 语义路径永远返回 top-k，即使毫不相关（"光合作用"在纯数学语料里也能拿到
+        # 0.47 的"最近邻"）。聊天素材宁缺毋滥：低于下限的不给 loop。词面路径
+        # 本身要求真实词命中，不受此限。
+        hub_results = [r for r in hub_results if r["score"] >= KB_FALLBACK_MIN_COSINE]
+    items = [_hub_result_to_kb_item(r) for r in hub_results]
+    if not items:
+        return {"results": []}
+    return {"results": items, "source": "mneme_knowledge_hub"}
 
 
 async def tool_search_textbook_knowledge(
@@ -1149,10 +1200,12 @@ async def mcp_remember_episode(
 @router.post("/SearchKnowledgeBase")
 async def mcp_search_knowledge_base(
     req: SearchKnowledgeBaseReq,
+    db: AsyncSession = Depends(get_db),
     current_user: User = Depends(get_current_user),
 ) -> dict:
-    # 非学生数据（共享知识库检索）——不碰 db，只要求登录（同 ListPersonas 惯例）。
-    return await tool_search_knowledge_base(req.query, req.top_k)
+    # 非学生数据（共享知识库检索）——只要求登录（同 ListPersonas 惯例）；db 仅用于
+    # Stratum 空时回落 Knowledge Hub 教材检索（只读）。
+    return await tool_search_knowledge_base(req.query, req.top_k, db=db)
 
 
 @router.post("/SearchTextbookKnowledge")

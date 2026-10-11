@@ -327,8 +327,8 @@ def build_tools(
         _spec(
             search_knowledge_base,
             "SearchKnowledgeBase",
-            "检索 Stratum 知识库素材（呈现层参考，不影响门控/判分；Stratum 不可用时"
-            "返回空列表）",
+            "检索知识库素材（先 Stratum，无结果时回落 Mneme 教材库，结果带书名/页码；"
+            "呈现层参考，不影响门控/判分；都不可用时返回空列表）",
             {
                 "query": {"type": "string"},
                 "top_k": {"type": "integer"},
