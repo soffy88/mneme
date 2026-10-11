@@ -9,6 +9,7 @@ from __future__ import annotations
 
 import json
 import os
+import time
 from typing import Any
 
 from obase.provider_timeout import provider_httpx_timeout
@@ -89,6 +90,29 @@ def reasoning_thinking_off() -> bool:
 def reasoning_min_tokens() -> int:
     """推理模型的 max_tokens 下限（默认 8192：实测 600/4000 仍可能全花在思考上）。"""
     return int(_bounded_env("MNEME_REASONING_MIN_TOKENS", 8192, 1024, 32768))
+
+
+# 单候选慢/挂时别让整条名单陪葬（2026-10-11：veya-free 间歇性 ReadTimeout，
+# 每次都要等满 120s 才轮到下一个模型）。非最后一个候选用较短的读超时，
+# 超时/连接失败后该模型在本进程冷却一段时间，冷却期内直接跳过（除非全员冷却）。
+_CANDIDATE_COOLDOWN_UNTIL: dict[str, float] = {}
+_COOLDOWN_EXC_NAMES = frozenset(
+    {"ReadTimeout", "ConnectTimeout", "PoolTimeout", "WriteTimeout", "TimeoutException", "ConnectError"}
+)
+
+
+def candidate_read_timeout_seconds() -> float:
+    """非最后一个候选的读超时（秒）。"""
+    return _bounded_env("MNEME_VEYA_CANDIDATE_TIMEOUT_SECONDS", 30.0, 5.0, 300.0)
+
+
+def candidate_cooldown_seconds() -> float:
+    """候选超时/连不上之后的跳过时长（秒）。0 = 关闭冷却。"""
+    return _bounded_env("MNEME_VEYA_CANDIDATE_COOLDOWN_SECONDS", 300.0, 0.0, 3600.0)
+
+
+def _cooling(model: str, now: float) -> bool:
+    return _CANDIDATE_COOLDOWN_UNTIL.get(model, 0.0) > now
 
 
 def reasoning_read_timeout_seconds() -> float:
@@ -178,9 +202,13 @@ class VeyaTextCaller:
             extras["enable_thinking"] = enable_thinking
 
         attempts: list[str] = []
+        now = time.monotonic()
+        live = [m for m in self.models if not _cooling(m, now)]
+        candidates = live or list(self.models)
         async with httpx.AsyncClient(timeout=self._http_timeout(httpx)) as client:
-            for candidate in self.models:
+            for idx, candidate in enumerate(candidates):
                 reasoning = is_reasoning_model(candidate)
+                is_last = idx == len(candidates) - 1
                 payload: dict[str, Any] = {
                     "model": candidate,
                     "messages": api_messages,
@@ -197,11 +225,16 @@ class VeyaTextCaller:
                 # retryable（timeout / connect / 5xx / 429，见 _classify_exception）
                 # 并带 max_retries=2 重投整条链。再叠一层只会让最坏耗时成倍相乘
                 # —— 曾经把单个词的等待推到几十分钟（实测卡在第 95 词 4 分钟）。
+                post_kwargs: dict[str, Any] = {}
+                if not is_last and not reasoning:
+                    short = candidate_read_timeout_seconds()
+                    post_kwargs["timeout"] = short
                 try:
                     response = await client.post(
                         f"{self.base_url}/chat/completions",
                         headers=self._auth_headers(),
                         json=payload,
+                        **post_kwargs,
                     )
                     response.raise_for_status()
                     data = response.json()
@@ -209,7 +242,12 @@ class VeyaTextCaller:
                     content = message.get("content") or ""
                 except Exception as exc:  # noqa: BLE001 — 换下一个模型试
                     attempts.append(f"{candidate}: {type(exc).__name__}")
+                    if type(exc).__name__ in _COOLDOWN_EXC_NAMES:
+                        cool = candidate_cooldown_seconds()
+                        if cool > 0:
+                            _CANDIDATE_COOLDOWN_UNTIL[candidate] = time.monotonic() + cool
                     continue
+                _CANDIDATE_COOLDOWN_UNTIL.pop(candidate, None)
                 if not str(content).strip() and not message.get("tool_calls"):
                     # HTTP 200 + 空正文不是成功（推理模型思考吃光额度时 finish=length）
                     finish = (data.get("choices") or [{}])[0].get("finish_reason")
