@@ -56,9 +56,11 @@ class MnemeClient:
             return {}
         return {"Authorization": f"Bearer {self.token}"}
 
-    def _request(self, method: str, path: str, **kwargs: Any) -> dict:
+    def _request(
+        self, method: str, path: str, *, timeout: float = 20.0, **kwargs: Any
+    ) -> dict:
         with httpx.Client(
-            base_url=self.base_url, timeout=20.0, transport=self.transport
+            base_url=self.base_url, timeout=timeout, transport=self.transport
         ) as client:
             resp = client.request(method, path, headers=self._headers(), **kwargs)
         if resp.status_code >= 400:
@@ -87,6 +89,19 @@ class MnemeClient:
 
     def book_textbooks(self) -> dict:
         return self._request("GET", "/v1/books/compile/textbooks")
+
+    def research(self, question: str, persona_slug: Optional[str] = None) -> dict:
+        payload: dict[str, Any] = {"question": question}
+        if persona_slug:
+            payload["persona_slug"] = persona_slug
+        # 同步生成：检索 + 一次 LLM 调用，推理模型回退时可能要一两分钟
+        return self._request("POST", "/v1/research", json=payload, timeout=240.0)
+
+    def research_get(self, research_id: str) -> dict:
+        return self._request("GET", f"/v1/research/{research_id}")
+
+    def research_list(self, limit: int = 20) -> dict:
+        return self._request("GET", "/v1/research", params={"limit": limit})
 
 
 def _print(obj: Any) -> None:
@@ -205,6 +220,53 @@ def cmd_book_status(args: argparse.Namespace) -> None:
         _print(client.book_status(args.book_id))
 
 
+def _format_research(rep: dict) -> str:
+    """把研究报告排成终端可读的文本：每条论断后面跟 [书 p.页]。"""
+    r = rep.get("report") or {}
+    lines = [f"# {r.get('title') or '研究报告'}  ({rep.get('status')})", ""]
+
+    def cite(p: dict) -> str:
+        cs = p.get("citations") or []
+        return " ".join(
+            f"[{c.get('source_id')} 《{c.get('book_name') or '教材'}》 p.{c.get('page_number')}]"
+            for c in cs
+        )
+
+    if r.get("summary"):
+        lines += [f"{r['summary']['text']} {cite(r['summary'])}", ""]
+    for sec in r.get("sections") or []:
+        lines.append(f"## {sec.get('heading')}")
+        for p in sec.get("points") or []:
+            lines.append(f"- {p.get('text')} {cite(p)}")
+        lines.append("")
+    for u in r.get("unsupported") or []:
+        lines.append(f"- （{u.get('note')}）{u.get('text')}")
+    for g in r.get("gaps") or []:
+        lines.append(f"* {g}")
+    srcs = rep.get("sources") or []
+    if srcs:
+        lines += ["", "来源："]
+        for s in srcs:
+            lines.append(
+                f"  {s.get('id')} 《{s.get('book_name')}》 p.{s.get('page_number')} chunk={s.get('chunk_id')}"
+            )
+    return "\n".join(lines)
+
+
+def cmd_research(args: argparse.Namespace) -> None:
+    client = MnemeClient(base_url=args.api_base)
+    if args.list:
+        _print(client.research_list(args.limit))
+        return
+    if args.id:
+        rep = client.research_get(args.id)
+    elif args.question:
+        rep = client.research(args.question, args.persona)
+    else:
+        raise RuntimeError("需要一个问题（或 --id / --list）")
+    print(json.dumps(rep, ensure_ascii=False, indent=2) if args.json else _format_research(rep))
+
+
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(prog="mneme", description="善学记命令行客户端")
     parser.add_argument(
@@ -266,6 +328,15 @@ def build_parser() -> argparse.ArgumentParser:
     p_bs.add_argument("--wait", action="store_true", help="轮询直到完成")
     p_bs.add_argument("--interval", type=float, default=10.0)
     p_bs.set_defaults(func=cmd_book_status)
+
+    p_rs = sub.add_parser("research", help="基于本地教材库的研究报告（每条论断带出处）")
+    p_rs.add_argument("question", nargs="?", help="要研究的问题，如 勾股定理的证明方法")
+    p_rs.add_argument("--persona", help="人格 slug（只影响语气）")
+    p_rs.add_argument("--id", help="查看一份已有报告")
+    p_rs.add_argument("--list", action="store_true", help="列出我的研究记录")
+    p_rs.add_argument("--limit", type=int, default=20)
+    p_rs.add_argument("--json", action="store_true", help="输出原始 JSON")
+    p_rs.set_defaults(func=cmd_research)
 
     return parser
 

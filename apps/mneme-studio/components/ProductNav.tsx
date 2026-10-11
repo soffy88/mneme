@@ -7,6 +7,7 @@ export function ProductNav() {
       <Link href="/today">Today</Link>
       <Link href="/path">Path</Link>
       <Link href="/practice">Practice</Link>
+      <Link href="/research">Research</Link>
       <Link href="/memory">Memory</Link>
       <Link href="/memory-inspect">My Memory</Link>
       <Link href="/notebook">Notebook</Link>

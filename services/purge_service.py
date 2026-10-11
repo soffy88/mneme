@@ -83,6 +83,8 @@ _STUDENT_TABLES: list[tuple[str, str]] = [
     ("streaks", "student_id"),
     ("timed_quizzes", "student_id"),
     ("user_learner_profiles", "student_id"),
+    # 研究报告（/v1/research）：学生的问题 + 报告，FC-2：新表同 PR 入清单。
+    ("research_reports", "student_id"),
     # socratic_sessions 先于 wrong_questions（其 question_id 指向 wrong_questions.id）
     ("socratic_sessions", "student_id"),
     # wrong_questions 先于 papers（其 paper_id 指向 papers.id）

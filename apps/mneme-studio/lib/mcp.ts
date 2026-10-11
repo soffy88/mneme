@@ -294,6 +294,76 @@ export function bookCompileStatus(bookId: string): Promise<BookCompileStatus> {
   return apiGet<BookCompileStatus>(`/v1/books/${encodeURIComponent(bookId)}/status`);
 }
 
+// ── 研究报告（/v1/research）：只检索本地教材库，每条论断带 书/页/切片 出处 ─────
+export interface ResearchCitation {
+  source_id: string;
+  book_name: string | null;
+  page_number: number | null;
+  chunk_id: string;
+  verified: boolean;
+}
+export interface ResearchPoint {
+  text: string;
+  sources: string[];
+  citations: ResearchCitation[];
+  support: "matched" | "weak";
+}
+export interface ResearchSource {
+  id: string;
+  chunk_id: string;
+  book_name: string | null;
+  subject: string | null;
+  grade: string | null;
+  page_number: number | null;
+  score: number | null;
+  verified: boolean;
+  excerpt: string;
+}
+export interface ResearchReportBody {
+  title: string;
+  summary: ResearchPoint | null;
+  sections: { heading: string; points: ResearchPoint[] }[];
+  unsupported: { text: string; note: string }[];
+  gaps: string[];
+}
+export interface ResearchReport {
+  id: string;
+  question: string;
+  grade: string | null;
+  status: "ready" | "extractive" | "no_sources";
+  title: string | null;
+  created_at: string | null;
+  report: ResearchReportBody;
+  sources: ResearchSource[];
+  model: string | null;
+  latency_ms: number;
+  error: string | null;
+}
+export interface ResearchListItem {
+  id: string;
+  question: string;
+  status: string;
+  title: string | null;
+  created_at: string | null;
+}
+export interface ResearchList {
+  items: ResearchListItem[];
+  daily_limit: number;
+  used_today: number;
+}
+
+export function createResearch(question: string): Promise<ResearchReport> {
+  return apiPost<ResearchReport>("/v1/research", { question });
+}
+
+export function getResearch(id: string): Promise<ResearchReport> {
+  return apiGet<ResearchReport>(`/v1/research/${encodeURIComponent(id)}`);
+}
+
+export function listResearch(): Promise<ResearchList> {
+  return apiGet<ResearchList>("/v1/research");
+}
+
 // ── W4 Solve：自然语言题目 -> 内核真实求解 + LLM 讲解 ─────────────────────
 // answer/steps 是 7 个确定性内核（S0 加固后全经沙箱）的真实输出；narration
 // 是 LLM 纯附加的自然语言讲解，绝不会替换/覆盖 answer/steps（SV-2/SV-4）。

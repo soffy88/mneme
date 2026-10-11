@@ -35,6 +35,7 @@ def register_domain_routers(app: FastAPI) -> None:
         progress,
         reading,
         related_labs,
+        research,
         review,
         socratic,
         subjects,
@@ -73,5 +74,6 @@ def register_domain_routers(app: FastAPI) -> None:
         cowriter,
         reading,
         animate,
+        research,
     ):
         app.include_router(mod.router)

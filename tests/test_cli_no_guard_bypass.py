@@ -48,13 +48,28 @@ def test_cli_never_imports_backend_internals():
     )
 
 
+# 显式白名单：不碰门控/判分/掌握度写入的已鉴权产品端点（各自的红线测试守住
+# 「不写学习状态」：tests/test_book_compile_entry.py、tests/test_research.py）。
+# 新增前缀必须同样不写证据/掌握度/FSRS，并在此写明理由。
+_NON_GATING_PRODUCT_PREFIXES = (
+    "/v1/books/",  # 活书编译：只写 books 表（共享内容），不触及学习状态
+    "/v1/research",  # 研究报告：只读教材库 + 写 research_reports，不触及学习状态
+)
+
+
 def test_cli_only_calls_v1_auth_and_mcp_paths():
-    """CLI 里所有硬编码的 HTTP 路径必须落在 /v1/auth/* 或 /mcp/* 下。"""
+    """CLI 里所有硬编码的 HTTP 路径必须落在 /v1/auth/*、/mcp/* 或白名单产品端点下。"""
     import re
 
     source = _CLI_MODULE.read_text(encoding="utf-8")
     paths = re.findall(r'"(/[a-zA-Z0-9_/{}\-]+)"', source)
     offenders = [
-        p for p in paths if not (p.startswith("/v1/auth/") or p.startswith("/mcp/"))
+        p
+        for p in paths
+        if not (
+            p.startswith("/v1/auth/")
+            or p.startswith("/mcp/")
+            or p.startswith(_NON_GATING_PRODUCT_PREFIXES)
+        )
     ]
     assert not offenders, f"CLI 出现非 /v1/auth/* 或 /mcp/* 的硬编码路径：{offenders}"
