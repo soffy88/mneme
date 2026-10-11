@@ -2845,3 +2845,40 @@ CI 常驻的判分准确率回归门，堵死"构造桩题掩盖真实数据判�
   掌握度/学习事件表）。测试：`tests/test_notebook_cowriter.py`。
 - [ ] 未做：家长只读（需先在授权模型里加"家长可读笔记"授权项）；Research 报告还没有
   Studio 页，所以 research 来源只有 API；visualize 页暂未加保存按钮；Co-Writer 无流式输出。
+## DT-IR/AN · 对标 DeepTutor：沉浸式阅读 + 步骤动画（2026-10-11）
+
+- [x] **DT-IR.1 沉浸式阅读（/studio/book 沉浸模式）**
+  活书详情页「📖 沉浸阅读」→ `?book_id=X&mode=immersive`：全屏无干扰、一次一块、顶部进度条、
+  ←/→ 翻块、字号调节、Fullscreen API。块类型：text/callout 正文、figure（有公式才显示）、
+  quiz →「检查一下」、flash_cards 翻卡（纯本地）、guided → /studio/learn?kcs=。
+  **检查一下**只走既有 RequestQuestion → SubmitAnswer（verdict_guard 唯一守卫写入路径，
+  前端不判分、不碰 expected、不写掌握度）。**解释这句**：选中句子 → 既有 `/v1/chat/turn`，
+  当前块正文（≤1200 字）作上下文、块的 kc_ids 作候选池。每块底部：错题练习 / 学这个知识点 /
+  步骤动画（数理化）/ 相关实验（RelatedLabsFor，按需展开）。
+- [x] **DT-IR.2 教材原文阅读（无活书时）**
+  `GET /v1/reading/textbooks/{textbook_id}?offset&limit`：textbook_chunks 线性化为阅读块，
+  **只读系统教材**（owner_student_id IS NULL），跳过目录页（含点线引导符）/乱码页/过短碎片
+  （复用 knowledge_hub_search 判据），PDF 断行确定性清理（tidy_chunk_text），每块附
+  ku_chunk_matches 前 3 个知识点（有才显示「检查一下」）。Studio `/studio/book?textbook_id=Y`，
+  书单页「沉浸阅读」卡：继续读 + 按学科选教材读原文。`GET /v1/reading/sources`。
+- [x] **DT-IR.3 阅读位置（每人每来源）**
+  新表 `reading_positions`（迁移 `rdp1a2b3c4d5`，PK student_id+source_kind+source_id，
+  FK users ON DELETE CASCADE），入 `purge_service._STUDENT_TABLES`，EXPECTED_MIGRATION_HEAD
+  同步。`GET /v1/reading/position/{student_id}` / `PUT /v1/reading/position`（仅本人，家长 403），
+  来源须存在、block_index < total_blocks。**只是进度不是学习证据**：reading_service/路由静态断言
+  不碰 kc_mastery / gate / process_interaction（tests/test_immersive_reading.py）。
+- [x] **DT-AN.1 步骤动画（替代 DeepTutor Manim Animator）**
+  `POST /v1/animate {kind, params}`（须登录）→ `mneme.anim/1` 纯数据时间线：kind ∈
+  solid_geometry（立体几何内核 lesson_data → 3D 正交投影 + 每步相机/高亮）、conic_chord
+  （圆锥曲线弦内核 → 讲解帧 + 倾斜角 5°…175° 扫描帧，读数全部落在精确答案区间内）、
+  equation_balance（配平内核 → 系数逐个就位、各元素/电荷左右条形对比）、function_graph
+  （visualize 模块 kernel_to_plot2d，表达式经 obase SymPyRuntime AST 白名单 + 沙箱）。
+  浮点统一 4 位、fingerprint = 规范 JSON sha256[:24]，同输入逐字节相同；`validate_spec` 白名单
+  校验图元/属性/颜色/帧字段。播放器 `/v1/edu-assets/mneme-animator-1/player.js`（自托管、
+  零依赖、createElementNS + textContent、无 eval/innerHTML/网络），Studio 在
+  `sandbox="allow-scripts"` iframe 里加载，CSP 钉死 `/v1/edu-assets/`。Studio `/studio/animate`
+  （例题 + 改参数 + 深链 `?kind=&params=<base64url>`），Lab 页结果下「🎬 步骤动画」。
+  **服务端零代码执行**（AST 断言无 eval/exec/compile/__import__/subprocess；不调 LLM）。
+- [ ] 未做：动画导出视频/GIF（DeepTutor 产出 mp4；我们只做客户端时间线）；物理类内核动画
+  （physics_service 暂无步骤结构化输出）；阅读器高亮/笔记与既有 /v1/highlights 打通；
+  解释这句的回答不入记忆（chat_turn 现状决定）。
