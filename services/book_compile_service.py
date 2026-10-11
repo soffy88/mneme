@@ -69,12 +69,23 @@ def per_user_daily_limit() -> int:
 
 def per_book_cost_cap_usd() -> float:
     """单本编译 LLM 开销上限：超出即中止后续调用。实测一本小教材约 $0.57。"""
-    return _env_float("MNEME_BOOK_COMPILE_MAX_USD", 1.5)
+    return _env_float("MNEME_BOOK_COMPILE_MAX_USD", 2.5)
+
+
+def min_output_tokens() -> int:
+    """生产 caller 的 max_tokens 下限。
+
+    omodul 生成器给的 max_tokens 是按非推理模型定的（150–800）。生产回退链里的推理
+    模型（InternAI Agents-A1 等）会把这点额度全花在思考上、content 为空，于是整本书
+    静默回退成静态模板（2026-10-11 实测：max_tokens=600/4000 都是空 content，
+    finish_reason=length）。入口层把下限抬到这里，不改 vendor。
+    """
+    return _env_int("MNEME_BOOK_COMPILE_MIN_TOKENS", 6000)
 
 
 def global_daily_cost_cap_usd() -> float:
     """全站每天经入口编译的总开销上限（已花 + 在途按单本上限预留）。"""
-    return _env_float("MNEME_BOOK_COMPILE_DAILY_USD", 10.0)
+    return _env_float("MNEME_BOOK_COMPILE_DAILY_USD", 15.0)
 
 
 def output_root() -> Path:
@@ -279,12 +290,16 @@ class BudgetCaller:
 
     omodul.book_compile 自己也记账（cost 支柱），但只记不拦；入口层需要的是止损。
 
-    同时数成功/失败调用：omodul 的各生成器在 LLM 失败时会回退静态模板并仍标
-    ready——provider 整体挂掉时会编出一本「全是模板」的书却显示 ready。入口层据此
-    把这种书降级（全失败→error，部分失败→partial），不让它冒充正常成书。
+    同时数成功/失败调用：omodul 的各生成器在 LLM 失败**或返回空 content** 时会回退
+    静态模板并仍标 ready——provider 挂掉/推理模型额度不够时会编出一本「全是模板」
+    的书却显示 ready。入口层把空 content 也记为失败，据此降级（全失败→error，部分
+    失败→partial），不让它冒充正常成书。
+
+    min_tokens / extra_kwargs 只给生产 caller 用（见 min_output_tokens）。
     """
 
-    def __init__(self, raw: Callable[..., Awaitable[dict]], *, cap_usd: float, model: str):
+    def __init__(self, raw: Callable[..., Awaitable[dict]], *, cap_usd: float, model: str,
+                 min_tokens: int = 0, extra_kwargs: Optional[dict] = None):
         from omodul._base import CostTracker
 
         self.raw = raw
@@ -292,6 +307,8 @@ class BudgetCaller:
         self.model = model
         self.tracker = CostTracker()
         self.exceeded = False
+        self.min_tokens = min_tokens
+        self.extra_kwargs = dict(extra_kwargs or {})
         self.ok_calls = 0
         self.failed_calls = 0
 
@@ -303,12 +320,17 @@ class BudgetCaller:
                 f"单本编译开销已达上限 ${self.cap_usd:.2f}，停止后续生成"
             )
         try:
-            resp = await self.raw(messages=messages, system=system, max_tokens=max_tokens)
+            resp = await self.raw(messages=messages, system=system,
+                                  max_tokens=max(max_tokens, self.min_tokens),
+                                  **self.extra_kwargs)
         except Exception:
             self.failed_calls += 1
             raise
-        self.ok_calls += 1
         self.tracker.add_from_response(resp, model=self.model)
+        if str(resp.get("content") or "").strip():
+            self.ok_calls += 1
+        else:
+            self.failed_calls += 1
         return resp
 
 
@@ -375,6 +397,7 @@ async def run_compile_job(
             textbook_id = claimed.textbook_id
 
             try:
+                min_tokens, extra = 0, {}
                 if caller is None:
                     from services.providers.setup import get_optional_text_caller
 
@@ -382,11 +405,14 @@ async def run_compile_job(
                     if caller is None:
                         await mark_error(db, book_id, "没有可用的 LLM provider（未配置或仅 mock）")
                         return {"status": "error", "book_id": book_id, "error": "no_llm"}
+                    # 生产 caller：抬 max_tokens 下限 + 关思维链（推理模型回退时不至于空 content）
+                    min_tokens, extra = min_output_tokens(), {"enable_thinking": False}
 
                 config = BookCompileConfig(textbook_id=textbook_id,
                                            budget_usd=per_book_cost_cap_usd())
                 budget = BudgetCaller(caller, cap_usd=per_book_cost_cap_usd(),
-                                      model=config.llm_model)
+                                      model=config.llm_model, min_tokens=min_tokens,
+                                      extra_kwargs=extra)
                 out_dir = (out_root or output_root()) / book_id
                 out_dir.mkdir(parents=True, exist_ok=True)
 
@@ -415,10 +441,10 @@ async def run_compile_job(
                 error = f"单本编译开销达到上限 ${budget.cap_usd:.2f}，部分内容未生成"
             elif budget.ok_calls == 0:
                 status = "error"
-                error = f"LLM 调用全部失败（{budget.failed_calls} 次），内容只是静态模板"
+                error = f"LLM 调用全部失败或返回空内容（{budget.failed_calls} 次），内容只是静态模板"
             elif budget.failed_calls and status == "ready":
                 status = "partial"
-                error = f"{budget.failed_calls} 次 LLM 调用失败，部分内容为静态模板"
+                error = f"{budget.failed_calls} 次 LLM 调用失败或返回空内容，部分内容为静态模板"
             await _adopt_compiled_book(db, placeholder_id=book_id,
                                        compiled_id=str(result["book_id"]),
                                        status=status, error=error)

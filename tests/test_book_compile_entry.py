@@ -311,6 +311,40 @@ async def test_run_compile_job_partial_llm_failure_downgrades(world, tmp_path: P
     assert res["llm_calls_failed"] > 0 and res["llm_calls_ok"] == 2
 
 
+@pytest.mark.asyncio
+async def test_run_compile_job_empty_content_is_not_ready(world, tmp_path: Path):
+    """推理模型额度不足时 HTTP 成功但 content 为空：omodul 回退模板仍标 ready，
+    入口层必须判 error（2026-10-11 生产实测出现过）。"""
+
+    async def empty(*, messages, system=None, max_tokens=800):
+        return {"content": "", "usage": {"input_tokens": 10, "output_tokens": 600}}
+
+    book_id = await _queue(world)
+    res = await svc.run_compile_job(book_id, session_factory=SessionLocal,
+                                    caller=empty, out_root=tmp_path)
+    assert res["status"] == "error", res
+    async with SessionLocal() as db:
+        st = await svc.get_compile_status(db, book_id)
+    assert st is not None and st["status"] == "error" and "空内容" in st["error"]
+
+
+def test_budget_caller_lifts_max_tokens_and_passes_extras():
+    seen: dict = {}
+
+    async def raw(*, messages, system=None, max_tokens=800, enable_thinking=None):
+        seen.update(max_tokens=max_tokens, enable_thinking=enable_thinking)
+        return {"content": "ok", "usage": {"input_tokens": 1, "output_tokens": 1}}
+
+    async def go():
+        b = svc.BudgetCaller(raw, cap_usd=1.0, model="m", min_tokens=6000,
+                             extra_kwargs={"enable_thinking": False})
+        await b(messages=[], max_tokens=150)
+        assert seen == {"max_tokens": 6000, "enable_thinking": False}
+        assert b.ok_calls == 1 and b.failed_calls == 0
+
+    asyncio.run(go())
+
+
 def test_budget_caller_stops_after_cap():
     async def raw(*, messages, system=None, max_tokens=800):
         return {"content": "x", "usage": {"input_tokens": 1000, "output_tokens": 1000}}
