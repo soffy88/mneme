@@ -431,3 +431,8 @@ export function matchRelatedLabs(opts: { q?: string; kcId?: string; subject?: st
   if (!opts.q && !opts.kcId) return Promise.resolve([]);
   return relatedGet(`/v1/related-labs/match?${p.toString()}`);
 }
+
+// ── Chat 工作区（/v1/chat/turn：intent_router + tutor_loop）──────────────────
+export function chatTurn<T>(payload: unknown): Promise<T> {
+  return apiPost<T>("/v1/chat/turn", payload);
+}

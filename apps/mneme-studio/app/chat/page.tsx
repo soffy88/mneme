@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef, useCallback } from "react";
+import { chatTurn, getStudentId, getToken, redirectToLogin } from "@/lib/mcp";
 import {
   OCard,
   OCardHeader,
@@ -30,8 +31,9 @@ interface ChatTurnReq {
 }
 
 interface ChatTurnRes {
-  answer: string;
-  action?: "goto_mastery_path" | "free_qa";
+  reply: string;
+  status?: string;
+  action?: "goto_mastery_path" | "continue";
   kc_hint?: string;
   kc_ids?: string[];
   tools_used?: string[];
@@ -39,9 +41,9 @@ interface ChatTurnRes {
 }
 
 const PERSONAS = [
-  { slug: "encouraging_partner", name: "鼓励型伙伴", description: "温暖陪伴，肯定努力" },
-  { slug: "direct_coach", name: "干脆型教练", description: "直击痛点，不绕弯子" },
-  { slug: "curious_explorer", name: "好奇探索者", description: "共同探索，激发好奇心" },
+  { slug: "encouraging-buddy", name: "鼓励型伙伴", description: "耐心温和，多鼓励" },
+  { slug: "brisk-coach", name: "干脆型教练", description: "简洁明快，注重准确" },
+  { slug: "curious-explorer", name: "好奇探索者", description: "爱打比方，爱提问" },
 ];
 
 function formatTime(date: Date) {
@@ -79,8 +81,9 @@ export default function ChatPage() {
 
     try {
       // Get student ID from localStorage or auth context
-      const studentId = localStorage.getItem("student_id");
-      if (!studentId) {
+      const studentId = getStudentId();
+      if (!getToken() || !studentId) {
+        redirectToLogin();
         throw new Error("未登录，请先登录");
       }
 
@@ -91,24 +94,10 @@ export default function ChatPage() {
         persona_slug: persona,
       };
 
-      const res = await fetch("/api/chat/turn", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${localStorage.getItem("access_token") || ""}`,
-        },
-        body: JSON.stringify(reqBody),
-      });
-
-      if (!res.ok) {
-        const err = await res.json().catch(() => ({ detail: "请求失败" }));
-        throw new Error(err.detail || `HTTP ${res.status}`);
-      }
-
-      const data: ChatTurnRes = await res.json();
+      const data = await chatTurn<ChatTurnRes>(reqBody);
 
       // Add assistant response
-      setMessages((prev) => [...prev, { role: "assistant", content: data.answer }]);
+      setMessages((prev) => [...prev, { role: "assistant", content: data.reply }]);
 
       // Handle practice redirect
       if (data.action === "goto_mastery_path" && data.kc_hint) {
