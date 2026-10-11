@@ -2304,3 +2304,94 @@ class MediaTelemetryEvent(Base):
     received_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True), server_default=text("now()"), nullable=False
     )
+
+
+# ===== Notebook / Co-Writer（DeepTutor 对标，学习者自有，不进门控）=====
+
+
+class Notebook(Base):
+    """学习者自己的笔记本（命名分组）。只属于 student_id 本人，家长/他人不可读写。
+
+    笔记只是学习者的收藏/整理，永不进 BKT/FSRS/门控判据。
+    """
+
+    __tablename__ = "notebooks"
+    __table_args__ = (
+        UniqueConstraint("student_id", "name", name="uq_notebooks_student_name"),
+    )
+
+    id: Mapped[str] = mapped_column(String(50), primary_key=True)
+    student_id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True), ForeignKey("users.id"), nullable=False, index=True
+    )
+    name: Mapped[str] = mapped_column(String(100), nullable=False)
+    description: Mapped[Optional[str]] = mapped_column(Text, nullable=True)
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), server_default=text("now()"), nullable=False
+    )
+    updated_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), server_default=text("now()"), nullable=False
+    )
+
+
+class NotebookRecord(Base):
+    """笔记本里的一条记录：来源类型 + 来源 id + kc_id（已知时）+ 内容。
+
+    student_id 冗余存一份（与 notebooks.student_id 一致），用于 owner 过滤与合规清除。
+    """
+
+    __tablename__ = "notebook_records"
+    __table_args__ = (
+        CheckConstraint(
+            "source_type IN ('chat','book_block','solve','visualize','research',"
+            "'cowriter','free_text')",
+            name="ck_notebook_records_source_type",
+        ),
+        Index("ix_notebook_records_notebook_created", "notebook_id", "created_at"),
+    )
+
+    id: Mapped[str] = mapped_column(String(50), primary_key=True)
+    notebook_id: Mapped[str] = mapped_column(
+        String(50), ForeignKey("notebooks.id", ondelete="CASCADE"), nullable=False
+    )
+    student_id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True), ForeignKey("users.id"), nullable=False, index=True
+    )
+    source_type: Mapped[str] = mapped_column(String(20), nullable=False)
+    source_id: Mapped[Optional[str]] = mapped_column(String(100), nullable=True)
+    kc_id: Mapped[Optional[str]] = mapped_column(String(100), nullable=True)
+    title: Mapped[Optional[str]] = mapped_column(String(200), nullable=True)
+    content: Mapped[str] = mapped_column(Text, nullable=False)
+    meta: Mapped[dict] = mapped_column(
+        "metadata", JSONB, nullable=False, server_default=text("'{}'::jsonb")
+    )
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), server_default=text("now()"), nullable=False
+    )
+    updated_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), server_default=text("now()"), nullable=False
+    )
+
+
+class CowriterRequest(Base):
+    """Co-Writer 调用账本：只记字数与结果（不存学生作文原文——数据最小化），
+    用于 per-user 每日限额。随用户删除物理清除。"""
+
+    __tablename__ = "cowriter_requests"
+    __table_args__ = (
+        Index("ix_cowriter_requests_student_created", "student_id", "created_at"),
+    )
+
+    id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True), primary_key=True, server_default=text("gen_random_uuid()")
+    )
+    student_id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True), ForeignKey("users.id"), nullable=False
+    )
+    action: Mapped[str] = mapped_column(String(20), nullable=False)
+    status: Mapped[str] = mapped_column(String(20), nullable=False)
+    input_chars: Mapped[int] = mapped_column(Integer, nullable=False, server_default=text("0"))
+    output_chars: Mapped[int] = mapped_column(Integer, nullable=False, server_default=text("0"))
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), server_default=text("now()"), nullable=False
+    )

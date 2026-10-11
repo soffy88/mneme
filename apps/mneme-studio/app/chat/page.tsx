@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef, useCallback } from "react";
 import { chatTurn, getStudentId, getToken, redirectToLogin } from "@/lib/mcp";
+import { SaveToNotebook } from "@/components/SaveToNotebook";
 import {
   OCard,
   OCardHeader,
@@ -20,6 +21,8 @@ import {
 interface ChatMessage {
   role: "user" | "assistant" | "system";
   content: string;
+  kc_id?: string;
+  question?: string;
 }
 
 interface ChatTurnReq {
@@ -97,7 +100,15 @@ export default function ChatPage() {
       const data = await chatTurn<ChatTurnRes>(reqBody);
 
       // Add assistant response
-      setMessages((prev) => [...prev, { role: "assistant", content: data.reply }]);
+      setMessages((prev) => [
+        ...prev,
+        {
+          role: "assistant",
+          content: data.reply,
+          kc_id: data.kc_ids?.[0] ?? data.kc_hint ?? undefined,
+          question: userMessage.content,
+        },
+      ]);
 
       // Handle practice redirect
       if (data.action === "goto_mastery_path" && data.kc_hint) {
@@ -172,6 +183,19 @@ export default function ChatPage() {
                       AI
                     </OBadge>
                   )}
+                </div>
+              )}
+              {msg.role === "assistant" && idx > 0 && msg.content.trim() && (
+                <div className="mt-2">
+                  <SaveToNotebook
+                    record={{
+                      source_type: "chat",
+                      content: msg.content,
+                      title: msg.question ? msg.question.slice(0, 60) : null,
+                      kc_id: msg.kc_id ?? null,
+                      metadata: persona ? { persona } : {},
+                    }}
+                  />
                 </div>
               )}
             </div>

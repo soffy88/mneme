@@ -51,6 +51,11 @@ class PurgeStorageCleanupError(RuntimeError):
 # parent_student / parent_alerts 的 parent_id 也指向 users，须双列清（见 _PARENT_TABLES）。
 _STUDENT_TABLES: list[tuple[str, str]] = [
     # 纯学生子表（只指向 users，互相无 FK）
+    # Notebook / Co-Writer（学习者自有，FC-2 新表同 PR 入清单）：
+    # notebook_records.notebook_id → notebooks.id，记录先于笔记本删。
+    ("notebook_records", "student_id"),
+    ("notebooks", "student_id"),
+    ("cowriter_requests", "student_id"),
     ("interaction_events", "student_id"),
     ("learning_events", "student_id"),
     ("memory_evidence", "student_id"),

@@ -9,6 +9,8 @@ export function ProductNav() {
       <Link href="/practice">Practice</Link>
       <Link href="/memory">Memory</Link>
       <Link href="/memory-inspect">My Memory</Link>
+      <Link href="/notebook">Notebook</Link>
+      <Link href="/cowriter">Co-Writer</Link>
       <Link href="/weak-areas">Weak Areas</Link>
       <Link href="/progress">Progress</Link>
       <Link href="/immersive">Immersive</Link>

@@ -29,6 +29,7 @@ import {
 } from "@/lib/mcp";
 import { MathText } from "@/components/MathText";
 import { CitationNote } from "@/components/CitationNote";
+import { SaveToNotebook } from "@/components/SaveToNotebook";
 
 function urlBookId(): string | null {
   if (typeof window === "undefined") return null;
@@ -39,7 +40,7 @@ const CONTENT_TYPE_LABEL: Record<string, string> = {
   theory: "讲解", practice: "练习为主", concept: "概念",
 };
 
-function BlockView({ block }: { block: BookBlock }) {
+function BlockBody({ block }: { block: BookBlock }) {
   if (block.status !== "ready") {
     return (
       <div className="text-sm text-[var(--o-color-fg-muted,#888)]" data-testid="block-error">
@@ -103,6 +104,38 @@ function BlockView({ block }: { block: BookBlock }) {
         </a>
       </div>
     </OCard>
+  );
+}
+
+// 内容块 + 「存到笔记本」：只给有正文的 text/callout/figure 块（quiz 等是练习入口，不存）。
+function BlockView({ block, bookId, chapterTitle }: { block: BookBlock; bookId: string; chapterTitle: string }) {
+  const p = block.payload;
+  const saveText =
+    block.block_type === "text" || block.block_type === "callout"
+      ? String(p.text ?? "")
+      : block.block_type === "figure"
+        ? String(p.caption ?? p.description ?? p.alt ?? "")
+        : "";
+  const kcIds = Array.isArray(p.kc_ids) ? (p.kc_ids as string[]) : [];
+  const kcId = typeof p.kc_id === "string" ? p.kc_id : kcIds[0] ?? null;
+  return (
+    <div className="space-y-1">
+      <BlockBody block={block} />
+      {block.status === "ready" && saveText.trim() && (
+        <div className="flex justify-end" data-testid="block-save">
+          <SaveToNotebook
+            record={{
+              source_type: "book_block",
+              source_id: block.block_id,
+              kc_id: kcId,
+              title: chapterTitle.slice(0, 200),
+              content: saveText,
+              metadata: { book_id: bookId, block_type: block.block_type },
+            }}
+          />
+        </div>
+      )}
+    </div>
   );
 }
 
@@ -367,7 +400,7 @@ export default function BookPage() {
           </OCardHeader>
           <div className="p-4 space-y-4">
             {ch.blocks.map((block) => (
-              <BlockView key={block.block_id} block={block} />
+              <BlockView key={block.block_id} block={block} bookId={book!.book_id} chapterTitle={ch.title} />
             ))}
           </div>
         </OCard>

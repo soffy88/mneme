@@ -15,12 +15,14 @@ def register_domain_routers(app: FastAPI) -> None:
         cognitive,
         conic_geometry,
         cornell,
+        cowriter,
         edu_assets,
         geometry,
         health,
         immersive,
         learning,
         memory,
+        notebooks,
         insights,
         papers,
         parent,
@@ -65,5 +67,7 @@ def register_domain_routers(app: FastAPI) -> None:
         edu_assets,
         related_labs,
         books,
+        notebooks,
+        cowriter,
     ):
         app.include_router(mod.router)

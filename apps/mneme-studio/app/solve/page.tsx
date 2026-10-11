@@ -13,6 +13,7 @@
 import { useState } from "react";
 import { OButton, OCard, OCardHeader, OCardTitle, OEmptyState } from "@helios/blocks";
 import { mcp, getToken, redirectToLogin, type SolveProblemResult } from "@/lib/mcp";
+import { SaveToNotebook } from "@/components/SaveToNotebook";
 
 export default function SolvePage() {
   const [problemText, setProblemText] = useState("");
@@ -106,6 +107,18 @@ export default function SolvePage() {
                   </li>
                 ))}
               </ol>
+              <SaveToNotebook
+                record={{
+                  source_type: "solve",
+                  title: problemText.trim().slice(0, 60),
+                  content: [
+                    `题目：${problemText.trim()}`,
+                    `答案：${result.answer}`,
+                    ...result.steps.map((s) => `${s.step_number}. ${s.description}：${s.expression} → ${s.result}`),
+                  ].join("\n"),
+                  metadata: { kernel: result.kernel },
+                }}
+              />
             </div>
           </OCard>
 

@@ -2815,3 +2815,33 @@ CI 常驻的判分准确率回归门，堵死"构造桩题掩盖真实数据判�
   的铁律）。Studio `/practice`：每题走既有 RequestQuestion → SubmitAnswer（verdict_guard →
   process_interaction）唯一守卫写入路径，答后内核重排 FSRS。未做：题目收藏（bookmark）——
   无数据模型，需新表/迁移，留待拍板。
+
+
+## DT-NB · 对标 DeepTutor：Notebook + Co-Writer（学习者自有、儿童安全，2026-10-11）
+
+- [x] **DT-NB.1 Notebook（学习者笔记本）**
+  alembic `nbk1a2b3c4d5`：`notebooks`（student_id + 唯一 name）/ `notebook_records`
+  （source_type ∈ chat/book_block/solve/visualize/research/cowriter/free_text + source_id +
+  kc_id + title + content + metadata）。`/v1/notebooks` CRUD + `POST /v1/notebooks/save`
+  （一键「存到笔记本」，按 id 或按名字找/建，默认「我的笔记」）。**owner-only**：现有授权
+  模型（agent.user_grants = admin 设的工具白名单）没有"家长读孩子笔记"授权，家长账号 403，
+  他人笔记本 403，不存在 404。上限：50 本/人、2000 条/本、20000 字/条。Studio
+  `/notebook`（nav: Notebook），对话回答 / 活书 text·callout·figure 块 / 解题结果 /
+  写作草稿都有「存到笔记本」按钮。
+- [x] **DT-NB.2 Co-Writer（写作教练，不代写）**
+  `POST /v1/cowriter/suggest {action: rewrite|expand|shorten|grammar|outline, text,
+  instruction?, cite?}` → 修改稿 + 可逐块接受/拒绝的 diff hunks（中文按字、英文按词；
+  `apply_hunks` 前后端同一算法）+ 最多 3 条说明 + 可选教材引用（同 SearchKnowledgeBase：
+  Stratum → Knowledge Hub）。`GET /v1/cowriter/limits`。**不可代写**：代写请求（帮我写/
+  代写/write it for me/do my homework…）、只贴题目/要求、自己的文字 < 15 字/词 → 422 且
+  不调用 LLM；输出按输入长度封顶（rewrite 1.3× / expand 1.6× / shorten 0.9× / grammar
+  1.15× / outline 0.8×，+40 字余量），超出在句末截断并标 truncated。生产 text caller
+  （get_optional_text_caller，enable_thinking=False，max_tokens 下限
+  MNEME_COWRITER_MIN_TOKENS=4000）；空 content/异常 → 502，无 caller → 503。每日限额
+  MNEME_COWRITER_DAILY_LIMIT=30（admin 豁免），账本 `cowriter_requests` 只存字数/状态，
+  不存作文原文。学生本人专用（家长 403）。Studio `/cowriter`（nav: Co-Writer）。
+- 三张新表同 PR 入 `purge_service._STUDENT_TABLES`（records 先于 notebooks）。
+  红线：`tests/test_notebook_cowriter_no_gating.py`（不 import 门控/判分/BKT/FSRS，不引用
+  掌握度/学习事件表）。测试：`tests/test_notebook_cowriter.py`。
+- [ ] 未做：家长只读（需先在授权模型里加"家长可读笔记"授权项）；Research 报告还没有
+  Studio 页，所以 research 来源只有 API；visualize 页暂未加保存按钮；Co-Writer 无流式输出。
