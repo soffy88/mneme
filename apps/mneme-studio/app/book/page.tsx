@@ -408,6 +408,10 @@ export default function BookPage() {
   const [books, setBooks] = useState<BookSummary[] | null>(null);
   const [book, setBook] = useState<BookDetail | null>(null);
   const [error, setError] = useState<string | null>(null);
+  // 本页按 URL 参数（book_id / textbook_id / mode）分支渲染；服务端拿不到 URL 查询，
+  // 挂载前统一渲染同一个占位，避免 hydration 不一致（React #418）。
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
 
   useEffect(() => {
     if (!getToken()) {
@@ -430,6 +434,14 @@ export default function BookPage() {
       }
     })();
   }, []);
+
+  if (!mounted) {
+    return (
+      <main className="mx-auto max-w-2xl p-6" data-testid="book-root">
+        <OEmptyState title="正在打开…" description="" />
+      </main>
+    );
+  }
 
   if (error) {
     return (
