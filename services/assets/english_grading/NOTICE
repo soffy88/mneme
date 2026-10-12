@@ -1,0 +1,20 @@
+English Practice
+Copyright (c) 2026 recepyagmur
+https://github.com/recepyagmur/EnglishPractice (commit 040d95546f7ffa1ef439ee66f9e8a3cbc7323072)
+
+This product includes software developed by recepyagmur, used under the MIT License
+(full text in LICENSE next to this file).
+
+Only code was ported. Nothing from the project's app/content (CC BY-SA 4.0, Turkish-oriented
+lessons, exams, patterns, word lists) and none of its Turkish explanation text was copied.
+
+---
+Modifications by Mneme (2026-10): the deterministic English-grading kernels
+(app/backend/exams.py normalize_answer / answer_forms / answer_ok / _order_key and the
+dictation scoring; app/backend/patterns.py fixed_parts / contains_pattern / uses_pattern /
+_match; app/backend/words.py word_forms; app/backend/pronoun_check.py find_errors / apply)
+were rewritten as 3O elements (oprim.english_grading, oprim.english_pronoun,
+oskill.english_answer_check_skill). The Turkish `lang` branch was dropped and feedback is in
+Chinese (他/她 are both "tā", so Chinese learners mix he/she); the offline-dictionary lookups
+were replaced by rule-based inflection plus a small irregular-form table and a
+capitalisation heuristic for names. Served by POST /v1/english/check.

@@ -857,6 +857,13 @@ async def tool_submit_answer(
     else:
         return {"error": f"unsupported qtype: {qtype}"}
 
+    if not is_correct and qtype in ("fill", "short"):
+        # 英语缩写感知等价补判（MNEME_ENGLISH_ANSWER_FORMS，默认开）：只把英语上等价的作答
+        # （He's finished = He has finished）从错改对；数学 / 非英语题恒不触发，门控不变。
+        from services.english_check_service import english_equivalent_answer
+
+        is_correct = english_equivalent_answer(answer, expected)
+
     # guard：确定性判分由 core 产出（origin=core），杜绝 agent 伪造 deterministic
     enforce("deterministic", None, origin="core")
 

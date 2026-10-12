@@ -112,6 +112,7 @@ services:
       LEARNING_EVENT_V2_DUAL_WRITE_ENABLED: ${LEARNING_EVENT_V2_DUAL_WRITE_ENABLED:-1}
       # 服务端掌握路径锁（/mcp/RequestQuestion 拒绝 locked KC 的新学习）；0 关闭。
       MNEME_PATH_LOCK: ${MNEME_PATH_LOCK:-1}
+      MNEME_ENGLISH_ANSWER_FORMS: ${MNEME_ENGLISH_ANSWER_FORMS:-1}
       # 本机 Veya gateway：文本 veya1.2-128K、视觉 veya1.2-vl；
       # gateway 通过 host.docker.internal:8791 暴露 OpenAI-compatible API。
       MNEME_LLM: ${MNEME_LLM:-veya}
