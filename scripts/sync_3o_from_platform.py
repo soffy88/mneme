@@ -21,8 +21,8 @@ ROOT = Path(__file__).resolve().parents[1]
 MANIFEST = ROOT / "3o-replication-lock.json"
 PLATFORM = Path("/data/soffy/projects/platform/3O")
 DEFAULTS = {
-    "oprim": {"sha": "b66526efc0398cfa58d910ee52717e4856532616", "files": ["echo_loop.py", "solid_geometry.py", "conic_analysis.py", "chemical_equation.py", "english_grading.py", "english_pronoun.py"]},
-    "oskill": {"sha": "6dfdf5243c82a2653d072e2ca4eda51dc41f863d", "files": ["echo_loop_skill.py", "solid_geometry_skill.py", "conic_chord_skill.py", "equation_balancing_skill.py", "english_answer_check_skill.py"]},
+    "oprim": {"sha": "fc5d239699f511104c0eed1096c367d008add684", "files": ["echo_loop.py", "solid_geometry.py", "conic_analysis.py", "chemical_equation.py", "english_grading.py", "english_pronoun.py"]},
+    "oskill": {"sha": "f282e971b052c9200bc378665d9de7cc5a6a41c9", "files": ["echo_loop_skill.py", "solid_geometry_skill.py", "conic_chord_skill.py", "equation_balancing_skill.py", "english_answer_check_skill.py"]},
     "omodul": {"sha": "3dd1f8388fe88c8473531f8db20fd62360149c72", "files": ["echo_loop_session.py", "_base.py", "_fingerprint.py", "solid_geometry_lesson.py", "conic_chord_lesson.py", "equation_balancing_lesson.py"]},
     "obase": {"sha": "87be8400b05284e1ba347cdec56dfbd55eadc511", "files": ["cognitive_types.py"]},
     "oservi": {"sha": "d0809e59609473ecd33c033790ebd39eee835218", "files": []},
