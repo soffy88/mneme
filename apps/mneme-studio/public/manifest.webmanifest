@@ -1,0 +1,52 @@
+{
+  "name": "善学记",
+  "short_name": "善学记",
+  "description": "善学记 · 拍下不会的题，一步步讲给你听；错题按记忆规律复习。",
+  "id": "/studio/learn",
+  "start_url": "/studio/learn",
+  "scope": "/studio",
+  "display": "standalone",
+  "orientation": "portrait",
+  "lang": "zh-CN",
+  "dir": "ltr",
+  "theme_color": "#25304a",
+  "background_color": "#ffffff",
+  "categories": ["education", "productivity"],
+  "icons": [
+    {
+      "src": "/studio/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/studio/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/studio/icon-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "拍一道错题",
+      "short_name": "拍题",
+      "url": "/studio/ask"
+    },
+    {
+      "name": "10 分钟复习",
+      "short_name": "复习",
+      "url": "/studio/review"
+    },
+    {
+      "name": "做题记录",
+      "short_name": "记录",
+      "url": "/studio/history"
+    }
+  ]
+}
