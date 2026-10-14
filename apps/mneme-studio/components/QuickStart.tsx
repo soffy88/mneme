@@ -3,7 +3,7 @@ import Link from "next/link";
 // 学生首页的三个大按钮：拍照提问 / 10分钟复习 / 做题记录。
 // 大卡片 + emoji，手机上单手可点（min-h 44px 以上），不依赖 hover。
 const ACTIONS = [
-  { href: "/ask", emoji: "📷", label: "拍照问题目", sub: "拍下来，AI 老师一步步讲" },
+  { href: "/ask", emoji: "📷", label: "拍照问题目", sub: "拍下来，马上给你思路和步骤" },
   { href: "/review", emoji: "⏱️", label: "10分钟复习", sub: "把错题巩固一遍" },
   { href: "/history", emoji: "📒", label: "做题记录", sub: "看看自己做过哪些题" },
 ];

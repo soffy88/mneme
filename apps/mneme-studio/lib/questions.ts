@@ -162,6 +162,8 @@ export interface AskSolveResult {
   unit?: string | null;
   /** 实际求解的题面（多题图片选中那一题）。 */
   question_text?: string | null;
+  /** 学科（math/physics/chemistry/english/chinese）：provider 命中时以 provider 为准。 */
+  subject?: string | null;
 }
 
 /** 反馈「这道题算错了」：原因枚举 + 可选备注。 */

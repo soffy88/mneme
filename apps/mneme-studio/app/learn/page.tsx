@@ -13,6 +13,7 @@ import {
 import { MathText } from "@/components/MathText";
 import { BookmarkStar } from "@/components/BookmarkStar";
 import { QuickStart } from "@/components/QuickStart";
+import { ProductNav } from "@/components/ProductNav";
 import Link from "next/link";
 import { reviewToday, type ReviewToday } from "@/lib/questions";
 
@@ -34,6 +35,18 @@ function urlKcs(): string[] {
   return (new URLSearchParams(window.location.search).get("kcs") || "")
     .split(",")
     .filter(Boolean);
+}
+
+const REASON_LABEL: Record<string, string> = {
+  expected_gain_per_minute: "现在花一分钟，收获最大",
+  retrieval_urgency: "快要忘了，正是复习的好时候",
+  transfer_evidence_gap: "还没在新题里用过，练一练才算真会",
+  high_uncertainty_diagnostic: "还不确定你会不会，先测一测",
+};
+
+function reasonText(codes: string[]): string {
+  const zh = codes.map((c) => REASON_LABEL[c]).filter(Boolean);
+  return zh.length ? zh.join("；") : "根据你最近的作答挑的下一步";
 }
 
 const ACTION_LABEL: Record<string, string> = {
@@ -173,21 +186,13 @@ export default function LearnPage() {
   return (
     <main className="mx-auto max-w-2xl p-6 space-y-4" data-testid="learn-root">
       <header className="flex items-center justify-between">
-        <h1 className="text-2xl font-bold">善学记 · Learn Now</h1>
+        <h1 className="text-2xl font-bold">善学记 · 马上学</h1>
         <OButton size="sm" className="min-h-[44px]" onClick={() => void refresh(ctx)} data-testid="refresh">
           刷新
         </OButton>
       </header>
 
-      <nav className="flex flex-wrap gap-3 text-sm" aria-label="学习导航">
-        <Link href="/learn" className="font-semibold">Learn Now</Link>
-        <Link href="/today">Today</Link>
-        <Link href="/path">Path</Link>
-        <Link href="/practice">Practice</Link>
-        <Link href="/memory">Memory</Link>
-        <Link href="/weak-areas">Weak Areas</Link>
-        <Link href="/progress">Progress</Link>
-      </nav>
+      <ProductNav />
 
       <OCard data-testid="today-review">
         <div className="space-y-3 p-4">
@@ -252,14 +257,13 @@ export default function LearnPage() {
       {learnNow && (
         <OCard data-testid="why-this">
           <div className="p-4 space-y-2">
-            <div className="font-semibold">Why this?</div>
+            <div className="font-semibold">为什么先学这个？</div>
             {learnNow.status === "CAUGHT_UP" ? (
-              <div className="text-sm">You’re caught up.</div>
+              <div className="text-sm">都跟上了，可以歇一歇 🎉</div>
             ) : (
               <>
-                <div className="text-sm">下一步由 PolicyDecision 选择。</div>
-                <div className="text-xs text-[var(--o-color-fg-muted,#888)]">
-                  {learnNow.reason_codes.length ? learnNow.reason_codes.join(" · ") : "证据正在积累"}
+                <div className="text-sm">
+                  {reasonText(learnNow.reason_codes)}
                 </div>
               </>
             )}

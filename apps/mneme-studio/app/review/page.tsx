@@ -420,8 +420,8 @@ export default function ReviewPage() {
                   )}
 
                   {result.explanation && (
-                    <div className="text-base whitespace-pre-wrap text-[var(--muted-foreground,#555)]">
-                      {result.explanation}
+                    <div className="text-base text-[var(--muted-foreground,#555)]">
+                      <MathText text={result.explanation} />
                     </div>
                   )}
 
@@ -475,7 +475,7 @@ export default function ReviewPage() {
               连续 {finished?.streak ?? today?.streak ?? 0} 天 🔥
             </div>
             <div className="text-xl font-bold" data-testid="review-finish-summary">
-              今天复习 {finished?.today_minutes ?? Math.round((Date.now() - sessionStartRef.current) / 60000)} 分钟 · {finished?.today_answered ?? answered} 题 · 正确率 {Math.round((finished?.today_accuracy ?? ((finished?.today_answered ?? answered) > 0 ? (finished?.today_correct ?? correct) / (finished?.today_answered ?? answered) : 0)) * 100)}%
+              <span className="inline-block whitespace-nowrap">今天复习 {finished?.today_minutes ?? Math.round((Date.now() - sessionStartRef.current) / 60000)} 分钟</span>{" · "}<span className="inline-block whitespace-nowrap">{finished?.today_answered ?? answered} 题</span>{" · "}<span className="inline-block whitespace-nowrap">正确率 {Math.round((finished?.today_accuracy ?? ((finished?.today_answered ?? answered) > 0 ? (finished?.today_correct ?? correct) / (finished?.today_answered ?? answered) : 0)) * 100)}%</span>
             </div>
             {finished?.message && <div className="text-base">{finished.message}</div>}
             {finished && (

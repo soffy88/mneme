@@ -13,6 +13,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { OButton, OCard, OCardHeader, OCardTitle } from "@helios/blocks";
 import { ProductNav } from "@/components/ProductNav";
 import { MathText } from "@/components/MathText";
+import { subjectLabel } from "@/lib/format";
 import { getToken, redirectToLogin } from "@/lib/mcp";
 import {
   askFollowup, askFeedback, askQuestion, addToWrongbook, solveAsk,
@@ -331,9 +332,10 @@ export default function AskPage() {
               <img
                 src={picked?.url}
                 alt="题目预览"
-                className="h-20 w-auto rounded-lg border object-contain"
+                className="h-20 w-20 shrink-0 rounded-lg border object-contain"
+                style={{ height: 80, width: 80, maxWidth: 80 }}
               />
-              <div className="flex-1 text-sm text-[var(--muted-foreground,#888)]">
+              <div className="min-w-0 flex-1 text-sm text-[var(--muted-foreground,#888)]">
                 已裁剪好，可以识别了
               </div>
               <OButton variant="ghost" className="min-h-[44px]" onClick={reset}>
@@ -440,6 +442,14 @@ export default function AskPage() {
             <OCardTitle>
               <span className="flex items-center gap-2">
                 解题结果
+                {solve.subject && subjectLabel(solve.subject) && (
+                  <span
+                    className="rounded-full bg-[var(--muted,#eee)] px-2 py-0.5 text-xs text-[var(--muted-foreground,#666)]"
+                    data-testid="ask-subject-chip"
+                  >
+                    {subjectLabel(solve.subject)}
+                  </span>
+                )}
                 {solver && (
                   <span className="rounded-full bg-[var(--secondary)] px-2 py-0.5 text-xs text-[var(--secondary-foreground)]">
                     {solver}

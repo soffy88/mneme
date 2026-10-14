@@ -148,6 +148,28 @@ function HistoryThumbnail({ recordId }: { recordId: string }) {
   return <img src={url} alt="题目缩略图" className="h-12 w-12 shrink-0 rounded-lg object-cover" />;
 }
 
+const GRADER_LABELS: Record<string, string> = {
+  kernel: "自动判分（精确计算）",
+  exact: "自动判分",
+  numeric: "自动判分",
+  choice: "自动判分",
+  self: "自己评",
+  self_grade: "自己评",
+  llm: "AI 判分",
+  provider: "自动判分",
+};
+
+function graderLabel(g: string | null | undefined): string {
+  if (!g) return "—";
+  return GRADER_LABELS[g.toLowerCase()] ?? "自动判分";
+}
+
+/** 知识点编码（RENJIAO-G8-MATH-S-ku-二次根式的定义、cmm-math-g6-算术）→ 只留中文名。 */
+function kpName(k: string): string {
+  const zh = k.split("-").filter((p) => /[\u4e00-\u9fff]/.test(p)).join("-");
+  return zh || k;
+}
+
 function DetailRow({ label, value }: { label: string; value: string | null }) {
   return (
     <div className="text-base">
@@ -220,13 +242,10 @@ function HistoryRow({ item }: { item: HistoryItem }) {
                 {beijingTime(item.created_at)}
               </span>
             </div>
-            <div className="mt-2 truncate text-base">
+            <div className="mt-2 line-clamp-2 break-words text-base">
               {item.question_text ? <MathText text={item.question_text} /> : "（含图题）"}
             </div>
           </div>
-        </div>
-        <div className="mt-2 line-clamp-2 text-base">
-          {item.question_text ? <MathText text={item.question_text} /> : "（含图题）"}
         </div>
       </button>
 
@@ -247,7 +266,7 @@ function HistoryRow({ item }: { item: HistoryItem }) {
               <DetailRow label="你的答案" value={detail.student_answer} />
               <DetailRow label="正确答案" value={detail.correct_answer} />
               <div className="text-sm text-[var(--muted-foreground,#888)]">
-                判分方式：{detail.grader || "—"}
+                判分方式：{graderLabel(detail.grader)}
               </div>
             </div>
           )}
@@ -423,7 +442,7 @@ export default function HistoryPage() {
                         : ""}
                       {typeof summary.accuracy === "number" ? ` · 正确率 ${Math.round(summary.accuracy * 100)}%` : ""}
                       {typeof summary.minutes === "number" ? ` · ${summary.minutes} 分钟` : ""}
-                      {topWrong ? ` · 错得最多：${topWrong.name || topWrong.kc_id}` : ""}
+                      {topWrong ? ` · 错得最多：${kpName(topWrong.name || topWrong.kc_id)}` : ""}
                     </>
                   ) : (
                     `${dayItems.length} 条记录 · 暂无当日汇总`

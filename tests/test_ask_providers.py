@@ -255,3 +255,24 @@ async def test_recognize_returns_lines_and_vision_off_by_default(monkeypatch):
     r = await pas.recognize_image(b"img")
     assert r["engine"] == "ocr" and r["image_w"] == 1200
     assert r["lines"][0]["box"] == [0.1, 0.4, 0.6, 0.45] and "x²" in r["lines"][0]["text"]
+
+
+def test_chinese_poem_textbook_version(ask_data, monkeypatch):
+    """《全唐诗》原文是“床前看月光…举头望山月”；卡片和答案要按统编教材写法。"""
+    from services.ask_providers import chinese
+
+    orig = chinese._poem
+
+    def quantangshi(db, pid):
+        row = orig(db, pid)
+        if row is None or row["title"] != "静夜思":
+            return row
+        d = dict(row)
+        d["body"] = "床前看月光，疑是地上霜。\n举头望山月，低头思故乡。"
+        return d
+
+    monkeypatch.setattr(chinese, "_poem", quantangshi)
+    r = chinese.chinese_lookup_solve("举头望明月，________。")
+    assert r and r["answer"] == "低头思故乡"
+    text = "".join(r["card"]["lines"])
+    assert "床前明月光" in text and "举头望明月" in text and "山月" not in text

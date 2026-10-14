@@ -25,6 +25,11 @@ _BLANK_RE = re.compile(r"_{2,}|＿{2,}|\(\s*\)|（\s*）|﹍{2,}|…{2,}|—{3,}
 _CLAUSE_SPLIT = re.compile(r"([，。？！；：、,.?!;:\n])")
 
 # 统编版初中古诗词（部分，名家名篇）——同句多出处时优先这些（标题, 作者）
+# 统编教材用的版本与《全唐诗》原文不同的名篇：卡片/答案按课本写法（学生默写按课本判）
+TEXTBOOK_BODY: dict[tuple[str, str], str] = {
+    ("静夜思", "李白"): "床前明月光，疑是地上霜。\n举头望明月，低头思故乡。",
+}
+
 CURRICULUM: set[tuple[str, str]] = {
     ("观沧海", "曹操"), ("龟虽寿", "曹操"), ("闻王昌龄左迁龙标遥有此寄", "李白"), ("次北固山下", "王湾"),
     ("天净沙·秋思", "马致远"), ("峨眉山月歌", "李白"), ("江南逢李龟年", "杜甫"), ("行军九日思长安故园", "岑参"),
@@ -242,7 +247,8 @@ def _solve_poem(t: str) -> Optional[dict]:
     _, pid, offset, poem, dists = best
     if len(known) >= 2 and len(dists) < 2 and not blanks:
         return None
-    clauses = _clauses(poem["body"])
+    body = TEXTBOOK_BODY.get((str(poem["title"]), str(poem["author"])), str(poem["body"]))
+    clauses = _clauses(body)
     answers: list[str] = []
     for bi in blanks:
         ci = bi + offset
@@ -262,7 +268,7 @@ def _solve_poem(t: str) -> Optional[dict]:
         src = "一首引用了这句名句的作品（原作暂未收录，出处以课本为准）"
     else:
         src = f"{poem['dynasty']}·{poem['author']}《{poem['title']}》" if poem["author"] else f"《{poem['title']}》"
-    lines = [ln for ln in str(poem["body"]).split("\n") if ln.strip()]
+    lines = [ln for ln in body.split("\n") if ln.strip()]
     # 高亮：答案所在的行
     hl_lines: list[int] = []
     pos = 0

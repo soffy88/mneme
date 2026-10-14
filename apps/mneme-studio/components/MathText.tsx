@@ -9,7 +9,24 @@ import "katex/dist/katex.min.css";
 
 type Seg = { t: "text" | "inline" | "display"; v: string };
 
-function tokenize(s: string): Seg[] {
+/** 题库里的填空占位（\$ \qquad \$、$\qquad$、\underline{\quad}）→（　　）；转义的 \$ 还原。 */
+export function normalizeBlanks(s: string): string {
+  return s
+    .replace(/\\?\$\s*(?:\\underline\{[^}]*\}|\\q?quad|\\_+|_+)\s*\\?\$/g, "（　　）")
+    .replace(/\\\$/g, "$")
+    .replace(/<ImageHere>/g, "");
+}
+
+/** 纯文本段（内核步骤）里的 x^2、sqrt(3) → x²、√(3)，学生更好读。 */
+export function prettyMath(s: string): string {
+  return s
+    .replace(/\^2(?![\d.])/g, "²")
+    .replace(/\^3(?![\d.])/g, "³")
+    .replace(/sqrt\(/g, "√(");
+}
+
+function tokenize(raw: string): Seg[] {
+  const s = normalizeBlanks(raw);
   const out: Seg[] = [];
   let i = 0;
   while (i < s.length) {
@@ -53,7 +70,7 @@ export function MathText({ text }: { text: string }) {
     <span className="whitespace-pre-wrap">
       {segs.map((p, idx) =>
         p.t === "text" ? (
-          <span key={idx}>{p.v}</span>
+          <span key={idx}>{prettyMath(p.v)}</span>
         ) : (
           <span
             key={idx}

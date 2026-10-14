@@ -311,17 +311,27 @@ def solve_arithmetic(text: str) -> Optional[KernelSolution]:
     except (_NotRational, AttributeError, ZeroDivisionError, SyntaxError, TypeError):
         rational_steps = None
     if rational_steps:
-        order = []
+        ops = []
+        outer = expr  # 括号外的部分（括号里的运算归“先算括号”）
+        for _ in range(6):
+            nxt = re.sub(r"\([^()]*\)", "0", outer)
+            if nxt == outer:
+                break
+            outer = nxt
         if "(" in expr:
-            order.append("先算括号里面的")
-        if "^" in expr:
-            order.append("再算乘方")
-        if re.search(r"[*/]", expr):
-            order.append("然后算乘除")
-        if re.search(r"(?<=[0-9)])\s*[+\-]", expr):
-            order.append("最后算加减")
-        if order:
-            steps.append("运算顺序：" + "，".join(order))
+            ops.append("括号里面的")
+        if "^" in outer:
+            ops.append("乘方")
+        # 2/3 这样的分数本身是一个数，不算“除法”
+        if re.search(r"\*|(?<=\))\s*/|/\s*(?=\()", expr) and re.search(r"[*/]", outer):
+            ops.append("乘除")
+        if re.search(r"(?<=[0-9)])\s*[+\-]", outer):
+            ops.append("加减")
+        if len(ops) == 1:
+            steps.append(f"运算顺序：只有{ops[0].replace('里面的', '')}，从左往右依次算")
+        elif ops:
+            words = ["先", *(["再", "然后"][: len(ops) - 2]), "最后"]
+            steps.append("运算顺序：" + "，".join(f"{w}算{o}" for w, o in zip(words, ops)))
         for st in rational_steps[:10]:
             steps.append(st)
         if len(rational_steps) > 10:

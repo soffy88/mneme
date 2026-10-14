@@ -51,14 +51,14 @@ function WordCard({ card }: { card: Extract<Card, { type: "english_word" }> }) {
 
 function PoemCard({ card }: { card: Extract<Card, { type: "poem" }> }) {
   return (
-    <div className="space-y-3 rounded-xl border p-5" data-testid="answer-card-poem">
+    <div className="space-y-3 rounded-xl border px-3 py-4" data-testid="answer-card-poem">
       <div className="text-center">
         <div className="text-2xl font-bold">{card.title}</div>
         <div className="mt-1 text-base text-[var(--muted-foreground,#666)]">
           〔{card.dynasty}〕{card.author}
         </div>
       </div>
-      <div className="mx-auto max-w-sm space-y-1.5 text-center text-lg leading-relaxed">
+      <div className="mx-auto max-w-sm space-y-1.5 text-center text-base leading-relaxed sm:text-lg">
         {card.lines.map((line, i) => {
           const isAnswer = card.highlight === i;
           const isBlank = card.answer != null && line.includes("○");
@@ -69,7 +69,9 @@ function PoemCard({ card }: { card: Extract<Card, { type: "poem" }> }) {
                 isAnswer ? "bg-[var(--secondary)] font-semibold" : ""
               } ${isBlank && !isAnswer ? "text-[var(--muted-foreground,#999)]" : ""}`}
             >
-              {line}
+              {line.split(/(?<=[，,；;])/).map((seg, j) => (
+                <span key={j} className="inline-block">{seg}</span>
+              ))}
             </div>
           );
         })}
