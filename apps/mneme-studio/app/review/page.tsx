@@ -502,8 +502,9 @@ export default function ReviewPage() {
             </div>
             <div className="space-y-1" data-testid="review-finish-summary">
               <div className="text-xl font-bold">
-                <span className="inline-block whitespace-nowrap">本次：{sessAnswered} 题</span>{" · "}<span className="inline-block whitespace-nowrap">做对 {sessCorrect} 题</span>{" · "}<span className="inline-block whitespace-nowrap">用时 {sessMinutesText}</span>
+                <span className="inline-block whitespace-nowrap">本次：{sessAnswered} 题</span>{" · "}<span className="inline-block whitespace-nowrap">做对 {sessCorrect} 题</span>
               </div>
+              <div className="text-base font-semibold" data-testid="review-finish-time">用时 {sessMinutesText}</div>
               {finished?.today_answered != null && finished.today_answered > 0 && (
                 <div className="text-sm text-[var(--muted-foreground,#888)]" data-testid="review-finish-today">
                   今天累计 {finished.today_answered} 题{finished.today_accuracy != null ? ` · 正确率 ${Math.round(finished.today_accuracy * 100)}%` : ""}
