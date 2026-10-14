@@ -1,7 +1,10 @@
 # Held-out set for the deterministic ask kernels. Written independently of problems.jsonl / kernel code.
 # Every answer is computed here (fractions/sympy), not typed by hand.
-import json, sys
+import json
+import sys
+from collections import Counter
 from fractions import Fraction as F
+
 import sympy as sp
 
 x, y = sp.symbols("x y")
@@ -158,10 +161,8 @@ assert 4200 * 2 * 50 == 420000 and abs(6 / 30 - 0.2) < 1e-12 and 6 * 3 / 9 == 2
 assert 40 + 12 + 48 == 100 and 2 + 32 + 64 == 98 and abs(28 / 80 - 0.35) < 1e-12 and 112 / 160 == 0.7
 assert 36 / 36 * 32 == 32 and abs(10 / 100 * 44 - 4.4) < 1e-9 and 50 * 0.2 / 0.1 - 50 == 50
 assert 200 * 0.8 / 1.25 == 128 and 300 / 120 == 2.5 and 600 / 40 == 15
-json.dump(None, open("/dev/null", "w"))
 out = sys.argv[1] if len(sys.argv) > 1 else "holdout.jsonl"
 with open(out, "w") as f:
     for p in P:
         f.write(json.dumps(p, ensure_ascii=False) + "\n")
-from collections import Counter
 print(len(P), dict(Counter(p["type"] for p in P)))

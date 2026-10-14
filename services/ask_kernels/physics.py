@@ -236,7 +236,11 @@ def _question_part(s: str) -> str:
     if idx >= 0:
         return s[idx:]
     ms = list(re.finditer(r"[^,;。，；]*(?:多少|多大|多长|多远|多高|多深|多重|多快|几)[^,;。，；]*", s))
-    return ms[-1].group(0) if ms else s[-30:]
+    if ms:
+        return ms[-1].group(0)
+    # 没有明确问法时只看最后一个分句（以前取末尾 30 字，会把前面“…的速度…”当成所求，OCR 截断时乱答）
+    parts = [p for p in re.split(r"[,;。，；\n]", s) if p.strip()]
+    return parts[-1] if parts else ""
 
 
 def _targets(s: str, roles: dict[str, Fraction]) -> list[str]:
@@ -432,6 +436,8 @@ def solve_physics(text: str) -> Optional[KernelSolution]:
     s = basic_normalize(text).replace("·", "*").replace("•", "*")
     s = s.replace("°C", "℃").replace("摄氏度", "℃")
     s = re.sub(r"(\d)\s*度(?=电|,|，|。|$)", r"\1kW*h", s) if re.search(r"电能|电费|电表|用电", s) else s
+    # 拍照 OCR 常把 m² 的上标丢掉：“接触面积是 0.25 m”——“面积”后紧跟的长度单位按面积单位读
+    s = re.sub(r"(面积\s*(?:是|为|约|大约)?\s*\d+(?:\.\d+)?\s*(?:c|d|m)?m)(?![²³2^a-zA-Z/])", r"\1^2", s)
     toks = _tokens(s)
     if not toks:
         return None

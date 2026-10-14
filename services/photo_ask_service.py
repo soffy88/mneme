@@ -81,6 +81,10 @@ def guess_subject(text: str) -> Optional[str]:
         return None
     if re.search(r"化学|配平|方程式|摩尔|溶液|[A-Z][a-z]?\d*\s*\+\s*[A-Z][a-z]?\d*\s*(=|→)", t):
         return "chemistry"
+    if re.search(r"相对分子质量|相对原子质量|元素的?质量分数|化合价", t):
+        return "chemistry"
+    if re.search(r"追上|相遇|相向|同向而行|追及|工程|利润|打\s*[一二三四五六七八九\d]\s*折", t):
+        return "math"
     if re.search(r"速度|加速度|电压|电流|电阻|牛顿|压强|浮力|功率|焦耳|质量为|重力", t):
         return "physics"
     latin = len(re.findall(r"[A-Za-z]", t))
@@ -142,6 +146,7 @@ def clean_chem_line(line: str) -> str:
 def clean_ocr_text(text: str, subject: Optional[str]) -> str:
     """OCR 结果确定性清洗；学生仍可在确认框里改。"""
     t = (text or "").strip().translate(_FW_ASCII)
+    t = re.sub(r"(?<![\d.])0\.\s+(?=\d)", "0.", t)  # OCR 把 0.25 断成 “0. 25”
     lines = t.split("\n")
     if subject in (None, "math", "physics", "chemistry"):
         lines = [clean_math_line(ln) for ln in lines]

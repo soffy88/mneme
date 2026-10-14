@@ -65,10 +65,33 @@ def _load(data: bytes) -> np.ndarray:
 
 
 def _order_quad(pts: np.ndarray) -> np.ndarray:
+    """按绕质心的角度排成 左上→右上→右下→左下（图像坐标 y 向下）。
+    旧的 sum/diff 取法在页面旋转时会让两个角取到同一个点，透视矫正后整张图被拉坏。"""
     pts = pts.reshape(4, 2).astype(np.float32)
-    s = pts.sum(axis=1)
-    d = np.diff(pts, axis=1).ravel()
-    return np.array([pts[np.argmin(s)], pts[np.argmin(d)], pts[np.argmax(s)], pts[np.argmax(d)]], np.float32)
+    c = pts.mean(axis=0)
+    ang = np.arctan2(pts[:, 1] - c[1], pts[:, 0] - c[0])
+    return pts[np.argsort(ang)]
+
+
+def _quad_ok(q: np.ndarray, shape: tuple[int, int]) -> bool:
+    """只接受“像一张纸”的四边形：四个角都在 55°–125°、对边长度比 ≤1.35、四点互不重合。"""
+    if len({(round(float(x)), round(float(y))) for x, y in q}) != 4:
+        return False
+    sides = [float(np.linalg.norm(q[(i + 1) % 4] - q[i])) for i in range(4)]
+    if min(sides) < 0.2 * max(shape):
+        return False
+    if max(sides[0], sides[2]) / max(1e-6, min(sides[0], sides[2])) > 1.35:
+        return False
+    if max(sides[1], sides[3]) / max(1e-6, min(sides[1], sides[3])) > 1.35:
+        return False
+    for i in range(4):
+        a, b, c = q[i - 1], q[i], q[(i + 1) % 4]
+        v1, v2 = a - b, c - b
+        cosv = float(np.dot(v1, v2) / max(1e-6, np.linalg.norm(v1) * np.linalg.norm(v2)))
+        deg = float(np.degrees(np.arccos(np.clip(cosv, -1.0, 1.0))))
+        if not 55.0 <= deg <= 125.0:
+            return False
+    return True
 
 
 def _find_page(gray: np.ndarray) -> Optional[np.ndarray]:
@@ -89,7 +112,8 @@ def _find_page(gray: np.ndarray) -> Optional[np.ndarray]:
     approx = cv2.approxPolyDP(c, 0.02 * cv2.arcLength(c, True), True)
     if len(approx) != 4 or not cv2.isContourConvex(approx):
         return None
-    return _order_quad(approx / scale)
+    q = _order_quad(approx / scale)
+    return q if _quad_ok(q, (h, w)) else None
 
 
 def _skew_angle(gray: np.ndarray) -> float:

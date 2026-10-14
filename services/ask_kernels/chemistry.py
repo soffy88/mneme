@@ -99,8 +99,22 @@ def _pct_val(v: Fraction) -> str:
     return s if "/" not in s else f"{float(x):.4g}"
 
 
+def _trust_names(s: str) -> str:
+    """“葡萄糖C0H2O”：OCR 常丢化学式下标，但中文名可靠——名字后紧跟的化学式与名字对应的不一致时，换成名字的化学式。"""
+    for name, canon in sorted(_NAMES.items(), key=lambda kv: -len(kv[0])):
+        if len(name) < 2:
+            continue
+        want = _parse(canon)
+        for m in re.finditer(rf"{name}\s*[(（]?\s*({_FORMULA})", s):
+            got = _parse(re.sub(r"^\d+", "", m.group(1)))
+            if want and got != want:
+                s = s[:m.start(1)] + canon + s[m.end(1):]
+                break
+    return s
+
+
 def solve_chemistry_calc(text: str) -> Optional[KernelSolution]:
-    s = _norm(text)
+    s = _trust_names(_norm(text))
     for fn in (_solve_stoich, _solve_solution, _solve_mass_fraction, _solve_mr):
         try:
             r = fn(s)

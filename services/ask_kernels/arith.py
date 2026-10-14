@@ -280,6 +280,9 @@ def solve_arithmetic(text: str) -> Optional[KernelSolution]:
         return None
     if re.fullmatch(r"-?sqrt\(\d+\)", expr) and not re.search(r"化简|最简", raw):
         return None
+    # 只有一个分数（OCR 只认出 “1/4”）——没有可算的东西，答案就是题面本身，不答
+    if re.fullmatch(r"\(?-?\d+\s*/\s*\d+\)?", expr.strip()) and not re.search(r"化简|约分|最简|化成|小数", raw):
+        return None
     val = parse(expr)
     if not getattr(val, "is_number", False) or val.has(sp.zoo, sp.nan, sp.oo):
         return None
