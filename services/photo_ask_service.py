@@ -152,10 +152,10 @@ _vision_slow = {"n": 0}
 
 
 def _vision_slow_count_bump() -> None:
-    """视觉连续 3 次没赶上宽限期 → 同样冷却（慢到没用也算不可用）。"""
+    """视觉连续 2 次没赶上宽限期 → 同样冷却（慢到没用也算不可用）。"""
     global _vision_cooldown_until
     _vision_slow["n"] += 1
-    if _vision_slow["n"] >= 3:
+    if _vision_slow["n"] >= 2:
         _vision_slow["n"] = 0
         _vision_cooldown_until = time.monotonic() + _env_float("MNEME_ASK_VISION_COOLDOWN", 300.0)
 
