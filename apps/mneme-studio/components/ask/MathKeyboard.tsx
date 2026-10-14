@@ -5,7 +5,7 @@
 
 import { useCallback } from "react";
 
-const KEYS = ["x²", "√", "÷", "×", "≤", "≥", "≠", "π", "°", "(", ")"];
+const KEYS = ["x²", "²", "√", "÷", "×", "−", "≤", "≥", "≠", "π", "°", "(", ")"];
 
 /** 分数：插入 "()/()" 并把光标放在第一个 () 里。 */
 const FRACTION = { before: "()/()", cursorOffset: 1 };
@@ -42,7 +42,7 @@ export function MathKeyboard({ target, onChange }: Props) {
         <button
           key={k}
           type="button"
-          className="min-h-[40px] min-w-[40px] rounded-lg border bg-[var(--background)] px-2 text-base tabular-nums"
+          className="min-h-[44px] min-w-[44px] rounded-lg border bg-[var(--background)] px-2 text-base tabular-nums"
           onClick={() => insert(k)}
         >
           {k}
@@ -50,7 +50,7 @@ export function MathKeyboard({ target, onChange }: Props) {
       ))}
       <button
         type="button"
-        className="min-h-[40px] rounded-lg border bg-[var(--background)] px-3 text-base"
+        className="min-h-[44px] rounded-lg border bg-[var(--background)] px-3 text-base"
         onClick={() => insert(FRACTION.before, FRACTION.before.length - FRACTION.cursorOffset)}
       >
         分数

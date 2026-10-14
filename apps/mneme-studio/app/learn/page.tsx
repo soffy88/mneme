@@ -14,6 +14,7 @@ import { MathText } from "@/components/MathText";
 import { BookmarkStar } from "@/components/BookmarkStar";
 import { QuickStart } from "@/components/QuickStart";
 import Link from "next/link";
+import { reviewToday, type ReviewToday } from "@/lib/questions";
 
 // 一套登录：student_id 取自 mneme 登录会话（mneme_user），**不再走 ?student=**。
 // 学习路径（AA.5）：默认经 GetPath 按学生档案拉（有内容的 KC、按章节序）；`?kcs=` 仍可覆盖；
@@ -53,6 +54,8 @@ export default function LearnPage() {
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [locked, setLocked] = useState<PathLockedInfo | null>(null);
+  const [todayReview, setTodayReview] = useState<ReviewToday | null>(null);
+  const [reviewLoading, setReviewLoading] = useState(true);
 
   const refresh = useCallback(async (c: { studentId: string; kcIds: string[] }) => {
     if (!c.studentId || c.kcIds.length === 0) return;
@@ -104,6 +107,10 @@ export default function LearnPage() {
       redirectToLogin();
       return;
     }
+    void reviewToday()
+      .then((data) => setTodayReview(data))
+      .catch(() => setTodayReview(null))
+      .finally(() => setReviewLoading(false));
     void (async () => {
       const sid = getStudentId() || "";
       let kcIds = urlKcs(); // ?kcs= 覆盖优先
@@ -167,7 +174,7 @@ export default function LearnPage() {
     <main className="mx-auto max-w-2xl p-6 space-y-4" data-testid="learn-root">
       <header className="flex items-center justify-between">
         <h1 className="text-2xl font-bold">善学记 · Learn Now</h1>
-        <OButton size="sm" onClick={() => void refresh(ctx)} data-testid="refresh">
+        <OButton size="sm" className="min-h-[44px]" onClick={() => void refresh(ctx)} data-testid="refresh">
           刷新
         </OButton>
       </header>
@@ -181,6 +188,35 @@ export default function LearnPage() {
         <Link href="/weak-areas">Weak Areas</Link>
         <Link href="/progress">Progress</Link>
       </nav>
+
+      <OCard data-testid="today-review">
+        <div className="space-y-3 p-4">
+          <div className="flex items-start justify-between gap-3">
+            <div>
+              <h2 className="text-xl font-bold">今日 10 分钟</h2>
+              <p className="mt-1 text-sm text-[var(--o-color-fg-muted,#777)]">每天复习一点，把学过的知识记得更牢。</p>
+            </div>
+            {todayReview && <span className="shrink-0 text-sm font-semibold">🔥 连续 {todayReview.streak} 天</span>}
+          </div>
+          {reviewLoading ? (
+            <p className="text-base text-[var(--o-color-fg-muted,#777)]">正在读取今日复习…</p>
+          ) : todayReview ? (
+            todayReview.items.length > 0 ? (
+              <p className="text-base">还有 <span className="font-bold">{todayReview.items.length}</span> 道错题待复习</p>
+            ) : (
+              <p className="text-base font-semibold">今天的错题都复习完了</p>
+            )
+          ) : (
+            <p className="text-base text-[var(--o-color-fg-muted,#777)]">今日复习暂时无法读取，打开复习页重试。</p>
+          )}
+          <Link
+            href={todayReview && todayReview.items.length === 0 ? "/ask" : "/review"}
+            className="flex min-h-[52px] w-full items-center justify-center rounded-xl bg-[var(--o-color-primary,#2458d3)] px-4 text-base font-semibold text-white"
+          >
+            {todayReview && todayReview.items.length === 0 ? "拍一道题" : "开始今日复习"}
+          </Link>
+        </div>
+      </OCard>
 
       <QuickStart />
 
