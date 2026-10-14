@@ -131,3 +131,12 @@ def test_prod_with_only_one_problem_still_refuses(monkeypatch):
         assert "真实验证通道" in str(e)
         assert "JWT_SECRET" not in str(e)  # 密钥这项已经修好了，不该被误报
     print("  只修好一半仍拒绝启动，且不误报已修好的那项 ✓")
+
+
+def test_interactive_api_docs_are_not_exposed_in_public_environments():
+    from services.main import _api_docs_enabled
+
+    for environment in ("demo", "staging", "production", "prod"):
+        assert _api_docs_enabled(environment) is False
+    for environment in ("dev", "development", "test"):
+        assert _api_docs_enabled(environment) is True

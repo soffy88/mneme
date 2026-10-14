@@ -95,6 +95,41 @@ class RegisterParentEmailReq(BaseModel):
     _v = field_validator("email")(lambda cls, v: _validate_email(v))
 
 
+class RegisterStudentAccountReq(BaseModel):
+    username: str
+    password: str
+    name: str
+    birth_date: date
+    grade: str
+
+    _v = field_validator("username")(lambda cls, v: auth_service.normalize_account_username(v))
+
+
+class RegisterParentAccountReq(BaseModel):
+    username: str
+    password: str
+    name: str
+
+    _v = field_validator("username")(lambda cls, v: auth_service.normalize_account_username(v))
+
+
+class ParentCreateStudentReq(BaseModel):
+    username: str
+    password: str
+    name: str
+    birth_date: date
+    grade: str
+
+    _v = field_validator("username")(lambda cls, v: auth_service.normalize_account_username(v))
+
+
+class LoginAccountPasswordReq(BaseModel):
+    username: str
+    password: str
+
+    _v = field_validator("username")(lambda cls, v: auth_service.normalize_account_username(v))
+
+
 class LoginEmailReq(BaseModel):
     email: str
     code: str
@@ -265,6 +300,82 @@ async def post_login_password(
     return result
 
 
+@router.post("/v1/auth/register/student-account", status_code=201)
+async def post_register_student_account(
+    payload: RegisterStudentAccountReq,
+    db: AsyncSession = Depends(get_db),
+):
+    """Register an age-14+ student via username/password, with no unverified email claim."""
+    _require_registration_open()
+    result = await auth_service.register_student_account(
+        db=db, username=payload.username, password=payload.password,
+        name=payload.name, birth_date=payload.birth_date, grade=payload.grade,
+    )
+    if "error" in result:
+        raise HTTPException(status_code=result["error_code"], detail=result["error"])
+    await db.commit()
+    return result
+
+
+@router.post("/v1/auth/register/parent-account", status_code=201)
+async def post_register_parent_account(
+    payload: RegisterParentAccountReq,
+    db: AsyncSession = Depends(get_db),
+):
+    """Create a parent account; it can add children only through its authenticated session."""
+    _require_registration_open()
+    result = await auth_service.register_parent_account(
+        db=db, username=payload.username, password=payload.password, name=payload.name,
+    )
+    if "error" in result:
+        raise HTTPException(status_code=result["error_code"], detail=result["error"])
+    await db.commit()
+    return result
+
+
+@router.post("/v1/auth/parent/create-student", status_code=201)
+async def post_parent_create_student(
+    payload: ParentCreateStudentReq,
+    request: Request,
+    current_user: User = Depends(get_current_user),
+    db: AsyncSession = Depends(get_db),
+):
+    """An authenticated parent creates a student and, where needed, records consent."""
+    if current_user.role != UserRole.parent:
+        raise HTTPException(status_code=403, detail="仅家长账号可以创建学生")
+    result = await auth_service.create_student_for_parent(
+        db=db, parent=current_user, username=payload.username,
+        password=payload.password, name=payload.name,
+        birth_date=payload.birth_date, grade=payload.grade,
+        ip_address=request.client.host if request.client else None,
+    )
+    if "error" in result:
+        raise HTTPException(status_code=result["error_code"], detail=result["error"])
+    await db.commit()
+    return result
+
+
+@router.post("/v1/auth/login-account-password")
+async def post_login_account_password(
+    payload: LoginAccountPasswordReq,
+    db: AsyncSession = Depends(get_db),
+):
+    """Username login for non-email accounts; retains password lockout and generic errors."""
+    result = await auth_service.login_password(
+        db=db, email=auth_service.username_account_email(payload.username),
+        password=payload.password,
+    )
+    if isinstance(result.get("user"), dict):
+        synthetic_email = result["user"].get("email")
+        username = auth_service.username_from_account_email(synthetic_email)
+        if username:
+            result["user"]["email"] = None
+            result["user"]["username"] = username
+    if "error" in result:
+        raise HTTPException(status_code=result["error_code"], detail=result["error"])
+    return result
+
+
 @router.post("/v1/auth/password")
 async def post_set_password(
     payload: SetPasswordReq,
@@ -284,10 +395,12 @@ async def post_set_password(
 @router.get("/v1/auth/me")
 async def get_me(user: User = Depends(get_current_user)):
     """当前用户信息。"""
+    account_username = auth_service.username_from_account_email(getattr(user, "email", None))
     return {
         "id": str(user.id),
         "phone": user.phone,
-        "email": getattr(user, "email", None),
+        "email": None if account_username else getattr(user, "email", None),
+        "username": account_username,
         "role": user.role.value,
         "name": user.name,
         "grade": getattr(user, "grade", None),
@@ -305,6 +418,8 @@ async def post_bind_child(
     db: AsyncSession = Depends(get_db),
 ):
     """家长绑定孩子。"""
+    if current_user.role != UserRole.parent:
+        raise HTTPException(status_code=403, detail="仅家长账号可以绑定孩子")
     student = (
         await db.execute(
             select(User).where(

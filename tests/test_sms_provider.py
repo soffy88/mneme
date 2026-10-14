@@ -20,9 +20,18 @@ def test_factory_returns_aliyun_when_configured(monkeypatch):
 
 
 @pytest.mark.asyncio
-async def test_mock_provider_returns_true():
+async def test_mock_provider_returns_true_for_explicit_test_allowlist(monkeypatch):
+    monkeypatch.setenv("MNEME_ENV", "test")
+    monkeypatch.setenv("MNEME_MOCK_CODE_ALLOWLIST", "13912345678")
     prov = MockSMSProvider()
     assert await prov.send_code("13912345678", "123456") is True
+
+
+@pytest.mark.asyncio
+async def test_mock_provider_refuses_public_demo_identity_even_if_allowlisted(monkeypatch):
+    monkeypatch.setenv("MNEME_ENV", "demo")
+    monkeypatch.setenv("MNEME_MOCK_CODE_ALLOWLIST", "13912345678")
+    assert await MockSMSProvider().send_code("13912345678", "123456") is False
 
 
 @pytest.mark.asyncio

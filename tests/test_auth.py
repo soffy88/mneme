@@ -10,6 +10,7 @@ C.1 认证测试
 
 from __future__ import annotations
 
+import os
 import uuid
 from datetime import UTC, datetime
 
@@ -51,7 +52,15 @@ async def _clean_phone(phone: str) -> None:
 
 
 async def _inject_code(phone: str, code: str = "123456") -> None:
-    """Put a code directly into Redis (bypasses send-code rate limit)."""
+    """Inject Redis OTP and explicitly allow this fake identity in the test process."""
+    os.environ["MNEME_ENV"] = "test"
+    allowlist = {
+        item.strip().lower()
+        for item in os.environ.get("MNEME_MOCK_CODE_ALLOWLIST", "").split(",")
+        if item.strip()
+    }
+    allowlist.add(phone.strip().lower())
+    os.environ["MNEME_MOCK_CODE_ALLOWLIST"] = ",".join(sorted(allowlist))
     r = aioredis.from_url(settings.REDIS_URL, decode_responses=True)
     try:
         await r.setex(f"sms:code:{phone}", 300, code)
@@ -70,13 +79,23 @@ async def client():
         yield c
 
 
+@pytest.fixture(autouse=True)
+def _isolated_auth_test_environment(monkeypatch):
+    monkeypatch.setenv("MNEME_ENV", "test")
+    monkeypatch.setenv("SMS_PROVIDER", "mock")
+    monkeypatch.setenv("EMAIL_PROVIDER", "mock")
+    monkeypatch.setenv("MNEME_MOCK_CODE_ALLOWLIST", "")
+
+
 # ── tests ─────────────────────────────────────────────────────────────────────
 
 
 @pytest.mark.asyncio
-async def test_auth_full_flow(client):
+async def test_auth_full_flow(client, monkeypatch):
     """send-code → Redis 存码 → register → me → login."""
     phone = "13912345678"
+    monkeypatch.setenv("MNEME_ENV", "test")
+    monkeypatch.setenv("MNEME_MOCK_CODE_ALLOWLIST", phone)
     await _clean_phone(phone)
 
     # 1. 发送验证码
@@ -116,9 +135,11 @@ async def test_auth_full_flow(client):
 
 
 @pytest.mark.asyncio
-async def test_send_code_rate_limit(client):
+async def test_send_code_rate_limit(client, monkeypatch):
     """60秒内同手机号第二次 send-code → 429。"""
     phone = "13911112222"
+    monkeypatch.setenv("MNEME_ENV", "test")
+    monkeypatch.setenv("MNEME_MOCK_CODE_ALLOWLIST", phone)
     await _clean_phone(phone)
 
     res = await client.post("/v1/auth/send-code", json={"phone": phone})
@@ -153,9 +174,12 @@ async def test_invalid_code_rejected(client):
 
 
 @pytest.mark.asyncio
-async def test_minor_without_guardian_rejected(client):
+async def test_minor_without_guardian_rejected(client, monkeypatch):
     """合规红线：13岁 + 无 guardian_phone → 422。"""
     phone = "13900001111"
+    monkeypatch.setenv("MNEME_ENV", "test")
+    monkeypatch.setenv("SMS_PROVIDER", "mock")
+    monkeypatch.setenv("MNEME_MOCK_CODE_ALLOWLIST", phone)
     await _clean_phone(phone)
     await _inject_code(phone, "123456")
 
@@ -176,9 +200,12 @@ async def test_minor_without_guardian_rejected(client):
 
 
 @pytest.mark.asyncio
-async def test_minor_with_guardian_accepted(client):
+async def test_minor_with_guardian_accepted(client, monkeypatch):
     """合规红线：13岁 + guardian_phone + consent=true → 201，写 guardian_consents。"""
     phone = "13900002222"
+    monkeypatch.setenv("MNEME_ENV", "test")
+    monkeypatch.setenv("SMS_PROVIDER", "mock")
+    monkeypatch.setenv("MNEME_MOCK_CODE_ALLOWLIST", phone)
     await _clean_phone(phone)
     await _inject_code(phone, "123456")
 
@@ -213,9 +240,11 @@ async def test_minor_with_guardian_accepted(client):
 
 
 @pytest.mark.asyncio
-async def test_code_consumed_after_use(client):
+async def test_code_consumed_after_use(client, monkeypatch):
     """验证码使用一次后失效，再注册同手机号 → 409（已注册）。"""
     phone = "13944445555"
+    monkeypatch.setenv("MNEME_ENV", "test")
+    monkeypatch.setenv("SMS_PROVIDER", "aliyun")
     await _clean_phone(phone)
     await _inject_code(phone, "123456")
 
@@ -249,9 +278,12 @@ async def test_code_consumed_after_use(client):
 
 
 @pytest.mark.asyncio
-async def test_deleted_user_cannot_login_or_query(client):
+async def test_deleted_user_cannot_login_or_query(client, monkeypatch):
     """合规红线：软删除后不可登录、已签发 token 失效（删除后数据不可查询）。"""
     phone = "13900007777"
+    monkeypatch.setenv("MNEME_ENV", "test")
+    monkeypatch.setenv("SMS_PROVIDER", "mock")
+    monkeypatch.setenv("MNEME_MOCK_CODE_ALLOWLIST", phone)
     await _clean_phone(phone)
     await _inject_code(phone)
 
@@ -303,10 +335,13 @@ async def test_delete_request_requires_auth(client):
 
 
 @pytest.mark.asyncio
-async def test_register_parent_binds_child(client):
+async def test_register_parent_binds_child(client, monkeypatch):
     """学生注册得 invite_code → 家长用 invite_code 注册并绑定 → /parent/children 含该生。"""
     s_phone = "13988880001"
     p_phone = "13988880002"
+    monkeypatch.setenv("MNEME_ENV", "test")
+    monkeypatch.setenv("SMS_PROVIDER", "mock")
+    monkeypatch.setenv("MNEME_MOCK_CODE_ALLOWLIST", "13988880001,13988880002,13988880003")
 
     async def _cleanup():
         async with SessionLocal() as s:
@@ -448,3 +483,132 @@ async def test_verify_code_attempts_reset_on_success(client):
         assert res.status_code == 201, res.text
     finally:
         await _clean_phone(phone)
+
+
+@pytest.mark.asyncio
+async def test_unverified_password_registration_disabled_and_mock_otp_rejected(client, monkeypatch):
+    """Public demo without real mail must fail closed, not bypass email ownership."""
+    email = f"mneme-security-{uuid.uuid4().hex}@example.invalid"
+    monkeypatch.setenv("MNEME_ENV", "demo")
+    monkeypatch.setenv("EMAIL_PROVIDER", "mock")
+    monkeypatch.delenv("MNEME_MOCK_CODE_ALLOWLIST", raising=False)
+
+    # Password-only registration would permit anyone to reserve a victim's email.
+    res = await client.post(
+        "/v1/auth/register/student-password",
+        json={
+            "email": email,
+            "password": "not-a-real-password",
+            "name": "Auth Security Test",
+            "birth_date": "2000-01-01",
+            "grade": "高三",
+        },
+    )
+    assert res.status_code in {403, 404}
+
+    # The parent variant is equally restricted; a guessed invite code must not help.
+    parent = await client.post(
+        "/v1/auth/register/parent-password",
+        json={
+            "email": email,
+            "password": "not-a-real-password",
+            "name": "Auth Security Parent Test",
+            "invite_code": "ABC123",
+        },
+    )
+    assert parent.status_code in {403, 404}
+
+    # Mock email may not send/log a public one-time code.
+    sent = await client.post("/v1/auth/send-email-code", json={"email": email})
+    assert sent.status_code == 429
+
+    # The old universal code is not accepted for a public demo identity.
+    otp = await client.post(
+        "/v1/auth/login-email", json={"email": email, "code": "123456"}
+    )
+    assert otp.status_code == 400
+
+
+@pytest.mark.asyncio
+async def test_username_password_signup_login_and_parent_student_flow(client):
+    """No mail transport: student/parent accounts can still authenticate safely."""
+    suffix = uuid.uuid4().hex[:10]
+    parent_name = f"sec-parent-{suffix}"
+    child_name = f"sec-child-{suffix}"
+    parent_email = f"u-{parent_name}@accounts.mneme.invalid"
+    child_email = f"u-{child_name}@accounts.mneme.invalid"
+    password = "Mneme-Secure-Test-2026"
+    try:
+        parent_res = await client.post(
+            "/v1/auth/register/parent-account",
+            json={"username": parent_name, "password": password, "name": "Security Parent Test"},
+        )
+        assert parent_res.status_code == 201, parent_res.text
+        parent_login = await client.post(
+            "/v1/auth/login-account-password",
+            json={"username": parent_name, "password": password},
+        )
+        assert parent_login.status_code == 200, parent_login.text
+        parent_token = parent_login.json()["token"]
+
+        child_res = await client.post(
+            "/v1/auth/parent/create-student",
+            headers={"Authorization": f"Bearer {parent_token}"},
+            json={
+                "username": child_name,
+                "password": password,
+                "name": "Security Child Test",
+                "birth_date": "2018-01-01",
+                "grade": "三年级",
+            },
+        )
+        assert child_res.status_code == 201, child_res.text
+        assert child_res.json()["user"].get("invite_code")
+
+        child_login = await client.post(
+            "/v1/auth/login-account-password",
+            json={"username": child_name, "password": password},
+        )
+        assert child_login.status_code == 200, child_login.text
+        assert child_login.json().get("token")
+
+        wrong_password = await client.post(
+            "/v1/auth/login-account-password",
+            json={"username": child_name, "password": "wrong-password"},
+        )
+        assert wrong_password.status_code == 401
+
+        # An under-14 child cannot bypass the authenticated-parent creation flow.
+        rejected = await client.post(
+            "/v1/auth/register/student-account",
+            json={
+                "username": f"too-young-{suffix}",
+                "password": password,
+                "name": "Too Young Test",
+                "birth_date": "2018-01-01",
+                "grade": "三年级",
+            },
+        )
+        assert rejected.status_code == 422, rejected.text
+    finally:
+        # Cleanup is confined to the test database and these unique records only.
+        async with SessionLocal() as session:
+            ids = []
+            for email_key in (parent_email, child_email):
+                user = (
+                    await session.execute(select(User).where(User.email == email_key))
+                ).scalar_one_or_none()
+                if user is not None:
+                    ids.append(user.id)
+            if ids:
+                await session.execute(
+                    delete(ParentStudent).where(
+                        (ParentStudent.parent_id.in_(ids))
+                        | (ParentStudent.student_id.in_(ids))
+                    )
+                )
+                await session.execute(
+                    delete(GuardianConsent).where(GuardianConsent.student_id.in_(ids))
+                )
+                await session.execute(delete(User).where(User.id.in_(ids)))
+                await session.commit()

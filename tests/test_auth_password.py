@@ -68,7 +68,10 @@ async def _clean_email(email: str) -> None:
         await r.aclose()
 
 
-async def _register(client, email: str) -> str:
+async def _register(client, email: str, monkeypatch) -> str:
+    monkeypatch.setenv("MNEME_ENV", "test")
+    monkeypatch.setenv("EMAIL_PROVIDER", "mock")
+    monkeypatch.setenv("MNEME_MOCK_CODE_ALLOWLIST", email)
     r = await client.post(
         "/v1/auth/register/student-email",
         json={
@@ -87,12 +90,12 @@ async def _register(client, email: str) -> str:
 
 
 @pytest.mark.asyncio
-async def test_password_hash_never_in_any_response(client, db):
+async def test_password_hash_never_in_any_response(client, db, monkeypatch):
     """password_hash 不得出现在注册/登录/me 任何一个响应体里。"""
     email = f"leak-{uuid.uuid4().hex[:8]}@qq.com"
     await _clean_email(email)
     try:
-        token = await _register(client, email)
+        token = await _register(client, email, monkeypatch)
 
         bodies = [
             (await client.post("/v1/auth/login-email", json={"email": email, "code": "123456"})).text,
@@ -122,13 +125,13 @@ async def test_password_hash_never_in_any_response(client, db):
 
 
 @pytest.mark.asyncio
-async def test_unknown_email_and_wrong_password_indistinguishable(client, db):
+async def test_unknown_email_and_wrong_password_indistinguishable(client, db, monkeypatch):
     known = f"known-{uuid.uuid4().hex[:8]}@qq.com"
     unknown = f"nobody-{uuid.uuid4().hex[:8]}@qq.com"
     await _clean_email(known)
     await _clean_email(unknown)
     try:
-        token = await _register(client, known)
+        token = await _register(client, known, monkeypatch)
         await client.post(
             "/v1/auth/password",
             json={"password": "sup3r-secret-pw"},
@@ -152,12 +155,12 @@ async def test_unknown_email_and_wrong_password_indistinguishable(client, db):
 
 
 @pytest.mark.asyncio
-async def test_account_without_password_cannot_log_in(client, db):
+async def test_account_without_password_cannot_log_in(client, db, monkeypatch):
     """password_hash IS NULL 的账号必须拒绝**所有**密码，包括空串。"""
     email = f"nopw-{uuid.uuid4().hex[:8]}@qq.com"
     await _clean_email(email)
     try:
-        await _register(client, email)
+        await _register(client, email, monkeypatch)
         for candidate in ["", " ", "x" * MIN_PASSWORD_CHARS, "123456"]:
             r = await client.post(
                 "/v1/auth/login-password", json={"email": email, "password": candidate}
@@ -177,12 +180,12 @@ async def test_verify_password_rejects_null_hash():
 
 
 @pytest.mark.asyncio
-async def test_password_login_lockout_after_max_attempts(client, db):
+async def test_password_login_lockout_after_max_attempts(client, db, monkeypatch):
     """连续输错到上限后锁定；且锁定只锁密码通道，验证码登录仍可用。"""
     email = f"lock-{uuid.uuid4().hex[:8]}@qq.com"
     await _clean_email(email)
     try:
-        token = await _register(client, email)
+        token = await _register(client, email, monkeypatch)
         await client.post(
             "/v1/auth/password",
             json={"password": "sup3r-secret-pw"},
@@ -220,12 +223,12 @@ async def test_password_login_lockout_after_max_attempts(client, db):
 
 
 @pytest.mark.asyncio
-async def test_password_login_success_and_code_login_still_works(client, db):
+async def test_password_login_success_and_code_login_still_works(client, db, monkeypatch):
     """设密码后：密码能登，验证码也仍能登（两条通道互不取代）。"""
     email = f"ok-{uuid.uuid4().hex[:8]}@qq.com"
     await _clean_email(email)
     try:
-        token = await _register(client, email)
+        token = await _register(client, email, monkeypatch)
 
         r = await client.post(
             "/v1/auth/password",

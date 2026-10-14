@@ -29,9 +29,18 @@ def test_factory_returns_smtp_when_configured(monkeypatch):
 
 
 @pytest.mark.asyncio
-async def test_mock_provider_returns_true():
+async def test_mock_provider_returns_true_for_explicit_test_allowlist(monkeypatch):
+    monkeypatch.setenv("MNEME_ENV", "test")
+    monkeypatch.setenv("MNEME_MOCK_CODE_ALLOWLIST", "kid@example.com")
     prov = MockEmailProvider()
     assert await prov.send_code("kid@example.com", "123456") is True
+
+
+@pytest.mark.asyncio
+async def test_mock_provider_refuses_public_demo_identity_even_if_allowlisted(monkeypatch):
+    monkeypatch.setenv("MNEME_ENV", "demo")
+    monkeypatch.setenv("MNEME_MOCK_CODE_ALLOWLIST", "kid@example.com")
+    assert await MockEmailProvider().send_code("kid@example.com", "123456") is False
 
 
 @pytest.mark.asyncio
@@ -43,7 +52,8 @@ async def test_mock_provider_fail_closed_in_prod(monkeypatch):
 
 
 @pytest.mark.asyncio
-async def test_mock_notification_allowed_in_dev():
+async def test_mock_notification_allowed_in_dev(monkeypatch):
+    monkeypatch.setenv("MNEME_ENV", "dev")
     prov = MockEmailProvider()
     assert await prov.send_notification("kid@example.com", "t", "c") is True
 

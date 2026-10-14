@@ -50,9 +50,18 @@ async def _clean_email(db: AsyncSession, email: str) -> None:
     await db.commit()
 
 
+def _allow_mock_emails(monkeypatch, *emails: str) -> None:
+    monkeypatch.setenv("MNEME_ENV", "test")
+    monkeypatch.setenv("EMAIL_PROVIDER", "mock")
+    monkeypatch.setenv("MNEME_MOCK_CODE_ALLOWLIST", ",".join(emails))
+
+
 @pytest.mark.asyncio
-async def test_send_email_code_ok(client):
+async def test_send_email_code_ok(client, monkeypatch):
     email = f"s-{uuid.uuid4().hex[:8]}@qq.com"  # 唯一，避开60s防刷键跨测试残留
+    monkeypatch.setenv("MNEME_ENV", "test")
+    monkeypatch.setenv("EMAIL_PROVIDER", "mock")
+    monkeypatch.setenv("MNEME_MOCK_CODE_ALLOWLIST", email)
     r = await client.post("/v1/auth/send-email-code", json={"email": email})
     assert r.status_code == 200
     assert r.json()["ok"] is True
@@ -65,8 +74,9 @@ async def test_invalid_email_rejected(client):
 
 
 @pytest.mark.asyncio
-async def test_register_student_email_full_flow(client, db):
+async def test_register_student_email_full_flow(client, db, monkeypatch):
     email = f"stu-{uuid.uuid4().hex[:8]}@qq.com"
+    _allow_mock_emails(monkeypatch, email)
     await _clean_email(db, email)
     try:
         r = await client.post(
@@ -108,9 +118,10 @@ async def test_register_student_email_full_flow(client, db):
 
 
 @pytest.mark.asyncio
-async def test_minor_email_without_guardian_rejected(client, db):
+async def test_minor_email_without_guardian_rejected(client, db, monkeypatch):
     """合规红线：<14 邮箱注册无监护人邮箱+同意 → 422。"""
     email = f"kid-{uuid.uuid4().hex[:8]}@qq.com"
+    _allow_mock_emails(monkeypatch, email)
     await _clean_email(db, email)
     try:
         r = await client.post(
@@ -129,9 +140,10 @@ async def test_minor_email_without_guardian_rejected(client, db):
 
 
 @pytest.mark.asyncio
-async def test_minor_email_with_guardian_accepted(client, db):
+async def test_minor_email_with_guardian_accepted(client, db, monkeypatch):
     """<14 + guardian_email + consent → 201，写 guardian_consents(guardian_email)。"""
     email = f"kid-{uuid.uuid4().hex[:8]}@qq.com"
+    _allow_mock_emails(monkeypatch, email)
     await _clean_email(db, email)
     try:
         r = await client.post(
@@ -161,10 +173,11 @@ async def test_minor_email_with_guardian_accepted(client, db):
 
 
 @pytest.mark.asyncio
-async def test_register_parent_email_binds_child(client, db):
+async def test_register_parent_email_binds_child(client, db, monkeypatch):
     """家长邮箱注册凭 invite_code 绑定孩子。"""
     child_email = f"child-{uuid.uuid4().hex[:8]}@qq.com"
     parent_email = f"parent-{uuid.uuid4().hex[:8]}@qq.com"
+    _allow_mock_emails(monkeypatch, child_email, parent_email)
     await _clean_email(db, child_email)
     await _clean_email(db, parent_email)
     try:

@@ -13,6 +13,7 @@ from __future__ import annotations
 import logging
 import os
 import random
+import re
 import uuid
 from datetime import date
 
@@ -42,13 +43,23 @@ def _is_mock() -> bool:
     return os.environ.get("SMS_PROVIDER", "mock").lower() != "aliyun"
 
 
-def _mock_bypass_allowed() -> bool:
-    """mock 万能码旁路仅在非生产环境可用（MNEME_ENV != prod）。
+def _mock_bypass_allowed(identifier: str | None = None) -> bool:
+    """Only explicitly allowlisted test identities may use the fixed mock code.
 
-    生产即使 SMS_PROVIDER 误配为 mock，万能码 123456 也不得放行——
-    否则任何人可登录任何已知账号（C2 修复：demo/dev 保留演示机制，
-    生产必须走真实验证通道，main._assert_prod_safety 同时把关）。"""
-    return os.environ.get("MNEME_ENV", "dev").lower() not in {"prod", "production"}
+    MNEME_ENV=demo is a public deployment, not a developer sandbox.  Exact,
+    normalized identifiers are required; wildcards and an empty allowlist fail
+    closed. Keep MNEME_MOCK_CODE_ALLOWLIST limited to non-real test accounts.
+    """
+    environment = os.environ.get("MNEME_ENV", "").strip().lower()
+    if environment not in {"dev", "development", "test"} or not identifier:
+        return False
+    normalized = identifier.strip().lower()
+    allowlist = {
+        item.strip().lower()
+        for item in os.environ.get("MNEME_MOCK_CODE_ALLOWLIST", "").split(",")
+        if item.strip()
+    }
+    return bool(normalized) and normalized in allowlist
 
 
 def _mask_phone(phone: str) -> str:
@@ -67,7 +78,7 @@ def _mask_email(email: str) -> str:
 
 
 def _is_email_mock() -> bool:
-    """邮箱验证码 mock 旁路仅在非 smtp 模式生效（同 SMS：生产设 EMAIL_PROVIDER=smtp 关闭）。"""
+    """邮箱验证采用 mock 还是 SMTP；mock 是否可发码还需通过测试环境 allowlist 门禁。"""
     return os.environ.get("EMAIL_PROVIDER", "mock").lower() != "smtp"
 
 
@@ -85,6 +96,8 @@ async def send_code(phone: str, provider) -> dict:
     """
     r = _redis()
     try:
+        if _is_mock() and not _mock_bypass_allowed(phone):
+            return {"ok": False, "message": "当前未配置真实短信通道，请使用邮箱密码登录或联系管理员"}
         rate_key = f"sms:limit:{phone}"
         if await r.get(rate_key):
             return {"ok": False, "message": "请稍后再试（60秒内只能发一条）"}
@@ -136,9 +149,15 @@ async def verify_code(phone: str, code: str) -> bool:
         if await _check_lockout(r, lock_key):
             return False
 
-        # mock 万能码旁路——仅限非 aliyun 模式且非生产环境
-        if _is_mock() and _mock_bypass_allowed() and code == MOCK_CODE:
-            return True
+        # Fixed code is test-only, even if an old mock code remains in Redis.
+        if _is_mock() and code == MOCK_CODE:
+            if _mock_bypass_allowed(phone):
+                return True
+            stored_mock = await r.get(f"sms:code:{phone}")
+            if stored_mock == MOCK_CODE:
+                await r.delete(f"sms:code:{phone}")
+                await _register_failure(r, f"sms:attempt:{phone}", lock_key)
+                return False
 
         stored = await r.get(f"sms:code:{phone}")
         if not stored:
@@ -307,6 +326,8 @@ async def send_email_code(email: str, provider) -> dict:
     """发送邮箱验证码，存 Redis TTL=5min，60s 防刷。渠道走 email provider（可插拔）。"""
     r = _redis()
     try:
+        if _is_email_mock() and not _mock_bypass_allowed(email):
+            return {"ok": False, "message": "当前未配置真实邮件通道，请使用密码登录或联系管理员"}
         rate_key = f"email:limit:{email}"
         if await r.get(rate_key):
             return {"ok": False, "message": "请稍后再试（60秒内只能发一条）"}
@@ -339,8 +360,14 @@ async def verify_email_code(email: str, code: str) -> bool:
         if await _check_lockout(r, lock_key):
             return False
 
-        if _is_email_mock() and _mock_bypass_allowed() and code == MOCK_CODE:
-            return True
+        if _is_email_mock() and code == MOCK_CODE:
+            if _mock_bypass_allowed(email):
+                return True
+            stored_mock = await r.get(f"email:code:{email}")
+            if stored_mock == MOCK_CODE:
+                await r.delete(f"email:code:{email}")
+                await _register_failure(r, f"email:attempt:{email}", lock_key)
+                return False
 
         stored = await r.get(f"email:code:{email}")
         if not stored:
@@ -366,8 +393,7 @@ async def register_student_email(
     guardian_consent: bool = False,
     ip_address: str | None = None,
 ) -> dict:
-    """邮箱注册学生：验证码校验 + 合规红线(<14须监护同意) + 邮箱唯一 + 写库 + JWT。
-    与手机号版同构，仅标识换成 email、监护联系方式换成 guardian_email。"""
+    """邮箱注册学生：必须验证邮箱验证码，再执行年龄合规与唯一性检查。"""
     from services.models import GuardianConsent, User, UserRole
 
     if not await verify_email_code(email, code):
@@ -433,7 +459,7 @@ async def register_parent_email(
     name: str,
     invite_code: str,
 ) -> dict:
-    """邮箱注册家长：验证码校验 → 邮箱唯一 → 凭 invite_code 绑定孩子 → JWT。"""
+    """邮箱注册家长：必须验证邮箱验证码及学生邀请码。"""
     from services.models import ParentStudent, User, UserRole
 
     if not await verify_email_code(email, code):
@@ -466,6 +492,127 @@ async def register_parent_email(
         "token": token,
         "user": {"id": str(parent.id), "name": parent.name, "email": parent.email},
     }
+
+
+_ACCOUNT_EMAIL_DOMAIN = "accounts.mneme.invalid"
+_ACCOUNT_USERNAME_RE = re.compile(r"^[a-z0-9][a-z0-9_.-]{2,31}$")
+
+
+def normalize_account_username(username: str) -> str:
+    """Validate a public username; this is not an email/phone ownership claim."""
+    normalized = (username or "").strip().lower()
+    if not _ACCOUNT_USERNAME_RE.fullmatch(normalized):
+        raise ValueError("用户名需为 3–32 位字母、数字、点、下划线或连字符，且以字母/数字开头")
+    return normalized
+
+
+def username_account_email(username: str) -> str:
+    """Map usernames to a reserved .invalid email key to avoid a DB migration."""
+    return f"u-{normalize_account_username(username)}@{_ACCOUNT_EMAIL_DOMAIN}"
+
+
+def username_from_account_email(email: str | None) -> str | None:
+    if not email or not email.endswith("@" + _ACCOUNT_EMAIL_DOMAIN):
+        return None
+    local = email.partition("@")[0]
+    return local[2:] if local.startswith("u-") else None
+
+
+async def _register_password_account(
+    db: AsyncSession,
+    *,
+    username: str,
+    password: str,
+    name: str,
+    role,
+    birth_date: date | None = None,
+    grade: str | None = None,
+    guardian_id=None,
+    ip_address: str | None = None,
+) -> dict:
+    from services.models import GuardianConsent, ParentStudent, User, UserRole
+    from services.passwords import PasswordPolicyError, hash_password
+
+    normalized = normalize_account_username(username)
+    try:
+        password_hash = hash_password(password)
+    except PasswordPolicyError as exc:
+        return {"error_code": 422, "error": str(exc)}
+
+    email_key = username_account_email(normalized)
+    existing = (await db.execute(select(User).where(User.email == email_key))).scalar_one_or_none()
+    if existing:
+        return {"error_code": 409, "error": "用户名已被使用"}
+
+    user = User(
+        id=uuid.uuid4(), email=email_key, name=name, role=role,
+        birth_date=birth_date, grade=grade, password_hash=password_hash,
+        invite_code=uuid.uuid4().hex[:6].upper() if role == UserRole.student else None,
+    )
+    db.add(user)
+    await db.flush()
+
+    if guardian_id is not None:
+        db.add(ParentStudent(parent_id=guardian_id, student_id=user.id))
+        age = None
+        if birth_date is not None:
+            from services.privacy import _age
+            age = _age(birth_date)
+        if age is not None and age < 14:
+            db.add(GuardianConsent(
+                id=uuid.uuid4(), student_id=user.id,
+                consent_type="authenticated_parent_account",
+                consent_version="1.0", ip_address=ip_address,
+            ))
+        await db.flush()
+
+    token = create_access_token({"sub": str(user.id), "role": user.role.value})
+    public_user = {"id": str(user.id), "name": user.name, "username": normalized}
+    if role == UserRole.student:
+        public_user["invite_code"] = user.invite_code
+    return {"token": token, "user": public_user}
+
+
+async def register_student_account(
+    db: AsyncSession, *, username: str, password: str, name: str,
+    birth_date: date, grade: str,
+) -> dict:
+    """Self-registration is for age 14+; younger users need an authenticated parent."""
+    from services.models import UserRole
+    from services.privacy import _age
+
+    age = _age(birth_date)
+    if age is not None and age < 14:
+        return {"error_code": 422, "error": "14 岁以下学生需由家长账号创建"}
+    return await _register_password_account(
+        db, username=username, password=password, name=name,
+        role=UserRole.student, birth_date=birth_date, grade=grade,
+    )
+
+
+async def register_parent_account(
+    db: AsyncSession, *, username: str, password: str, name: str,
+) -> dict:
+    """Create a parent login identity without pretending an email address was verified."""
+    from services.models import UserRole
+    return await _register_password_account(
+        db, username=username, password=password, name=name, role=UserRole.parent,
+    )
+
+
+async def create_student_for_parent(
+    db: AsyncSession, *, parent, username: str, password: str, name: str,
+    birth_date: date, grade: str, ip_address: str | None = None,
+) -> dict:
+    """A logged-in parent creates and is linked to a child account."""
+    from services.models import UserRole
+    if parent.role != UserRole.parent:
+        return {"error_code": 403, "error": "仅家长账号可以创建学生"}
+    return await _register_password_account(
+        db, username=username, password=password, name=name,
+        role=UserRole.student, birth_date=birth_date, grade=grade,
+        guardian_id=parent.id, ip_address=ip_address,
+    )
 
 
 async def login_email(db: AsyncSession, email: str, code: str) -> dict:

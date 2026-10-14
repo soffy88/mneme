@@ -17,6 +17,7 @@ from __future__ import annotations
 import pytest
 
 from services import auth_service
+from services.main import _api_docs_enabled
 from services.auth_service import (
     MOCK_CODE,
     _check_lockout,
@@ -72,29 +73,45 @@ def fake_redis(monkeypatch: pytest.MonkeyPatch):
 # ── _mock_bypass_allowed ──────────────────────────────────────────────────────
 
 
-def test_mock_bypass_allowed_dev(monkeypatch: pytest.MonkeyPatch):
-    monkeypatch.setenv("MNEME_ENV", "dev")
-    assert _mock_bypass_allowed() is True
-
-
-def test_mock_bypass_allowed_default(monkeypatch: pytest.MonkeyPatch):
-    monkeypatch.delenv("MNEME_ENV", raising=False)
-    assert _mock_bypass_allowed() is True
-
-
-def test_mock_bypass_allowed_blocked_in_prod(monkeypatch: pytest.MonkeyPatch):
-    monkeypatch.setenv("MNEME_ENV", "prod")
+def test_mock_bypass_requires_exact_allowlisted_identity(monkeypatch: pytest.MonkeyPatch):
+    monkeypatch.setenv("MNEME_ENV", "test")
+    monkeypatch.setenv("MNEME_MOCK_CODE_ALLOWLIST", "13900001111,Kid@example.com")
+    assert _mock_bypass_allowed("13900001111") is True
+    assert _mock_bypass_allowed("kid@EXAMPLE.com") is True
+    assert _mock_bypass_allowed("13900001112") is False
     assert _mock_bypass_allowed() is False
+    monkeypatch.setenv("MNEME_ENV", "demo")
+    assert _mock_bypass_allowed("13900001111") is False
+
+
+def test_mock_bypass_default_fails_closed(monkeypatch: pytest.MonkeyPatch):
+    monkeypatch.delenv("MNEME_ENV", raising=False)
+    monkeypatch.delenv("MNEME_MOCK_CODE_ALLOWLIST", raising=False)
+    assert _mock_bypass_allowed("13900001111") is False
 
 
 # ── verify_code：手机号通道 ───────────────────────────────────────────────────
 
 
 @pytest.mark.asyncio
-async def test_verify_code_mock_bypass_in_dev(fake_redis):
-    """dev + mock provider：无存储验证码，万能码 123456 也应放行（演示机制）。"""
+async def test_verify_code_mock_bypass_only_for_allowlisted_test_identity(monkeypatch, fake_redis):
+    """Fixed test code is allowed only for the exact listed identity."""
+    monkeypatch.setenv("MNEME_ENV", "test")
+    monkeypatch.setenv("SMS_PROVIDER", "mock")
+    monkeypatch.setenv("MNEME_MOCK_CODE_ALLOWLIST", "13900001111")
     assert await verify_code("13900001111", MOCK_CODE) is True
+    assert await verify_code("13900001112", MOCK_CODE) is False
+    monkeypatch.setenv("MNEME_ENV", "demo")
+    assert await verify_code("13900001111", MOCK_CODE) is False
 
+
+@pytest.mark.asyncio
+async def test_verify_code_rejects_stale_mock_otp_for_non_allowlisted_user(monkeypatch, fake_redis):
+    monkeypatch.setenv("MNEME_ENV", "demo")
+    monkeypatch.setenv("SMS_PROVIDER", "mock")
+    monkeypatch.delenv("MNEME_MOCK_CODE_ALLOWLIST", raising=False)
+    await fake_redis.setex("sms:code:13900001113", 300, MOCK_CODE)
+    assert await verify_code("13900001113", MOCK_CODE) is False
 
 @pytest.mark.asyncio
 async def test_verify_code_mock_bypass_blocked_in_prod(monkeypatch, fake_redis):
@@ -151,9 +168,21 @@ async def test_verify_code_lockout_after_max_failures(fake_redis):
 
 
 @pytest.mark.asyncio
-async def test_verify_email_code_mock_bypass_in_dev(fake_redis):
-    assert await verify_email_code("kid@example.com", MOCK_CODE) is True
+async def test_verify_email_code_mock_bypass_only_for_allowlisted_test_identity(monkeypatch, fake_redis):
+    monkeypatch.setenv("MNEME_ENV", "test")
+    monkeypatch.setenv("EMAIL_PROVIDER", "mock")
+    monkeypatch.setenv("MNEME_MOCK_CODE_ALLOWLIST", "kid@example.com")
+    assert await verify_email_code("KID@example.com", MOCK_CODE) is True
+    assert await verify_email_code("other@example.com", MOCK_CODE) is False
 
+
+@pytest.mark.asyncio
+async def test_verify_email_code_rejects_stale_mock_otp_for_non_allowlisted_user(monkeypatch, fake_redis):
+    monkeypatch.setenv("MNEME_ENV", "demo")
+    monkeypatch.setenv("EMAIL_PROVIDER", "mock")
+    monkeypatch.delenv("MNEME_MOCK_CODE_ALLOWLIST", raising=False)
+    await fake_redis.setex("email:code:stale@example.com", 300, MOCK_CODE)
+    assert await verify_email_code("stale@example.com", MOCK_CODE) is False
 
 @pytest.mark.asyncio
 async def test_verify_email_code_mock_bypass_blocked_in_prod(monkeypatch, fake_redis):
@@ -221,3 +250,9 @@ async def test_register_failure_locks_after_max_and_clears_counter(fake_redis):
         await _register_failure(fake_redis, "sms:attempt:13900008888", "sms:lock:13900008888")
     assert await fake_redis.get("sms:lock:13900008888") is not None
     assert await fake_redis.get("sms:attempt:13900008888") is None
+
+
+def test_public_demo_disables_api_documentation():
+    assert _api_docs_enabled("demo") is False
+    assert _api_docs_enabled("production") is False
+    assert _api_docs_enabled("dev") is True
