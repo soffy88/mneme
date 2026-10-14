@@ -98,22 +98,68 @@ export interface AskResult {
   grade: string | null;
   has_image: boolean;
   ocr: OcrInfo;
+  /** 文字行（带归一化边界框），Server 有能力才有；缺失就走纯文本。 */
+  lines?: AskLine[];
+  image_w?: number | null;
+  image_h?: number | null;
   warning?: string;
 }
 
 export type SolveStatus = "ok" | "partial" | "llm_unavailable";
 
+/** provider = 教学引擎（feature-flag）给的讲解；llm = 通用 LLM 兜底。 */
+export type SolverKind = "kernel" | "provider" | "llm" | "none";
+
+/** 识别出的文字行 + 归一化到上传图的边界框 [x0,y0,x1,y1]（0..1）。 */
+export interface AskLine {
+  text: string;
+  score: number;
+  box: [number, number, number, number];
+}
+
+export type AnswerCard =
+  | {
+      type: "english_word";
+      word: string;
+      phonetic?: string | null;
+      meanings: string[];
+      inflections?: Record<string, unknown> | null;
+      tags?: string[] | null;
+    }
+  | {
+      type: "poem";
+      title: string;
+      author: string;
+      dynasty: string;
+      lines: string[];
+      highlight?: number | null;
+      answer?: string | null;
+    }
+  | { type: "pinyin"; items: { char: string; pinyin: string }[] }
+  | {
+      type: "idiom";
+      word: string;
+      pinyin?: string | null;
+      explanation: string;
+      derivation?: string | null;
+      example?: string | null;
+    };
+
 export interface AskSolveResult {
   ask_id: string;
   status: SolveStatus;
-  solver: "kernel" | "llm" | "none";
+  solver: SolverKind;
   kernel?: string | null;
   hint: string | null;
   steps: string[];
   answer: string | null;
   explanation: string | null;
   latency_ms: number;
+  card?: AnswerCard | null;
 }
+
+/** 反馈「这道题算错了」：原因枚举 + 可选备注。 */
+export type ReportReason = "识别错了" | "答案错了" | "步骤看不懂" | "其他";
 
 export interface AskFeedbackResult {
   ok: true;
@@ -167,6 +213,11 @@ export interface ReviewFinishResult {
   remaining_due: number;
   next_due_at: string | null;
   message: string;
+  /** 服务端今日合计（新字段，旧服务端没有 → 前端回落客户端计数）。 */
+  today_minutes?: number | null;
+  today_answered?: number | null;
+  today_correct?: number | null;
+  due_tomorrow?: number | null;
 }
 
 export type HistoryResult = "correct" | "wrong" | "unknown";
@@ -209,6 +260,34 @@ export interface HistoryDetail {
   meta: Record<string, unknown>;
 }
 
+/** 按北京时间一天的做题统计（GET /v1/questions/summary）。 */
+export interface HistorySummaryDay {
+  date: string; // YYYY-MM-DD（北京时间）
+  count: number;
+  graded: number;
+  correct: number;
+  wrong: number;
+  accuracy: number | null;
+  top_wrong_kcs: { kc_id: string; count: number }[];
+}
+
+export interface HistorySummary {
+  days: HistorySummaryDay[];
+}
+
+/** 按天统计（北京时区）。服务端没有就返回 null，前端自己从已加载记录里算。 */
+export async function historySummary(days = 30): Promise<HistorySummary | null> {
+  try {
+    return await requestJson<HistorySummary>(
+      `/v1/questions/summary?days=${encodeURIComponent(String(days))}`,
+      { headers: authHeaders() },
+      20_000
+    );
+  } catch {
+    return null; // 老服务端没有这个端点 → 前端本地口径兜底
+  }
+}
+
 // ── API ─────────────────────────────────────────────────────────────────────
 export interface AskInput {
   image?: Blob | null;
@@ -247,6 +326,20 @@ export function askFeedback(askId: string, understood: boolean): Promise<AskFeed
   return postJson<AskFeedbackResult>(
     `/v1/questions/ask/${encodeURIComponent(askId)}/feedback`,
     { understood }
+  );
+}
+
+/** 「这道题算错了？」反馈。服务端只记不返回细节，失败不打断学生。 */
+export function reportAsk(
+  askId: string,
+  body: { reason: string; comment?: string | null }
+): Promise<{ ok: true }> {
+  return postJson<{ ok: true }>(
+    `/v1/questions/ask/${encodeURIComponent(askId)}/report`,
+    {
+      reason: body.reason,
+      ...(body.comment && body.comment.trim() ? { comment: body.comment.trim() } : {}),
+    }
   );
 }
 
