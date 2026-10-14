@@ -300,7 +300,7 @@ class QuestionRecord(Base):
     source: Mapped[str] = mapped_column(String(32), nullable=False)
     subject: Mapped[Optional[str]] = mapped_column(String(20), nullable=True)
     grade: Mapped[Optional[str]] = mapped_column(String(10), nullable=True)
-    kc_ids: Mapped[Optional[list]] = mapped_column(JSONB, nullable=True)
+    kc_ids: Mapped[Optional[list]] = mapped_column(JSONB(none_as_null=True), nullable=True)
     question_ref: Mapped[Optional[str]] = mapped_column(String(128), nullable=True)
     question_text: Mapped[Optional[str]] = mapped_column(Text, nullable=True)
     image_key: Mapped[Optional[str]] = mapped_column(String(255), nullable=True)
@@ -316,7 +316,7 @@ class QuestionRecord(Base):
     wrong_question_id: Mapped[Optional[uuid.UUID]] = mapped_column(
         UUID(as_uuid=True), nullable=True
     )
-    meta: Mapped[Optional[dict]] = mapped_column(JSONB, nullable=True)
+    meta: Mapped[Optional[dict]] = mapped_column(JSONB(none_as_null=True), nullable=True)
     created_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True), server_default=text("now()"), nullable=False
     )

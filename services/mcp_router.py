@@ -75,6 +75,7 @@ _CONTENT_KC_SQL = text(
     SELECT DISTINCT jsonb_object_keys(knowledge_points) AS kc
     FROM wrong_questions
     WHERE needs_image = false AND question_text NOT LIKE '%<ImageHere>%'
+      AND jsonb_typeof(knowledge_points) = 'object'
     UNION
     SELECT kc_id FROM gate.rubric
     """

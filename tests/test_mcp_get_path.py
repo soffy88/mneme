@@ -143,3 +143,28 @@ async def test_get_path_content_filtered_and_ordered(g10a_path_baseline):
 
         # 无重复
         assert len(kc) == len(set(kc))
+
+
+@pytest.mark.asyncio
+async def test_get_path_tolerates_json_null_knowledge_points(g10a_path_baseline):
+    """历史脏数据：knowledge_points 存成 JSON 'null' 标量时 GetPath 不得 500。"""
+    from sqlalchemy import text as _text
+
+    bad = uuid.uuid4()
+    async with SessionLocal() as db:
+        await db.execute(
+            _text(
+                "INSERT INTO wrong_questions (id, subject, question_text, knowledge_points, needs_image) "
+                "VALUES (:i, 'math', '脏数据回归题', 'null'::jsonb, false)"
+            ),
+            {"i": bad},
+        )
+        await db.commit()
+    try:
+        async with SessionLocal() as db:
+            p = await tool_get_path(db, uuid.uuid4())
+            assert len(p["kc_ids"]) > 0
+    finally:
+        async with SessionLocal() as db:
+            await db.execute(_text("DELETE FROM wrong_questions WHERE id = :i"), {"i": bad})
+            await db.commit()

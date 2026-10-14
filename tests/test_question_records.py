@@ -538,3 +538,49 @@ async def test_recognize_prefers_vision_falls_back_to_ocr(monkeypatch):
     monkeypatch.setattr(pas, "_ocr_sidecar", ocr_down)
     r = await pas.recognize_image(b"img")
     assert r["engine"] == "none" and r["text"] == ""
+
+
+@pytest.mark.asyncio
+async def test_wrongbook_add_without_kc_stores_sql_null_and_getpath_ok(students):
+    """回归：无知识点的记录加入错题本，knowledge_points / kc_ids / meta 必须是 SQL NULL，
+    不能是 JSON 'null' 标量（否则 _CONTENT_KC_SQL 的 jsonb_object_keys 报错 → GetPath 500）。"""
+    a = students["a"]
+    async with _client() as c:
+        r = await c.post("/v1/questions/ask", data={"text": "这句话怎么理解？"}, headers=_h(a))
+        assert r.status_code == 200, r.text
+        ask_id = r.json()["ask_id"]
+        w = await c.post("/v1/wrongbook/add", json={"record_id": ask_id}, headers=_h(a))
+        assert w.status_code == 200, w.text
+        wq_id = w.json()["wrong_question_id"]
+        async with SessionLocal() as db:
+            kp_null = (
+                await db.execute(
+                    text("SELECT knowledge_points IS NULL, jsonb_typeof(knowledge_points) FROM wrong_questions WHERE id = :i"),
+                    {"i": wq_id},
+                )
+            ).one()
+            assert kp_null[1] != "null"
+            rows = (
+                await db.execute(
+                    text("SELECT jsonb_typeof(kc_ids), jsonb_typeof(meta) FROM question_records WHERE student_id = :s"),
+                    {"s": str(a)},
+                )
+            ).all()
+            assert rows and all(k != "null" and m != "null" for k, m in rows)
+        g = await c.post("/mcp/GetPath", json={"student_id": str(a)}, headers=_h(a))
+        assert g.status_code == 200, g.text
+
+
+@pytest.mark.asyncio
+async def test_question_record_none_json_fields_are_sql_null(students):
+    a = students["a"]
+    rid = uuid.uuid4()
+    async with SessionLocal() as db:
+        db.add(QuestionRecord(id=rid, student_id=a, source="photo_ask", kc_ids=None, meta=None))
+        await db.commit()
+        row = (
+            await db.execute(
+                text("SELECT kc_ids IS NULL, meta IS NULL FROM question_records WHERE id = :i"), {"i": str(rid)}
+            )
+        ).one()
+        assert row == (True, True)

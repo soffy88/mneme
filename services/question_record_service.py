@@ -237,6 +237,11 @@ async def _ensure_wrong_question(
             await db.flush()
             return wq.id
     kcs = _norm_kc_ids(kc_ids)
+    extra: dict[str, Any] = {}
+    if kcs:
+        # 只有非空才传：WrongQuestion.knowledge_points 是普通 JSONB（none_as_null=False），
+        # 显式传 None 会落成 JSON 'null' 标量，jsonb_object_keys 碰到即报错 → GetPath 500。
+        extra["knowledge_points"] = {k: k for k in kcs}
     wq = WrongQuestion(
         id=uuid.uuid4(),
         student_id=student_id,
@@ -244,10 +249,10 @@ async def _ensure_wrong_question(
         question_text=_clip(question_text, _MAX_TEXT),
         student_answer=_clip(student_answer, _MAX_ANSWER),
         correct_answer=_clip(correct_answer, _MAX_ANSWER),
-        knowledge_points={k: k for k in kcs} if kcs else None,
         source=source,
         image_key=image_key,
         needs_image=False,
+        **extra,
     )
     db.add(wq)
     await db.flush()
