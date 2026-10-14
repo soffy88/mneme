@@ -105,7 +105,7 @@ export interface AskResult {
   warning?: string;
 }
 
-export type SolveStatus = "ok" | "partial" | "llm_unavailable";
+export type SolveStatus = "ok" | "partial" | "multi" | "no_exact_solver" | "llm_unavailable";
 
 /** provider = 教学引擎（feature-flag）给的讲解；llm = 通用 LLM 兜底。 */
 export type SolverKind = "kernel" | "provider" | "llm" | "none";
@@ -156,6 +156,12 @@ export interface AskSolveResult {
   explanation: string | null;
   latency_ms: number;
   card?: AnswerCard | null;
+  /** 内核解的机器可判分答案（answer_kind=num/nums/expr/ineq/text）。 */
+  answer_value?: string | null;
+  answer_kind?: string | null;
+  unit?: string | null;
+  /** 实际求解的题面（多题图片选中那一题）。 */
+  question_text?: string | null;
 }
 
 /** 反馈「这道题算错了」：原因枚举 + 可选备注。 */
@@ -168,6 +174,7 @@ export interface AskFeedbackResult {
 export interface AskFollowupResult {
   reply: string;
   status: "ok" | "llm_unavailable";
+  solver?: string;
 }
 
 export interface WrongbookAddResult {
@@ -313,7 +320,7 @@ export function askQuestion(input: AskInput): Promise<AskResult> {
 /** 解题。可能 5–40s，故给 60s 超时。 */
 export function solveAsk(
   askId: string,
-  body: { text: string; subject?: string | null; grade?: string | null }
+  body: { text: string; subject?: string | null; grade?: string | null; question_index?: number }
 ): Promise<AskSolveResult> {
   return postJson<AskSolveResult>(
     `/v1/questions/ask/${encodeURIComponent(askId)}/solve`,

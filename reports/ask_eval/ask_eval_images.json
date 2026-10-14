@@ -1,0 +1,481 @@
+{
+ "mode": "images",
+ "total": {
+  "n": 45,
+  "answered": 24,
+  "correct": 20,
+  "coverage": 0.5333,
+  "accuracy": 0.8333,
+  "confident_wrong": 4,
+  "p50_ms": 1.9,
+  "p95_ms": 69.1
+ },
+ "per_type": {
+  "absval": {
+   "n": 1,
+   "answered": 1,
+   "correct": 0,
+   "coverage": 1.0,
+   "accuracy": 0.0
+  },
+  "chem_balance": {
+   "n": 1,
+   "answered": 1,
+   "correct": 0,
+   "coverage": 1.0,
+   "accuracy": 0.0
+  },
+  "chem_frac": {
+   "n": 1,
+   "answered": 0,
+   "correct": 0,
+   "coverage": 0.0,
+   "accuracy": null
+  },
+  "chem_mr": {
+   "n": 1,
+   "answered": 0,
+   "correct": 0,
+   "coverage": 0.0,
+   "accuracy": null
+  },
+  "chem_sol": {
+   "n": 1,
+   "answered": 1,
+   "correct": 1,
+   "coverage": 1.0,
+   "accuracy": 1.0
+  },
+  "chem_stoich": {
+   "n": 1,
+   "answered": 0,
+   "correct": 0,
+   "coverage": 0.0,
+   "accuracy": null
+  },
+  "expand": {
+   "n": 1,
+   "answered": 1,
+   "correct": 1,
+   "coverage": 1.0,
+   "accuracy": 1.0
+  },
+  "factor": {
+   "n": 1,
+   "answered": 1,
+   "correct": 0,
+   "coverage": 1.0,
+   "accuracy": 0.0
+  },
+  "frac": {
+   "n": 1,
+   "answered": 1,
+   "correct": 1,
+   "coverage": 1.0,
+   "accuracy": 1.0
+  },
+  "frac_eq": {
+   "n": 1,
+   "answered": 1,
+   "correct": 1,
+   "coverage": 1.0,
+   "accuracy": 1.0
+  },
+  "geom": {
+   "n": 1,
+   "answered": 1,
+   "correct": 1,
+   "coverage": 1.0,
+   "accuracy": 1.0
+  },
+  "ineq": {
+   "n": 1,
+   "answered": 1,
+   "correct": 1,
+   "coverage": 1.0,
+   "accuracy": 1.0
+  },
+  "ineq_sys": {
+   "n": 1,
+   "answered": 0,
+   "correct": 0,
+   "coverage": 0.0,
+   "accuracy": null
+  },
+  "invprop": {
+   "n": 1,
+   "answered": 0,
+   "correct": 0,
+   "coverage": 0.0,
+   "accuracy": null
+  },
+  "lineq": {
+   "n": 1,
+   "answered": 0,
+   "correct": 0,
+   "coverage": 0.0,
+   "accuracy": null
+  },
+  "linfunc": {
+   "n": 1,
+   "answered": 0,
+   "correct": 0,
+   "coverage": 0.0,
+   "accuracy": null
+  },
+  "percent": {
+   "n": 1,
+   "answered": 1,
+   "correct": 1,
+   "coverage": 1.0,
+   "accuracy": 1.0
+  },
+  "phy_buoy": {
+   "n": 1,
+   "answered": 0,
+   "correct": 0,
+   "coverage": 0.0,
+   "accuracy": null
+  },
+  "phy_density": {
+   "n": 1,
+   "answered": 0,
+   "correct": 0,
+   "coverage": 0.0,
+   "accuracy": null
+  },
+  "phy_gravity": {
+   "n": 1,
+   "answered": 0,
+   "correct": 0,
+   "coverage": 0.0,
+   "accuracy": null
+  },
+  "phy_heat": {
+   "n": 1,
+   "answered": 1,
+   "correct": 1,
+   "coverage": 1.0,
+   "accuracy": 1.0
+  },
+  "phy_lever": {
+   "n": 1,
+   "answered": 1,
+   "correct": 1,
+   "coverage": 1.0,
+   "accuracy": 1.0
+  },
+  "phy_liquid": {
+   "n": 1,
+   "answered": 0,
+   "correct": 0,
+   "coverage": 0.0,
+   "accuracy": null
+  },
+  "phy_ohm": {
+   "n": 1,
+   "answered": 0,
+   "correct": 0,
+   "coverage": 0.0,
+   "accuracy": null
+  },
+  "phy_power": {
+   "n": 1,
+   "answered": 1,
+   "correct": 1,
+   "coverage": 1.0,
+   "accuracy": 1.0
+  },
+  "phy_pressure": {
+   "n": 1,
+   "answered": 1,
+   "correct": 1,
+   "coverage": 1.0,
+   "accuracy": 1.0
+  },
+  "phy_speed": {
+   "n": 1,
+   "answered": 0,
+   "correct": 0,
+   "coverage": 0.0,
+   "accuracy": null
+  },
+  "phy_wave": {
+   "n": 1,
+   "answered": 0,
+   "correct": 0,
+   "coverage": 0.0,
+   "accuracy": null
+  },
+  "phy_work": {
+   "n": 1,
+   "answered": 1,
+   "correct": 1,
+   "coverage": 1.0,
+   "accuracy": 1.0
+  },
+  "power": {
+   "n": 1,
+   "answered": 1,
+   "correct": 0,
+   "coverage": 1.0,
+   "accuracy": 0.0
+  },
+  "prob": {
+   "n": 1,
+   "answered": 1,
+   "correct": 1,
+   "coverage": 1.0,
+   "accuracy": 1.0
+  },
+  "pyth": {
+   "n": 1,
+   "answered": 1,
+   "correct": 1,
+   "coverage": 1.0,
+   "accuracy": 1.0
+  },
+  "quad": {
+   "n": 1,
+   "answered": 1,
+   "correct": 1,
+   "coverage": 1.0,
+   "accuracy": 1.0
+  },
+  "quad_disc": {
+   "n": 1,
+   "answered": 0,
+   "correct": 0,
+   "coverage": 0.0,
+   "accuracy": null
+  },
+  "quadfunc": {
+   "n": 1,
+   "answered": 0,
+   "correct": 0,
+   "coverage": 0.0,
+   "accuracy": null
+  },
+  "radical": {
+   "n": 1,
+   "answered": 0,
+   "correct": 0,
+   "coverage": 0.0,
+   "accuracy": null
+  },
+  "ratio": {
+   "n": 1,
+   "answered": 0,
+   "correct": 0,
+   "coverage": 0.0,
+   "accuracy": null
+  },
+  "sci": {
+   "n": 1,
+   "answered": 0,
+   "correct": 0,
+   "coverage": 0.0,
+   "accuracy": null
+  },
+  "simplify_frac": {
+   "n": 1,
+   "answered": 1,
+   "correct": 1,
+   "coverage": 1.0,
+   "accuracy": 1.0
+  },
+  "stats": {
+   "n": 1,
+   "answered": 0,
+   "correct": 0,
+   "coverage": 0.0,
+   "accuracy": null
+  },
+  "sys2": {
+   "n": 1,
+   "answered": 1,
+   "correct": 1,
+   "coverage": 1.0,
+   "accuracy": 1.0
+  },
+  "sys3": {
+   "n": 1,
+   "answered": 1,
+   "correct": 1,
+   "coverage": 1.0,
+   "accuracy": 1.0
+  },
+  "trig": {
+   "n": 1,
+   "answered": 1,
+   "correct": 1,
+   "coverage": 1.0,
+   "accuracy": 1.0
+  },
+  "unit": {
+   "n": 1,
+   "answered": 1,
+   "correct": 1,
+   "coverage": 1.0,
+   "accuracy": 1.0
+  },
+  "word_age": {
+   "n": 1,
+   "answered": 0,
+   "correct": 0,
+   "coverage": 0.0,
+   "accuracy": null
+  }
+ },
+ "wrong": [
+  {
+   "id": "absval-02",
+   "type": "absval",
+   "ms": 2243.1,
+   "kernel": "arith.rational",
+   "answer": "3/2",
+   "answer_value": "3/2",
+   "expected": [
+    "1"
+   ],
+   "unit": "",
+   "image": "000_absval-02.jpg",
+   "ocr_text": "计算：|-5/2|-1（-3/2)|的值",
+   "ocr_ms": 3771,
+   "result": "wrong"
+  },
+  {
+   "id": "chem_balance-01",
+   "type": "chem_balance",
+   "ms": 528.4,
+   "kernel": "chemistry.balance",
+   "answer": "CH + 2O = CO + HO",
+   "answer_value": "1, 2, 1, 1",
+   "expected": [
+    "1",
+    "2",
+    "1",
+    "2"
+   ],
+   "unit": "",
+   "image": "001_chem_balance-01.jpg",
+   "ocr_text": "配平下列化学方程式，写出各物质前的化学计量数（按CH、O\n、CO、HO的顺序）： CH+O→（点燃）CO\n+HO",
+   "ocr_ms": 6608,
+   "result": "wrong"
+  },
+  {
+   "id": "factor-03",
+   "type": "factor",
+   "ms": 7.9,
+   "kernel": "arith.rational",
+   "answer": "-4",
+   "answer_value": "-4",
+   "expected": "2*(x-2)*(x+2)",
+   "unit": "",
+   "image": "007_factor-03.jpg",
+   "ocr_text": "因式分解：2x2-8.",
+   "ocr_ms": 4213,
+   "result": "wrong"
+  },
+  {
+   "id": "power-04",
+   "type": "power",
+   "ms": 6.2,
+   "kernel": "arith.rational",
+   "answer": "1",
+   "answer_value": "1",
+   "expected": "10/9",
+   "unit": "",
+   "image": "029_power-04.jpg",
+   "ocr_text": "计算：（-2)~0+3-2.",
+   "ocr_ms": 4407,
+   "result": "wrong"
+  }
+ ],
+ "unanswered": [
+  {
+   "id": "chem_frac-04",
+   "type": "chem_frac"
+  },
+  {
+   "id": "chem_mr-03",
+   "type": "chem_mr"
+  },
+  {
+   "id": "chem_stoich-03",
+   "type": "chem_stoich"
+  },
+  {
+   "id": "ineq_sys-04",
+   "type": "ineq_sys"
+  },
+  {
+   "id": "invprop-02",
+   "type": "invprop"
+  },
+  {
+   "id": "lineq-03",
+   "type": "lineq"
+  },
+  {
+   "id": "linfunc-02",
+   "type": "linfunc"
+  },
+  {
+   "id": "phy_buoy-04",
+   "type": "phy_buoy"
+  },
+  {
+   "id": "phy_density-03",
+   "type": "phy_density"
+  },
+  {
+   "id": "phy_gravity-02",
+   "type": "phy_gravity"
+  },
+  {
+   "id": "phy_liquid-02",
+   "type": "phy_liquid"
+  },
+  {
+   "id": "phy_ohm-05",
+   "type": "phy_ohm"
+  },
+  {
+   "id": "phy_speed-03",
+   "type": "phy_speed"
+  },
+  {
+   "id": "phy_wave-01",
+   "type": "phy_wave"
+  },
+  {
+   "id": "quad_disc-01",
+   "type": "quad_disc"
+  },
+  {
+   "id": "quadfunc-03",
+   "type": "quadfunc"
+  },
+  {
+   "id": "radical-03",
+   "type": "radical"
+  },
+  {
+   "id": "ratio-04",
+   "type": "ratio"
+  },
+  {
+   "id": "sci-01",
+   "type": "sci"
+  },
+  {
+   "id": "stats-04",
+   "type": "stats"
+  },
+  {
+   "id": "word_age-02",
+   "type": "word_age"
+  }
+ ]
+}

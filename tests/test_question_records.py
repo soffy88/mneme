@@ -65,7 +65,7 @@ def test_kernel_linear_equation_from_ocr_text():
     from services.ask_kernels import solve_math_text
 
     sol = solve_math_text("1. 解方程：3x+5=20，求× 的值。")
-    assert sol is not None and sol.kernel == "algebra.linear"
+    assert sol is not None and sol.kernel == "algebra.linear_eq"
     assert sol.answer == "x = 5"
     assert any("检验" in s for s in sol.steps)
     assert "x" in sol.hint
@@ -75,11 +75,11 @@ def test_kernel_quadratic_and_arithmetic():
     from services.ask_kernels import solve_math_text
 
     q = solve_math_text("解方程 x²-5x+6=0")
-    assert q is not None and q.kernel == "algebra.quadratic"
+    assert q is not None and q.kernel == "algebra.quadratic_eq"
     assert "2" in q.answer and "3" in q.answer and any("因式分解" in s for s in q.steps)
-    assert solve_math_text("x^2+2x+5=0").answer == "无实数根"
+    assert solve_math_text("x^2+2x+5=0").answer_value == "无实数根"
     ar = solve_math_text("计算：(-2)² + 4 × 3 = ?")
-    assert ar is not None and ar.kernel == "arithmetic" and ar.answer == "16"
+    assert ar is not None and ar.kernel.startswith("arith") and ar.answer == "16"
     assert solve_math_text("1/2 + 1/3 =").answer.startswith("5/6")
     assert solve_math_text("今天天气很好") is None
     assert solve_math_text("速度 v = 3 m/s，求路程") is None

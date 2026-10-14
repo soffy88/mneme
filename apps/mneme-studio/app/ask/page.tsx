@@ -40,6 +40,17 @@ type Phase = "idle" | "picking" | "cropping" | "lines" | "recognizing" | "confir
 type RetryKind = "recognize" | "solve" | null;
 type ChatMsg = { role: "me" | "ai"; text: string };
 
+// 后端 /solve 的扩展字段（services/photo_ask_service.solve_question 的文档）：
+// status="multi" → questions；status="no_exact_solver" → similar / references。
+type AskQuestionItem = { index: number; label: string; text: string; solvable: boolean; kernel: string | null };
+type AskSimilarItem = { text: string; answer: string; steps?: string[]; hint?: string | null; score?: number };
+type AskReference = { content: string; book_name?: string | null; page_number?: number | null };
+type AskSolveExtra = AskSolveResult & {
+  questions?: AskQuestionItem[];
+  similar?: AskSimilarItem[];
+  references?: AskReference[];
+};
+
 export default function AskPage() {
   const [phase, setPhase] = useState<Phase>("idle");
   const [subject, setSubject] = useState<string | null>(null);
@@ -157,7 +168,7 @@ export default function AskPage() {
     }
   }, [sourceBlob, typedText, subject]);
 
-  const startSolve = useCallback(async () => {
+  const startSolve = useCallback(async (questionIndex?: number) => {
     if (!ask) return;
     setPhase("solving");
     setError(null);
@@ -169,6 +180,7 @@ export default function AskPage() {
         text: confirmText.trim(),
         subject: ask.subject ?? subject,
         grade: ask.grade,
+        ...(typeof questionIndex === "number" ? { question_index: questionIndex } : {}),
       });
       setSolve(r);
       setPhase("done");
@@ -231,8 +243,8 @@ export default function AskPage() {
         {
           role: "ai",
           text:
-            r.status === "llm_unavailable"
-              ? "AI 老师有点忙，稍后再试"
+            r.status === "llm_unavailable" && !r.reply
+              ? "我们换个角度再看一遍步骤，哪一步不懂就回复“第几步”。"
               : r.reply,
         },
       ]);
@@ -268,6 +280,7 @@ export default function AskPage() {
 
   const solver = solve ? solverLabel(solve.solver) : null;
   const kernel = kernelLabel(solve?.kernel);
+  const solveX = solve as AskSolveExtra | null;
   const llmBusy = solve?.status === "llm_unavailable";
   const emptyText = phase === "confirm" && !confirmText.trim();
   const hasCard = !!solve?.card;
@@ -277,7 +290,7 @@ export default function AskPage() {
       <header className="space-y-1">
         <h1 className="text-2xl font-bold">拍照问题目</h1>
         <p className="text-base text-[var(--muted-foreground,#666)]">
-          拍下不会的题，AI 老师一步步讲给你听。
+          拍下不会的题，马上给你思路、步骤和答案。
         </p>
       </header>
       <ProductNav />
@@ -453,6 +466,26 @@ export default function AskPage() {
             {/* 卡片型答案（单词/古诗/拼音/成语）：比 hint/steps 更贴题型 */}
             <AnswerCard card={solve.card} />
 
+            
+            {solve.status === "multi" && (solveX?.questions?.length ?? 0) > 0 && (
+              <div className="space-y-2" data-testid="ask-multi">
+                {solveX?.questions?.map((q) => (
+                  <button
+                    key={q.index}
+                    type="button"
+                    className="w-full rounded-lg border p-3 text-left text-base min-h-[44px]"
+                    onClick={() => void startSolve(q.index)}
+                  >
+                    <span className="mr-2 font-semibold">{q.label}</span>
+                    <MathText text={q.text} />
+                    {q.solvable && (
+                      <span className="ml-2 rounded-full bg-[var(--secondary)] px-2 py-0.5 text-xs">可精确求解</span>
+                    )}
+                  </button>
+                ))}
+              </div>
+            )}
+
             {!hasCard && solve.hint && (
               <div
                 className="rounded-xl bg-[var(--secondary)] p-4 text-base"
@@ -510,6 +543,37 @@ export default function AskPage() {
             {solve.explanation && (
               <div className="text-base whitespace-pre-wrap text-[var(--muted-foreground,#555)]">
                 {solve.explanation}
+              </div>
+            )}
+
+            {solve.status === "no_exact_solver" && (solveX?.similar?.length ?? 0) > 0 && (
+              <div className="space-y-2" data-testid="ask-similar">
+                <div className="text-sm font-semibold">同类题参考</div>
+                {solveX?.similar?.map((q, i) => (
+                  <details key={i} className="rounded-lg border p-3 text-base">
+                    <summary className="cursor-pointer"><MathText text={q.text} /></summary>
+                    {(q.steps ?? []).length > 0 && (
+                      <ol className="mt-2 list-decimal space-y-1 pl-5 text-sm">
+                        {(q.steps ?? []).map((st, j) => (
+                          <li key={j}><MathText text={st} /></li>
+                        ))}
+                      </ol>
+                    )}
+                    <div className="mt-2 text-sm">答案：<MathText text={q.answer} /></div>
+                  </details>
+                ))}
+              </div>
+            )}
+
+            {solve.status === "no_exact_solver" && (solveX?.references?.length ?? 0) > 0 && (
+              <div className="space-y-2" data-testid="ask-references">
+                <div className="text-sm font-semibold">教材相关内容</div>
+                {solveX?.references?.map((r, i) => (
+                  <div key={i} className="rounded-lg bg-[var(--muted,#f4f4f4)] p-3 text-sm">
+                    {r.book_name && <div className="mb-1 text-xs text-[var(--muted-foreground,#888)]">{r.book_name}{r.page_number ? ` 第 ${r.page_number} 页` : ""}</div>}
+                    {r.content}
+                  </div>
+                ))}
               </div>
             )}
 
@@ -592,7 +656,7 @@ export default function AskPage() {
       )}
 
       {/* e. 底部动作栏 */}
-      {phase === "done" && (
+      {phase === "done" && solve?.status !== "multi" && (
         <div className="fixed inset-x-0 bottom-0 z-10 border-t bg-[var(--background)] p-3">
           <div className="mx-auto flex max-w-xl gap-2">
             <OButton

@@ -14,10 +14,15 @@ fsrs_card_json / fsrs_due / fsrs_state 列——不另建调度器。
 英语 → 缩写感知等价；仍判不了且 LLM 可用 → LLM 判分（短超时）；否则学生对照答案自评。
 
 毕业：连续答对 3 次且最近一次答对时 FSRS 间隔 ≥ 7 天（或连续答对 4 次）→ graduated_at，不再出现。
+
+变式（services.ask_kernels.variants）：能被精确内核解出的错题，第一次复习出原题，之后的复习出
+“同类型、换数字”的变式题（种子 = 错题 id + 已复习次数，确定性，作答时用同一种子重建并用内核判分）。
+会话里的变式题 item 带 variant=True 与 original_text；作答接口不变（仍按 item_id 提交）。
 """
 
 from __future__ import annotations
 
+import asyncio
 import re
 import uuid
 from datetime import datetime, timedelta, timezone
@@ -28,6 +33,8 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from services.logging_config import logger
 from services.models import KCMastery, WrongQuestion
+
+VARIANT_SUBJECTS = {None, "", "math", "数学", "physics", "物理", "chemistry", "化学"}
 
 SESSION_BUDGET_SECONDS = 600
 MAX_ITEMS = 10
@@ -143,6 +150,38 @@ async def grade_with_llm(question: str, answer: str, expected: str, timeout: flo
     return None
 
 
+def _variant_seed(item_id: uuid.UUID, review_count: int) -> int:
+    return (int(item_id.hex[:8], 16) ^ (int(review_count) * 7919)) & 0x7FFFFFFF
+
+
+_VARIANT_CACHE: dict[tuple[str, int], Optional[dict]] = {}
+
+
+def variant_for(question_text: Optional[str], subject: Optional[str], item_id: uuid.UUID, review_count: int) -> Optional[dict]:
+    """第 2 次及以后的复习：返回 {text, kernel, solution}；第一次（review_count=0）或做不出干净变式 → None。"""
+    if review_count < 1 or not question_text or subject not in VARIANT_SUBJECTS:
+        return None
+    seed = _variant_seed(item_id, review_count)
+    key = (question_text, seed)
+    if key in _VARIANT_CACHE:
+        return _VARIANT_CACHE[key]
+    try:
+        from services.ask_kernels.variants import make_variant
+
+        v = make_variant(question_text, seed, subject=subject)
+    except Exception as exc:  # noqa: BLE001
+        logger.info("wrongbook variant failed: %s", type(exc).__name__)
+        v = None
+    if len(_VARIANT_CACHE) > 512:
+        _VARIANT_CACHE.clear()
+    _VARIANT_CACHE[key] = v
+    return v
+
+
+def _variant_answer_type(kind: str) -> str:
+    return "numeric" if kind in ("num", "nums") else "text"
+
+
 def _first_kc(wq: WrongQuestion) -> Optional[str]:
     kp = wq.knowledge_points or {}
     for k in kp.keys() if isinstance(kp, dict) else []:
@@ -224,6 +263,35 @@ async def build_today_session(db: AsyncSession, student_id: uuid.UUID, *, now: O
                 "answer_type": atype,
                 "est_seconds": est,
                 "review_count": int(r.review_count or 0),
+                "variant": False,
+                "_rc": int(r.review_count or 0),
+                "_id": r.id,
+            }
+        )
+    # 变式：第二次起出“换数字”的同类题（CPU 计算放线程，整体限时）
+    import time as _time
+
+    t_var = _time.monotonic()
+    for item in picked:
+        rc, rid = item.pop("_rc"), item.pop("_id")
+        if rc < 1 or _time.monotonic() - t_var > 4.0:
+            continue
+        try:
+            v = await asyncio.wait_for(
+                asyncio.to_thread(variant_for, item["question_text"], item["subject"], rid, rc), timeout=2.5
+            )
+        except Exception:  # noqa: BLE001
+            v = None
+        if v is None:
+            continue
+        item.update(
+            {
+                "variant": True,
+                "original_text": item["question_text"],
+                "question_text": v["text"],
+                "has_image": False,
+                "image_record_id": None,
+                "answer_type": _variant_answer_type(v["solution"].get("answer_kind", "num")),
             }
         )
     total_due = len(due_rows) + len(new_rows)
@@ -283,11 +351,37 @@ async def answer_item(
         return None
     expected = wq.correct_answer or ""
     question = wq.question_text or ""
+    variant = await asyncio.to_thread(variant_for, question, wq.subject, wq.id, int(wq.review_count or 0))
+    variant_steps: Optional[str] = None
+    kernel_sol: Optional[dict] = variant["solution"] if variant else None
+    if variant:
+        question = variant["text"]
+        expected = str(variant["solution"].get("answer") or "")
+        variant_steps = "\n".join(str(x) for x in (variant["solution"].get("steps") or [])[:8])
     if self_grade is not None:
         is_correct: Optional[bool] = bool(self_grade)
         grader = "self"
     else:
-        is_correct, grader = grade_deterministic(answer, expected, wq.subject)
+        is_correct, grader = None, "none"
+        if kernel_sol is None and (answer or "").strip() and answer_type(expected, wq.subject) != "choice":
+            kernel_sol = await asyncio.to_thread(_kernel_solution, question, wq.subject)
+        if kernel_sol is not None and (answer or "").strip():
+            from services.ask_kernels.variants import grade_answer
+
+            try:
+                k = await asyncio.to_thread(
+                    grade_answer,
+                    answer,
+                    str(kernel_sol.get("answer_value") or ""),
+                    str(kernel_sol.get("answer_kind") or "num"),
+                    str(kernel_sol.get("unit") or ""),
+                )
+            except Exception:  # noqa: BLE001
+                k = None
+            if k is not None:
+                is_correct, grader = k, "kernel"
+        if is_correct is None and not variant:
+            is_correct, grader = grade_deterministic(answer, expected, wq.subject)
         if is_correct is None and expected and (answer or "").strip():
             llm = await grade_with_llm(question, answer, expected)
             if llm is not None:
@@ -298,7 +392,8 @@ async def answer_item(
             "is_correct": None,
             "needs_self_grade": True,
             "correct_answer": expected or None,
-            "explanation": _explanation(wq),
+            "variant": bool(variant),
+            "explanation": variant_steps or _explanation(wq),
             "grader": "none",
             "next_due": wq.fsrs_due.isoformat() if wq.fsrs_due else None,
             "graduated": False,
@@ -307,9 +402,9 @@ async def answer_item(
     sched = schedule_after_answer(wq, is_correct=is_correct, struggled=struggled, now=now)
     kc = _first_kc(wq)
     subject, kp = wq.subject, wq.knowledge_points
-    image_key = wq.image_key
+    image_key = wq.image_key if not variant else None
     wq_id = wq.id
-    explanation = _explanation(wq)
+    explanation = variant_steps or _explanation(wq)
     await db.commit()  # 默认 expire_on_commit：此后不再读 wq 属性（async 懒加载会炸）
 
     # BKT/FSRS 知识点真相源：有真实 KC 才写；失败不影响复习主流程。
@@ -347,18 +442,35 @@ async def answer_item(
         grader=grader,
         duration_ms=duration_ms,
         wrong_question_id=item_id,
-        meta={"session_id": session_id, "graduated": sched["graduated"], "next_due": sched["next_due"]},
+        meta={
+            "session_id": session_id,
+            "graduated": sched["graduated"],
+            "next_due": sched["next_due"],
+            **({"variant": True, "variant_kernel": variant["kernel"]} if variant else {}),
+        },
     )
     return {
         "item_id": str(item_id),
         "is_correct": is_correct,
         "needs_self_grade": False,
+        "variant": bool(variant),
         "correct_answer": expected or None,
         "explanation": explanation,
         "grader": grader,
         "next_due": sched["next_due"],
         "graduated": sched["graduated"],
     }
+
+
+def _kernel_solution(question: str, subject: Optional[str]) -> Optional[dict]:
+    """原题能被精确内核解出时，用内核答案判分（比字符串比对更稳）。"""
+    try:
+        from services.ask_kernels import solve_text
+
+        sol = solve_text(question, subject, budget_s=2.0)
+    except Exception:  # noqa: BLE001
+        return None
+    return sol.to_dict() if sol is not None else None
 
 
 def _explanation(wq: WrongQuestion) -> Optional[str]:
