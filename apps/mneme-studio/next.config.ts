@@ -16,6 +16,7 @@ const nextConfig: NextConfig = {
   basePath: "/studio",
   transpilePackages: ["@helios/blocks"],
   reactStrictMode: true,
-  output: "standalone", // 生产：standalone 产物便于容器化（同 mneme-web 部署方式）。};
+  output: "standalone", // 生产：standalone 产物便于容器化（同 mneme-web 部署方式）。
+};
 
 export default nextConfig;

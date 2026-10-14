@@ -12,6 +12,7 @@ import { OButton, OCard, OCardHeader, OCardTitle, OEmptyState, OProgressBar } fr
 import { ProductNav } from "@/components/ProductNav";
 import { formatWhen, subjectLabel } from "@/lib/format";
 import { MathText } from "@/components/MathText";
+import { MathKeyboard } from "@/components/ask/MathKeyboard";
 import { getToken, redirectToLogin } from "@/lib/mcp";
 import {
   fetchQuestionImageUrl, reviewAnswer, reviewFinish, reviewToday,
@@ -77,6 +78,7 @@ export default function ReviewPage() {
   const [correct, setCorrect] = useState(0);
   const [finished, setFinished] = useState<ReviewFinishResult | null>(null);
 
+  const answerRef = useRef<HTMLTextAreaElement | null>(null);
   const itemStartRef = useRef<number>(0);
   const sessionStartRef = useRef<number>(0);
 
@@ -221,12 +223,21 @@ export default function ReviewPage() {
           {!loading && today && total === 0 && (
             <OCard>
               <div className="p-4 space-y-4">
-                <OEmptyState title="错题本是空的 🎉" description="拍一道不会的题，就开始了。" />
+                <OEmptyState title="今天没有要复习的错题 🎉" description="错题都巩固好了。也可以拍一道暂时不会的题，继续练习。" />
+                {today.streak > 0 && (
+                  <p className="text-base text-[var(--muted-foreground,#888)]">已连续复习 {today.streak} 天 🔥</p>
+                )}
                 <Link
                   href="/ask"
-                  className="inline-flex min-h-[44px] items-center rounded-[var(--control-radius)] bg-[var(--primary)] px-4 text-base text-[var(--primary-foreground)]"
+                  className="flex min-h-[52px] w-full items-center justify-center rounded-[var(--control-radius)] bg-[var(--primary)] px-4 text-base font-semibold text-[var(--primary-foreground)]"
                 >
-                  去拍一道题
+                  拍一道不会的题
+                </Link>
+                <Link
+                  href="/practice"
+                  className="flex min-h-[48px] w-full items-center justify-center rounded-[var(--control-radius)] border border-[var(--border)] px-4 text-base"
+                >
+                  去练习
                 </Link>
               </div>
             </OCard>
@@ -334,14 +345,19 @@ export default function ReviewPage() {
               )}
 
               {!result && current.answer_type === "numeric" && (
-                <input
-                  data-testid="review-answer"
-                  inputMode="decimal"
-                  className="min-h-[48px] w-full rounded-xl border px-3 text-base"
-                  placeholder="写下你的答案"
-                  value={answer}
-                  onChange={(e) => setAnswer(e.target.value)}
-                />
+                <div className="space-y-2">
+                  <MathKeyboard target={answerRef} onChange={setAnswer} />
+                  <textarea
+                    ref={answerRef}
+                    data-testid="review-answer"
+                    inputMode="decimal"
+                    rows={2}
+                    className="min-h-[52px] w-full rounded-xl border px-3 py-3 text-base"
+                    placeholder="写下你的答案（支持分数、根号和数学符号）"
+                    value={answer}
+                    onChange={(e) => setAnswer(e.target.value)}
+                  />
+                </div>
               )}
 
               {!result && current.answer_type === "text" && (
@@ -456,15 +472,15 @@ export default function ReviewPage() {
           <div className="p-6 space-y-5 text-center">
             <div className="text-6xl" aria-hidden>🔥</div>
             <div className="text-2xl font-bold">
-              连续复习 {finished?.streak ?? today?.streak ?? 0} 天
+              连续 {finished?.streak ?? today?.streak ?? 0} 天 🔥
             </div>
-            <div className="text-base">
-              本轮作答 {answered} 题，答对 {correct} 题。
+            <div className="text-xl font-bold" data-testid="review-finish-summary">
+              今天复习 {finished?.today_minutes ?? Math.round((Date.now() - sessionStartRef.current) / 60000)} 分钟 · {finished?.today_answered ?? answered} 题 · 正确率 {Math.round((finished?.today_accuracy ?? ((finished?.today_answered ?? answered) > 0 ? (finished?.today_correct ?? correct) / (finished?.today_answered ?? answered) : 0)) * 100)}%
             </div>
             {finished?.message && <div className="text-base">{finished.message}</div>}
-            {finished && finished.remaining_due > 0 && (
+            {finished && (
               <div className="text-base text-[var(--muted-foreground,#888)]">
-                还有 {finished.remaining_due} 道等着复习
+                明天要复习 {finished.due_tomorrow ?? 0} 题
               </div>
             )}
             {finished?.next_due_at && (

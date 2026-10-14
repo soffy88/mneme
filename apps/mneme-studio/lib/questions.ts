@@ -224,6 +224,7 @@ export interface ReviewFinishResult {
   today_minutes?: number | null;
   today_answered?: number | null;
   today_correct?: number | null;
+  today_accuracy?: number | null;
   due_tomorrow?: number | null;
 }
 
@@ -275,7 +276,8 @@ export interface HistorySummaryDay {
   correct: number;
   wrong: number;
   accuracy: number | null;
-  top_wrong_kcs: { kc_id: string; count: number }[];
+  minutes?: number | null;
+  top_wrong_kcs: { kc_id: string; name?: string | null; count: number }[];
 }
 
 export interface HistorySummary {
