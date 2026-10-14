@@ -10,6 +10,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { OButton, OCard, OCardHeader, OCardTitle, OEmptyState, OProgressBar } from "@helios/blocks";
 import { ProductNav } from "@/components/ProductNav";
+import { formatWhen, subjectLabel } from "@/lib/format";
 import { MathText } from "@/components/MathText";
 import { getToken, redirectToLogin } from "@/lib/mcp";
 import {
@@ -284,7 +285,7 @@ export default function ReviewPage() {
           <OCard>
             <OCardHeader>
               <OCardTitle>
-                {current.subject ? `${current.subject} · ` : ""}
+                {current.subject ? `${subjectLabel(current.subject)} · ` : ""}
                 {current.review_count > 0 ? `复习过 ${current.review_count} 次` : "新错题"}
               </OCardTitle>
             </OCardHeader>
@@ -464,6 +465,11 @@ export default function ReviewPage() {
             {finished && finished.remaining_due > 0 && (
               <div className="text-base text-[var(--muted-foreground,#888)]">
                 还有 {finished.remaining_due} 道等着复习
+              </div>
+            )}
+            {finished?.next_due_at && (
+              <div className="text-base text-[var(--muted-foreground,#888)]" data-testid="review-next-due">
+                下次复习：{formatWhen(finished.next_due_at)}
               </div>
             )}
             <div className="flex flex-col gap-2">

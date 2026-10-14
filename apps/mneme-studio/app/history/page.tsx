@@ -9,6 +9,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { OButton, OCard, OEmptyState } from "@helios/blocks";
 import { ProductNav } from "@/components/ProductNav";
+import { SUBJECT_OPTIONS, formatWhen, subjectLabel } from "@/lib/format";
 import { MathText } from "@/components/MathText";
 import { getToken, redirectToLogin } from "@/lib/mcp";
 import {
@@ -23,7 +24,6 @@ const RESULT_CHIPS: { label: string; value: HistoryResult | null }[] = [
   { label: "提问", value: "unknown" },
 ];
 
-const SUBJECTS = ["数学", "物理", "化学", "英语", "语文", "其他"];
 
 const SOURCES: { label: string; value: string }[] = [
   { label: "全部来源", value: "" },
@@ -37,16 +37,6 @@ const SOURCES: { label: string; value: string }[] = [
 
 const PAGE_SIZE = 20;
 
-function formatWhen(iso: string): string {
-  const d = new Date(iso);
-  if (Number.isNaN(d.getTime())) return "";
-  const now = new Date();
-  const time = d.toLocaleTimeString("zh-CN", { hour: "2-digit", minute: "2-digit", hour12: false });
-  if (d.getFullYear() === now.getFullYear()) {
-    return `${d.getMonth() + 1}月${d.getDate()}日 ${time}`;
-  }
-  return `${d.getFullYear()}年${d.getMonth() + 1}月${d.getDate()}日 ${time}`;
-}
 
 function resultIcon(isCorrect: boolean | null): string {
   if (isCorrect === true) return "✅";
@@ -145,7 +135,7 @@ function HistoryRow({ item }: { item: HistoryItem }) {
             <span className="text-lg" aria-hidden>{resultIcon(item.is_correct)}</span>
             <span className="truncate text-sm text-[var(--muted-foreground,#888)]">
               {item.source_label}
-              {item.subject ? ` · ${item.subject}` : ""}
+              {item.subject ? ` · ${subjectLabel(item.subject)}` : ""}
             </span>
           </div>
           <span className="shrink-0 text-sm text-[var(--muted-foreground,#888)]">
@@ -286,8 +276,8 @@ export default function HistoryPage() {
             onChange={(e) => setSubject(e.target.value)}
           >
             <option value="">全部科目</option>
-            {SUBJECTS.map((s) => (
-              <option key={s} value={s}>{s}</option>
+            {SUBJECT_OPTIONS.map((s) => (
+              <option key={s.value} value={s.value}>{s.label}</option>
             ))}
           </select>
         </label>
