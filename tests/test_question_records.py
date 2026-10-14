@@ -520,6 +520,7 @@ async def test_recognize_prefers_vision_falls_back_to_ocr(monkeypatch):
     async def vision_down(b64):
         raise RuntimeError("gateway reset")
 
+    monkeypatch.setenv("MNEME_ASK_VISION", "1")  # 视觉默认关闭，这里显式打开测竞速
     monkeypatch.setattr(pas, "_ocr_sidecar", ocr_ok)
     monkeypatch.setattr(pas, "_vision_cooldown_until", 0.0)
     monkeypatch.setattr(pas, "_vision", vision_ok)

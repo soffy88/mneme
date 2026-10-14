@@ -226,6 +226,11 @@ services:
     restart: unless-stopped
     environment:
       OMP_NUM_THREADS: ${MNEME_OCR_THREADS:-4}
+      MNEME_OCR_THREADS: ${MNEME_OCR_THREADS:-4}
+      # 检测限长 960（长边）+ 预处理（透视/纠偏/去阴影/CLAHE）；p50 ≈1.2s/张（4 核）
+      MNEME_OCR_DET_SIDE: ${MNEME_OCR_DET_SIDE:-960}
+      MNEME_OCR_MAX_SIDE: ${MNEME_OCR_MAX_SIDE:-1600}
+      MNEME_OCR_PREPROCESS: ${MNEME_OCR_PREPROCESS:-1}
     cpus: ${MNEME_OCR_CPUS:-4}
     mem_limit: 1500m
     networks:

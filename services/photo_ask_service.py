@@ -2,11 +2,12 @@
 
 识别（全部免费）：
 - 本机 CPU OCR sidecar（RapidOCR，compose 服务 ``ocr``，MNEME_OCR_URL，默认 http://ocr:8100）；
-- 同时（可选）问已配置的视觉模型（get_vision_caller，Veya VL）。OCR 先回来就先等视觉一小段宽限，
-  视觉超时/失败就用 OCR 结果。MNEME_ASK_VISION=0 可关掉视觉。
+- 可选：同时问已配置的视觉模型（get_vision_caller，Veya VL）。**默认关闭**（MNEME_ASK_VISION=1 才开），
+  开启时 OCR 先回来就先等视觉一小段宽限，视觉超时/失败就用 OCR 结果。
 
 求解：
 - 精确内核（services.ask_kernels：一元一次/二次方程、算术、化学配平）命中 → 毫秒级返回，不调 LLM；
+- 再试确定性 provider（services.ask_providers：英语查词/语法、语文拼音/古诗词/成语）→ solver="provider"；
 - 否则问文本 LLM（get_optional_text_caller），带超时（MNEME_ASK_LLM_TIMEOUT，默认 35s）；
   失败返回 status=llm_unavailable，前端提示稍后重试——绝不 500。
 
@@ -90,13 +91,60 @@ def guess_subject(text: str) -> Optional[str]:
     return None
 
 
+_FW_ASCII = {i: i - 0xFEE0 for i in range(0xFF01, 0xFF5F)}
+# 全角字母数字和运算符转半角；中文标点（，。：；？！、（）「」）保留——语文题要用
+for _keep in "，。：；？！（）":
+    _FW_ASCII.pop(ord(_keep), None)
+_MATHY = re.compile(r"[0-9][\s]*[+\-×÷=<>≤≥/^]|[=+×÷√≤≥]|方程|计算|化简|求值|不等式")
+
+
+def clean_math_line(line: str) -> str:
+    """数学式子行的 OCR 清洗（确定性、保守）：全角转半角、乘号/变量 x、上标、根号、括号。"""
+    s = line
+    if not _MATHY.search(s):
+        return s
+    s = s.replace("（", "(").replace("）", ")") if re.search(r"[0-9a-z][)）]|[(（][-0-9a-z]", s) else s
+    # 变量 X/×：「求 × 的值」「2x - 7」里的 ×/X 是变量 x
+    s = re.sub(r"求\s*[×X]\s*的", "求 x 的", s)
+    s = re.sub(r"(?<=[0-9])\s*[×X]\s*(?=[\s]*[+\-=<>≤≥)²³]|$)", "x", s)
+    s = re.sub(r"(?<![A-Za-z])X(?![A-Za-z])", "x", s)
+    # 上标：变量后紧跟 2/3 再接运算符/结尾 → ²/³（x2-5x → x²-5x）；化学式不在这里处理
+    s = re.sub(r"(?<![A-Za-z0-9])([a-z])([23])(?=\s*(?:[+\-=<>≤≥)]|$))", lambda m: m.group(1) + ("²" if m.group(2) == "2" else "³"), s)
+    s = re.sub(r"\)\s*([23])(?=\s*(?:[+\-=<>≤≥]|$))", lambda m: ")" + ("²" if m.group(1) == "2" else "³"), s)
+    s = re.sub(r"√\s+(?=[0-9a-z(])", "√", s)
+    s = re.sub(r"\s*([=+×÷<>≤≥])\s*", r" \1 ", s)
+    s = re.sub(r"(?<=[0-9a-z)²³])\s*-\s*(?=[0-9a-z(√])", " - ", s)
+    s = re.sub(r"[ \t]{2,}", " ", s)
+    s = re.sub(r"\s*([：:])\s*", "：", s) if re.search(r"[\u4e00-\u9fff]\s*[：:]", s) else s
+    return s.strip()
+
+
+def clean_chem_line(line: str) -> str:
+    """化学式里 OCR 把字母 O 认成数字 0（H20 → H2O、02 → O2、C02 → CO2）。"""
+
+    def fix(tok: str) -> str:
+        if not re.search(r"[A-Z]", tok) and not tok.startswith("0"):
+            return tok
+        out = []
+        for i, ch in enumerate(tok):
+            if ch == "0" and (i == 0 or tok[i - 1].isdigit() or tok[i - 1].isupper()):
+                out.append("O")
+            else:
+                out.append(ch)
+        return "".join(out)
+
+    return re.sub(r"(?<![0-9A-Za-z])(?:[A-Z0][A-Za-z0-9()]*)", lambda m: fix(m.group(0)), line)
+
+
 def clean_ocr_text(text: str, subject: Optional[str]) -> str:
-    t = (text or "").strip()
-    if subject in (None, "math"):
-        # 只修 OCR 把变量 x 认成乘号的典型错误；其余保持原样（学生可再改）
-        t = re.sub(r"求\s*[×X]\s*的", "求 x 的", t)
-        t = re.sub(r"(?<=[0-9])\s*[×X]\s*(?=[+\-=])", "x", t)
-    return t
+    """OCR 结果确定性清洗；学生仍可在确认框里改。"""
+    t = (text or "").strip().translate(_FW_ASCII)
+    lines = t.split("\n")
+    if subject in (None, "math", "physics", "chemistry"):
+        lines = [clean_math_line(ln) for ln in lines]
+    if subject == "chemistry" or any(re.search(r"配平|化学|[A-Z][a-z]?[0-9]\s*[+=]", ln) for ln in lines):
+        lines = [clean_chem_line(ln) if re.search(r"[A-Z]", ln) else ln for ln in lines]
+    return "\n".join(lines)
 
 
 async def _ocr_sidecar(image: bytes) -> dict[str, Any]:
@@ -111,6 +159,13 @@ async def _ocr_sidecar(image: bytes) -> dict[str, Any]:
     return {
         "text": str(data.get("text") or ""),
         "confidence": float(data.get("score") or 0.0) or None,
+        "lines": [
+            {"text": str(ln.get("text") or ""), "score": ln.get("score"), "box": ln.get("box")}
+            for ln in (data.get("lines") or [])
+            if isinstance(ln, dict) and ln.get("text")
+        ][:60],
+        "image_w": data.get("image_w"),
+        "image_h": data.get("image_h"),
     }
 
 
@@ -166,7 +221,8 @@ async def recognize_image(image: bytes) -> dict[str, Any]:
 
     global _vision_cooldown_until
     t0 = time.monotonic()
-    vision_on = os.environ.get("MNEME_ASK_VISION", "1").strip().lower() not in {"0", "false", "off"}
+    # 视觉模型默认关闭（模型暂不可用）；MNEME_ASK_VISION=1 才和 OCR 竞速
+    vision_on = os.environ.get("MNEME_ASK_VISION", "0").strip().lower() in {"1", "true", "on", "yes"}
     # 熔断：视觉模型最近失败过就冷却一段时间直接走 OCR，不让每个学生都多等宽限期
     if vision_on and t0 < _vision_cooldown_until:
         vision_on = False
@@ -218,6 +274,9 @@ async def recognize_image(image: bytes) -> dict[str, Any]:
         }
     if ocr_res and ocr_res.get("text"):
         subject = guess_subject(ocr_res["text"])
+        lines = [
+            {**ln, "text": clean_ocr_text(ln["text"], subject)} for ln in (ocr_res.get("lines") or [])
+        ]
         return {
             "text": clean_ocr_text(ocr_res["text"], subject),
             "subject": subject,
@@ -226,6 +285,9 @@ async def recognize_image(image: bytes) -> dict[str, Any]:
             "ms": ms,
             "confidence": ocr_res.get("confidence"),
             "ocr_text": ocr_res["text"],
+            "lines": lines,
+            "image_w": ocr_res.get("image_w"),
+            "image_h": ocr_res.get("image_h"),
         }
     return {"text": "", "subject": None, "grade": None, "engine": "none", "ms": ms, "confidence": None}
 
@@ -310,6 +372,28 @@ async def solve_question(text: str, subject: Optional[str], grade: Optional[str]
             "latency_ms": int((time.monotonic() - t0) * 1000),
         }
 
+    # 确定性 provider（英语/语文，无 LLM）：见 services/ask_providers/README.md
+    prov: Optional[dict] = None
+    try:
+        from services.ask_providers import solve_with_providers
+
+        prov = await asyncio.wait_for(asyncio.to_thread(solve_with_providers, text, subject), timeout=3.0)
+    except Exception as exc:  # noqa: BLE001
+        logger.warning("ask provider failed: %s", type(exc).__name__)
+    if prov:
+        return {
+            "status": "ok",
+            "solver": "provider",
+            "kernel": prov.get("kernel"),
+            "hint": prov.get("hint") or None,
+            "steps": list(prov.get("steps") or []),
+            "answer": prov.get("answer"),
+            "explanation": prov.get("explanation") or None,
+            "card": prov.get("card"),
+            "subject": subject or prov.get("subject"),
+            "latency_ms": int((time.monotonic() - t0) * 1000),
+        }
+
     timeout = _env_float("MNEME_ASK_LLM_TIMEOUT", 35.0)
     raw = await _llm_call(
         system=_SOLVE_SYSTEM.format(grade=_grade_label(grade)),
@@ -388,6 +472,8 @@ def new_image_key(student_id: uuid.UUID, content_type: str) -> str:
 __all__ = [
     "MAX_IMAGE_BYTES",
     "SUBJECTS",
+    "clean_chem_line",
+    "clean_math_line",
     "clean_ocr_text",
     "followup_reply",
     "guess_subject",
