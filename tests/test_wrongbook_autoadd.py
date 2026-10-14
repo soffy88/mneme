@@ -42,6 +42,18 @@ async def _records(student_id: uuid.UUID, source: str) -> list[QuestionRecord]:
         )
 
 
+@pytest.fixture(autouse=True)
+def _no_ask_rate_limit(monkeypatch):
+    """整套测试在 60s 内会打很多次 /v1/questions/ask*（同一 IP），按 IP 的 30 次/分限流会让后面的用例随机 429。
+    限流本身由 tests/test_ratelimit* 覆盖；这里只测业务。"""
+    import services.ratelimit as rl
+
+    async def _ok(*_a, **_kw):
+        return None
+
+    monkeypatch.setattr(rl, "check_rate_limit", _ok)
+
+
 @pytest.fixture
 async def student():
     a = uuid.uuid4()

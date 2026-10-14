@@ -68,6 +68,9 @@ def _norm(text: str) -> str:
 def _strip_given(s: str) -> str:
     """去掉题目给出的相对原子/分子质量表“(H=1，O=16)”“CaCO3=100”，避免当成题目里的物质。"""
     s = re.sub(r"[(（][^()（）]*?[A-Z][a-z]?\d*\s*=\s*\d[^()（）]*[)）]", " ", s)
+    # “(Ca-40 C-12 O-16)”“[H:1, O:16]”这类相对原子质量提示
+    s = re.sub(r"[(（\[［][^()（）\[\]［］]*?[A-Z][a-z]?\s*[-—:：]\s*\d[^()（）\[\]［］]*[)）\]］]", " ", s)
+    s = re.sub(r"(?:相对原子质量)?[:：]?\s*(?:(?<![A-Za-z])[A-Z][a-z]?\s*[-—:：]\s*\d+(?:\.\d+)?[\s,，、;；]*){2,}", " ", s)
     return re.sub(r"(?<![A-Za-z0-9])([A-Z][a-z]?\d*)+\s*=\s*\d+(?:\.\d+)?(?![\d.]*\s*(?:g|克|t|吨|kg))", " ", s)
 
 
@@ -296,7 +299,13 @@ def _equation(s: str) -> Optional[tuple[list[str], list[str]]]:
     right = [re.sub(r"^\d+", "", x.strip().rstrip("↑↓ ")) for x in m.group(2).split("+")]
     if not left or not right or any(_parse(x) is None for x in left + right):
         return None
+    # OCR 丢了下标（CH4→CH、O2→O、H2O→HO）时会配出“看似成立”的错方程：这些写法初中不会出现，直接放弃
+    if any(x in _IMPLAUSIBLE for x in left + right):
+        return None
     return left, right
+
+
+_IMPLAUSIBLE = {"O", "H", "N", "Cl", "F", "Br", "I", "CH", "HO", "CH2", "CH3", "NH", "NH2", "SO", "C2"}
 
 
 def _balance(left: list[str], right: list[str]) -> Optional[list[int]]:

@@ -241,9 +241,29 @@ def _pick_numeric_segment(s: str) -> Optional[str]:
     return None
 
 
+def _leftover_numbers(s: str, expr: str) -> bool:
+    """题面（math_normalize 后）里出现、但所选算式里没有的数字串（忽略 第1题/保留2位/1. 这类编号与要求）。"""
+    def nums(t: str) -> list[str]:
+        return re.findall(r"\d+(?:\.\d+)?", t)
+
+    rest = re.sub(r"第\s*\d+\s*[题问小空个]|保留\s*\d+\s*位|精确到\s*\S{0,6}|^\s*\(?\d+\s*[.)、]|\b\d+\s*分\b", " ", s)
+    pool = nums(expr)
+    for n in nums(rest):
+        if n in pool:
+            pool.remove(n)
+        else:
+            return True
+    return False
+
+
 def solve_arithmetic(text: str) -> Optional[KernelSolution]:
     import sympy as sp
 
+    # 口语运算词：“2又1/3 减去 3/4”“5 乘以 6”→ 符号，否则只会算到第一个数
+    text = re.sub(r"\s*(?:减去|减)\s*(?=[(（\d−-])", " - ", text or "")
+    text = re.sub(r"\s*(?:加上)\s*(?=[(（\d−-])", " + ", text)
+    text = re.sub(r"\s*(?:乘以|乘)\s*(?=[(（\d−-])", " × ", text)
+    text = re.sub(r"\s*(?:除以)\s*(?=[(（\d−-])", " ÷ ", text)
     raw = basic_normalize(text)
     s = math_normalize(text)
     expr = _pick_numeric_segment(s)
@@ -251,6 +271,12 @@ def solve_arithmetic(text: str) -> Optional[KernelSolution]:
         return None
     # 题面别处还有别的式子/字母未用上（比如“已知 x=2，求…”）→ 不是纯计算题
     if re.search(r"已知|其中|当\s*[a-z]\s*=|若|方程|不等式|函数|比较|哪个大|大小|科学记数法表示.{0,8}n", raw):
+        return None
+    # 因式分解/展开/解方程不是数值计算（OCR 把 2x² 认成 2x2 时会被误当算式）；OCR 残留的 ~ 表示丢了上标
+    if re.search(r"因式分解|分解因式|展开|解得|求解|[~～]", raw):
+        return None
+    # 题面里还有没进算式的数（“…再减去 3/4”没被识别）→ 宁可不答也不只算一半
+    if _leftover_numbers(s, expr):
         return None
     if re.fullmatch(r"-?sqrt\(\d+\)", expr) and not re.search(r"化简|最简", raw):
         return None

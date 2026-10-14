@@ -139,11 +139,11 @@ def _ocr(image: bytes) -> str:
     return ""
 
 
-def run(images: bool, out_dir: Optional[Path]) -> dict:
+def run(images: bool, out_dir: Optional[Path], corpus: Optional[Path] = None) -> dict:
     from services.ask_kernels import solve_text
 
     probs = {}
-    for line in CORPUS.read_text(encoding="utf-8").splitlines():
+    for line in (corpus or CORPUS).read_text(encoding="utf-8").splitlines():
         if line.strip():
             p = json.loads(line)
             probs[p["id"]] = p
@@ -237,8 +237,9 @@ def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--images", action="store_true")
     ap.add_argument("--out", default="reports/ask_eval")
+    ap.add_argument("--corpus", default=None, help="另一个题库 jsonl（如 holdout.jsonl）；文本模式")
     args = ap.parse_args()
-    rep = run(args.images, Path(args.out))
+    rep = run(args.images, Path(args.out), Path(args.corpus) if args.corpus else None)
     t = rep["total"]
     print(f"[{rep['mode']}] n={t['n']} answered={t['answered']} correct={t['correct']} coverage={t['coverage']:.1%} "
           f"accuracy={t['accuracy']:.1%} confident_wrong={t['confident_wrong']} p50={t['p50_ms']}ms p95={t['p95_ms']}ms")

@@ -1,0 +1,90 @@
+{"id": "h-frac-01", "type": "frac", "subject": "math", "text": "计算 3/4 − 5/6 + 1/3 的结果。", "answer": ["1/4"], "answer_kind": "num", "unit": ""}
+{"id": "h-frac-02", "type": "frac", "subject": "math", "text": "求值：(−1/2) × 4/5 ÷ (−2/15)", "answer": ["3"], "answer_kind": "num", "unit": ""}
+{"id": "h-frac-03", "type": "frac", "subject": "math", "text": "2又1/3 减去 3/4 等于多少？", "answer": ["19/12"], "answer_kind": "num", "unit": ""}
+{"id": "h-dec-01", "type": "frac", "subject": "math", "text": "计算：0.25 × (−8) + 1.5", "answer": ["-1/2"], "answer_kind": "num", "unit": ""}
+{"id": "h-neg-01", "type": "frac", "subject": "math", "text": "计算：−3² + (−2)³ − (−5)", "answer": ["-12"], "answer_kind": "num", "unit": ""}
+{"id": "h-power-01", "type": "power", "subject": "math", "text": "计算 2^(−2) + (π − 3)^0 的值", "answer": ["5/4"], "answer_kind": "num", "unit": ""}
+{"id": "h-power-02", "type": "power", "subject": "math", "text": "(−1/3)^(−2) − 4 等于多少", "answer": ["5"], "answer_kind": "num", "unit": ""}
+{"id": "h-radical-01", "type": "radical", "subject": "math", "text": "化简计算：√27 − √12 + √3", "answer": ["2*sqrt(3)"], "answer_kind": "num", "unit": ""}
+{"id": "h-radical-02", "type": "radical", "subject": "math", "text": "计算 √8 × √2 − √16 的结果", "answer": ["0"], "answer_kind": "num", "unit": ""}
+{"id": "h-trig-01", "type": "trig", "subject": "math", "text": "计算：2sin30° + tan45° − cos60°", "answer": ["3/2"], "answer_kind": "num", "unit": ""}
+{"id": "h-trig-02", "type": "trig", "subject": "math", "text": "求 sin60° · cos30° 的值", "answer": ["3/4"], "answer_kind": "num", "unit": ""}
+{"id": "h-absval-01", "type": "absval", "subject": "math", "text": "计算：|−7| − |3 − 10| + |−2|", "answer": ["2"], "answer_kind": "num", "unit": ""}
+{"id": "h-expand-01", "type": "expand", "subject": "math", "text": "展开：(2x − 3)(x + 4)", "answer": "2*x**2+5*x-12", "answer_kind": "expr", "unit": ""}
+{"id": "h-expand-02", "type": "expand", "subject": "math", "text": "计算 (x + 5)² − x(x + 2)", "answer": "8*x+25", "answer_kind": "expr", "unit": ""}
+{"id": "h-factor-01", "type": "factor", "subject": "math", "text": "把 x² − 9 分解因式", "answer": "(x-3)*(x+3)", "answer_kind": "expr", "unit": ""}
+{"id": "h-factor-02", "type": "factor", "subject": "math", "text": "分解因式：3x² − 12x + 12", "answer": "3*(x-2)**2", "answer_kind": "expr", "unit": ""}
+{"id": "h-factor-03", "type": "factor", "subject": "math", "text": "因式分解 x² + x − 12", "answer": "(x-3)*(x+4)", "answer_kind": "expr", "unit": ""}
+{"id": "h-simplify-01", "type": "simplify_frac", "subject": "math", "text": "化简：(x² − 4)/(x + 2)", "answer": "x-2", "answer_kind": "expr", "unit": ""}
+{"id": "h-lineq-01", "type": "lineq", "subject": "math", "text": "解方程 5x − 7 = 2x + 8", "answer": ["5"], "answer_kind": "num", "unit": ""}
+{"id": "h-lineq-02", "type": "lineq", "subject": "math", "text": "求方程 (x − 1)/2 = (x + 2)/3 的解", "answer": ["7"], "answer_kind": "num", "unit": ""}
+{"id": "h-lineq-03", "type": "lineq", "subject": "math", "text": "已知 3(x + 2) − 4 = 11，求 x。", "answer": ["3"], "answer_kind": "num", "unit": ""}
+{"id": "h-quad-01", "type": "quad", "subject": "math", "text": "解一元二次方程：x² − 7x + 10 = 0", "answer": ["2", "5"], "answer_kind": "nums", "unit": ""}
+{"id": "h-quad-02", "type": "quad", "subject": "math", "text": "方程 2x² + 3x − 2 = 0 的根是多少？", "answer": ["-2", "1/2"], "answer_kind": "nums", "unit": ""}
+{"id": "h-quad-03", "type": "quad", "subject": "math", "text": "用配方法解方程 x² − 6x + 4 = 0", "answer": ["3 - sqrt(5)", "3 + sqrt(5)"], "answer_kind": "nums", "unit": ""}
+{"id": "h-fraceq-01", "type": "frac_eq", "subject": "math", "text": "解分式方程：3/(x − 1) = 2/x", "answer": ["-2"], "answer_kind": "num", "unit": ""}
+{"id": "h-sys2-01", "type": "sys2", "subject": "math", "text": "解方程组：x + y = 7，2x − y = 2", "answer": ["3", "4"], "answer_kind": "nums", "unit": ""}
+{"id": "h-sys2-02", "type": "sys2", "subject": "math", "text": "已知 3x + 4y = 18 且 x − 2y = −4，求 x、y。", "answer": ["2", "3"], "answer_kind": "nums", "unit": ""}
+{"id": "h-ineq-01", "type": "ineq", "subject": "math", "text": "解不等式 3x − 5 > 7", "answer": "x>4", "answer_kind": "ineq", "unit": ""}
+{"id": "h-ineq-02", "type": "ineq", "subject": "math", "text": "解不等式：−2x + 1 ≥ 9", "answer": "x<=-4", "answer_kind": "ineq", "unit": ""}
+{"id": "h-ineqsys-01", "type": "ineq_sys", "subject": "math", "text": "解不等式组：x − 1 > 0，2x − 7 ≤ 1", "answer": "1<x<=4", "answer_kind": "ineq", "unit": ""}
+{"id": "h-linfunc-01", "type": "linfunc", "subject": "math", "text": "一次函数的图象经过点 (1, 3) 和 (3, 7)，求这个函数的解析式。", "answer": "2*x+1", "answer_kind": "expr", "unit": ""}
+{"id": "h-linfunc-02", "type": "linfunc", "subject": "math", "text": "直线 y = kx − 4 经过点 (2, 2)，求 k 的值。", "answer": ["3"], "answer_kind": "num", "unit": ""}
+{"id": "h-quadfunc-01", "type": "quadfunc", "subject": "math", "text": "求抛物线 y = x² − 4x + 1 的顶点坐标。", "answer": ["2", "-3"], "answer_kind": "nums", "unit": ""}
+{"id": "h-quadfunc-02", "type": "quadfunc", "subject": "math", "text": "二次函数 y = −x² + 6x − 5 的最大值是多少？", "answer": ["4"], "answer_kind": "num", "unit": ""}
+{"id": "h-quadfunc-03", "type": "quadfunc", "subject": "math", "text": "抛物线 y = x² − 2x − 8 与 x 轴交点的横坐标是多少？", "answer": ["-2", "4"], "answer_kind": "nums", "unit": ""}
+{"id": "h-quadfunc-04", "type": "quadfunc", "subject": "math", "text": "抛物线 y = 2x² + 8x + 3 的对称轴是直线 x = ？", "answer": ["-2"], "answer_kind": "num", "unit": ""}
+{"id": "h-invprop-01", "type": "invprop", "subject": "math", "text": "反比例函数 y = k/x 的图象经过点 (2, −6)，求 k。", "answer": ["-12"], "answer_kind": "num", "unit": ""}
+{"id": "h-invprop-02", "type": "invprop", "subject": "math", "text": "已知 y 与 x 成反比例，当 x = 4 时 y = 3，求 x = 6 时 y 的值。", "answer": ["2"], "answer_kind": "num", "unit": ""}
+{"id": "h-pyth-01", "type": "pyth", "subject": "math", "text": "在 Rt△ABC 中，∠C = 90°，AC = 6，BC = 8，求 AB 的长。", "answer": ["10"], "answer_kind": "num", "unit": ""}
+{"id": "h-pyth-02", "type": "pyth", "subject": "math", "text": "直角三角形斜边长 13，一条直角边长 5，另一条直角边长是多少？", "answer": ["12"], "answer_kind": "num", "unit": ""}
+{"id": "h-circle-01", "type": "geom", "subject": "math", "text": "一个圆的半径是 3 cm，求它的面积（结果保留 π）。", "answer": ["9*pi"], "answer_kind": "num", "unit": "cm^2"}
+{"id": "h-circle-02", "type": "geom", "subject": "math", "text": "圆的直径为 10，求它的周长（保留 π）。", "answer": ["10*pi"], "answer_kind": "num", "unit": ""}
+{"id": "h-sector-01", "type": "geom", "subject": "math", "text": "半径为 6、圆心角为 120° 的扇形面积是多少？（保留 π）", "answer": ["12*pi"], "answer_kind": "num", "unit": ""}
+{"id": "h-polygon-01", "type": "geom", "subject": "math", "text": "正八边形的每个内角是多少度？", "answer": ["135"], "answer_kind": "num", "unit": "°"}
+{"id": "h-polygon-02", "type": "geom", "subject": "math", "text": "一个多边形的内角和是 1080°，它是几边形？", "answer": ["8"], "answer_kind": "num", "unit": ""}
+{"id": "h-rttrig-01", "type": "trig", "subject": "math", "text": "在 Rt△ABC 中，∠C = 90°，∠A = 30°，斜边 AB = 10，求 BC 的长。", "answer": ["5"], "answer_kind": "num", "unit": ""}
+{"id": "h-similar-01", "type": "geom", "subject": "math", "text": "△ABC ∽ △DEF，相似比为 2:3，若 AB = 4，求 DE 的长。", "answer": ["6"], "answer_kind": "num", "unit": ""}
+{"id": "h-triangle-01", "type": "geom", "subject": "math", "text": "三角形的两个内角分别是 47° 和 68°，求第三个内角的度数。", "answer": ["65"], "answer_kind": "num", "unit": "°"}
+{"id": "h-stats-01", "type": "stats", "subject": "math", "text": "求数据 4，7，9，6，9 的平均数。", "answer": ["7"], "answer_kind": "num", "unit": ""}
+{"id": "h-stats-02", "type": "stats", "subject": "math", "text": "数据 3，8，5，10，6，2 的中位数是多少？", "answer": ["11/2"], "answer_kind": "num", "unit": ""}
+{"id": "h-stats-03", "type": "stats", "subject": "math", "text": "一组数据 2，5，5，7，5，9 的众数是几？", "answer": ["5"], "answer_kind": "num", "unit": ""}
+{"id": "h-stats-04", "type": "stats", "subject": "math", "text": "求数据 1，3，5，7，9 的方差。", "answer": ["8"], "answer_kind": "num", "unit": ""}
+{"id": "h-prob-01", "type": "prob", "subject": "math", "text": "掷一枚质地均匀的骰子，朝上的点数是偶数的概率是多少？", "answer": ["1/2"], "answer_kind": "num", "unit": ""}
+{"id": "h-prob-02", "type": "prob", "subject": "math", "text": "盒子里有 3 个红球、5 个黄球、2 个蓝球，随机摸出一个是黄球的概率是多少？", "answer": ["1/2"], "answer_kind": "num", "unit": ""}
+{"id": "h-travel-01", "type": "word_travel", "subject": "math", "text": "甲乙两地相距 300 km，一辆客车和一辆货车同时从两地出发相向而行，客车每小时行 70 km，货车每小时行 50 km，几小时后两车相遇？", "answer": ["5/2"], "answer_kind": "num", "unit": "小时"}
+{"id": "h-travel-02", "type": "word_travel", "subject": "math", "text": "小明以每分钟 60 m 的速度先走 10 分钟，哥哥以每分钟 100 m 的速度从同一地点出发去追，哥哥几分钟能追上小明？", "answer": ["15"], "answer_kind": "num", "unit": "分钟"}
+{"id": "h-work-01", "type": "word_work", "subject": "math", "text": "一项工程，甲单独做 12 天完成，乙单独做 6 天完成，两人合做需要几天完成？", "answer": ["4"], "answer_kind": "num", "unit": "天"}
+{"id": "h-profit-01", "type": "word_profit", "subject": "math", "text": "一件衬衫标价 200 元，打八折出售后仍获利 25%，这件衬衫的进价是多少元？", "answer": ["128"], "answer_kind": "num", "unit": "元"}
+{"id": "h-profit-02", "type": "word_profit", "subject": "math", "text": "某商品进价 80 元，售价 100 元，利润率是多少？", "answer": ["25"], "answer_kind": "num", "unit": "%"}
+{"id": "h-discount-01", "type": "word_profit", "subject": "math", "text": "一台电脑原价 4500 元，现在打九折，现价是多少元？", "answer": ["4050"], "answer_kind": "num", "unit": "元"}
+{"id": "h-conc-01", "type": "word_conc", "subject": "math", "text": "把 20 g 盐溶解在 180 g 水中，所得盐水的浓度是多少？", "answer": ["10"], "answer_kind": "num", "unit": "%"}
+{"id": "h-age-01", "type": "word_age", "subject": "math", "text": "今年父亲 40 岁，儿子 12 岁，几年后父亲的年龄是儿子的 3 倍？", "answer": ["2"], "answer_kind": "num", "unit": "年"}
+{"id": "h-chicken-01", "type": "word_chicken", "subject": "math", "text": "笼子里有鸡和兔共 20 只，脚共 56 只，兔有多少只？", "answer": ["8"], "answer_kind": "num", "unit": "只"}
+{"id": "h-chicken-02", "type": "word_chicken", "subject": "math", "text": "鸡兔同笼，共有 35 个头，94 只脚，鸡有多少只？", "answer": ["23"], "answer_kind": "num", "unit": "只"}
+{"id": "h-speed-01", "type": "phy_speed", "subject": "physics", "text": "一辆汽车 2 h 行驶了 144 km，它的平均速度是多少 m/s？", "answer": ["20"], "answer_kind": "num", "unit": "m/s"}
+{"id": "h-speed-02", "type": "phy_speed", "subject": "physics", "text": "声音在空气中的传播速度是 340 m/s，经过 3 s 听到回声，求声源到障碍物的距离。", "answer": ["510"], "answer_kind": "num", "unit": "m"}
+{"id": "h-density-01", "type": "phy_density", "subject": "physics", "text": "一块金属的质量是 270 g，体积是 100 cm³，求它的密度是多少 g/cm³？", "answer": ["2.7"], "answer_kind": "num", "unit": "g/cm^3"}
+{"id": "h-density-02", "type": "phy_density", "subject": "physics", "text": "体积为 0.5 m³ 的冰，密度为 0.9×10³ kg/m³，它的质量是多少 kg？", "answer": ["450"], "answer_kind": "num", "unit": "kg"}
+{"id": "h-pressure-01", "type": "phy_pressure", "subject": "physics", "text": "一个质量为 60 kg 的人双脚站立，鞋底与地面的总接触面积为 0.04 m²，他对地面的压强是多少？（g = 10 N/kg）", "answer": ["15000"], "answer_kind": "num", "unit": "Pa"}
+{"id": "h-liquid-01", "type": "phy_liquid", "subject": "physics", "text": "水深 2 m 处水产生的压强是多少帕？（ρ水 = 1.0×10³ kg/m³，g 取 10 N/kg）", "answer": ["20000"], "answer_kind": "num", "unit": "Pa"}
+{"id": "h-buoy-01", "type": "phy_buoy", "subject": "physics", "text": "一个物体浸没在水中，排开水的体积是 2×10⁻⁴ m³，它受到的浮力是多大？（g = 10 N/kg）", "answer": ["2"], "answer_kind": "num", "unit": "N"}
+{"id": "h-lever-01", "type": "phy_lever", "subject": "physics", "text": "杠杆平衡时，动力臂是 0.6 m，阻力臂是 0.2 m，阻力是 300 N，求动力。", "answer": ["100"], "answer_kind": "num", "unit": "N"}
+{"id": "h-work-01p", "type": "phy_work", "subject": "physics", "text": "用 50 N 的水平拉力使木箱沿水平方向前进 4 m，拉力做了多少功？", "answer": ["200"], "answer_kind": "num", "unit": "J"}
+{"id": "h-power-01p", "type": "phy_power", "subject": "physics", "text": "起重机在 10 s 内把重 6000 N 的货物匀速提高 5 m，它的功率是多少瓦？", "answer": ["3000"], "answer_kind": "num", "unit": "W"}
+{"id": "h-eff-01", "type": "phy_work", "subject": "physics", "text": "用动滑轮把重 400 N 的物体提升 2 m，拉力做的总功是 1000 J，求机械效率。", "answer": ["80"], "answer_kind": "num", "unit": "%"}
+{"id": "h-heat-01", "type": "phy_heat", "subject": "physics", "text": "质量为 2 kg 的水温度从 20 ℃ 升高到 70 ℃，吸收的热量是多少？[c水 = 4.2×10³ J/(kg·℃)]", "answer": ["420000"], "answer_kind": "num", "unit": "J"}
+{"id": "h-ohm-01", "type": "phy_ohm", "subject": "physics", "text": "一个电阻两端电压为 12 V，通过它的电流是 0.4 A，这个电阻的阻值是多少欧？", "answer": ["30"], "answer_kind": "num", "unit": "Ω"}
+{"id": "h-ohm-02", "type": "phy_ohm", "subject": "physics", "text": "R1 = 10 Ω 和 R2 = 20 Ω 串联在 6 V 的电源上，电路中的电流是多少？", "answer": ["0.2"], "answer_kind": "num", "unit": "A"}
+{"id": "h-ohm-03", "type": "phy_ohm", "subject": "physics", "text": "两个电阻 R1 = 6 Ω、R2 = 3 Ω 并联，它们的总电阻是多少？", "answer": ["2"], "answer_kind": "num", "unit": "Ω"}
+{"id": "h-elec-01", "type": "phy_power", "subject": "physics", "text": "一盏标有“220 V 100 W”的灯正常工作 5 h，消耗电能多少 kW·h？", "answer": ["0.5"], "answer_kind": "num", "unit": "kW·h"}
+{"id": "h-mr-01", "type": "chem_mr", "subject": "chemistry", "text": "计算 CaCO₃ 的相对分子质量。（Ca-40 C-12 O-16）", "answer": ["100"], "answer_kind": "num", "unit": ""}
+{"id": "h-mr-02", "type": "chem_mr", "subject": "chemistry", "text": "H₂SO₄ 的相对分子质量是多少？（H-1 S-32 O-16）", "answer": ["98"], "answer_kind": "num", "unit": ""}
+{"id": "h-mr-03", "type": "chem_mr", "subject": "chemistry", "text": "求 CO₂ 的相对分子质量（C-12，O-16）。", "answer": ["44"], "answer_kind": "num", "unit": ""}
+{"id": "h-frac-c1", "type": "chem_frac", "subject": "chemistry", "text": "计算 NH₄NO₃ 中氮元素的质量分数。（N-14 H-1 O-16）", "answer": ["35"], "answer_kind": "num", "unit": "%"}
+{"id": "h-frac-c2", "type": "chem_frac", "subject": "chemistry", "text": "Fe₂O₃ 中铁元素的质量分数是多少？（Fe-56 O-16）", "answer": ["70"], "answer_kind": "num", "unit": "%"}
+{"id": "h-sol-01", "type": "chem_sol", "subject": "chemistry", "text": "将 15 g 氯化钠完全溶解在 85 g 水中，所得溶液中溶质的质量分数是多少？", "answer": ["15"], "answer_kind": "num", "unit": "%"}
+{"id": "h-sol-02", "type": "chem_sol", "subject": "chemistry", "text": "要配制 200 g 质量分数为 5% 的氢氧化钠溶液，需要氢氧化钠多少克？", "answer": ["10"], "answer_kind": "num", "unit": "g"}
+{"id": "h-dil-01", "type": "chem_sol", "subject": "chemistry", "text": "把 50 g 质量分数为 20% 的硫酸溶液稀释成 10% 的溶液，需要加水多少克？", "answer": ["50"], "answer_kind": "num", "unit": "g"}
+{"id": "h-stoich-01", "type": "chem_stoich", "subject": "chemistry", "text": "根据 2H₂O =通电= 2H₂↑ + O₂↑，电解 36 g 水，能生成氧气多少克？（H-1 O-16）", "answer": ["32"], "answer_kind": "num", "unit": "g"}
+{"id": "h-stoich-02", "type": "chem_stoich", "subject": "chemistry", "text": "已知 CaCO₃ + 2HCl = CaCl₂ + H₂O + CO₂↑，10 g 碳酸钙与足量稀盐酸反应，生成二氧化碳多少克？（Ca-40 C-12 O-16）", "answer": ["4.4"], "answer_kind": "num", "unit": "g"}

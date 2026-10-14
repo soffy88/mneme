@@ -37,6 +37,18 @@ async def _records(student_id: uuid.UUID, source: str | None = None) -> list[Que
         return list((await db.execute(stmt.order_by(QuestionRecord.created_at))).scalars().all())
 
 
+@pytest.fixture(autouse=True)
+def _no_ask_rate_limit(monkeypatch):
+    """整套测试在 60s 内会打很多次 /v1/questions/ask*（同一 IP），按 IP 的 30 次/分限流会让后面的用例随机 429。
+    限流本身由 tests/test_ratelimit* 覆盖；这里只测业务。"""
+    import services.ratelimit as rl
+
+    async def _ok(*_a, **_kw):
+        return None
+
+    monkeypatch.setattr(rl, "check_rate_limit", _ok)
+
+
 @pytest.fixture
 async def students():
     a, b = uuid.uuid4(), uuid.uuid4()
@@ -178,7 +190,7 @@ async def test_photo_ask_typed_solve_feedback_wrongbook_history(students):
         assert item["source_label"] == "拍照提问" and item["wrong_question_id"]
         d = (await c.get(f"/v1/questions/history/{ask_id}", headers=_h(a))).json()
         assert d["correct_answer"] == "x = 7" and d["understood"] is True
-        assert d["meta"]["solution"]["kernel"] == "algebra.linear"
+        assert d["meta"]["solution"]["kernel"] == "algebra.linear_eq"
         assert (await c.get(f"/v1/questions/history/{ask_id}", headers=_h(b))).status_code == 404
         assert (await c.get("/v1/questions/history", headers=_h(b))).json()["total"] == 0
         assert (await c.post("/v1/questions/ask", data={"text": "x"})).status_code == 401
@@ -217,9 +229,35 @@ async def test_photo_ask_image_path_and_private_image(students, monkeypatch):
 
 
 @pytest.mark.asyncio
-async def test_photo_ask_llm_unavailable_is_graceful(students, monkeypatch):
+async def test_photo_ask_no_exact_solver_without_llm(students, monkeypatch):
+    """LLM 兜底默认关闭（MNEME_ASK_LLM_FALLBACK 未设）：没有内核/provider 适用 → no_exact_solver，
+    带按题型的提示 + 说明，绝不 500、绝不调 LLM；追问走确定性回复。"""
     a = students["a"]
     import services.photo_ask_service as pas
+
+    monkeypatch.delenv("MNEME_ASK_LLM_FALLBACK", raising=False)
+
+    async def boom(**_kw):
+        raise AssertionError("LLM must not be called when MNEME_ASK_LLM_FALLBACK is off")
+
+    monkeypatch.setattr(pas, "_llm_call", boom)
+    async with _client() as c:
+        ask = (await c.post("/v1/questions/ask", data={"text": "《背影》表达了作者怎样的情感？", "subject": "chinese"}, headers=_h(a))).json()
+        s = await c.post(f"/v1/questions/ask/{ask['ask_id']}/solve", json={"text": ask["text"]}, headers=_h(a))
+        assert s.status_code == 200, s.text
+        body = s.json()
+        assert body["status"] == "no_exact_solver" and body["solver"] == "none"
+        assert body["hint"] and body["explanation"] and isinstance(body.get("similar", []), list)
+        f = await c.post(f"/v1/questions/ask/{ask['ask_id']}/followup", json={"message": "没懂"}, headers=_h(a))
+        assert f.status_code == 200 and f.json()["reply"]
+
+
+@pytest.mark.asyncio
+async def test_photo_ask_llm_flag_on_but_unavailable_is_graceful(students, monkeypatch):
+    a = students["a"]
+    import services.photo_ask_service as pas
+
+    monkeypatch.setenv("MNEME_ASK_LLM_FALLBACK", "1")
 
     async def no_llm(**_kw):
         return None
@@ -228,9 +266,9 @@ async def test_photo_ask_llm_unavailable_is_graceful(students, monkeypatch):
     async with _client() as c:
         ask = (await c.post("/v1/questions/ask", data={"text": "《背影》表达了作者怎样的情感？", "subject": "chinese"}, headers=_h(a))).json()
         s = await c.post(f"/v1/questions/ask/{ask['ask_id']}/solve", json={"text": ask["text"]}, headers=_h(a))
-        assert s.status_code == 200 and s.json()["status"] == "llm_unavailable" and s.json()["solver"] == "none"
+        assert s.status_code == 200 and s.json()["status"] == "no_exact_solver" and s.json()["solver"] == "none"
         f = await c.post(f"/v1/questions/ask/{ask['ask_id']}/followup", json={"message": "没懂"}, headers=_h(a))
-        assert f.status_code == 200 and f.json()["status"] == "llm_unavailable"
+        assert f.status_code == 200 and f.json()["reply"]
 
 
 @pytest.mark.asyncio
@@ -246,6 +284,7 @@ async def test_photo_ask_llm_solution_and_followup(students, monkeypatch):
             return '{"hint": "想想光合作用需要什么", "steps": ["第一步", "第二步"], "answer": "光、水、二氧化碳", "explanation": "光合作用条件"}'
         return "我们换个例子来说……你明白了吗？"
 
+    monkeypatch.setenv("MNEME_ASK_LLM_FALLBACK", "1")
     monkeypatch.setattr(pas, "_llm_call", fake_llm)
     async with _client() as c:
         ask = (await c.post("/v1/questions/ask", data={"text": "光合作用需要哪些条件？", "subject": "生物"}, headers=_h(a))).json()

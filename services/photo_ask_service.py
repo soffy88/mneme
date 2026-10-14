@@ -544,6 +544,9 @@ async def followup_reply(
         who = "学生" if turn.get("role") == "student" else "老师"
         context.append(f"{who}：{str(turn.get('text') or '')[:500]}")
     context.append(f"学生：{message.strip()[:500]}")
+    # LLM 兜底关闭（默认）时不去等模型超时，直接用确定性追问回复
+    if not _llm_fallback_enabled():
+        return {"reply": _deterministic_followup(sol, message, history), "status": "ok", "solver": "kernel"}
     raw = await _llm_call(
         system=_FOLLOWUP_SYSTEM,
         user="\n\n".join(context),
