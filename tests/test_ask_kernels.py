@@ -137,3 +137,117 @@ def test_similar_questions_bank_lookup() -> None:
     assert isinstance(out, list)
     for q in out:
         assert q["text"] and q["answer"]
+
+
+# ── 题库扫描（bank_scan）发现的答非所问：内核必须弃答（或不给出当时的错答） ─────────────────
+# (题面原文, 当时给错的内核, 当时的错答)；题面保留题库里的 LaTeX 写法
+BANK_OFF_TARGET = [
+    ("算 804-197 的差大约是 ( )。", "arith.rational", "607"),
+    ("一个四位数的密码, 它的大小在 2000 与 3000 之间, 百位数字是 0 , 十位与个位数字相同, 它们两个的和是 8 , 这个密码是 $(\\quad)$ 。", "arith.compare", "3000"),
+    ("(2021-浙江瑞安$\\cdot$开学考试) 若 $\\left\\{\\begin{array}{l}x=a \\\\ y=b\\end{array}\\right.$ 是方程组 $\\left\\{\\begin{array}{l}2 x+3 y=-5 \\\\ 2 x-3 y=7\\end{array}\\right.$ 的解, 则代数式 $9 b^{2}-4 a^{2}$ 的值是\n\n##", "algebra.linear_system_2", "x=1/2, y=-2"),
+    ("一个圆的周长是 31.4 米, 半径增加 1 米后, 面积增加了 $\\qquad$平方米.", "geometry.circle", "24649/(100*pi)"),
+    ("关于 $x$ 的一元二次方程 $(m-5) x^{2}+2 x+2=0$ 有实根, 则 $m$ 的最大整数解是 \\$ \\qquad \\$ .", "algebra.linear_eq", "x=-1"),
+    ("若 $m(m-2)=3$, 则 $(m-1)^{2}$ 的值是", "algebra.quadratic_eq", "-1, 3"),
+    ("若实数 $x$ 满足 $x^{2}-2 x-1=0$, 则 $2 x^{3}-7 x^{2}+4 x-2020$ 的值为", "algebra.linear_eq", "x=-1/2"),
+    ("若 $\\triangle A B C$ 的周长为 20 , 面积为 32 , 则 $\\triangle A B C$ 的内切圆半径为", "geometry.circle", "100/pi"),
+    ("在一个不透明的盒子中装有许多球, 它们除颜色不同外, 其余均相同. 已知有 8 个白球, 若从中随机摸出一个球, 它是白球的概率为 $\\frac{2}{3}$, 盒中共有球 $\\qquad$个.\n\n##", "prob.classical", "1"),
+    ("在一张边长是 6 分米的正方形纸上裁出一个最大的圆, 这个圆的面积是 （）平方分米。", "geometry.square", "36"),
+    ("若 $m$ 是方程 $x^{2}-4 x+1=0$ 的一个根, 则 $3 m^{2}-12 m+2020$ 的值为", "algebra.linear_eq", "x=1/4"),
+    ("已知 $a$ 是方程 $x^{2}-3 x-1=0$ 的一个根, 则代数式 $-2 a^{2}+6 a-3$ 的值是", "algebra.linear_eq", "x=-1/3"),
+    ("403-298$ 的结果大约是 $(\\quad)$", "arith.rational", "105"),
+    ("在一个不透明的口袋中,装有若干个除颜色不同外，其余都相同的小球。如果口袋中装有3个红球且从中随机摸出一个球是红球的概率为$frac{1}{5}$,那么口袋中小球共有$qquad$个.", "prob.classical", "1"),
+    ("袋子里有 4 个黑球, $m$ 个白球, 它们除颜色外都相同. 经过大量实验, 从中任取一个球恰好是黑球的概率是 $\\frac{1}{2}$, 则 $m$ 的值是 $\\qquad$ .", "prob.classical", "1"),
+    ("一个长方形长 10 厘米, 宽 8 厘米, 在里面剪一个最大的半圆, 这个半圆的周长是 $\\qquad$厘米。", "geometry.rectangle", "36"),
+    ("已知直线 $l_{1}$ 经过点 $A(0,-1)$ 和点 $B\\left(\\frac{4}{a}, 1\\right)$, 直线 $l_{2}$ 经过点 $M(1,1)$ 和点 $N(0,-2)$, 若 $l_{1}$ 与 $l_{2}$ 没有公共点,则实数 $a$ 的值为", "function.linear", "2*x-1"),
+    ("三个互不相等的有理数, 既可以表示为 $1, a+b, b$ 的形式, 又可以表示为 $0, \\frac{a}{b}$, $a$ 的形式, 且 $|x|=3$, 求 $(a+b)^{2020}+(a b)^{2021}-(a+b-a b)+x^{2}$ 的值为 \\$ \\qquad \\$ .", "algebra.abs_eq", "-3, 3"),
+    ("7. 在直角坐标系中, 曲线 $C_{1}$ 的参数方程为 $\\left\\{\\begin{array}{c}x=\\cos \\alpha \\\\ y=1+2 \\sin \\alpha\\end{array}\\right.$ ( $\\alpha$ 为参数), 在极坐标系中, $C_{2}$的方程为 $\\rho(3 \\cos \\theta-4 \\sin \\theta)=6$, 则 $C_{1}$ 与 $C_{2}$ 的交点个数为", "algebra.linear_eq", "y=3"),
+    ("$\\sin \\frac{13 \\pi}{6}+\\cos \\frac{13 \\pi}{3}-\\tan \\left(-\\frac{23 \\pi}{4}\\right)$ 的值为 \\$ \\qquad \\$ .", "arith.real", "49*pi/4"),
+    ("一个长 $8 \\mathrm{~cm}$ 、宽 $5 \\mathrm{~cm}$ 的长方形按 $5: 1$ 的比例放大后，得到的图形的面积是 $\\qquad$ .", "geometry.rectangle", "40"),
+    ("(2021-浙江瑞安$\\cdot$开学考试) 若 $\\left\\{\\begin{array}{l}x=a \\\\ y=b\\end{array}\\right.$ 是方程组 $\\left\\{\\begin{array}{l}2 x+3 y=-5 \\\\ 2 x-3 y=7\\end{array}\\right.$ 的解, 则代数式 $9 b^{2}-4 a^{2}$ 的值是\n\n##", "algebra.linear_system_2", "x=1/2, y=-2"),
+    ("已知 $a_{2} \\frac{1}{9}=\\frac{4}{9}$, 则 $\\log _{\\frac{2}{3}} a=$", "algebra.quadratic_eq", "-2, 2"),
+    ("一张半圆形纸片的周长是 $20.56 \\mathrm{~cm}$ ，它的半径是 $\\qquad$ ) cm，面积是 $\\qquad$ ) $\\mathrm{cm}^{2}$ 。", "geometry.circle", "66049/(1250*pi)"),
+    ("坐标平面上一机器人在行进中始终保持到两点 $A(a, 0)$ (其中 $a \\in \\mathbf{R}$ ) 和 $B(0,1)$ 的距离相等, 且机器人也始终接触不到直线 $l: y=x+1$, 则 $a$ 的值为 \\$ \\qquad \\$", "function.linear", "x+1"),
+    ("6. 方程 $x+\\sin x=0$ 的根有 \\$ \\qquad \\$个.", "algebra.linear_eq", "x=0"),
+    ("当 $a=3, b=-\\frac{1}{3}$ 时, $(a+b)^{2}+(a+b)(a-b)-2 a^{2}=$", "algebra.linear_system_2", "a=3, b=-1/3"),
+    ("小北在计算 “ $5+3 \\times 9$ ” 时, 从左到右依次计算, 算出的结果与正确答案相差 ( )。", "arith.rational", "32"),
+    ("已知抛物线 $y=x^{2}$ 与直线 $y=(k+2) x+1-2 k$ 的两个不同交点分别为 $A\\left(x_{1}, y_{1}\\right)$, $B\\left(x_{2}, y_{2}\\right)$. 若 $x_{1}$ 和 $x_{2}$ 均为整数, 则实数 $k$ 的值为 $\\qquad$ .\n\n##", "function.quadratic", "0, 0, 0"),
+    ("在一个边长是 $10 \\mathrm{~cm}$ 的正方形中剪去一个最大的圆, 剩下部分的面积（） $\\mathrm{cm}^{2}$ 。", "geometry.square", "100"),
+    ("在一个比例中，两个内项互为倒数，如果一个外项是 $\\frac{1}{10}$ ，那么另一个外项是 )。 $\\qquad$", "arith.real", "1/10"),
+    ("一个半圆的周长是 $10.28 \\mathrm{dm}$, 这个半圆的面积是 $\\qquad$ $\\mathrm{dm}^{2}$ 。", "geometry.circle", "66049/(5000*pi)"),
+    ("求值: $\\log _{4} 16+16^{\\frac{1}{2}}=$", "arith.real", "420"),
+    ("$\\frac{\\lg 3+2 \\lg 2-1}{\\lg 1.2}=$", "arith.rational", "20"),
+    ("用二分法求方程 $x^{2}-5=0$ 在区间 $(2,3)$ 内的近似解, 经过\\qquad次二分后精确度能达到 0.01 .", "algebra.quadratic_eq", "-sqrt(5), sqrt(5)"),
+    ("计算 $100\\left(\\frac{1}{2} \\lg 9-\\lg 2\\right)-\\log _{9} 8 \\cdot \\log _{4} \\sqrt[3]{3}=$", "arith.radical", "250-6272*sqrt(3)"),
+    ("一组数据 $2,3,4,5, \\ldots, 2016$ 的中位数为 \\$ \\qquad \\$", "stats.descriptive", "3.5"),
+    ("已知扇形的周长是 $4 \\mathrm{~cm}$, 则扇形面积最大时, 扇形的中心角的弧度数是", "geometry.circle", "4/pi"),
+    ("小明用 $s^{2}=\\frac{1}{10}\\left[\\left(x_{1}-3\\right)^{2}+\\left(x_{2}-3\\right)^{2}+\\cdots+\\left(x_{10}-3\\right)^{2}\\right]$ 计算一组数据的方差,那么 $x_{1}+x_{2}+\\cdots+x_{10}=$ \\$ \\qquad \\$", "algebra.vieta", "0"),
+    ("一个圆环的外圆半径是 $10 \\mathrm{~cm}$, 内圆半径是 $8 \\mathrm{~cm}$, 它的面积是 $\\qquad$。", "geometry.circle", "100*pi"),
+    ("二次函数 $y=(x-2)(5-2 x)$ 的二次项系数是 $\\qquad$", "function.quadratic", "9/4, 1/8, 9/4"),
+    ("当 $x=\\sqrt{3}+1$ 时, 式子 $x^{2}-2 x+2$ 的值为", "algebra.linear_eq", "x=1+sqrt(3)"),
+    ("已知二次函数 $y=-x^{2}+10 x-21$, 当 $6 \\leq x \\leq 12$ 时，函数的最大值是 $\\qquad$ .", "function.quadratic", "4"),
+    ("6.$sin 95^{\\circ}+\\cos 175^{\\circ}$ 的值为", "arith.trig", "cos(pi/36)+175"),
+    ("一个半圆的周长是 $25.7 \\mathrm{~cm}$, 这个半圆的面积是 $\\qquad$ $\\mathrm{cm}^{2}$ 。", "geometry.circle", "66049/(800*pi)"),
+    ("（2020 秋 -龙凤区校级月考）如下一组数据： $10,12,25,10,30,10,13$; 则该组数据的中位数与众数的差为", "stats.descriptive", "12, 10"),
+    ("如图所示, 一个正四棱雉(底面是正方形, 从顶点向底面引垂线, 垂足是底面中心的四棱雉)的正方形底面的边长为 $4 \\mathrm{~cm}$, 高与斜高的夹角为 $30^{\\circ}$, 则正四棱雉的表面积为 $\\mathrm{cm}^{2}$.\n\n<ImageHere>", "geometry.square", "16"),
+    ("如图, 二次函数 $y=x^{2}-4 x+3$ 的图象交 $x$ 轴于 $A 、 B$ 两点, 交 $y$ 轴于点 $C, \\triangle A B C$ 的面积为 $\\qquad$\n\n<ImageHere>\n\n##", "function.quadratic", "2, -1, 2"),
+    ("在一个半径是 $3 \\mathrm{~cm}$ 的圆中画一个扇形, 如右图。弧 $\\mathrm{AB}$ 的长度是 $6.28 \\mathrm{~cm}$, 这个扇形的面积是 ( ) cm²\n\n<ImageHere>", "geometry.circle", "9*pi"),
+    ("如图, 正方形 $A B C D$ 的边长为 $2, M N / / B C$ 分别交 $A B 、 C D$ 于点 $M 、 N$, 在 $M N$ 上任取两点 $P 、 Q$,那么图中阴影部分的面积是 \\$ \\qquad \\$ .\n\n<ImageHere>", "geometry.square", "4"),
+    ("抛物线 $y=\\frac{1}{16} x^{2}$ 的焦点与双曲线 $\\frac{x^{2}}{3}-\\frac{y^{2}}{m}=-1$ 的上焦点重合, 则 $m=$ \\$ \\qquad \\$ .\n\n18 如图, 过抛物线 $y^{2}=2 p x(p>0)$ 的焦点 $F$ 的直线 $l$ 依次交抛物线及其准线于点 $A, B, C$, 若 $|B C|=2|B F|$, 且 $|A F|=3$, 则抛物线的方程是 \\$ \\qquad \\$ .", "function.quadratic", "0, 0, 0"),
+    ("如图, 在一个长 $20 m$, 宽 $10 m$ 的矩形草地内修建宽度相等的小路 (阴影部分),若剩余草地（空白部分）的面积 $171 m^{2}$, 则小路的宽度为 m.\n\n<ImageHere>", "geometry.rectangle", "200"),
+    ("生物学研究表明, 在一定的温度范围内, 酶的活性会随温度的升高逐渐增强; 在最适温度时, 酶的活性最强; 超过一定温度范围, 酶的活性又随温度的开高逐渐减弱, 甚至会失去活性$\\cdot$现已知某种酶的活性值 $y$ (单位: $1 \\mathrm{U}$ ) 与温度 $x$ (单位: ${ }^{\\circ} \\mathrm{C}$ ) 的关系可以近似用二次函数 $y=-\\frac{1}{2} x^{2}+14 x+142$来表示, 则当温度为最适宜温度时, 该种酶的活性值为 $\\qquad$ $\\mathrm{IU}$.\n\n<ImageHere>", "function.quadratic", "14, 240, 14"),
+]
+
+
+@pytest.mark.parametrize("text,kernel,wrong", BANK_OFF_TARGET)
+def test_bank_scan_off_target_abstains(text: str, kernel: str, wrong: str) -> None:
+    sol = solve_text(text, "math")
+    assert sol is None or sol.answer_value != wrong, (kernel, sol and sol.kernel, sol and sol.answer_value)
+
+
+@pytest.mark.parametrize(
+    "text,kernel,value",
+    [
+        # LaTeX 题面能被识别（题库/教辅文本）
+        ("关于 $x$ 的一元二次方程 $(m-5) x^{2}+2 x+2=0$ 有实根, 则 $m$ 的最大整数解是 \\$ \\qquad \\$ .", "algebra.quadratic_param", "4"),
+        ("二次函数 $y=(x-4)^{2}+9$ 的最小值是 $\\qquad$", "function.quadratic", "9"),
+        ("计算: $\\left(\\frac{65}{7}+\\frac{65}{9}\\right) \\div\\left(\\frac{5}{7}+\\frac{5}{9}\\right)$", "arith", "13"),
+        # 小学圆：周长是 3.14 的整数倍 → 按 π≈3.14
+        ("一个圆的周长是 31.4 米，它的面积是多少平方米？", "geometry.circle", "157/2"),
+    ],
+)
+def test_latex_and_pi_314(text: str, kernel: str, value: str) -> None:
+    sol = solve_text(text, "math")
+    assert sol is not None and sol.kernel.startswith(kernel), sol
+    assert sol.answer_value.replace(" ", "") == value
+
+
+def test_latex_to_plain() -> None:
+    from services.ask_kernels.core import latex_to_plain
+
+    assert latex_to_plain("x^{2}-2 x-1=0") == "x^2-2 x-1=0"
+    assert latex_to_plain("$\\frac{2}{3}$") == "(2)/(3)"
+    assert latex_to_plain("$x_{1}+x_{2}$") == "x1+x2"
+    assert latex_to_plain("$64^{\\circ}$") == "64°"
+    assert latex_to_plain("计算：(-2/3) + (-1/6).") == "计算：(-2/3) + (-1/6)."  # 无 LaTeX 原样返回
+
+
+@pytest.mark.parametrize(
+    "text,subject",
+    [
+        ("apple 是什么意思", "english"),
+        ("go 的过去式是什么", "english"),
+        ("She ___ (go) to school every day.", "english"),
+        ("He is ___ honest boy. A. a B. an C. the", "english"),
+        ("床前明月光的下一句是什么", "chinese"),
+        ("《静夜思》的作者是谁", "chinese"),
+        ("给“重”字注音", "chinese"),
+        ("画蛇添足是什么意思", "chinese"),
+        ("守株待兔", "chinese"),
+        ("解方程 2x+3=7", "math"),
+        ("计算 3/4 + 1/2", "math"),
+    ],
+)
+def test_guess_subject_provider_subjects(text: str, subject: str) -> None:
+    from services.photo_ask_service import guess_subject
+
+    assert guess_subject(text) == subject

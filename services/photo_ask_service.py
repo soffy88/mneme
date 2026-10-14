@@ -89,13 +89,36 @@ def guess_subject(text: str) -> Optional[str]:
         return "physics"
     latin = len(re.findall(r"[A-Za-z]", t))
     han = len(re.findall(r"[\u4e00-\u9fff]", t))
+    words = re.findall(r"[A-Za-z]{2,}", t)
     if latin > 20 and latin > 3 * han:
         return "english"
+    # 英语：查词/语法/选择填空（“apple 是什么意思”“go 的过去式”“She ___ to school.”）
+    if re.search(r"英语|英文|单词|过去式|过去分词|现在分词|第三人称|复数|比较级|最高级|音标|词性|翻译成英|用英语", t) or (
+        words and not re.search(r"\d\s*[a-z]|[a-z]\s*[=+\-^]|[=+×÷^²]|sin|cos|tan", t)
+        and (latin >= 2 * han or re.search(r"[A-Za-z]+\s*(?:是什么意思|什么意思|的意思|怎么读|怎么拼|的中文)", t))
+    ):
+        return "english"
+    # 语文：拼音/古诗词/成语/字词
+    if re.search(r"拼音|注音|读音|多音字|古诗|诗句|诗人|诗词|作者是|朝代|上一句|下一句|上句|下句|默写|成语|近义词|反义词|"
+                 r"意思是|解释加点|偏旁|部首|笔画|造句|修辞|课文|文言|《[^》]{1,20}》", t) and not re.search(r"[=+×÷^²]|方程|计算", t):
+        return "chinese"
+    q = r"\s*[“\"「]?"
+    if re.fullmatch(q + r"[\u4e00-\u9fff]{4}[”\"」]?\s*[?？]?\s*", t) or re.fullmatch(
+            q + r"[\u4e00-\u9fff]{1,8}[”\"」]?\s*(?:是什么意思|什么意思|的意思|怎么读|的拼音)\s*[?？]?\s*", t):
+        return "chinese"  # 只有一个成语，或“××是什么意思/怎么读”
     if re.search(r"\d", t) and re.search(r"[=+\-×÷*/^²]|方程|计算|求|函数|三角形|角|面积|周长", t):
         return "math"
     if han > 30 and not re.search(r"\d", t):
         return "chinese"
     return None
+
+
+def _provider_subject(prov: dict) -> Optional[str]:
+    fam = str(prov.get("kernel") or "").split(".")[0]
+    if fam in ("english", "chinese"):
+        return fam
+    sub = prov.get("subject")
+    return sub if sub in ("english", "chinese") else None
 
 
 _FW_ASCII = {i: i - 0xFEE0 for i in range(0xFF01, 0xFF5F)}
@@ -482,7 +505,8 @@ async def solve_question(
             "explanation": prov.get("explanation") or None,
             "card": prov.get("card"),
             "question_text": picked_text,
-            "subject": subject or prov.get("subject"),
+            # provider 命中即说明学科（english.* / chinese.*）：以它为准，前端据此显示学科标签
+            "subject": _provider_subject(prov) or subject,
             "latency_ms": int((time.monotonic() - t0) * 1000),
         }
 

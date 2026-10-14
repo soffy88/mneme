@@ -237,6 +237,55 @@ def strip_question_number(text: str) -> str:
     return t
 
 
+# ── LaTeX 题面（题库/教辅文本常见）→ 印刷体 ─────────────────────────────────
+
+_LATEX_HINT = re.compile(r"\$|\\(?:frac|dfrac|left|right|sqrt|cdot|times|div|qquad|quad|pi|circ|angle|triangle|le|ge|neq)\b|\^\{|_\{")
+_LATEX_SYMS = {
+    r"\cdot": "·", r"\times": "×", r"\div": "÷", r"\pi": "π", r"\angle": "∠", r"\triangle": "△",
+    r"\leqslant": "≤", r"\geqslant": "≥", r"\leq": "≤", r"\geq": "≥", r"\le": "≤", r"\ge": "≥", r"\neq": "≠",
+    r"\pm": "±", r"\because": "因为", r"\therefore": "所以", r"\%": "%", r"\{": "{", r"\}": "}",
+    r"\sin": "sin", r"\cos": "cos", r"\tan": "tan", r"\cot": "cot", r"\log": "log", r"\lg": "lg", r"\ln": "ln",
+    r"\ldots": "…", r"\cdots": "…", r"\dots": "…", r"\alpha": "α", r"\beta": "β", r"\theta": "θ", r"\rho": "ρ",
+    r"\backsim": "∽", r"\sim": "∽", r"\cong": "≌", r"\perp": "⊥", r"\parallel": "∥", r"\infty": "∞",
+}
+_BRACE = r"\{((?:[^{}]|\{[^{}]*\})*)\}"
+
+
+def latex_to_plain(text: str) -> str:
+    """把题库里的 LaTeX 写法转成内核认识的印刷体：$…$、\\frac{a}{b}→(a)/(b)、x^{2}→x^2、
+    x_{1}→x1、\\sqrt{3}→√(3)、^{\\circ}→°、\\qquad/\\underline{…}→（ ）。不含 LaTeX 的文本原样返回。"""
+    s = text or ""
+    if not _LATEX_HINT.search(s):
+        return s
+    s = s.replace("\\$", "$")
+    s = re.sub(r"(?<![a-zA-Z\\])(frac|qquad|sqrt)(?=[{\s])", r"\\\1", s)  # 丢了反斜杠的 frac{1}{5}
+    s = re.sub(r"\\(?:left|right|big|Big|bigg|Bigg)(?![a-zA-Z])\s*([(){}\[\].|]|\\\{|\\\}|\\\||)", lambda m: "" if m.group(1) in (".", "") else m.group(1), s)
+    s = re.sub(r"\\(?:displaystyle|textstyle|mathrm|text|operatorname|boldsymbol|mathbf)\s*", "", s)
+    s = re.sub(r"\^\s*\{\s*\\circ\s*\}|\^\s*\\circ|\\circ", "°", s)
+    s = re.sub(r"\\(?:qquad|quad)\b|\\underline\s*\{\s*(?:\\[a-z]+\s*)*\}|\\_+|_{2,}", "（ ）", s)
+    for _ in range(4):
+        s2 = re.sub(r"\\[dt]?frac\s*" + _BRACE + r"\s*" + _BRACE, r"(\1)/(\2)", s)
+        s2 = re.sub(r"\\[dt]?frac\s*(\d)\s*(\d)", r"(\1)/(\2)", s2)
+        s2 = re.sub(r"\\sqrt\s*\[\s*3\s*\]\s*" + _BRACE, r"³√(\1)", s2)
+        s2 = re.sub(r"\\sqrt\s*" + _BRACE, r"√(\1)", s2)
+        s2 = re.sub(r"\\sqrt\s*(\d+|[a-z])", r"√\1", s2)
+        s2 = re.sub(r"\^\s*\{\s*(-?\d+|[a-z])\s*\}", r"^\1", s2)
+        s2 = re.sub(r"\^\s*" + _BRACE, r"^(\1)", s2)
+        s2 = re.sub(r"_\s*\{\s*([0-9a-zA-Z]+)\s*\}", r"\1", s2)
+        if s2 == s:
+            break
+        s = s2
+    s = re.sub(r"\\begin\s*\{(?:array|cases|aligned)\}\s*(?:\{[^{}]*\})?|\\end\s*\{(?:array|cases|aligned)\}", "", s)
+    s = s.replace("\\\\", "; ")
+    for a, b in sorted(_LATEX_SYMS.items(), key=lambda kv: -len(kv[0])):
+        s = re.sub(re.escape(a) + (r"(?![a-zA-Z])" if a[-1].isalpha() else ""), b, s)
+    s = s.replace("$", " ")
+    s = re.sub(r"\\[a-zA-Z]+", " ", s)
+    s = re.sub(r"\(\s*\)|（\s*）", "（ ）", s)
+    s = re.sub(r"[ \t]+", " ", s)
+    return s.strip()
+
+
 __all__ = [
     "KernelSolution",
     "NUM_RE",
@@ -245,6 +294,7 @@ __all__ = [
     "cn_small_number",
     "fmt_approx",
     "fmt_frac",
+    "latex_to_plain",
     "fmt_num",
     "fmt_sig",
     "numbers_in",

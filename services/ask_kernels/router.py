@@ -13,7 +13,7 @@ from dataclasses import dataclass
 from typing import Callable, Optional
 
 from services.ask_kernels import algebra, arith, functions, geometry, stats, word
-from services.ask_kernels.core import KernelSolution, basic_normalize, strip_question_number
+from services.ask_kernels.core import KernelSolution, basic_normalize, latex_to_plain, strip_question_number
 from services.ask_kernels.sym import math_normalize, segments
 
 MIN_CONFIDENCE = 0.6
@@ -138,7 +138,7 @@ def classify(text: str, subject: Optional[str] = None) -> list[tuple[float, Kern
 def solve_text(text: str, subject: Optional[str] = None, *, budget_s: float = 4.0,
                families: Optional[set[str]] = None) -> Optional[KernelSolution]:
     """同步求解（CPU 轻量）：按分类顺序尝试，返回第一个已验证、置信的解；都不行返回 None。"""
-    t = strip_question_number((text or "").strip())
+    t = strip_question_number(latex_to_plain((text or "").strip()))
     if not t or len(t) > 1500:
         return None
     t0 = time.monotonic()
@@ -158,8 +158,78 @@ def solve_text(text: str, subject: Optional[str] = None, *, budget_s: float = 4.
         except Exception:  # noqa: BLE001 — 单个内核出错不影响其他内核
             sol = None
         if sol is not None and sol.verified and sol.confidence >= MIN_CONFIDENCE and (sol.answer or "").strip():
+            if off_target(t, sol):
+                continue
             return _as_percent_if_asked(t, sol)
     return None
+
+
+# ── 答非所问守卫 ───────────────────────────────────────────────────────────
+# 题库扫描（bank_scan）里内核“解对了一个式子、却不是题目问的东西”的典型情形：问估算、问代数式的值、
+# 已知概率反求个数、半圆/圆环/剪去、区间最值、超纲（对数/双曲线/参数方程）……这些一律弃答，宁缺毋滥。
+
+_ABSTAIN_ALL = re.compile(
+    r"大约|估算|估一估|估计|近似解|二分法|密码|参数方程|极坐标|对数|log|\blg\b|焦点|双曲线|椭圆|弧度|向量|数列|"
+    r"如图|如右图|如下图|图中|阴影|<ImageHere>|机器人|依次计算|从左到右|算成|看成|抄错|漏掉|"
+    r"互为倒数|内项|外项|四棱|棱锥|棱柱|表面积|\.\.\.|…|⋯|∈"
+)
+_EQ_KERNELS = ("algebra.linear_eq", "algebra.quadratic_eq", "algebra.abs_eq", "algebra.fractional_eq",
+               "algebra.linear_system")
+_ASK_VALUE = re.compile(r"(?:则|求|那么|式子|代数式|计算)\s*(?:代数式|式子)?\s*([^,;。?，；]{1,60}?)\s*(?:的值|值为|值是|=\s*(?:（\s*）)?\s*[.。]?\s*$)")
+
+
+def _asked_expression(raw: str) -> Optional[str]:
+    """“则 3m^2-12m+2020 的值为”里被问的式子（不是单个字母）；没有返回 None。"""
+    for m in _ASK_VALUE.finditer(raw):
+        e = m.group(1).strip()
+        if re.search(r"[a-z]", e) and not re.fullmatch(r"[a-z]", e) and re.search(r"[+\-*/^()]|\d\s*[a-z]|[a-z]\s*[a-z]", e):
+            return e
+    return None
+
+
+def _asked_var(raw: str) -> Optional[str]:
+    m = re.search(r"(?:则|求|那么)?\s*(?:实数|整数)?\s*([a-z])\s*(?:的(?:最大|最小)?(?:整数)?(?:值|解)|\s*=\s*(?:（\s*）|\?|$))", raw)
+    return m.group(1) if m else None
+
+
+def off_target(text: str, sol: KernelSolution) -> bool:
+    """内核给出的解是否答非所问（True → 弃答）。只做排除，不改答案。"""
+    raw = basic_normalize(text)
+    k = sol.kernel
+    fam = k.split(".")[0]
+    if _ABSTAIN_ALL.search(raw):
+        return True
+    if re.search(r"(?:sin|cos|tan)", raw) and fam == "arith" and re.search(r"(?:sin|cos|tan)(?!\s*(?:\^\s*\d)?\s*\(?\s*\d+(?:\.\d+)?\s*°)", raw):
+        return True  # 只认特殊角“sin30°”；sin(13π/6) 之类不作答
+    if re.search(r"sin|cos|tan|log", sol.answer_value or ""):
+        return True
+    if k.startswith(_EQ_KERNELS) or k in ("function.linear", "function.quadratic"):
+        if _asked_expression(raw):
+            return True  # 解出了方程，题目问的却是另一个代数式的值
+        v = _asked_var(raw)
+        got_vars = set(re.findall(r"([a-z])\s*=", sol.answer_value or ""))
+        if v and got_vars and v not in got_vars:
+            return True
+        if v and k.startswith("function.") and sol.answer_kind == "expr" and v not in got_vars:
+            return True  # 问参数的值，内核却给了函数解析式
+    if k.startswith(_EQ_KERNELS) and re.search(r"当\s*[a-z]\s*=", raw):
+        return True  # “当 x=√3+1 时，式子…的值”是代入求值，不是解方程
+    if fam == "prob" and re.search(r"(?:概率|可能性)\s*(?:为|是|等于)\s*[(\d]", raw):
+        return True  # 已知概率反求个数/参数
+    if fam == "stats" and re.search(r"[的之](?:差|和|积|商)|相差|多多少|少多少", raw) and "," in (sol.answer_value or ""):
+        return True
+    if k.startswith("function.quadratic") and re.search(r"[≤<]\s*x\s*[≤<]|二次项|一次项|常数项|△|三角形|面积|温度|整数", raw):
+        return True
+    if k == "algebra.vieta" and re.search(r"s\s*\^\s*2|方差", raw):
+        return True
+    if k.startswith("geometry.circle") and re.search(r"增加|减少|扩大|缩小|内切|外接|△|三角形|圆环|环形|剪|剩下|最大|中心角|画|转化|拼成|长方形|正方形", raw):
+        return True
+    if k.startswith(("geometry.rectangle", "geometry.square", "geometry.plane")) and re.search(
+        r"圆|放大|缩小|比例|剪|剩下|小路|折|拼|围成|做成|制成", raw):
+        return True
+    if fam == "arith" and k != "arith.sci" and re.search(r"[(（]\s*[)）]\s*[里内]?填|[□○]", raw) and not re.search(r"计算|=", raw):
+        return True
+    return False
 
 
 def _as_percent_if_asked(text: str, sol: KernelSolution) -> KernelSolution:
@@ -232,4 +302,4 @@ def split_questions(text: str) -> list[dict]:
     return []
 
 
-__all__ = ["KERNELS", "KernelSpec", "MIN_CONFIDENCE", "classify", "solve_text", "split_questions"]
+__all__ = ["KERNELS", "KernelSpec", "MIN_CONFIDENCE", "classify", "off_target", "solve_text", "split_questions"]

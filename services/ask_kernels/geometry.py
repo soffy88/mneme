@@ -253,7 +253,13 @@ def solve_circle(text: str) -> Optional[KernelSolution]:
     if r is None:
         mc = re.search(rf"周长(?:为|是|等于)\s*{_N}\s*(?:π|pi)?", raw)
         if mc and re.search(r"面积", raw):
-            C = _R(mc.group(1)) * (sp.pi if re.search(rf"周长(?:为|是|等于)\s*{_N}\s*(?:π|pi)", raw) else 1)
+            if re.search(r"半圆|扇形|弧", raw):
+                return None  # 半圆/扇形的周长 ≠ 2πr，不按整圆反推半径
+            with_pi = bool(re.search(rf"周长(?:为|是|等于)\s*{_N}\s*(?:π|pi)", raw))
+            C = _R(mc.group(1)) * (sp.pi if with_pi else 1)
+            if pi_v is None and not with_pi and "." in mc.group(1) and (C / sp.Rational(314, 100) * 100).is_integer:
+                PI = sp.Rational(314, 100)  # 小学题：周长 31.4、12.56… 是按 π≈3.14 出的数
+                steps.append("周长是 3.14 的整数倍，按 π ≈ 3.14 计算")
             r = C / (2 * PI)
             steps.append(f"由周长 C = 2πr 得 r = {fmt(C)} ÷ (2π) = {fmt(r)}")
         else:
