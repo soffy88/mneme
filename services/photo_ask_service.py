@@ -147,6 +147,12 @@ def clean_ocr_text(text: str, subject: Optional[str]) -> str:
     """OCR 结果确定性清洗；学生仍可在确认框里改。"""
     t = (text or "").strip().translate(_FW_ASCII)
     t = re.sub(r"(?<![\d.])0\.\s+(?=\d)", "0.", t)  # OCR 把 0.25 断成 “0. 25”
+    # 拍照 OCR 的常见丢符号：10~7 → 10^7（上标丢失）、cm3/m3 → cm³/m³、电学题里 60Q → 60Ω、“-次函数”“收人”
+    t = re.sub(r"(?<![\d.])10\s*[~～]\s*(-?\d+)", r"10^\1", t)
+    t = re.sub(r"(?<=\d)\s*((?:c|d|m)?m)3(?![0-9])", lambda m: m.group(1) + "³", t)
+    if re.search(r"电阻|电路|并联|串联|欧姆", t):
+        t = re.sub(r"(?<=\d)\s*Q(?![A-Za-z])", "Ω", t)
+    t = t.replace("-次函数", "一次函数").replace("一-次函数", "一次函数").replace("收人", "收入")
     lines = t.split("\n")
     if subject in (None, "math", "physics", "chemistry"):
         lines = [clean_math_line(ln) for ln in lines]
