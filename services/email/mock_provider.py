@@ -9,22 +9,31 @@ logger = logging.getLogger(__name__)
 class MockEmailProvider(EmailProvider):
     """开发 mock：把验证码打到日志，不真发邮件。
 
-    门控（C2/C5 配套）：仅 demo/dev 环境（MNEME_ENV != prod）可用；
-    生产误配 EMAIL_PROVIDER=mock 时 fail-closed（不发验证码日志）。"""
+    固定验证码只对 dev/development/test 环境中显式 allowlist 的测试身份开放。
+    demo 是公开环境，始终 fail-closed；不会向日志写验证码或正文。"""
 
-    def _prod_gate(self) -> bool:
-        return os.environ.get("MNEME_ENV", "dev").lower() in {"prod", "production"}
+    def _allowlisted(self, email: str) -> bool:
+        env = os.environ.get("MNEME_ENV", "").strip().lower()
+        allowlist = {
+            item.strip().lower()
+            for item in os.environ.get("MNEME_MOCK_CODE_ALLOWLIST", "").split(",")
+            if item.strip()
+        }
+        return env in {"dev", "development", "test"} and email.strip().lower() in allowlist
 
     async def send_code(self, email: str, code: str) -> bool:
-        if self._prod_gate():
-            logger.error("[MockEmail] 生产环境禁用 mock provider，拒绝发送")
-            return False
-        logger.info("[MockEmail] 发送验证码给 %s, 验证码: %s", email, code)
-        return True
+        if code == "123456" and self._allowlisted(email):
+            local, _, domain = email.partition("@")
+            masked = f"{local[:1]}***@{domain}" if domain else "***"
+            logger.info("[MockEmail] test OTP issued to allowlisted identity %s", masked)
+            return True
+        logger.warning("[MockEmail] real email unavailable; refusing to log or deliver OTP")
+        return False
 
     async def send_notification(self, email: str, title: str, content: str) -> bool:
-        if self._prod_gate():
-            logger.error("[MockEmail] 生产环境禁用 mock provider，拒绝发送")
+        # Never write user message content to application logs in a public demo deployment.
+        if os.environ.get("MNEME_ENV", "").strip().lower() not in {"dev", "development", "test"}:
+            logger.warning("[MockEmail] notification delivery disabled outside local/test environments")
             return False
-        logger.info("[MockEmail] 发送通知给 %s, 标题: %s, 内容: %s", email, title, content)
+        logger.info("[MockEmail] notification suppressed for %s", email.partition("@")[0][:1] + "***")
         return True

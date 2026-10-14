@@ -163,7 +163,21 @@ async def lifespan(app: FastAPI):
 _sms_provider = get_sms_provider()
 _email_provider = get_email_provider()
 
-app = FastAPI(title="Mneme API", version="0.1.0", lifespan=lifespan)
+def _api_docs_enabled(environment: str | None = None) -> bool:
+    """Interactive API documentation is available only in local/test environments."""
+    value = (environment if environment is not None else os.environ.get("MNEME_ENV", "dev"))
+    return value.strip().lower() in {"dev", "development", "test"}
+
+
+_docs_enabled = _api_docs_enabled()
+app = FastAPI(
+    title="Mneme API",
+    version="0.1.0",
+    lifespan=lifespan,
+    docs_url="/docs" if _docs_enabled else None,
+    redoc_url="/redoc" if _docs_enabled else None,
+    openapi_url="/openapi.json" if _docs_enabled else None,
+)
 
 
 @app.exception_handler(Exception)
