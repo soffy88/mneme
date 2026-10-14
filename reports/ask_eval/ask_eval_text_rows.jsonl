@@ -1,0 +1,226 @@
+{"id": "frac-01", "type": "frac", "ms": 2667.5, "kernel": "arith.rational", "answer": "-5/6", "answer_value": "-5/6", "expected": ["-5/6"], "unit": "", "result": "correct"}
+{"id": "frac-02", "type": "frac", "ms": 10.0, "kernel": "arith.rational", "answer": "5/4", "answer_value": "5/4", "expected": ["5/4"], "unit": "", "result": "correct"}
+{"id": "frac-03", "type": "frac", "ms": 7.2, "kernel": "arith.rational", "answer": "-2/3", "answer_value": "-2/3", "expected": ["-2/3"], "unit": "", "result": "correct"}
+{"id": "frac-04", "type": "frac", "ms": 8.1, "kernel": "arith.rational", "answer": "2/3", "answer_value": "2/3", "expected": ["2/3"], "unit": "", "result": "correct"}
+{"id": "frac-05", "type": "frac", "ms": 6.9, "kernel": "arith.rational", "answer": "3", "answer_value": "3", "expected": ["3"], "unit": "", "result": "correct"}
+{"id": "frac-06", "type": "frac", "ms": 8.2, "kernel": "arith.rational", "answer": "15/4", "answer_value": "15/4", "expected": ["15/4"], "unit": "", "result": "correct"}
+{"id": "frac-07", "type": "frac", "ms": 41.7, "kernel": "arith.rational", "answer": "1", "answer_value": "1", "expected": ["1"], "unit": "", "result": "correct"}
+{"id": "frac-08", "type": "frac", "ms": 14.6, "kernel": "arith.rational", "answer": "-1", "answer_value": "-1", "expected": ["-1"], "unit": "", "result": "correct"}
+{"id": "percent-01", "type": "percent", "ms": 3.1, "kernel": "word.profit", "answer": "160 元", "answer_value": "160", "expected": ["160"], "unit": "元", "result": "correct"}
+{"id": "percent-02", "type": "percent", "ms": 0.5, "kernel": "ratio.percent_of", "answer": "80%", "answer_value": "80", "expected": ["80"], "unit": "%", "result": "correct"}
+{"id": "percent-03", "type": "percent", "ms": 0.9, "kernel": "ratio.successive_change", "answer": "100%", "answer_value": "100", "expected": ["100"], "unit": "%", "result": "correct"}
+{"id": "power-01", "type": "power", "ms": 44.3, "kernel": "arith.rational", "answer": "32", "answer_value": "32", "expected": ["32"], "unit": "", "result": "correct"}
+{"id": "power-02", "type": "power", "ms": 8.5, "kernel": "arith.rational", "answer": "-1/8", "answer_value": "-1/8", "expected": ["-1/8"], "unit": "", "result": "correct"}
+{"id": "power-03", "type": "power", "ms": 173.4, "kernel": "algebra.expand", "answer": "a^7", "answer_value": "a**7", "expected": "a**7", "unit": "", "result": "correct"}
+{"id": "power-04", "type": "power", "ms": 10.3, "kernel": "arith.rational", "answer": "10/9", "answer_value": "10/9", "expected": "10/9", "unit": "", "result": "correct"}
+{"id": "power-05", "type": "power", "ms": 12.3, "kernel": "algebra.expand", "answer": "-6x^5y^3", "answer_value": "-6*x**5*y**3", "expected": "-6*x**5*y**3", "unit": "", "result": "correct"}
+{"id": "sci-01", "type": "sci", "ms": 1.4, "kernel": "arith.sci_notation", "answer": "n = 5", "answer_value": "5", "expected": ["5"], "unit": "", "result": "correct"}
+{"id": "sci-02", "type": "sci", "ms": 0.7, "kernel": "arith.sci_notation", "answer": "n = -4", "answer_value": "-4", "expected": ["-4"], "unit": "", "result": "correct"}
+{"id": "sci-03", "type": "sci", "ms": 7.9, "kernel": "arith.rational", "answer": "60000000", "answer_value": "60000000", "expected": ["60000000"], "unit": "", "result": "correct"}
+{"id": "sci-04", "type": "sci", "ms": 11.0, "kernel": "arith.rational", "answer": "4000", "answer_value": "4000", "expected": ["4000"], "unit": "", "result": "correct"}
+{"id": "radical-01", "type": "radical", "ms": 145.1, "kernel": "arith.radical", "answer": "4√3", "answer_value": "4*sqrt(3)", "expected": ["4*sqrt(3)"], "unit": "", "result": "correct"}
+{"id": "radical-02", "type": "radical", "ms": 10.1, "kernel": "arith.radical", "answer": "3", "answer_value": "3", "expected": ["3"], "unit": "", "result": "correct"}
+{"id": "radical-03", "type": "radical", "ms": 17.0, "kernel": "arith.radical", "answer": "1", "answer_value": "1", "expected": ["1"], "unit": "", "result": "correct"}
+{"id": "radical-04", "type": "radical", "ms": 19.8, "kernel": "arith.radical", "answer": "√2/2", "answer_value": "sqrt(2)/2", "expected": "sqrt(2)/2", "unit": "", "result": "correct"}
+{"id": "radical-05", "type": "radical", "ms": 13.0, "kernel": "arith.radical", "answer": "7√3", "answer_value": "7*sqrt(3)", "expected": ["7*sqrt(3)"], "unit": "", "result": "correct"}
+{"id": "radical-06", "type": "radical", "ms": 51.6, "kernel": "arith.radical", "answer": "0", "answer_value": "0", "expected": ["0"], "unit": "", "result": "correct"}
+{"id": "radical-07", "type": "radical", "ms": 2.0, "kernel": null, "answer": null, "answer_value": null, "expected": "√7", "unit": "", "result": "unanswered"}
+{"id": "expand-01", "type": "expand", "ms": 18.6, "kernel": "algebra.expand", "answer": "x^2 + x - 6", "answer_value": "x**2+x-6", "expected": "(x-2)*(x+3)", "unit": "", "result": "correct"}
+{"id": "expand-02", "type": "expand", "ms": 21.7, "kernel": "algebra.expand", "answer": "4x^2 - 4x + 1", "answer_value": "4*x**2-4*x+1", "expected": "(2*x-1)**2", "unit": "", "result": "correct"}
+{"id": "expand-03", "type": "expand", "ms": 20.7, "kernel": "algebra.expand", "answer": "x^3 + x^2 - x + 2", "answer_value": "x**3+x**2-x+2", "expected": "x**3 + x**2 - x + 2", "unit": "", "result": "correct"}
+{"id": "expand-04", "type": "expand", "ms": 17.2, "kernel": "algebra.expand", "answer": "a^2 - b^2", "answer_value": "a**2-b**2", "expected": "a**2 - b**2", "unit": "", "result": "correct"}
+{"id": "expand-05", "type": "expand", "ms": 21.3, "kernel": "algebra.expand", "answer": "6x^2 - 11x - 10", "answer_value": "6*x**2-11*x-10", "expected": "(3*x+2)*(2*x-5)", "unit": "", "result": "correct"}
+{"id": "factor-01", "type": "factor", "ms": 11.5, "kernel": "algebra.factor", "answer": "(x - 3)(x + 3)", "answer_value": "(x-3)*(x+3)", "expected": "(x-3)*(x+3)", "unit": "", "result": "correct"}
+{"id": "factor-02", "type": "factor", "ms": 10.8, "kernel": "algebra.factor", "answer": "(x + 2)(x + 3)", "answer_value": "(x+2)*(x+3)", "expected": "(x+2)*(x+3)", "unit": "", "result": "correct"}
+{"id": "factor-03", "type": "factor", "ms": 35.4, "kernel": "algebra.factor", "answer": "2(x - 2)(x + 2)", "answer_value": "2*(x-2)*(x+2)", "expected": "2*(x-2)*(x+2)", "unit": "", "result": "correct"}
+{"id": "factor-04", "type": "factor", "ms": 10.0, "kernel": "algebra.factor", "answer": "(x - 3)^2", "answer_value": "(x-3)**2", "expected": "(x-3)**2", "unit": "", "result": "correct"}
+{"id": "factor-05", "type": "factor", "ms": 13.7, "kernel": "algebra.factor", "answer": "(x - 1)(x + 3)", "answer_value": "(x-1)*(x+3)", "expected": "(x-1)*(x+3)", "unit": "", "result": "correct"}
+{"id": "factor-06", "type": "factor", "ms": 11.0, "kernel": "algebra.factor", "answer": "-(x - 2)^2", "answer_value": "-(x-2)**2", "expected": "-(x-2)**2", "unit": "", "result": "correct"}
+{"id": "simplify_frac-01", "type": "simplify_frac", "ms": 33.3, "kernel": "algebra.simplify", "answer": "(x + 2)/(x + 1)", "answer_value": "(x+2)/(x+1)", "expected": "(x+2)/(x+1)", "unit": "", "result": "correct"}
+{"id": "simplify_frac-02", "type": "simplify_frac", "ms": 32.1, "kernel": "algebra.simplify_eval", "answer": "1", "answer_value": "1", "expected": ["1"], "unit": "", "result": "correct"}
+{"id": "simplify_frac-03", "type": "simplify_frac", "ms": 32.9, "kernel": "algebra.simplify", "answer": "x - y", "answer_value": "x-y", "expected": "x - y", "unit": "", "result": "correct"}
+{"id": "simplify_frac-04", "type": "simplify_frac", "ms": 34.1, "kernel": "algebra.simplify_eval", "answer": "5", "answer_value": "5", "expected": ["5"], "unit": "", "result": "correct"}
+{"id": "simplify_frac-05", "type": "simplify_frac", "ms": 38.2, "kernel": "algebra.simplify", "answer": "2(x + 2)/(x - 2)", "answer_value": "2*(x+2)/(x-2)", "expected": "2*(x+2)/(x-2)", "unit": "", "result": "correct"}
+{"id": "lineq-01", "type": "lineq", "ms": 14.5, "kernel": "algebra.linear_eq", "answer": "x = 5", "answer_value": "x=5", "expected": ["5"], "unit": "", "result": "correct"}
+{"id": "lineq-02", "type": "lineq", "ms": 25.5, "kernel": "algebra.linear_eq", "answer": "x = -5", "answer_value": "x=-5", "expected": ["-5"], "unit": "", "result": "correct"}
+{"id": "lineq-03", "type": "lineq", "ms": 22.9, "kernel": "algebra.linear_eq", "answer": "x = -1", "answer_value": "x=-1", "expected": ["-1"], "unit": "", "result": "correct"}
+{"id": "lineq-04", "type": "lineq", "ms": 23.4, "kernel": "algebra.linear_eq", "answer": "x = 4", "answer_value": "x=4", "expected": ["4"], "unit": "", "result": "correct"}
+{"id": "lineq-05", "type": "lineq", "ms": 19.8, "kernel": "algebra.linear_eq", "answer": "x = 11", "answer_value": "x=11", "expected": ["11"], "unit": "", "result": "correct"}
+{"id": "quad-01", "type": "quad", "ms": 30.0, "kernel": "algebra.quadratic_eq", "answer": "x₁ = 2，x₂ = 3", "answer_value": "2, 3", "expected": ["2", "3"], "unit": "", "result": "correct"}
+{"id": "quad-02", "type": "quad", "ms": 22.5, "kernel": "algebra.quadratic_eq", "answer": "x₁ = -5，x₂ = 5", "answer_value": "-5, 5", "expected": ["-5", "5"], "unit": "", "result": "correct"}
+{"id": "quad-03", "type": "quad", "ms": 53.7, "kernel": "algebra.quadratic_eq", "answer": "x₁ = -2 - √3，x₂ = -2 + √3", "answer_value": "-2-sqrt(3), -2+sqrt(3)", "expected": ["-2 - sqrt(3)", "-2 + sqrt(3)"], "unit": "", "result": "correct"}
+{"id": "quad-04", "type": "quad", "ms": 36.5, "kernel": "algebra.quadratic_eq", "answer": "x₁ = 1，x₂ = 5", "answer_value": "1, 5", "expected": ["1", "5"], "unit": "", "result": "correct"}
+{"id": "quad-05", "type": "quad", "ms": 48.4, "kernel": "algebra.quadratic_eq", "answer": "x₁ = (2 - √6)/2，x₂ = (2 + √6)/2", "answer_value": "(2-sqrt(6))/2, (2+sqrt(6))/2", "expected": ["1 - sqrt(6)/2", "1 + sqrt(6)/2"], "unit": "", "result": "correct"}
+{"id": "quad-06", "type": "quad", "ms": 23.4, "kernel": "algebra.quadratic_eq", "answer": "x₁ = 1，x₂ = 3", "answer_value": "1, 3", "expected": ["1", "3"], "unit": "", "result": "correct"}
+{"id": "quad_disc-01", "type": "quad_disc", "ms": 14.9, "kernel": "algebra.discriminant", "answer": "方程没有实数根", "answer_value": "无实数根", "expected": "无实数根", "unit": "", "result": "correct"}
+{"id": "quad_disc-02", "type": "quad_disc", "ms": 21.1, "kernel": "algebra.quadratic_param", "answer": "m = 9", "answer_value": "9", "expected": ["9"], "unit": "", "result": "correct"}
+{"id": "quad_disc-03", "type": "quad_disc", "ms": 18.9, "kernel": "algebra.vieta", "answer": "x1 + x2 = 7", "answer_value": "7", "expected": ["7"], "unit": "", "result": "correct"}
+{"id": "quad_disc-04", "type": "quad_disc", "ms": 19.8, "kernel": "algebra.vieta", "answer": "x1·x2 = 10", "answer_value": "10", "expected": ["10"], "unit": "", "result": "correct"}
+{"id": "quad_disc-05", "type": "quad_disc", "ms": 34.0, "kernel": "algebra.quadratic_param", "answer": "k = 1", "answer_value": "1", "expected": ["1"], "unit": "", "result": "correct"}
+{"id": "frac_eq-01", "type": "frac_eq", "ms": 19.7, "kernel": "algebra.fractional_eq", "answer": "x = 2", "answer_value": "x=2", "expected": ["2"], "unit": "", "result": "correct"}
+{"id": "frac_eq-02", "type": "frac_eq", "ms": 19.9, "kernel": "algebra.fractional_eq", "answer": "x = 3", "answer_value": "x=3", "expected": ["3"], "unit": "", "result": "correct"}
+{"id": "frac_eq-03", "type": "frac_eq", "ms": 16.5, "kernel": "algebra.fractional_eq", "answer": "x = 4", "answer_value": "x=4", "expected": ["4"], "unit": "", "result": "correct"}
+{"id": "frac_eq-04", "type": "frac_eq", "ms": 20.6, "kernel": "algebra.fractional_eq", "answer": "原方程无解", "answer_value": "无解", "expected": "无解", "unit": "", "result": "correct"}
+{"id": "frac_eq-05", "type": "frac_eq", "ms": 24.7, "kernel": "algebra.fractional_eq", "answer": "x = 4", "answer_value": "x=4", "expected": ["4"], "unit": "", "result": "correct"}
+{"id": "ineq-01", "type": "ineq", "ms": 18.4, "kernel": "algebra.inequality", "answer": "x > 4", "answer_value": "x>4", "expected": "x>4", "unit": "", "result": "correct"}
+{"id": "ineq-02", "type": "ineq", "ms": 21.2, "kernel": "algebra.inequality", "answer": "x ≤ 2", "answer_value": "x<=2", "expected": "x<=2", "unit": "", "result": "correct"}
+{"id": "ineq-03", "type": "ineq", "ms": 13.0, "kernel": "algebra.inequality", "answer": "x < -2", "answer_value": "x<-2", "expected": "x<-2", "unit": "", "result": "correct"}
+{"id": "ineq-04", "type": "ineq", "ms": 14.8, "kernel": "algebra.inequality", "answer": "x < 4", "answer_value": "x<4", "expected": "x<4", "unit": "", "result": "correct"}
+{"id": "ineq_sys-01", "type": "ineq_sys", "ms": 27.2, "kernel": "algebra.inequality_system", "answer": "2 < x < 4", "answer_value": "2<x<4", "expected": "2<x<4", "unit": "", "result": "correct"}
+{"id": "ineq_sys-02", "type": "ineq_sys", "ms": 39.6, "kernel": "algebra.inequality_system", "answer": "1/5 < x < 2", "answer_value": "1/5<x<2", "expected": "1/5<x<2", "unit": "", "result": "correct"}
+{"id": "ineq_sys-03", "type": "ineq_sys", "ms": 40.3, "kernel": "algebra.inequality_system", "answer": "4 个（-1、0、1、2）", "answer_value": "4", "expected": ["4"], "unit": "", "result": "correct"}
+{"id": "ineq_sys-04", "type": "ineq_sys", "ms": 59.9, "kernel": "algebra.inequality_system", "answer": "5/2 < x ≤ 4", "answer_value": "5/2<x<=4", "expected": "5/2<x<=4", "unit": "", "result": "correct"}
+{"id": "ineq_sys-05", "type": "ineq_sys", "ms": 45.9, "kernel": "algebra.inequality_system", "answer": "-2 ≤ x < 1", "answer_value": "-2<=x<1", "expected": "-2<=x<1", "unit": "", "result": "correct"}
+{"id": "sys2-01", "type": "sys2", "ms": 34.0, "kernel": "algebra.linear_system_2", "answer": "x = 7，y = 3", "answer_value": "x=7, y=3", "expected": ["7", "3"], "unit": "", "result": "correct"}
+{"id": "sys2-02", "type": "sys2", "ms": 30.7, "kernel": "algebra.linear_system_2", "answer": "x = 3，y = 1", "answer_value": "x=3, y=1", "expected": ["3", "1"], "unit": "", "result": "correct"}
+{"id": "sys2-03", "type": "sys2", "ms": 37.5, "kernel": "algebra.linear_system_2", "answer": "x = 2，y = 3", "answer_value": "x=2, y=3", "expected": ["2", "3"], "unit": "", "result": "correct"}
+{"id": "sys2-04", "type": "sys2", "ms": 32.9, "kernel": "algebra.linear_system_2", "answer": "x = 2，y = 3", "answer_value": "x=2, y=3", "expected": ["2", "3"], "unit": "", "result": "correct"}
+{"id": "sys2-05", "type": "sys2", "ms": 56.5, "kernel": "algebra.linear_system_2", "answer": "x = 12/5，y = 6/5", "answer_value": "x=12/5, y=6/5", "expected": ["12/5", "6/5"], "unit": "", "result": "correct"}
+{"id": "sys2-06", "type": "sys2", "ms": 32.8, "kernel": "algebra.linear_system_2", "answer": "x = 51/13，y = 35/13", "answer_value": "x=51/13, y=35/13", "expected": ["51/13", "35/13"], "unit": "", "result": "correct"}
+{"id": "sys3-01", "type": "sys3", "ms": 62.9, "kernel": "algebra.linear_system_3", "answer": "x = 1，y = 2，z = 3", "answer_value": "x=1, y=2, z=3", "expected": ["1", "2", "3"], "unit": "", "result": "correct"}
+{"id": "sys3-02", "type": "sys3", "ms": 52.5, "kernel": "algebra.linear_system_3", "answer": "x = 2，y = 3，z = 6", "answer_value": "x=2, y=3, z=6", "expected": ["2", "3", "6"], "unit": "", "result": "correct"}
+{"id": "sys3-03", "type": "sys3", "ms": 62.8, "kernel": "algebra.linear_system_3", "answer": "x = 1，y = 2，z = 3", "answer_value": "x=1, y=2, z=3", "expected": ["1", "2", "3"], "unit": "", "result": "correct"}
+{"id": "absval-01", "type": "absval", "ms": 9.2, "kernel": "arith.rational", "answer": "5", "answer_value": "5", "expected": ["5"], "unit": "", "result": "correct"}
+{"id": "absval-02", "type": "absval", "ms": 12.8, "kernel": "arith.rational", "answer": "1", "answer_value": "1", "expected": ["1"], "unit": "", "result": "correct"}
+{"id": "absval-03", "type": "absval", "ms": 29.3, "kernel": "algebra.abs_eq", "answer": "x = -2，x = 8", "answer_value": "-2, 8", "expected": ["-2", "8"], "unit": "", "result": "correct"}
+{"id": "absval-04", "type": "absval", "ms": 25.3, "kernel": "algebra.abs_eq", "answer": "x = 2", "answer_value": "2", "expected": ["2"], "unit": "", "result": "correct"}
+{"id": "linfunc-01", "type": "linfunc", "ms": 14.3, "kernel": "function.linear", "answer": "k = 3；b = 2", "answer_value": "3, 2", "expected": ["3", "2"], "unit": "", "result": "correct"}
+{"id": "linfunc-02", "type": "linfunc", "ms": 12.6, "kernel": "function.linear", "answer": "y = 5", "answer_value": "5", "expected": ["5"], "unit": "", "result": "correct"}
+{"id": "linfunc-03", "type": "linfunc", "ms": 1.8, "kernel": "function.linear", "answer": "y = 2x - 1", "answer_value": "2*x-1", "expected": "2*x-1", "unit": "", "result": "correct"}
+{"id": "linfunc-04", "type": "linfunc", "ms": 22.2, "kernel": "function.linear", "answer": "b = 4", "answer_value": "4", "expected": ["4"], "unit": "", "result": "correct"}
+{"id": "linfunc-05", "type": "linfunc", "ms": 9.3, "kernel": "function.linear", "answer": "与 x 轴交于 (2, 0)", "answer_value": "2, 0", "expected": ["2"], "unit": "", "result": "correct"}
+{"id": "quadfunc-01", "type": "quadfunc", "ms": 12.0, "kernel": "function.quadratic", "answer": "顶点 (1, -4)", "answer_value": "1, -4", "expected": ["1", "-4"], "unit": "", "result": "correct"}
+{"id": "quadfunc-02", "type": "quadfunc", "ms": 25.1, "kernel": "function.quadratic", "answer": "与 x 轴交于 (1, 0)、(3, 0)", "answer_value": "1, 3", "expected": ["1", "3"], "unit": "", "result": "correct"}
+{"id": "quadfunc-03", "type": "quadfunc", "ms": 9.2, "kernel": "function.quadratic", "answer": "当 x = 1 时，最大值为 4", "answer_value": "4", "expected": ["4"], "unit": "", "result": "correct"}
+{"id": "quadfunc-04", "type": "quadfunc", "ms": 8.5, "kernel": "function.quadratic", "answer": "对称轴 x = 2", "answer_value": "2", "expected": ["2"], "unit": "", "result": "correct"}
+{"id": "quadfunc-05", "type": "quadfunc", "ms": 9.7, "kernel": "function.quadratic", "answer": "当 x = -3 时，最小值为 -1", "answer_value": "-1", "expected": ["-1"], "unit": "", "result": "correct"}
+{"id": "quadfunc-06", "type": "quadfunc", "ms": 10.1, "kernel": "function.quadratic", "answer": "当 x = 1 时，最大值为 1", "answer_value": "1", "expected": ["1"], "unit": "", "result": "correct"}
+{"id": "invprop-01", "type": "invprop", "ms": 1.4, "kernel": "function.inverse", "answer": "k = 6，y = 6/x", "answer_value": "6", "expected": ["6"], "unit": "", "result": "correct"}
+{"id": "invprop-02", "type": "invprop", "ms": 0.4, "kernel": "function.inverse", "answer": "y = 2", "answer_value": "2", "expected": ["2"], "unit": "", "result": "correct"}
+{"id": "invprop-03", "type": "invprop", "ms": 0.5, "kernel": "function.inverse", "answer": "k = -8，y = -8/x", "answer_value": "-8", "expected": ["-8"], "unit": "", "result": "correct"}
+{"id": "pyth-01", "type": "pyth", "ms": 1.5, "kernel": "geometry.pythagoras", "answer": "5", "answer_value": "5", "expected": ["5"], "unit": "", "result": "correct"}
+{"id": "pyth-02", "type": "pyth", "ms": 0.6, "kernel": "geometry.pythagoras", "answer": "12", "answer_value": "12", "expected": ["12"], "unit": "", "result": "correct"}
+{"id": "pyth-03", "type": "pyth", "ms": 0.8, "kernel": "geometry.pythagoras", "answer": "2√2（≈ 2.83）", "answer_value": "2*sqrt(2)", "expected": ["2*sqrt(2)"], "unit": "", "result": "correct"}
+{"id": "pyth-04", "type": "pyth", "ms": 0.7, "kernel": "geometry.pythagoras", "answer": "10", "answer_value": "10", "expected": ["10"], "unit": "", "result": "correct"}
+{"id": "pyth-05", "type": "pyth", "ms": 0.8, "kernel": "geometry.pythagoras", "answer": "8", "answer_value": "8", "expected": ["8"], "unit": "", "result": "correct"}
+{"id": "geom-01", "type": "geom", "ms": 0.6, "kernel": "geometry.square", "answer": "面积 = 25", "answer_value": "25", "expected": ["25"], "unit": "", "result": "correct"}
+{"id": "geom-02", "type": "geom", "ms": 1.5, "kernel": "geometry.circle", "answer": "面积 = 9π（≈ 28.27）", "answer_value": "9*pi", "expected": ["9*pi"], "unit": "", "result": "correct"}
+{"id": "geom-03", "type": "geom", "ms": 0.9, "kernel": "geometry.circle", "answer": "周长 = 8 + 4π", "answer_value": "8+4*pi", "expected": "8 + 4*pi", "unit": "", "result": "correct"}
+{"id": "geom-04", "type": "geom", "ms": 0.9, "kernel": "geometry.sector", "answer": "弧长 = 3π（≈ 9.425）", "answer_value": "3*pi", "expected": ["3*pi"], "unit": "", "result": "correct"}
+{"id": "geom-05", "type": "geom", "ms": 1.6, "kernel": "geometry.polygon", "answer": "每个外角为 72°", "answer_value": "72", "expected": ["72"], "unit": "°", "result": "correct"}
+{"id": "geom-06", "type": "geom", "ms": 0.6, "kernel": "geometry.polygon", "answer": "边数为 9", "answer_value": "9", "expected": ["9"], "unit": "", "result": "correct"}
+{"id": "geom-07", "type": "geom", "ms": 1.4, "kernel": "geometry.similar", "answer": "36", "answer_value": "36", "expected": ["36"], "unit": "", "result": "correct"}
+{"id": "geom-08", "type": "geom", "ms": 3.0, "kernel": "geometry.sector", "answer": "扇形面积 = 3π/2（≈ 4.712）", "answer_value": "3*pi/2", "expected": "3*pi/2", "unit": "", "result": "correct"}
+{"id": "trig-01", "type": "trig", "ms": 25.1, "kernel": "arith.trig", "answer": "1", "answer_value": "1", "expected": ["1"], "unit": "", "result": "correct"}
+{"id": "trig-02", "type": "trig", "ms": 22.7, "kernel": "arith.trig", "answer": "(2 - 3√2)/2", "answer_value": "(2-3*sqrt(2))/2", "expected": "1 - 3*sqrt(2)/2", "unit": "", "result": "correct"}
+{"id": "trig-03", "type": "trig", "ms": 4.4, "kernel": "geometry.right_triangle_trig", "answer": "BC = 10√3/3（≈ 5.77）", "answer_value": "10*sqrt(3)/3", "expected": ["10*sqrt(3)/3"], "unit": "", "result": "correct"}
+{"id": "trig-04", "type": "trig", "ms": 9.7, "kernel": "arith.trig", "answer": "1", "answer_value": "1", "expected": ["1"], "unit": "", "result": "correct"}
+{"id": "trig-05", "type": "trig", "ms": 8.6, "kernel": "arith.trig", "answer": "2", "answer_value": "2", "expected": ["2"], "unit": "", "result": "correct"}
+{"id": "stats-01", "type": "stats", "ms": 1.6, "kernel": "stats.descriptive", "answer": "平均数 6", "answer_value": "6", "expected": ["6"], "unit": "", "result": "correct"}
+{"id": "stats-02", "type": "stats", "ms": 0.4, "kernel": "stats.descriptive", "answer": "中位数 6", "answer_value": "6", "expected": ["6"], "unit": "", "result": "correct"}
+{"id": "stats-03", "type": "stats", "ms": 0.5, "kernel": "stats.descriptive", "answer": "众数 2", "answer_value": "2", "expected": ["2"], "unit": "", "result": "correct"}
+{"id": "stats-04", "type": "stats", "ms": 0.4, "kernel": "stats.descriptive", "answer": "方差 5.6", "answer_value": "5.6", "expected": ["28/5"], "unit": "", "result": "correct"}
+{"id": "stats-05", "type": "stats", "ms": 0.5, "kernel": "stats.descriptive", "answer": "标准差 √6", "answer_value": "sqrt(6)", "expected": ["sqrt(6)"], "unit": "", "result": "correct"}
+{"id": "stats-06", "type": "stats", "ms": 0.4, "kernel": "stats.descriptive", "answer": "极差 13", "answer_value": "13", "expected": ["13"], "unit": "", "result": "correct"}
+{"id": "stats-07", "type": "stats", "ms": 1.0, "kernel": "stats.weighted_mean", "answer": "80", "answer_value": "80", "expected": ["80"], "unit": "", "result": "correct"}
+{"id": "prob-01", "type": "prob", "ms": 1.3, "kernel": "prob.classical", "answer": "40%", "answer_value": "40", "expected": ["40"], "unit": "%", "result": "correct"}
+{"id": "prob-02", "type": "prob", "ms": 2.0, "kernel": "prob.two_step", "answer": "50%", "answer_value": "50", "expected": ["50"], "unit": "%", "result": "correct"}
+{"id": "prob-03", "type": "prob", "ms": 1.1, "kernel": null, "answer": null, "answer_value": null, "expected": ["17"], "unit": "%", "result": "unanswered"}
+{"id": "prob-04", "type": "prob", "ms": 1.0, "kernel": "prob.classical", "answer": "40%", "answer_value": "40", "expected": ["40"], "unit": "%", "result": "correct"}
+{"id": "prob-05", "type": "prob", "ms": 1.4, "kernel": null, "answer": null, "answer_value": null, "expected": ["33"], "unit": "%", "result": "unanswered"}
+{"id": "ratio-01", "type": "ratio", "ms": 0.6, "kernel": "ratio.allocate", "answer": "36", "answer_value": "36", "expected": ["36"], "unit": "", "result": "correct"}
+{"id": "ratio-02", "type": "ratio", "ms": 5.2, "kernel": "ratio.successive_change", "answer": "1 元", "answer_value": "1", "expected": ["1"], "unit": "元", "result": "correct"}
+{"id": "ratio-03", "type": "ratio", "ms": 12.2, "kernel": "ratio.percent_base", "answer": "240 吨", "answer_value": "240", "expected": ["240"], "unit": "吨", "result": "correct"}
+{"id": "ratio-04", "type": "ratio", "ms": 2.5, "kernel": "ratio.percent_base", "answer": "4000 元", "answer_value": "4000", "expected": ["4000"], "unit": "元", "result": "correct"}
+{"id": "ratio-05", "type": "ratio", "ms": 0.7, "kernel": "word.profit", "answer": "10 元", "answer_value": "10", "expected": ["10"], "unit": "元", "result": "correct"}
+{"id": "unit-01", "type": "unit", "ms": 1.7, "kernel": "unit.convert", "answer": "3500米", "answer_value": "3500", "expected": ["3500"], "unit": "m", "result": "correct"}
+{"id": "unit-02", "type": "unit", "ms": 1.2, "kernel": "unit.convert", "answer": "135分钟", "answer_value": "135", "expected": ["135"], "unit": "min", "result": "correct"}
+{"id": "unit-03", "type": "unit", "ms": 1.4, "kernel": "unit.convert", "answer": "750升", "answer_value": "750", "expected": ["750"], "unit": "L", "result": "correct"}
+{"id": "unit-04", "type": "unit", "ms": 1.3, "kernel": "unit.convert", "answer": "1200千克", "answer_value": "1200", "expected": ["1200"], "unit": "kg", "result": "correct"}
+{"id": "word_travel-01", "type": "word_travel", "ms": 7.4, "kernel": "word.travel_meet", "answer": "6 小时", "answer_value": "6", "expected": ["6"], "unit": "h", "result": "correct"}
+{"id": "word_travel-02", "type": "word_travel", "ms": 0.7, "kernel": "word.travel_chase", "answer": "2.5 小时", "answer_value": "2.5", "expected": ["5/2"], "unit": "h", "result": "correct"}
+{"id": "word_travel-03", "type": "word_travel", "ms": 0.7, "kernel": "word.travel_meet", "answer": "2 小时", "answer_value": "2", "expected": ["2"], "unit": "h", "result": "correct"}
+{"id": "word_travel-04", "type": "word_travel", "ms": 0.8, "kernel": "word.travel_chase", "answer": "0.25 小时", "answer_value": "0.25", "expected": ["0.25"], "unit": "h", "result": "correct"}
+{"id": "word_travel-05", "type": "word_travel", "ms": 2.4, "kernel": null, "answer": null, "answer_value": null, "expected": ["2/3"], "unit": "h", "result": "unanswered"}
+{"id": "word_travel-06", "type": "word_travel", "ms": 1.6, "kernel": null, "answer": null, "answer_value": null, "expected": ["180"], "unit": "km", "result": "unanswered"}
+{"id": "word_work-01", "type": "word_work", "ms": 3.0, "kernel": "word.work", "answer": "6 天", "answer_value": "6", "expected": ["6"], "unit": "天", "result": "correct"}
+{"id": "word_work-02", "type": "word_work", "ms": 0.9, "kernel": "word.work", "answer": "12 天", "answer_value": "12", "expected": ["12"], "unit": "天", "result": "correct"}
+{"id": "word_work-03", "type": "word_work", "ms": 2.7, "kernel": null, "answer": null, "answer_value": null, "expected": ["24"], "unit": "h", "result": "unanswered"}
+{"id": "word_work-04", "type": "word_work", "ms": 0.9, "kernel": null, "answer": null, "answer_value": null, "expected": ["30"], "unit": "天", "result": "unanswered"}
+{"id": "word_profit-01", "type": "word_profit", "ms": 0.3, "kernel": "word.profit", "answer": "40 元", "answer_value": "40", "expected": ["40"], "unit": "元", "result": "correct"}
+{"id": "word_profit-02", "type": "word_profit", "ms": 0.5, "kernel": "word.profit", "answer": "200 元", "answer_value": "200", "expected": ["200"], "unit": "元", "result": "correct"}
+{"id": "word_profit-03", "type": "word_profit", "ms": 1.6, "kernel": null, "answer": null, "answer_value": null, "expected": ["70"], "unit": "%", "result": "unanswered"}
+{"id": "word_profit-04", "type": "word_profit", "ms": 0.3, "kernel": "word.profit", "answer": "120%", "answer_value": "120", "expected": ["120"], "unit": "%", "result": "correct"}
+{"id": "word_profit-05", "type": "word_profit", "ms": 1.1, "kernel": null, "answer": null, "answer_value": null, "expected": ["200"], "unit": "元", "result": "unanswered"}
+{"id": "word_conc-01", "type": "word_conc", "ms": 5.0, "kernel": null, "answer": null, "answer_value": null, "expected": ["20"], "unit": "%", "result": "unanswered"}
+{"id": "word_conc-02", "type": "word_conc", "ms": 1.9, "kernel": "word.concentration", "answer": "30 克", "answer_value": "30", "expected": ["30"], "unit": "g", "result": "correct"}
+{"id": "word_conc-03", "type": "word_conc", "ms": 0.7, "kernel": "word.concentration", "answer": "20%", "answer_value": "20", "expected": ["20"], "unit": "%", "result": "correct"}
+{"id": "word_age-01", "type": "word_age", "ms": 1.1, "kernel": "word.age", "answer": "5 年后", "answer_value": "5", "expected": ["5"], "unit": "年", "result": "correct"}
+{"id": "word_age-02", "type": "word_age", "ms": 0.4, "kernel": "word.age", "answer": "5 年前", "answer_value": "5", "expected": ["5"], "unit": "年", "result": "correct"}
+{"id": "word_age-03", "type": "word_age", "ms": 2.9, "kernel": "word.age", "answer": "10 岁", "answer_value": "10", "expected": ["10"], "unit": "岁", "result": "correct"}
+{"id": "word_chicken-01", "type": "word_chicken", "ms": 1.6, "kernel": "word.chicken_rabbit", "answer": "鸡 23 只", "answer_value": "23", "expected": ["23"], "unit": "只", "result": "correct"}
+{"id": "word_chicken-02", "type": "word_chicken", "ms": 1.5, "kernel": "word.chicken_rabbit", "answer": "三轮车 8", "answer_value": "8", "expected": ["8"], "unit": "辆", "result": "correct"}
+{"id": "word_chicken-03", "type": "word_chicken", "ms": 1.1, "kernel": "word.chicken_rabbit", "answer": "兔 10 只", "answer_value": "10", "expected": ["10"], "unit": "只", "result": "correct"}
+{"id": "phy_speed-01", "type": "phy_speed", "ms": 0.9, "kernel": "physics.speed", "answer": "v = 约 16.67 m/s", "answer_value": "16.67", "expected": ["60"], "unit": "km/h", "result": "correct"}
+{"id": "phy_speed-02", "type": "phy_speed", "ms": 1.4, "kernel": "physics.speed", "answer": "s = 50 m", "answer_value": "50", "expected": ["50"], "unit": "m", "result": "correct"}
+{"id": "phy_speed-03", "type": "phy_speed", "ms": 1.3, "kernel": "physics.speed", "answer": "t = 40 s", "answer_value": "40", "expected": ["40"], "unit": "s", "result": "correct"}
+{"id": "phy_speed-04", "type": "phy_speed", "ms": 0.8, "kernel": "physics.speed", "answer": "v = 3 m/s", "answer_value": "3", "expected": ["3"], "unit": "m/s", "result": "correct"}
+{"id": "phy_density-01", "type": "phy_density", "ms": 0.9, "kernel": "physics.density", "answer": "ρ = 2700 kg/m³", "answer_value": "2700", "expected": ["2.7"], "unit": "g/cm^3", "result": "correct"}
+{"id": "phy_density-02", "type": "phy_density", "ms": 1.4, "kernel": "physics.density", "answer": "m = 0.79 kg", "answer_value": "0.79", "expected": ["790"], "unit": "g", "result": "correct"}
+{"id": "phy_density-03", "type": "phy_density", "ms": 2.3, "kernel": null, "answer": null, "answer_value": null, "expected": ["2"], "unit": "L", "result": "unanswered"}
+{"id": "phy_density-04", "type": "phy_density", "ms": 2.0, "kernel": null, "answer": null, "answer_value": null, "expected": ["400"], "unit": "g", "result": "unanswered"}
+{"id": "phy_gravity-01", "type": "phy_gravity", "ms": 0.4, "kernel": "physics.gravity", "answer": "G = 200 N", "answer_value": "200", "expected": ["200"], "unit": "N", "result": "correct"}
+{"id": "phy_gravity-02", "type": "phy_gravity", "ms": 1.4, "kernel": "physics.density", "answer": "m = 4.5 kg", "answer_value": "4.5", "expected": ["4.5"], "unit": "kg", "result": "correct"}
+{"id": "phy_pressure-01", "type": "phy_pressure", "ms": 0.8, "kernel": "physics.pressure", "answer": "p = 120 Pa", "answer_value": "120", "expected": ["120"], "unit": "Pa", "result": "correct"}
+{"id": "phy_pressure-02", "type": "phy_pressure", "ms": 1.8, "kernel": null, "answer": null, "answer_value": null, "expected": ["300000000"], "unit": "Pa", "result": "unanswered"}
+{"id": "phy_pressure-03", "type": "phy_pressure", "ms": 0.5, "kernel": "physics.pressure", "answer": "p = 50000 Pa", "answer_value": "50000", "expected": ["50000"], "unit": "Pa", "result": "correct"}
+{"id": "phy_liquid-01", "type": "phy_liquid", "ms": 1.1, "kernel": "physics.pressure", "answer": "p = 50000 Pa", "answer_value": "50000", "expected": ["50000"], "unit": "Pa", "result": "correct"}
+{"id": "phy_liquid-02", "type": "phy_liquid", "ms": 2.9, "kernel": "physics.pressure", "answer": "p = 4000 Pa", "answer_value": "4000", "expected": ["4000"], "unit": "Pa", "result": "correct"}
+{"id": "phy_liquid-03", "type": "phy_liquid", "ms": 0.9, "kernel": "physics.pressure", "answer": "p = 3000 Pa", "answer_value": "3000", "expected": ["3000"], "unit": "Pa", "result": "correct"}
+{"id": "phy_buoy-01", "type": "phy_buoy", "ms": 1.1, "kernel": null, "answer": null, "answer_value": null, "expected": ["5"], "unit": "N", "result": "unanswered"}
+{"id": "phy_buoy-02", "type": "phy_buoy", "ms": 0.7, "kernel": "physics.buoyancy", "answer": "F浮 = 5 N", "answer_value": "5", "expected": ["5"], "unit": "N", "result": "correct"}
+{"id": "phy_buoy-03", "type": "phy_buoy", "ms": 0.7, "kernel": "physics.buoyancy", "answer": "F浮 = 6 N", "answer_value": "6", "expected": ["6"], "unit": "N", "result": "correct"}
+{"id": "phy_buoy-04", "type": "phy_buoy", "ms": 0.8, "kernel": "physics.buoyancy", "answer": "F浮 = 0.8 N", "answer_value": "0.8", "expected": ["0.8"], "unit": "N", "result": "correct"}
+{"id": "phy_lever-01", "type": "phy_lever", "ms": 1.6, "kernel": null, "answer": null, "answer_value": null, "expected": ["4"], "unit": "m", "result": "unanswered"}
+{"id": "phy_lever-02", "type": "phy_lever", "ms": 0.4, "kernel": "physics.lever", "answer": "F₁ = 20 N", "answer_value": "20", "expected": ["20"], "unit": "N", "result": "correct"}
+{"id": "phy_lever-03", "type": "phy_lever", "ms": 1.4, "kernel": null, "answer": null, "answer_value": null, "expected": ["30"], "unit": "N", "result": "unanswered"}
+{"id": "phy_work-01", "type": "phy_work", "ms": 0.4, "kernel": "physics.work_power", "answer": "W = 60 J", "answer_value": "60", "expected": ["60"], "unit": "J", "result": "correct"}
+{"id": "phy_work-02", "type": "phy_work", "ms": 1.1, "kernel": "physics.work_power", "answer": "P = 400 W", "answer_value": "400", "expected": ["400"], "unit": "W", "result": "correct"}
+{"id": "phy_work-03", "type": "phy_work", "ms": 1.9, "kernel": null, "answer": null, "answer_value": null, "expected": ["80"], "unit": "%", "result": "abstained_ok"}
+{"id": "phy_work-04", "type": "phy_work", "ms": 1.3, "kernel": null, "answer": null, "answer_value": null, "expected": "条件不足", "unit": "", "result": "abstained_ok"}
+{"id": "phy_work-05", "type": "phy_work", "ms": 0.4, "kernel": "physics.work_power", "answer": "W = 800 J", "answer_value": "800", "expected": ["800"], "unit": "J", "result": "correct"}
+{"id": "phy_heat-01", "type": "phy_heat", "ms": 1.1, "kernel": "physics.heat", "answer": "Q = 42000 J", "answer_value": "42000", "expected": ["42000"], "unit": "J", "result": "correct"}
+{"id": "phy_heat-02", "type": "phy_heat", "ms": 1.3, "kernel": "physics.heat", "answer": "Q = 672000 J", "answer_value": "672000", "expected": ["672000"], "unit": "J", "result": "correct"}
+{"id": "phy_heat-03", "type": "phy_heat", "ms": 1.2, "kernel": "physics.heat", "answer": "Q放 = 1.5×10^7 J", "answer_value": "15000000", "expected": ["15000000"], "unit": "J", "result": "correct"}
+{"id": "phy_heat-04", "type": "phy_heat", "ms": 1.3, "kernel": "physics.heat", "answer": "Q放 = 2.4×10^6 J", "answer_value": "2400000", "expected": ["2400000"], "unit": "J", "result": "correct"}
+{"id": "phy_ohm-01", "type": "phy_ohm", "ms": 1.0, "kernel": "physics.ohm", "answer": "R = 12 Ω", "answer_value": "12", "expected": ["12"], "unit": "Ω", "result": "correct"}
+{"id": "phy_ohm-02", "type": "phy_ohm", "ms": 1.0, "kernel": "physics.ohm", "answer": "U = 4 V", "answer_value": "4", "expected": ["4"], "unit": "V", "result": "correct"}
+{"id": "phy_ohm-03", "type": "phy_ohm", "ms": 0.7, "kernel": "physics.ohm", "answer": "R = 50 Ω", "answer_value": "50", "expected": ["50"], "unit": "Ω", "result": "correct"}
+{"id": "phy_ohm-04", "type": "phy_ohm", "ms": 0.7, "kernel": "physics.ohm", "answer": "R = 8 Ω", "answer_value": "8", "expected": ["8"], "unit": "Ω", "result": "correct"}
+{"id": "phy_ohm-05", "type": "phy_ohm", "ms": 1.4, "kernel": null, "answer": null, "answer_value": null, "expected": ["60"], "unit": "Ω", "result": "unanswered"}
+{"id": "phy_ohm-06", "type": "phy_ohm", "ms": 1.0, "kernel": null, "answer": null, "answer_value": null, "expected": ["0.6"], "unit": "A", "result": "unanswered"}
+{"id": "phy_power-01", "type": "phy_power", "ms": 0.5, "kernel": "physics.ohm", "answer": "I = 约 0.1818 A", "answer_value": "0.1818", "expected": ["2/11"], "unit": "A", "result": "correct"}
+{"id": "phy_power-02", "type": "phy_power", "ms": 1.5, "kernel": "physics.electric_power", "answer": "W电 = 0.5 kW·h", "answer_value": "0.5", "expected": ["0.5"], "unit": "kW·h", "result": "correct"}
+{"id": "phy_power-03", "type": "phy_power", "ms": 1.5, "kernel": null, "answer": null, "answer_value": null, "expected": ["1000"], "unit": "W", "result": "unanswered"}
+{"id": "phy_power-04", "type": "phy_power", "ms": 0.5, "kernel": "physics.electric_power", "answer": "Q = 12100 J", "answer_value": "12100", "expected": ["12100"], "unit": "J", "result": "correct"}
+{"id": "phy_wave-01", "type": "phy_wave", "ms": 1.0, "kernel": "physics.speed", "answer": "s = 1360 m", "answer_value": "1360", "expected": ["1360"], "unit": "m", "result": "correct"}
+{"id": "phy_wave-02", "type": "phy_wave", "ms": 0.9, "kernel": "physics.wave", "answer": "λ = 6 m", "answer_value": "6", "expected": ["6"], "unit": "m", "result": "correct"}
+{"id": "chem_mr-01", "type": "chem_mr", "ms": 866.5, "kernel": "chemistry.formula_mass", "answer": "250", "answer_value": "250", "expected": ["250"], "unit": "", "result": "correct"}
+{"id": "chem_mr-02", "type": "chem_mr", "ms": 0.7, "kernel": "chemistry.formula_mass", "answer": "100", "answer_value": "100", "expected": ["100"], "unit": "", "result": "correct"}
+{"id": "chem_mr-03", "type": "chem_mr", "ms": 0.7, "kernel": "chemistry.formula_mass", "answer": "180", "answer_value": "180", "expected": ["180"], "unit": "", "result": "correct"}
+{"id": "chem_mr-04", "type": "chem_mr", "ms": 0.8, "kernel": "chemistry.formula_mass", "answer": "36", "answer_value": "36", "expected": ["36"], "unit": "", "result": "correct"}
+{"id": "chem_frac-01", "type": "chem_frac", "ms": 2.7, "kernel": "chemistry.mass_fraction", "answer": "35%", "answer_value": "35", "expected": ["35"], "unit": "%", "result": "correct"}
+{"id": "chem_frac-02", "type": "chem_frac", "ms": 0.8, "kernel": "chemistry.mass_fraction", "answer": "70%", "answer_value": "70", "expected": ["70"], "unit": "%", "result": "correct"}
+{"id": "chem_frac-03", "type": "chem_frac", "ms": 0.9, "kernel": "chemistry.mass_fraction", "answer": "40%", "answer_value": "40", "expected": ["40"], "unit": "%", "result": "correct"}
+{"id": "chem_frac-04", "type": "chem_frac", "ms": 1.2, "kernel": "chemistry.mass_fraction", "answer": "60%", "answer_value": "60", "expected": ["60"], "unit": "%", "result": "correct"}
+{"id": "chem_sol-01", "type": "chem_sol", "ms": 0.7, "kernel": "chemistry.solution", "answer": "20%", "answer_value": "20", "expected": ["20"], "unit": "%", "result": "correct"}
+{"id": "chem_sol-02", "type": "chem_sol", "ms": 1.0, "kernel": "chemistry.solution", "answer": "2 g", "answer_value": "2", "expected": ["2"], "unit": "g", "result": "correct"}
+{"id": "chem_sol-03", "type": "chem_sol", "ms": 0.9, "kernel": "chemistry.dilution", "answer": "100 g", "answer_value": "100", "expected": ["100"], "unit": "g", "result": "correct"}
+{"id": "chem_sol-04", "type": "chem_sol", "ms": 0.7, "kernel": "chemistry.solution", "answer": "26.5%", "answer_value": "26.5", "expected": ["26.5"], "unit": "%", "result": "correct"}
+{"id": "chem_stoich-01", "type": "chem_stoich", "ms": 3.0, "kernel": "chemistry.stoichiometry", "answer": "16 g", "answer_value": "16", "expected": ["16"], "unit": "g", "result": "correct"}
+{"id": "chem_stoich-02", "type": "chem_stoich", "ms": 2.0, "kernel": "chemistry.stoichiometry", "answer": "0.4 g", "answer_value": "0.4", "expected": ["0.4"], "unit": "g", "result": "correct"}
+{"id": "chem_stoich-03", "type": "chem_stoich", "ms": 4.8, "kernel": null, "answer": null, "answer_value": null, "expected": ["44.8"], "unit": "t", "result": "unanswered"}
+{"id": "chem_stoich-04", "type": "chem_stoich", "ms": 1.3, "kernel": "chemistry.stoichiometry", "answer": "12.8 g", "answer_value": "12.8", "expected": ["12.8"], "unit": "g", "result": "correct"}
+{"id": "chem_stoich-05", "type": "chem_stoich", "ms": 2.1, "kernel": "chemistry.stoichiometry", "answer": "56 g", "answer_value": "56", "expected": ["56"], "unit": "g", "result": "correct"}
+{"id": "chem_balance-01", "type": "chem_balance", "ms": 1.7, "kernel": "chemistry.balance", "answer": "CH4 + 2O2 = CO2 + 2H2O", "answer_value": "1, 2, 1, 2", "expected": ["1", "2", "1", "2"], "unit": "", "result": "correct"}
+{"id": "chem_balance-02", "type": "chem_balance", "ms": 2.0, "kernel": "chemistry.balance", "answer": "Fe2O3 + 3CO = 2Fe + 3CO2", "answer_value": "1, 3, 2, 3", "expected": ["1", "3", "2", "3"], "unit": "", "result": "correct"}

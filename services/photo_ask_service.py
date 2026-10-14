@@ -5,10 +5,13 @@
 - 同时（可选）问已配置的视觉模型（get_vision_caller，Veya VL）。OCR 先回来就先等视觉一小段宽限，
   视觉超时/失败就用 OCR 结果。MNEME_ASK_VISION=0 可关掉视觉。
 
-求解：
-- 精确内核（services.ask_kernels：一元一次/二次方程、算术、化学配平）命中 → 毫秒级返回，不调 LLM；
-- 否则问文本 LLM（get_optional_text_caller），带超时（MNEME_ASK_LLM_TIMEOUT，默认 35s）；
-  失败返回 status=llm_unavailable，前端提示稍后重试——绝不 500。
+求解（solve_question，确定性优先，不依赖任何 LLM）：
+- 多题图片：题面里有 ≥2 个编号的题/小题且没指定 question_index → status=multi，返回题目列表让学生挑；
+- 精确内核（services.ask_kernels：数与式、方程不等式、函数、几何、统计概率、应用题模板、
+  初中物理公式、化学计算与配平）命中 → 毫秒级返回 status=ok, solver=kernel；
+- 都不适用 → status=no_exact_solver，带最相似的 3 道已解题（similar），绝不只回一句“有点忙”；
+- 仅当 MNEME_ASK_LLM_FALLBACK=1 时，才在内核失败后尝试文本 LLM（带 MNEME_ASK_LLM_TIMEOUT 超时），
+  LLM 失败仍回到 no_exact_solver。
 
 隐私：图片只进私有桶 question-images（对象键按学生 id 分目录），日志不记题面/图片。
 """
@@ -23,7 +26,7 @@ import time
 import uuid
 from typing import Any, Optional
 
-from services.ask_kernels import normalize_math_text, solve_exact
+from services.ask_kernels import normalize_math_text, solve_exact, solve_text, split_questions
 from services.logging_config import logger
 
 SUBJECTS = {
@@ -292,13 +295,89 @@ async def _llm_call(*, system: str, user: str, max_tokens: int, timeout: float, 
     return str(content or "") or None
 
 
-async def solve_question(text: str, subject: Optional[str], grade: Optional[str]) -> dict[str, Any]:
-    """返回 {status, solver, kernel, hint, steps, answer, explanation, latency_ms}。永不抛。"""
+def _llm_fallback_enabled() -> bool:
+    return os.environ.get("MNEME_ASK_LLM_FALLBACK", "0").strip().lower() in {"1", "true", "on", "yes"}
+
+
+_TYPE_HINTS: list[tuple[str, str]] = [
+    (r"方程组", "用代入消元或加减消元，把方程组化成一元一次方程。"),
+    (r"不等式", "解法和方程类似；两边乘除负数时不等号要变向，不等式组取公共部分。"),
+    (r"方程", "先整理（去分母、去括号、移项、合并），再求解，最后代回检验。"),
+    (r"函数|抛物线", "先求出解析式（待定系数法），再结合图象性质（顶点、对称轴、交点）分析。"),
+    (r"三角形|圆|角|边形|面积|周长", "画出图形，把已知条件标在图上，找能用的定理（勾股、相似、内角和……）。"),
+    (r"速度|压强|浮力|电|热|功", "写出已知量（统一成国际单位）→ 找公式 → 代入计算 → 带单位写答案。"),
+    (r"化学|溶液|质量分数|方程式", "先写出（配平）化学方程式，找出已知量和未知量的质量关系，列比例式求解。"),
+]
+
+
+def _generic_hint(text: str) -> str:
+    for pat, hint in _TYPE_HINTS:
+        if re.search(pat, text or ""):
+            return hint
+    return "先圈出已知条件和要求的量，想想学过的哪个公式或方法把它们联系起来。"
+
+
+def _multi_payload(parts: list[dict], subject: Optional[str], t0: float) -> dict[str, Any]:
+    """多题图片的响应：只告诉学生每题能不能精确求解，不提前给答案。"""
+    items = []
+    for p in parts[:12]:
+        sol = None
+        try:
+            sol = solve_text(p["text"], subject, budget_s=1.0)
+        except Exception:  # noqa: BLE001
+            sol = None
+        items.append(
+            {
+                "index": p["index"],
+                "label": p["label"],
+                "text": p["text"],
+                "solvable": sol is not None,
+                "kernel": sol.kernel if sol is not None else None,
+            }
+        )
+    return {
+        "status": "multi",
+        "solver": "none",
+        "kernel": None,
+        "hint": "这张图里有好几道题，选一道开始吧。",
+        "steps": [],
+        "answer": None,
+        "explanation": None,
+        "questions": items,
+        "subject": subject,
+        "latency_ms": int((time.monotonic() - t0) * 1000),
+    }
+
+
+async def solve_question(
+    text: str, subject: Optional[str], grade: Optional[str], *, question_index: Optional[int] = None
+) -> dict[str, Any]:
+    """求解一道题。永不抛。
+
+    响应形状（所有分支都带 status/solver/kernel/hint/steps/answer/explanation/subject/latency_ms）：
+
+    - status="ok", solver="kernel"：精确内核已验证的解；另带
+        answer_value / answer_kind / unit（机器可判分的答案）、check（验证方式）、question_text（实际求解的题面）。
+    - status="multi"：多题图片，questions=[{index, label, text, solvable, kernel}]；
+        学生选一题后再调 /solve，body 带 question_index（或直接把那题的 text 发来）。
+    - status="no_exact_solver"：没有内核适用；hint 是按题型给的通用提示，
+        similar=[{text, answer, steps, hint, kernel, subject, score, source}]（最多 3 道已解的相似题）。
+    - status="ok"/"partial", solver="llm"：仅当 MNEME_ASK_LLM_FALLBACK=1 且 LLM 可用时。
+    """
     t0 = time.monotonic()
     subject = normalize_subject(subject) or guess_subject(text)
+    parts = split_questions(text)
+    picked_text = text
+    if parts:
+        if question_index is None:
+            return _multi_payload(parts, subject, t0)
+        match = next((p for p in parts if p["index"] == question_index), None)
+        if match is not None:
+            picked_text = match["text"]
+            subject = normalize_subject(None) or guess_subject(picked_text) or subject
     exact = None
     try:
-        exact = await solve_exact(text, subject)
+        exact = await solve_exact(picked_text, subject)
     except Exception as exc:  # noqa: BLE001
         logger.warning("ask exact kernel failed: %s", type(exc).__name__)
     if exact is not None:
@@ -306,46 +385,58 @@ async def solve_question(text: str, subject: Optional[str], grade: Optional[str]
             "status": "ok",
             "solver": "kernel",
             **exact.to_dict(),
+            "question_text": picked_text,
             "subject": subject,
             "latency_ms": int((time.monotonic() - t0) * 1000),
         }
 
-    timeout = _env_float("MNEME_ASK_LLM_TIMEOUT", 35.0)
-    raw = await _llm_call(
-        system=_SOLVE_SYSTEM.format(grade=_grade_label(grade)),
-        user=f"学科：{SUBJECTS.get(subject or 'other', '其他')}\n题目：\n{text.strip()[:3000]}",
-        max_tokens=1200,
-        timeout=timeout,
-        json_mode=True,
-    )
-    data = _parse_llm_json(raw) if raw else None
-    latency = int((time.monotonic() - t0) * 1000)
-    if not data:
-        return {
-            "status": "llm_unavailable",
-            "solver": "none",
-            "kernel": None,
-            "hint": None,
-            "steps": [],
-            "answer": None,
-            "explanation": None,
-            "subject": subject,
-            "latency_ms": latency,
-        }
-    steps_raw = data.get("steps") or []
-    if isinstance(steps_raw, str):
-        steps_raw = [s for s in re.split(r"\n+", steps_raw) if s.strip()]
-    steps = [str(s).strip() for s in steps_raw if str(s).strip()][:12]
+    if _llm_fallback_enabled():
+        timeout = _env_float("MNEME_ASK_LLM_TIMEOUT", 35.0)
+        raw = await _llm_call(
+            system=_SOLVE_SYSTEM.format(grade=_grade_label(grade)),
+            user=f"学科：{SUBJECTS.get(subject or 'other', '其他')}\n题目：\n{picked_text.strip()[:3000]}",
+            max_tokens=1200,
+            timeout=timeout,
+            json_mode=True,
+        )
+        data = _parse_llm_json(raw) if raw else None
+        if data:
+            steps_raw = data.get("steps") or []
+            if isinstance(steps_raw, str):
+                steps_raw = [s for s in re.split(r"\n+", steps_raw) if s.strip()]
+            steps = [str(s).strip() for s in steps_raw if str(s).strip()][:12]
+            return {
+                "status": "ok" if steps or data.get("answer") else "partial",
+                "solver": "llm",
+                "kernel": None,
+                "hint": (str(data.get("hint") or "").strip() or None),
+                "steps": steps,
+                "answer": (str(data.get("answer") or "").strip() or None),
+                "explanation": (str(data.get("explanation") or "").strip() or None),
+                "question_text": picked_text,
+                "subject": subject,
+                "latency_ms": int((time.monotonic() - t0) * 1000),
+            }
+
+    from services.ask_kernels.similar import similar_questions
+
+    try:
+        similar = similar_questions(picked_text, subject, k=3)
+    except Exception as exc:  # noqa: BLE001
+        logger.info("ask similar lookup failed: %s", type(exc).__name__)
+        similar = []
     return {
-        "status": "ok" if steps or data.get("answer") else "partial",
-        "solver": "llm",
+        "status": "no_exact_solver",
+        "solver": "none",
         "kernel": None,
-        "hint": (str(data.get("hint") or "").strip() or None),
-        "steps": steps,
-        "answer": (str(data.get("answer") or "").strip() or None),
-        "explanation": (str(data.get("explanation") or "").strip() or None),
+        "hint": _generic_hint(picked_text),
+        "steps": [],
+        "answer": None,
+        "explanation": "这道题暂时还没有精确解法。可以先看看下面的同类题和解答，或者把题目改得更清楚（比如补全数字、去掉无关文字）再试一次。",
+        "similar": similar,
+        "question_text": picked_text,
         "subject": subject,
-        "latency_ms": latency,
+        "latency_ms": int((time.monotonic() - t0) * 1000),
     }
 
 
@@ -376,8 +467,37 @@ async def followup_reply(
         json_mode=False,
     )
     if not raw or not raw.strip():
-        return {"reply": "AI 老师有点忙，稍后再试一次吧。", "status": "llm_unavailable"}
+        return {"reply": _deterministic_followup(sol, message, history), "status": "ok", "solver": "kernel"}
     return {"reply": raw.strip()[:2000], "status": "ok"}
+
+
+def _deterministic_followup(sol: dict, message: str, history: list[dict]) -> str:
+    """没有 LLM 时的追问回复：按学生问的“第几步”展开那一步，否则换个说法把思路和关键步骤再讲一遍。"""
+    steps = [str(x) for x in (sol.get("steps") or [])]
+    m = re.search(r"第\s*(\d+|[一二三四五六七八九十])\s*步", message or "")
+    if m and steps:
+        from services.ask_kernels.core import cn_small_number
+
+        n = int(m.group(1)) if m.group(1).isdigit() else (cn_small_number(m.group(1)) or 0)
+        if 1 <= n <= len(steps):
+            prev = steps[n - 2] if n >= 2 else "读题，写出已知条件"
+            return (
+                f"第 {n} 步是：{steps[n - 1]}\n它接着上一步（{prev}）来做。"
+                f"{('这一步用到的方法：' + str(sol.get('hint'))) if sol.get('hint') else ''}\n"
+                "你自己把这一步再算一遍，看看哪里和我不一样？"
+            )
+    lines = []
+    if sol.get("hint"):
+        lines.append(f"先抓住思路：{sol['hint']}")
+    if steps:
+        lines.append("我们一步一步来：")
+        lines += [f"{i}. {st}" for i, st in enumerate(steps[:8], 1)]
+    if sol.get("answer"):
+        lines.append(f"所以答案是 {sol['answer']}。")
+    lines.append("哪一步没看懂？回复“第几步”，我把那一步展开讲。")
+    if len(history) >= 4:
+        lines.append("也可以先把这道题加入错题本，复习时会换个数字再练一次。")
+    return "\n".join(lines)
 
 
 def new_image_key(student_id: uuid.UUID, content_type: str) -> str:

@@ -1,0 +1,448 @@
+{
+ "mode": "text",
+ "total": {
+  "n": 224,
+  "answered": 204,
+  "correct": 204,
+  "coverage": 0.9107,
+  "accuracy": 1.0,
+  "confident_wrong": 0,
+  "p50_ms": 2.1,
+  "p95_ms": 45.9
+ },
+ "per_type": {
+  "absval": {
+   "n": 4,
+   "answered": 4,
+   "correct": 4,
+   "coverage": 1.0,
+   "accuracy": 1.0
+  },
+  "chem_balance": {
+   "n": 2,
+   "answered": 2,
+   "correct": 2,
+   "coverage": 1.0,
+   "accuracy": 1.0
+  },
+  "chem_frac": {
+   "n": 4,
+   "answered": 4,
+   "correct": 4,
+   "coverage": 1.0,
+   "accuracy": 1.0
+  },
+  "chem_mr": {
+   "n": 4,
+   "answered": 4,
+   "correct": 4,
+   "coverage": 1.0,
+   "accuracy": 1.0
+  },
+  "chem_sol": {
+   "n": 4,
+   "answered": 4,
+   "correct": 4,
+   "coverage": 1.0,
+   "accuracy": 1.0
+  },
+  "chem_stoich": {
+   "n": 5,
+   "answered": 4,
+   "correct": 4,
+   "coverage": 0.8,
+   "accuracy": 1.0
+  },
+  "expand": {
+   "n": 5,
+   "answered": 5,
+   "correct": 5,
+   "coverage": 1.0,
+   "accuracy": 1.0
+  },
+  "factor": {
+   "n": 6,
+   "answered": 6,
+   "correct": 6,
+   "coverage": 1.0,
+   "accuracy": 1.0
+  },
+  "frac": {
+   "n": 8,
+   "answered": 8,
+   "correct": 8,
+   "coverage": 1.0,
+   "accuracy": 1.0
+  },
+  "frac_eq": {
+   "n": 5,
+   "answered": 5,
+   "correct": 5,
+   "coverage": 1.0,
+   "accuracy": 1.0
+  },
+  "geom": {
+   "n": 8,
+   "answered": 8,
+   "correct": 8,
+   "coverage": 1.0,
+   "accuracy": 1.0
+  },
+  "ineq": {
+   "n": 4,
+   "answered": 4,
+   "correct": 4,
+   "coverage": 1.0,
+   "accuracy": 1.0
+  },
+  "ineq_sys": {
+   "n": 5,
+   "answered": 5,
+   "correct": 5,
+   "coverage": 1.0,
+   "accuracy": 1.0
+  },
+  "invprop": {
+   "n": 3,
+   "answered": 3,
+   "correct": 3,
+   "coverage": 1.0,
+   "accuracy": 1.0
+  },
+  "lineq": {
+   "n": 5,
+   "answered": 5,
+   "correct": 5,
+   "coverage": 1.0,
+   "accuracy": 1.0
+  },
+  "linfunc": {
+   "n": 5,
+   "answered": 5,
+   "correct": 5,
+   "coverage": 1.0,
+   "accuracy": 1.0
+  },
+  "percent": {
+   "n": 3,
+   "answered": 3,
+   "correct": 3,
+   "coverage": 1.0,
+   "accuracy": 1.0
+  },
+  "phy_buoy": {
+   "n": 4,
+   "answered": 3,
+   "correct": 3,
+   "coverage": 0.75,
+   "accuracy": 1.0
+  },
+  "phy_density": {
+   "n": 4,
+   "answered": 2,
+   "correct": 2,
+   "coverage": 0.5,
+   "accuracy": 1.0
+  },
+  "phy_gravity": {
+   "n": 2,
+   "answered": 2,
+   "correct": 2,
+   "coverage": 1.0,
+   "accuracy": 1.0
+  },
+  "phy_heat": {
+   "n": 4,
+   "answered": 4,
+   "correct": 4,
+   "coverage": 1.0,
+   "accuracy": 1.0
+  },
+  "phy_lever": {
+   "n": 3,
+   "answered": 1,
+   "correct": 1,
+   "coverage": 0.333,
+   "accuracy": 1.0
+  },
+  "phy_liquid": {
+   "n": 3,
+   "answered": 3,
+   "correct": 3,
+   "coverage": 1.0,
+   "accuracy": 1.0
+  },
+  "phy_ohm": {
+   "n": 6,
+   "answered": 4,
+   "correct": 4,
+   "coverage": 0.667,
+   "accuracy": 1.0
+  },
+  "phy_power": {
+   "n": 4,
+   "answered": 3,
+   "correct": 3,
+   "coverage": 0.75,
+   "accuracy": 1.0
+  },
+  "phy_pressure": {
+   "n": 3,
+   "answered": 2,
+   "correct": 2,
+   "coverage": 0.667,
+   "accuracy": 1.0
+  },
+  "phy_speed": {
+   "n": 4,
+   "answered": 4,
+   "correct": 4,
+   "coverage": 1.0,
+   "accuracy": 1.0
+  },
+  "phy_wave": {
+   "n": 2,
+   "answered": 2,
+   "correct": 2,
+   "coverage": 1.0,
+   "accuracy": 1.0
+  },
+  "phy_work": {
+   "n": 3,
+   "answered": 3,
+   "correct": 3,
+   "coverage": 1.0,
+   "accuracy": 1.0
+  },
+  "power": {
+   "n": 5,
+   "answered": 5,
+   "correct": 5,
+   "coverage": 1.0,
+   "accuracy": 1.0
+  },
+  "prob": {
+   "n": 5,
+   "answered": 3,
+   "correct": 3,
+   "coverage": 0.6,
+   "accuracy": 1.0
+  },
+  "pyth": {
+   "n": 5,
+   "answered": 5,
+   "correct": 5,
+   "coverage": 1.0,
+   "accuracy": 1.0
+  },
+  "quad": {
+   "n": 6,
+   "answered": 6,
+   "correct": 6,
+   "coverage": 1.0,
+   "accuracy": 1.0
+  },
+  "quad_disc": {
+   "n": 5,
+   "answered": 5,
+   "correct": 5,
+   "coverage": 1.0,
+   "accuracy": 1.0
+  },
+  "quadfunc": {
+   "n": 6,
+   "answered": 6,
+   "correct": 6,
+   "coverage": 1.0,
+   "accuracy": 1.0
+  },
+  "radical": {
+   "n": 7,
+   "answered": 6,
+   "correct": 6,
+   "coverage": 0.857,
+   "accuracy": 1.0
+  },
+  "ratio": {
+   "n": 5,
+   "answered": 5,
+   "correct": 5,
+   "coverage": 1.0,
+   "accuracy": 1.0
+  },
+  "sci": {
+   "n": 4,
+   "answered": 4,
+   "correct": 4,
+   "coverage": 1.0,
+   "accuracy": 1.0
+  },
+  "simplify_frac": {
+   "n": 5,
+   "answered": 5,
+   "correct": 5,
+   "coverage": 1.0,
+   "accuracy": 1.0
+  },
+  "stats": {
+   "n": 7,
+   "answered": 7,
+   "correct": 7,
+   "coverage": 1.0,
+   "accuracy": 1.0
+  },
+  "sys2": {
+   "n": 6,
+   "answered": 6,
+   "correct": 6,
+   "coverage": 1.0,
+   "accuracy": 1.0
+  },
+  "sys3": {
+   "n": 3,
+   "answered": 3,
+   "correct": 3,
+   "coverage": 1.0,
+   "accuracy": 1.0
+  },
+  "trig": {
+   "n": 5,
+   "answered": 5,
+   "correct": 5,
+   "coverage": 1.0,
+   "accuracy": 1.0
+  },
+  "unit": {
+   "n": 4,
+   "answered": 4,
+   "correct": 4,
+   "coverage": 1.0,
+   "accuracy": 1.0
+  },
+  "word_age": {
+   "n": 3,
+   "answered": 3,
+   "correct": 3,
+   "coverage": 1.0,
+   "accuracy": 1.0
+  },
+  "word_chicken": {
+   "n": 3,
+   "answered": 3,
+   "correct": 3,
+   "coverage": 1.0,
+   "accuracy": 1.0
+  },
+  "word_conc": {
+   "n": 3,
+   "answered": 2,
+   "correct": 2,
+   "coverage": 0.667,
+   "accuracy": 1.0
+  },
+  "word_profit": {
+   "n": 5,
+   "answered": 3,
+   "correct": 3,
+   "coverage": 0.6,
+   "accuracy": 1.0
+  },
+  "word_travel": {
+   "n": 6,
+   "answered": 4,
+   "correct": 4,
+   "coverage": 0.667,
+   "accuracy": 1.0
+  },
+  "word_work": {
+   "n": 4,
+   "answered": 2,
+   "correct": 2,
+   "coverage": 0.5,
+   "accuracy": 1.0
+  }
+ },
+ "wrong": [],
+ "unanswered": [
+  {
+   "id": "radical-07",
+   "type": "radical"
+  },
+  {
+   "id": "prob-03",
+   "type": "prob"
+  },
+  {
+   "id": "prob-05",
+   "type": "prob"
+  },
+  {
+   "id": "word_travel-05",
+   "type": "word_travel"
+  },
+  {
+   "id": "word_travel-06",
+   "type": "word_travel"
+  },
+  {
+   "id": "word_work-03",
+   "type": "word_work"
+  },
+  {
+   "id": "word_work-04",
+   "type": "word_work"
+  },
+  {
+   "id": "word_profit-03",
+   "type": "word_profit"
+  },
+  {
+   "id": "word_profit-05",
+   "type": "word_profit"
+  },
+  {
+   "id": "word_conc-01",
+   "type": "word_conc"
+  },
+  {
+   "id": "phy_density-03",
+   "type": "phy_density"
+  },
+  {
+   "id": "phy_density-04",
+   "type": "phy_density"
+  },
+  {
+   "id": "phy_pressure-02",
+   "type": "phy_pressure"
+  },
+  {
+   "id": "phy_buoy-01",
+   "type": "phy_buoy"
+  },
+  {
+   "id": "phy_lever-01",
+   "type": "phy_lever"
+  },
+  {
+   "id": "phy_lever-03",
+   "type": "phy_lever"
+  },
+  {
+   "id": "phy_ohm-05",
+   "type": "phy_ohm"
+  },
+  {
+   "id": "phy_ohm-06",
+   "type": "phy_ohm"
+  },
+  {
+   "id": "phy_power-03",
+   "type": "phy_power"
+  },
+  {
+   "id": "chem_stoich-03",
+   "type": "chem_stoich"
+  }
+ ]
+}

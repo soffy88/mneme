@@ -1,0 +1,226 @@
+{"id": "frac-01", "type": "frac", "subject": "math", "text": "计算：(-2/3) + (-1/6).", "answer_kind": "num", "answer": ["-5/6"], "unit": "", "note": "异号/异分母分数加法，结果为负"}
+{"id": "frac-02", "type": "frac", "subject": "math", "text": "计算：2 3/4 - 1 1/2（结果化成最简分数）.", "answer_kind": "num", "answer": ["5/4"], "unit": "", "note": "带分数减法"}
+{"id": "frac-03", "type": "frac", "subject": "math", "text": "计算：(-3/5) × (10/9).", "answer_kind": "num", "answer": ["-2/3"], "unit": "", "note": "分数乘法，约分"}
+{"id": "frac-04", "type": "frac", "subject": "math", "text": "计算：(-5/6) ÷ (-5/4).", "answer_kind": "num", "answer": ["2/3"], "unit": "", "note": "负负得正的分数除法"}
+{"id": "frac-05", "type": "frac", "subject": "math", "text": "计算：3.5 + (-0.5)（结果用小数表示）.", "answer_kind": "num", "answer": ["3"], "unit": "", "note": "小数与负数相加"}
+{"id": "frac-06", "type": "frac", "subject": "math", "text": "计算：0.75 ÷ 0.2.", "answer_kind": "num", "answer": ["15/4"], "unit": "", "note": "小数除法，225/15=15"}
+{"id": "frac-07", "type": "frac", "subject": "math", "text": "计算：1/2 + 1/3 + 1/6.", "answer_kind": "num", "answer": ["1"], "unit": "", "note": "三个分数求和"}
+{"id": "frac-08", "type": "frac", "subject": "math", "text": "计算：(-2)^3 ÷ 4 - (-1).", "answer_kind": "num", "answer": ["-1"], "unit": "", "note": "乘方与除法、减法混合（有理数运算）"}
+{"id": "percent-01", "type": "percent", "subject": "math", "text": "一件商品原价 200 元，打八折出售，售价是多少元？", "answer_kind": "num", "answer": ["160"], "unit": "元", "note": "打折"}
+{"id": "percent-02", "type": "percent", "subject": "math", "text": "某班有 50 名学生，其中 40 名参加了兴趣小组，参加人数占全班人数的百分数是多少（填百分号前的数）？", "answer_kind": "num", "answer": ["80"], "unit": "%", "note": "百分率"}
+{"id": "percent-03", "type": "percent", "subject": "math", "text": "一件商品先涨价 25%，再降价 20%，现价是原价的百分之几（填百分号前的数）？", "answer_kind": "num", "answer": ["100"], "unit": "%", "note": "连续百分率变化，回到原价"}
+{"id": "power-01", "type": "power", "subject": "math", "text": "计算：2^3 × 2^2.", "answer_kind": "num", "answer": ["32"], "unit": "", "note": "同底数幂相乘"}
+{"id": "power-02", "type": "power", "subject": "math", "text": "计算：(-1/2)^3.", "answer_kind": "num", "answer": ["-1/8"], "unit": "", "note": "负数的奇次幂"}
+{"id": "power-03", "type": "power", "subject": "math", "text": "计算：(a^2)^3 · a.", "answer_kind": "expr", "answer": "a**7", "unit": "", "note": "幂的乘方与同底数幂相乘，指数相加"}
+{"id": "power-04", "type": "power", "subject": "math", "text": "计算：(-2)^0 + 3^-2.", "answer_kind": "expr", "answer": "10/9", "unit": "", "note": "0 次幂、负整数指数"}
+{"id": "power-05", "type": "power", "subject": "math", "text": "计算：(-3x^2y) · (2x^3y^2)（写成最简形式）.", "answer_kind": "expr", "answer": "-6*x**5*y**3", "unit": "", "note": "单项式乘单项式，指数相加"}
+{"id": "sci-01", "type": "sci", "subject": "math", "text": "把 405000 用科学记数法表示，写成 a×10^n 的形式，其中 1≤a<10. 写出 n 的值.", "answer_kind": "num", "answer": ["5"], "unit": "", "note": "问的是指数 n"}
+{"id": "sci-02", "type": "sci", "subject": "math", "text": "把 0.00056 用科学记数法表示，写成 a×10^n 的形式，其中 1≤a<10. 写出 n 的值.", "answer_kind": "num", "answer": ["-4"], "unit": "", "note": "问的是指数 n"}
+{"id": "sci-03", "type": "sci", "subject": "math", "text": "计算：(3×10^4) × (2×10^3) 的值（写成普通整数）.", "answer_kind": "num", "answer": ["60000000"], "unit": "", "note": "科学记数法乘法"}
+{"id": "sci-04", "type": "sci", "subject": "math", "text": "计算：(8×10^5) ÷ (2×10^2) 的值（写成普通整数）.", "answer_kind": "num", "answer": ["4000"], "unit": "", "note": "科学记数法除法"}
+{"id": "radical-01", "type": "radical", "subject": "math", "text": "计算：√48 的值（化成最简二次根式，用 √ 表示）.", "answer_kind": "num", "answer": ["4*sqrt(3)"], "unit": "", "note": "48=16×3"}
+{"id": "radical-02", "type": "radical", "subject": "math", "text": "计算：√18 ÷ √2 的值.", "answer_kind": "num", "answer": ["3"], "unit": "", "note": "二次根式除法"}
+{"id": "radical-03", "type": "radical", "subject": "math", "text": "计算：(√3 + √2)(√3 - √2) 的值.", "answer_kind": "num", "answer": ["1"], "unit": "", "note": "平方差，分母有理化思想"}
+{"id": "radical-04", "type": "radical", "subject": "math", "text": "化简：1/√2（分母有理化）.", "answer_kind": "expr", "answer": "sqrt(2)/2", "unit": "", "note": "分母有理化，等于 √2/2"}
+{"id": "radical-05", "type": "radical", "subject": "math", "text": "计算：2√12 + 3√3 的值（化成最简二次根式）.", "answer_kind": "num", "answer": ["7*sqrt(3)"], "unit": "", "note": "同类二次根式合并"}
+{"id": "radical-06", "type": "radical", "subject": "math", "text": "计算：√20 - 2√5 的值.", "answer_kind": "num", "answer": ["0"], "unit": "", "note": "20=4×5，相减为零"}
+{"id": "radical-07", "type": "radical", "subject": "math", "text": "比较大小，写出较大的数：√7 与 2.6，哪个大？", "answer_kind": "text", "answer": "√7", "unit": "", "note": "√7≈2.6458>2.6"}
+{"id": "expand-01", "type": "expand", "subject": "math", "text": "化简：(x + 3)(x - 2).", "answer_kind": "expr", "answer": "(x-2)*(x+3)", "unit": "", "note": "展开后 x^2+x-6"}
+{"id": "expand-02", "type": "expand", "subject": "math", "text": "化简：(2x - 1)^2.", "answer_kind": "expr", "answer": "(2*x-1)**2", "unit": "", "note": "完全平方"}
+{"id": "expand-03", "type": "expand", "subject": "math", "text": "化简：(x + 2)(x^2 - x + 1).", "answer_kind": "expr", "answer": "x**3 + x**2 - x + 2", "unit": "", "note": "多项式乘法"}
+{"id": "expand-04", "type": "expand", "subject": "math", "text": "化简：(a + b)(a - b).", "answer_kind": "expr", "answer": "a**2 - b**2", "unit": "", "note": "平方差，不能进一步因式分解"}
+{"id": "expand-05", "type": "expand", "subject": "math", "text": "化简：(3x + 2)(2x - 5).", "answer_kind": "expr", "answer": "(3*x+2)*(2*x-5)", "unit": "", "note": "展开得 6x^2-11x-10"}
+{"id": "factor-01", "type": "factor", "subject": "math", "text": "因式分解：x^2 - 9.", "answer_kind": "expr", "answer": "(x-3)*(x+3)", "unit": "", "note": "平方差"}
+{"id": "factor-02", "type": "factor", "subject": "math", "text": "因式分解：x^2 + 5x + 6.", "answer_kind": "expr", "answer": "(x+2)*(x+3)", "unit": "", "note": "十字相乘法"}
+{"id": "factor-03", "type": "factor", "subject": "math", "text": "因式分解：2x^2 - 8.", "answer_kind": "expr", "answer": "2*(x-2)*(x+2)", "unit": "", "note": "先提公因式再用平方差"}
+{"id": "factor-04", "type": "factor", "subject": "math", "text": "因式分解：x^2 - 6x + 9.", "answer_kind": "expr", "answer": "(x-3)**2", "unit": "", "note": "完全平方"}
+{"id": "factor-05", "type": "factor", "subject": "math", "text": "因式分解：x^2 + 2x - 3.", "answer_kind": "expr", "answer": "(x-1)*(x+3)", "unit": "", "note": "十字相乘法，常数项为负"}
+{"id": "factor-06", "type": "factor", "subject": "math", "text": "因式分解：-x^2 + 4x - 4.", "answer_kind": "expr", "answer": "-(x-2)**2", "unit": "", "note": "先提负号，再完全平方"}
+{"id": "simplify_frac-01", "type": "simplify_frac", "subject": "math", "text": "化简：(x^2 - 4)/(x^2 - x - 2).", "answer_kind": "expr", "answer": "(x+2)/(x+1)", "unit": "", "note": "分子=(x-2)(x+2)，分母=(x-2)(x+1)，约分 expected answer corrected after independent verification (sympy/substitution) 2026-10-14"}
+{"id": "simplify_frac-02", "type": "simplify_frac", "subject": "math", "text": "化简求值：(x^2 - 4)/(x + 2)，其中 x = 3.", "answer_kind": "num", "answer": ["1"], "unit": "", "note": "约分后 x-2 = 1"}
+{"id": "simplify_frac-03", "type": "simplify_frac", "subject": "math", "text": "化简：(x^2 - y^2)/(x + y).", "answer_kind": "expr", "answer": "x - y", "unit": "", "note": "平方差约分"}
+{"id": "simplify_frac-04", "type": "simplify_frac", "subject": "math", "text": "化简求值：(1/x + 1/y)/(1/(xy))，其中 x = 2，y = 3.", "answer_kind": "num", "answer": ["5"], "unit": "", "note": "化为 (x+y)，代入"}
+{"id": "simplify_frac-05", "type": "simplify_frac", "subject": "math", "text": "化简：(2x^2 - 8)/(x^2 - 4x + 4).", "answer_kind": "expr", "answer": "2*(x+2)/(x-2)", "unit": "", "note": "分子=2(x-2)(x+2)，分母=(x-2)^2"}
+{"id": "lineq-01", "type": "lineq", "subject": "math", "text": "解方程：3x - 7 = 8.", "answer_kind": "num", "answer": ["5"], "unit": "", "note": "x=5"}
+{"id": "lineq-02", "type": "lineq", "subject": "math", "text": "解方程：2(x - 3) = 5x + 9.", "answer_kind": "num", "answer": ["-5"], "unit": "", "note": "2x-6=5x+9 ⇒ x=-5"}
+{"id": "lineq-03", "type": "lineq", "subject": "math", "text": "解方程：(x + 1)/2 - (2x - 1)/3 = 1.", "answer_kind": "num", "answer": ["-1"], "unit": "", "note": "去分母得 x=-1"}
+{"id": "lineq-04", "type": "lineq", "subject": "math", "text": "解方程：0.5x - 0.7 = 0.3x + 0.1.", "answer_kind": "num", "answer": ["4"], "unit": "", "note": "小数系数方程，0.2x=0.8 expected answer corrected after independent verification (sympy/substitution) 2026-10-14"}
+{"id": "lineq-05", "type": "lineq", "subject": "math", "text": "解方程：x/3 - (x - 1)/6 = 2.", "answer_kind": "num", "answer": ["11"], "unit": "", "note": "去分母得 x=11 expected answer corrected after independent verification (sympy/substitution) 2026-10-14"}
+{"id": "quad-01", "type": "quad", "subject": "math", "text": "解方程：x^2 - 5x + 6 = 0.", "answer_kind": "nums", "answer": ["2", "3"], "unit": "", "note": "两根升序"}
+{"id": "quad-02", "type": "quad", "subject": "math", "text": "解方程：x^2 - 25 = 0.", "answer_kind": "nums", "answer": ["-5", "5"], "unit": "", "note": "平方差开方"}
+{"id": "quad-03", "type": "quad", "subject": "math", "text": "解方程：x^2 + 4x + 1 = 0.", "answer_kind": "nums", "answer": ["-2 - sqrt(3)", "-2 + sqrt(3)"], "unit": "", "note": "公式法，Δ=12"}
+{"id": "quad-04", "type": "quad", "subject": "math", "text": "解方程：x^2 - 6x + 5 = 0.", "answer_kind": "nums", "answer": ["1", "5"], "unit": "", "note": "十字相乘"}
+{"id": "quad-05", "type": "quad", "subject": "math", "text": "解方程：2x^2 - 4x - 1 = 0.", "answer_kind": "nums", "answer": ["1 - sqrt(6)/2", "1 + sqrt(6)/2"], "unit": "", "note": "公式法，Δ=24"}
+{"id": "quad-06", "type": "quad", "subject": "math", "text": "解方程：x(x - 3) = x - 3.", "answer_kind": "nums", "answer": ["1", "3"], "unit": "", "note": "移项得 (x-1)(x-3)=0"}
+{"id": "quad_disc-01", "type": "quad_disc", "subject": "math", "text": "不解方程，判断方程 x^2 + 2x + 3 = 0 的根的情况.", "answer_kind": "text", "answer": "无实数根", "unit": "", "note": "Δ=-8<0"}
+{"id": "quad_disc-02", "type": "quad_disc", "subject": "math", "text": "关于 x 的方程 x^2 - 6x + m = 0 有两个相等的实数根，求 m 的值.", "answer_kind": "num", "answer": ["9"], "unit": "", "note": "Δ=36-4m=0"}
+{"id": "quad_disc-03", "type": "quad_disc", "subject": "math", "text": "设 x₁、x₂ 是方程 x^2 - 7x + 10 = 0 的两个根，求 x₁ + x₂ 的值.", "answer_kind": "num", "answer": ["7"], "unit": "", "note": "韦达定理，两根和"}
+{"id": "quad_disc-04", "type": "quad_disc", "subject": "math", "text": "设 x₁、x₂ 是方程 x^2 - 7x + 10 = 0 的两个根，求 x₁·x₂ 的值.", "answer_kind": "num", "answer": ["10"], "unit": "", "note": "韦达定理，两根积"}
+{"id": "quad_disc-05", "type": "quad_disc", "subject": "math", "text": "若关于 x 的一元二次方程 kx^2 - 6x + 9 = 0 有实数根，求 k 的最大整数值.", "answer_kind": "num", "answer": ["1"], "unit": "", "note": "k=1 ⇒ Δ=-12；k 已是最大整数"}
+{"id": "frac_eq-01", "type": "frac_eq", "subject": "math", "text": "解方程：2/x = 3/(x + 1).", "answer_kind": "num", "answer": ["2"], "unit": "", "note": "交叉相乘得 2(x+1)=3x"}
+{"id": "frac_eq-02", "type": "frac_eq", "subject": "math", "text": "解方程：1/(x - 2) = 3/x.", "answer_kind": "num", "answer": ["3"], "unit": "", "note": "x=3 为其解"}
+{"id": "frac_eq-03", "type": "frac_eq", "subject": "math", "text": "解方程：1/x + 1/2 = 3/x.", "answer_kind": "num", "answer": ["4"], "unit": "", "note": "化简 1/2=2/x"}
+{"id": "frac_eq-04", "type": "frac_eq", "subject": "math", "text": "解方程：x/(x - 1) = 2/(x - 1) + 1.", "answer_kind": "text", "answer": "无解", "unit": "", "note": "x=1 为增根"}
+{"id": "frac_eq-05", "type": "frac_eq", "subject": "math", "text": "解分式方程：2/(x - 2) - 4/(x - 2)^2 = 0.", "answer_kind": "nums", "answer": ["4"], "unit": "", "note": "化简 2(x-2)=4，x=4"}
+{"id": "ineq-01", "type": "ineq", "subject": "math", "text": "解不等式：2x - 3 > 5.", "answer_kind": "ineq", "answer": "x>4", "unit": "", "note": ""}
+{"id": "ineq-02", "type": "ineq", "subject": "math", "text": "解不等式：3(x + 1) ≤ 2x + 5.", "answer_kind": "ineq", "answer": "x<=2", "unit": "", "note": "除以正数，方向不变"}
+{"id": "ineq-03", "type": "ineq", "subject": "math", "text": "解不等式：-2x + 1 > 5.", "answer_kind": "ineq", "answer": "x<-2", "unit": "", "note": "除以负数，不等号方向改变"}
+{"id": "ineq-04", "type": "ineq", "subject": "math", "text": "解不等式：(x - 1)/3 - (x + 2)/2 > -2.", "answer_kind": "ineq", "answer": "x<4", "unit": "", "note": "去分母后方向不变 expected answer corrected after independent verification (sympy/substitution) 2026-10-14"}
+{"id": "ineq_sys-01", "type": "ineq_sys", "subject": "math", "text": "解不等式组：2x - 1 > 3，且 3x - 2 < 10.", "answer_kind": "ineq", "answer": "2<x<4", "unit": "", "note": "取公共部分"}
+{"id": "ineq_sys-02", "type": "ineq_sys", "subject": "math", "text": "解不等式组：x - 2 < 0，且 5x + 1 > 2.", "answer_kind": "ineq", "answer": "1/5<x<2", "unit": "", "note": "解集为区间 expected answer corrected after independent verification (sympy/substitution) 2026-10-14"}
+{"id": "ineq_sys-03", "type": "ineq_sys", "subject": "math", "text": "不等式组 x - 3 < 0，且 x + 1 ≥ 0 的整数解共有多少个？", "answer_kind": "num", "answer": ["4"], "unit": "", "note": "整数解 -1,0,1,2 共 4 个"}
+{"id": "ineq_sys-04", "type": "ineq_sys", "subject": "math", "text": "解不等式组：5x - 2 > 3(x + 1)，且 (1/2)x - 1 ≤ 7 - (3/2)x.", "answer_kind": "ineq", "answer": "5/2<x<=4", "unit": "", "note": "5x-2>3x+3 ⇒ x>5/2；2x≤8 ⇒ x≤4"}
+{"id": "ineq_sys-05", "type": "ineq_sys", "subject": "math", "text": "解不等式组：2(x + 5) ≥ 6，且 3 - 2x > 1.", "answer_kind": "ineq", "answer": "-2<=x<1", "unit": "", "note": "x≥-2 且 x<1 expected answer corrected after independent verification (sympy/substitution) 2026-10-14"}
+{"id": "sys2-01", "type": "sys2", "subject": "math", "text": "解方程组：x + y = 10，x - y = 4.", "answer_kind": "nums", "answer": ["7", "3"], "unit": "", "note": "x 然后 y"}
+{"id": "sys2-02", "type": "sys2", "subject": "math", "text": "解方程组：2x + y = 7，x - y = 2.", "answer_kind": "nums", "answer": ["3", "1"], "unit": "", "note": "x=3, y=1"}
+{"id": "sys2-03", "type": "sys2", "subject": "math", "text": "解方程组：3x + 2y = 12，x - 2y = -4.", "answer_kind": "nums", "answer": ["2", "3"], "unit": "", "note": "相加得 x=2，回代 y=3"}
+{"id": "sys2-04", "type": "sys2", "subject": "math", "text": "解方程组：x + 2y = 8，2x - y = 1.", "answer_kind": "nums", "answer": ["2", "3"], "unit": "", "note": "代入法"}
+{"id": "sys2-05", "type": "sys2", "subject": "math", "text": "解方程组：4x - 3y = 6，2x + y = 6.", "answer_kind": "nums", "answer": ["12/5", "6/5"], "unit": "", "note": "y=0, x=3 expected answer corrected after independent verification (sympy/substitution) 2026-10-14"}
+{"id": "sys2-06", "type": "sys2", "subject": "math", "text": "解方程组：5x + 2y = 25，3x - 4y = 1.", "answer_kind": "nums", "answer": ["51/13", "35/13"], "unit": "", "note": "消元法 expected answer corrected after independent verification (sympy/substitution) 2026-10-14"}
+{"id": "sys3-01", "type": "sys3", "subject": "math", "text": "解方程组：x + y + z = 6，x - y + z = 2，x + y - z = 0.", "answer_kind": "nums", "answer": ["1", "2", "3"], "unit": "", "note": "x=y=z=2 expected answer corrected after independent verification (sympy/substitution) 2026-10-14"}
+{"id": "sys3-02", "type": "sys3", "subject": "math", "text": "解方程组：x + y = 5，y + z = 9，x + z = 8.", "answer_kind": "nums", "answer": ["2", "3", "6"], "unit": "", "note": "x=2, y=3, z=6"}
+{"id": "sys3-03", "type": "sys3", "subject": "math", "text": "解方程组：2x + y + z = 7，x + 2y + z = 8，x + y + 2z = 9.", "answer_kind": "nums", "answer": ["1", "2", "3"], "unit": "", "note": "三式相加除以4后回代"}
+{"id": "absval-01", "type": "absval", "subject": "math", "text": "计算：|-3| + |-2| 的值.", "answer_kind": "num", "answer": ["5"], "unit": "", "note": "绝对值和"}
+{"id": "absval-02", "type": "absval", "subject": "math", "text": "计算：|-5/2| - |(-3/2)| 的值.", "answer_kind": "num", "answer": ["1"], "unit": "", "note": "2.5 - 1.5 = 1"}
+{"id": "absval-03", "type": "absval", "subject": "math", "text": "解方程：|x - 3| = 5.", "answer_kind": "nums", "answer": ["-2", "8"], "unit": "", "note": "两根升序"}
+{"id": "absval-04", "type": "absval", "subject": "math", "text": "若 |x - 2| = 0，则 x 的值是多少？", "answer_kind": "num", "answer": ["2"], "unit": "", "note": "绝对值为零仅 x=2"}
+{"id": "linfunc-01", "type": "linfunc", "subject": "math", "text": "一次函数 y = kx + b 的图像经过点 (0, 2) 和 (1, 5)，求 k 与 b 的值（先 k 后 b）.", "answer_kind": "nums", "answer": ["3", "2"], "unit": "", "note": "斜率3，截距2"}
+{"id": "linfunc-02", "type": "linfunc", "subject": "math", "text": "已知一次函数 y = 2x - 1，求 x = 3 时的函数值 y.", "answer_kind": "num", "answer": ["5"], "unit": "", "note": "代入求值"}
+{"id": "linfunc-03", "type": "linfunc", "subject": "math", "text": "求经过点 (1, 1) 和 (3, 5) 的一次函数解析式（写成 ax+b 形式，系数为整数或最简分数）.", "answer_kind": "expr", "answer": "2*x-1", "unit": "", "note": "斜率为2，截距-1"}
+{"id": "linfunc-04", "type": "linfunc", "subject": "math", "text": "一次函数 y = -2x + 4 的图像与 y 轴交点的纵截距是多少？", "answer_kind": "num", "answer": ["4"], "unit": "", "note": "x=0 时 y=4"}
+{"id": "linfunc-05", "type": "linfunc", "subject": "math", "text": "一次函数 y = 3x - 6，求它与 x 轴交点的横坐标.", "answer_kind": "num", "answer": ["2"], "unit": "", "note": "令 y=0"}
+{"id": "quadfunc-01", "type": "quadfunc", "subject": "math", "text": "二次函数 y = x^2 - 2x - 3，求其图像的顶点坐标（先横坐标后纵坐标）.", "answer_kind": "nums", "answer": ["1", "-4"], "unit": "", "note": "顶点 (1,-4)"}
+{"id": "quadfunc-02", "type": "quadfunc", "subject": "math", "text": "二次函数 y = x^2 - 4x + 3，求其图像与 x 轴交点的横坐标（升序排列）.", "answer_kind": "nums", "answer": ["1", "3"], "unit": "", "note": "令 y=0 解方程"}
+{"id": "quadfunc-03", "type": "quadfunc", "subject": "math", "text": "二次函数 y = -x^2 + 2x + 3，求其最大值.", "answer_kind": "num", "answer": ["4"], "unit": "", "note": "开口向下，顶点值4"}
+{"id": "quadfunc-04", "type": "quadfunc", "subject": "math", "text": "二次函数 y = 2x^2 - 8x + 5，求其对称轴的横坐标.", "answer_kind": "num", "answer": ["2"], "unit": "", "note": "x=-b/2a=2"}
+{"id": "quadfunc-05", "type": "quadfunc", "subject": "math", "text": "二次函数 y = x^2 + 6x + 8，求其最小值.", "answer_kind": "num", "answer": ["-1"], "unit": "", "note": "顶点值 -1"}
+{"id": "quadfunc-06", "type": "quadfunc", "subject": "math", "text": "二次函数 y = -2x^2 + 4x - 1，求其最大值.", "answer_kind": "num", "answer": ["1"], "unit": "", "note": "顶点值 1"}
+{"id": "invprop-01", "type": "invprop", "subject": "math", "text": "已知反比例函数 y = k/x 的图像经过点 (2, 3)，求 k 的值.", "answer_kind": "num", "answer": ["6"], "unit": "", "note": "k=xy=6"}
+{"id": "invprop-02", "type": "invprop", "subject": "math", "text": "反比例函数 y = 8/x，当 x = 4 时，求 y 的值.", "answer_kind": "num", "answer": ["2"], "unit": "", "note": "y=8/4=2"}
+{"id": "invprop-03", "type": "invprop", "subject": "math", "text": "已知反比例函数 y = k/x 的图像经过点 (-2, 4)，求 k 的值.", "answer_kind": "num", "answer": ["-8"], "unit": "", "note": "k=-8"}
+{"id": "pyth-01", "type": "pyth", "subject": "math", "text": "直角三角形的两条直角边分别为 3 和 4，求斜边的长度.", "answer_kind": "num", "answer": ["5"], "unit": "", "note": "勾股定理"}
+{"id": "pyth-02", "type": "pyth", "subject": "math", "text": "直角三角形的斜边长为 13，一条直角边长为 5，求另一条直角边长.", "answer_kind": "num", "answer": ["12"], "unit": "", "note": "13²-5²=144"}
+{"id": "pyth-03", "type": "pyth", "subject": "math", "text": "等腰直角三角形的直角边长为 2，求斜边长.", "answer_kind": "num", "answer": ["2*sqrt(2)"], "unit": "", "note": "斜边=2√2"}
+{"id": "pyth-04", "type": "pyth", "subject": "math", "text": "直角三角形的两条直角边分别为 6 和 8，求斜边长.", "answer_kind": "num", "answer": ["10"], "unit": "", "note": ""}
+{"id": "pyth-05", "type": "pyth", "subject": "math", "text": "直角三角形的斜边长为 10，一条直角边长为 6，求另一条直角边长.", "answer_kind": "num", "answer": ["8"], "unit": "", "note": ""}
+{"id": "geom-01", "type": "geom", "subject": "math", "text": "一个正方形的边长为 5，求它的面积.", "answer_kind": "num", "answer": ["25"], "unit": "", "note": ""}
+{"id": "geom-02", "type": "geom", "subject": "math", "text": "一个圆的半径为 3，求它的面积（用 π 表示）.", "answer_kind": "num", "answer": ["9*pi"], "unit": "", "note": "πr²"}
+{"id": "geom-03", "type": "geom", "subject": "math", "text": "一个半圆的半径为 4，求这个半圆的周长（含直径，结果用 π 表示）.", "answer_kind": "expr", "answer": "8 + 4*pi", "unit": "", "note": "半圆弧长 4π 加直径 8"}
+{"id": "geom-04", "type": "geom", "subject": "math", "text": "一个圆心角为 90°、半径为 6 的扇形，求其弧长（用 π 表示）.", "answer_kind": "num", "answer": ["3*pi"], "unit": "", "note": "弧长=2πr×90/360=3π"}
+{"id": "geom-05", "type": "geom", "subject": "math", "text": "正五边形的一个外角是多少度？", "answer_kind": "num", "answer": ["72"], "unit": "°", "note": "外角和360/5"}
+{"id": "geom-06", "type": "geom", "subject": "math", "text": "一个正多边形的每个内角为 140°，求它是几边形？", "answer_kind": "num", "answer": ["9"], "unit": "", "note": "外角40°，360/40=9"}
+{"id": "geom-07", "type": "geom", "subject": "math", "text": "两个相似三角形的相似比为 2:3，若较小三角形的面积为 16，求较大三角形的面积.", "answer_kind": "num", "answer": ["36"], "unit": "", "note": "面积比4:9"}
+{"id": "geom-08", "type": "geom", "subject": "math", "text": "一个圆心角为 60°、半径为 3 的扇形面积（用 π 表示）.", "answer_kind": "expr", "answer": "3*pi/2", "unit": "", "note": "30π/360×9=3π/2"}
+{"id": "trig-01", "type": "trig", "subject": "math", "text": "计算：sin 30° + cos 60° 的值.", "answer_kind": "num", "answer": ["1"], "unit": "", "note": "0.5+0.5"}
+{"id": "trig-02", "type": "trig", "subject": "math", "text": "计算：2 sin 30° - 3 cos 45° 的值（用 √ 表示）.", "answer_kind": "expr", "answer": "1 - 3*sqrt(2)/2", "unit": "", "note": "1 - (3√2)/2"}
+{"id": "trig-03", "type": "trig", "subject": "math", "text": "在 Rt△ABC 中，∠C = 90°，∠A = 30°，AC = 10，求 BC 的长.", "answer_kind": "num", "answer": ["10*sqrt(3)/3"], "unit": "", "note": "tan30°=BC/10"}
+{"id": "trig-04", "type": "trig", "subject": "math", "text": "计算：(sin 60°)² + (cos 60°)² 的值.", "answer_kind": "num", "answer": ["1"], "unit": "", "note": "平方和为1"}
+{"id": "trig-05", "type": "trig", "subject": "math", "text": "计算：tan 45° + cot 45° 的值.", "answer_kind": "num", "answer": ["2"], "unit": "", "note": "都为1"}
+{"id": "stats-01", "type": "stats", "subject": "math", "text": "求数据 2, 4, 6, 8, 10 的平均数.", "answer_kind": "num", "answer": ["6"], "unit": "", "note": ""}
+{"id": "stats-02", "type": "stats", "subject": "math", "text": "求数据 3, 5, 7, 9 的中位数.", "answer_kind": "num", "answer": ["6"], "unit": "", "note": "(5+7)/2"}
+{"id": "stats-03", "type": "stats", "subject": "math", "text": "求数据 1, 2, 2, 3, 5 的众数.", "answer_kind": "num", "answer": ["2"], "unit": "", "note": "出现次数最多"}
+{"id": "stats-04", "type": "stats", "subject": "math", "text": "求数据 4, 7, 9, 9, 11 的方差.", "answer_kind": "num", "answer": ["28/5"], "unit": "", "note": "平均数为8，方差=68/10=34/5 expected answer corrected after independent verification (sympy/substitution) 2026-10-14"}
+{"id": "stats-05", "type": "stats", "subject": "math", "text": "求数据 5, 8, 11 的标准差.", "answer_kind": "num", "answer": ["sqrt(6)"], "unit": "", "note": "平均8，方差6"}
+{"id": "stats-06", "type": "stats", "subject": "math", "text": "求数据 12, 5, 18, 9 的极差（最大值与最小值之差）.", "answer_kind": "num", "answer": ["13"], "unit": "", "note": "18-5"}
+{"id": "stats-07", "type": "stats", "subject": "math", "text": "小明期末考试成绩：语文 90、数学 80、英语 70，三门权重相同，求加权平均分.", "answer_kind": "num", "answer": ["80"], "unit": "", "note": "(90+80+70)/3"}
+{"id": "prob-01", "type": "prob", "subject": "math", "text": "一个不透明的袋子里有 2 个红球和 3 个白球，从中任取一个球，取到红球的概率是多少（填百分号前的数）？", "answer_kind": "num", "answer": ["40"], "unit": "%", "note": "2/5=40%"}
+{"id": "prob-02", "type": "prob", "subject": "math", "text": "抛掷一枚均匀的硬币两次，出现“一次正面一次反面”的概率是多少（填百分数前的数）？", "answer_kind": "num", "answer": ["50"], "unit": "%", "note": "2/4=50%"}
+{"id": "prob-03", "type": "prob", "subject": "math", "text": "同时掷两枚均匀的骰子，点数之和为 7 的概率是多少（填百分号前的数，保留整数）？", "answer_kind": "num", "answer": ["17"], "unit": "%", "note": "6/36≈16.7%"}
+{"id": "prob-04", "type": "prob", "subject": "math", "text": "一个标有 1 到 5 的五张卡片，随机抽取一张，抽到偶数的概率是多少（填百分号前的数）？", "answer_kind": "num", "answer": ["40"], "unit": "%", "note": "2,4 两张，2/5=40%"}
+{"id": "prob-05", "type": "prob", "subject": "math", "text": "一个转盘被等分成红、黄、蓝三个扇形，转动后指针停在红色区域的概率是多少（填百分号前的数）？", "answer_kind": "num", "answer": ["33"], "unit": "%", "note": "1/3≈33.3%"}
+{"id": "ratio-01", "type": "ratio", "subject": "math", "text": "把 60 按 2:3 的比例分成两部分，较大的部分是多少？", "answer_kind": "num", "answer": ["36"], "unit": "", "note": "60×3/5=36"}
+{"id": "ratio-02", "type": "ratio", "subject": "math", "text": "某商品原价 100 元，先降价 10%，再涨价 10%，现价比原价少多少元？", "answer_kind": "num", "answer": ["1"], "unit": "元", "note": "99-100=-1"}
+{"id": "ratio-03", "type": "ratio", "subject": "math", "text": "某工厂去年产量为 200 吨，今年比去年增长 20%，今年产量是多少吨？", "answer_kind": "num", "answer": ["240"], "unit": "吨", "note": "200×1.2"}
+{"id": "ratio-04", "type": "ratio", "subject": "math", "text": "某县去年人均收入 5000 元，前年比去年少 20%，前年人均收入是多少元？", "answer_kind": "num", "answer": ["4000"], "unit": "元", "note": "5000×0.8"}
+{"id": "ratio-05", "type": "ratio", "subject": "math", "text": "某商品成本 80 元，按成本加价 25% 定价后打九折出售，实际利润是多少元？", "answer_kind": "num", "answer": ["10"], "unit": "元", "note": "80×1.25×0.9-80=10"}
+{"id": "unit-01", "type": "unit", "subject": "math", "text": "3.5 千米等于多少米？", "answer_kind": "num", "answer": ["3500"], "unit": "m", "note": "km→m"}
+{"id": "unit-02", "type": "unit", "subject": "math", "text": "2 小时 15 分钟等于多少分钟？", "answer_kind": "num", "answer": ["135"], "unit": "min", "note": "120+15"}
+{"id": "unit-03", "type": "unit", "subject": "math", "text": "0.75 立方米等于多少升？", "answer_kind": "num", "answer": ["750"], "unit": "L", "note": "1 m³=1000 L"}
+{"id": "unit-04", "type": "unit", "subject": "math", "text": "1.2 吨等于多少千克？", "answer_kind": "num", "answer": ["1200"], "unit": "kg", "note": "1 t=1000 kg"}
+{"id": "word_travel-01", "type": "word_travel", "subject": "math", "text": "甲、乙两人从相距 60 千米的两地同时出发相向而行，甲的速度为 4 千米/时，乙的速度为 6 千米/时，问几小时后相遇？", "answer_kind": "num", "answer": ["6"], "unit": "h", "note": "60/(4+6)"}
+{"id": "word_travel-02", "type": "word_travel", "subject": "math", "text": "一列慢车以 50 千米/时的速度从甲地开出，2 小时后一列快车以 90 千米/时的速度同向追出，几小时后快车追上慢车？", "answer_kind": "num", "answer": ["5/2"], "unit": "h", "note": "50×2/(90-50)=2.5"}
+{"id": "word_travel-03", "type": "word_travel", "subject": "math", "text": "A、B 两地相距 240 千米，一辆客车和一辆货车同时从两地相向而行，客车速度为 70 千米/时，货车速度为 50 千米/时，几小时相遇？", "answer_kind": "num", "answer": ["2"], "unit": "h", "note": "240/120"}
+{"id": "word_travel-04", "type": "word_travel", "subject": "math", "text": "小明以 5 千米/时的速度步行，小狗以 15 千米/时的速度从同地同向奔跑，小狗比小明晚 0.5 小时出发，几小时后小狗追上小明？", "answer_kind": "num", "answer": ["0.25"], "unit": "h", "note": "5×0.5/(15-5)=0.25"}
+{"id": "word_travel-05", "type": "word_travel", "subject": "math", "text": "两列火车从相距 480 千米的两站同时出发相向而行，速度分别为 80 千米/时和 100 千米/时，问出发多少小时后两车相距 60 千米？", "answer_kind": "num", "answer": ["2/3"], "unit": "h", "note": "(480-60)/180=7/3"}
+{"id": "word_travel-06", "type": "word_travel", "subject": "math", "text": "甲、乙两车同时从 A 地出发开往 B 地，甲车速度 60 千米/时，乙车速度 45 千米/时，甲车比乙车早到 1 小时，求 A、B 两地距离.", "answer_kind": "num", "answer": ["180"], "unit": "km", "note": "d/45-d/60=1"}
+{"id": "word_work-01", "type": "word_work", "subject": "math", "text": "一项工程，甲单独做需 10 天完成，乙单独做需 15 天完成，两人合作需多少天完成？", "answer_kind": "num", "answer": ["6"], "unit": "天", "note": "1/(1/10+1/15)=6"}
+{"id": "word_work-02", "type": "word_work", "subject": "math", "text": "一项工程，甲单独做 6 天完成，甲乙合作 4 天完成，乙单独做需多少天完成？", "answer_kind": "num", "answer": ["12"], "unit": "天", "note": "1/(1/4-1/6)=12"}
+{"id": "word_work-03", "type": "word_work", "subject": "math", "text": "水池有一进水管和一出水管，单开进水管 8 小时注满，单开出水管 12 小时放空，两管齐开多久注满空池？", "answer_kind": "num", "answer": ["24"], "unit": "h", "note": "1/(1/8-1/12)=24"}
+{"id": "word_work-04", "type": "word_work", "subject": "math", "text": "甲、乙合作一项工程 12 天完成，甲单独做比乙单独做少用 10 天，若乙单独做需多少天？", "answer_kind": "num", "answer": ["30"], "unit": "天", "note": "1/(1/x+1/(x-10))=12 ⇒ x=30"}
+{"id": "word_profit-01", "type": "word_profit", "subject": "math", "text": "一件衣服进价 120 元，标价 200 元，打八折卖出，求实际利润.", "answer_kind": "num", "answer": ["40"], "unit": "元", "note": "160-120"}
+{"id": "word_profit-02", "type": "word_profit", "subject": "math", "text": "某商品按 30% 的利润定价，定价为 260 元，求它的成本.", "answer_kind": "num", "answer": ["200"], "unit": "元", "note": "成本×1.3=260"}
+{"id": "word_profit-03", "type": "word_profit", "subject": "math", "text": "一件商品标价 300 元，降价后售价为 210 元，求售价是原价的百分之几（填百分号前的数）.", "answer_kind": "num", "answer": ["70"], "unit": "%", "note": "210/300=70%"}
+{"id": "word_profit-04", "type": "word_profit", "subject": "math", "text": "某商店将进价 100 元的商品提价 50% 后打八折出售，实际售价是进价的百分之几（填百分号前的数）？", "answer_kind": "num", "answer": ["120"], "unit": "%", "note": "100×1.5×0.8=120"}
+{"id": "word_profit-05", "type": "word_profit", "subject": "math", "text": "某品牌衬衫降价 20% 后售价为 160 元，求原价.", "answer_kind": "num", "answer": ["200"], "unit": "元", "note": "原价×0.8=160"}
+{"id": "word_conc-01", "type": "word_conc", "subject": "math", "text": "有 100 克质量为 20 g 的食盐水太稀了；正确表述为：有 20 g 食盐加水配成 100 g 食盐水，其溶质质量分数是多少（填百分号前的数）？", "answer_kind": "num", "answer": ["20"], "unit": "%", "note": "20/100=20%"}
+{"id": "word_conc-02", "type": "word_conc", "subject": "math", "text": "现有 200 克浓度为 15% 的糖水，求其中糖的质量.", "answer_kind": "num", "answer": ["30"], "unit": "g", "note": "200×15%"}
+{"id": "word_conc-03", "type": "word_conc", "subject": "math", "text": "将 40 克糖溶入 160 克水中，求所得糖水的质量分数（填百分号前的数）.", "answer_kind": "num", "answer": ["20"], "unit": "%", "note": "40/200=20%"}
+{"id": "word_age-01", "type": "word_age", "subject": "math", "text": "父亲今年 40 岁，儿子今年 10 岁，几年后父亲年龄是儿子的 3 倍？", "answer_kind": "num", "answer": ["5"], "unit": "年", "note": "40+x=3(10+x)"}
+{"id": "word_age-02", "type": "word_age", "subject": "math", "text": "今年小明 12 岁，爸爸 40 岁，几年前爸爸年龄是小明的 5 倍？", "answer_kind": "num", "answer": ["5"], "unit": "年", "note": "40-x=5(12-x)"}
+{"id": "word_age-03", "type": "word_age", "subject": "math", "text": "甲比乙大 6 岁，两年后甲的年龄是乙的 2 倍，求甲今年多少岁？", "answer_kind": "num", "answer": ["10"], "unit": "岁", "note": "设甲今年 x 岁，x+2=2(x-6+2)，x=10"}
+{"id": "word_chicken-01", "type": "word_chicken", "subject": "math", "text": "鸡兔同笼，共有头 35 个，脚 94 只，求鸡有多少只？", "answer_kind": "num", "answer": ["23"], "unit": "只", "note": "鸡23兔12"}
+{"id": "word_chicken-02", "type": "word_chicken", "subject": "math", "text": "停车场上共有自行车和三轮车 20 辆，轮子共 48 个，求三轮车有多少辆？", "answer_kind": "num", "answer": ["8"], "unit": "辆", "note": "设三轮车x，3x+2(20-x)=48 ⇒ x=8"}
+{"id": "word_chicken-03", "type": "word_chicken", "subject": "math", "text": "鸡兔同笼，鸡和兔共 30 只，脚共 80 只，求兔有多少只？", "answer_kind": "num", "answer": ["10"], "unit": "只", "note": "兔10鸡20"}
+{"id": "phy_speed-01", "type": "phy_speed", "subject": "physics", "text": "一辆汽车在 2 小时内行驶了 120 千米，求它的平均速度.", "answer_kind": "num", "answer": ["60"], "unit": "km/h", "note": "v=s/t"}
+{"id": "phy_speed-02", "type": "phy_speed", "subject": "physics", "text": "小明骑自行车以 5 m/s 的速度匀速行驶，10 秒内通过的路程是多少？", "answer_kind": "num", "answer": ["50"], "unit": "m", "note": "s=vt"}
+{"id": "phy_speed-03", "type": "phy_speed", "subject": "physics", "text": "一列火车长 200 m，以 20 m/s 的速度匀速通过一座长 600 m 的大桥，从车头上桥到车尾离桥共需多少时间？", "answer_kind": "num", "answer": ["40"], "unit": "s", "note": "s=200+600=800m"}
+{"id": "phy_speed-04", "type": "phy_speed", "subject": "physics", "text": "某物体在平直公路上做匀速直线运动，5 min 内通过 900 m，求它的速度.", "answer_kind": "num", "answer": ["3"], "unit": "m/s", "note": "5min=300s"}
+{"id": "phy_density-01", "type": "phy_density", "subject": "physics", "text": "一块质量为 2.7 kg、体积为 1000 cm³ 的金属块，求它的密度.", "answer_kind": "num", "answer": ["2.7"], "unit": "g/cm^3", "note": "铝的密度，注意单位换算"}
+{"id": "phy_density-02", "type": "phy_density", "subject": "physics", "text": "一个实心铁球的体积为 100 cm³，铁的密度为 7.9 g/cm³，求铁球的质量.", "answer_kind": "num", "answer": ["790"], "unit": "g", "note": "m=ρV"}
+{"id": "phy_density-03", "type": "phy_density", "subject": "physics", "text": "有一个瓶子最多能装 2 kg 的水，求这个瓶子的容积；若用它装酒精，最多能装多少 kg 酒精？（酒精密度 0.8×10³ kg/m³，先求容积，填 L）", "answer_kind": "num", "answer": ["2"], "unit": "L", "note": "2 kg 水体积为 2 L"}
+{"id": "phy_density-04", "type": "phy_density", "subject": "physics", "text": "某液体的密度为 0.8 g/cm³，一个容器中装有 500 mL 该液体，求液体的质量.", "answer_kind": "num", "answer": ["400"], "unit": "g", "note": "m=0.8×500"}
+{"id": "phy_gravity-01", "type": "phy_gravity", "subject": "physics", "text": "一个质量为 20 kg 的物体放在水平地面上，求它受到的重力（g 取 10 N/kg）.", "answer_kind": "num", "answer": ["200"], "unit": "N", "note": "G=mg"}
+{"id": "phy_gravity-02", "type": "phy_gravity", "subject": "physics", "text": "一个物体受到的重力为 45 N（g 取 10 N/kg），求它的质量.", "answer_kind": "num", "answer": ["4.5"], "unit": "kg", "note": "m=G/g"}
+{"id": "phy_pressure-01", "type": "phy_pressure", "subject": "physics", "text": "一个物体重 60 N，把它平放在水平桌面上，与桌面的接触面积为 0.5 m²，求物体对桌面的压强.", "answer_kind": "num", "answer": ["120"], "unit": "Pa", "note": "p=F/S=60/0.5"}
+{"id": "phy_pressure-02", "type": "phy_pressure", "subject": "physics", "text": "图钉尖的面积是 0.05 mm²，钉帽的面积是 0.75 cm²，若用 15 N 的力按住图钉，求钉尖对墙产生的压强（单位换算成 Pa）.", "answer_kind": "num", "answer": ["300000000"], "unit": "Pa", "note": "0.05mm²=5×10^-8 m²"}
+{"id": "phy_pressure-03", "type": "phy_pressure", "subject": "physics", "text": "一辆质量为 1.5 t 的汽车，轮胎与地面的总接触面积为 0.3 m²，求汽车对地面的压强（g 取 10 N/kg）.", "answer_kind": "num", "answer": ["50000"], "unit": "Pa", "note": "F=15000N，p=50000"}
+{"id": "phy_liquid-01", "type": "phy_liquid", "subject": "physics", "text": "一个水池中水深 5 m，求池底受到的压强（水的密度取 1.0×10³ kg/m³，g 取 10 N/kg）.", "answer_kind": "num", "answer": ["50000"], "unit": "Pa", "note": "p=ρgh"}
+{"id": "phy_liquid-02", "type": "phy_liquid", "subject": "physics", "text": "某液体密度为 800 kg/m³，深度 0.5 m 处的压强是多少（g 取 10 N/kg）？", "answer_kind": "num", "answer": ["4000"], "unit": "Pa", "note": "p=ρgh"}
+{"id": "phy_liquid-03", "type": "phy_liquid", "subject": "physics", "text": "一个两端开口的玻璃管插入水中，膜片距水面 30 cm，求膜片受到的压强（水的密度取 1.0×10³ kg/m³，g 取 10 N/kg）.", "answer_kind": "num", "answer": ["3000"], "unit": "Pa", "note": "p=ρgh=3000"}
+{"id": "phy_buoy-01", "type": "phy_buoy", "subject": "physics", "text": "一个物体浸没在水中，排开的水重 5 N，求它受到的浮力.", "answer_kind": "num", "answer": ["5"], "unit": "N", "note": "阿基米德原理 F浮=G排"}
+{"id": "phy_buoy-02", "type": "phy_buoy", "subject": "physics", "text": "一个金属块浸没在水中，排开水的体积为 500 cm³，求它受到的浮力.", "answer_kind": "num", "answer": ["5"], "unit": "N", "note": "V排=5×10^-4 m³，F浮=1000×10×5×10^-4=5N"}
+{"id": "phy_buoy-03", "type": "phy_buoy", "subject": "physics", "text": "一个物体在空气中重为 10 N，浸没在某种液体中时测力计读数为 4 N，用称重法求此时物体受到的浮力.", "answer_kind": "num", "answer": ["6"], "unit": "N", "note": "F浮=G-F=6N"}
+{"id": "phy_buoy-04", "type": "phy_buoy", "subject": "physics", "text": "一个体积为 200 cm³ 的木块漂浮在水面上，有 3/5 的体积露出水面，求木块受到的浮力.", "answer_kind": "num", "answer": ["0.8"], "unit": "N", "note": "V排=2/5×200=80 cm³，F浮=1000×10×8×10^-5=0.8N"}
+{"id": "phy_lever-01", "type": "phy_lever", "subject": "physics", "text": "一根轻质杠杆左端挂一重 6 N 的物体，力臂为 2 m，右端用 3 N 的力竖直向下拉才能平衡，求右边力臂.", "answer_kind": "num", "answer": ["4"], "unit": "m", "note": "F1L1=F2L2"}
+{"id": "phy_lever-02", "type": "phy_lever", "subject": "physics", "text": "一根杠杆的动力臂为 0.5 m，阻力臂为 0.1 m，若阻力为 100 N，求动力（设杠杆水平平衡）.", "answer_kind": "num", "answer": ["20"], "unit": "N", "note": "F1×0.5=100×0.1"}
+{"id": "phy_lever-03", "type": "phy_lever", "subject": "physics", "text": "一根木棒长 1 m，在一端挂 10 N 的物体，支点距挂物体端 0.3 m，手在另一端竖直向上用力使棒水平平衡，求用力大小.", "answer_kind": "num", "answer": ["30"], "unit": "N", "note": "F×0.7=10×0.3"}
+{"id": "phy_work-01", "type": "phy_work", "subject": "physics", "text": "用 20 N 的水平推力把物体沿水平方向推动了 3 m，求推力做的功.", "answer_kind": "num", "answer": ["60"], "unit": "J", "note": "W=Fs"}
+{"id": "phy_work-02", "type": "phy_work", "subject": "physics", "text": "一台机器在 5 s 内做了 2000 J 的功，求它的功率.", "answer_kind": "num", "answer": ["400"], "unit": "W", "note": "P=W/t"}
+{"id": "phy_work-03", "type": "phy_work", "subject": "physics", "text": "用 50 N 的力把重 200 N 的物体沿斜面匀速推到 4 m 高处，斜面长 5 m，求这个斜面的机械效率（填百分号前的数）.", "answer_kind": "abstain", "answer": ["80"], "unit": "%", "note": "data inconsistent (W有=800J > W总=250J); correct behaviour is to abstain"}
+{"id": "phy_work-04", "type": "phy_work", "subject": "physics", "text": "某人用 100 N 的力将重为 180 N 的物体匀速提高了 1 m，求额外功（克服动滑轮或绳重、摩擦之外）是多少？", "answer_kind": "abstain", "answer": "条件不足", "unit": "", "note": "insufficient data; correct behaviour is to abstain"}
+{"id": "phy_work-05", "type": "phy_work", "subject": "physics", "text": "用一动滑轮将重 400 N 的物体匀速提升 2 m，若不计动滑轮重和摩擦，求拉力做的功.", "answer_kind": "num", "answer": ["800"], "unit": "J", "note": "F=200 N，绳端移动 4 m"}
+{"id": "phy_heat-01", "type": "phy_heat", "subject": "physics", "text": "质量为 0.5 kg 的水，温度升高了 20 ℃，求水吸收的热量（水的比热容为 4.2×10³ J/(kg·℃)）.", "answer_kind": "num", "answer": ["42000"], "unit": "J", "note": "Q=cmΔt=4.2e3×0.5×20"}
+{"id": "phy_heat-02", "type": "phy_heat", "subject": "physics", "text": "质量是 2 kg 的水，温度从 20 ℃升高到 100 ℃，求吸收的热量（水的比热容为 4.2×10³ J/(kg·℃)）.", "answer_kind": "num", "answer": ["672000"], "unit": "J", "note": "Q=cmΔt=4.2e3×2×80"}
+{"id": "phy_heat-03", "type": "phy_heat", "subject": "physics", "text": "完全燃烧 0.5 kg 的酒精，放出多少热量？（酒精的热值为 3.0×10^7 J/kg）", "answer_kind": "num", "answer": ["15000000"], "unit": "J", "note": "Q=mq"}
+{"id": "phy_heat-04", "type": "phy_heat", "subject": "physics", "text": "完全燃烧 200 g 干木柴能放出多少热量？（干木柴的热值取 1.2×10^7 J/kg）", "answer_kind": "num", "answer": ["2400000"], "unit": "J", "note": "m=0.2 kg，Q=mq"}
+{"id": "phy_ohm-01", "type": "phy_ohm", "subject": "physics", "text": "一个电阻两端的电压为 6 V，通过它的电流为 0.5 A，求这个电阻的阻值.", "answer_kind": "num", "answer": ["12"], "unit": "Ω", "note": "R=U/I"}
+{"id": "phy_ohm-02", "type": "phy_ohm", "subject": "physics", "text": "一个定值电阻的阻值为 20 Ω，通过它的电流为 0.2 A，求它两端的电压.", "answer_kind": "num", "answer": ["4"], "unit": "V", "note": "U=IR"}
+{"id": "phy_ohm-03", "type": "phy_ohm", "subject": "physics", "text": "把阻值分别为 10 Ω 和 40 Ω 的两个电阻串联，求串联后的总电阻.", "answer_kind": "num", "answer": ["50"], "unit": "Ω", "note": "R=R1+R2"}
+{"id": "phy_ohm-04", "type": "phy_ohm", "subject": "physics", "text": "把阻值分别为 10 Ω 和 40 Ω 的两个电阻并联，求并联后的总电阻.", "answer_kind": "num", "answer": ["8"], "unit": "Ω", "note": "1/R=1/10+1/40=5/40，R=8"}
+{"id": "phy_ohm-05", "type": "phy_ohm", "subject": "physics", "text": "一个电阻 R 与一个 60 Ω 的电阻并联后总电阻为 30 Ω，求 R 的阻值.", "answer_kind": "num", "answer": ["60"], "unit": "Ω", "note": "等值并联：R=60（因 60/60=30）；一般公式 1/30=1/R+1/60 ⇒ R=60"}
+{"id": "phy_ohm-06", "type": "phy_ohm", "subject": "physics", "text": "某导体两端的电压为 6 V 时，通过的电流为 0.3 A；当它两端的电压增大到 12 V 时，求通过导体的电流.", "answer_kind": "num", "answer": ["0.6"], "unit": "A", "note": "R不变=20 Ω"}
+{"id": "phy_power-01", "type": "phy_power", "subject": "physics", "text": "一个标有“220 V 40 W”字样的白炽灯，正常工作时的电流是多少？", "answer_kind": "num", "answer": ["2/11"], "unit": "A", "note": "I=P/U=40/220=2/11"}
+{"id": "phy_power-02", "type": "phy_power", "subject": "physics", "text": "一个电热水壶的额定功率为 1000 W，正常工作 30 min 消耗多少电能（用 kW·h 作单位）？", "answer_kind": "num", "answer": ["0.5"], "unit": "kW·h", "note": "1 kW×0.5 h"}
+{"id": "phy_power-03", "type": "phy_power", "subject": "physics", "text": "一个电熨斗的电阻为 48.4 Ω，接在 220 V 的家庭电路中，求它消耗的电功率.", "answer_kind": "num", "answer": ["1000"], "unit": "W", "note": "P=U²/R=220²/48.4"}
+{"id": "phy_power-04", "type": "phy_power", "subject": "physics", "text": "一个电炉的电阻为 48.4 Ω，通过的电流为 5 A，求通电 10 s 电流产生的热量.", "answer_kind": "num", "answer": ["12100"], "unit": "J", "note": "Q=I²Rt=25×48.4×10 expected answer corrected after independent verification (sympy/substitution) 2026-10-14"}
+{"id": "phy_wave-01", "type": "phy_wave", "subject": "physics", "text": "雷电发生时，我们先看到闪电，4 s 后才听到雷声，求雷电发生处距我们多远？（忽略光的传播时间，声速取 340 m/s）", "answer_kind": "num", "answer": ["1360"], "unit": "m", "note": "s=vt=340×4"}
+{"id": "phy_wave-02", "type": "phy_wave", "subject": "physics", "text": "某电磁波的频率为 50 MHz，求它的波长（真空中光速取 3×10^8 m/s，波长用 m）.", "answer_kind": "num", "answer": ["6"], "unit": "m", "note": "λ=c/f=3e8/5e7=6 m"}
+{"id": "chem_mr-01", "type": "chem_mr", "subject": "chemistry", "text": "计算胆矾 CuSO₄·5H₂O 的相对分子质量（H=1，Cu=64，S=32，O=16）.", "answer_kind": "num", "answer": ["250"], "unit": "", "note": "64+32+16×4+5×(1×2+16)=250"}
+{"id": "chem_mr-02", "type": "chem_mr", "subject": "chemistry", "text": "计算石灰石的主要成分碳酸钙 CaCO₃ 的相对分子质量.", "answer_kind": "num", "answer": ["100"], "unit": "", "note": "40+12+16×3"}
+{"id": "chem_mr-03", "type": "chem_mr", "subject": "chemistry", "text": "计算葡萄糖 C₆H₁₂O₆ 的相对分子质量.", "answer_kind": "num", "answer": ["180"], "unit": "", "note": "12×6+1×12+16×6"}
+{"id": "chem_mr-04", "type": "chem_mr", "subject": "chemistry", "text": "求 2H₂O 的相对分子质量总和.", "answer_kind": "num", "answer": ["36"], "unit": "", "note": "2×18=36"}
+{"id": "chem_frac-01", "type": "chem_frac", "subject": "chemistry", "text": "计算硝酸铵 NH₄NO₃ 中氮元素的质量分数（H=1，N=14，O=16，填百分号前的数）.", "answer_kind": "num", "answer": ["35"], "unit": "%", "note": "Mr=80，2N=28，28/80=35%"}
+{"id": "chem_frac-02", "type": "chem_frac", "subject": "chemistry", "text": "计算氧化铁 Fe₂O₃ 中铁元素的质量分数（Fe=56，O=16，填百分号前的数）.", "answer_kind": "num", "answer": ["70"], "unit": "%", "note": "Mr=160，2Fe=112，70%"}
+{"id": "chem_frac-03", "type": "chem_frac", "subject": "chemistry", "text": "计算碳酸钙 CaCO₃ 中钙元素的质量分数（Ca=40，C=12，O=16，填百分号前的数）.", "answer_kind": "num", "answer": ["40"], "unit": "%", "note": "40/100=40%"}
+{"id": "chem_frac-04", "type": "chem_frac", "subject": "chemistry", "text": "计算氧化镁 MgO 中镁元素的质量分数（Mg=24，O=16，填百分号前的数）.", "answer_kind": "num", "answer": ["60"], "unit": "%", "note": "24/40=60%"}
+{"id": "chem_sol-01", "type": "chem_sol", "subject": "chemistry", "text": "将 20 g 氯化钠固体溶于 80 g 水中，所得溶液中溶质的质量分数是多少（填百分号前的数）？", "answer_kind": "num", "answer": ["20"], "unit": "%", "note": "20/(20+80)=20%"}
+{"id": "chem_sol-02", "type": "chem_sol", "subject": "chemistry", "text": "取 20 g 溶质质量分数为 10% 的氯化钠溶液，其中含氯化钠多少克？", "answer_kind": "num", "answer": ["2"], "unit": "g", "note": "20×10%=2 g"}
+{"id": "chem_sol-03", "type": "chem_sol", "subject": "chemistry", "text": "把 100 g 溶质质量分数为 20% 的食盐水稀释成 10% 的溶液，需加水多少克？", "answer_kind": "num", "answer": ["100"], "unit": "g", "note": "溶质 20 g，稀释后溶液 200 g，加水 100 g"}
+{"id": "chem_sol-04", "type": "chem_sol", "subject": "chemistry", "text": "某温度下氯化钠的溶解度为 36 g，该温度下氯化钠饱和溶液中溶质的质量分数是多少（填百分号前的数，保留一位小数）？", "answer_kind": "num", "answer": ["26.5"], "unit": "%", "note": "36/(36+100)=26.47%≈26.5%"}
+{"id": "chem_stoich-01", "type": "chem_stoich", "subject": "chemistry", "text": "实验室用双氧水制氧气，反应的化学方程式为 2H₂O₂ =MnO₂= 2H₂O + O₂↑. 若完全分解 34 g 过氧化氢，理论上可制得氧气多少克？", "answer_kind": "num", "answer": ["16"], "unit": "g", "note": "2H₂O₂(68)→O₂(32)，34 g 得 16 g"}
+{"id": "chem_stoich-02", "type": "chem_stoich", "subject": "chemistry", "text": "锌与稀硫酸反应：Zn + H₂SO₄ = ZnSO₄ + H₂↑（Zn=65）. 若用 13 g 锌与足量稀硫酸反应，可制得氢气多少克？", "answer_kind": "num", "answer": ["0.4"], "unit": "g", "note": "65 g Zn→2 g H₂，13 g 锌得 0.4 g"}
+{"id": "chem_stoich-03", "type": "chem_stoich", "subject": "chemistry", "text": "高温煅烧石灰石：CaCO₃ =高温= CaO + CO₂↑（CaCO₃=100，CaO=56）. 煅烧含碳酸钙 80% 的石灰石 100 t，理论上可得到氧化钙多少吨？", "answer_kind": "num", "answer": ["44.8"], "unit": "t", "note": "实际 CaCO₃ 质量 100×80%=80 t，由 100:56 得 80 t→44.8 t"}
+{"id": "chem_stoich-04", "type": "chem_stoich", "subject": "chemistry", "text": "氢气还原氧化铜：H₂ + CuO =△= Cu + H₂O（CuO=80，Cu=64）. 用足量氢气还原 16 g 氧化铜，理论上可得到铜多少克？", "answer_kind": "num", "answer": ["12.8"], "unit": "g", "note": "80→64，16 g 得 12.8 g"}
+{"id": "chem_stoich-05", "type": "chem_stoich", "subject": "chemistry", "text": "一氧化碳还原氧化铁：Fe₂O₃ + 3CO =高温= 2Fe + 3CO₂（Fe₂O₃=160，Fe=56）. 用 CO 还原 80 g 氧化铁，理论上可得到铁多少克？", "answer_kind": "num", "answer": ["56"], "unit": "g", "note": "160→112，80 g 得 56 g"}
+{"id": "chem_balance-01", "type": "chem_balance", "subject": "chemistry", "text": "配平下列化学方程式，写出各物质前的化学计量数（按 CH₄、O₂、CO₂、H₂O 的顺序）: ___CH₄ + ___O₂ →(点燃) ___CO₂ + ___H₂O.", "answer_kind": "nums", "answer": ["1", "2", "1", "2"], "unit": "", "note": "CH₄+2O₂=CO₂+2H₂O"}
+{"id": "chem_balance-02", "type": "chem_balance", "subject": "chemistry", "text": "配平下列化学方程式，写出各物质前的化学计量数（按 Fe₂O₃、CO、Fe、CO₂ 的顺序）: ___Fe₂O₃ + ___CO →(高温) ___Fe + ___CO₂.", "answer_kind": "nums", "answer": ["1", "3", "2", "3"], "unit": "", "note": "Fe₂O₃+3CO=2Fe+3CO₂"}

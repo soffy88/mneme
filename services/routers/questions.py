@@ -133,6 +133,8 @@ class SolveReq(BaseModel):
     text: str = Field(min_length=1, max_length=4000)
     subject: Optional[str] = None
     grade: Optional[str] = None
+    # 多题图片：上一次 /solve 返回 status="multi" 时，学生选中的那一题的 index
+    question_index: Optional[int] = Field(default=None, ge=0, le=50)
 
 
 @router.post("/v1/questions/ask/{ask_id}/solve")
@@ -152,28 +154,81 @@ async def post_ask_solve(
     original_text = rec.question_text
     await db.rollback()  # 释放连接：求解可能要几十秒，不占着事务
 
-    result = await solve_question(body.text, subject, grade)
+    result = await solve_question(body.text, subject, grade, question_index=body.question_index)
 
     from services.question_record_service import update_record
+
+    if result.get("status") == "multi":
+        # 还没选题：只记下题目列表，不改题面/答案
+        await update_record(ask_id, uid, meta={"multi": [q.get("label") for q in result.get("questions") or []]})
+        return {"ask_id": str(ask_id), **result}
+
+    if result.get("status") == "no_exact_solver":
+        result["references"] = await _textbook_refs(db, result.get("question_text") or body.text, result.get("subject"))
 
     meta: dict = {
         "solution": {
             k: result.get(k)
-            for k in ("status", "solver", "kernel", "hint", "steps", "answer", "explanation", "latency_ms")
+            for k in (
+                "status", "solver", "kernel", "hint", "steps", "answer", "explanation", "latency_ms",
+                "answer_value", "answer_kind", "unit", "check",
+            )
+            if k in result
         }
     }
+    if result.get("similar"):
+        meta["similar"] = [q.get("text") for q in result["similar"]][:3]
+    solved_text = (result.get("question_text") or body.text).strip()
     if original_text and original_text.strip() != body.text.strip():
         meta["ocr_text_edited"] = True
+    if body.question_index is not None:
+        meta["picked_index"] = body.question_index
     await update_record(
         ask_id,
         uid,
-        question_text=body.text.strip(),
+        question_text=solved_text,
         subject=result.get("subject") or subject,
         grade=grade,
         correct_answer=result.get("answer"),
         meta=meta,
     )
     return {"ask_id": str(ask_id), **result}
+
+
+async def _textbook_refs(db: AsyncSession, text: str, subject: Optional[str]) -> list[dict]:
+    """no_exact_solver 时补充 ≤3 段教材原文（词面/向量检索，3 秒超时，失败返回空列表）。"""
+    try:
+        from services.knowledge_hub_search import search_knowledge_base
+
+        out = await asyncio.wait_for(search_knowledge_base(db, query=text[:300], top_k=6), timeout=3.0)
+    except Exception as exc:  # noqa: BLE001
+        logger.info("ask textbook refs skipped: %s", type(exc).__name__)
+        try:
+            await db.rollback()
+        except Exception:  # noqa: BLE001
+            pass
+        return []
+    refs = []
+    for r in out.get("results") or []:
+        meta = r.get("textbook_meta") or {}
+        if subject and meta.get("subject") and meta.get("subject") != subject:
+            continue
+        refs.append(
+            {
+                "content": str(r.get("content") or "")[:300],
+                "book_name": meta.get("book_name"),
+                "grade": meta.get("grade"),
+                "page_number": r.get("page_number"),
+                "score": r.get("score"),
+            }
+        )
+        if len(refs) >= 3:
+            break
+    try:
+        await db.rollback()
+    except Exception:  # noqa: BLE001
+        pass
+    return refs
 
 
 class FeedbackReq(BaseModel):
