@@ -3,8 +3,11 @@
 // /studio/ask —— 拍照问题目（移动端优先，单屏分步）。
 //
 // 数据通道是 lib/questions.ts（/v1/questions/*）。前端只上传图片/文字、展示内核与
-// LLM 的返回；不判分、不生成答案。图片在**客户端**旋转 + 缩放到长边 1600 再上传，
-// 取原图时带 token 换 blob → object URL（token 绝不进 URL）。
+// LLM 的返回；不判分、不生成答案。图片在**客户端**裁剪 + 旋转 + 缩放到长边 1600 再上传
+// （components/ask/ImagePrep.ts，EXIF orientation 已应用），取原图时带 token 换
+// blob → object URL（token 绝不进 URL）。
+//
+// 步骤：选图 → 裁剪 → 选行（有 lines 时）→ 确认题干 → 解题 → 结果。
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import { OButton, OCard, OCardHeader, OCardTitle } from "@helios/blocks";
@@ -15,73 +18,42 @@ import {
   askFollowup, askFeedback, askQuestion, addToWrongbook, solveAsk,
   type AskResult, type AskSolveResult,
 } from "@/lib/questions";
+import { CameraButton } from "@/components/ask/CameraButton";
+import { CropBox, type CropRect } from "@/components/ask/CropBox";
+import { LineTapper } from "@/components/ask/LineTapper";
+import { MathKeyboard } from "@/components/ask/MathKeyboard";
+import { AnswerCard, solverLabel, kernelLabel } from "@/components/ask/AnswerCard";
+import { ReportWrong } from "@/components/ask/ReportWrong";
+import { WaitSkeleton } from "@/components/ask/WaitSkeleton";
+import { prepImage } from "@/components/ask/ImagePrep";
 
 const SUBJECTS = ["数学", "物理", "化学", "英语", "语文", "其他"];
-const MAX_SIDE = 1600;
 
-/** 客户端图片处理：旋转 rotationDeg 度 + 缩放到长边 ≤1600 + JPEG q=0.85。 */
-async function processImage(source: Blob, rotationDeg: number): Promise<Blob> {
-  const url = URL.createObjectURL(source);
-  try {
-    const img = await new Promise<HTMLImageElement>((resolve, reject) => {
-      const el = new Image();
-      el.onload = () => resolve(el);
-      el.onerror = () => reject(new Error("图片读取失败，换一张试试"));
-      el.src = url;
-    });
-    const srcW = img.naturalWidth;
-    const srcH = img.naturalHeight;
-    if (!srcW || !srcH) throw new Error("图片读取失败，换一张试试");
-
-    const swap = rotationDeg % 180 !== 0;
-    const outW = swap ? srcH : srcW;
-    const outH = swap ? srcW : srcH;
-    const scale = Math.min(1, MAX_SIDE / Math.max(outW, outH));
-    const cw = Math.max(1, Math.round(outW * scale));
-    const ch = Math.max(1, Math.round(outH * scale));
-
-    const canvas = document.createElement("canvas");
-    canvas.width = cw;
-    canvas.height = ch;
-    const ctx = canvas.getContext("2d");
-    if (!ctx) throw new Error("这个浏览器处理不了图片");
-    ctx.translate(cw / 2, ch / 2);
-    ctx.rotate((rotationDeg * Math.PI) / 180);
-    ctx.drawImage(img, (-srcW * scale) / 2, (-srcH * scale) / 2, srcW * scale, srcH * scale);
-
-    const out = await new Promise<Blob | null>((resolve) =>
-      canvas.toBlob((b) => resolve(b), "image/jpeg", 0.85)
-    );
-    if (!out) throw new Error("图片处理失败，换一张试试");
-    return out;
-  } finally {
-    URL.revokeObjectURL(url);
-  }
+/** 已解码的原图（裁剪用）：object URL + 自然像素尺寸。 */
+interface Picked {
+  url: string;
+  width: number;
+  height: number;
 }
 
-type Phase = "idle" | "recognizing" | "confirm" | "solving" | "done";
+type Phase = "idle" | "picking" | "cropping" | "lines" | "recognizing" | "confirm" | "solving" | "done";
 type RetryKind = "recognize" | "solve" | null;
 type ChatMsg = { role: "me" | "ai"; text: string };
-
-function solverLabel(solver: AskSolveResult["solver"]): string | null {
-  if (solver === "kernel") return "精确求解";
-  if (solver === "llm") return "AI 讲解";
-  return null;
-}
 
 export default function AskPage() {
   const [phase, setPhase] = useState<Phase>("idle");
   const [subject, setSubject] = useState<string | null>(null);
 
+  // 原图（未裁剪，仅解码）：交给 CropBox 显示 + 取自然尺寸；裁剪+缩放+编码后才上传。
+  const [picked, setPicked] = useState<Picked | null>(null);
   const [sourceBlob, setSourceBlob] = useState<Blob | null>(null);
-  const [rotation, setRotation] = useState(0);
-  const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const [showTyped, setShowTyped] = useState(false);
   const [typedText, setTypedText] = useState("");
 
   const [ask, setAsk] = useState<AskResult | null>(null);
   const [confirmText, setConfirmText] = useState("");
   const [solve, setSolve] = useState<AskSolveResult | null>(null);
+  const confirmRef = useRef<HTMLTextAreaElement>(null);
 
   const [elapsed, setElapsed] = useState(0);
   const [showSteps, setShowSteps] = useState(false);
@@ -98,57 +70,64 @@ export default function AskPage() {
   const [error, setError] = useState<string | null>(null);
   const [retryKind, setRetryKind] = useState<RetryKind>(null);
 
-  const cameraRef = useRef<HTMLInputElement>(null);
-  const albumRef = useRef<HTMLInputElement>(null);
-
   useEffect(() => {
     if (!getToken()) redirectToLogin();
   }, []);
 
-  // 预览 URL 生命周期：换了就回收旧的。
+  // 识别 / 解题都在等，一个计时器两处用。
+  const waiting = phase === "recognizing" || phase === "solving";
   useEffect(() => {
-    if (!sourceBlob) {
-      setPreviewUrl(null);
-      return;
-    }
-    const url = URL.createObjectURL(sourceBlob);
-    setPreviewUrl(url);
-    return () => URL.revokeObjectURL(url);
-  }, [sourceBlob]);
-
-  // 解题计时器（"正在思考… 12s"）。
-  useEffect(() => {
-    if (phase !== "solving") return;
+    if (!waiting) return;
     setElapsed(0);
     const id = setInterval(() => setElapsed((s) => s + 1), 1000);
     return () => clearInterval(id);
-  }, [phase]);
+  }, [waiting]);
 
+  // 原图 object URL 生命周期。
+  useEffect(() => {
+    if (!picked) return;
+    return () => URL.revokeObjectURL(picked.url);
+  }, [picked]);
+
+  /** 选到文件 → 解码出自然尺寸 → 进裁剪步（打字输入跳过这些）。 */
   const pickFile = useCallback(async (file: File | null) => {
     if (!file) return;
     setError(null);
     setRetryKind(null);
     try {
-      const blob = await processImage(file, 0);
-      setRotation(0);
-      setSourceBlob(blob);
+      const { width, height } = await prepImage(file, { maxSide: 1600 });
+      const url = URL.createObjectURL(file);
+      setPicked((prev) => {
+        if (prev) URL.revokeObjectURL(prev.url);
+        return { url, width, height };
+      });
+      setSourceBlob(null);
+      setPhase("cropping");
     } catch (e) {
       setError(e instanceof Error ? e.message : "图片处理失败");
     }
   }, []);
 
-  const rotate = useCallback(async () => {
-    if (!sourceBlob) return;
-    setError(null);
-    try {
-      const next = (rotation + 90) % 360;
-      const blob = await processImage(sourceBlob, 90);
-      setRotation(next);
-      setSourceBlob(blob);
-    } catch (e) {
-      setError(e instanceof Error ? e.message : "旋转失败");
-    }
-  }, [sourceBlob, rotation]);
+  /** 裁剪确认 → 编码（裁剪 + 缩放 + JPEG）→ 有 lines 的服务端会在识别后给行。 */
+  const applyCrop = useCallback(
+    async (crop: CropRect | null) => {
+      if (!picked) return;
+      setError(null);
+      try {
+        const res = await fetch(picked.url);
+        const file = await res.blob();
+        const out = await prepImage(file, { maxSide: 1600, crop });
+        setSourceBlob(out.blob);
+        setPhase("idle");
+      } catch (e) {
+        setError(e instanceof Error ? e.message : "图片处理失败，换一张试试");
+        setPhase("cropping");
+      }
+    },
+    [picked]
+  );
+
+  const lines = ask?.lines && ask.lines.length > 0 ? ask.lines : null;
 
   const recognize = useCallback(async () => {
     if (!sourceBlob && !typedText.trim()) return;
@@ -169,7 +148,8 @@ export default function AskPage() {
       setChat([]);
       setShowSteps(false);
       setShowAnswer(false);
-      setPhase("confirm");
+      // 有分行 + 有图 → 先让学生点行；否则直接进确认。
+      setPhase(r.lines && r.lines.length > 0 && r.has_image ? "lines" : "confirm");
     } catch (e) {
       setError(e instanceof Error ? e.message : "识别失败，请重试");
       setRetryKind("recognize");
@@ -268,8 +248,11 @@ export default function AskPage() {
 
   const reset = useCallback(() => {
     setPhase("idle");
+    setPicked((prev) => {
+      if (prev) URL.revokeObjectURL(prev.url);
+      return null;
+    });
     setSourceBlob(null);
-    setRotation(0);
     setTypedText("");
     setShowTyped(false);
     setAsk(null);
@@ -281,13 +264,13 @@ export default function AskPage() {
     setChatInput("");
     setError(null);
     setRetryKind(null);
-    if (cameraRef.current) cameraRef.current.value = "";
-    if (albumRef.current) albumRef.current.value = "";
   }, []);
 
   const solver = solve ? solverLabel(solve.solver) : null;
+  const kernel = kernelLabel(solve?.kernel);
   const llmBusy = solve?.status === "llm_unavailable";
   const emptyText = phase === "confirm" && !confirmText.trim();
+  const hasCard = !!solve?.card;
 
   return (
     <main className="mx-auto max-w-xl p-4 pb-28 space-y-4" data-testid="ask-root">
@@ -299,55 +282,27 @@ export default function AskPage() {
       </header>
       <ProductNav />
 
+      {/* 裁剪：拍完先裁，去掉旁边的杂物/半张别的题 */}
+      {phase === "cropping" && picked && (
+        <CropBox
+          src={picked.url}
+          naturalWidth={picked.width}
+          naturalHeight={picked.height}
+          onCancel={reset}
+          onConfirm={(crop) => void applyCrop(crop)}
+        />
+      )}
+
       {/* a. 选图 / 直接输入 */}
       {(phase === "idle" || phase === "recognizing") && (
         <>
-          <div className="grid grid-cols-2 gap-3">
-            <OButton
-              variant="outline"
-              className="h-24 flex-col gap-1 text-base"
-              data-testid="ask-camera"
-              disabled={phase === "recognizing"}
-              onClick={() => cameraRef.current?.click()}
-            >
-              <span className="text-2xl" aria-hidden>📷</span>
-              拍照
-            </OButton>
-            <OButton
-              variant="outline"
-              className="h-24 flex-col gap-1 text-base"
-              disabled={phase === "recognizing"}
-              onClick={() => albumRef.current?.click()}
-            >
-              <span className="text-2xl" aria-hidden>🖼️</span>
-              相册
-            </OButton>
-          </div>
-          <input
-            ref={cameraRef}
-            type="file"
-            accept="image/*"
-            capture="environment"
-            className="hidden"
-            onChange={(e) => void pickFile(e.target.files?.[0] ?? null)}
-          />
-          <input
-            ref={albumRef}
-            type="file"
-            accept="image/*"
-            className="hidden"
-            onChange={(e) => void pickFile(e.target.files?.[0] ?? null)}
+          <CameraButton
+            busy={phase === "recognizing"}
+            onPick={(f) => void pickFile(f)}
+            onType={() => setShowTyped(true)}
           />
 
-          {!showTyped ? (
-            <button
-              type="button"
-              className="text-base text-[var(--primary)] underline underline-offset-4"
-              onClick={() => setShowTyped(true)}
-            >
-              或者直接输入题目
-            </button>
-          ) : (
+          {showTyped && (
             <textarea
               data-testid="ask-text"
               className="w-full min-h-[120px] rounded-xl border p-3 text-base"
@@ -355,6 +310,23 @@ export default function AskPage() {
               value={typedText}
               onChange={(e) => setTypedText(e.target.value)}
             />
+          )}
+
+          {sourceBlob && (
+            <div className="flex items-center gap-2 rounded-xl border p-3">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={picked?.url}
+                alt="题目预览"
+                className="h-20 w-auto rounded-lg border object-contain"
+              />
+              <div className="flex-1 text-sm text-[var(--muted-foreground,#888)]">
+                已裁剪好，可以识别了
+              </div>
+              <OButton variant="ghost" className="min-h-[44px]" onClick={reset}>
+                换一张
+              </OButton>
+            </div>
           )}
 
           <div className="space-y-2">
@@ -381,29 +353,8 @@ export default function AskPage() {
             </div>
           </div>
 
-          {previewUrl && (
-            <OCard>
-              <div className="p-3 space-y-3">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src={previewUrl}
-                  alt="题目预览"
-                  className="mx-auto max-h-64 w-auto rounded-lg border object-contain"
-                />
-                <div className="flex gap-2">
-                  <OButton
-                    variant="ghost"
-                    className="min-h-[44px]"
-                    onClick={() => void rotate()}
-                  >
-                    ↻ 旋转
-                  </OButton>
-                  <OButton variant="ghost" className="min-h-[44px]" onClick={reset}>
-                    换一张
-                  </OButton>
-                </div>
-              </div>
-            </OCard>
+          {phase === "recognizing" && (
+            <WaitSkeleton title="正在识别题目…" seconds={elapsed} />
           )}
 
           <OButton
@@ -414,12 +365,22 @@ export default function AskPage() {
             disabled={phase === "recognizing" || (!sourceBlob && !typedText.trim())}
             onClick={() => void recognize()}
           >
-            {phase === "recognizing" ? "正在识别…" : "识别题目"}
+            识别题目
           </OButton>
         </>
       )}
 
-      {/* b/c. 确认题目 */}
+      {/* b. 选行（有分行 + 有图时才出现）：图太大点不准就用下面的芯片 */}
+      {phase === "lines" && ask && lines && picked && (
+        <LineTapper
+          imageUrl={picked.url}
+          lines={lines}
+          onChange={setConfirmText}
+          onDone={() => setPhase("confirm")}
+        />
+      )}
+
+      {/* c. 确认题目 */}
       {(phase === "confirm" || phase === "solving") && ask && (
         <OCard>
           <OCardHeader>
@@ -434,7 +395,9 @@ export default function AskPage() {
             {ask.warning && !emptyText && (
               <div className="text-sm text-[var(--muted-foreground,#888)]">{ask.warning}</div>
             )}
+            <MathKeyboard target={confirmRef} onChange={setConfirmText} />
             <textarea
+              ref={confirmRef}
               data-testid="ask-confirm-text"
               className="w-full min-h-[120px] rounded-xl border p-3 text-base"
               value={confirmText}
@@ -448,12 +411,10 @@ export default function AskPage() {
               disabled={phase === "solving" || !confirmText.trim()}
               onClick={() => void startSolve()}
             >
-              {phase === "solving" ? "正在思考…" : "开始解题"}
+              开始解题
             </OButton>
             {phase === "solving" && (
-              <div className="text-center text-sm text-[var(--muted-foreground,#888)]">
-                正在思考… {elapsed} 秒
-              </div>
+              <WaitSkeleton title="正在解题…" seconds={elapsed} hintAfterSeconds={6} />
             )}
           </div>
         </OCard>
@@ -471,6 +432,11 @@ export default function AskPage() {
                     {solver}
                   </span>
                 )}
+                {kernel && solver === "精确求解" && (
+                  <span className="rounded-full bg-[var(--muted,#eee)] px-2 py-0.5 text-xs text-[var(--muted-foreground,#666)]">
+                    {kernel}
+                  </span>
+                )}
               </span>
             </OCardTitle>
           </OCardHeader>
@@ -484,7 +450,10 @@ export default function AskPage() {
               </div>
             )}
 
-            {solve.hint && (
+            {/* 卡片型答案（单词/古诗/拼音/成语）：比 hint/steps 更贴题型 */}
+            <AnswerCard card={solve.card} />
+
+            {!hasCard && solve.hint && (
               <div
                 className="rounded-xl bg-[var(--secondary)] p-4 text-base"
                 data-testid="ask-hint"
@@ -494,7 +463,7 @@ export default function AskPage() {
               </div>
             )}
 
-            {solve.steps.length > 0 && (
+            {solve.steps.length > 0 && !hasCard && (
               <div data-testid="ask-steps">
                 {showSteps ? (
                   <ol className="space-y-2 text-base">
@@ -519,7 +488,7 @@ export default function AskPage() {
               </div>
             )}
 
-            {solve.answer != null && solve.answer !== "" && (
+            {solve.answer != null && solve.answer !== "" && !hasCard && (
               <div>
                 {showAnswer ? (
                   <div className="rounded-xl border p-4 text-base">
@@ -595,13 +564,16 @@ export default function AskPage() {
               </div>
             )}
 
-            <button
-              type="button"
-              className="text-base text-[var(--primary)] underline underline-offset-4"
-              onClick={reset}
-            >
-              再拍一道
-            </button>
+            <div className="flex items-center justify-between gap-2">
+              <ReportWrong askId={solve.ask_id} />
+              <button
+                type="button"
+                className="text-base text-[var(--primary)] underline underline-offset-4"
+                onClick={reset}
+              >
+                再拍一道
+              </button>
+            </div>
           </div>
         </OCard>
       )}

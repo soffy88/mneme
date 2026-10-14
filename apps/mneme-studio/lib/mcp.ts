@@ -169,6 +169,30 @@ export function pathLockedInfo(e: unknown): PathLockedInfo | null {
   }
 }
 
+const UUID_RE =
+  /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+
+/**
+ * ProductEvent 上报的客户端侧清洗（服务端 `ProductEventRequest` 见 services/routers/product.py）：
+ * - `knowledge_refs` 上限 20 条（服务端 `Field(max_length=20)`，超了整条 422）；
+ * - 丢空串 / 非字符串（服务端 list[str] 对空串会做后续 K 查询，无意义还脏）
+ * - `policy_decision_id` 必须是合法 UUID 或 null（空串 / "None" / 任意串都 422）。
+ * 这是**契约清洗**不是业务判断：事件本身的意义由服务端裁决，前端只保证不违规。
+ */
+function normalizeKnowledgeRefs(refs: readonly string[]): string[] {
+  return refs
+    .filter((r): r is string => typeof r === "string" && r.trim() !== "")
+    .map((r) => r.trim())
+    .slice(0, 20);
+}
+
+/** 合法 UUID（1-5 版本）→ 原样；其余（undefined/空串/任意串）→ null。 */
+function normalizeUuid(value: string | null | undefined): string | null {
+  if (typeof value !== "string") return null;
+  const v = value.trim();
+  return UUID_RE.test(v) ? v : null;
+}
+
 // ── 类型（**故意不含 expected 字段**）───────────────────────────────────────
 export type NextAction =
   | "answer_pending" | "review" | "probe" | "practice" | "assess" | "complete";
@@ -638,8 +662,8 @@ export const mcp = {
     apiPost<{ event_id: string }>(`/v2/product/events/${studentId}`, {
       event_type: eventType,
       occurred_at: new Date().toISOString(),
-      knowledge_refs: knowledgeRefs,
-      policy_decision_id: policyDecisionId,
+      knowledge_refs: normalizeKnowledgeRefs(knowledgeRefs),
+      policy_decision_id: normalizeUuid(policyDecisionId),
     }),
 
   // Memory Inspect：仅本人可读/可删（服务端 _ensure_student_self）。
