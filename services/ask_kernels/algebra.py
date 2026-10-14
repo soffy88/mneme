@@ -919,6 +919,11 @@ def solve_polynomial(text: str) -> Optional[KernelSolution]:
     want_simplify = bool(re.search(r"化简|计算|展开|求值|先化简", raw))
     if not (want_factor or want_square or want_simplify):
         return None
+    # 叙述型题（“小马虎在计算…时漏掉了括号，算成了…，相差多少”）：题面里有两个式子在比较，不是让你展开这一个
+    if re.search(r"漏掉|漏了|算成|看成|抄错|抄成|相差|错误的结果|正确的结果|比较大小|差是多少", raw):
+        return None
+    if len([m for m in re.findall(r"\$([^$]+)\$", text or "") if re.search(r"[a-z]", re.sub(r"\\[a-zA-Z]+", "", m))]) > 1:
+        return None
     head = raw
     if want_eval:
         head = raw[: want_eval.start()]
