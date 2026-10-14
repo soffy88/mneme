@@ -23,7 +23,7 @@ import uuid
 from datetime import datetime, timedelta, timezone
 from typing import Optional
 
-from sqlalchemy import or_, select
+from sqlalchemy import func, or_, select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from services.logging_config import logger
@@ -378,11 +378,26 @@ async def finish_session(
 ) -> dict:
     from zoneinfo import ZoneInfo
 
-    from services.question_record_service import review_streak
+    from services.question_record_service import review_streak, today_review_stats
 
     now = now or datetime.now(timezone.utc)
     today = now.astimezone(ZoneInfo("Asia/Shanghai")).date()
     st = await review_streak(db, student_id=student_id, today=today)
+    tstats = await today_review_stats(db, student_id=student_id, today=today)
+    # 明天要复习：到明天（北京时间）结束前到期、未毕业的错题数（含今天没做完的）
+    tomorrow_end = datetime(today.year, today.month, today.day, tzinfo=timezone.utc) + timedelta(days=2) - timedelta(hours=8)
+    due_tomorrow = (
+        await db.execute(
+            select(func.count())
+            .select_from(WrongQuestion)
+            .where(
+                WrongQuestion.student_id == student_id,
+                WrongQuestion.graduated_at.is_(None),
+                WrongQuestion.question_text.isnot(None),
+                or_(WrongQuestion.fsrs_due.is_(None), WrongQuestion.fsrs_due < tomorrow_end),
+            )
+        )
+    ).scalar_one()
     remaining = (
         await db.execute(
             select(WrongQuestion.id).where(
@@ -418,6 +433,11 @@ async def finish_session(
         "longest_streak": st["longest_streak"],
         "remaining_due": len(remaining),
         "next_due_at": nxt.isoformat() if nxt else None,
+        "due_tomorrow": int(due_tomorrow or 0),
+        "today_answered": tstats["answered"],
+        "today_correct": tstats["correct"],
+        "today_accuracy": round(tstats["correct"] / tstats["answered"], 4) if tstats["answered"] else None,
+        "today_minutes": round(tstats["duration_ms"] / 60000, 1),
         "message": msg,
     }
 

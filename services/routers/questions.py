@@ -4,6 +4,8 @@
 - POST /v1/questions/ask/{ask_id}/solve        求解（精确内核优先，LLM 兜底，带超时）
 - POST /v1/questions/ask/{ask_id}/feedback     懂了 / 没懂
 - POST /v1/questions/ask/{ask_id}/followup     没懂 → 追问
+- POST /v1/questions/ask/{ask_id}/report       「这道题算错了？」反馈（识别错/答案错/步骤看不懂/其他）
+- GET  /v1/questions/summary?days=7            近 N 天每天 题数/正确率/错得最多的知识点（家长视图预留）
 - POST /v1/wrongbook/add                       一键加入错题本（任意记录）
 - GET  /v1/questions/history[/{id}]            做题记录（筛选：学科/来源/对错/日期）
 - GET  /v1/questions/records/{id}/image        私有图片（鉴权后回字节，不出签名 URL）
@@ -80,6 +82,8 @@ async def post_ask(
     image_key: Optional[str] = None
     warning: Optional[str] = None
     ocr = {"engine": "typed", "ms": 0, "confidence": None}
+    lines: list = []
+    image_w = image_h = None
     out_text = typed
     out_grade = (grade or "").strip() or current_user.grade or None
     if data:
@@ -99,6 +103,8 @@ async def post_ask(
             subj = subj or rec.get("subject")
             out_grade = out_grade or rec.get("grade")
             ocr = {"engine": rec["engine"], "ms": rec["ms"], "confidence": rec.get("confidence")}
+            lines = list(rec.get("lines") or [])
+            image_w, image_h = rec.get("image_w"), rec.get("image_h")
             if not out_text:
                 warning = "没看清题目，请手动输入或重新拍一张（光线亮一点、对准题目）"
     subj = subj or guess_subject(out_text)
@@ -125,6 +131,9 @@ async def post_ask(
         "grade": out_grade,
         "has_image": bool(image_key),
         "ocr": ocr,
+        "lines": lines,
+        "image_w": image_w,
+        "image_h": image_h,
         **({"warning": warning} if warning else {}),
     }
 
@@ -159,7 +168,7 @@ async def post_ask_solve(
     meta: dict = {
         "solution": {
             k: result.get(k)
-            for k in ("status", "solver", "kernel", "hint", "steps", "answer", "explanation", "latency_ms")
+            for k in ("status", "solver", "kernel", "hint", "steps", "answer", "explanation", "card", "latency_ms")
         }
     }
     if original_text and original_text.strip() != body.text.strip():
@@ -195,6 +204,53 @@ async def post_ask_feedback(
     rec.updated_at = datetime.now(timezone.utc)
     await db.commit()
     return {"ok": True}
+
+
+class ReportReq(BaseModel):
+    reason: Literal["识别错了", "答案错了", "步骤看不懂", "其他", "ocr", "answer", "steps", "other"] = "其他"
+    comment: Optional[str] = Field(default=None, max_length=500)
+
+
+@router.post("/v1/questions/ask/{ask_id}/report")
+async def post_ask_report(
+    ask_id: UUID,
+    body: ReportReq,
+    current_user: User = Depends(get_current_user),
+    db: AsyncSession = Depends(get_db),
+):
+    """「这道题算错了？」：记到该题记录的 meta.reports（只追加，最多 10 条），供内核/OCR 回归用。"""
+    rec = await _own_record(db, current_user, ask_id)
+    meta = dict(rec.meta or {})
+    reports = list(meta.get("reports") or [])
+    raw_sol = meta.get("solution")
+    sol: dict = raw_sol if isinstance(raw_sol, dict) else {}
+    reports.append(
+        {
+            "reason": body.reason,
+            "comment": (body.comment or "").strip()[:500] or None,
+            "solver": sol.get("solver"),
+            "kernel": sol.get("kernel"),
+            "at": datetime.now(timezone.utc).isoformat(),
+        }
+    )
+    meta["reports"] = reports[-10:]
+    rec.meta = meta
+    rec.updated_at = datetime.now(timezone.utc)
+    await db.commit()
+    logger.info("ask report recorded (reason=%s, kernel=%s)", body.reason, sol.get("kernel"))
+    return {"ok": True}
+
+
+@router.get("/v1/questions/summary")
+async def get_questions_summary(
+    days: int = Query(7, ge=1, le=90),
+    current_user: User = Depends(get_current_user),
+    db: AsyncSession = Depends(get_db),
+):
+    """近 N 天（北京时间自然日）每天：题数、已判分数、对/错、正确率、错得最多的知识点。"""
+    from services.question_record_service import daily_summary
+
+    return await daily_summary(db, student_id=current_user.id, days=days)
 
 
 class FollowupReq(BaseModel):

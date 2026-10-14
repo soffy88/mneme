@@ -370,6 +370,23 @@ async def _kc_review_label(db: AsyncSession, kc_id: str) -> str:
     return f"知识点复习：{name or kc_id}"
 
 
+async def _kc_review_original(db: AsyncSession, student_id: uuid.UUID, kc_id: str) -> Optional[WrongQuestion]:
+    """KC 复习展示的原错题（与 get_due_variants 同一取法）；没有返回 None。"""
+    try:
+        return (
+            await db.execute(
+                select(WrongQuestion)
+                .where(
+                    WrongQuestion.student_id == student_id,
+                    WrongQuestion.knowledge_points.has_key(kc_id),
+                )
+                .limit(1)
+            )
+        ).scalar_one_or_none()
+    except Exception:  # noqa: BLE001
+        return None
+
+
 async def reveal_review_answer(
     db: AsyncSession, student_id: uuid.UUID, kc_id: str
 ) -> dict:
@@ -439,15 +456,20 @@ async def submit_review_answer(
         )
     from services.question_record_service import record_question
 
+    # 判错 → 自动回到错题本：复习的题就是原错题，按题干去重后重新排进 10 分钟复习
+    orig = await _kc_review_original(db, student_id, kc_id) if verdict == "wrong" else None
+    orig_text = (orig.question_text or "").strip() if orig is not None else ""
     await record_question(
         student_id=student_id,
         source="kc_review",
-        question_text=await _kc_review_label(db, kc_id),
+        question_text=orig_text or await _kc_review_label(db, kc_id),
+        subject=(orig.subject if orig is not None else None),
         kc_ids=[kc_id],
         question_ref=kc_id,
         student_answer=student_answer,
         correct_answer=answer or None,
         is_correct=None if verdict == "unsure" else verdict == "correct",
         grader=None if verdict == "unsure" else "rule",
+        auto_wrong_book=bool(orig_text),
     )
     return {"ku_id": kc_id, "verdict": verdict, "answer": answer}

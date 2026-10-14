@@ -38,6 +38,7 @@ async def check_english(
         correct_answer=(request.accepted[0] if request.accepted else None),
         is_correct=result.get("answer_ok") if result.get("answer_checked") else None,
         grader="kernel",
+        auto_wrong_book=bool(request.context),
         meta={"tool": "english.check", "type": request.type},
     )
     return result

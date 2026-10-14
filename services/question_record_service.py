@@ -210,6 +210,8 @@ async def _ensure_wrong_question(
     correct_answer: Optional[str],
     kc_ids: Any,
     image_key: Optional[str],
+    knowledge_points: Optional[dict] = None,
+    needs_image: bool = False,
 ) -> uuid.UUID:
     """同一学生、同一题干（忽略空白）、尚未毕业的错题只保留一条；没有则新建。
 
@@ -238,7 +240,9 @@ async def _ensure_wrong_question(
             return wq.id
     kcs = _norm_kc_ids(kc_ids)
     extra: dict[str, Any] = {}
-    if kcs:
+    if knowledge_points:
+        extra["knowledge_points"] = dict(knowledge_points)
+    elif kcs:
         # 只有非空才传：WrongQuestion.knowledge_points 是普通 JSONB（none_as_null=False），
         # 显式传 None 会落成 JSON 'null' 标量，jsonb_object_keys 碰到即报错 → GetPath 500。
         extra["knowledge_points"] = {k: k for k in kcs}
@@ -251,12 +255,42 @@ async def _ensure_wrong_question(
         correct_answer=_clip(correct_answer, _MAX_ANSWER),
         source=source,
         image_key=image_key,
-        needs_image=False,
+        needs_image=bool(needs_image),
         **extra,
     )
     db.add(wq)
     await db.flush()
     return wq.id
+
+
+async def ensure_wrong_question(
+    db: AsyncSession,
+    *,
+    student_id: uuid.UUID,
+    source: str,
+    subject: Optional[str],
+    question_text: str,
+    student_answer: Optional[str] = None,
+    correct_answer: Optional[str] = None,
+    kc_ids: Any = None,
+    image_key: Optional[str] = None,
+    knowledge_points: Optional[dict] = None,
+    needs_image: bool = False,
+) -> uuid.UUID:
+    """在调用方的事务里建/复用错题（按题干哈希去重；已有未毕业的就重新排进复习）。不提交。"""
+    return await _ensure_wrong_question(
+        db,
+        student_id=student_id,
+        source=source if source in SOURCE_LABELS else "other",
+        subject=subject,
+        question_text=question_text,
+        student_answer=student_answer,
+        correct_answer=correct_answer,
+        kc_ids=kc_ids,
+        image_key=image_key,
+        knowledge_points=knowledge_points,
+        needs_image=needs_image,
+    )
 
 
 async def add_record_to_wrong_book(
@@ -449,9 +483,135 @@ async def review_streak(db: AsyncSession, *, student_id: uuid.UUID, today: date)
     return {"streak": current, "longest_streak": max(longest, current)}
 
 
+def _local_day_expr() -> Any:
+    return func.date(func.timezone("Asia/Shanghai", QuestionRecord.created_at))
+
+
+async def daily_summary(
+    db: AsyncSession, *, student_id: uuid.UUID, days: int = 7, today: Optional[date] = None
+) -> dict:
+    """近 N 个北京时间自然日的做题汇总：每天 count/graded/correct/wrong/accuracy/top_wrong_kcs。"""
+    from zoneinfo import ZoneInfo
+
+    from sqlalchemy import case
+
+    days = max(1, min(int(days), 90))
+    today = today or datetime.now(timezone.utc).astimezone(ZoneInfo("Asia/Shanghai")).date()
+    first = today - timedelta(days=days - 1)
+    start_utc = datetime(first.year, first.month, first.day, tzinfo=timezone.utc) - timedelta(hours=8)
+    day = _local_day_expr()
+    where = and_(QuestionRecord.student_id == student_id, QuestionRecord.created_at >= start_utc)
+    agg = (
+        await db.execute(
+            select(
+                day,
+                func.count(),
+                func.count(QuestionRecord.is_correct),
+                func.sum(case((QuestionRecord.is_correct.is_(True), 1), else_=0)),
+                func.sum(case((QuestionRecord.is_correct.is_(False), 1), else_=0)),
+                func.coalesce(func.sum(QuestionRecord.duration_ms), 0),
+            )
+            .where(where)
+            .group_by(day)
+        )
+    ).all()
+    wrong_rows = (
+        await db.execute(
+            select(day, QuestionRecord.kc_ids)
+            .where(where, QuestionRecord.is_correct.is_(False), QuestionRecord.kc_ids.isnot(None))
+            .limit(5000)
+        )
+    ).all()
+    per_day_kc: dict[date, dict[str, int]] = {}
+    overall: dict[str, int] = {}
+    for d, kcs in wrong_rows:
+        if not isinstance(kcs, list):
+            continue
+        bucket = per_day_kc.setdefault(d, {})
+        for k in kcs:
+            k = str(k)
+            bucket[k] = bucket.get(k, 0) + 1
+            overall[k] = overall.get(k, 0) + 1
+    names: dict[str, str] = {}
+    if overall:
+        try:
+            from services.models import KnowledgeUnit
+
+            for kid, name in (
+                await db.execute(
+                    select(KnowledgeUnit.id, KnowledgeUnit.name).where(KnowledgeUnit.id.in_(list(overall)[:200]))
+                )
+            ).all():
+                names[str(kid)] = str(name)
+        except Exception:  # noqa: BLE001 — 名字只是锦上添花
+            names = {}
+
+    def top(counts: dict[str, int], n: int) -> list[dict]:
+        return [
+            {"kc_id": k, "name": names.get(k), "count": c}
+            for k, c in sorted(counts.items(), key=lambda kv: (-kv[1], kv[0]))[:n]
+        ]
+
+    by_day = {r[0]: r for r in agg}
+    out_days: list[dict[str, Any]] = []
+    for i in range(days):
+        d = first + timedelta(days=i)
+        r = by_day.get(d)
+        count, graded, correct, wrong, dur = (
+            (int(r[1]), int(r[2]), int(r[3] or 0), int(r[4] or 0), int(r[5] or 0)) if r else (0, 0, 0, 0, 0)
+        )
+        out_days.append(
+            {
+                "date": d.isoformat(),
+                "count": count,
+                "graded": graded,
+                "correct": correct,
+                "wrong": wrong,
+                "accuracy": round(correct / graded, 4) if graded else None,
+                "minutes": round(dur / 60000, 1),
+                "top_wrong_kcs": top(per_day_kc.get(d, {}), 3),
+            }
+        )
+    tot_graded = sum(x["graded"] for x in out_days)
+    tot_correct = sum(x["correct"] for x in out_days)
+    return {
+        "days": out_days,
+        "total": {
+            "count": sum(x["count"] for x in out_days),
+            "graded": tot_graded,
+            "correct": tot_correct,
+            "accuracy": round(tot_correct / tot_graded, 4) if tot_graded else None,
+            "top_wrong_kcs": top(overall, 5),
+        },
+    }
+
+
+async def today_review_stats(db: AsyncSession, *, student_id: uuid.UUID, today: date) -> dict:
+    """今天（北京时间）错题复习的 题数/做对/用时（来自 source=review 的记录）。"""
+    from sqlalchemy import case
+
+    r = (
+        await db.execute(
+            select(
+                func.count(),
+                func.sum(case((QuestionRecord.is_correct.is_(True), 1), else_=0)),
+                func.coalesce(func.sum(QuestionRecord.duration_ms), 0),
+            ).where(
+                QuestionRecord.student_id == student_id,
+                QuestionRecord.source == "review",
+                _local_day_expr() == today,
+            )
+        )
+    ).one()
+    return {"answered": int(r[0] or 0), "correct": int(r[1] or 0), "duration_ms": int(r[2] or 0)}
+
+
 __all__ = [
     "SOURCE_LABELS",
+    "daily_summary",
+    "today_review_stats",
     "add_record_to_wrong_book",
+    "ensure_wrong_question",
     "get_record",
     "list_history",
     "record_image_key",

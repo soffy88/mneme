@@ -478,7 +478,23 @@ async def post_practice_submit(
     # 4. 答错则写学生错题记录。 This follows the idempotent cognitive write;
     # an exception rolls back both writes in the request transaction.
     student_wq_id: UUID | None = None
-    if not is_correct:
+    if not is_correct and (bank_q.question_text or "").strip():
+        # 错题本自动收录：同一学生同一题干未毕业的错题只留一条（又错一次 → 重新排进复习）
+        from services.question_record_service import ensure_wrong_question
+
+        student_wq_id = await ensure_wrong_question(
+            db,
+            student_id=body.student_id,
+            source="practice",
+            subject=bank_q.subject,
+            question_text=bank_q.question_text or "",
+            student_answer=body.student_answer or None,
+            correct_answer=bank_q.correct_answer,
+            kc_ids=[body.ku_id],
+            knowledge_points=bank_q.knowledge_points or {body.ku_id: body.ku_id},
+            needs_image=bool(bank_q.needs_image),
+        )
+    elif not is_correct:
         student_wq = WrongQuestion(
             id=uuid.uuid4(),
             student_id=body.student_id,
