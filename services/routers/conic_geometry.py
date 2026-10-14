@@ -49,6 +49,17 @@ async def solve_conic_chord(
     current_user: User = Depends(get_current_user),
 ) -> dict[str, Any]:
     solution = await _solve(spec)
+    from services.question_record_service import record_question
+
+    await record_question(
+        student_id=getattr(current_user, "id", None),
+        source="solver",
+        subject="math",
+        question_text=str(solution.get("title") or "圆锥曲线"),
+        correct_answer=str(solution.get("expression_latex") or "") or None,
+        grader="kernel",
+        meta={"tool": "geometry.conic", "fingerprint": solution.get("fingerprint")},
+    )
     return {k: solution[k] for k in _FIELDS}
 
 

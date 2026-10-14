@@ -253,6 +253,76 @@ class WrongQuestion(Base):
     )  # T.6 步骤链批改：{student_steps, step_verdicts, first_wrong_step(0-based|null)}
     # ZPD 难度自适应排序用（迁移 8ad19eb4ab90）：未校准(NULL)时按 999.0 距离兜底
     item_difficulty: Mapped[Optional[float]] = mapped_column(Float, nullable=True)
+    # 错题本复习（迁移 qrc1a2b3c4d5，全部可空/有默认值 = 纯增量）：
+    # source 记这道错题从哪来（practice/quiz/review/photo_ask/mcp/manual…）；
+    # image_key 是私有桶 question-images 里的对象键（只存键，不存签名 URL）；
+    # review_* 是 10 分钟错题复习的毕业计数（连续答对 N 次且间隔够长 → graduated_at）。
+    source: Mapped[Optional[str]] = mapped_column(String(32), nullable=True)
+    image_key: Mapped[Optional[str]] = mapped_column(String(255), nullable=True)
+    question_record_id: Mapped[Optional[uuid.UUID]] = mapped_column(
+        UUID(as_uuid=True), nullable=True
+    )
+    review_count: Mapped[int] = mapped_column(
+        Integer, server_default=text("0"), nullable=False
+    )
+    review_correct_streak: Mapped[int] = mapped_column(
+        Integer, server_default=text("0"), nullable=False
+    )
+    last_reviewed_at: Mapped[Optional[datetime]] = mapped_column(
+        DateTime(timezone=True), nullable=True
+    )
+    graduated_at: Mapped[Optional[datetime]] = mapped_column(
+        DateTime(timezone=True), nullable=True
+    )
+
+
+class QuestionRecord(Base):
+    """学生见到/作答的每一道题（统一、只追加的做题记录；迁移 qrc1a2b3c4d5）。
+
+    只追加：不删、不改题目事实（题干/作答/判分）；仅回填关联与反馈列
+    （wrong_question_id、understood、hints_used、meta.solution 等）。拍照提问在识别后先落一行
+    （is_correct 为空），学生确认/修改题干后回填 question_text。
+    student_id / wrong_question_id 只存值不设 FK：记录写在独立会话里，不能等主事务里未提交的
+    错题行；学生硬删由 purge_service._STUDENT_TABLES 清单负责（同 question_bookmarks）。
+    """
+
+    __tablename__ = "question_records"
+    __table_args__ = (
+        Index("ix_question_records_student_created", "student_id", "created_at"),
+        Index("ix_question_records_student_source", "student_id", "source"),
+    )
+
+    id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True), primary_key=True, server_default=text("gen_random_uuid()")
+    )
+    # 不设 FK（同 question_bookmarks）：学生硬删走 purge_service._STUDENT_TABLES 清单。
+    student_id: Mapped[uuid.UUID] = mapped_column(UUID(as_uuid=True), nullable=False)
+    source: Mapped[str] = mapped_column(String(32), nullable=False)
+    subject: Mapped[Optional[str]] = mapped_column(String(20), nullable=True)
+    grade: Mapped[Optional[str]] = mapped_column(String(10), nullable=True)
+    kc_ids: Mapped[Optional[list]] = mapped_column(JSONB, nullable=True)
+    question_ref: Mapped[Optional[str]] = mapped_column(String(128), nullable=True)
+    question_text: Mapped[Optional[str]] = mapped_column(Text, nullable=True)
+    image_key: Mapped[Optional[str]] = mapped_column(String(255), nullable=True)
+    student_answer: Mapped[Optional[str]] = mapped_column(Text, nullable=True)
+    correct_answer: Mapped[Optional[str]] = mapped_column(Text, nullable=True)
+    is_correct: Mapped[Optional[bool]] = mapped_column(Boolean, nullable=True)
+    grader: Mapped[Optional[str]] = mapped_column(String(20), nullable=True)
+    hints_used: Mapped[int] = mapped_column(
+        Integer, server_default=text("0"), nullable=False
+    )
+    duration_ms: Mapped[Optional[int]] = mapped_column(Integer, nullable=True)
+    understood: Mapped[Optional[bool]] = mapped_column(Boolean, nullable=True)
+    wrong_question_id: Mapped[Optional[uuid.UUID]] = mapped_column(
+        UUID(as_uuid=True), nullable=True
+    )
+    meta: Mapped[Optional[dict]] = mapped_column(JSONB, nullable=True)
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), server_default=text("now()"), nullable=False
+    )
+    updated_at: Mapped[Optional[datetime]] = mapped_column(
+        DateTime(timezone=True), nullable=True
+    )
 
 
 # ===== 认知状态（内核落库）=====

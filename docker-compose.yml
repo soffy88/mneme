@@ -217,6 +217,20 @@ services:
     networks:
       - default
 
+  # 拍照问题目 OCR 侧车（RapidOCR + ONNXRuntime，CPU、免费、离线）。只在 compose 内网暴露，
+  # api 用 http://ocr:8100（MNEME_OCR_URL 可覆盖），不映射宿主端口；无状态、不落盘。
+  ocr:
+    build:
+      context: ./docker/ocr
+    image: mneme-ocr:cpu
+    restart: unless-stopped
+    environment:
+      OMP_NUM_THREADS: ${MNEME_OCR_THREADS:-4}
+    cpus: ${MNEME_OCR_CPUS:-4}
+    mem_limit: 1500m
+    networks:
+      - default
+
   worker:
     build:
       context: .

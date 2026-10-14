@@ -34,6 +34,7 @@ def register_domain_routers(app: FastAPI) -> None:
         operator,
         practice,
         progress,
+        questions,
         reading,
         related_labs,
         research,
@@ -77,5 +78,6 @@ def register_domain_routers(app: FastAPI) -> None:
         reading,
         animate,
         research,
+        questions,
     ):
         app.include_router(mod.router)

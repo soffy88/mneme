@@ -24,6 +24,20 @@ async def check_english(
     current_user: User = Depends(get_current_user),
 ) -> dict[str, Any]:
     try:
-        return check(request)
+        result = check(request)
     except ValueError as exc:
         raise HTTPException(status_code=422, detail=str(exc)) from exc
+    from services.question_record_service import record_question
+
+    await record_question(
+        student_id=getattr(current_user, "id", None),
+        source="solver",
+        subject="english",
+        question_text=request.context or None,
+        student_answer=request.text,
+        correct_answer=(request.accepted[0] if request.accepted else None),
+        is_correct=result.get("answer_ok") if result.get("answer_checked") else None,
+        grader="kernel",
+        meta={"tool": "english.check", "type": request.type},
+    )
+    return result

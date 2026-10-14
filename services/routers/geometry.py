@@ -30,6 +30,17 @@ async def solve_solid_geometry(
         solution = await solve(spec)
     except SolidGeometryError as exc:
         raise HTTPException(status_code=422, detail=str(exc)) from exc
+    from services.question_record_service import record_question
+
+    await record_question(
+        student_id=getattr(current_user, "id", None),
+        source="solver",
+        subject="math",
+        question_text=str(solution.get("title") or "立体几何"),
+        correct_answer=str(solution.get("answer_latex") or solution.get("answer_value") or "") or None,
+        grader="kernel",
+        meta={"tool": "geometry.solid", "fingerprint": solution.get("fingerprint")},
+    )
     return {
         "query_type": solution["query_type"],
         "title": solution["title"],

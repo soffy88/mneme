@@ -12,6 +12,7 @@ import {
 } from "@/lib/mcp";
 import { MathText } from "@/components/MathText";
 import { BookmarkStar } from "@/components/BookmarkStar";
+import { QuickStart } from "@/components/QuickStart";
 import Link from "next/link";
 
 // 一套登录：student_id 取自 mneme 登录会话（mneme_user），**不再走 ?student=**。
@@ -180,6 +181,8 @@ export default function LearnPage() {
         <Link href="/weak-areas">Weak Areas</Link>
         <Link href="/progress">Progress</Link>
       </nav>
+
+      <QuickStart />
 
       {error && (
         <OCard data-testid="error"><div className="p-4 text-sm text-[var(--o-color-danger,#c00)]">出错了：{error}</div></OCard>

@@ -41,7 +41,32 @@ async def post_socratic_start(
     await db.commit()
     if "error" in result:
         raise HTTPException(status_code=404, detail=result["error"])
+    await _record_socratic_question(db, student_id, question_id)
     return result
+
+
+async def _record_socratic_question(db: AsyncSession, student_id: UUID, question_id: UUID) -> None:
+    """统一做题记录：开启苏格拉底引导 = 学生看到了这道题（旁路，失败不影响会话）。"""
+    try:
+        from services.models import WrongQuestion
+        from services.question_record_service import record_question
+
+        wq = await db.get(WrongQuestion, question_id)
+        if wq is None:
+            return
+        own = wq.student_id == student_id
+        await record_question(
+            student_id=student_id,
+            source="socratic",
+            question_text=wq.question_text,
+            subject=wq.subject,
+            kc_ids=wq.knowledge_points,
+            question_ref=str(question_id),
+            wrong_question_id=question_id if own else None,
+            image_key=wq.image_key if own else None,
+        )
+    except Exception:  # noqa: BLE001
+        return
 
 
 @router.post("/v1/socratic/{session_id}/message")

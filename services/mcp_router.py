@@ -776,6 +776,37 @@ async def tool_pose_question(
     return {"ok": True, "question_id": question_id}
 
 
+async def _record_mcp_attempt(
+    *,
+    student_id: uuid.UUID,
+    pending: dict,
+    answer: str,
+    is_correct: Optional[bool],
+    grader: str,
+    time_spent_seconds: Optional[int],
+) -> None:
+    """统一做题记录（旁路，独立会话；失败只记日志）。答错自动入错题本。
+
+    expected 只进记录与本人错题本（学生答完后才可见），不进本工具的返回体（红线不变）。
+    """
+    from services.question_record_service import record_question
+
+    await record_question(
+        student_id=student_id,
+        source="mcp",
+        question_text=pending.get("prompt"),
+        kc_ids=[pending.get("kc_id")] if pending.get("kc_id") else None,
+        question_ref=str(pending.get("question_id") or ""),
+        student_answer=answer,
+        correct_answer=pending.get("expected") or None,
+        is_correct=is_correct,
+        grader=grader,
+        duration_ms=time_spent_seconds * 1000 if time_spent_seconds else None,
+        auto_wrong_book=True,
+        meta={"qtype": pending.get("qtype")},
+    )
+
+
 async def tool_submit_answer(
     db: AsyncSession,
     *,
@@ -828,6 +859,14 @@ async def tool_submit_answer(
         from services.grading_observability import record_grading
 
         record_grading("open", "llm_verified")
+        await _record_mcp_attempt(
+            student_id=student_id,
+            pending=pending,
+            answer=answer,
+            is_correct=verdict.passed,
+            grader="llm",
+            time_spent_seconds=time_spent_seconds,
+        )
         return {
             "graded": True,
             "is_correct": verdict.passed,
@@ -882,6 +921,14 @@ async def tool_submit_answer(
         time_spent_seconds=time_spent_seconds,
     )
     await gate_store.clear_pending(db, student_id=student_id, question_id=question_id)
+    await _record_mcp_attempt(
+        student_id=student_id,
+        pending=pending,
+        answer=answer,
+        is_correct=is_correct,
+        grader="kernel" if qtype in ("solve", "fill") else "rule",
+        time_spent_seconds=time_spent_seconds,
+    )
     return {
         "graded": True,
         "is_correct": is_correct,
@@ -1165,7 +1212,18 @@ async def mcp_solve_problem(
     current_user: User = Depends(get_current_user),
 ) -> dict:
     # 无 DB 依赖（纯计算 + LLM），仍要求登录：/mcp 已公网，统一"须登录"闸门。
-    return await tool_solve_problem(req.problem_text)
+    result = await tool_solve_problem(req.problem_text)
+    from services.question_record_service import record_question
+
+    await record_question(
+        student_id=getattr(current_user, "id", None),
+        source="solver",
+        question_text=req.problem_text,
+        correct_answer=str(result.get("answer") or "") or None,
+        grader="kernel" if result.get("solvable") else None,
+        meta={"tool": "solve_problem", "kernel": result.get("kernel"), "solvable": result.get("solvable")},
+    )
+    return result
 
 
 @router.post("/VisualizeConcept")
@@ -1338,6 +1396,14 @@ async def mcp_report_result(
     current_user: User = Depends(get_current_user),
 ) -> dict:
     _ensure_student_self(current_user, req.student_id)
+    pending_snapshot = None
+    if req.question_id:
+        try:
+            pending_snapshot = await gate_store.get_pending(
+                db, student_id=req.student_id, question_id=req.question_id
+            )
+        except Exception:  # noqa: BLE001 — 只为记录取题面，取不到不影响上报
+            pending_snapshot = None
     try:
         r = await tool_report_result(
             db,
@@ -1351,6 +1417,21 @@ async def mcp_report_result(
             model_id=req.model_id,
         )
         await db.commit()
+        from services.question_record_service import record_question
+
+        await record_question(
+            student_id=req.student_id,
+            source="mcp",
+            question_text=(pending_snapshot or {}).get("prompt"),
+            kc_ids=[req.kc_id],
+            question_ref=req.question_id,
+            correct_answer=(pending_snapshot or {}).get("expected") or None,
+            is_correct=req.is_correct,
+            grader="llm" if "llm" in (req.verdict_source or "") else "rule",
+            duration_ms=req.response_time_ms,
+            auto_wrong_book=bool((pending_snapshot or {}).get("prompt")),
+            meta={"verdict_source": req.verdict_source, "reported": True},
+        )
         return r
     except GuardRejection as e:
         await db.rollback()

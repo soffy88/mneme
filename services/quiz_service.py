@@ -174,6 +174,7 @@ async def submit_quiz(
     from services.cognitive_service import process_interaction
 
     results: list[dict] = []
+    to_record: list[dict] = []
     correct_count = 0
     for it in items:
         qid = it["question_id"]
@@ -200,6 +201,17 @@ async def submit_quiz(
                 correct_count += 1
 
         results.append({"ku_id": kc_id, "question_id": qid, "verdict": verdict})
+        to_record.append(
+            {
+                "question_text": (wq.question_text if wq else None) or it.get("question_text"),
+                "subject": wq.subject if wq else None,
+                "kc_id": kc_id,
+                "question_ref": qid,
+                "student_answer": student_answer,
+                "correct_answer": correct_answer or None,
+                "is_correct": None if verdict == "unsure" else verdict == "correct",
+            }
+        )
 
     score = round(correct_count / len(items), 4) if items else 0.0
     now = datetime.now(timezone.utc)
@@ -208,6 +220,26 @@ async def submit_quiz(
     quiz.score = score
     quiz.results = results
     await db.commit()
+
+    # 统一做题记录（旁路：独立会话，失败不影响交卷）；答错的题自动入错题本
+    from services.question_record_service import record_question
+
+    for rec in to_record:
+        await record_question(
+            student_id=student_id,
+            source="quiz",
+            question_text=rec["question_text"],
+            subject=rec["subject"],
+            kc_ids=[rec["kc_id"]],
+            question_ref=rec["question_ref"],
+            student_answer=rec["student_answer"],
+            correct_answer=rec["correct_answer"],
+            is_correct=rec["is_correct"],
+            grader="rule" if rec["is_correct"] is not None else None,
+            duration_ms=per_item_seconds * 1000 if per_item_seconds else None,
+            auto_wrong_book=True,
+            meta={"quiz_id": str(quiz_id)},
+        )
 
     failed_kcs = [r["ku_id"] for r in results if r["verdict"] == "wrong"]
 

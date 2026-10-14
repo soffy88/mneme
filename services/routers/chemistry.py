@@ -28,6 +28,17 @@ async def balance_chemical_equation(
         solution = await balance(spec)
     except EduKernelError as exc:
         raise HTTPException(status_code=422, detail=str(exc)) from exc
+    from services.question_record_service import record_question
+
+    await record_question(
+        student_id=getattr(current_user, "id", None),
+        source="solver",
+        subject="chemistry",
+        question_text="配平：" + " + ".join(spec.reactants) + " = " + " + ".join(spec.products),
+        correct_answer=str(solution.get("equation_text") or "") or None,
+        grader="kernel",
+        meta={"tool": "chemistry.balance", "fingerprint": solution.get("fingerprint")},
+    )
     return {
         k: solution[k]
         for k in (

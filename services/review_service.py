@@ -357,6 +357,19 @@ async def _original_answer_for_kc(
     return (wq.correct_answer if wq else "") or ""
 
 
+async def _kc_review_label(db: AsyncSession, kc_id: str) -> str:
+    """做题记录里 KC 变式复习的题面占位：变式题干不落库，记「知识点复习：<KC 名>」。"""
+    try:
+        from services.models import KnowledgeUnit
+
+        name = (
+            await db.execute(select(KnowledgeUnit.name).where(KnowledgeUnit.id == kc_id))
+        ).scalar_one_or_none()
+    except Exception:  # noqa: BLE001
+        name = None
+    return f"知识点复习：{name or kc_id}"
+
+
 async def reveal_review_answer(
     db: AsyncSession, student_id: uuid.UUID, kc_id: str
 ) -> dict:
@@ -381,6 +394,20 @@ async def reveal_review_answer(
         tutor_mode=("independent_transfer" if source == "transfer_probe" else None),
         ai_assisted=(False if source == "transfer_probe" else None),
         independent_mode=(True if source == "transfer_probe" else None),
+    )
+    from services.question_record_service import record_question
+
+    await record_question(
+        student_id=student_id,
+        source="kc_review",
+        question_text=await _kc_review_label(db, kc_id),
+        kc_ids=[kc_id],
+        question_ref=kc_id,
+        student_answer=None,
+        correct_answer=answer or None,
+        is_correct=False,
+        grader="rule",
+        meta={"revealed": True},
     )
     return {"ku_id": kc_id, "answer": answer, "recorded_again": True}
 
@@ -410,4 +437,17 @@ async def submit_review_answer(
             ai_assisted=(False if source == "transfer_probe" else None),
             independent_mode=(True if source == "transfer_probe" else None),
         )
+    from services.question_record_service import record_question
+
+    await record_question(
+        student_id=student_id,
+        source="kc_review",
+        question_text=await _kc_review_label(db, kc_id),
+        kc_ids=[kc_id],
+        question_ref=kc_id,
+        student_answer=student_answer,
+        correct_answer=answer or None,
+        is_correct=None if verdict == "unsure" else verdict == "correct",
+        grader=None if verdict == "unsure" else "rule",
+    )
     return {"ku_id": kc_id, "verdict": verdict, "answer": answer}

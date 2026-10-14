@@ -88,6 +88,9 @@ _STUDENT_TABLES: list[tuple[str, str]] = [
     # 题目收藏（/v2/practice/bookmarks）：学生自有，FC-2：新表同 PR 入清单。
     # 只存 wrong_question_id 值（无 FK），与 wrong_questions 删除顺序无关。
     ("question_bookmarks", "student_id"),
+    # 统一做题记录（question_records）：学生自有，FC-2：新表同 PR 入清单。
+    # wrong_question_id 只存值（无 FK），与 wrong_questions 删除顺序无关。
+    ("question_records", "student_id"),
     # socratic_sessions 先于 wrong_questions（其 question_id 指向 wrong_questions.id）
     ("socratic_sessions", "student_id"),
     # wrong_questions 先于 papers（其 paper_id 指向 papers.id）
@@ -182,6 +185,7 @@ async def purge_deleted_users(
     # 但删行发生在循环里，blob 清理紧随其后即可。
     await _collect_textbook_storage_paths(db, id_strs)
     await _collect_media_storage_refs(db, id_strs)
+    await _collect_question_image_keys(db, id_strs)
 
     # memory_claim_evidence has no student_id of its own.  Remove its edges
     # before the student-scoped claim/evidence rows (and before users), even
@@ -253,6 +257,7 @@ async def purge_deleted_users(
     # delete_media_file.
     failed_blobs = await _delete_textbook_files_blobs()
     failed_blobs.extend(await _delete_media_files_blobs())
+    failed_blobs.extend(await _delete_question_image_blobs())
     if failed_blobs:
         raise PurgeStorageCleanupError(failed_blobs)
 
@@ -437,6 +442,7 @@ async def request_delete_and_purge_now(db: AsyncSession, student_id: uuid.UUID) 
 # media），不留孤儿对象。MinIO 故障不阻断 PII 物理删除（合规优先，blob 由巡检兜底）。
 _collected_storage_paths: list[str] = []
 _collected_media_storage_refs: list[str] = []
+_collected_question_image_keys: list[str] = []
 
 
 async def _collect_textbook_storage_paths(db: AsyncSession, id_strs: list[str]) -> None:
@@ -520,6 +526,59 @@ async def _delete_textbook_files_blobs() -> list[str]:
     except Exception:  # noqa: BLE001 — best-effort，MinIO 整体不可达不阻断 DB 删除
         logger.warning("MinIO 不可达，blob 清理跳过（DB 删除已优先完成）")
         failed.extend(paths)
+    return failed
+
+
+async def _collect_question_image_keys(db: AsyncSession, id_strs: list[str]) -> None:
+    """删行前收集该学生拍照提问/错题图片的对象键（私有桶 question-images）。"""
+    global _collected_question_image_keys
+    keys: set[str] = set()
+    for table in ("question_records", "wrong_questions"):
+        if not await _table_exists(db, table):
+            continue
+        has_col = (
+            await db.execute(
+                text(
+                    "SELECT 1 FROM information_schema.columns "
+                    "WHERE table_name = :t AND column_name = 'image_key'"
+                ),
+                {"t": table},
+            )
+        ).first()
+        if not has_col:  # 列尚未迁移的旧库：无图可清
+            continue
+        rows = (
+            await db.execute(
+                text(
+                    f"SELECT image_key FROM {table} "
+                    "WHERE student_id = ANY(:ids) AND image_key IS NOT NULL"
+                ),
+                {"ids": id_strs},
+            )
+        ).all()
+        keys.update(r[0] for r in rows if r[0])
+    _collected_question_image_keys = sorted(keys)
+
+
+async def _delete_question_image_blobs() -> list[str]:
+    """Delete collected question-image object keys from the private bucket."""
+    global _collected_question_image_keys
+    keys, _collected_question_image_keys = _collected_question_image_keys, []
+    if not keys:
+        return []
+    failed: list[str] = []
+    try:
+        from services.storage import delete_question_image
+
+        for key in keys:
+            try:
+                await asyncio.to_thread(delete_question_image, key)
+            except Exception:  # noqa: BLE001 — 记录失败并继续清理其余对象
+                logger.warning("question image blob 删除失败（留待巡检兜底）")
+                failed.append(key)
+    except Exception:  # noqa: BLE001 — MinIO 整体不可达
+        logger.warning("MinIO 不可达，question image blob 清理跳过")
+        failed.extend(keys)
     return failed
 
 

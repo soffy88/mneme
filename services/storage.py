@@ -139,3 +139,46 @@ def presign_media_get_url(object_path: str, expires_seconds: int = 3600) -> str:
         object_path,
         expires=timedelta(seconds=expires_seconds),
     )
+
+
+# ── 拍照问题目 / 错题图片：私有桶（儿童数据，不出签名 URL，只经鉴权 API 回传字节）──
+QUESTION_IMAGE_BUCKET = "question-images"
+
+
+def ensure_question_image_bucket() -> None:
+    c = _client()
+    if not c.bucket_exists(QUESTION_IMAGE_BUCKET):
+        c.make_bucket(QUESTION_IMAGE_BUCKET)  # 新桶默认私有（无匿名策略）
+
+
+def upload_question_image(object_path: str, data: bytes, content_type: str) -> None:
+    ensure_question_image_bucket()
+    _client().put_object(
+        QUESTION_IMAGE_BUCKET,
+        object_path,
+        io.BytesIO(data),
+        length=len(data),
+        content_type=content_type,
+    )
+
+
+def download_question_image(object_path: str) -> bytes:
+    try:
+        resp = _client().get_object(QUESTION_IMAGE_BUCKET, object_path)
+        try:
+            return resp.read()
+        finally:
+            resp.close()
+            resp.release_conn()
+    except S3Error as e:
+        raise FileNotFoundError("question image not found") from e
+
+
+def delete_question_image(object_path: str) -> None:
+    """删除题目图片；对象不存在视为成功（幂等）。"""
+    try:
+        _client().remove_object(QUESTION_IMAGE_BUCKET, object_path)
+    except S3Error as e:
+        if e.code == "NoSuchKey":
+            return
+        raise

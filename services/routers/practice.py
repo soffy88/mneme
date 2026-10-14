@@ -418,6 +418,7 @@ async def post_practice_submit(
         bank_q.correct_answer or ""
     )  # 先取出，避免 commit 后对象过期触发懒加载(MissingGreenlet)
     bank_subject = bank_q.subject or ""  # 同上，误解诊断要用，先取
+    bank_text = bank_q.question_text or ""  # 做题记录用，commit 前先取
 
     # 2. 自动判分（选择题/短答确定性判对错；自由作答判 unsure → 交学生对照答案自评）
     from oprim.answer_judge import judge_answer
@@ -493,6 +494,23 @@ async def post_practice_submit(
         await db.flush()
     await db.commit()
 
+    # 统一做题记录（旁路：独立会话，失败不影响提交结果）
+    from services.question_record_service import record_question
+
+    await record_question(
+        student_id=body.student_id,
+        source="practice",
+        question_text=bank_text,
+        subject=bank_subject or None,
+        kc_ids=[body.ku_id],
+        question_ref=str(body.question_id),
+        student_answer=body.student_answer,
+        correct_answer=correct_ans or None,
+        is_correct=is_correct,
+        grader="rule" if auto_judged else "self",
+        wrong_question_id=student_wq_id,
+    )
+
     # 刻意练习细颗粒反馈（教育理念 07）：答错且带步骤时，确定性定位首个错步（非整题重来）
     # U.24 教学机制 feature-flag（PEDAGOGY_FINE_FEEDBACK_ENABLED=0 急停）
 
@@ -567,6 +585,15 @@ async def post_instant_solve(
         result = await handle_instant_solve(
             student_id=current_user.id, image_b64=image_b64, kc_hint=kc_hint
         )
+        from services.question_record_service import record_question
+
+        await record_question(
+            student_id=current_user.id,
+            source="solver",
+            question_text=result.get("recognized_text") or None,
+            kc_ids=[kc_hint] if kc_hint else None,
+            meta={"tool": "instant_solve"},
+        )
         return result
     except Exception as e:
         # 不把内部异常原文回给客户端（可能泄露栈/连接串/内核细节），只记服务端日志。
@@ -591,6 +618,14 @@ async def post_deep_solve(
 
     try:
         result = await handle_deep_solve(req.problem_text)
+        from services.question_record_service import record_question
+
+        await record_question(
+            student_id=current_user.id,
+            source="solver",
+            question_text=req.problem_text,
+            meta={"tool": "deep_solve"},
+        )
         return {"ok": True, "data": result}
     except Exception as e:
         logger.error("deep-solve failed for %s: %s", current_user.id, e)
