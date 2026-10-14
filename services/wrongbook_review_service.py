@@ -486,7 +486,13 @@ def _explanation(wq: WrongQuestion) -> Optional[str]:
 
 
 async def finish_session(
-    db: AsyncSession, student_id: uuid.UUID, *, answered: int, correct: int, now: Optional[datetime] = None
+    db: AsyncSession,
+    student_id: uuid.UUID,
+    *,
+    answered: int,
+    correct: int,
+    duration_seconds: Optional[int] = None,
+    now: Optional[datetime] = None,
 ) -> dict:
     from zoneinfo import ZoneInfo
 
@@ -526,16 +532,26 @@ async def finish_session(
             .where(
                 WrongQuestion.student_id == student_id,
                 WrongQuestion.graduated_at.is_(None),
+                WrongQuestion.question_text.isnot(None),
                 WrongQuestion.fsrs_due > now,
             )
             .order_by(WrongQuestion.fsrs_due.asc())
             .limit(1)
         )
     ).scalar_one_or_none()
+    # 下次复习：还有到期没做完的 → now；否则取最早的未来到期时间，按北京时间给出 today/tomorrow/date
+    tz = ZoneInfo("Asia/Shanghai")
+    if remaining:
+        next_kind: Optional[str] = "now"
+    elif nxt is not None:
+        d = (nxt if nxt.tzinfo else nxt.replace(tzinfo=timezone.utc)).astimezone(tz).date()
+        next_kind = "today" if d == today else ("tomorrow" if d == today + timedelta(days=1) else "later")
+    else:
+        next_kind = None
     if answered <= 0:
         msg = "今天还没开始复习哦，花 10 分钟把错题过一遍吧。"
     elif correct == answered:
-        msg = f"全对！{answered} 道错题都拿下了，明天继续保持 💪"
+        msg = f"太棒了，本次 {answered} 道全做对！这些错题你已经掌握得越来越牢了 🎉"
     elif correct * 2 >= answered:
         msg = f"做对了 {correct}/{answered} 道，做错的题会更早再出现，帮你记牢。"
     else:
@@ -545,6 +561,10 @@ async def finish_session(
         "longest_streak": st["longest_streak"],
         "remaining_due": len(remaining),
         "next_due_at": nxt.isoformat() if nxt else None,
+        "next_due_kind": next_kind,
+        "session_answered": answered,
+        "session_correct": correct,
+        "session_minutes": round(duration_seconds / 60, 1) if duration_seconds is not None else None,
         "due_tomorrow": int(due_tomorrow or 0),
         "today_answered": tstats["answered"],
         "today_correct": tstats["correct"],

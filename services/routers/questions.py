@@ -500,5 +500,9 @@ async def post_review_today_finish(
     from services.wrongbook_review_service import finish_session
 
     return await finish_session(
-        db, current_user.id, answered=body.answered, correct=min(body.correct, body.answered)
+        db,
+        current_user.id,
+        answered=body.answered,
+        correct=min(body.correct, body.answered),
+        duration_seconds=body.duration_seconds,
     )

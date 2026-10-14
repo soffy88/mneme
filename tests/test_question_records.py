@@ -349,6 +349,12 @@ async def test_review_today_session_answer_finish(students):
 
         fin = await c.post("/v1/review/today/finish", json={"session_id": sess["session_id"], "answered": 2, "correct": 1, "duration_seconds": 300}, headers=_h(a))
         assert fin.status_code == 200 and fin.json()["streak"] == 1 and fin.json()["message"]
+        fj = fin.json()
+        assert fj["session_answered"] == 2 and fj["session_correct"] == 1 and fj["session_minutes"] == 5.0
+        assert fj["next_due_kind"] in ("now", "today", "tomorrow", "later", None)
+        if fj["next_due_kind"] != "now" and fj["next_due_at"]:
+            from datetime import datetime as _dt
+            assert _dt.fromisoformat(fj["next_due_at"]) > now
 
     recs = await _records(a, "review")
     assert recs and recs[0].wrong_question_id == due_id and recs[0].is_correct is True and recs[0].grader == "kernel"

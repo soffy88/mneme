@@ -10,7 +10,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { OButton, OCard, OCardHeader, OCardTitle, OEmptyState, OProgressBar } from "@helios/blocks";
 import { ProductNav } from "@/components/ProductNav";
-import { formatWhen, subjectLabel } from "@/lib/format";
+import { subjectLabel } from "@/lib/format";
 import { MathText } from "@/components/MathText";
 import { MathKeyboard } from "@/components/ask/MathKeyboard";
 import { getToken, redirectToLogin } from "@/lib/mcp";
@@ -26,6 +26,26 @@ function mmss(total: number): string {
   const m = Math.floor(s / 60);
   const sec = s % 60;
   return `${String(m).padStart(2, "0")}:${String(sec).padStart(2, "0")}`;
+}
+
+/** 下次复习文案：只用未来的到期时间；还有到期题 → 现在就可以再复习。 */
+function nextDueLabel(f: ReviewFinishResult | null): string | null {
+  if (!f) return null;
+  if (f.next_due_kind === "now" || (f.next_due_kind == null && f.remaining_due > 0)) return "现在就可以再复习";
+  if (!f.next_due_at) return null;
+  const due = new Date(f.next_due_at);
+  if (Number.isNaN(due.getTime())) return null;
+  if (due.getTime() <= Date.now()) return "现在就可以再复习";
+  const fmt = (d: Date) => d.toLocaleDateString("zh-CN", { timeZone: "Asia/Shanghai" });
+  const now = new Date();
+  const tomorrow = new Date(now.getTime() + 86400000);
+  if (fmt(due) === fmt(now)) {
+    const hm = due.toLocaleTimeString("zh-CN", { timeZone: "Asia/Shanghai", hour: "2-digit", minute: "2-digit", hour12: false });
+    return `下次复习：今天 ${hm} 以后`;
+  }
+  if (fmt(due) === fmt(tomorrow)) return "下次复习：明天";
+  const md = due.toLocaleDateString("zh-CN", { timeZone: "Asia/Shanghai", month: "long", day: "numeric" });
+  return `下次复习：${md}`;
 }
 
 /** 带 token 取题目图片 → object URL（token 绝不进 URL）。 */
@@ -200,6 +220,12 @@ export default function ReviewPage() {
   const needsSelf = !!result?.needs_self_grade;
   const answeredDone = !!result && !result.needs_self_grade;
   const timeUp = remaining <= 0;
+
+  const sessAnswered = finished?.session_answered ?? answered;
+  const sessCorrect = finished?.session_correct ?? correct;
+  const sessMinutes = finished?.session_minutes ?? (phase === "finish" ? Math.round((Date.now() - sessionStartRef.current) / 6000) / 10 : 0);
+  const sessMinutesText = sessMinutes < 1 ? "不到 1 分钟" : `${Math.round(sessMinutes)} 分钟`;
+  const nextDueText = nextDueLabel(finished);
 
   return (
     <main className="mx-auto max-w-xl p-4 space-y-4" data-testid="review-root">
@@ -474,18 +500,25 @@ export default function ReviewPage() {
             <div className="text-2xl font-bold">
               连续 {finished?.streak ?? today?.streak ?? 0} 天 🔥
             </div>
-            <div className="text-xl font-bold" data-testid="review-finish-summary">
-              <span className="inline-block whitespace-nowrap">今天复习 {finished?.today_minutes ?? Math.round((Date.now() - sessionStartRef.current) / 60000)} 分钟</span>{" · "}<span className="inline-block whitespace-nowrap">{finished?.today_answered ?? answered} 题</span>{" · "}<span className="inline-block whitespace-nowrap">正确率 {Math.round((finished?.today_accuracy ?? ((finished?.today_answered ?? answered) > 0 ? (finished?.today_correct ?? correct) / (finished?.today_answered ?? answered) : 0)) * 100)}%</span>
+            <div className="space-y-1" data-testid="review-finish-summary">
+              <div className="text-xl font-bold">
+                <span className="inline-block whitespace-nowrap">本次：{sessAnswered} 题</span>{" · "}<span className="inline-block whitespace-nowrap">做对 {sessCorrect} 题</span>{" · "}<span className="inline-block whitespace-nowrap">用时 {sessMinutesText}</span>
+              </div>
+              {finished?.today_answered != null && finished.today_answered > 0 && (
+                <div className="text-sm text-[var(--muted-foreground,#888)]" data-testid="review-finish-today">
+                  今天累计 {finished.today_answered} 题{finished.today_accuracy != null ? ` · 正确率 ${Math.round(finished.today_accuracy * 100)}%` : ""}
+                </div>
+              )}
             </div>
             {finished?.message && <div className="text-base">{finished.message}</div>}
-            {finished && (
+            {finished && (finished.due_tomorrow ?? 0) > 0 && (
               <div className="text-base text-[var(--muted-foreground,#888)]">
-                明天要复习 {finished.due_tomorrow ?? 0} 题
+                明天要复习 {finished.due_tomorrow} 题
               </div>
             )}
-            {finished?.next_due_at && (
+            {nextDueText && (
               <div className="text-base text-[var(--muted-foreground,#888)]" data-testid="review-next-due">
-                下次复习：{formatWhen(finished.next_due_at)}
+                {nextDueText}
               </div>
             )}
             <div className="flex flex-col gap-2">

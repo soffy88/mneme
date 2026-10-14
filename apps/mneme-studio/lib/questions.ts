@@ -228,6 +228,12 @@ export interface ReviewFinishResult {
   today_correct?: number | null;
   today_accuracy?: number | null;
   due_tomorrow?: number | null;
+  /** 本次会话（服务端回显）。 */
+  session_answered?: number | null;
+  session_correct?: number | null;
+  session_minutes?: number | null;
+  /** now=还有到期题可马上复习；today/tomorrow/later=最早未来到期日（北京时间）。 */
+  next_due_kind?: "now" | "today" | "tomorrow" | "later" | null;
 }
 
 export type HistoryResult = "correct" | "wrong" | "unknown";
