@@ -1,0 +1,52 @@
+    table_name    |  cnt  
+------------------+-------
+ textbooks        |    44
+ reading_passages |  1063
+ question_records | 14307
+ knowledge_units  |  1028
+(4 rows)
+
+          sample          
+--------------------------
+ --- Sample Textbooks ---
+(1 row)
+
+           id           | book_name  
+------------------------+------------
+ ctsf-math-62c5fae15149 | 二年级下册
+ ctsf-math-7ad61b07869e | 一年级下册
+(2 rows)
+
+             sample             
+--------------------------------
+ --- Sample Knowledge Units ---
+(1 row)
+
+              id               |       name       
+-------------------------------+------------------
+ ctsf-math-f5e5a4933667-u9-kp2 | 几何图形组合复习
+ ctsf-math-62c5fae15149-u1-kp1 | 收集数据的方法
+(2 rows)
+
+             sample              
+---------------------------------
+ --- Sample Question Records ---
+(1 row)
+
+                  id                  |                      left                      
+--------------------------------------+------------------------------------------------
+ 948d4fd1-d4e9-54ac-b8f3-04f2308fee05 | $25 + 137 + 75 = 137 + (25 + 75)$ 只运用了加法
+ f51aef72-b19e-54df-af61-b81b75b89619 | $a \times (b + c) = a \times b + a \time
+(2 rows)
+
+             sample              
+---------------------------------
+ --- Sample Reading Passages ---
+(1 row)
+
+         id         |   left   
+--------------------+----------
+ ctsf-p-6b1dfdfa-12 | 开国大典
+ ctsf-p-6b1dfdfa-13 | 灯光
+(2 rows)
+

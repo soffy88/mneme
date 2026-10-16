@@ -58,3 +58,4 @@ data/ku_verification_report.json
 .veya-project/
 # 活书编译 trail/report（services/book_compile_service.output_root）
 data/book_compile/
+upstream/
