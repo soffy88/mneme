@@ -59,3 +59,7 @@ data/ku_verification_report.json
 # 活书编译 trail/report（services/book_compile_service.output_root）
 data/book_compile/
 upstream/
+pi_ctsf3.*
+pi_loop_ctsf3.log
+verify_ctsf.out
+brief.md
