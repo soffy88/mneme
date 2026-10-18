@@ -1470,6 +1470,9 @@ class VocabularyCollection(Base):
     source_relative_path: Mapped[Optional[str]] = mapped_column(String(500), nullable=True)
     source_file_sha256: Mapped[Optional[str]] = mapped_column(String(64), nullable=True)
     metadata_json: Mapped[Optional[dict]] = mapped_column(JSONB, nullable=True)
+    # 来源许可与地址（如 lilinji/English：CC BY-NC-SA 4.0）。见 alembic vlc1a2b3c4d5。
+    license: Mapped[Optional[str]] = mapped_column(String(100), nullable=True)
+    source_url: Mapped[Optional[str]] = mapped_column(String(500), nullable=True)
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=text("now()"))
     updated_at: Mapped[Optional[datetime]] = mapped_column(DateTime(timezone=True), onupdate=text("now()"))
 
@@ -1830,6 +1833,8 @@ class VocabularyImportBatch(Base):
 
     status: Mapped[str] = mapped_column(String(20), nullable=False) # DRY_RUN / SUCCESS / FAILED / ROLLED_BACK
     report_path: Mapped[Optional[str]] = mapped_column(String(500), nullable=True)
+    license: Mapped[Optional[str]] = mapped_column(String(100), nullable=True)
+    source_url: Mapped[Optional[str]] = mapped_column(String(500), nullable=True)
 
 
 # ===== 通用课程内容链（Course → Book → Lesson → TimedSentence）=====
