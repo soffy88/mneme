@@ -4,7 +4,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select
 from services.models import KnowledgeUnit
 
-DATA_DIR = "/tmp/cn-math-taxonomy/data"
+DATA_DIR = os.getenv("CN_MATH_DATA_DIR", os.path.join(os.path.dirname(os.path.dirname(__file__)), "data", "cn_math_taxonomy"))
 
 async def import_cn_math_taxonomy(db: AsyncSession) -> dict:
     topics_path = os.path.join(DATA_DIR, "topics.json")
