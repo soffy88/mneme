@@ -6,10 +6,11 @@ from services.cn_math_importer import import_cn_math_taxonomy
 
 @pytest.mark.asyncio
 async def test_cn_math_importer():
-    # Verify files exist in /tmp/cn-math-taxonomy/data
-    assert os.path.exists("/tmp/cn-math-taxonomy/data/topics.json")
-    assert os.path.exists("/tmp/cn-math-taxonomy/data/dependencies.json")
-    assert os.path.exists("/tmp/cn-math-taxonomy/data/questions.json")
+    data_dir = os.getenv("CN_MATH_DATA_DIR", os.path.join(os.path.dirname(os.path.dirname(__file__)), "data", "cn_math_taxonomy"))
+    # Verify files exist in data dir
+    assert os.path.exists(os.path.join(data_dir, "topics.json"))
+    assert os.path.exists(os.path.join(data_dir, "dependencies.json"))
+    assert os.path.exists(os.path.join(data_dir, "questions.json"))
 
     # Mock async session
     mock_db = AsyncMock()
