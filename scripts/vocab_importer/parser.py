@@ -1,10 +1,14 @@
-from openpyxl import load_workbook
 import warnings
 from typing import Generator
 from .models import ParsedVocabularyEntry
 
 def parse_workbook(filepath: str, schema: str) -> Generator[ParsedVocabularyEntry, None, None]:
     warnings.simplefilter("ignore")
+    try:
+        from openpyxl import load_workbook
+    except ImportError as exc:
+        raise RuntimeError("XLSX parsing requires the optional openpyxl package") from exc
+
     wb = load_workbook(filepath, read_only=True, data_only=True)
     ws = wb.active
     
@@ -57,4 +61,3 @@ def parse_workbook(filepath: str, schema: str) -> Generator[ParsedVocabularyEntr
             order += 1
             
         row_idx += 1
-

@@ -27,8 +27,13 @@ async def test_learning_metrics_shape():
         "transfer_rate",
     ):
         assert k in m
-    # 迁移探针题池已建（U.18），但本次聚合口径下暂无 transfer_probe 事件 → None + 说明
-    assert m["transfer_rate"] is None and "转移" not in m  # 有 note
+    # This is a cohort aggregate. A persisted transfer-probe event is valid
+    # input; assert the value/count contract rather than assuming an empty DB.
+    rate = m["transfer_rate"]
+    if m["transfer_rate_n"] == 0:
+        assert rate is None
+    else:
+        assert rate is not None and 0.0 <= rate <= 1.0
     assert "transfer_note" in m
     # 数值型或 None（不编数）
     for k in ("mastery_speed", "delayed_retention", "calibration_overconfidence"):

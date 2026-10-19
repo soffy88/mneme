@@ -104,6 +104,10 @@ async def review_completion_rate(
     for sid, kc, card in cards:
         if (sid, kc) in completed_pairs:
             continue
+        # JSONB `null` is SQL-non-null but is decoded as Python None. Treat it
+        # like an absent card instead of crashing the cohort endpoint.
+        if not isinstance(card, dict):
+            continue
         if _parse_card_ts(card.get("last_review")) is None:
             continue  # 从未复习过的新卡不算复习欠账（由新学路径处理）
         due = _parse_card_ts(card.get("due"))

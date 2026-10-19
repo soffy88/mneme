@@ -47,6 +47,9 @@ async def db_wq_with_answer():
         await db.execute(delete(MasterySnapshot).where(MasterySnapshot.student_id == student_id))
         await db.execute(delete(KCMastery).where(KCMastery.student_id == student_id))
         await db.execute(delete(WrongQuestion).where(WrongQuestion.id == wq_id))
+        from .db_test_helpers import cleanup_learning_events
+
+        await cleanup_learning_events(db, student_id)
         await db.execute(delete(User).where(User.id == student_id))
         await db.commit()
     await engine.dispose()

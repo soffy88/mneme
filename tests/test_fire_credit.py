@@ -165,6 +165,9 @@ async def fire_env():
             delete(KnowledgeCluster).where(KnowledgeCluster.textbook_id == tb_id)
         )
         await db.execute(delete(Textbook).where(Textbook.id == tb_id))
+        from .db_test_helpers import cleanup_learning_events
+
+        await cleanup_learning_events(db, student_id)
         await db.execute(delete(User).where(User.id == student_id))
         await db.commit()
     await engine.dispose()

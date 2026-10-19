@@ -68,6 +68,9 @@ async def test_student(db_session):
     await db_session.execute(
         delete(KCMastery).where(KCMastery.student_id == student_id)
     )
+    from .db_test_helpers import cleanup_learning_events
+
+    await cleanup_learning_events(db_session, student_id)
     await db_session.execute(delete(User).where(User.id == student_id))
     await db_session.commit()
 

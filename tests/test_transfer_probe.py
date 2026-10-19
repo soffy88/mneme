@@ -32,7 +32,7 @@ from services.transfer_probe_service import (
 )
 from services.review_service import get_due_variants, submit_review_answer
 
-KU = "test-transfer-ku"
+KU = f"test-transfer-ku-{uuid.uuid4().hex}"
 
 
 @pytest.fixture()
@@ -55,6 +55,9 @@ async def db_student():
         )
         await db.execute(delete(KCMastery).where(KCMastery.student_id == sid))
         await db.execute(delete(WrongQuestion).where(WrongQuestion.student_id == sid))
+        from .db_test_helpers import cleanup_learning_events
+
+        await cleanup_learning_events(db, sid)
         await db.execute(delete(User).where(User.id == sid))
         await db.commit()
     await engine.dispose()

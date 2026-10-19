@@ -14,7 +14,7 @@ from unittest.mock import patch
 
 import pytest
 from httpx import ASGITransport, AsyncClient
-from sqlalchemy import delete, select
+from sqlalchemy import delete, select, text
 from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_async_engine
 from sqlalchemy.pool import NullPool
 
@@ -68,6 +68,9 @@ async def _cleanup_students(db: AsyncSession, sids: list[uuid.UUID]) -> None:
     )
     await db.execute(delete(KCMastery).where(KCMastery.student_id.in_(sids)))
     await db.execute(delete(WrongQuestion).where(WrongQuestion.student_id.in_(sids)))
+    from .db_test_helpers import cleanup_learning_events
+
+    await cleanup_learning_events(db, sids)
     await db.execute(delete(User).where(User.id.in_(sids)))
     await db.commit()
 
@@ -350,6 +353,28 @@ async def db_metrics():
                 p_guess=0.15,
                 p_slip=0.12,
             )
+        )
+        # JSONB null is distinct from SQL NULL and can be decoded as None.
+        # It must not make cohort-wide retention metrics crash.
+        db.add(
+            KCMastery(
+                student_id=_S3,
+                knowledge_point="T2-KC-JSON-NULL",
+                fsrs_card_json={"due": None},
+                p_mastery=0.2,
+                p_init=0.2,
+                p_transit=0.2,
+                p_guess=0.15,
+                p_slip=0.12,
+            )
+        )
+        await db.flush()
+        await db.execute(
+            text(
+                "UPDATE kc_mastery SET fsrs_card_json = 'null'::jsonb "
+                "WHERE student_id = :sid AND knowledge_point = :kc"
+            ),
+            {"sid": _S3, "kc": "T2-KC-JSON-NULL"},
         )
         # 探针校准
         for r, ok in ((0.9, True), (0.9, False), (0.6, True), (0.3, True)):

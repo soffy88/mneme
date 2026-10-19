@@ -160,45 +160,65 @@ async def _drive(db, sid) -> int:
 
 
 @pytest.mark.asyncio
-async def test_dod_full_loop_reaches_complete_all_mastered():
+async def test_dod_full_loop_reaches_complete_all_mastered(monkeypatch):
+    # This scenario exercises the external assess -> ReportResult path, not the
+    # server-side LLM verifier. The live container may have a real provider
+    # configured, whose verdict is non-deterministic; force the documented
+    # verifier-unavailable fallback so the test drives the intended path.
+    async def _verifier_unavailable(*args, **kwargs):
+        return None
+
+    monkeypatch.setattr(
+        "services.qualitative_verify.run_qualitative_verifier",
+        _verifier_unavailable,
+    )
     async with SessionLocal() as db:
         sid = uuid.uuid4()
         db.add(User(id=sid, phone=f"t{sid.hex[:10]}", role=UserRole.student))
         await db.flush()
+        # MCP write paths use independent sessions; make the fixture user
+        # visible to those sessions before driving the end-to-end flow.
+        await db.commit()
 
-        iters = await _drive(db, sid)
-        assert iters < MAX_ITERS
+        try:
+            iters = await _drive(db, sid)
+            assert iters < MAX_ITERS
 
-        # 三桩全 mastered
-        for kc in KC_IDS:
-            m = await tool_check_mastery(db, sid, kc)
-            assert m["is_mastered"] is True, (kc, m)
+            # 三桩全 mastered
+            for kc in KC_IDS:
+                m = await tool_check_mastery(db, sid, kc)
+                assert m["is_mastered"] is True, (kc, m)
 
-        # 真 DB 写入：量化桩 kc_mastery 建卡；定性桩 gate.qualitative_mastery
-        for kc in (PROC_KC, MEM_KC):
-            row = (
-                await db.execute(
-                    select(KCMastery).where(
-                        KCMastery.student_id == sid,
-                        KCMastery.knowledge_point == kc,
+            # 真 DB 写入：量化桩 kc_mastery 建卡；定性桩 gate.qualitative_mastery
+            for kc in (PROC_KC, MEM_KC):
+                row = (
+                    await db.execute(
+                        select(KCMastery).where(
+                            KCMastery.student_id == sid,
+                            KCMastery.knowledge_point == kc,
+                        )
                     )
-                )
-            ).scalar_one_or_none()
-            assert row is not None and row.p_mastery is not None
-        qmap = await gate_store.get_qualitative_mastery_map(db, sid)
-        assert qmap.get(CONCEPT_KC) is True
+                ).scalar_one_or_none()
+                assert row is not None and row.p_mastery is not None
+            qmap = await gate_store.get_qualitative_mastery_map(db, sid)
+            assert qmap.get(CONCEPT_KC) is True
 
-        # evidence 落库：定性桩的 llm_verified 裁决可查，且含回验过的 evidence_spans
-        ev_rows = (
-            await db.execute(
-                text(
-                    "SELECT verdict FROM gate.evidence "
-                    "WHERE student_id = CAST(:sid AS uuid) AND kc_id = :kc"
-                ),
-                {"sid": str(sid), "kc": CONCEPT_KC},
-            )
-        ).all()
-        assert ev_rows, "定性桩 evidence 未落 gate.evidence"
-        verdict = ev_rows[0][0]
-        spans = [s for d in verdict["dimensions"] for s in d["spans"]]
-        assert spans, "evidence 无 evidence_spans（锚定丢失）"
+            # evidence 落库：定性桩的 llm_verified 裁决可查，且含回验过的 evidence_spans
+            ev_rows = (
+                await db.execute(
+                    text(
+                        "SELECT verdict FROM gate.evidence "
+                        "WHERE student_id = CAST(:sid AS uuid) AND kc_id = :kc"
+                    ),
+                    {"sid": str(sid), "kc": CONCEPT_KC},
+                )
+            ).all()
+            assert ev_rows, "定性桩 evidence 未落 gate.evidence"
+            verdict = ev_rows[0][0]
+            spans = [s for d in verdict["dimensions"] for s in d["spans"]]
+            assert spans, "evidence 无 evidence_spans（锚定丢失）"
+        finally:
+            await db.rollback()
+            from .db_test_helpers import cleanup_test_student
+
+            await cleanup_test_student(db, sid)

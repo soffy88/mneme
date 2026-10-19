@@ -1,9 +1,13 @@
-from openpyxl import load_workbook
 import warnings
 
 def detect_schema(filepath: str):
     warnings.simplefilter("ignore")
     try:
+        # Keep identity/metadata imports usable in environments that do not
+        # install the optional spreadsheet parser. Workbook parsing still
+        # reports the missing dependency as a structured parse failure.
+        from openpyxl import load_workbook
+
         wb = load_workbook(filepath, read_only=True, data_only=True)
         ws = wb.active
         rows = list(ws.iter_rows(max_row=20, values_only=True))

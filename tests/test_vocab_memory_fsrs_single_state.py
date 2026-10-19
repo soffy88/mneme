@@ -94,6 +94,9 @@ async def enrolled_student(db_session: AsyncSession):
         text("DELETE FROM vocabulary_memory_nodes WHERE vocabulary_item_id = :v"), {"v": vid}
     )
     await db_session.execute(text("DELETE FROM vocabulary_items WHERE id = :v"), {"v": vid})
+    from .db_test_helpers import cleanup_learning_events
+
+    await cleanup_learning_events(db_session, sid)
     await db_session.execute(text("DELETE FROM users WHERE id = :s"), {"s": sid})
     await db_session.commit()
 

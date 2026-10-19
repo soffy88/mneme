@@ -200,7 +200,8 @@ def test_stable_uuid_identity():
 
 
 def test_get_vid_reuses_k12_namespace():
-    # Must equal the K12 importer's get_vid for the same normalized form.
+    # Importing the identity helper must not require the optional XLSX parser.
+    # Both importers use the same UUID namespace contract.
     from scripts.import_english_k12_vocab import get_vid as k12_get_vid
 
     assert get_vid("airport") == k12_get_vid("airport")
