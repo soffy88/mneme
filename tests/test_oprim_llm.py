@@ -1,14 +1,29 @@
 import pytest
 import base64
 from oprim.llm_oprims import ocr_paper, PaperOCRResult
-from obase.llm import register_mock_providers
+from obase.provider_registry import ProviderRegistry
+
+
+class _FakeVLM:
+    async def __call__(self, **kwargs):
+        return {"content": {"questions": []}, "raw_text": "Mock VLM Response"}
+
+
+class _FakeRegistry:
+    def __init__(self):
+        self._vlm = _FakeVLM()
+
+    def vlm(self):
+        return self._vlm
 
 @pytest.fixture(autouse=True)
-def setup_mock_llm():
-    try:
-        register_mock_providers()
-    except Exception:
-        pass  # 同一 pytest 进程已注册即可复用
+def setup_mock_llm(monkeypatch):
+    # Register the mock at the provider boundary this oprim actually uses.
+    # obase.llm's legacy mock registry does not replace services.providers.
+    registry = _FakeRegistry()
+    monkeypatch.setattr(
+        ProviderRegistry, "get", classmethod(lambda cls: registry)
+    )
 
 @pytest.mark.asyncio
 async def test_ocr_paper_mock():

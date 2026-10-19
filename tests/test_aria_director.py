@@ -16,8 +16,14 @@ from services.aria_director import (
 
 
 def _no_key(monkeypatch: pytest.MonkeyPatch) -> None:
+    # The API container may carry live provider credentials. Force the explicit
+    # mock backend so these fallback tests can never make a real network call.
+    monkeypatch.setenv("MNEME_LLM", "qwen")
+    monkeypatch.setenv("MNEME_ALLOW_MOCK_LLM", "1")
     monkeypatch.delenv("DASHSCOPE_API_KEY", raising=False)
     monkeypatch.delenv("QWEN_API_KEY", raising=False)
+    monkeypatch.delenv("DEEPSEEK_API_KEY", raising=False)
+    monkeypatch.delenv("INTERN_AI_API_KEY", raising=False)
 
 
 # ── 无 key → 启发式回落 ──────────────────────────────────────────────────────
@@ -34,6 +40,11 @@ async def test_direct_falls_back_to_heuristic_without_key(monkeypatch):
 
 @pytest.mark.asyncio
 async def test_direct_falls_back_with_key_invalid_placeholder(monkeypatch):
+    monkeypatch.setenv("MNEME_LLM", "qwen")
+    monkeypatch.setenv("MNEME_ALLOW_MOCK_LLM", "1")
+    monkeypatch.delenv("DASHSCOPE_API_KEY", raising=False)
+    monkeypatch.delenv("DEEPSEEK_API_KEY", raising=False)
+    monkeypatch.delenv("INTERN_AI_API_KEY", raising=False)
     monkeypatch.setenv("QWEN_API_KEY", "your_key_here")
     out = await direct(AriaDirectorInput(event="tick"))
     assert out.source == "heuristic"

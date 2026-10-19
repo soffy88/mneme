@@ -216,24 +216,31 @@ async def test_fit_gate_blocks_massed_logs(db, monkeypatch):
     """复习对够 min_reviews 但全是同日连答 → 不做 Powell 拟合。"""
     s, sids = db
     base = datetime(2026, 3, 1, tzinfo=timezone.utc)
-    for _ in range(20):
-        sid = uuid.uuid4()
-        sids.append(sid)
-        s.add(User(id=sid, phone=f"1{str(sid.int)[:10]}", role=UserRole.student))
-        await s.flush()
-        for hour, rating in [(0, 3), (2, 3), (4, 3)]:  # 同日 3 答 → 2 复习对但 0 间隔对
-            s.add(InteractionEvent(
-                student_id=sid, knowledge_point=KC, source=InteractionSource.quick,
-                is_correct=True, fsrs_rating=rating,
-                occurred_at=base + timedelta(hours=hour),
-            ))
+    sid = uuid.uuid4()
+    sids.append(sid)
+    s.add(User(id=sid, phone=f"1{str(sid.int)[:10]}", role=UserRole.student))
+    await s.flush()
+    # Thirty same-day review pairs meet min_reviews but produce no spaced
+    # reviews. Scope the replay to this student, not the shared test cohort.
+    for hour in range(31):
+        s.add(InteractionEvent(
+            student_id=sid, knowledge_point=KC, source=InteractionSource.quick,
+            is_correct=True, fsrs_rating=3,
+            occurred_at=base + timedelta(hours=hour),
+        ))
     await s.flush()
     called = []
     monkeypatch.setattr(
         "services.fsrs_optimize_service.fit_weights",
         lambda *a, **k: called.append(1) or (None, 0.0, 0.0),
     )
-    r = await fit_and_store_weights(s, cohort=COHORT, min_reviews=30, min_spaced_reviews=400)
+    r = await fit_and_store_weights(
+        s,
+        cohort=COHORT,
+        student_id=sid,
+        min_reviews=30,
+        min_spaced_reviews=400,
+    )
     assert r["stored"] is False
     assert r["reason"] == "insufficient_spaced_reviews"
     assert r["n_spaced_reviews"] == 0 and r["n_reviews"] >= 30

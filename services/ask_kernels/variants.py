@@ -108,8 +108,13 @@ def _clean_enough(new: KernelSolution, orig: KernelSolution) -> bool:
 
 
 def make_variant(text: str, seed: int, *, original: Optional[KernelSolution] = None, subject: Optional[str] = None,
-                 attempts: int = 40, budget_s: float = 1.5) -> Optional[dict[str, Any]]:
-    """同类变式题（确定性）。返回 {text, solution(dict), kernel}；做不出干净的变式返回 None。"""
+                 attempts: int = 40, budget_s: Optional[float] = None) -> Optional[dict[str, Any]]:
+    """同类变式题（确定性）。返回 {text, solution(dict), kernel}；做不出干净的变式返回 None。
+
+    ``budget_s`` 默认关闭：同一 (text, seed) 必须得到同一结果，不能因为机器负载
+    /覆盖率插桩导致“同一调用有时超时返回 None”。需要线上时延上限的调用方
+    （如错题复习）显式传 budget_s。
+    """
     base = text if not re.search(r"[０-９]", text) else basic_normalize(text)
     orig = original or solve_text(base, subject)
     if orig is None:
@@ -122,7 +127,7 @@ def make_variant(text: str, seed: int, *, original: Optional[KernelSolution] = N
 
     t0 = time.monotonic()
     for _ in range(attempts):
-        if time.monotonic() - t0 > budget_s:
+        if budget_s is not None and time.monotonic() - t0 > budget_s:
             break
         # 每次改 1~全部 个数字
         k = rng.randint(1, len(toks))
@@ -139,7 +144,11 @@ def make_variant(text: str, seed: int, *, original: Optional[KernelSolution] = N
         vt = "".join(out)
         if vt == base:
             continue
-        sol = solve_text(vt, subject, budget_s=1.5)
+        # A single candidate must not be silently dropped because of a transient
+        # CPU spike; the outer budget (when supplied) still bounds the call.
+        sol = solve_text(
+            vt, subject, budget_s=budget_s if budget_s is not None else 30.0
+        )
         if sol is None or sol.kernel != orig.kernel or not sol.verified or sol.answer_kind != orig.answer_kind:
             continue
         if not _clean_enough(sol, orig):

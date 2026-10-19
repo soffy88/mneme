@@ -66,7 +66,9 @@ async def test_calibration_moves_slip_and_sets_n(db):
     result = await calibrate_bkt_priors(s, min_warm=10)
     await s.commit()
 
-    assert result["calibrated_kcs"] == 1
+    # This is a cohort-wide operation. Other fixtures may have valid warm
+    # samples for other KCs in the persistent test database.
+    assert result["calibrated_kcs"] >= 1
     after = (await s.execute(select(BKTPrior).where(BKTPrior.knowledge_point == KC))).scalar_one()
     assert after.calibrated_from_n > 0                 # 飞轮真的写回了
     assert after.p_slip > slip_before                  # 高暖错误率 → slip 上调
@@ -103,8 +105,8 @@ async def test_calibration_updates_transit(db):
 async def test_insufficient_warm_samples_skipped(db):
     s, sids = db
     await _add_events(s, sids, students=1, attempts=3, warm_error_rate=0.5)  # 暖样本仅 2
-    result = await calibrate_bkt_priors(s, min_warm=15)
+    await calibrate_bkt_priors(s, min_warm=15)
     await s.commit()
-    assert result["calibrated_kcs"] == 0
     row = (await s.execute(select(BKTPrior).where(BKTPrior.knowledge_point == KC))).scalar_one()
     assert (row.calibrated_from_n or 0) == 0           # 样本不足不动先验
+    assert row.p_slip == pytest.approx(0.10)

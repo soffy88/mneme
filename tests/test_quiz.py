@@ -28,8 +28,9 @@ from services.models import (
 )
 from services.quiz_service import get_or_create_due_quiz, submit_quiz
 
-KU_A = "test-quiz-ku-a"
-KU_B = "test-quiz-ku-b"
+# These IDs must not collide with prior runs against the persistent test DB.
+KU_A = f"test-quiz-ku-a-{uuid.uuid4().hex}"
+KU_B = f"test-quiz-ku-b-{uuid.uuid4().hex}"
 
 
 def _fsrs_card(overdue_days: int) -> dict:
@@ -77,6 +78,9 @@ async def student(db: AsyncSession):
     await db.execute(delete(MasterySnapshot).where(MasterySnapshot.student_id == sid))
     await db.execute(delete(KCMastery).where(KCMastery.student_id == sid))
     await db.execute(delete(WrongQuestion).where(WrongQuestion.student_id == sid))
+    from .db_test_helpers import cleanup_learning_events
+
+    await cleanup_learning_events(db, sid)
     await db.execute(delete(User).where(User.id == sid))
     await db.commit()
 

@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import importlib.util
+import importlib
 import uuid
 from pathlib import Path
 
@@ -75,7 +76,8 @@ async def seeded():
 @pytest.mark.asyncio
 async def test_backfill_then_match_is_fill_only_and_idempotent(monkeypatch, seeded):
     tb, chunk_ids, ku_ids = seeded
-    monkeypatch.setattr("oprim.embed_chunks.embed_text_with_model", _fake_embed)
+    embed_chunks_module = importlib.import_module("oprim.embed_chunks")
+    monkeypatch.setattr(embed_chunks_module, "embed_text_with_model", _fake_embed)
 
     async with SessionLocal() as db:
         dry = await khb.backfill_embeddings(db, textbook_ids=[tb], dry_run=True)

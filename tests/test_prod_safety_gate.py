@@ -42,8 +42,10 @@ def test_prod_with_default_jwt_secret_and_mock_channels_refuses_to_start(monkeyp
 
     monkeypatch.setenv("MNEME_ENV", "production")
     monkeypatch.setattr(settings, "JWT_SECRET", "mneme-dev-secret-change-in-prod!")
-    monkeypatch.delenv("SMS_PROVIDER", raising=False)
-    monkeypatch.delenv("EMAIL_PROVIDER", raising=False)
+    monkeypatch.setenv("JWT_SECRET", "mneme-dev-secret-change-in-prod!")
+    monkeypatch.setenv("MNEME_ALLOW_MOCK_LLM", "0")
+    monkeypatch.setenv("SMS_PROVIDER", "mock")
+    monkeypatch.setenv("EMAIL_PROVIDER", "mock")
     monkeypatch.setenv("DATABASE_URL", "postgresql://prod-db/mneme")
     monkeypatch.setenv("REDIS_URL", "redis://prod-redis:6379/4")
     monkeypatch.setenv("MINIO_ENDPOINT", "https://prod-storage.example")
@@ -67,6 +69,9 @@ def test_prod_with_real_secret_and_aliyun_sms_starts_cleanly(monkeypatch):
     from obase.config import settings
 
     monkeypatch.setenv("MNEME_ENV", "production")
+    monkeypatch.setenv("MNEME_ALLOW_MOCK_LLM", "0")
+    monkeypatch.setenv("MNEME_LLM", "veya")
+    monkeypatch.setenv("VEYA_API_KEY", "test-only-valid-provider-key")
     monkeypatch.setattr(settings, "JWT_SECRET", "a-real-rotated-production-secret")
     monkeypatch.setenv("SMS_PROVIDER", "aliyun")
     monkeypatch.delenv("EMAIL_PROVIDER", raising=False)
@@ -89,6 +94,9 @@ def test_prod_with_real_secret_and_smtp_email_starts_cleanly(monkeypatch):
     from obase.config import settings
 
     monkeypatch.setenv("MNEME_ENV", "production")
+    monkeypatch.setenv("MNEME_ALLOW_MOCK_LLM", "0")
+    monkeypatch.setenv("MNEME_LLM", "veya")
+    monkeypatch.setenv("VEYA_API_KEY", "test-only-valid-provider-key")
     monkeypatch.setattr(settings, "JWT_SECRET", "a-real-rotated-production-secret")
     monkeypatch.setenv("SMS_PROVIDER", "mock")
     monkeypatch.setenv("EMAIL_PROVIDER", "smtp")
@@ -111,6 +119,7 @@ def test_prod_with_only_one_problem_still_refuses(monkeypatch):
     from obase.config import settings
 
     monkeypatch.setenv("MNEME_ENV", "production")
+    monkeypatch.setenv("MNEME_ALLOW_MOCK_LLM", "0")
     monkeypatch.setattr(settings, "JWT_SECRET", "a-real-rotated-production-secret")
     monkeypatch.setenv("SMS_PROVIDER", "mock")
     monkeypatch.setenv("EMAIL_PROVIDER", "mock")

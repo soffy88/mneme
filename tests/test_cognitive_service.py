@@ -49,6 +49,9 @@ async def db_with_student():
         await session.execute(delete(MasterySnapshot).where(MasterySnapshot.student_id == student_id))
         await session.execute(delete(InteractionEvent).where(InteractionEvent.student_id == student_id))
         await session.execute(delete(KCMastery).where(KCMastery.student_id == student_id))
+        from .db_test_helpers import cleanup_learning_events
+
+        await cleanup_learning_events(session, student_id)
         await session.execute(delete(User).where(User.id == student_id))
         await session.commit()
 

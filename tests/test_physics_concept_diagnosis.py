@@ -300,16 +300,29 @@ async def test_start_concept_diagnosis_unknown_ku(db, student):
 
 @pytest.mark.asyncio
 async def test_concept_diagnosis_start_api_never_leaks_misconception_option(
-    db, student, physics_kus
+    db, student, physics_kus, monkeypatch
 ):
-    """API 响应不能下发 misconception_option（否则诊断失去意义）。
-
-    未注册 ProviderRegistry 时 omodul 走内置 _MockCaller 兜底（同
-    test_guide_services.py 对 force_analysis/reading_guide 的既有测试方式），
-    不需要额外 mock。
-    """
+    """API 响应不能下发 misconception_option（否则诊断失去意义）。"""
     ku_hit, _ = physics_kus
     sid, token = student
+
+    # Keep this route-contract test independent of whichever provider happens
+    # to be configured in the runner. Workflow payload shape is covered by its
+    # own tests; this test verifies persistence and answer-leak protection.
+    import omodul
+
+    async def _fake_workflow(*, config, input_data, output_dir):
+        return {
+            "has_candidate": True,
+            "misconception_id": "PHYS-FORCE-MOTION",
+            "remediation": "惯性演示",
+            "scenario": "物体匀速运动",
+            "option_a": "没有力就会停下",
+            "option_b": "保持匀速",
+            "misconception_option": "A",
+        }
+
+    monkeypatch.setattr(omodul, "physics_concept_diagnosis_workflow", _fake_workflow)
 
     async with AsyncClient(
         transport=ASGITransport(app=app), base_url="http://test"

@@ -38,6 +38,9 @@ async def db_student():
             delete(MasterySnapshot).where(MasterySnapshot.student_id == sid)
         )
         await db.execute(delete(KCMastery).where(KCMastery.student_id == sid))
+        from .db_test_helpers import cleanup_learning_events
+
+        await cleanup_learning_events(db, sid)
         await db.execute(delete(User).where(User.id == sid))
         await db.commit()
     await engine.dispose()

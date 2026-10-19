@@ -86,6 +86,8 @@ def test_production_rejects_default_mock_llm(monkeypatch):
 
 def test_veya_registers_local_text_and_vision(monkeypatch):
     monkeypatch.setenv("MNEME_LLM", "veya")
+    monkeypatch.setenv("VEYA_API_KEY", "test-veya-key")
+    monkeypatch.delenv("INTERN_AI_API_KEY", raising=False)
     monkeypatch.setenv("VEYA_BASE_URL", "http://veya.test/v1")
     monkeypatch.setenv("VEYA_MODEL", "veya1.2-128K")
     monkeypatch.setenv("VEYA_VL_MODEL", "veya1.2-vl")

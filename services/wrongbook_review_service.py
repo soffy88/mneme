@@ -168,7 +168,7 @@ def variant_for(question_text: Optional[str], subject: Optional[str], item_id: u
     try:
         from services.ask_kernels.variants import make_variant
 
-        v = make_variant(question_text, seed, subject=subject)
+        v = make_variant(question_text, seed, subject=subject, budget_s=1.5)
     except Exception as exc:  # noqa: BLE001
         logger.info("wrongbook variant failed: %s", type(exc).__name__)
         v = None

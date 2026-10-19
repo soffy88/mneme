@@ -71,7 +71,7 @@ async def student(db: AsyncSession):
 
 
 @pytest.fixture(scope="function")
-async def ku_seed(db: AsyncSession):
+async def ku_seed(db: AsyncSession, student):
     """2 cluster / 4 KU: ku_a(no prereq), ku_b(prereq:ku_a), ku_c(no prereq), ku_d(prereq:ku_b)"""
     tb_id = f"test-tb-plan-{uuid.uuid4().hex[:6]}"
     c1_id = f"test-c1-plan-{uuid.uuid4().hex[:6]}"
@@ -118,6 +118,13 @@ async def ku_seed(db: AsyncSession):
             )
         )
     await db.commit()
+
+    # P4 is global across unbound textbooks by design. Bind this fixture's
+    # student to its own test textbook so unrelated persisted test KUs cannot
+    # change which seeded prerequisites are recommended.
+    from services.textbook_bindings_service import set_textbook_bindings
+
+    await set_textbook_bindings(db, student, {"math": tb_id})
 
     yield {
         "tb_id": tb_id,
