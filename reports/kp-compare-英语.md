@@ -449,3 +449,99 @@ mneme 目前没有英语知识图谱。若要建，建议复用数学的做法�
 3. **教材目录有 15 册来自 k12 映射**（新版小学 6 册、新版初中 5 册、旧版七上/七下/八下、旧版三上），未逐一与纸质教材核对；已用 PDF 核对 16 册。
 4. **章节可信度**只抽样核实了小学 6 册与八上，其余册未逐单元验证。
 5. 本报告不评价 k12 数据在其他学科的质量，结论仅限英语。
+
+---
+
+## 11. 缺口补齐（2026-10-20）
+
+### 11.1 口径：哪些算“确认缺口”
+
+本轮只补**两侧都能确认**的缺口，判定沿用 §6.1/§6.2 的考点级结论：
+
+- 考点在义教/高中课标或人教版教材目录中有明确落点；
+- k12 比对侧只有 0–4 条支撑（`compare_points.csv` 判定为“缺失”或“薄弱”），没有可复用的现成结构；
+- mneme 侧确实没有对应知识点。仓库 `data/ku_packages` 的 47 个包、11 646 个 KU 全部属于语文（7 700）/数学（2 395）/物理（1 551），**没有任何英语 KU 包**，英语词表与初中句库也不承载语法/语篇/题型考点。
+
+按此口径，确认缺口共 **29 条**：§6.1“完全缺失”6 条 + §6.2“薄弱”23 条。本轮补齐其中 **21 条**，其余 8 条因教材落点不可确认暂缓（见 11.4）。§4.1 中判为“覆盖”的 128 条考点同样没有 mneme KU，但它们不是“比对确认的缺口”，而是“从零建英语 KU 体系”的问题，按 §9 P1 另立专项，不在本轮扩面。
+
+### 11.2 补齐清单（21 个 KU / 7 个包）
+
+小学（1 个）：
+
+| 考点ID | 缺口考点 | 教材落点 | 新增 KU |
+|---|---|---|---|
+| X-F5 | 问路与指路 | PEP 六年级上册 Unit 1 How can I get there? | `PEP3-G6-ENGLISH-S-ku-问路与指路` |
+
+初中（7 个，均落在九年级全一册中考复习）：
+
+| 考点ID | 缺口考点 | 新增 KU |
+|---|---|---|
+| C-G24 | 倒装（so/neither 等） | `RENJIAO-G9-ENGLISH-QYC-ku-倒装句-so-neither` |
+| C-G22 | 感叹句 | `RENJIAO-G9-ENGLISH-QYC-ku-感叹句` |
+| C-G23 | 反意疑问句 | `RENJIAO-G9-ENGLISH-QYC-ku-反意疑问句` |
+| C-G25 | 虚拟语气（初步） | `RENJIAO-G9-ENGLISH-QYC-ku-虚拟语气初步` |
+| C-D5 | 完形填空 | `RENJIAO-G9-ENGLISH-QYC-ku-完形填空` |
+| C-D8 | 补全对话 | `RENJIAO-G9-ENGLISH-QYC-ku-补全对话` |
+| C-S3 | 短文改错/信息还原 | `RENJIAO-G9-ENGLISH-QYC-ku-短文改错与信息还原` |
+
+高中语法（7 个）：
+
+| 考点ID | 缺口考点 | 教材落点 | 新增 KU |
+|---|---|---|---|
+| G-G1 | 过去将来时 | 必修第一册 | `RENJIAO-G10-ENGLISH-BX1-ku-过去将来时` |
+| G-G7 | 省略句 | 必修第三册 Unit 3、Unit 5 | `RENJIAO-G11-ENGLISH-BX3-ku-省略句` |
+| G-G18 | 同位语从句 | 选择性必修第二册 Unit 2 | `RENJIAO-G11-ENGLISH-SBX2-ku-同位语从句` |
+| G-G16 | 倒装 | 选择性必修第四册 | `RENJIAO-G12-ENGLISH-SBX4-ku-倒装句` |
+| G-G19 | 虚拟语气 | 选择性必修第四册 | `RENJIAO-G12-ENGLISH-SBX4-ku-虚拟语气` |
+| G-G17 | 强调结构 | 选择性必修第四册 | `RENJIAO-G12-ENGLISH-SBX4-ku-强调结构` |
+| G-G20 | 状语从句的复习与运用 | 选择性必修第四册 | `RENJIAO-G12-ENGLISH-SBX4-ku-状语从句的复习与运用` |
+
+高中题型（6 个，落在高考备考包）：
+
+| 考点ID | 缺口考点 | 新增 KU |
+|---|---|---|
+| G-X8 | 概要写作 | `GAOKAO-ENGLISH-GAOKAO-ku-概要写作` |
+| G-X3 | 七选五 | `GAOKAO-ENGLISH-GAOKAO-ku-七选五` |
+| G-X5 | 语法填空 | `GAOKAO-ENGLISH-GAOKAO-ku-语法填空` |
+| G-X7 | 读后续写 | `GAOKAO-ENGLISH-GAOKAO-ku-读后续写` |
+| G-X4 | 完形填空 | `GAOKAO-ENGLISH-GAOKAO-ku-完形填空` |
+| G-X11 | 短文改错 | `GAOKAO-ENGLISH-GAOKAO-ku-短文改错` |
+
+### 11.3 存放位置与格式
+
+| 文件 | 学段 | KU 数 |
+|---|---|---|
+| `data/ku_packages/PEP3-G6-ENGLISH-S.json` | 小学六上 | 1 |
+| `data/ku_packages/RENJIAO-G9-ENGLISH-QYC.json` | 初中九全 | 7 |
+| `data/ku_packages/RENJIAO-G10-ENGLISH-BX1.json` | 高中必修一 | 1 |
+| `data/ku_packages/RENJIAO-G11-ENGLISH-BX3.json` | 高中必修三 | 1 |
+| `data/ku_packages/RENJIAO-G11-ENGLISH-SBX2.json` | 高中选必二 | 1 |
+| `data/ku_packages/RENJIAO-G12-ENGLISH-SBX4.json` | 高中选必四 | 4 |
+| `data/ku_packages/GAOKAO-ENGLISH-GAOKAO.json` | 高考备考 | 6 |
+
+- 教材 ID 沿用 `scripts/import_textbooks_subjects.py` 的 `{PUBLISHER}-{GRADE}-{SUBJECT}-{VOLUME}`；高考备考包按仓库先例 `GAOKAO-CHINESE-GAOKAO` 命名为 `GAOKAO-ENGLISH-GAOKAO`。包结构照 `scripts/export_ku_package.py` 的 `UNIT_FIELDS`（18 个字段），cluster 为 `<教材ID>-kc-<主题>`，KU 为 `<教材ID>-ku-<slug>`。
+- 每个 KU 都有 `name / description / prerequisites / related_kus / difficulty / exam_frequency / ku_type / curriculum_standard / rich_content`；`rich_content` 采用仓库现有的 `definition、key_points、examples、intuition、connections、common_mistakes、counter_examples` 七键结构。
+- 说明与例题全部依据课标分级要求和教材单元自写，**未复制 k12-knowledge-points 的任何正文**（该仓库无许可证）；`source_excerpt` 留空，`provenance` 留空，`ai_generated=true`、`verified=false`，等人工复核后再翻转。
+- 关系只写能解析的边：高中倒装的前置指向初中 `so/neither` KU；初中倒装/虚拟与高中倒装/虚拟、过去将来时与虚拟、省略与状语从句、强调与倒装、七选五与完形、语法填空与短文改错、概要写作与读后续写互为关联。没有可靠前置的 KU 不硬造边，避免悬空前置卡住新学路径。
+- 词汇类考点（X-V1/V2/V3、C-V1–V4、G-V1/V2/V3/V4）按 §9 P1 继续走 `vocabulary_items`，不进 KU；本轮未新增词表。
+
+### 11.4 未补的缺口及原因（8 条 + 128 条覆盖项）
+
+| 学段 | 考点ID | 缺口考点 | 未补原因 |
+|---|---|---|---|
+| 小学 | X-Y3 | 单词重音、句子重音与语调 | 小学 6 册章节标题与内容错配（§7.4），现有 k12 落点只有 1 条附录，无法可靠定位单元；需先建字母/音素/语调的基础 KU 链 |
+| 小学 | X-G2 | 人称代词与物主代词 | 同上；命中的 4 条多为“名词性物主代词”且标为过细，不能作为章节依据 |
+| 小学 | X-G4 | 冠词 a/an/the | 同上；仅有 2 条支撑且均判“多余/过细”，无稳定单元 |
+| 小学 | X-F6 | 打电话 | 仅 1 条附录类命中，教材单元不可确认 |
+| 小学 | X-S1 | 听懂简单指令与课堂用语 | 命中的 2 条均为词汇表/祈使句条目，非课堂用语单元 |
+| 小学 | X-S2 | 模仿语音语调、朗读与吟唱 | 命中条目分散在字母、歌谣和阅读板块，无独立单元 |
+| 小学 | X-S4 | 看图说话与简单复述 | 命中的 4 条分属不同年级的看图写话，章节证据互相冲突 |
+| 初中 | C-Y1 | 音标与拼读规则 | 七上教材未入库（映射表只有七下），Starter 单元无法确认；音标需与字母名称音、音素分类一起建链 |
+
+其余 128 条“覆盖”考点（k12 有 ≥5 条支撑）没有补：它们不是 §6 的“确认缺口”，而是整个英语 KU 体系的空白；按 §9 P1 应作为独立专项，先定课标编码骨架（`GB-ENG-*`）、再按语法/语音/语篇/语用分批建设，避免在本轮把“补缺口”扩成“从零建全科”。
+
+### 11.5 校验与测试
+
+- 数据校验（脚本内联，未入库）：7 个包全部可解析；`textbook.id` 与文件名、`units[].textbook_id` 一致；cluster 引用全部命中；21 个 KU 的 ID/名称在英语新增集内唯一，且与现有 11 646 个 KU 无 ID/名称冲突；`description` 均 ≥ 8 字；`difficulty` 在 `[0,1]`；`exam_frequency` 合法；`rich_content` 八键齐全；前置/关联边全部可解析且无自指。
+- 往复校验：用 `scripts/export_ku_package.build_package` 重新构建 7 个包，与落盘 JSON 逐字节一致，说明字段与 import/export 契约对称。
+- 测试：`python3 -m pytest tests/test_ku_package_roundtrip.py tests/test_ku_ingest_gate.py -q --no-cov` → **7 passed**。加 `--no-cov` 是因为仓库全局 `fail_under=60` 对两个文件的定向运行不适用；断言本身全部通过。未新增 skip/xfail。

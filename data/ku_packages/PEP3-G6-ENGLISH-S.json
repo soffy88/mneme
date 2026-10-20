@@ -1,0 +1,61 @@
+{
+  "textbook": {
+    "id": "PEP3-G6-ENGLISH-S",
+    "subject": "english",
+    "grade": "G6",
+    "edition": "PEP3",
+    "book_name": "人教版PEP英语（三年级起点）六年级上册"
+  },
+  "clusters": [
+    {
+      "id": "PEP3-G6-ENGLISH-S-kc-问路与指路",
+      "name": "Unit 1 How can I get there?·问路与指路",
+      "display_order": 1,
+      "description": "六年级上册 Unit 1：问路与指路的句型、方位表达与礼貌用语"
+    }
+  ],
+  "units": [
+    {
+      "id": "PEP3-G6-ENGLISH-S-ku-问路与指路",
+      "textbook_id": "PEP3-G6-ENGLISH-S",
+      "cluster_id": "PEP3-G6-ENGLISH-S-kc-问路与指路",
+      "name": "问路与指路",
+      "description": "用 Where is ...? / How can I get to ...? / Is there ... near here? 询问地点，用 Go straight、turn left/right、next to、between ... and ... 等说明路线；问路先以 Excuse me 开场，得到帮助后道谢，没听清时可说 Pardon? 或 Thank you all the same.\n【教材】人教版PEP英语六年级上册 Unit 1 How can I get there?\n【课标】义教英语课标2022 二级 语用：问路与指路",
+      "prerequisites": [],
+      "related_kus": [],
+      "difficulty": 0.3,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "kouyu_jiaoji",
+      "curriculum_standard": "义教英语课标2022·二级·语用：问路与指路",
+      "mastery_levels": [],
+      "rich_content": {
+        "definition": "问路与指路是小学阶段的核心交际功能：用特殊疑问句和 There be 句型询问地点，用方位介词与行走指令说明路线，并根据对方身份和场合选择礼貌表达。",
+        "key_points": [
+          "⚠️ 问路先礼貌开场：Excuse me.；结束用 Thank you. / Thank you all the same.",
+          "⚠️ 指路按行走顺序说：Go straight (for ...), turn left/right at the ..., then it's on your left/right.",
+          "⚠️ 方位表达用 next to / between ... and ... / across from / behind / in front of；left/right 以问路者行进方向为准。"
+        ],
+        "examples": [
+          "—Excuse me, where is the museum? —Go straight and turn right at the second crossing. It's next to the library.",
+          "—How can I get to the post office? —Walk along this street. It's between the bank and the supermarket.",
+          "—Is there a hospital near here? —Yes. It's across from the park."
+        ],
+        "intuition": "把路线想成一条有方向的路：先定起点，再按“直走—转弯—参照物”的顺序说，听的人就能一步步走到。",
+        "connections": "向前衔接特殊疑问句、There be 句型和方位介词；向后衔接出行方式、地图与游记类语篇。",
+        "common_mistakes": [
+          "把 left/right 按说话人自己的方向说，而不是按问路者前进方向。",
+          "漏掉冠词或介词：说成 go straight the street / next the bank。",
+          "只给地名不给路线，或把路线顺序说反。"
+        ],
+        "counter_examples": "“Where is the museum?” 回答 “It's a museum.” 没有提供位置信息；正确应给出方向或参照物，如 “It's next to the library.”"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    }
+  ]
+}

@@ -1,0 +1,62 @@
+{
+  "textbook": {
+    "id": "RENJIAO-G11-ENGLISH-SBX2",
+    "subject": "english",
+    "grade": "G11",
+    "edition": "RENJIAO",
+    "book_name": "人教版高中英语选择性必修第二册"
+  },
+  "clusters": [
+    {
+      "id": "RENJIAO-G11-ENGLISH-SBX2-kc-同位语从句",
+      "name": "同位语从句",
+      "display_order": 1,
+      "description": "选必二 Unit 2 Bridging Cultures：抽象名词后的同位语从句"
+    }
+  ],
+  "units": [
+    {
+      "id": "RENJIAO-G11-ENGLISH-SBX2-ku-同位语从句",
+      "textbook_id": "RENJIAO-G11-ENGLISH-SBX2",
+      "cluster_id": "RENJIAO-G11-ENGLISH-SBX2-kc-同位语从句",
+      "name": "同位语从句",
+      "description": "跟在 fact, news, idea, belief, doubt, hope, promise, possibility 等抽象名词后，用 that/whether/who/what 等引导，说明该名词的具体内容。that 在从句中不作成分、通常不省略；同位语从句解释内容，定语从句修饰限定。\n【教材】人教版高中英语选择性必修第二册 Unit 2 Bridging Cultures\n【课标】高中英语课标2017/2020 选择性必修 语法：同位语从句",
+      "prerequisites": [],
+      "related_kus": [],
+      "difficulty": 0.6,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": "高中英语课标（2017年版2020年修订）·选择性必修·语法：同位语从句",
+      "mastery_levels": [],
+      "rich_content": {
+        "definition": "同位语从句跟在 fact, news, idea, belief, doubt, hope, promise, possibility 等抽象名词后，用 that/whether/who/what 等引导，说明该名词的具体内容。",
+        "key_points": [
+          "⚠️ that 在同位语从句中不作句子成分，通常不省略；从句本身结构完整。",
+          "⚠️ 同位语从句解释“是什么内容”，定语从句修饰“哪一个/什么样的”，这是两者的核心区别。",
+          "⚠️ 常接同位语从句的名词多为抽象名词，如 fact, news, idea, thought, belief, doubt, hope, promise, possibility, evidence。"
+        ],
+        "examples": [
+          "The news that our team won the game excited everyone.",
+          "There is no doubt that he will succeed.",
+          "The question whether we should go remains undecided.",
+          "The fact that she passed the exam surprised us."
+        ],
+        "intuition": "同位语从句像给名词加一个“内容说明书”：前面的名词只是一个盒子，从句告诉你盒子里装的是什么。",
+        "connections": "以名词性从句、that 的用法和定语从句为基础；与定语从句中关系代词/关系副词的选择相互对照。",
+        "common_mistakes": [
+          "把同位语从句误判为定语从句，试图在从句中找 that 的成分。",
+          "在同位语从句中漏掉 that，如 The news our team won ...（正式语境应补 that）。",
+          "用 which 引导同位语从句，如 The fact which he lied ...（应为 that）。"
+        ],
+        "counter_examples": "“The news that he told me was true.” 中 that 作 told 的宾语，是定语从句；“The news that he had passed the exam was true.” 中从句结构完整，是同位语从句。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    }
+  ]
+}

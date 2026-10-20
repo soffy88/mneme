@@ -1,0 +1,223 @@
+{
+  "textbook": {
+    "id": "RENJIAO-G12-ENGLISH-SBX4",
+    "subject": "english",
+    "grade": "G12",
+    "edition": "RENJIAO",
+    "book_name": "人教版高中英语选择性必修第四册"
+  },
+  "clusters": [
+    {
+      "id": "RENJIAO-G12-ENGLISH-SBX4-kc-倒装句",
+      "name": "倒装句（部分倒装与完全倒装）",
+      "display_order": 1,
+      "description": "选必四·高考复习：否定词、only、地点状语等引起的倒装"
+    },
+    {
+      "id": "RENJIAO-G12-ENGLISH-SBX4-kc-虚拟语气",
+      "name": "虚拟语气",
+      "display_order": 2,
+      "description": "选必四·高考复习：与现在/过去/将来相反的虚拟条件句"
+    },
+    {
+      "id": "RENJIAO-G12-ENGLISH-SBX4-kc-强调结构",
+      "name": "强调结构",
+      "display_order": 3,
+      "description": "选必四·高考复习：It is/was ... that/who ... 与 do 强调"
+    },
+    {
+      "id": "RENJIAO-G12-ENGLISH-SBX4-kc-状语从句的复习与运用",
+      "name": "状语从句的复习与运用",
+      "display_order": 4,
+      "description": "选必四·高考复习：时间、条件、让步、结果等状语从句"
+    }
+  ],
+  "units": [
+    {
+      "id": "RENJIAO-G12-ENGLISH-SBX4-ku-倒装句",
+      "textbook_id": "RENJIAO-G12-ENGLISH-SBX4",
+      "cluster_id": "RENJIAO-G12-ENGLISH-SBX4-kc-倒装句",
+      "name": "倒装句（部分倒装与完全倒装）",
+      "description": "完全倒装把谓语整体置于主语之前，常见于 there be、here/there + 不及物动词 + 主语、地点介词短语前置；部分倒装只提前助动词、be 动词或情态动词，常见于否定/半否定词置句首、only + 状语置句首、so/neither 呼应、省略 if 的虚拟条件句和 as/though 让步从句。\n【教材】人教版高中英语选择性必修第四册（选修提高类语法）\n【课标】高中英语课标2017/2020 选修（提高类）语法：倒装",
+      "prerequisites": [
+        "RENJIAO-G9-ENGLISH-QYC-ku-倒装句-so-neither"
+      ],
+      "related_kus": [
+        "RENJIAO-G12-ENGLISH-SBX4-ku-强调结构"
+      ],
+      "difficulty": 0.65,
+      "exam_frequency": "high",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": "高中英语课标（2017年版2020年修订）·选修（提高类）·语法：倒装",
+      "mastery_levels": [],
+      "rich_content": {
+        "definition": "倒装句把谓语或助动词置于主语之前，分为完全倒装（谓语整体前置）和部分倒装（只提前助动词、be 动词或情态动词），用于强调、衔接或特定句式。",
+        "key_points": [
+          "⚠️ 完全倒装常见于 there be、here/there/now/then + 不及物动词 + 主语、地点介词短语前置。",
+          "⚠️ 部分倒装常见于否定/半否定词（never, seldom, hardly, little, not only）置句首、only + 状语置句首、so/neither 呼应、省略 if 的虚拟条件句、as/though 让步从句。",
+          "⚠️ 倒装后助动词的时态和人称仍要与新主语一致。"
+        ],
+        "examples": [
+          "Never have I seen such a beautiful sunset.",
+          "Only then did he realize his mistake.",
+          "Here comes the bus.",
+          "Had I known the truth, I would have told you.",
+          "Child as he is, he knows a lot."
+        ],
+        "intuition": "倒装像把句子的“重心”往前搬：把否定词、only 短语或地点状语放到句首，就把助动词也拉到主语前面，形成强调。",
+        "connections": "以一般疑问句语序、否定词、only 状语、虚拟条件句和 so/neither 结构为基础；与强调结构共同服务于信息焦点。",
+        "common_mistakes": [
+          "否定词置句首后不倒装，如 Never I have seen ...。",
+          "Only + 主语置句首时误倒装，如 Only he can do it 不应倒装。",
+          "倒装后助动词与主语不一致，如 Here comes the students。"
+        ],
+        "counter_examples": "“Only he can solve the problem.” 中 only 修饰主语，句子不倒装；只有 only 修饰状语并置于句首时才部分倒装，如 “Only in this way can we solve it.”"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G12-ENGLISH-SBX4-ku-强调结构",
+      "textbook_id": "RENJIAO-G12-ENGLISH-SBX4",
+      "cluster_id": "RENJIAO-G12-ENGLISH-SBX4-kc-强调结构",
+      "name": "强调结构",
+      "description": "通过特定句式把句子某一成分置于信息焦点，常见 It is/was + 被强调部分 + that/who + 其余部分，以及 do/does/did + 动词原形、What ... is/was ... 等。强调人可用 who，其他成分用 that；强调句不能强调谓语。\n【教材】人教版高中英语选择性必修第四册（强调结构复习）\n【课标】高中英语课标2017/2020 选修（提高类）语法：强调结构",
+      "prerequisites": [],
+      "related_kus": [
+        "RENJIAO-G12-ENGLISH-SBX4-ku-倒装句"
+      ],
+      "difficulty": 0.55,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": "高中英语课标（2017年版2020年修订）·选修（提高类）·语法：强调结构",
+      "mastery_levels": [],
+      "rich_content": {
+        "definition": "强调结构通过特定句式把句子某一成分置于信息焦点，常见 It is/was + 被强调部分 + that/who + 其余部分，以及 do/does/did + 动词原形、What ... is/was ... 等。",
+        "key_points": [
+          "⚠️ It is/was ... that/who ... 可强调主语、宾语和状语，不能强调谓语；强调人时可用 who，其他成分用 that。",
+          "⚠️ 强调谓语用 do/does/did + 动词原形，如 He did come.。",
+          "⚠️ 判断强调句：去掉 It is/was 和 that/who，若剩余部分仍能组成完整句子，则为强调句。"
+        ],
+        "examples": [
+          "It was Mary who/that helped me yesterday.",
+          "It was in the park that I met him.",
+          "He does work hard.",
+          "What I need is a good rest."
+        ],
+        "intuition": "强调结构像舞台追光：句子成分都在，但追光灯打到谁，谁就是重点。",
+        "connections": "以陈述句语序、定语从句和主语从句为基础；与倒装句共同实现信息焦点调整。",
+        "common_mistakes": [
+          "强调谓语时误用 It is ... that ...，如 It is he came that ...。",
+          "强调时间/地点状语时误用 when/where，如 It was in 2020 when I met him（应为 that）。",
+          "去掉强调框架后句子不完整，却仍当作强调句。"
+        ],
+        "counter_examples": "“It is a pity that he missed the train.” 去掉 It is ... that 后剩余部分不能独立成句，这是主语从句，不是强调句。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G12-ENGLISH-SBX4-ku-状语从句的复习与运用",
+      "textbook_id": "RENJIAO-G12-ENGLISH-SBX4",
+      "cluster_id": "RENJIAO-G12-ENGLISH-SBX4-kc-状语从句的复习与运用",
+      "name": "状语从句的复习与运用",
+      "description": "按功能梳理时间、条件、原因、让步、目的、结果、方式、比较等状语从句，掌握各组连词与固定句式。时间/条件状语从句遵循主将从现；让步用 although/though/even if/while/no matter wh-；结果用 so ... that / such ... that。写作中避免 because 与 so、although 与 but 重复使用。\n【教材】人教版高中英语选择性必修第四册（高考复习）\n【课标】高中英语课标2017/2020 选择性必修 语法：状语从句的复习与运用",
+      "prerequisites": [],
+      "related_kus": [
+        "RENJIAO-G11-ENGLISH-BX3-ku-省略句"
+      ],
+      "difficulty": 0.5,
+      "exam_frequency": "high",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": "高中英语课标（2017年版2020年修订）·选择性必修·语法：状语从句的复习与运用",
+      "mastery_levels": [],
+      "rich_content": {
+        "definition": "状语从句按功能分为时间、条件、原因、让步、目的、结果、方式、比较等类型，通过从属连词与主句连接，表达逻辑关系。",
+        "key_points": [
+          "⚠️ 时间/条件状语从句遵循“主将从现”：主句用一般将来时，从句用一般现在时。",
+          "⚠️ 让步用 although/though/even if/even though/while/no matter wh-；结果用 so ... that / such ... that。",
+          "⚠️ because 与 so、although 与 but 不在同一句中重复使用；从句主语与主句一致且含 be 时可省略。"
+        ],
+        "examples": [
+          "When you arrive, please call me.",
+          "Unless it rains, we will go hiking.",
+          "Although he was tired, he kept working.",
+          "It was so cold that we stayed indoors.",
+          "No matter what happens, stay calm."
+        ],
+        "intuition": "状语从句像给主句加“条件、时间、原因”的标签；先判断两句之间的逻辑关系，再选对应的连词。",
+        "connections": "以各类从属连词、时态呼应和省略句为基础；与定语从句、名词性从句共同构成复合句体系。",
+        "common_mistakes": [
+          "主将从现误用，如 When you will arrive, please call me。",
+          "although 与 but 连用，because 与 so 连用。",
+          "so ... that 与 such ... that 混用，忽略 so 修饰形容词/副词、such 修饰名词。"
+        ],
+        "counter_examples": "“Although he was ill, but he went to school.” 中 although 与 but 重复；应删去 but，或改用 “He was ill, but he went to school.”"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G12-ENGLISH-SBX4-ku-虚拟语气",
+      "textbook_id": "RENJIAO-G12-ENGLISH-SBX4",
+      "cluster_id": "RENJIAO-G12-ENGLISH-SBX4-kc-虚拟语气",
+      "name": "虚拟语气",
+      "description": "表示与事实相反或实现可能性很小的假设、愿望、建议和要求，按时间分为与现在、过去、将来相反三类，并有混合虚拟条件句。另注意 wish、as if、if only、would rather 后的从句，以及 suggest/order/insist/demand 等表示建议、命令、要求时的宾语从句。\n【教材】人教版高中英语选择性必修第四册（选修提高类语法）\n【课标】高中英语课标2017/2020 选修（提高类）语法：虚拟语气",
+      "prerequisites": [],
+      "related_kus": [
+        "RENJIAO-G10-ENGLISH-BX1-ku-过去将来时"
+      ],
+      "difficulty": 0.7,
+      "exam_frequency": "high",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": "高中英语课标（2017年版2020年修订）·选修（提高类）·语法：虚拟语气",
+      "mastery_levels": [],
+      "rich_content": {
+        "definition": "虚拟语气表示与事实相反或实现可能性很小的假设、愿望、建议和要求，按时间分为与现在、过去、将来相反三类，并有混合虚拟条件句。",
+        "key_points": [
+          "⚠️ 与现在相反：if + 过去式（be 用 were），主句 would/could/might/should + 动词原形。",
+          "⚠️ 与过去相反：if + had done，主句 would/could/might/should + have done。",
+          "⚠️ 与将来相反：if + were to do / should do / 过去式，主句 would/could/might/should + 动词原形。",
+          "⚠️ wish, as if, if only, would rather 后的从句，以及 suggest/order/insist/demand 等表示建议、命令、要求时的宾语从句，也用虚拟语气。"
+        ],
+        "examples": [
+          "If I were you, I would accept the offer.",
+          "If he had left earlier, he would have caught the train.",
+          "If it should rain tomorrow, the match would be put off.",
+          "I wish I had listened to your advice.",
+          "The teacher suggested that we (should) hand in our homework on time."
+        ],
+        "intuition": "虚拟语气用“时态后退”制造距离：现在的事用过去式，过去的事用过去完成式，将来的事用 were to/should，距离越远越不真实。",
+        "connections": "以条件状语从句、一般过去时、过去完成时和宾语从句为基础；与过去将来时中的 would、wish 的用法相互参照。",
+        "common_mistakes": [
+          "与过去相反的虚拟条件句主句用 would do，而不是 would have done。",
+          "suggest 表示“暗示”时不用虚拟语气，如 His smile suggested that he was happy。",
+          "混合虚拟条件句中主从句时间不一致时，仍机械套用同一时间形式。"
+        ],
+        "counter_examples": "“If he studied hard, he would pass the exam.” 表示与现在/将来相反；“If he had studied hard, he would have passed the exam.” 表示与过去相反，两者不能混用。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    }
+  ]
+}
