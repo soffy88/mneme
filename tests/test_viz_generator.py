@@ -313,3 +313,21 @@ def test_viz_service_never_writes_mastery_directly():
     src = (ROOT / "services/viz_generator.py").read_text(encoding="utf-8")
     for forbidden in ("KCMastery", "process_interaction", "kc_mastery", "bkt_update"):
         assert forbidden not in src
+
+
+def test_quiz_json_with_raw_tex_backslashes_is_repaired_and_normalized():
+    raw = '{"items":[{"id":"q1","prompt":"计算 \\((x+3)^2\\)，\\frac{1}{2}","choices":["\\(a\\)","b","c","d"],"answer":2}]}'
+    page = GOOD.replace(json.dumps(QUIZ, ensure_ascii=False), raw)
+    with pytest.raises(ValueError):
+        json.loads(raw)
+    out = vg.postprocess(page, KU, "base")
+    q = vg.extract_quiz(out)
+    assert q and q[0]["prompt"] == "计算 \\((x+3)^2\\)，\\frac{1}{2}" and q[0]["answer"] == 2
+    block = vg._QUIZ_BLOCK.search(out).group(2)
+    assert json.loads(block)["items"][0]["choices"][0] == "\\(a\\)"  # 页内 JSON.parse 可用
+
+
+def test_quiz_missing_is_fatal():
+    page = vg.postprocess(GOOD, KU, "base")
+    no_quiz = vg._QUIZ_BLOCK.sub("", page)
+    assert "quiz_missing" in vg.quality_check(no_quiz)["fatal"]

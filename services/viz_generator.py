@@ -94,6 +94,7 @@ MNEME_OVERRIDES = f"""
 5. **小测验**：恰好 3 道单选题，每题 4 个选项，紧扣本知识点（若给了薄弱点，至少 2 题针对薄弱点）。
    必须在页面中放一段机器可读的题目数据（答案用 0-3 的选项下标）：
    `<script type="application/json" id="mneme-quiz">{{"items":[{{"id":"q1","prompt":"…","choices":["…","…","…","…"],"answer":0,"explain":"…"}}]}}</script>`
+   这段必须是合法 JSON：字符串里的每个反斜杠都要写成两个（如 `"\\\\(x^2\\\\)"`），否则 JSON.parse 会失败。
    测验面板的题目必须从这段 JSON 渲染；学生每选定一个选项时调用
    `if (window.mnemeQuizAnswer) window.mnemeQuizAnswer("q1", 选项下标);`（由宿主注入，勿自行定义），
    再在页面内给即时反馈。
@@ -186,6 +187,7 @@ def postprocess(html_text: str, ku_id: str, variant: str) -> str:
     out = _TAILWIND_TAG.sub("", out)
     out = _EXT_FONT_LINK.sub("", out)
     out = _FOOTER_RE.sub("", out)
+    out = normalize_quiz_block(out)
     inject = f'<meta http-equiv="Content-Security-Policy" content="{CSP}">' + _hook_script(ku_id, variant)
     m = re.search(r"<head[^>]*>", out, re.I)
     if m:
@@ -195,15 +197,44 @@ def postprocess(html_text: str, ku_id: str, variant: str) -> str:
     return out
 
 
+_QUIZ_BLOCK = re.compile(r"(<script[^>]*id=[\"']mneme-quiz[\"'][^>]*>)(.*?)(</script>)", re.S | re.I)
+_JSON_ESC = re.compile(r'\\(\\|"|/|u[0-9a-fA-F]{4})|\\')
+
+
+def _repair_json(raw: str) -> str:
+    """LLM 常把 TeX 原样写进 JSON 字符串（\\( \\frac \\times）：除合法的 \\\\ \\" \\/ \\uXXXX 外，单反斜杠一律按字面量转义。"""
+    return _JSON_ESC.sub(lambda m: m.group(0) if m.group(1) else "\\\\", raw)
+
+
+def _parse_quiz_json(raw: str) -> Any:
+    raw = _html.unescape(raw.strip())
+    for cand in (raw, _repair_json(raw)):
+        try:
+            return json.loads(cand)
+        except (ValueError, TypeError):
+            continue
+    return None
+
+
+def normalize_quiz_block(html_text: str) -> str:
+    """把测验 JSON 规范化（修反斜杠），保证页内 JSON.parse 与服务端答案键一致。"""
+
+    def fix(m: re.Match[str]) -> str:
+        data = _parse_quiz_json(m.group(2))
+        if data is None:
+            return m.group(0)
+        body = json.dumps(data, ensure_ascii=False).replace("</", "<\\/")
+        return m.group(1) + body + m.group(3)
+
+    return _QUIZ_BLOCK.sub(fix, html_text, count=1)
+
+
 def extract_quiz(html_text: str) -> list[dict[str, Any]]:
-    m = re.search(
-        r"<script[^>]*id=[\"']mneme-quiz[\"'][^>]*>(.*?)</script>", html_text, re.S | re.I
-    )
+    m = _QUIZ_BLOCK.search(html_text)
     if not m:
         return []
-    try:
-        data = json.loads(_html.unescape(m.group(1).strip()))
-    except (ValueError, TypeError):
+    data = _parse_quiz_json(m.group(2))
+    if data is None:
         return []
     items = data.get("items") if isinstance(data, dict) else data
     out: list[dict[str, Any]] = []
@@ -330,7 +361,7 @@ def quality_check(html_text: str) -> dict[str, Any]:
     fatal = [
         i
         for i in issues
-        if i.startswith(("parse_error", "missing_", "non_whitelisted_url", "external_host", "network_api", "upstream_footer", "too_large", "tex_delims"))
+        if i.startswith(("parse_error", "missing_", "non_whitelisted_url", "external_host", "network_api", "upstream_footer", "too_large", "tex_delims", "quiz_missing"))
     ]
     return {
         "ok": not fatal,
