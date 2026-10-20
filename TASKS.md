@@ -2899,3 +2899,14 @@ CI 常驻的判分准确率回归门，堵死"构造桩题掩盖真实数据判�
   （extractive）。每人每天 10 次（admin 豁免）、全站每天 2 USD、输出 1500 tokens。表
   `research_reports`（alembic rsr1a2b3c4d5，已入 purge 清单）。CLI `mneme research`；Studio `/research`。
   未做：多轮/子问题分解的「深度」研究（当前单次检索 top-6）；语义检索依赖 embedding（GPU 恢复前为词面兜底）。
+
+## CNM-2 · cn-math-taxonomy 升级到一—九年级 + 先修回溯诊断（2026-10-20，hark/cn-math-taxonomy）
+
+- [x] 数据快照升级到上游 3251221（531 知识点 = 小学 216 + 初中 315；909 先修边；2271 题；课标；id-aliases），
+  原样拷贝、sha256 记在 `data/cn_math_taxonomy/UPSTREAM.json`，LICENSE（CC BY-NC 4.0 全文）+ NOTICE.md 署名。
+- [x] 内核：`mneme_core.domain.oprim.prereq_graph` / `oprim.prereq_judge` / `oskill.prereq_diagnosis`（移植上游 engine.js，
+  差分核对 300 会话 + 45,650 判题逐位一致）；服务 `services/prereq_diagnosis_service.py`；`/v1/placement/prereq/*` + 4 个 MCP 工具。
+- [x] 导入器：小学 KU 打「小学」标签、课标条文、`rich_content.order`；旧 18 个 cnm_ext_* 行只标 deprecated + alias_targets，不删。
+- [ ] 未做（需决策）：对生产库重跑导入器（会新增 216 个小学 KU、改写初中 KU 的 hard 先修→影响 P4/fringe 解锁）；
+  诊断作答是否逐题回写 BKT（须走 SubmitAnswer/process_interaction）；tutor agent 是否挂这 4 个工具（需 SetUserGrant 白名单）；
+  前端页面（mneme-web）；商用需上游单独授权（CC BY-NC）。

@@ -1,0 +1,16 @@
+{
+  "repo": "https://github.com/xiaoyang111222/cn-math-taxonomy",
+  "commit": "3251221aa85c76f6837a3e37addea6e9ed85df98",
+  "commit_date": "2026-10-19",
+  "license": "CC BY-NC 4.0",
+  "author": "xiaoyang111222",
+  "note": "Files copied verbatim from upstream data/ (and LICENSE). Do not edit; re-sync from upstream instead.",
+  "sha256": {
+    "topics.json": "42918488158a08395e7b19145c7473c7329a96002ed5d03a04a330d314f8cef0",
+    "dependencies.json": "2d73408ec17de151dbf6606dc42cbc5ebf58422f80a5184ab0a6c21c718ac65c",
+    "questions.json": "b9c02cecad12ae784d1fdea6b26e5acb86e6428ce6267668e2b29070647c3eec",
+    "cn-curriculum-standards.json": "52f5a848ce9cb5b067c933707d0f8ce67e685fb43b22d9bbbeaf6306e90f14a6",
+    "id-aliases.json": "791334fe08835c539ce7dd6afa686dffebba5f810d11ec616b5c5d70a87864fb",
+    "LICENSE": "41003d4a74749c0220e33dd415042164b5a1093ed401f36277234f772d22d3d0"
+  }
+}

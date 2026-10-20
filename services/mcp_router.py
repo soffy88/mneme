@@ -2145,3 +2145,95 @@ async def mcp_get_mastery_path(
 ) -> dict:
     await _ensure_student_access(db, current_user, req.student_id)
     return await tool_get_mastery_path(db, req.student_id, req.now)
+
+
+# ---------------------------------------------------------------- 先修回溯诊断（cn-math-taxonomy）
+# 共享知识图 + 客户端持有的无状态会话：不读写学生数据，只要求登录（同 SearchKnowledgeBase 惯例）。
+# 诊断结论不是 P(L)：不写 kc_mastery、不调 process_interaction（掌握度唯一路径红线）。
+
+
+def _prereq_call(fn: Any, *args: Any, **kwargs: Any) -> Any:
+    from services import prereq_diagnosis_service as pds
+
+    try:
+        return fn(*args, **kwargs)
+    except pds.PrereqDiagnosisError as e:
+        raise HTTPException(status_code=400, detail=str(e)) from e
+
+
+def tool_search_math_topic(q: str, limit: int = 10) -> dict:
+    from services import prereq_diagnosis_service as pds
+
+    return {"topics": pds.search_topic(q, limit)}
+
+
+def tool_get_math_topic(topic_id: str, recursive_prereqs: bool = False) -> dict:
+    from services import prereq_diagnosis_service as pds
+
+    topic = _prereq_call(pds.get_topic, topic_id)
+    if recursive_prereqs and not topic.get("deprecated"):
+        topic["all_prerequisites"] = _prereq_call(pds.get_prerequisites, topic_id, True)
+    return topic
+
+
+def tool_start_prereq_diagnosis(targets: list[str], limit: Optional[int] = None) -> dict:
+    from services import prereq_diagnosis_service as pds
+
+    return _prereq_call(pds.start, targets, limit=limit)
+
+
+def tool_submit_prereq_diagnosis_answer(
+    session: dict, answer: Optional[str] = None, result: Optional[str] = None
+) -> dict:
+    from services import prereq_diagnosis_service as pds
+
+    return _prereq_call(pds.answer, session, answer, result)
+
+
+class SearchMathTopicReq(BaseModel):
+    q: str
+    limit: int = 10
+
+
+class GetMathTopicReq(BaseModel):
+    topic_id: str
+    recursive_prereqs: bool = False
+
+
+class StartPrereqDiagnosisReq(BaseModel):
+    targets: list[str]
+    limit: Optional[int] = None
+
+
+class SubmitPrereqDiagnosisAnswerReq(BaseModel):
+    session: dict[str, Any]
+    answer: Optional[str] = None
+    result: Optional[str] = None
+
+
+@router.post("/SearchMathTopic")
+async def mcp_search_math_topic(
+    req: SearchMathTopicReq, current_user: User = Depends(get_current_user)
+) -> dict:
+    return tool_search_math_topic(req.q, max(1, min(req.limit, 50)))
+
+
+@router.post("/GetMathTopic")
+async def mcp_get_math_topic(
+    req: GetMathTopicReq, current_user: User = Depends(get_current_user)
+) -> dict:
+    return tool_get_math_topic(req.topic_id, req.recursive_prereqs)
+
+
+@router.post("/StartPrereqDiagnosis")
+async def mcp_start_prereq_diagnosis(
+    req: StartPrereqDiagnosisReq, current_user: User = Depends(get_current_user)
+) -> dict:
+    return tool_start_prereq_diagnosis(req.targets, req.limit)
+
+
+@router.post("/SubmitPrereqDiagnosisAnswer")
+async def mcp_submit_prereq_diagnosis_answer(
+    req: SubmitPrereqDiagnosisAnswerReq, current_user: User = Depends(get_current_user)
+) -> dict:
+    return tool_submit_prereq_diagnosis_answer(req.session, req.answer, req.result)
