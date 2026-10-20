@@ -2359,3 +2359,35 @@ async def mcp_submit_prereq_diagnosis_answer(
     return await submit_prereq_answer_with_writeback(
         db, current_user, req.session, req.answer, req.result, req.record_mastery
     )
+
+
+# ---------------------------------------------------------------- AetherViz 知识点互动课
+# 共享内容（按 KU 缓存于 MinIO），授权同 /v1/viz/ku（services.tool_grants，学生默认放行）。
+# 课内测验结果只经 /v1/viz/quiz-answer → gate pending → tool_submit_answer 回写。
+
+
+class GenerateKUVisualizationReq(BaseModel):
+    ku_id: str
+    weak_points: Optional[list[str]] = None
+    force: bool = False
+    wait_seconds: float = 25.0
+
+
+@router.post("/GenerateKUVisualization")
+async def mcp_generate_ku_visualization(
+    req: GenerateKUVisualizationReq,
+    db: AsyncSession = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+) -> dict:
+    from services.routers.viz import VizReq, generate_ku_visualization
+
+    return await generate_ku_visualization(
+        db,
+        current_user,
+        VizReq(
+            ku_id=req.ku_id,
+            weak_points=req.weak_points,
+            force=req.force,
+            wait_seconds=max(0.0, min(req.wait_seconds, 60.0)),
+        ),
+    )

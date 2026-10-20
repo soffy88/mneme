@@ -11,6 +11,8 @@ llm_caller + 12 callable：
     SubmitPrereqDiagnosisAnswer），同样走 HTTP；授权见 services.tool_grants（学生默认放行，
     admin 可经 SetUserGrant 收紧）。诊断会话 JSON 由 agent 原样回传；学生作答由服务端逐题经
     SubmitAnswer 写路径回写掌握度，agent 不得自行判定掌握度、不得用 result 自评代学生作答；
+  · GenerateKUVisualization（AetherViz 知识点互动课，单文件 HTML，按 KU 缓存；学生默认放行；
+    status=pending 时稍后同参重调）；HTML 只给前端 sandbox iframe，agent 只引用 ku_id/题目；
   · t_assess_explanation：本地跑 mneme-core ``qualitative_verifier``（注入 verifier_llm）。
 
 Recall/RememberEpisode（C5）/SearchKnowledgeBase（C4）/SearchTextbookKnowledge（W3 A4）：
@@ -255,6 +257,17 @@ def build_tools(
             },
         )
 
+    async def generate_ku_visualization(inp: dict) -> Any:
+        """AetherViz：为知识点生成/取缓存互动课；返回值去掉 html（太长，前端另取）。"""
+        out = await _call(
+            "GenerateKUVisualization",
+            {"ku_id": inp["ku_id"], "weak_points": inp.get("weak_points"), "wait_seconds": 20},
+        )
+        if isinstance(out, dict) and "html" in out:
+            out = {k: v for k, v in out.items() if k != "html"}
+            out["html_available"] = True
+        return out
+
     def _spec(fn, name, desc, props, required, readonly=False) -> ToolSpec:
         return ToolSpec(
             name=name,
@@ -427,6 +440,18 @@ def build_tools(
                 "result": {"type": "string", "enum": ["correct", "wrong", "skip"]},
             },
             ["session"],
+        ),
+        _spec(
+            generate_ku_visualization,
+            "GenerateKUVisualization",
+            "为一个知识点（KU id，如 cnmath:cnm_148）生成互动可视化课（单文件 HTML，前端沙箱展示），"
+            "可带诊断薄弱点；返回 status=ready/pending/failed 与课内测验题目（不含答案）。"
+            "pending 表示正在生成，稍后同参再调；测验作答由前端经 SubmitAnswer 路径回写，agent 不代答",
+            {
+                "ku_id": {"type": "string"},
+                "weak_points": {"type": "array", "items": {"type": "string"}},
+            },
+            ["ku_id"],
         ),
     ]
 
