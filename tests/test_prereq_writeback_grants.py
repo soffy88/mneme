@@ -125,10 +125,12 @@ async def test_wrong_answer_lowers_and_self_assessment_never_writes(actors, clie
     s2 = r.json()["session"]
     q2 = r.json()["next"]["question"]
     if q2["type"] in ("numeric", "choice"):
-        bad = "Z" if q2["type"] == "choice" else "-98765"
+        right = _answer_of(q2["id"])
+        # 选择题要给合法但错误的选项键（非法键判题不推进 → not_applied）
+        bad = next(c["key"] for c in q2["choices"] if c["key"] != right) if q2["type"] == "choice" else "-98765"
         r3 = await client.post("/v1/placement/prereq/answer", json={"session": s2, "answer": bad}, headers=_h(stu))
         wb = r3.json()["mastery_writeback"]
-        assert wb["written"] is True and wb["is_correct"] is False
+        assert wb["written"] is True and wb["is_correct"] is False, (q2, wb)
         assert (await _mastery(db, stu, "cnmath:cnm_221")) is not None
 
 
