@@ -2915,3 +2915,10 @@ CI 常驻的判分准确率回归门，堵死"构造桩题掩盖真实数据判�
 - [x] 授权：`services/tool_grants.py`（学生默认 4 个诊断工具；admin SetUserGrant 白名单优先；家长需显式授权）；tutor agent `build_tools` 挂 4 个工具。测试 `tests/test_prereq_writeback_grants.py`。
 - [x] 前端：mneme-web `/placement/prereq` 诊断页（开诊断→作答→薄弱根因 + 按年级学习路径）。
 - [x] 生产：备份后重跑 cn_math_importer（新增 216 小学 KU、改写初中 hard 先修、18 个 cnm_ext_* 只标 deprecated）。
+
+## AV-1 · AetherViz 知识点互动课（2026-10-20）
+
+- [x] vendored `data/aetherviz/`（SKILL.md + LICENSE 原样 + NOTICE）；自托管 three r134(+OrbitControls)/D3 7.9.0 于 `services/assets/vendor/`。
+- [x] `services/viz_generator.py`：生成 + 后处理 + 质检 + MinIO 缓存 (ku_id, variant) + 后台生成/pending 轮询；`services/routers/viz.py`（`/v1/viz/ku`、`/v1/viz/quiz-answer`）；MCP `GenerateKUVisualization`；`tool_grants` 学生默认；tutor agent 挂载。
+- [x] 课内测验经 SubmitAnswer 回写（gate pending → `tool_submit_answer`，去重）。测试 `tests/test_viz_generator.py`。
+- [x] 前端：mneme-web `/placement/prereq` 薄弱根因下 sandbox iframe 互动课（`KUVizLesson`）。

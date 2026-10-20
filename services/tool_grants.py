@@ -23,7 +23,9 @@ from sqlalchemy.ext.asyncio import AsyncSession
 PREREQ_DIAGNOSIS_TOOLS: frozenset[str] = frozenset(
     {"SearchMathTopic", "GetMathTopic", "StartPrereqDiagnosis", "SubmitPrereqDiagnosisAnswer"}
 )
-DEFAULT_STUDENT_TOOLS: frozenset[str] = PREREQ_DIAGNOSIS_TOOLS
+# AetherViz 知识点互动课（共享内容；课内测验回写只经 SubmitAnswer）——学生默认可用
+VIZ_TOOLS: frozenset[str] = frozenset({"GenerateKUVisualization"})
+DEFAULT_STUDENT_TOOLS: frozenset[str] = PREREQ_DIAGNOSIS_TOOLS | VIZ_TOOLS
 
 
 def _is_student(user: Any) -> bool:

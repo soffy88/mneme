@@ -223,9 +223,11 @@ async def test_mcp_submit_writes_for_student(actors, client, db):
 
 
 def test_default_student_tools_are_the_four_diagnosis_tools():
-    assert DEFAULT_STUDENT_TOOLS == PREREQ_DIAGNOSIS_TOOLS == {
+    assert PREREQ_DIAGNOSIS_TOOLS == {
         "SearchMathTopic", "GetMathTopic", "StartPrereqDiagnosis", "SubmitPrereqDiagnosisAnswer"
     }
+    # AetherViz 起学生默认集 = 4 个诊断工具 + GenerateKUVisualization
+    assert DEFAULT_STUDENT_TOOLS == PREREQ_DIAGNOSIS_TOOLS | {"GenerateKUVisualization"}
     assert "BindPartnerChannel" not in DEFAULT_STUDENT_TOOLS
 
 

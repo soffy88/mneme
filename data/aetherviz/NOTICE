@@ -1,0 +1,12 @@
+AetherViz Master
+Copyright (c) 2026 andyhu
+https://github.com/andyhuo520/aetherviz-master  (commit a1c005f, MIT License, see LICENSE)
+
+SKILL.md and LICENSE in this directory are vendored verbatim and must not be edited.
+
+---
+Use in Mneme (2026-10): services/viz_generator.py uses SKILL.md as the system prompt for
+LLM-generated single-file lesson pages, followed by Mneme override instructions:
+self-hosted libraries under /v1/edu-assets/ instead of CDNs (three.js r134, KaTeX 0.16.8,
+D3 7.9.0), no Tailwind CDN, grade-appropriate Chinese, a machine-readable quiz block with a
+postMessage hook, and no "由 AetherViz Master 为你生成" footer (attribution is kept here instead).
