@@ -775,6 +775,7 @@ FIRe=前置隐式重复信用（只写调度折扣）。**KU≠记忆单元。**
 `oprim.ability.estimate_ability`(Rasch/1PL,纯函数):从 [(难度,对错)] 网格 MLE 估学生能力
 θ∈[0,1] + SE(Fisher 信息)。`POST /v1/placement/estimate` 入学定位/冷启动。**L1 `get_zpd_band`
 升级为 θ 驱动**(有 θ 用 θ 中心,无则退回掌握度启发式)。`POST /v1/placement/next` 全量 CAT 会话(无状态,累积响应→θ→SE<0.10或25题停→选就近θ下一题)。误解诊断骨架:`oprim.misconception`(干扰项→误解ID精确映射,教研逐题填;退回KU名关键词)+`GET /v1/misconception/{ku}`。
+**先修回溯诊断(cn-math-taxonomy,2026-10-20)**:与 CAT 并列的第二种定位。数据=上游 cn-math-taxonomy 一—九年级知识图(531 KU `cnmath:cnm_xxx`,909 条先修边 hard/soft,2271 题,课标对齐;CC BY-NC 4.0,原样快照 `data/cn_math_taxonomy`)。算法 `mneme_core.domain.oskill.prereq_diagnosis`(移植上游 engine.js,逐位一致):每知识点≤2题,首题对→掌握并推断全部祖先掌握;错→第二题(同级或更易),对→不稳,再错→薄弱并回溯先修(hard 先于 soft,深度优先);输出薄弱根因 + 学习路径(年级低→高,同年级先修在前)。判题 `oprim.prereq_judge`(choice/numeric 确定性,代数式/文字不可靠时 manual→学生自评)。`POST /v1/placement/prereq/start|answer` + MCP `SearchMathTopic/GetMathTopic/StartPrereqDiagnosis/SubmitPrereqDiagnosisAnswer`。无状态(会话 JSON 客户端保存,无 PII、无新表);**诊断结论(mastered/shaky/weak)不是 P(L)**,不直接写 kc_mastery。**逐题 BKT 回写(CNM-3)**:学生本人每道**自动判题**作答由服务层登记 gate pending(kc_id=KU `cnmath:cnm_xxx`,expected=题库答案;numeric→fill/sympy,choice/short→answer_match)后走既有 `tool_submit_answer`(SubmitAnswer 唯一写路径)更新 BKT/FSRS;自评(result)、self 题、家长/admin 代答不回写;同一(会话 seed,题,第几次)只写一次。**授权**:`services/tool_grants.py`——无授权行时学生默认可用这 4 个工具(只读共享图/无状态),admin `SetUserGrant` 显式白名单优先(可收紧),家长需显式授权;tutor agent(`tutor_loop.build_tools`)已挂载。前端 mneme-web `/placement/prereq` 诊断页。
 
 ---
 

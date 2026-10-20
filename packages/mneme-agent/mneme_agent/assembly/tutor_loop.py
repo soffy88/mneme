@@ -7,6 +7,10 @@ llm_caller + 12 callable：
     SearchKnowledgeBase / SearchTextbookKnowledge，C5 起加 Recall/Remember、
     C4 起加 SearchKnowledgeBase、W3 A4 起加 SearchTextbookKnowledge）
     经 **HTTP** ``/mcp/*`` 触达；
+  · 4 个先修回溯诊断工具（CNM-3：SearchMathTopic / GetMathTopic / StartPrereqDiagnosis /
+    SubmitPrereqDiagnosisAnswer），同样走 HTTP；授权见 services.tool_grants（学生默认放行，
+    admin 可经 SetUserGrant 收紧）。诊断会话 JSON 由 agent 原样回传；学生作答由服务端逐题经
+    SubmitAnswer 写路径回写掌握度，agent 不得自行判定掌握度、不得用 result 自评代学生作答；
   · t_assess_explanation：本地跑 mneme-core ``qualitative_verifier``（注入 verifier_llm）。
 
 Recall/RememberEpisode（C5）/SearchKnowledgeBase（C4）/SearchTextbookKnowledge（W3 A4）：
@@ -219,6 +223,38 @@ def build_tools(
             },
         )
 
+    async def search_math_topic(inp: dict) -> Any:
+        """CNM-3：检索一—九年级数学知识点（cn-math-taxonomy 共享知识图，只读）。"""
+        return await _call(
+            "SearchMathTopic", {"q": inp["q"], "limit": inp.get("limit", 10)}
+        )
+
+    async def get_math_topic(inp: dict) -> Any:
+        return await _call(
+            "GetMathTopic",
+            {
+                "topic_id": inp["topic_id"],
+                "recursive_prereqs": bool(inp.get("recursive_prereqs", False)),
+            },
+        )
+
+    async def start_prereq_diagnosis(inp: dict) -> Any:
+        return await _call(
+            "StartPrereqDiagnosis",
+            {"targets": inp["targets"], "limit": inp.get("limit")},
+        )
+
+    async def submit_prereq_diagnosis_answer(inp: dict) -> Any:
+        """学生作答原样转交；result 只在学生本人明确自评/说不会时给。"""
+        return await _call(
+            "SubmitPrereqDiagnosisAnswer",
+            {
+                "session": inp["session"],
+                "answer": inp.get("answer"),
+                "result": inp.get("result"),
+            },
+        )
+
     def _spec(fn, name, desc, props, required, readonly=False) -> ToolSpec:
         return ToolSpec(
             name=name,
@@ -348,6 +384,49 @@ def build_tools(
             },
             [],
             readonly=True,
+        ),
+        _spec(
+            search_math_topic,
+            "SearchMathTopic",
+            "按名称/描述检索一—九年级数学知识点（返回 KU id cnmath:cnm_xxx、年级、章节）",
+            {"q": {"type": "string"}, "limit": {"type": "integer"}},
+            ["q"],
+            readonly=True,
+        ),
+        _spec(
+            get_math_topic,
+            "GetMathTopic",
+            "取数学知识点详情 + 直接先修（hard/soft）；recursive_prereqs=true 给全部祖先",
+            {
+                "topic_id": {"type": "string"},
+                "recursive_prereqs": {"type": "boolean"},
+            },
+            ["topic_id"],
+            readonly=True,
+        ),
+        _spec(
+            start_prereq_diagnosis,
+            "StartPrereqDiagnosis",
+            "对目标知识点开先修回溯诊断（每点≤2题，答错沿先修回溯找薄弱根因）；"
+            "返回 session（原样保存回传）+ 第一题（不含答案）",
+            {
+                "targets": {"type": "array", "items": {"type": "string"}},
+                "limit": {"type": "integer"},
+            },
+            ["targets"],
+        ),
+        _spec(
+            submit_prereq_diagnosis_answer,
+            "SubmitPrereqDiagnosisAnswer",
+            "交学生对当前诊断题的原话作答（session 原样回传）；返回下一题与报告"
+            "（薄弱根因 + 按年级学习路径）。作答由服务端判分并经 SubmitAnswer 回写掌握度；"
+            "needs_self_assessment=true 时请学生本人自评后带 result 重交",
+            {
+                "session": {"type": "object"},
+                "answer": {"type": "string"},
+                "result": {"type": "string", "enum": ["correct", "wrong", "skip"]},
+            },
+            ["session"],
         ),
     ]
 
