@@ -116,7 +116,7 @@
       "textbook_id": "ZHONGKAO-CHINESE-ZHUANTI",
       "cluster_id": "ZHONGKAO-CHINESE-ZHUANTI-kc-文言虚词",
       "name": "其·语气副词：大概、难道",
-      "description": "[declarative]\nknow-what: “其”放在句首或句中可表推测、反问或祈使：其真无马邪（难道）；其真不知马也（大概）；尔其无忘乃父之志（一定）。要结合句末语气词判断。\n来源: 统编版八年级下册·《马说》；九年级下册·《五代史伶官传序》\n轨道: 积累",
+      "description": "[declarative]\nknow-what: “其”放在句首或句中可表推测、反问或祈使：其真无马邪（难道）；其真不知马也（大概）；尔其无忘乃父之志（一定）。要结合句末语气词判断。\n来源: 统编版八年级下册·《马说》；选择性必修中册·《五代史伶官传序》\n轨道: 积累",
       "prerequisites": [
         "ZHONGKAO-CHINESE-ZHUANTI-ku-其-代词-他的-那"
       ],
@@ -248,7 +248,7 @@
       "textbook_id": "ZHONGKAO-CHINESE-ZHUANTI",
       "cluster_id": "ZHONGKAO-CHINESE-ZHUANTI-kc-文言虚词",
       "name": "为·介词与动词",
-      "description": "[declarative]\nknow-what: “为”读 wèi 作介词，译为“替、给”（为人谋而不忠乎）或“为了”；读 wéi 作动词，译为“做、是”（为宫室器皿、中轩敞者为舱）；“为……所”表被动（为天下笑）。\n来源: 统编版七年级上册·《论语》十二章；八年级下册·《核舟记》\n轨道: 积累",
+      "description": "[declarative]\nknow-what: “为”读 wèi 作介词，译为“替、给”（为人谋而不忠乎）或“为了”；读 wéi 作动词，译为“做、是”（为宫室器皿、中轩敞者为舱）；“为……所”表被动（为天下笑）。\n来源: 统编版七年级上册·《论语》十二章；八年级下册·《核舟记》；选择性必修中册·《过秦论》\n轨道: 积累",
       "prerequisites": [],
       "related_kus": [],
       "difficulty": 0.5,
@@ -372,7 +372,7 @@
       "textbook_id": "ZHONGKAO-CHINESE-ZHUANTI",
       "cluster_id": "ZHONGKAO-CHINESE-ZHUANTI-kc-文言虚词",
       "name": "也·判断语气与句中停顿",
-      "description": "[declarative]\nknow-what: “也”用于判断句末表判断（环滁皆山也）；用于陈述句末表肯定或解释（吾尝终日而思矣，不如须臾之所学也）；用于句中表停顿（师道之不传也久矣）。\n来源: 统编版九年级上册·《醉翁亭记》《岳阳楼记》\n轨道: 积累",
+      "description": "[declarative]\nknow-what: “也”用于判断句末表判断（环滁皆山也）；用于陈述句末表肯定或解释（吾尝终日而思矣，不如须臾之所学也）；用于句中表停顿（师道之不传也久矣）。\n来源: 统编版九年级上册·《醉翁亭记》；必修上册·《劝学》《师说》\n轨道: 积累",
       "prerequisites": [
         "ZHONGKAO-CHINESE-ZHUANTI-ku-者-代词与判断标志"
       ],
@@ -414,7 +414,7 @@
       "textbook_id": "ZHONGKAO-CHINESE-ZHUANTI",
       "cluster_id": "ZHONGKAO-CHINESE-ZHUANTI-kc-文言虚词",
       "name": "因·于是、凭借、因为",
-      "description": "[declarative]\nknow-what: “因”可译为“于是、就”（因屏人曰）、“凭借、依靠”（因势象形、因人之力而敝之）、“通过”（因宾客至蔺相如门谢罪）、“因为”（因不因势利导）。\n来源: 统编版八年级下册·《核舟记》；高中必修下册·《烛之武退秦师》\n轨道: 积累",
+      "description": "[declarative]\nknow-what: “因”可译为“于是、就”（因舍船，从口入）、“凭借、依靠”（因势象形、因人之力而敝之）、“因为”（恩所加，则思无因喜以谬赏）。\n来源: 统编版八年级下册·《桃花源记》《核舟记》；必修下册·《烛之武退秦师》《谏太宗十思疏》\n轨道: 积累",
       "prerequisites": [],
       "related_kus": [],
       "difficulty": 0.5,
@@ -434,7 +434,7 @@
       "textbook_id": "ZHONGKAO-CHINESE-ZHUANTI",
       "cluster_id": "ZHONGKAO-CHINESE-ZHUANTI-kc-文言虚词",
       "name": "且·而且、尚且、将要",
-      "description": "[declarative]\nknow-what: “且”表递进译为“而且、况且”（且焉置土石）；表让步译为“尚且”（臣死且不避）；表将来译为“将要”（年且九十，行将就木）；还可表“将近”（北山愚公者，年且九十）。\n来源: 统编版八年级上册·《愚公移山》；高中必修下册·《鸿门宴》\n轨道: 积累",
+      "description": "[declarative]\nknow-what: “且”表递进译为“而且、况且”（且焉置土石）；表让步译为“尚且”（臣死且不避）；表将来译为“将要”（若属皆且为所虏）；还可表“将近”（北山愚公者，年且九十）。\n来源: 统编版八年级上册·《愚公移山》；必修下册·《鸿门宴》\n轨道: 积累",
       "prerequisites": [],
       "related_kus": [],
       "difficulty": 0.5,
@@ -454,7 +454,7 @@
       "textbook_id": "ZHONGKAO-CHINESE-ZHUANTI",
       "cluster_id": "ZHONGKAO-CHINESE-ZHUANTI-kc-文言虚词",
       "name": "虽·虽然与即使",
-      "description": "[declarative]\nknow-what: “虽”表事实让步译为“虽然”（虽一毫而莫取）；表假设让步译为“即使”（虽乘奔御风，不以疾也）；“虽然”连用常译为“虽然如此”。\n来源: 统编版八年级上册·《三峡》；必修上册·《赤壁赋》\n轨道: 积累",
+      "description": "[declarative]\nknow-what: “虽”表假设让步译为“即使”（虽乘奔御风，不以疾也；虽一毫而莫取）；“虽然”连用是固定结构，译为“虽然如此”（虽然，受地于先王）；“虽”单用表事实让步（虽然）在文言中较少，遇到时需结合上下文判断。\n来源: 统编版八年级上册·《三峡》；必修上册·《赤壁赋》；九年级下册·《唐雎不辱使命》\n轨道: 积累",
       "prerequisites": [],
       "related_kus": [],
       "difficulty": 0.5,
@@ -674,7 +674,7 @@
       "textbook_id": "ZHONGKAO-CHINESE-ZHUANTI",
       "cluster_id": "ZHONGKAO-CHINESE-ZHUANTI-kc-文言翻译",
       "name": "文言翻译：倒装句的语序调整",
-      "description": "[procedural]\nknow-what: 倒装句翻译的调整方法\nknow-how: 1.识别宾语前置、状语后置、定语后置、主谓倒装；2.找到正常语序；3.按现代汉语顺序重排；4.保留原句强调重点。\nknow-why: 倒装是古汉语的强调手段，翻译成现代语序后仍要保留强调意味。\n实例: “句读之不知”调整为“不知句读”，译为“不懂得断句”。\n来源: 统编版九年级上册·《师说》\n轨道: 鉴赏",
+      "description": "[procedural]\nknow-what: 倒装句翻译的调整方法\nknow-how: 1.识别宾语前置、状语后置、定语后置、主谓倒装；2.找到正常语序；3.按现代汉语顺序重排；4.保留原句强调重点。\nknow-why: 倒装是古汉语的强调手段，翻译成现代语序后仍要保留强调意味。\n实例: “句读之不知”调整为“不知句读”，译为“不懂得断句”。\n来源: 统编版高中语文必修上册·《师说》\n轨道: 鉴赏",
       "prerequisites": [
         "ZHONGKAO-CHINESE-ZHUANTI-ku-文言翻译-判断句与被动句"
       ],

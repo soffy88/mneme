@@ -94,7 +94,7 @@
       "textbook_id": "GAOKAO-CHINESE-ZHUANTI",
       "cluster_id": "GAOKAO-CHINESE-ZHUANTI-kc-文言虚词",
       "name": "而·转折、修饰与并列",
-      "description": "[declarative]\nknow-what: “而”表转折译为“却、但是”（青，取之于蓝，而青于蓝）；表修饰，前项修饰后项（吾尝终日而思矣）；表并列（蟹六跪而二螯）；表承接（登高而招）。\n来源: 统编版高中语文必修上册·《劝学》\n轨道: 积累",
+      "description": "[declarative]\nknow-what: “而”表转折译为“却、但是”（青，取之于蓝，而青于蓝）；表修饰，前项修饰后项（吾尝终日而思矣）；表并列（蟹六跪而二螯）；表承接（积善成德，而神明自得）。\n来源: 统编版高中语文必修上册·《劝学》\n轨道: 积累",
       "prerequisites": [],
       "related_kus": [
         "GAOKAO-CHINESE-ZHUANTI-ku-以-工具-凭借与修饰"
@@ -116,7 +116,7 @@
       "textbook_id": "GAOKAO-CHINESE-ZHUANTI",
       "cluster_id": "GAOKAO-CHINESE-ZHUANTI-kc-文言虚词",
       "name": "以·工具、凭借与修饰",
-      "description": "[declarative]\nknow-what: “以”作介词译为“用、拿”（愿以十五城请易璧）、“凭借”（以勇气闻于诸侯）；作连词表目的（以赂秦之地封天下之谋臣）；表修饰（木欣欣以向荣）。\n来源: 统编版高中语文必修下册·《鸿门宴》；选择性必修下册·《归去来兮辞》\n轨道: 积累",
+      "description": "[declarative]\nknow-what: “以”作介词译为“用、拿”（请以剑舞）、“把”（具告以事）、“凭借”（不然，籍何以至此）；作连词表目的（举所佩玉玦以示之者三）；表修饰（木欣欣以向荣）。\n来源: 统编版高中语文必修下册·《鸿门宴》；选择性必修下册·《归去来兮辞》\n轨道: 积累",
       "prerequisites": [
         "GAOKAO-CHINESE-ZHUANTI-ku-而-转折-修饰与并列"
       ],
@@ -138,7 +138,7 @@
       "textbook_id": "GAOKAO-CHINESE-ZHUANTI",
       "cluster_id": "GAOKAO-CHINESE-ZHUANTI-kc-文言虚词",
       "name": "于·处所、比较与对象",
-      "description": "[declarative]\nknow-what: “于”可译为“从”（取之于蓝）、“比”（青于蓝）、“向、对”（善假于物也）、“在”（战于长勺）、“被”（受制于人）。判断时看谓语和宾语的关系。\n来源: 统编版高中语文必修上册·《劝学》\n轨道: 积累",
+      "description": "[declarative]\nknow-what: “于”可译为“从”（取之于蓝）、“比”（青于蓝）、“向、对”（善假于物也）、“在”（战于长勺）、“被”（受制于人）。判断时看谓语和宾语的关系。\n来源: 统编版高中语文必修上册·《劝学》；九年级下册·《曹刿论战》\n轨道: 积累",
       "prerequisites": [],
       "related_kus": [
         "GAOKAO-CHINESE-ZHUANTI-ku-为-被动-治理与判断"
@@ -160,7 +160,7 @@
       "textbook_id": "GAOKAO-CHINESE-ZHUANTI",
       "cluster_id": "GAOKAO-CHINESE-ZHUANTI-kc-文言虚词",
       "name": "为·被动、治理与判断",
-      "description": "[declarative]\nknow-what: “为”可表被动，译为“被”（为天下笑）；作动词译为“治理”（为国以礼）、“是”（人为刀俎）、“做”（为宫室器皿）；读 wèi 时译为“替、给”。\n来源: 统编版高中语文必修下册·《齐桓晋文之事》；选择性必修中册·《过秦论》\n轨道: 积累",
+      "description": "[declarative]\nknow-what: “为”可表被动，译为“被”（为天下笑）；作动词译为“治理”（为国以礼）、“是”（人为刀俎）、“做”（为宫室器皿）；读 wèi 时译为“替、给”。\n来源: 统编版高中语文必修下册·《子路、曾皙、冉有、公西华侍坐》《鸿门宴》；选择性必修中册·《过秦论》；八年级下册·《核舟记》\n轨道: 积累",
       "prerequisites": [
         "GAOKAO-CHINESE-ZHUANTI-ku-于-处所-比较与对象"
       ],
@@ -182,7 +182,7 @@
       "textbook_id": "GAOKAO-CHINESE-ZHUANTI",
       "cluster_id": "GAOKAO-CHINESE-ZHUANTI-kc-文言虚词",
       "name": "乃·才、于是与竟然",
-      "description": "[declarative]\nknow-what: “乃”可译为“才”（度我至军中，公乃入）、“于是、就”（乃使蒙恬北筑长城）、“竟然”（今其智乃反不能及）、“是”（当立者乃公子扶苏）。\n来源: 统编版高中语文必修下册·《鸿门宴》；必修上册·《师说》\n轨道: 积累",
+      "description": "[declarative]\nknow-what: “乃”可译为“才”（度我至军中，公乃入）、“于是、就”（乃使蒙恬北筑长城）、“竟然”（今其智乃反不能及）、“是”（当立者乃公子扶苏）。\n来源: 统编版高中语文必修下册·《鸿门宴》；必修上册·《师说》；选择性必修中册·《过秦论》\n轨道: 积累",
       "prerequisites": [],
       "related_kus": [],
       "difficulty": 0.5,
@@ -202,7 +202,7 @@
       "textbook_id": "GAOKAO-CHINESE-ZHUANTI",
       "cluster_id": "GAOKAO-CHINESE-ZHUANTI-kc-文言虚词",
       "name": "则·就、却与那么",
-      "description": "[declarative]\nknow-what: “则”表承接译为“就”（金就砺则利）；表转折译为“却”（于其身也，则耻师焉）；表假设译为“那么、就”（向吾不为斯役，则久已病矣）。\n来源: 统编版高中语文必修上册·《劝学》《师说》\n轨道: 积累",
+      "description": "[declarative]\nknow-what: “则”表承接译为“就”（金就砺则利）；表转折译为“却”（于其身也，则耻师焉）；表假设译为“那么、就”（入则无法家拂士，出则无敌国外患者）。\n来源: 统编版高中语文必修上册·《劝学》《师说》；八年级上册·《生于忧患，死于安乐》\n轨道: 积累",
       "prerequisites": [],
       "related_kus": [],
       "difficulty": 0.5,
@@ -242,7 +242,7 @@
       "textbook_id": "GAOKAO-CHINESE-ZHUANTI",
       "cluster_id": "GAOKAO-CHINESE-ZHUANTI-kc-文言虚词",
       "name": "乎·介词、词尾与语气",
-      "description": "[declarative]\nknow-what: “乎”作介词相当于“于”（君子博学而日参省乎己）；作词尾译为“……的样子”（浩浩乎如冯虚御风）；作语气词表疑问、反问或感叹（其皆出于此乎）。\n来源: 统编版高中语文必修上册·《劝学》；必修下册·《赤壁赋》\n轨道: 积累",
+      "description": "[declarative]\nknow-what: “乎”作介词相当于“于”（君子博学而日参省乎己）；作词尾译为“……的样子”（浩浩乎如冯虚御风）；作语气词表疑问、反问或感叹（其皆出于此乎）。\n来源: 统编版高中语文必修上册·《劝学》《赤壁赋》\n轨道: 积累",
       "prerequisites": [],
       "related_kus": [],
       "difficulty": 0.6,
@@ -262,7 +262,7 @@
       "textbook_id": "GAOKAO-CHINESE-ZHUANTI",
       "cluster_id": "GAOKAO-CHINESE-ZHUANTI-kc-文言虚词",
       "name": "者·判断标志与定语后置",
-      "description": "[declarative]\nknow-what: “者”作代词译为“……的人、……的事物”（假舟楫者）；放在主语后表停顿，与“也”构成判断句（廉颇者，赵之良将也）；还可作定语后置标志。\n来源: 统编版高中语文必修上册·《劝学》；必修下册·《廉颇蔺相如列传》\n轨道: 积累",
+      "description": "[declarative]\nknow-what: “者”作代词译为“……的人、……的事物”（假舟楫者）；放在主语后表停顿，与“也”构成判断句（师者，所以传道受业解惑也）；还可作定语后置标志（马之千里者）。\n来源: 统编版高中语文必修上册·《劝学》《师说》；八年级下册·《马说》\n轨道: 积累",
       "prerequisites": [],
       "related_kus": [
         "GAOKAO-CHINESE-ZHUANTI-ku-也-判断与肯定"
@@ -306,7 +306,7 @@
       "textbook_id": "GAOKAO-CHINESE-ZHUANTI",
       "cluster_id": "GAOKAO-CHINESE-ZHUANTI-kc-文言虚词",
       "name": "与·结交、赞同与和",
-      "description": "[declarative]\nknow-what: “与”作动词译为“结交”（与嬴而不助五国也）、“赞同”（吾与点也）、“给予”（蹴尔而与之）；作连词译为“和”（吾与汝毕力平险）；读 yù 时表“参与”。\n来源: 统编版高中语文必修下册·《六国论》；选择性必修下册·《子路、曾皙、冉有、公西华侍坐》\n轨道: 积累",
+      "description": "[declarative]\nknow-what: “与”作动词译为“结交”（与嬴而不助五国也）、“赞同”（吾与点也）、“给予”（蹴尔而与之）；作连词译为“和”（吾与汝毕力平险）；读 yù 时表“参与”。\n来源: 统编版高中语文必修下册·《六国论》《子路、曾皙、冉有、公西华侍坐》；九年级下册·《鱼我所欲也》；八年级上册·《愚公移山》\n轨道: 积累",
       "prerequisites": [],
       "related_kus": [],
       "difficulty": 0.6,
@@ -326,7 +326,7 @@
       "textbook_id": "GAOKAO-CHINESE-ZHUANTI",
       "cluster_id": "GAOKAO-CHINESE-ZHUANTI-kc-文言虚词",
       "name": "因·凭借、于是与通过",
-      "description": "[declarative]\nknow-what: “因”可译为“凭借、趁着”（因利乘便）、“依靠”（因人之力而敝之）、“于是”（因屏人曰）、“通过”（因宾客至蔺相如门谢罪）、“因为”。\n来源: 统编版高中语文必修下册·《鸿门宴》；选择性必修中册·《过秦论》\n轨道: 积累",
+      "description": "[declarative]\nknow-what: “因”可译为“凭借、趁着”（因利乘便）、“依靠”（因人之力而敝之）、“于是”（因舍船，从口入）、“通过”（因宾客至蔺相如门谢罪）、“因为”（恩所加，则思无因喜以谬赏）。\n来源: 统编版选择性必修中册·《过秦论》；必修下册·《烛之武退秦师》《谏太宗十思疏》；八年级下册·《桃花源记》；《廉颇蔺相如列传》（旧人教版，课外）\n轨道: 积累",
       "prerequisites": [],
       "related_kus": [],
       "difficulty": 0.6,
@@ -346,7 +346,7 @@
       "textbook_id": "GAOKAO-CHINESE-ZHUANTI",
       "cluster_id": "GAOKAO-CHINESE-ZHUANTI-kc-文言虚词",
       "name": "且·况且、尚且与将要",
-      "description": "[declarative]\nknow-what: “且”表递进译为“况且”（且壮士不死即已）；表让步译为“尚且”（臣死且不避）；表将来译为“将要”（不出，火且尽）；还可表“将近”。\n来源: 统编版高中语文必修下册·《鸿门宴》；必修上册·《赤壁赋》\n轨道: 积累",
+      "description": "[declarative]\nknow-what: “且”表递进译为“况且”（且壮士不死即已）；表让步译为“尚且”（臣死且不避）；表将来译为“将要”（若属皆且为所虏）；还可表“将近”（年且九十）。\n来源: 统编版高中语文必修下册·《鸿门宴》；九年级下册·《陈涉世家》；八年级上册·《愚公移山》\n轨道: 积累",
       "prerequisites": [],
       "related_kus": [],
       "difficulty": 0.6,
@@ -366,7 +366,7 @@
       "textbook_id": "GAOKAO-CHINESE-ZHUANTI",
       "cluster_id": "GAOKAO-CHINESE-ZHUANTI-kc-文言虚词",
       "name": "虽·即使与虽然如此",
-      "description": "[declarative]\nknow-what: “虽”表假设让步译为“即使”（虽董之以严刑）；表事实让步译为“虽然”（虽然，犹有未树也）；“虽然”连用常译为“虽然如此”。\n来源: 统编版高中语文必修下册·《谏太宗十思疏》；选择性必修上册·《老子》四章\n轨道: 积累",
+      "description": "[declarative]\nknow-what: “虽”表假设让步译为“即使”（虽董之以严刑）；“虽然”连用是固定结构，译为“虽然如此”（虽然，受地于先王）。\n来源: 统编版高中语文必修下册·《谏太宗十思疏》；九年级下册·《唐雎不辱使命》\n轨道: 积累",
       "prerequisites": [],
       "related_kus": [],
       "difficulty": 0.6,
@@ -386,7 +386,7 @@
       "textbook_id": "GAOKAO-CHINESE-ZHUANTI",
       "cluster_id": "GAOKAO-CHINESE-ZHUANTI-kc-文言虚词",
       "name": "遂·承接与最终结果",
-      "description": "[declarative]\nknow-what: “遂”表承接译为“于是、就”（遂与外人间隔）；表结果译为“终于、最终”（遂成枯落）；与“乃”相比更强调事情顺承完成。\n来源: 统编版高中语文必修下册·《项脊轩志》；选择性必修下册·《陈情表》\n轨道: 积累",
+      "description": "[declarative]\nknow-what: “遂”表承接译为“于是、就”（遂与外人间隔）；表结果译为“终于、最终”（遂成枯落）；与“乃”相比更强调事情顺承完成。\n来源: 统编版八年级下册·《桃花源记》；七年级上册·《诫子书》\n轨道: 积累",
       "prerequisites": [],
       "related_kus": [],
       "difficulty": 0.5,
@@ -406,7 +406,7 @@
       "textbook_id": "GAOKAO-CHINESE-ZHUANTI",
       "cluster_id": "GAOKAO-CHINESE-ZHUANTI-kc-文言虚词",
       "name": "何·什么、为什么与多么",
-      "description": "[declarative]\nknow-what: “何”作疑问代词译为“什么”（大王来何操）；作疑问副词译为“为什么”（何不按兵束甲）；作程度副词译为“多么”（水何澹澹）；“如……何”译为“把……怎么样”。\n来源: 统编版高中语文必修下册·《鸿门宴》；必修上册·《短歌行》\n轨道: 积累",
+      "description": "[declarative]\nknow-what: “何”作疑问代词译为“什么”（大王来何操）；作疑问副词译为“为什么”（何不按兵束甲）；作程度副词译为“多么”（水何澹澹）；“如……何”译为“把……怎么样”。\n来源: 统编版高中语文必修下册·《鸿门宴》；七年级上册·《观沧海》；《赤壁之战》（旧人教版，课外）\n轨道: 积累",
       "prerequisites": [],
       "related_kus": [],
       "difficulty": 0.5,
@@ -426,7 +426,7 @@
       "textbook_id": "GAOKAO-CHINESE-ZHUANTI",
       "cluster_id": "GAOKAO-CHINESE-ZHUANTI-kc-文言翻译与断句",
       "name": "高考文言翻译：直译为主",
-      "description": "[procedural]\nknow-what: 高考文言翻译的基本原则\nknow-how: 1.逐字落实关键词；2.能直译就直译；3.典故、修辞无法对应时意译；4.保持原句语气。\nknow-why: 高考按得分点给分，直译保证关键词落实，意译只处理无法直译的部分。\n实例: “臣所以去亲戚而事君者，徒慕君之高义也”逐字译出原因和“只”义。\n来源: 统编版高中语文必修下册·《廉颇蔺相如列传》\n轨道: 鉴赏",
+      "description": "[procedural]\nknow-what: 高考文言翻译的基本原则\nknow-how: 1.逐字落实关键词；2.能直译就直译；3.典故、修辞无法对应时意译；4.保持原句语气。\nknow-why: 高考按得分点给分，直译保证关键词落实，意译只处理无法直译的部分。\n实例: “臣所以去亲戚而事君者，徒慕君之高义也”逐字译出原因和“只”义。\n来源: 《廉颇蔺相如列传》（旧人教版，课外）\n轨道: 鉴赏",
       "prerequisites": [],
       "related_kus": [
         "GAOKAO-CHINESE-ZHUANTI-ku-高考文言翻译-六字操作法"
@@ -606,7 +606,7 @@
       "textbook_id": "GAOKAO-CHINESE-ZHUANTI",
       "cluster_id": "GAOKAO-CHINESE-ZHUANTI-kc-文言翻译与断句",
       "name": "文言翻译：得分点检查",
-      "description": "[procedural]\nknow-what: 翻译答案的自检清单\nknow-how: 1.关键词是否译出；2.虚词关系是否体现；3.句式是否转换；4.省略是否补足；5.语句是否通顺；6.是否改变原意。\nknow-why: 翻译失分多集中在关键词和句式，按清单逐项核对能减少低级错误。\n实例: 译完后回看“所以”“徒”“高义”是否落实。\n来源: 统编版高中语文必修下册·《廉颇蔺相如列传》\n轨道: 鉴赏",
+      "description": "[procedural]\nknow-what: 翻译答案的自检清单\nknow-how: 1.关键词是否译出；2.虚词关系是否体现；3.句式是否转换；4.省略是否补足；5.语句是否通顺；6.是否改变原意。\nknow-why: 翻译失分多集中在关键词和句式，按清单逐项核对能减少低级错误。\n实例: 译完后回看“所以”“徒”“高义”是否落实。\n来源: 《廉颇蔺相如列传》（旧人教版，课外）\n轨道: 鉴赏",
       "prerequisites": [
         "GAOKAO-CHINESE-ZHUANTI-ku-文言翻译-倒装与省略"
       ],
@@ -650,7 +650,7 @@
       "textbook_id": "GAOKAO-CHINESE-ZHUANTI",
       "cluster_id": "GAOKAO-CHINESE-ZHUANTI-kc-文言内容概括",
       "name": "高考文言概括：人物形象",
-      "description": "[procedural]\nknow-what: 概括文言人物形象的方法\nknow-how: 1.找出主要事件；2.圈出语言、动作、神态；3.用形容词概括性格；4.用原文证据支撑。\nknow-why: 人物形象由具体言行构成，先证据后结论才能避免空泛。\n实例: 《廉颇蔺相如列传》中蔺相如机智勇敢、顾全大局。\n来源: 统编版高中语文必修下册·《廉颇蔺相如列传》\n轨道: 鉴赏",
+      "description": "[procedural]\nknow-what: 概括文言人物形象的方法\nknow-how: 1.找出主要事件；2.圈出语言、动作、神态；3.用形容词概括性格；4.用原文证据支撑。\nknow-why: 人物形象由具体言行构成，先证据后结论才能避免空泛。\n实例: 《廉颇蔺相如列传》中蔺相如机智勇敢、顾全大局。\n来源: 《廉颇蔺相如列传》（旧人教版，课外）\n轨道: 鉴赏",
       "prerequisites": [],
       "related_kus": [],
       "difficulty": 0.6,
@@ -1014,7 +1014,7 @@
       "textbook_id": "GAOKAO-CHINESE-ZHUANTI",
       "cluster_id": "GAOKAO-CHINESE-ZHUANTI-kc-名篇名句默写",
       "name": "《蜀道难》·蜀道之难，难于上青天",
-      "description": "[declarative]\nknow-what: 名句：“蜀道之难，难于上青天！”易错字：蜀、难。该句在诗中反复出现，注意三次出现的位置和语气。\n来源: 统编版高中语文必修下册·《蜀道难》\n轨道: 积累",
+      "description": "[declarative]\nknow-what: 名句：“蜀道之难，难于上青天！”易错字：蜀、难。该句在诗中反复出现，注意三次出现的位置和语气。\n来源: 统编版高中语文选择性必修下册·《蜀道难》\n轨道: 积累",
       "prerequisites": [],
       "related_kus": [],
       "difficulty": 0.4,

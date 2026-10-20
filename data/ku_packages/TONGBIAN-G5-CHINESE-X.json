@@ -100,7 +100,7 @@
     {
       "id": "TONGBIAN-G5-CHINESE-X-ku-文言字词-吾-曰-弗-莫",
       "textbook_id": "TONGBIAN-G5-CHINESE-X",
-      "cluster_id": "TONGBIAN-G5-CHINESE-X-kc-识字与写字",
+      "cluster_id": "TONGBIAN-G5-CHINESE-X-kc-古诗文积累",
       "name": "文言字词：吾、曰、弗、莫",
       "description": "[declarative]\nknow-what: “吾”是第一人称“我”；“曰”是“说”；“弗”是“不”；“莫”是“不要、没有谁”。这些词在《自相矛盾》《杨氏之子》等短文中反复出现。\n来源: 统编版五年级下册·第六、八单元\n轨道: 积累",
       "prerequisites": [],
@@ -360,7 +360,7 @@
     {
       "id": "TONGBIAN-G5-CHINESE-X-ku-文言文翻译-留-换-补",
       "textbook_id": "TONGBIAN-G5-CHINESE-X",
-      "cluster_id": "TONGBIAN-G5-CHINESE-X-kc-梳理与探究",
+      "cluster_id": "TONGBIAN-G5-CHINESE-X-kc-古诗文积累",
       "name": "文言文翻译：留、换、补",
       "description": "[procedural]\nknow-what: 文言句子翻译的基本方法\nknow-how: 1.留：人名、地名、年号照抄；2.换：古词换成现代词；3.补：补出省略的主语或宾语；4.检查句子是否通顺。\nknow-why: 文言省略多、词义古，逐字硬译会不通，必须补足成分并调整语序。\n实例: “杨氏之子九岁，甚聪惠”译为“杨家的孩子九岁，非常聪明”。\n来源: 统编版五年级下册·第八单元·杨氏之子\n轨道: 鉴赏",
       "prerequisites": [],

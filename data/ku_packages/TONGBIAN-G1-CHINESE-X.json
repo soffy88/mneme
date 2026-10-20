@@ -98,11 +98,11 @@
       "verified": false
     },
     {
-      "id": "TONGBIAN-G1-CHINESE-X-ku-同音字与形近字-午-牛-刀-力-人-入-玉-主",
+      "id": "TONGBIAN-G1-CHINESE-X-ku-形近字-午-牛-刀-力-人-入-玉-主",
       "textbook_id": "TONGBIAN-G1-CHINESE-X",
       "cluster_id": "TONGBIAN-G1-CHINESE-X-kc-识字与写字",
-      "name": "同音字与形近字：午/牛、刀/力、人/入、玉/主",
-      "description": "[declarative]\nknow-what: 这些字音同或形近而意义不同：午（中午）与牛（水牛），刀（小刀）与力（力气），人（人们）与入（进入），玉（玉石）与主（主人）。\n来源: 统编版一年级下册·第八单元·语文园地八\n轨道: 积累",
+      "name": "形近字：午/牛、刀/力、人/入、玉/主",
+      "description": "[declarative]\nknow-what: 这些字形近而意义不同：午（中午）与牛（水牛），刀（小刀）与力（力气），人（人们）与入（进入），玉（玉石）与主（主人）。\n来源: 统编版一年级下册·第八单元·语文园地八\n轨道: 积累",
       "prerequisites": [],
       "related_kus": [],
       "difficulty": 0.3,
