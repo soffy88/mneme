@@ -1,0 +1,64 @@
+{
+  "textbook": {
+    "id": "RENJIAO-G11-ENGLISH-BX3",
+    "subject": "english",
+    "grade": "G11",
+    "edition": "RENJIAO",
+    "book_name": "人教版高中英语必修第三册"
+  },
+  "clusters": [
+    {
+      "id": "RENJIAO-G11-ENGLISH-BX3-kc-省略句",
+      "name": "省略句",
+      "display_order": 1,
+      "description": "必修三 Unit 3、Unit 5：状语从句、并列句与不定式中的省略"
+    }
+  ],
+  "units": [
+    {
+      "id": "RENJIAO-G11-ENGLISH-BX3-ku-省略句",
+      "textbook_id": "RENJIAO-G11-ENGLISH-BX3",
+      "cluster_id": "RENJIAO-G11-ENGLISH-BX3-kc-省略句",
+      "name": "省略句",
+      "description": "在不影响理解的前提下省略重复或已知成分，常见于状语从句、并列句、比较结构、不定式和口语答语。状语从句省略的前提是从句主语与主句一致且谓语含 be 动词；不定式省略时保留 to。省略后必须保持语法关系清楚。\n【教材】人教版高中英语必修第三册 Unit 3、Unit 5（省略结构）\n【课标】高中英语课标2017/2020 必修 语法：省略",
+      "prerequisites": [],
+      "related_kus": [
+        "RENJIAO-G12-ENGLISH-SBX4-ku-状语从句的复习与运用"
+      ],
+      "difficulty": 0.55,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": "高中英语课标（2017年版2020年修订）·必修·语法：省略",
+      "mastery_levels": [],
+      "rich_content": {
+        "definition": "省略句是在不影响理解的前提下省去句中重复或已知成分的句式，常见于状语从句、并列句、比较结构、不定式和口语答语。",
+        "key_points": [
+          "⚠️ 状语从句省略的条件：从句主语与主句主语一致，且从句谓语含 be 动词，可省去“主语 + be”。",
+          "⚠️ 并列句省略重复的谓语或宾语；比较结构省略与主句相同的部分。",
+          "⚠️ 不定式省略时保留 to，如 I asked him to, but he didn't want to。"
+        ],
+        "examples": [
+          "While (he was) reading, he took notes.",
+          "If (it is) necessary, we will call you.",
+          "He can swim, and so can his sister.",
+          "You may go if you want to."
+        ],
+        "intuition": "省略不是丢信息，而是把对方已经知道的部分留白；判断能否省略，关键看省掉后句子是否仍然清楚、语法是否完整。",
+        "connections": "以状语从句、并列句、比较结构和不定式为基础；与倒装、强调结构同属“语序与信息安排”的句法手段。",
+        "common_mistakes": [
+          "从句主语与主句不一致时省略主语，造成歧义。",
+          "省略 be 动词后留下不完整的谓语，如 While reading the book was interesting。",
+          "不定式省略时把 to 一起丢掉，如 I didn't want。"
+        ],
+        "counter_examples": "“While walking in the park, the flowers looked beautiful.” 中 walking 的逻辑主语是人，与主句主语 flowers 不一致，属于悬垂分词，不能这样省略。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    }
+  ]
+}

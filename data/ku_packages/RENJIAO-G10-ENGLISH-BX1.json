@@ -1,0 +1,64 @@
+{
+  "textbook": {
+    "id": "RENJIAO-G10-ENGLISH-BX1",
+    "subject": "english",
+    "grade": "G10",
+    "edition": "RENJIAO",
+    "book_name": "人教版高中英语必修第一册"
+  },
+  "clusters": [
+    {
+      "id": "RENJIAO-G10-ENGLISH-BX1-kc-过去将来时",
+      "name": "过去将来时",
+      "display_order": 1,
+      "description": "必修一：从过去看将来的 would / was going to 等表达"
+    }
+  ],
+  "units": [
+    {
+      "id": "RENJIAO-G10-ENGLISH-BX1-ku-过去将来时",
+      "textbook_id": "RENJIAO-G10-ENGLISH-BX1",
+      "cluster_id": "RENJIAO-G10-ENGLISH-BX1-kc-过去将来时",
+      "name": "过去将来时",
+      "description": "从过去某一时间看将要发生的动作或状态，常用 would + 动词原形、was/were going to + 动词原形、was/were about to + 动词原形、was/were to + 动词原形。多用于宾语从句、间接引语和记叙文中的计划安排；was/were about to 通常不与具体时间状语连用。\n【教材】人教版高中英语必修第一册（课标必修语法：过去将来时）\n【课标】高中英语课标2017/2020 必修 语法：过去将来时",
+      "prerequisites": [],
+      "related_kus": [
+        "RENJIAO-G12-ENGLISH-SBX4-ku-虚拟语气"
+      ],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": "高中英语课标（2017年版2020年修订）·必修·语法：过去将来时",
+      "mastery_levels": [],
+      "rich_content": {
+        "definition": "过去将来时表示从过去某一时间看将要发生的动作或状态，常见形式有 would do、was/were going to do、was/were about to do、was/were to do。",
+        "key_points": [
+          "⚠️ would + 动词原形最常用，多用于宾语从句和间接引语。",
+          "⚠️ was/were going to do 表示过去的计划或打算；was/were about to do 表示“正要”，通常不与具体时间状语连用。",
+          "⚠️ 判断依据是“站在过去看将来”，常与 said, thought, knew, hoped 等过去时动词搭配。"
+        ],
+        "examples": [
+          "He said he would come the next day.",
+          "She was going to visit her aunt, but it rained.",
+          "We were about to leave when the phone rang.",
+          "They were to meet at the station at seven."
+        ],
+        "intuition": "把时间轴往回拨到过去某一点，再从那里往右看：那条“未来线”上的动作就用过去将来时。",
+        "connections": "以一般将来时（will/be going to）和一般过去时为基础；与宾语从句时态呼应、间接引语和虚拟语气中的 would 用法相互参照。",
+        "common_mistakes": [
+          "把“过去的将来”写成 will do，忽略时态呼应。",
+          "was about to 后接具体时间，如 was about to leave at 8 o'clock（通常应说 was going to leave at 8）。",
+          "混淆 would do（过去的将来/意愿）与 used to do（过去常常）。"
+        ],
+        "counter_examples": "“He said he will come.” 在间接引语中通常应改为 “He said he would come.”；但客观真理例外，如 “He said the sun rises in the east.”"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    }
+  ]
+}

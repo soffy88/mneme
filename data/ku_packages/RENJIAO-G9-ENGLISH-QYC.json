@@ -1,0 +1,358 @@
+{
+  "textbook": {
+    "id": "RENJIAO-G9-ENGLISH-QYC",
+    "subject": "english",
+    "grade": "G9",
+    "edition": "RENJIAO",
+    "book_name": "人教版英语九年级全一册"
+  },
+  "clusters": [
+    {
+      "id": "RENJIAO-G9-ENGLISH-QYC-kc-倒装句-so-neither",
+      "name": "倒装句（so/neither）",
+      "display_order": 1,
+      "description": "九年级全一册·中考复习：so/neither 表示“也一样”的倒装"
+    },
+    {
+      "id": "RENJIAO-G9-ENGLISH-QYC-kc-感叹句",
+      "name": "感叹句（what/how）",
+      "display_order": 2,
+      "description": "九年级全一册·中考复习：what/how 引导的感叹句"
+    },
+    {
+      "id": "RENJIAO-G9-ENGLISH-QYC-kc-反意疑问句",
+      "name": "反意疑问句",
+      "display_order": 3,
+      "description": "九年级全一册·中考复习：前肯后否、前否后肯的附加问句"
+    },
+    {
+      "id": "RENJIAO-G9-ENGLISH-QYC-kc-虚拟语气初步",
+      "name": "虚拟语气（初步）",
+      "display_order": 4,
+      "description": "九年级全一册·中考复习：If I were you, I would ... 与 wish 从句"
+    },
+    {
+      "id": "RENJIAO-G9-ENGLISH-QYC-kc-完形填空",
+      "name": "完形填空（中考）",
+      "display_order": 5,
+      "description": "九年级全一册·中考复习：完形填空的语篇解题流程"
+    },
+    {
+      "id": "RENJIAO-G9-ENGLISH-QYC-kc-补全对话",
+      "name": "补全对话",
+      "display_order": 6,
+      "description": "九年级全一册·中考复习：情景对话的问答配对与衔接"
+    },
+    {
+      "id": "RENJIAO-G9-ENGLISH-QYC-kc-短文改错与信息还原",
+      "name": "短文改错与信息还原",
+      "display_order": 7,
+      "description": "九年级全一册·中考复习：逐行改错与还原句子"
+    }
+  ],
+  "units": [
+    {
+      "id": "RENJIAO-G9-ENGLISH-QYC-ku-倒装句-so-neither",
+      "textbook_id": "RENJIAO-G9-ENGLISH-QYC",
+      "cluster_id": "RENJIAO-G9-ENGLISH-QYC-kc-倒装句-so-neither",
+      "name": "倒装句（so/neither 结构）",
+      "description": "表示前句所说的情况也适用于另一主语：肯定用 So + 助动词 + 主语，否定用 Neither/Nor + 助动词 + 主语。助动词的时态与前句一致，人称和数由新主语决定；前句谓语是实义动词时用 do/does/did。\n【教材】人教版英语九年级全一册 中考复习（so/neither 倒装）\n【课标】义教英语课标2022 三级 语法：倒装（so/neither 等）",
+      "prerequisites": [],
+      "related_kus": [
+        "RENJIAO-G12-ENGLISH-SBX4-ku-倒装句"
+      ],
+      "difficulty": 0.45,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": "义教英语课标2022·三级·语法：倒装（so/neither 等）",
+      "mastery_levels": [],
+      "rich_content": {
+        "definition": "so/neither 倒装用于表示前句所说的情况同样适用于另一主语：肯定用 So + 助动词 + 主语，否定用 Neither/Nor + 助动词 + 主语。",
+        "key_points": [
+          "⚠️ 助动词与前句谓语一致：be 用 be，情态动词用情态动词，实义动词用 do/does/did。",
+          "⚠️ 助动词的人称和数由新主语决定，不由前句主语决定。",
+          "⚠️ So + 主语 + 助动词 不是倒装，表示确认“确实如此”，两者语序不同。"
+        ],
+        "examples": [
+          "—I like playing basketball. —So do I.",
+          "—She can't swim. —Neither can he.",
+          "—Tom watched the film last night. —So did Mary."
+        ],
+        "intuition": "倒装就像把“我也一样”压缩成一句：先把助动词搬到主语前面，再用新主语接上。",
+        "connections": "以一般现在时、一般过去时、情态动词和 be 动词为基础；与 so/neither 的确认用法、反意疑问句的附加问句相互参照。",
+        "common_mistakes": [
+          "—I am tired. —So do I.（应为 So am I.）",
+          "—He doesn't like coffee. —Neither he does.（应为 Neither does he.）",
+          "把 So do I 与 So I do 混用。"
+        ],
+        "counter_examples": "“So I do.” 不是“我也一样”，而是“我确实如此”，用于回应对方的判断；表示“我也一样”必须倒装为 “So do I.”"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G9-ENGLISH-QYC-ku-反意疑问句",
+      "textbook_id": "RENJIAO-G9-ENGLISH-QYC",
+      "cluster_id": "RENJIAO-G9-ENGLISH-QYC-kc-反意疑问句",
+      "name": "反意疑问句",
+      "description": "陈述句后附加简短问句，遵循前肯后否、前否后肯；附加部分主语用人称代词，助动词与前句时态、人称一致。含 never/hardly/little/few/nothing 等否定词时按否定句处理；Let's 用 shall we，祈使句用 will you，I am 用 aren't I。\n【教材】人教版英语九年级全一册 中考复习（反意疑问句）\n【课标】义教英语课标2022 三级 语法：反意疑问句",
+      "prerequisites": [],
+      "related_kus": [],
+      "difficulty": 0.45,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": "义教英语课标2022·三级·语法：反意疑问句",
+      "mastery_levels": [],
+      "rich_content": {
+        "definition": "反意疑问句由陈述句加简短附加问句构成，用于确认或征求对方看法，遵循前肯后否、前否后肯。",
+        "key_points": [
+          "⚠️ 附加问句的主语用人称代词，助动词与前句时态、人称一致。",
+          "⚠️ never/hardly/little/few/nothing 等含否定意义，按否定句处理，附加部分用肯定。",
+          "⚠️ Let's 用 shall we；祈使句用 will you；I am 用 aren't I。"
+        ],
+        "examples": [
+          "You are a student, aren't you?",
+          "She doesn't like coffee, does she?",
+          "Let's go home, shall we?",
+          "Open the window, will you?"
+        ],
+        "intuition": "附加问句像句尾的“对吧？”：前句肯定就反过来问否定，前句否定就反过来问肯定。",
+        "connections": "以 be 动词、助动词、情态动词和一般现在时/过去时为基础；与 so/neither 倒装、一般疑问句的回答方式相互参照。",
+        "common_mistakes": [
+          "She hardly speaks English, doesn't she?（hardly 否定，应用 does she）",
+          "Let's go, will we?（应为 shall we）",
+          "按问句形式回答反意疑问句，而不是按事实回答。"
+        ],
+        "counter_examples": "“You didn't finish it, did you?” 若实际完成了，应回答 “Yes, I did.”，不能因为问句是否定式就回答 “No, I did.”"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G9-ENGLISH-QYC-ku-完形填空",
+      "textbook_id": "RENJIAO-G9-ENGLISH-QYC",
+      "cluster_id": "RENJIAO-G9-ENGLISH-QYC-kc-完形填空",
+      "name": "完形填空（中考）",
+      "description": "先通读全文抓主旨、人物关系和情感基调，再逐空结合上下文语义、固定搭配、语法形式和逻辑关系选词。每空选项通常词性一致，先排除搭配或语义明显不符项，最后复读检查人称、时态、连词和代词指代是否贯通。\n【题型】中考英语完形填空（九年级全一册复习）",
+      "prerequisites": [],
+      "related_kus": [
+        "RENJIAO-G9-ENGLISH-QYC-ku-短文改错与信息还原"
+      ],
+      "difficulty": 0.5,
+      "exam_frequency": "high",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "method",
+      "curriculum_standard": "义教英语课标2022·三级·语篇：完形填空",
+      "mastery_levels": [],
+      "rich_content": {
+        "definition": "完形填空是在一篇短文中留出若干空格，要求根据上下文从选项中选出最佳词项，综合考查词汇、语法和语篇理解。",
+        "key_points": [
+          "⚠️ 先通读全文，抓住主旨、人物关系和情感基调，不看选项。",
+          "⚠️ 逐空从上下文语义、固定搭配、语法形式和逻辑关系四个角度判断。",
+          "⚠️ 最后带入选项复读，检查人称、时态、连词和代词指代是否贯通。"
+        ],
+        "examples": [
+          "通读时发现文章讲“一次失败后重新尝试”，第 3 空选 brave 而不是 lazy，因为后文写他再次站上跑道。",
+          "空格前是 enjoy，后接动名词，选项中只有 reading 符合 enjoy doing 的搭配。",
+          "两个分句之间是转折关系，因此选 but 而不是 so。"
+        ],
+        "intuition": "完形像拼一幅被挖掉几块的图：先看整幅画的主题，再根据周围颜色和线条补块，不能只盯着一块。",
+        "connections": "以词汇搭配、时态语态、连词和代词为基础；与阅读理解、语法填空共用“先通读、再定位、后复读”的语篇策略。",
+        "common_mistakes": [
+          "逐句作答，不看上下文，导致前后时态或人称矛盾。",
+          "只凭汉语意思选词，忽略英语固定搭配。",
+          "改完不回读，漏掉连词和代词指代错误。"
+        ],
+        "counter_examples": "某空单句填 interesting 也通顺，但全文在讲“危险”，此处应选 dangerous；完形必须以全文主线为准。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G9-ENGLISH-QYC-ku-感叹句",
+      "textbook_id": "RENJIAO-G9-ENGLISH-QYC",
+      "cluster_id": "RENJIAO-G9-ENGLISH-QYC-kc-感叹句",
+      "name": "感叹句（what/how）",
+      "description": "用 what 或 how 表达强烈情感：what 修饰名词短语，how 修饰形容词、副词或整个句子。what 句注意单数可数名词前冠词不能省，how 后形容词或副词紧跟；感叹句用陈述语序，口语中可省略主语和谓语。\n【教材】人教版英语九年级全一册 中考复习（感叹句）\n【课标】义教英语课标2022 三级 语法：感叹句",
+      "prerequisites": [],
+      "related_kus": [],
+      "difficulty": 0.35,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": "义教英语课标2022·三级·语法：感叹句",
+      "mastery_levels": [],
+      "rich_content": {
+        "definition": "感叹句用 what 或 how 表达强烈情感：what 修饰名词，how 修饰形容词、副词或句子。",
+        "key_points": [
+          "⚠️ what 句结构：What + a/an + 形容词 + 单数可数名词 + 主语 + 谓语！What + 形容词 + 复数/不可数名词 + ...！",
+          "⚠️ how 句结构：How + 形容词/副词 + 主语 + 谓语！How + 主语 + 谓语！",
+          "⚠️ 感叹句用陈述语序，不倒装；口语可省略主语和谓语。"
+        ],
+        "examples": [
+          "What a beautiful garden it is!",
+          "What clean water it is!",
+          "How fast the boy runs!",
+          "How time flies!"
+        ],
+        "intuition": "what 后面跟“东西”，how 后面跟“程度”；先看感叹中心是名词还是形容词/副词，再选引导词。",
+        "connections": "以名词短语、形容词和副词为基础；与 so/such 结构、how 引导的疑问句区分。",
+        "common_mistakes": [
+          "What a beautiful garden is it!（应为 it is，陈述语序）",
+          "How a beautiful garden it is!（how 不修饰名词短语）",
+          "What clean water is it!（不可数名词不加 a/an，语序也错）"
+        ],
+        "counter_examples": "“How beautiful the garden is!” 与 “What a beautiful garden it is!” 同义，但前者感叹形容词 beautiful，后者感叹名词短语 a beautiful garden。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G9-ENGLISH-QYC-ku-短文改错与信息还原",
+      "textbook_id": "RENJIAO-G9-ENGLISH-QYC",
+      "cluster_id": "RENJIAO-G9-ENGLISH-QYC-kc-短文改错与信息还原",
+      "name": "短文改错与信息还原",
+      "description": "短文改错逐行排查名词单复数、动词时态与语态、主谓一致、冠词、介词、代词、连词、形容词副词和固定搭配；信息还原先看空格位置与前后句逻辑，再用代词指代、关键词复现和段落主旨验证选项。两类题都先通读、后修改、再回读。\n【题型】中考英语短文改错/信息还原（部分省市，九年级全一册复习）",
+      "prerequisites": [],
+      "related_kus": [],
+      "difficulty": 0.5,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "method",
+      "curriculum_standard": "义教英语课标2022·中考题型：短文改错/信息还原",
+      "mastery_levels": [],
+      "rich_content": {
+        "definition": "短文改错要求逐行找出并改正语法、词汇和搭配错误；信息还原要求从选项中选出句子填入短文空格，使语篇完整。",
+        "key_points": [
+          "⚠️ 短文改错按“名词—动词—冠词—介词—代词—连词—形容词/副词—固定搭配”顺序逐行排查。",
+          "⚠️ 信息还原先看空格位置和前后句逻辑，再用代词指代、关键词复现和段落主旨验证。",
+          "⚠️ 两类题都先通读、后修改、再回读，确保改后语义不变。"
+        ],
+        "examples": [
+          "短文改错：He go to school by bike every day. → go 改为 goes（主谓一致）。",
+          "信息还原：空格后出现 “They are also good for the environment.”，说明前句应提到复数事物，选项中的 “These bags” 可与之衔接。",
+          "短文改错：I'm interesting in music. → interesting 改为 interested（-ed 修饰人）。"
+        ],
+        "intuition": "短文改错像体检，按器官逐项排查；信息还原像拼图，先看缺口形状，再看相邻块的颜色和线条。",
+        "connections": "以主谓一致、时态、非谓语、冠词、介词和代词为基础；与完形填空、语法填空共享语篇衔接策略。",
+        "common_mistakes": [
+          "只改单词不改形式，或一行改多处。",
+          "信息还原只看单句通顺，不看段间逻辑和代词指代。",
+          "改后不回读，造成新的语法错误。"
+        ],
+        "counter_examples": "信息还原中某选项单看语法正确，但代词 they 在上下文中无指代对象，仍不能选。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G9-ENGLISH-QYC-ku-虚拟语气初步",
+      "textbook_id": "RENJIAO-G9-ENGLISH-QYC",
+      "cluster_id": "RENJIAO-G9-ENGLISH-QYC-kc-虚拟语气初步",
+      "name": "虚拟语气（初步）",
+      "description": "初中阶段重点掌握两类：If I were you, I would ... 表示与现在事实相反的假设；wish + 过去式/过去完成式表示愿望或遗憾。if 从句用过去式（be 动词统一用 were），主句用 would/could/might + 动词原形；不要与“主将从现”的真实条件句混用。\n【教材】人教版英语九年级全一册 中考复习（虚拟语气初步）\n【课标】义教英语课标2022 三级 语法：虚拟语气（初步）",
+      "prerequisites": [],
+      "related_kus": [
+        "RENJIAO-G12-ENGLISH-SBX4-ku-虚拟语气"
+      ],
+      "difficulty": 0.55,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": "义教英语课标2022·三级·语法：虚拟语气（初步）",
+      "mastery_levels": [],
+      "rich_content": {
+        "definition": "虚拟语气表示与事实相反或可能性很小的假设、愿望，初中阶段重点掌握 If I were you, I would ... 和 wish + 过去式/过去完成式。",
+        "key_points": [
+          "⚠️ 与现在事实相反：if 从句用一般过去时，be 动词统一用 were；主句用 would/could/might + 动词原形。",
+          "⚠️ wish 后表示现在愿望用过去式，表示过去遗憾用 had done。",
+          "⚠️ 真实条件句遵循“主将从现”，虚拟条件句不遵循。"
+        ],
+        "examples": [
+          "If I were you, I would ask the teacher for help.",
+          "If it rained tomorrow, we would stay at home.",
+          "I wish I could fly.",
+          "I wish I had studied harder."
+        ],
+        "intuition": "虚拟语气说的是“假如/要是”，不是真会发生的事；所以时态往过去退一步，表示距离现实。",
+        "connections": "以一般过去时、过去完成时和条件状语从句为基础；高中阶段扩展为与过去、将来相反的完整虚拟体系。",
+        "common_mistakes": [
+          "If I was you, I would ...（正式语境用 were）",
+          "If I were you, I will ...（主句应用 would）",
+          "把 If it rains tomorrow, we will ... 当成虚拟语气。"
+        ],
+        "counter_examples": "“If it rains tomorrow, we will stay at home.” 是真实条件句，说话人认为可能下雨；虚拟语气应说 “If it rained tomorrow, we would stay at home.”"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G9-ENGLISH-QYC-ku-补全对话",
+      "textbook_id": "RENJIAO-G9-ENGLISH-QYC",
+      "cluster_id": "RENJIAO-G9-ENGLISH-QYC-kc-补全对话",
+      "name": "补全对话",
+      "description": "根据对话情境和上下文，选出或写出符合交际意图的句子，使对话连贯。先判断双方关系、场合和交际意图，再抓问答配对、礼貌程度与指代衔接；一般疑问句用 Yes/No 回答，特殊疑问句用具体信息回答。\n【题型】中考英语补全对话（九年级全一册复习）",
+      "prerequisites": [],
+      "related_kus": [],
+      "difficulty": 0.35,
+      "exam_frequency": "high",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "method",
+      "curriculum_standard": "义教英语课标2022·三级·语篇：补全对话",
+      "mastery_levels": [],
+      "rich_content": {
+        "definition": "补全对话要求根据对话情境和上下文，选出或写出使对话连贯、得体的句子，考查交际用语和语篇衔接。",
+        "key_points": [
+          "⚠️ 先判断对话双方关系、场合和交际意图（购物、问路、打电话、看病、邀请等）。",
+          "⚠️ 抓问答配对：一般疑问句用 Yes/No 回答，特殊疑问句用具体信息回答。",
+          "⚠️ 注意礼貌程度、指代和时态一致，选项中的代词要能在上下文中找到指代对象。"
+        ],
+        "examples": [
+          "—Would you like to go with us? —Yes, I'd love to.",
+          "—How far is it from here? —About ten minutes' walk.",
+          "—Could I speak to Mr. Green? —Hold on, please."
+        ],
+        "intuition": "补全对话像接电话：对方问什么，你就答什么；对方用什么语气，你就用什么语气。",
+        "connections": "以问候、请求、邀请、道歉、购物、问路、打电话等交际功能为基础；与听力对话和口语表达相互支撑。",
+        "common_mistakes": [
+          "答非所问：问 How far 却回答时间。",
+          "忽略礼貌程度，对长辈用过于随意的表达。",
+          "选项代词指代不清，或时态与上文不一致。"
+        ],
+        "counter_examples": "—How long have you been here? 回答 “Two kilometers.” 是答非所问；应回答时间段，如 “For two days.”"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    }
+  ]
+}

@@ -1,0 +1,315 @@
+{
+  "textbook": {
+    "id": "GAOKAO-ENGLISH-GAOKAO",
+    "subject": "english",
+    "grade": "G12",
+    "edition": "高考备考",
+    "book_name": "高考备考·英语题型"
+  },
+  "clusters": [
+    {
+      "id": "GAOKAO-ENGLISH-GAOKAO-kc-概要写作",
+      "name": "高考题型·概要写作",
+      "display_order": 1,
+      "description": "部分省市高考题型：约 60 词语篇概要"
+    },
+    {
+      "id": "GAOKAO-ENGLISH-GAOKAO-kc-七选五",
+      "name": "高考题型·七选五",
+      "display_order": 2,
+      "description": "高考阅读理解七选五（语篇填空）"
+    },
+    {
+      "id": "GAOKAO-ENGLISH-GAOKAO-kc-语法填空",
+      "name": "高考题型·语法填空",
+      "display_order": 3,
+      "description": "高考语法填空（有提示词/无提示词）"
+    },
+    {
+      "id": "GAOKAO-ENGLISH-GAOKAO-kc-读后续写",
+      "name": "高考题型·读后续写",
+      "display_order": 4,
+      "description": "高考读后续写（两段、给定首句）"
+    },
+    {
+      "id": "GAOKAO-ENGLISH-GAOKAO-kc-完形填空",
+      "name": "高考题型·完形填空",
+      "display_order": 5,
+      "description": "高考完形填空"
+    },
+    {
+      "id": "GAOKAO-ENGLISH-GAOKAO-kc-短文改错",
+      "name": "高考题型·短文改错",
+      "display_order": 6,
+      "description": "部分省市高考题型：短文改错"
+    }
+  ],
+  "units": [
+    {
+      "id": "GAOKAO-ENGLISH-GAOKAO-ku-七选五",
+      "textbook_id": "GAOKAO-ENGLISH-GAOKAO",
+      "cluster_id": "GAOKAO-ENGLISH-GAOKAO-kc-七选五",
+      "name": "七选五",
+      "description": "从七个选项中选出五个填入短文空格，使语篇完整连贯。先读首段和空格前后句确定话题与结构，再按空格位置判断功能（主题句、承接句、转折句、总结句），利用代词指代、关键词复现、同义替换、逻辑连接和标点线索匹配选项，最后通读检查段内与段间逻辑。\n【题型】高考英语七选五（语篇填空）",
+      "prerequisites": [],
+      "related_kus": [
+        "GAOKAO-ENGLISH-GAOKAO-ku-完形填空"
+      ],
+      "difficulty": 0.6,
+      "exam_frequency": "high",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "method",
+      "curriculum_standard": "高考题型：七选五（语篇填空）",
+      "mastery_levels": [],
+      "rich_content": {
+        "definition": "七选五从七个选项中选出五个填入短文空格，使语篇完整连贯，重点考查语篇结构、衔接手段和逻辑关系。",
+        "key_points": [
+          "⚠️ 先读首段和空格前后句，确定话题、文体和段落结构。",
+          "⚠️ 按空格位置判断功能：段首多为主题句，段中多为承接/转折/例证，段尾多为总结或过渡。",
+          "⚠️ 利用代词指代、关键词复现、同义替换、逻辑连接词和标点线索匹配选项，最后通读验证。"
+        ],
+        "examples": [
+          "空格后一句以 “These methods” 开头，说明空格处应提到复数的方法，选项中含 “Two practical methods” 的句子可入选。",
+          "空格前说 “Some people prefer online learning.”，空格后说 “Others value face-to-face communication.”，中间应选含转折/并列关系的句子。",
+          "段尾空格后是下一段主题，空格处应选承上启下的过渡句。"
+        ],
+        "intuition": "七选五像给文章补上被抽走的积木：先看缺口在墙的哪个位置，再用形状（句式）和颜色（关键词）找唯一匹配的块。",
+        "connections": "以段落结构、指代、连接词和同义替换为基础；与完形填空、阅读理解中的语篇衔接题共享策略。",
+        "common_mistakes": [
+          "只看单句通顺，不看段间逻辑。",
+          "忽略代词和定冠词 the 的指代线索。",
+          "先入为主选一个，后面不回头调整。"
+        ],
+        "counter_examples": "某选项单句语法正确，但其中 “this problem” 在空格前找不到对应问题，仍不能选。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "GAOKAO-ENGLISH-GAOKAO-ku-完形填空",
+      "textbook_id": "GAOKAO-ENGLISH-GAOKAO",
+      "cluster_id": "GAOKAO-ENGLISH-GAOKAO-kc-完形填空",
+      "name": "完形填空（高考）",
+      "description": "通读全文把握主旨、人物和情感走向，再逐空从上下文、词汇搭配、语法结构和逻辑关系四个维度判断；先易后难，利用复现、同义反义、代词指代和连词确定语义场，最后带入选项复读，检查时态、人称、褒贬色彩和段落衔接。\n【题型】高考英语完形填空",
+      "prerequisites": [],
+      "related_kus": [
+        "GAOKAO-ENGLISH-GAOKAO-ku-七选五"
+      ],
+      "difficulty": 0.6,
+      "exam_frequency": "high",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "method",
+      "curriculum_standard": "高考题型：完形填空",
+      "mastery_levels": [],
+      "rich_content": {
+        "definition": "高考完形填空在语篇中留出若干空格，要求从选项中选出最佳词项，综合考查词汇搭配、语法、逻辑关系和语篇理解。",
+        "key_points": [
+          "⚠️ 先通读全文，把握主旨、人物、情感和结构，不看选项。",
+          "⚠️ 逐空从上下文语义、词汇搭配、语法结构和逻辑关系四个维度判断，先易后难。",
+          "⚠️ 利用复现、同义反义、代词指代和连词确定语义场，最后带入选项复读。"
+        ],
+        "examples": [
+          "全文讲“作者从失败中学会坚持”，第 5 空选 persisted 而不是 gave up，因为后文写他继续训练。",
+          "空格前是 make a ______，选项中只有 decision 符合 make a decision 的固定搭配。",
+          "前后句是因果关系，因此选 therefore 而不是 however。"
+        ],
+        "intuition": "完形像修复一张被剪掉几块的织毯：先看整体图案和颜色，再根据经纬线补块，单看一块永远补不对。",
+        "connections": "以词汇搭配、语法、连词和语篇衔接为基础；与七选五、语法填空、短文改错共享语篇策略。",
+        "common_mistakes": [
+          "逐句翻译作答，忽略全文主线。",
+          "只凭汉语对应义选词，忽略英语搭配和语体。",
+          "改完不复读，漏掉时态、人称和逻辑矛盾。"
+        ],
+        "counter_examples": "某空填 happy 单句通顺，但全文情感基调是悲伤，且后文写“他低下头”，此处应选 sad；完形以语篇逻辑为准。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "GAOKAO-ENGLISH-GAOKAO-ku-概要写作",
+      "textbook_id": "GAOKAO-ENGLISH-GAOKAO",
+      "cluster_id": "GAOKAO-ENGLISH-GAOKAO-kc-概要写作",
+      "name": "概要写作",
+      "description": "阅读一篇说明文或议论文后，用约 60 词概括主旨与要点，不加入个人观点和细节。先划分段落、提取主题句，再合并同类信息、删除例证与重复，最后用自己的话按“总—分—总”或“现象—原因—结论”重组，检查时态、人称和词数。评分重点是要点完整、概括准确、语言独立和衔接连贯。\n【题型】高考英语概要写作（部分省市）",
+      "prerequisites": [],
+      "related_kus": [
+        "GAOKAO-ENGLISH-GAOKAO-ku-读后续写"
+      ],
+      "difficulty": 0.65,
+      "exam_frequency": "high",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "method",
+      "curriculum_standard": "高考题型：概要写作",
+      "mastery_levels": [],
+      "rich_content": {
+        "definition": "概要写作要求阅读一篇说明文或议论文后，用约 60 词概括其主旨与要点，不加入个人观点和具体细节。",
+        "key_points": [
+          "⚠️ 先划分段落、提取每段主题句，再合并同类信息，删除例证、数据和重复。",
+          "⚠️ 用自己的话重组，避免照抄原文长句；按“总—分—总”或“现象—原因—结论”组织。",
+          "⚠️ 检查要点完整、概括准确、词数达标、时态和人称一致、衔接连贯。"
+        ],
+        "examples": [
+          "原文四段分别讲“塑料污染现状—危害—原因—措施”，概要可写：Plastic pollution is worsening and harms ecosystems. It is caused mainly by overuse and poor recycling. Governments and individuals should reduce, reuse and recycle.",
+          "原文举了三个城市案例，概要只保留“多个城市已采取措施”这一共同点，不逐一列举。",
+          "把原文 “Some scientists believe that ...” 改写为 “Scientists warn that ...”，避免整句照搬。"
+        ],
+        "intuition": "概要像给长文拍一张全景照：保留轮廓和主要景物，裁掉细节和重复，不能只拍一角，也不能加滤镜。",
+        "connections": "以段落主旨、主题句、同义替换和衔接词为基础；与阅读理解、读后续写共同考查语篇输入与输出。",
+        "common_mistakes": [
+          "逐段抄原句，只做删减，不做改写。",
+          "加入个人评价或原文没有的建议。",
+          "遗漏多个段落的核心要点，或把细节当主旨。"
+        ],
+        "counter_examples": "概要中写 “I think plastic pollution is terrible.” 属于个人观点，不应出现；应改为对原文要点的客观概括。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "GAOKAO-ENGLISH-GAOKAO-ku-短文改错",
+      "textbook_id": "GAOKAO-ENGLISH-GAOKAO",
+      "cluster_id": "GAOKAO-ENGLISH-GAOKAO-kc-短文改错",
+      "name": "短文改错（高考）",
+      "description": "按行检查常见错误：动词时态与语态、主谓一致、非谓语形式、名词单复数、冠词、介词、代词、连词、形容词副词及比较等级、固定搭配和多余/缺失词。先通读了解大意，再逐行修改，每行通常一处错误；最后回读确认语法正确、语义通顺且未改变原意。\n【题型】高考英语短文改错（部分省市）",
+      "prerequisites": [],
+      "related_kus": [
+        "GAOKAO-ENGLISH-GAOKAO-ku-语法填空"
+      ],
+      "difficulty": 0.6,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "method",
+      "curriculum_standard": "高考题型：短文改错",
+      "mastery_levels": [],
+      "rich_content": {
+        "definition": "短文改错要求在一篇短文中逐行找出并改正语法、词汇、搭配和行文错误，考查语法基础与语篇校验能力。",
+        "key_points": [
+          "⚠️ 按“动词时态/语态—主谓一致—非谓语—名词单复数—冠词—介词—代词—连词—形容词/副词—固定搭配”逐行排查。",
+          "⚠️ 每行通常一处错误，注意多余词（删）和缺失词（补）两种形式。",
+          "⚠️ 先通读了解大意，再逐行修改，最后回读确认语法正确、语义不变。"
+        ],
+        "examples": [
+          "He go to school by bike. → go 改为 goes（主谓一致）。",
+          "I'm interesting in history. → interesting 改为 interested（-ed 修饰人）。",
+          "Although it was raining, but we went out. → 删去 but（连词重复）。",
+          "She gave me a advice. → a 改为 some 或删去 a（advice 不可数）。"
+        ],
+        "intuition": "短文改错像校对员：先通读知道文章想说什么，再逐行找“不合语法、不合搭配、不合逻辑”的地方，改完还要再读一遍。",
+        "connections": "以时态、语态、主谓一致、非谓语、冠词、介词、代词和连词为基础；与语法填空、完形填空共享语法校验能力。",
+        "common_mistakes": [
+          "只改单词拼写，忽略时态、语态和主谓一致。",
+          "一行改多处，或改变原意。",
+          "只删不加，漏掉缺失词。"
+        ],
+        "counter_examples": "“He suggested me to go.” 不能只把 me 改成 I；suggest 不接不定式作宾补，应改为 “He suggested that I (should) go.” 或 “He advised me to go.”"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "GAOKAO-ENGLISH-GAOKAO-ku-语法填空",
+      "textbook_id": "GAOKAO-ENGLISH-GAOKAO",
+      "cluster_id": "GAOKAO-ENGLISH-GAOKAO-kc-语法填空",
+      "name": "语法填空",
+      "description": "在语篇中根据语法和上下文填写单词或所给词的正确形式。有提示词时判断词性转换、时态语态、非谓语、比较等级、名词复数和派生；无提示词时优先考虑冠词、介词、连词、代词和情态动词。先通读抓主线，再逐空判断句子成分，最后回读检查主谓一致与固定搭配。\n【题型】高考英语语法填空",
+      "prerequisites": [],
+      "related_kus": [
+        "GAOKAO-ENGLISH-GAOKAO-ku-短文改错"
+      ],
+      "difficulty": 0.6,
+      "exam_frequency": "high",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "method",
+      "curriculum_standard": "高考题型：语法填空",
+      "mastery_levels": [],
+      "rich_content": {
+        "definition": "语法填空在语篇中考查语法和词汇，要求填写单词或所给词的正确形式，分有提示词和无提示词两类。",
+        "key_points": [
+          "⚠️ 有提示词：先判断所缺词性，再考虑时态/语态、非谓语、比较等级、名词复数和派生。",
+          "⚠️ 无提示词：优先考虑冠词、介词、连词、代词和情态动词。",
+          "⚠️ 先通读抓主线，再逐空分析句子成分，最后回读检查主谓一致和固定搭配。"
+        ],
+        "examples": [
+          "He ______ (work) here since 2010. → has worked（现在完成时）。",
+          "The book ______ (write) by a famous author last year. → was written（一般过去时被动）。",
+          "She is interested in ______ (read) novels. → reading（介词后动名词）。",
+          "______ (fortunate), no one was hurt. → Fortunately（副词作状语）。"
+        ],
+        "intuition": "语法填空像给句子做“缺件安装”：先看缺的是哪种零件（词性），再看它要和谁配合（时态、搭配、主谓一致）。",
+        "connections": "以词性、句子成分、时态语态、非谓语和构词法为基础；与短文改错、完形填空共享语法与语篇判断。",
+        "common_mistakes": [
+          "看到提示词就填原形，忽略时态、语态和词性转换。",
+          "无提示词空格只凭语感填，忽略冠词、介词和连词的结构要求。",
+          "非谓语只看意义，不看逻辑主语和固定搭配。"
+        ],
+        "counter_examples": "“I'm looking forward to hear from you.” 中 to 是介词，应填 hearing，不是 hear；不能只看 to 就想到不定式。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "GAOKAO-ENGLISH-GAOKAO-ku-读后续写",
+      "textbook_id": "GAOKAO-ENGLISH-GAOKAO",
+      "cluster_id": "GAOKAO-ENGLISH-GAOKAO-kc-读后续写",
+      "name": "读后续写",
+      "description": "阅读故事前半部分后，按给定首句续写两段，保持人物、情节、视角、时态和语言风格一致。先梳理人物关系、冲突与伏笔，确定续写的转折与解决；每段围绕一个中心事件，用动作、对话、心理和环境描写推进，并在结尾回应主题。\n【题型】高考英语读后续写",
+      "prerequisites": [],
+      "related_kus": [
+        "GAOKAO-ENGLISH-GAOKAO-ku-概要写作"
+      ],
+      "difficulty": 0.65,
+      "exam_frequency": "high",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "method",
+      "curriculum_standard": "高考题型：读后续写",
+      "mastery_levels": [],
+      "rich_content": {
+        "definition": "读后续写要求阅读故事前半部分后，按给定首句续写两段，保持人物、情节、视角、时态和语言风格一致。",
+        "key_points": [
+          "⚠️ 先梳理人物关系、核心冲突、伏笔和情感走向，再确定续写的转折与解决。",
+          "⚠️ 每段围绕一个中心事件展开，用动作、对话、心理和环境描写推进，避免流水账。",
+          "⚠️ 段首句必须承接，结尾回应主题；不引入未铺垫的新人物或超自然转折。"
+        ],
+        "examples": [
+          "原文写女孩因搬家与好友分别，续写第一段可写她在新学校收到好友来信，第二段写她主动结交新朋友并回信。",
+          "段首句 “Suddenly, I heard a loud knock at the door.” 后应紧接开门所见与人物反应，不能跳到第二天。",
+          "结尾用 “I realized that true friendship never fades.” 回应原文主题。"
+        ],
+        "intuition": "读后续写像接力跑：原文把接力棒交到你手里，你要顺着它的速度和方向跑，不能突然换道。",
+        "connections": "以记叙文要素、人物描写、时态一致和段落衔接为基础；与概要写作、阅读理解共同训练语篇理解与产出。",
+        "common_mistakes": [
+          "忽略段首句，另起炉灶写新故事。",
+          "时态在一般过去时和一般现在时之间跳动。",
+          "只叙述不描写，或堆砌形容词没有情节推进。"
+        ],
+        "counter_examples": "原文是第三人称过去时，续写突然改成第一人称现在时，会造成视角和时态断裂，即使情节合理也不符合要求。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    }
+  ]
+}
