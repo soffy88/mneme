@@ -2907,6 +2907,11 @@ CI 常驻的判分准确率回归门，堵死"构造桩题掩盖真实数据判�
 - [x] 内核：`mneme_core.domain.oprim.prereq_graph` / `oprim.prereq_judge` / `oskill.prereq_diagnosis`（移植上游 engine.js，
   差分核对 300 会话 + 45,650 判题逐位一致）；服务 `services/prereq_diagnosis_service.py`；`/v1/placement/prereq/*` + 4 个 MCP 工具。
 - [x] 导入器：小学 KU 打「小学」标签、课标条文、`rich_content.order`；旧 18 个 cnm_ext_* 行只标 deprecated + alias_targets，不删。
-- [ ] 未做（需决策）：对生产库重跑导入器（会新增 216 个小学 KU、改写初中 KU 的 hard 先修→影响 P4/fringe 解锁）；
-  诊断作答是否逐题回写 BKT（须走 SubmitAnswer/process_interaction）；tutor agent 是否挂这 4 个工具（需 SetUserGrant 白名单）；
-  前端页面（mneme-web）；商用需上游单独授权（CC BY-NC）。
+- [x] 决策（2026-10-20 用户批准全部后续）→ 见 CNM-3。商用仍需上游单独授权（CC BY-NC）。
+
+## CNM-3 · 先修诊断 BKT 回写 + agent 工具授权 + 前端诊断页 + 生产导入（2026-10-20）
+
+- [x] 逐题 BKT 回写：自动判题作答 → gate pending(KU id) → `tool_submit_answer`（SubmitAnswer 唯一写路径）；自评/self 题/家长不写；重放去重。`/v1/placement/prereq/answer` 与 MCP `SubmitPrereqDiagnosisAnswer` 共用 `submit_prereq_answer_with_writeback`。
+- [x] 授权：`services/tool_grants.py`（学生默认 4 个诊断工具；admin SetUserGrant 白名单优先；家长需显式授权）；tutor agent `build_tools` 挂 4 个工具。测试 `tests/test_prereq_writeback_grants.py`。
+- [x] 前端：mneme-web `/placement/prereq` 诊断页（开诊断→作答→薄弱根因 + 按年级学习路径）。
+- [x] 生产：备份后重跑 cn_math_importer（新增 216 小学 KU、改写初中 hard 先修、18 个 cnm_ext_* 只标 deprecated）。

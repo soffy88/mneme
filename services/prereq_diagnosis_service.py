@@ -10,8 +10,11 @@
 图的来源与 ``services.cn_math_importer`` 写入 knowledge_units 的是同一份数据
 （``data/cn_math_taxonomy``，上游 CC BY-NC 4.0），topic ``cnm_xxx`` ↔ KU ``cnmath:cnm_xxx``。
 
-红线：诊断结论（mastered/shaky/weak）**不是 P(L)**，这里不写 kc_mastery、不调
-process_interaction。会话里不放 student_id（seed 用随机串），避免 PII 进客户端存档。
+红线：诊断结论（mastered/shaky/weak）**不是 P(L)**，本模块不写 kc_mastery、不调
+process_interaction。逐题 BKT 回写由服务层 ``services.mcp_router.prereq_mastery_writeback``
+完成：每道**自动判题**的作答都登记成 gate pending 再走既有 ``tool_submit_answer``（SubmitAnswer
+唯一写路径），本模块只给出 ``answered``（题号/KU/题型/是否自评）。会话里不放 student_id
+（seed 用随机串），避免 PII 进客户端存档。
 """
 
 from __future__ import annotations
@@ -170,6 +173,17 @@ def _report(session: dict[str, Any]) -> dict[str, Any]:
     }
 
 
+@lru_cache(maxsize=1)
+def _question_index() -> dict[str, dict[str, Any]]:
+    return {q["id"]: q for qs in graph().bank.values() for q in qs if q.get("id")}
+
+
+def question_by_id(qid: str) -> dict[str, Any] | None:
+    """题库原题（含参考答案，仅供服务端回写登记 pending，不外发）。"""
+    q = _question_index().get(qid)
+    return dict(q) if q else None
+
+
 def _check_session(session: Any) -> dict[str, Any]:
     keys = ("targets", "limit", "order", "status", "stack", "answers", "attempts", "seed")
     if not isinstance(session, dict) or any(k not in session for k in keys):
@@ -209,9 +223,19 @@ def answer(session: Any, user_answer: Any = None, result: str | None = None) -> 
         feedback = {"verdict": out.get("verdict"), "result": out.get("result"),
                     "answer": q.get("answer"), "explanation": q.get("explanation")}
     new = out["session"]
+    answered = None
+    if item and out["applied"]:
+        q = item["question"]
+        answered = {
+            "question_id": q.get("id"), "topic_id": item["topicId"], "ku_id": to_ku_id(item["topicId"]),
+            "type": q.get("type"), "attempt": item["attempt"], "seed": str(s.get("seed") or ""),
+            # result 显式给出（自评/不会）= 非自动判题，不回写掌握度
+            "self_assessed": result is not None,
+        }
     return {
         "session": new,
         "applied": out["applied"],
+        "answered": answered,
         "needs_self_assessment": bool(out.get("needs_self_assessment")),
         "feedback": feedback,
         "next": _public_item(pd.next_item(graph(), new)),

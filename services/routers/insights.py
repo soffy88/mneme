@@ -438,6 +438,7 @@ class PrereqAnswerReq(BaseModel):
     session: dict[str, Any]
     answer: str | None = None
     result: Literal["correct", "wrong", "skip"] | None = None
+    record_mastery: bool = True
 
 
 @router.post("/v1/placement/prereq/start")
@@ -447,7 +448,7 @@ async def post_placement_prereq_start(
 ):
     """L3 先修回溯诊断(cn-math-taxonomy 一—九年级,无状态)：给目标 KU(cnmath:cnm_xxx)开会话。
     每知识点≤2题,答错沿先修(hard先于soft)回溯找薄弱根因。会话 JSON 由客户端保存回传;
-    结论不是 P(L),不落库。"""
+    结论不是 P(L);会话不落库。"""
     from services import prereq_diagnosis_service as pds
 
     try:
@@ -459,16 +460,17 @@ async def post_placement_prereq_start(
 @router.post("/v1/placement/prereq/answer")
 async def post_placement_prereq_answer(
     body: PrereqAnswerReq,
-    _auth: User = Depends(get_current_user),
+    db: AsyncSession = Depends(get_db),
+    current_user: User = Depends(get_current_user),
 ):
     """交当前题答案(或 result 自评/不会)→ 新会话 + 下一题 + 报告(薄弱根因 + 年级低→高学习路径)。
-    代数式/文字题判不准时 needs_self_assessment=true、会话不推进,附参考答案供自评。"""
-    from services import prereq_diagnosis_service as pds
+    代数式/文字题判不准时 needs_self_assessment=true、会话不推进,附参考答案供自评。
+    学生本人的自动判题作答逐题经 SubmitAnswer 写路径回写 BKT(mastery_writeback);自评不回写。"""
+    from services.mcp_router import submit_prereq_answer_with_writeback
 
-    try:
-        return pds.answer(body.session, body.answer, body.result)
-    except pds.PrereqDiagnosisError as e:
-        raise HTTPException(status_code=400, detail=str(e)) from e
+    return await submit_prereq_answer_with_writeback(
+        db, current_user, body.session, body.answer, body.result, body.record_mastery
+    )
 
 
 @router.get("/v1/misconception/{ku_id}")

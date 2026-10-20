@@ -2148,8 +2148,13 @@ async def mcp_get_mastery_path(
 
 
 # ---------------------------------------------------------------- 先修回溯诊断（cn-math-taxonomy）
-# 共享知识图 + 客户端持有的无状态会话：不读写学生数据，只要求登录（同 SearchKnowledgeBase 惯例）。
-# 诊断结论不是 P(L)：不写 kc_mastery、不调 process_interaction（掌握度唯一路径红线）。
+# 共享知识图 + 客户端持有的无状态会话。授权：services.tool_grants（学生默认放行，admin
+# 可经 SetUserGrant 白名单收紧；家长需显式授权）。诊断结论不是 P(L)；学生本人的每道
+# 自动判题作答经 prereq_mastery_writeback 登记 pending → tool_submit_answer（SubmitAnswer
+# 唯一写路径），逐题回写 BKT/FSRS。自评（result=correct/wrong/skip）与 self 题不回写。
+
+# 上游题型 → SubmitAnswer 判分题型（numeric→fill=sympy；choice/short→answer_match）
+_PREREQ_QTYPE = {"numeric": "fill", "choice": "choice", "short": "short"}
 
 
 def _prereq_call(fn: Any, *args: Any, **kwargs: Any) -> Any:
@@ -2185,9 +2190,111 @@ def tool_start_prereq_diagnosis(targets: list[str], limit: Optional[int] = None)
 def tool_submit_prereq_diagnosis_answer(
     session: dict, answer: Optional[str] = None, result: Optional[str] = None
 ) -> dict:
+    """纯诊断推进（不碰 DB）。带 DB 的学生作答走 submit_prereq_answer_with_writeback。"""
     from services import prereq_diagnosis_service as pds
 
     return _prereq_call(pds.answer, session, answer, result)
+
+
+def _prereq_writeback_qid(answered: dict) -> str:
+    qid = f"prereq:{answered.get('seed', '')}:{answered.get('question_id')}:{answered.get('attempt')}"
+    return qid[:64]
+
+
+async def prereq_mastery_writeback(
+    db: AsyncSession,
+    *,
+    student_id: uuid.UUID,
+    answered: Optional[dict],
+    user_answer: Optional[str],
+) -> dict:
+    """把一道诊断作答经 SubmitAnswer 写路径回写掌握度（逐题，一题一次）。
+
+    只回写：已推进（answered 非空）+ 自动判题（非自评）+ 有作答 + 题型可确定性判分。
+    pending 的 kc_id = KU id（cnmath:cnm_xxx），expected = 题库参考答案（只进 gate，不外发）。
+    同一 (会话 seed, 题, 第几次) 只写一次（question_ref 去重，防客户端重放）。失败不影响诊断。
+    """
+    from services import prereq_diagnosis_service as pds
+
+    if not answered:
+        return {"written": False, "reason": "not_applied"}
+    if answered.get("self_assessed"):
+        return {"written": False, "reason": "self_assessed"}
+    if not (user_answer or "").strip():
+        return {"written": False, "reason": "no_answer"}
+    qtype = _PREREQ_QTYPE.get(str(answered.get("type")))
+    q = pds.question_by_id(str(answered.get("question_id")))
+    if qtype is None or q is None or not q.get("answer"):
+        return {"written": False, "reason": "not_auto_gradable"}
+
+    qid = _prereq_writeback_qid(answered)
+    from services.models import QuestionRecord
+
+    dup = (
+        await db.execute(
+            select(QuestionRecord.id).where(
+                QuestionRecord.student_id == student_id, QuestionRecord.question_ref == qid
+            ).limit(1)
+        )
+    ).first()
+    if dup is not None or await gate_store.get_pending(db, student_id=student_id, question_id=qid):
+        return {"written": False, "reason": "duplicate", "question_id": qid}
+
+    try:
+        async with db.begin_nested():
+            await gate_store.pose_question(
+                db,
+                question_id=qid,
+                student_id=student_id,
+                kc_id=str(answered["ku_id"]),
+                prompt=str(q.get("prompt") or ""),
+                expected=str(q["answer"]),
+                qtype=qtype,
+            )
+            r = await tool_submit_answer(
+                db, student_id=student_id, question_id=qid, answer=str(user_answer)
+            )
+    except Exception as e:  # noqa: BLE001 — 回写失败不拖垮诊断
+        logger.warning("prereq mastery writeback failed: %s", e)
+        return {"written": False, "reason": "error", "question_id": qid}
+    if not r.get("graded"):
+        return {"written": False, "reason": str(r.get("error") or "not_graded"), "question_id": qid}
+    return {
+        "written": True,
+        "question_id": qid,
+        "kc_id": r.get("kc_id"),
+        "is_correct": r.get("is_correct"),
+        "verdict_source": r.get("verdict_source"),
+    }
+
+
+async def submit_prereq_answer_with_writeback(
+    db: AsyncSession,
+    current_user: User,
+    session: dict,
+    answer: Optional[str] = None,
+    result: Optional[str] = None,
+    record_mastery: bool = True,
+) -> dict:
+    """诊断推进 + （学生本人）逐题 SubmitAnswer 回写。家长/admin 代答不写任何学生档案。"""
+    from services.tool_grants import _is_student
+
+    out = tool_submit_prereq_diagnosis_answer(session, answer, result)
+    if record_mastery and _is_student(current_user):
+        out["mastery_writeback"] = await prereq_mastery_writeback(
+            db, student_id=current_user.id, answered=out.get("answered"), user_answer=answer
+        )
+        await db.commit()
+    else:
+        out["mastery_writeback"] = {"written": False, "reason": "not_student" if record_mastery else "disabled"}
+    return out
+
+
+async def _ensure_tool_allowed(db: AsyncSession, current_user: User, tool: str) -> None:
+    from services.tool_grants import is_tool_allowed
+
+    if not await is_tool_allowed(db, current_user, tool):
+        raise HTTPException(status_code=403, detail=f"未获授权使用 {tool}")
 
 
 class SearchMathTopicReq(BaseModel):
@@ -2209,31 +2316,46 @@ class SubmitPrereqDiagnosisAnswerReq(BaseModel):
     session: dict[str, Any]
     answer: Optional[str] = None
     result: Optional[str] = None
+    record_mastery: bool = True
 
 
 @router.post("/SearchMathTopic")
 async def mcp_search_math_topic(
-    req: SearchMathTopicReq, current_user: User = Depends(get_current_user)
+    req: SearchMathTopicReq,
+    db: AsyncSession = Depends(get_db),
+    current_user: User = Depends(get_current_user),
 ) -> dict:
+    await _ensure_tool_allowed(db, current_user, "SearchMathTopic")
     return tool_search_math_topic(req.q, max(1, min(req.limit, 50)))
 
 
 @router.post("/GetMathTopic")
 async def mcp_get_math_topic(
-    req: GetMathTopicReq, current_user: User = Depends(get_current_user)
+    req: GetMathTopicReq,
+    db: AsyncSession = Depends(get_db),
+    current_user: User = Depends(get_current_user),
 ) -> dict:
+    await _ensure_tool_allowed(db, current_user, "GetMathTopic")
     return tool_get_math_topic(req.topic_id, req.recursive_prereqs)
 
 
 @router.post("/StartPrereqDiagnosis")
 async def mcp_start_prereq_diagnosis(
-    req: StartPrereqDiagnosisReq, current_user: User = Depends(get_current_user)
+    req: StartPrereqDiagnosisReq,
+    db: AsyncSession = Depends(get_db),
+    current_user: User = Depends(get_current_user),
 ) -> dict:
+    await _ensure_tool_allowed(db, current_user, "StartPrereqDiagnosis")
     return tool_start_prereq_diagnosis(req.targets, req.limit)
 
 
 @router.post("/SubmitPrereqDiagnosisAnswer")
 async def mcp_submit_prereq_diagnosis_answer(
-    req: SubmitPrereqDiagnosisAnswerReq, current_user: User = Depends(get_current_user)
+    req: SubmitPrereqDiagnosisAnswerReq,
+    db: AsyncSession = Depends(get_db),
+    current_user: User = Depends(get_current_user),
 ) -> dict:
-    return tool_submit_prereq_diagnosis_answer(req.session, req.answer, req.result)
+    await _ensure_tool_allowed(db, current_user, "SubmitPrereqDiagnosisAnswer")
+    return await submit_prereq_answer_with_writeback(
+        db, current_user, req.session, req.answer, req.result, req.record_mastery
+    )
