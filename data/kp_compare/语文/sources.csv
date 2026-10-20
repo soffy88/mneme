@@ -1,0 +1,8 @@
+﻿类别,来源,URL/路径,用途,访问状态
+k12知识点,k12-knowledge-points @9e4b493,https://github.com/mmlong818/k12-knowledge-points,提取语文 canonical_name/grades/annotations/textbook chapter_path,"已下载 split/{小学,初中,高中}/语文.json"
+课标,义务教育语文课程标准（2022年版）,http://www.moe.gov.cn/srcsite/A26/s8001/202204/t20220420_619921.html,小学、初中考点框架（识字与写字/阅读与鉴赏/表达与交流/梳理与探究）,HTTP 200 已核验
+课标,普通高中语文课程标准（2017年版2020年修订）,http://www.moe.gov.cn/srcsite/A26/s8001/202006/t20200603_462199.html,高中 18 个学习任务群与高考考点框架,HTTP 200 已核验
+教材,人民教育出版社 中小学教材电子版（语文）,https://jc.pep.com.cn/?filed=小学&subject=语文,核对统编版（人教版）册次与目录,HTTP 200（SPA，目录未机器可读）
+教材,国家中小学智慧教育平台,https://basic.smartedu.cn/tchMaterial,统编教材目录交叉核对,HTTP 403（未采用）
+mneme数据,data/ku_packages/TONGBIAN-G*-CHINESE-*.json,data/ku_packages/,初中/高中教材单元与 KU 对应、覆盖率对照,本地已用
+mneme数据,data/ku_packages/GAOKAO-CHINESE-GAOKAO.json,data/ku_packages/,高考成语 KU 对照,本地已用
