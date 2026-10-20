@@ -186,6 +186,12 @@
       "name": "导数应用：含参函数综合问题",
       "display_order": 30,
       "description": null
+    },
+    {
+      "id": "RENJIAO-G11-MATH-A-SBX2-kc-数列求和方法与不等式",
+      "name": "数列求和方法与不等式",
+      "display_order": 31,
+      "description": "错位相减、裂项相消与数列不等式放缩"
     }
   ],
   "units": [
@@ -1868,6 +1874,54 @@
           "错误3：混淆时间间隔，比如用时刻差计算时，忘记位移差对应的是同一时间区间，导致分子分母不匹配。"
         ],
         "counter_examples": "容易混淆的是平均速率。例如，物体绕一圈回到原点，位移为0，平均速度为0，但路程不为0，平均速率不为0。平均速度关注位置变化，平均速率关注路径长度。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": true
+    },
+    {
+      "id": "RENJIAO-G11-MATH-A-SBX2-ku-数列不等式与放缩",
+      "textbook_id": "RENJIAO-G11-MATH-A-SBX2",
+      "cluster_id": "RENJIAO-G11-MATH-A-SBX2-kc-数列求和方法与不等式",
+      "name": "数列不等式与放缩",
+      "description": "证明含数列的不等式时，把通项或部分和放大、缩小为可求和的形式，注意方向与端点。",
+      "prerequisites": [
+        "RENJIAO-G11-MATH-A-SBX2-ku-裂项相消求和",
+        "RENJIAO-G11-MATH-A-SBX2-ku-数学归纳法证明不等式-含参数"
+      ],
+      "related_kus": [
+        "RENJIAO-G11-MATH-A-SBX2-ku-不等式e-x-ln-x-m--0的证明"
+      ],
+      "difficulty": 0.9,
+      "exam_frequency": "high",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "procedure",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "证明 ∑(k=1 到 n) 1/k²<2：k≥2 时 1/k²<1/[k(k−1)]=1/(k−1)−1/k，故和<1+(1−1/n)<2。",
+          "证明 1+1/2+…+1/n>ln(n+1)：利用 1/k>ln(1+1/k)=ln(k+1)−ln k，逐项相加后右边裂项相消。",
+          "证明 1/2²+1/3²+…+1/n²<1/2：把 1/k² 放缩为 1/[k(k−1)] 后求和，再验证 n=1 的起始情形。"
+        ],
+        "intuition": "放缩像给一堆不规则石子称重：把每颗石子换成略大（或略小）但能整齐堆叠的方块，总量仍能给出可靠的上界或下界。",
+        "definition": "数列不等式与放缩指在证明含数列的不等式时，对通项或部分和作适当放大或缩小，使其变成可求和、可裂项或可比较的形式。放缩必须保持不等号方向一致，并且放缩后的量仍能控制到目标界。",
+        "key_points": [
+          "⚠️ 先判断要证的方向：要证“小于”，就把通项放大；要证“大于”，就把通项缩小。",
+          "⚠️ 常用放缩：1/n²<1/[n(n−1)]（n≥2）、1/2ⁿ 型等比界、√n 型有理化放缩。",
+          "⚠️ 放缩后必须能求和；端点 n=1 或前几项常常需要单独验证，必要时保留前几项不放缩。"
+        ],
+        "application": "高考数列压轴：证明 Sₙ 小于常数、Sₙ 大于某式，或比较 Sₙ 与 ln n；常与裂项相消、等比求和、数学归纳法联合使用。",
+        "connections": "以裂项相消、等比数列求和、数学归纳法为基础；与导数中的函数不等式证明互为姊妹篇，一个是离散放缩，一个是连续放缩。",
+        "common_mistakes": [
+          "放缩过头，得到的界比目标还松，无法推出结论。",
+          "不等号方向与放缩方向不一致，证明中途反向。",
+          "忽略 n=1 的起始项，或只验证 n=k 而没有完成归纳步骤。"
+        ],
+        "counter_examples": "1/n²<1/[n(n−1)] 只在 n≥2 时成立，n=1 时右边无意义；把 1/n 放大成 1/2ⁿ 对 n≥2 并不成立，不能随意替换。"
       },
       "provenance": null,
       "source_excerpt": null,
@@ -3908,6 +3962,102 @@
           "错误3：求导后未检查定义域，直接取极值点，若极值点超出限速，应取边界值。"
         ],
         "counter_examples": "混淆“最省油车速”与“最经济车速”：最省油车速仅使耗油率 $f(v)$ 最小（如 $v=40$ km/h），但总费用还需考虑时间工资，通常最经济车速更高。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": true
+    },
+    {
+      "id": "RENJIAO-G11-MATH-A-SBX2-ku-裂项相消求和",
+      "textbook_id": "RENJIAO-G11-MATH-A-SBX2",
+      "cluster_id": "RENJIAO-G11-MATH-A-SBX2-kc-数列求和方法与不等式",
+      "name": "裂项相消求和",
+      "description": "把通项拆成两个相邻结构之差，求和时中间项成对抵消，只留首尾若干项。",
+      "prerequisites": [
+        "RENJIAO-G11-MATH-A-SBX2-ku-等差数列前n项和公式-倒序相加法",
+        "RENJIAO-G11-MATH-A-SBX2-ku-数列的通项公式"
+      ],
+      "related_kus": [
+        "RENJIAO-G11-MATH-A-SBX2-ku-错位相减求和"
+      ],
+      "difficulty": 0.65,
+      "exam_frequency": "high",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "procedure",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "∑(k=1 到 n) 1/[k(k+1)]=(1−1/2)+(1/2−1/3)+…+(1/n−1/(n+1))=1−1/(n+1)=n/(n+1)。",
+          "∑(k=1 到 n) 1/[(2k−1)(2k+1)]=(1/2)[(1−1/3)+(1/3−1/5)+…+(1/(2n−1)−1/(2n+1))]=n/(2n+1)。",
+          "∑(k=1 到 n) 1/(√k+√(k+1))=∑(√(k+1)−√k)=√(n+1)−1。"
+        ],
+        "intuition": "裂项像拉链：每一项拆成前后两半，前一项的后半与后一项的前半正好咬合抵消，最后只剩拉链头和尾。",
+        "definition": "裂项相消法是把数列通项写成 f(n)−f(n+1)（或 f(n+1)−f(n)）的形式，求和时中间项依次抵消，只保留首尾若干项。分式、根式、对数型通项都可能通过恒等变形裂项。",
+        "key_points": [
+          "⚠️ 常见裂项：1/[n(n+k)]=(1/k)(1/n−1/(n+k))，系数 1/k 不能漏。",
+          "⚠️ 根式裂项：1/(√n+√(n+1))=√(n+1)−√n；对数裂项：log(aₙ₊₁/aₙ)=log aₙ₊₁−log aₙ。",
+          "⚠️ 求和后要数清剩余项，并检查 n=1 时公式是否成立。"
+        ],
+        "application": "高考数列求和与不等式证明；分式、根式、对数型通项都可能裂项；也常用于把和式化成可直接比较的界。",
+        "connections": "与错位相减并列为两大求和方法；八年级分式运算中的裂项是它的雏形；裂项后的和式常作为放缩证明的起点。",
+        "common_mistakes": [
+          "裂项时漏掉系数 1/k，例如把 1/[n(n+2)] 直接写成 1/n−1/(n+2)。",
+          "抵消后剩余项判断错误，多写或少写一项。",
+          "最后结果没有通分或化简，掩盖了错误。"
+        ],
+        "counter_examples": "1/(n²+1) 不能裂成两个简单分式之差，裂项法失效；1/[n(n+2)] 必须乘 1/2，否则与原式不相等。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": true
+    },
+    {
+      "id": "RENJIAO-G11-MATH-A-SBX2-ku-错位相减求和",
+      "textbook_id": "RENJIAO-G11-MATH-A-SBX2",
+      "cluster_id": "RENJIAO-G11-MATH-A-SBX2-kc-数列求和方法与不等式",
+      "name": "错位相减求和",
+      "description": "求“等差×等比”型数列前 n 项和：写出 Sn，乘公比后错位相减，化为等比数列求和。",
+      "prerequisites": [
+        "RENJIAO-G11-MATH-A-SBX2-ku-等比数列前n项和公式-错位相减法推导",
+        "RENJIAO-G11-MATH-A-SBX2-ku-等比数列的通项公式"
+      ],
+      "related_kus": [
+        "RENJIAO-G11-MATH-A-SBX2-ku-裂项相消求和"
+      ],
+      "difficulty": 0.7,
+      "exam_frequency": "high",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "procedure",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "aₙ=n·2ⁿ：Sₙ=1·2+2·2²+…+n·2ⁿ，两边乘 2 得 2Sₙ=1·2²+…+(n−1)·2ⁿ+n·2^(n+1)，相减得 −Sₙ=2+2²+…+2ⁿ−n·2^(n+1)，故 Sₙ=(n−1)2^(n+1)+2。",
+          "aₙ=(2n−1)/2ⁿ：同样乘公比 1/2 后错位相减，中间部分构成等比数列，最后把 Sₙ 的系数化为 1。",
+          "aₙ=n·3ⁿ 可先求 Sₙ，再代 n=1 检验首项，确认公式没有错位。"
+        ],
+        "intuition": "错位相减像把两排同样的多米诺骨牌错开一格：中间大部分两两抵消，只剩头、尾和一段整齐的等比数列。",
+        "definition": "错位相减法是求形如 aₙ=bₙcₙ 的数列前 n 项和的方法，其中 {bₙ} 为等差数列、{cₙ} 为公比 q≠1 的等比数列。写出 Sₙ，两边乘 q，再与原式相减，中间项构成等比数列。",
+        "key_points": [
+          "⚠️ 适用结构是“等差×等比”，乘的是等比部分的公比 q。",
+          "⚠️ 相减时逐项对齐，尤其注意最后一项的符号和指数。",
+          "⚠️ q=1 时退化为等差求和，不能套用错位相减，否则分母为 0。"
+        ],
+        "application": "高考数列大题第二问的高频方法；也用于求 ∑n/2ⁿ 一类收敛级数的部分和，以及后续与不等式证明衔接。",
+        "connections": "直接建立在等比数列前 n 项和公式（错位相减推导）之上，与裂项相消并列为两大求和方法；求和结果常作为放缩证明的起点。",
+        "common_mistakes": [
+          "乘公比后项数没有对齐，导致中间项抵消不完整。",
+          "相减时最后一项符号写错，或忘记把 −Sₙ 的系数化为 1。",
+          "公比 q=1 时仍乘 q 相减，出现除以 0 的错误。"
+        ],
+        "counter_examples": "aₙ=n+2ⁿ 是“等差+等比”，应分组求和，不能错位相减；aₙ=n·2ⁿ 才是“等差×等比”，适用错位相减。"
       },
       "provenance": null,
       "source_excerpt": null,

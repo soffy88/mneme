@@ -1079,6 +1079,54 @@
       "source_excerpt": null,
       "ai_generated": true,
       "verified": false
+    },
+    {
+      "id": "RENJIAO-G3-MATH-S-ku-除加除减",
+      "textbook_id": "RENJIAO-G3-MATH-S",
+      "cluster_id": "RENJIAO-G3-MATH-S-kc-混合运算的运算顺序",
+      "name": "除加除减",
+      "description": "算式中同时有除法和加法或减法时，先算除法，再算加减；有括号先算括号里的。",
+      "prerequisites": [
+        "RENJIAO-G3-MATH-S-ku-同级运算的运算顺序",
+        "RENJIAO-G3-MATH-S-ku-两级运算的运算顺序"
+      ],
+      "related_kus": [
+        "RENJIAO-G3-MATH-S-ku-用综合算式解决多步问题"
+      ],
+      "difficulty": 0.4,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "procedure",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "24÷6+3=4+3=7；36−18÷3=36−6=30。",
+          "48÷(6+2)=48÷8=6，有括号时先算括号里的加法。",
+          "24÷6×3 是同级运算，从左往右算得 12，不能先算 6×3。"
+        ],
+        "intuition": "除加除减像先分堆再合并：先把东西平均分好（除法），再加上一些或拿走一些（加减）。",
+        "definition": "除加除减混合运算指一个算式中同时含有除法和加法（或减法）。运算顺序是：有括号先算括号内；没有括号时先算除法，再算加法或减法；同级运算从左往右依次计算。",
+        "key_points": [
+          "⚠️ 先算除法，再算加、减，不能从左往右看到什么算什么。",
+          "⚠️ 有括号先算括号里的；括号改变了原来的运算顺序。",
+          "⚠️ 同级运算从左往右；注意“除”与“除以”的读法区别。"
+        ],
+        "application": "三年级上册混合运算与解决实际问题，例如先平均分再求和；也是后续四则混合运算的基础。",
+        "connections": "与“乘加乘减”结构相同，只是把乘法换成除法；以表内除法、同级与两级运算顺序为基础；为带括号的综合算式铺路。",
+        "common_mistakes": [
+          "从左往右先算加法，如把 24÷6+3 算成 24÷9。",
+          "忽略括号，把 48÷(6+2) 算成 48÷6+2。",
+          "有余数除法中余数处理错误，或把“除以”与“除”弄反。"
+        ],
+        "counter_examples": "24÷6+3 与 24÷(6+3) 结果不同，前者是 7，后者是 24÷9；24÷6×3 是同级运算，应从左往右得 12，而不是 24÷18。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
     }
   ]
 }

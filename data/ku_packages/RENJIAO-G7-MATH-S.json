@@ -204,6 +204,12 @@
       "name": "有理数的乘方",
       "display_order": 33,
       "description": null
+    },
+    {
+      "id": "RENJIAO-G7-MATH-S-kc-一元一次方程",
+      "name": "一元一次方程",
+      "display_order": 34,
+      "description": "第五章：方程解法、含参讨论与错解辨析"
     }
   ],
   "units": [
@@ -1135,6 +1141,55 @@
           "认为 $5$ 与 $5x$ 是同类项：错在常数项与含字母项不能混为一谈。"
         ],
         "counter_examples": "$3x^2y$ 与 $3xy^2$：字母相同但 $x$ 和 $y$ 的指数不同，不是同类项。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
+      "id": "RENJIAO-G7-MATH-S-ku-含参一元一次方程与错解",
+      "textbook_id": "RENJIAO-G7-MATH-S",
+      "cluster_id": "RENJIAO-G7-MATH-S-kc-一元一次方程",
+      "name": "含参一元一次方程与错解",
+      "description": "系数含字母的一元一次方程需按未知数系数是否为 0 分类；同时辨析去分母、去括号、移项中的典型错解。",
+      "prerequisites": [
+        "RENJIAO-G7-MATH-S-ku-合并同类项法则",
+        "RENJIAO-G7-MATH-S-ku-整式加减运算法则"
+      ],
+      "related_kus": [
+        "RENJIAO-G7-MATH-S-ku-整式加减的化简求值"
+      ],
+      "difficulty": 0.6,
+      "exam_frequency": "mid",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "procedure",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "解关于 x 的方程 (m−1)x=m²−1：当 m≠1 时，x=m+1；当 m=1 时，方程化为 0=0，任意实数都是解。",
+          "解关于 x 的方程 ax=3：a≠0 时 x=3/a；a=0 时方程化为 0=3，无解。",
+          "错解辨析：解 (x−1)/2−(2x+1)/3=1 时，去分母得 3(x−1)−2(2x+1)=1，右边的 1 漏乘了 6，正确应为 3(x−1)−2(2x+1)=6。"
+        ],
+        "intuition": "含参方程像一台可调档的天平：参数决定两边是否还能平衡；当未知数系数被调到 0 时，天平就失去唯一答案，必须单独讨论。",
+        "definition": "含参一元一次方程指未知数系数或常数项含有字母参数的方程，整理后形如 ax=b。解的情况由 a 决定：a≠0 时有唯一解 x=b/a；a=0 且 b=0 时有无数解；a=0 且 b≠0 时无解。",
+        "key_points": [
+          "⚠️ 先整理成 ax=b 的标准形式，再讨论 a 是否为 0，不能直接两边除以含参系数。",
+          "⚠️ 去分母时每一项都要乘最简公分母，尤其不要漏乘不含分母的常数项。",
+          "⚠️ 去括号注意括号前是负号时逐项变号；移项必须变号；系数化为 1 时除以的是未知数的系数。"
+        ],
+        "application": "七年级解方程与中考含参方程小题；错解分析常用于选择、填空以及解答题中的“找错并改正”。",
+        "connections": "以等式性质、去括号、合并同类项为基础；向后衔接八年级分式方程的增根讨论和九年级一元二次方程的含参判别。",
+        "common_mistakes": [
+          "不讨论未知数系数为 0，直接除以参数，漏掉无解或无数解的情形。",
+          "去分母时漏乘不含分母的项，或分子是多项式时忘记加括号。",
+          "去括号时括号前是负号，只变了第一项的符号。",
+          "移项不变号，或把“无解”与“解为 0”混为一谈。"
+        ],
+        "counter_examples": "0·x=0 不是无解，而是有无数个解；0·x=3 才无解。方程 x/2=1 的解是 x=2，不是 1/2，系数化为 1 时除的是 1/2。"
       },
       "provenance": null,
       "source_excerpt": null,

@@ -352,3 +352,104 @@ PY
 
 匹配脚本未入库（依赖 `/tmp/k12kp` 快照）；方法与阈值已完整写在
 `data/kp_compare/数学/README.md`，可按同样口径重跑。
+
+---
+
+## 十、缺口补齐（2026-10-20）
+
+### 10.1 口径
+
+以第四节“真缺口清单”与 `data/kp_compare/数学/compare.csv` 的 `真缺口清单` 列为起点，
+再回查 mneme 全量数学知识点：`data/ku_packages/*MATH*.json` + `renjiao-math-g10-a.json`
+（2,389 KU）以及 `data/cn_math_taxonomy/topics.json` 经 `services/cn_math_importer.py`
+导入的 531 个 `cnmath:` KU。只有“教材有、两侧全量都没有”的才补。
+
+补入方式完全沿用现有 `ku_packages` 契约（`textbook` / `clusters` / `units`，字段与
+`scripts/export_ku_package.py` 的 `UNIT_FIELDS` 一致），不新建数据格式、不改 schema、
+不导入 k12 上游正文。
+
+### 10.2 已补：14 个 KU，覆盖 13 条缺口
+
+| 学段/册 | 教材章节 | KU 名称 | 所在包 / cluster | KU ID |
+| :--- | :--- | :--- | :--- | :--- |
+| 小学 三上 | 二 混合运算 | 除加除减 | `RENJIAO-G3-MATH-S` / `-kc-混合运算的运算顺序` | `RENJIAO-G3-MATH-S-ku-除加除减` |
+| 初中 七上 | 第五章 一元一次方程 | 含参一元一次方程与错解 | `RENJIAO-G7-MATH-S` / 新增 `-kc-一元一次方程` | `RENJIAO-G7-MATH-S-ku-含参一元一次方程与错解` |
+| 初中 七下 | 第七章 相交线与平行线 | 平行线拐点模型 | `RENJIAO-G7-MATH-X` / `-kc-平行线的性质` | `RENJIAO-G7-MATH-X-ku-平行线拐点模型` |
+| 初中 八上 | 第十四章 全等三角形 | 一线三等角模型 | `RENJIAO-G8-MATH-S` / `-kc-三角形全等的判定定理-一般三角形` | `RENJIAO-G8-MATH-S-ku-一线三等角模型` |
+| 初中 九下 | 第二十七章 相似 | 母子型相似模型 | `RENJIAO-G9-MATH-X` / `-kc-相似三角形的应用` | `RENJIAO-G9-MATH-X-ku-母子型相似模型` |
+| 高中 必修一 | 第三章 函数的概念与性质 | 幂函数 | `renjiao-math-g10-a` / 新增 `-kc-函数的概念与性质` | `renjiao-math-g10-a-ku-幂函数` |
+| 高中 必修一 | 第三章 函数的概念与性质 | 抽象函数 | 同上 | `renjiao-math-g10-a-ku-抽象函数` |
+| 高中 必修一 | 第三章 函数的概念与性质 | 函数图象的识别 | 同上 | `renjiao-math-g10-a-ku-函数图象的识别` |
+| 高中 必修一 | 第二章 一元二次函数、方程和不等式 | 含参不等式恒成立讨论 | `renjiao-math-g10-a` / `-kc-一元二次不等式与函数-方程的联系及恒成立` | `renjiao-math-g10-a-ku-含参不等式恒成立讨论` |
+| 高中 必修二 | 第八章 立体几何初步 | 外接球与内切球 | `RENJIAO-G10-MATH-BX2` / `-kc-03` | `RENJIAO-G10-MATH-BX2-ku-外接球与内切球` |
+| 高中 选必二 | 第四章 数列 | 错位相减求和 | `RENJIAO-G11-MATH-A-SBX2` / 新增 `-kc-数列求和方法与不等式` | `RENJIAO-G11-MATH-A-SBX2-ku-错位相减求和` |
+| 高中 选必二 | 第四章 数列 | 裂项相消求和 | 同上 | `RENJIAO-G11-MATH-A-SBX2-ku-裂项相消求和` |
+| 高中 选必二 | 第四章 数列 | 数列不等式与放缩 | 同上 | `RENJIAO-G11-MATH-A-SBX2-ku-数列不等式与放缩` |
+| 高中 选必三 | 第六章 计数原理 | 分组分配问题 | `RENJIAO-G12-MATH-A-SBX3` / `-kc-排列与组合的典型应用` | `RENJIAO-G12-MATH-A-SBX3-ku-分组分配问题` |
+
+说明：
+
+- 第四节把“错位相减 / 裂项相消”记为一条，第七节 P0 要求两者各建独立 KU，故拆成
+  2 个 KU；其余缺口一缺口一 KU。16 条原始记录去重后是 15 个知识点，本次 14 个 KU
+  覆盖其中 13 个，另 2 个已有 `cnmath:` KU（见 10.4）。
+- 新增 3 个 cluster 只为承载缺口，不重建整章：七上“一元一次方程”、必修一“函数的
+  概念与性质”、选必二“数列求和方法与不等式”。其余缺口挂到已有章节 cluster。
+- 每个 KU 均含 `description`（简明说明）与完整 `rich_content`（`definition`、
+  `key_points`、`examples`、`intuition`、`application`、`connections`、
+  `common_mistakes`、`counter_examples`），全部为自写内容，未复制上游正文。
+- `prerequisites` / `related_kus` 一律写**可解析的现有 KU ID**（跨包或同包），
+  不写裸名称；新增的 3 个链式前置（裂项 → 放缩）也指向本包新 ID。
+- `verified` 沿用各包现有口径：高中四包与必修二写 `true`，初中三包与三上写
+  `false`（与包内其余 KU 一致，避免把“未经人工复核”标成已核验）。
+- 数学 KU 总数 2,389 → 2,403。
+
+### 10.3 校验
+
+```bash
+# 入库契约预演（9 个改动包逐个）
+for f in renjiao-math-g10-a RENJIAO-G10-MATH-BX2 RENJIAO-G11-MATH-A-SBX2 \
+         RENJIAO-G12-MATH-A-SBX3 RENJIAO-G7-MATH-S RENJIAO-G7-MATH-X \
+         RENJIAO-G8-MATH-S RENJIAO-G9-MATH-X RENJIAO-G3-MATH-S; do
+  python3 scripts/import_ku_package.py "data/ku_packages/$f.json" --dry-run
+done
+
+# 相关测试（只跑这 3 个文件，不跑全量）
+TEST_DATABASE_URL='postgresql://postgres:postgres@localhost:5433/mneme_test' \
+  python3 -m pytest -o addopts= --no-cov -q \
+  tests/test_ku_package_roundtrip.py tests/test_cn_math_taxonomy.py \
+  tests/test_cn_math_importer_unit.py
+
+# 题库/包结构端到端自检
+python3 scripts/test_question_bank.py
+```
+
+结果：9 个包 dry-run 全部 `[DRY-RUN] 预演通过`；pytest `5 passed`；
+`test_question_bank.py` 输出 `All tests passed!`（KU 914、verified 914）。
+另做了唯一性自检：14 个新 ID 全库唯一、cluster 均存在、`textbook_id` 一致、
+所有前置/关联引用均可解析、`difficulty`/`ku_type`/`exam_frequency` 合法、
+`verified=true` 的 5 条均带 `examples/definition/key_points`。
+
+### 10.4 未补的缺口及原因
+
+| 缺口 | 未补原因 |
+| :--- | :--- |
+| 集合的基本运算（交集、并集、补集、Venn 图） | 复核确认 mneme 已有 8 个 KU（`renjiao-math-g10-a` 的 `ku-集合的基本运算`、`ku-venn图` 等），`compare.csv` 的“mneme 是否已有”列也标 ✅。不属于真缺口。 |
+| 用代数式表示规律（七上 第三章） | `data/cn_math_taxonomy/topics.json` 的 `cnm_030` 已由 `services/cn_math_importer.py` 导入为 `cnmath:cnm_030` KU，章节正是“七上 第三章 代数式 3.1/3.2”。再补一个 `ku_packages` KU 会把同一知识点的掌握度拆到两个 `kc_id`，违反“一概念一 KU”。 |
+| 统计活动的基本过程（七下 第十二章） | 同上，`cnm_300` 已是 `cnmath:cnm_300`（12.1，含提出/收集/整理/描述/分析/结论完整流程）。 |
+| P1 分册硬洞：七上一元一次方程与几何图形初步整章、七下二元一次方程组/不等式/数据、三上其余 2024 版单元、选必二导数综合 | 这些是第六节指出的**包内分册完整性**问题，不在第四节“已确认真缺口”清单内。本次只补确认缺口，未顺手扩章，避免把“补缺口”变成无功底的全章重建；建议按 P1 单独立项、逐章补。 |
+
+### 10.5 变更文件
+
+- `data/ku_packages/renjiao-math-g10-a.json`（+4 KU、+1 cluster）
+- `data/ku_packages/RENJIAO-G10-MATH-BX2.json`（+1 KU）
+- `data/ku_packages/RENJIAO-G11-MATH-A-SBX2.json`（+3 KU、+1 cluster）
+- `data/ku_packages/RENJIAO-G12-MATH-A-SBX3.json`（+1 KU）
+- `data/ku_packages/RENJIAO-G7-MATH-S.json`（+1 KU、+1 cluster）
+- `data/ku_packages/RENJIAO-G7-MATH-X.json`（+1 KU）
+- `data/ku_packages/RENJIAO-G8-MATH-S.json`（+1 KU）
+- `data/ku_packages/RENJIAO-G9-MATH-X.json`（+1 KU）
+- `data/ku_packages/RENJIAO-G3-MATH-S.json`（+1 KU）
+- `reports/kp-compare-数学.md`（本节）
+
+未改 schema、未改导入/校验脚本、未新增测试、未加 skip/xfail，未提交
+`mneme.egg-info`。

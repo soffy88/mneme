@@ -6162,6 +6162,53 @@
       "verified": true
     },
     {
+      "id": "RENJIAO-G10-MATH-BX2-ku-外接球与内切球",
+      "textbook_id": "RENJIAO-G10-MATH-BX2",
+      "cluster_id": "RENJIAO-G10-MATH-BX2-kc-03",
+      "name": "外接球与内切球",
+      "description": "多面体与旋转体的外接球、内切球半径求法：长方体补形、正四面体模型、等体积法。",
+      "prerequisites": [
+        "RENJIAO-G10-MATH-BX2-ku-球体的定义及结构特征",
+        "RENJIAO-G10-MATH-BX2-ku-柱、锥、台、球的表面积和体积计算"
+      ],
+      "related_kus": [
+        "RENJIAO-G10-MATH-BX2-ku-棱柱、棱锥、棱台的表面积公式"
+      ],
+      "difficulty": 0.8,
+      "exam_frequency": "high",
+      "question_types": [],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "棱长为 2 的正方体，外接球直径等于体对角线 2√3，故 R=√3，表面积 12π。",
+          "棱长为 a 的正四面体：外接球半径 R=√6a/4，内切球半径 r=√6a/12，两球同心。",
+          "三棱锥三条侧棱两两垂直且长分别为 a、b、c，可补成长方体，外接球半径 R=√(a²+b²+c²)/2。"
+        ],
+        "intuition": "外接球是“把几何体装进一个球”，内切球是“把球塞进几何体”；补形法就是把不好装的形状补成好装的长方体。",
+        "definition": "外接球指经过几何体所有顶点的球，球心到各顶点距离相等；内切球指与几何体各面都相切的球，球心到各面的距离都等于半径。求半径的关键是定位球心并建立到顶点或到面的等量关系。",
+        "key_points": [
+          "⚠️ 长方体（含正方体）的外接球直径等于体对角线，R=√(a²+b²+c²)/2。",
+          "⚠️ 直棱柱的外接球球心在上下底面外心连线的中点；正四面体可补成正方体或用高与底面外接圆半径求解。",
+          "⚠️ 内切球常用等体积法：把几何体分成以各面为底、球心为顶点的小锥体，得 r=3V/S表。"
+        ],
+        "application": "立体几何小题高频：求外接球或内切球的表面积、体积；已知球与几何体的关系反求棱长；也常与三视图、折叠问题结合。",
+        "connections": "依赖球的结构特征、棱柱棱锥的体积与表面积、空间中的垂直关系；向前衔接“空间几何体的结构特征”，向后为空间向量法求距离做铺垫。",
+        "common_mistakes": [
+          "把底面外接圆半径当成外接球半径，忘了球心还在竖直方向上。",
+          "正四面体的外接球与内切球半径公式记混，或把 R=√6a/4 写成 √3a/2。",
+          "内切球误用 r=V/S表，正确关系是 r=3V/S表。",
+          "把任意三棱锥都补成长方体；补形要求三条侧棱两两垂直。"
+        ],
+        "counter_examples": "只有三条侧棱两两垂直的三棱锥才能直接补成长方体；一般三棱锥的外接球球心不一定在底面外心上，需要用作垂直平分面相交来定位。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": true
+    },
+    {
       "id": "RENJIAO-G10-MATH-BX2-ku-多种抽样方法组合使用",
       "textbook_id": "RENJIAO-G10-MATH-BX2",
       "cluster_id": "RENJIAO-G10-MATH-BX2-kc-04",

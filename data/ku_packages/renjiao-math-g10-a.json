@@ -240,6 +240,12 @@
       "name": "函数 y=Asin(ωx+φ) 的建模与参数影响",
       "display_order": 37,
       "description": null
+    },
+    {
+      "id": "renjiao-math-g10-a-kc-函数的概念与性质",
+      "name": "函数的概念与性质",
+      "display_order": 38,
+      "description": "第三章：函数概念与表示、基本性质、幂函数与图象识别"
     }
   ],
   "units": [
@@ -4318,6 +4324,53 @@
       "verified": true
     },
     {
+      "id": "renjiao-math-g10-a-ku-函数图象的识别",
+      "textbook_id": "renjiao-math-g10-a",
+      "cluster_id": "renjiao-math-g10-a-kc-函数的概念与性质",
+      "name": "函数图象的识别",
+      "description": "利用定义域、奇偶性、单调性、特殊点与远处趋势，把解析式与图象对应起来。",
+      "prerequisites": [
+        "renjiao-math-g10-a-ku004"
+      ],
+      "related_kus": [
+        "renjiao-math-g10-a-ku005"
+      ],
+      "difficulty": 0.7,
+      "exam_frequency": "high",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "y=x/(x²+1)：奇函数、过原点，|x| 很大时函数值趋于 0，图象是过原点、左右对称的一个小峰和一个小谷。",
+          "y=ln|x|：偶函数，图象关于 y 轴对称；x→0 时函数值趋于 −∞，x=1 处为 0。",
+          "y=x+1/x：定义域 x≠0，奇函数；x>0 时在 x=1 处取最小值 2，图象在 y 轴两侧各有一支。"
+        ],
+        "intuition": "识别图象像认人：不必记住每根头发，只看身高（定义域）、是否左右对称（奇偶性）、走路方向（单调性）和几个标志性特征（特殊点、渐近趋势）。",
+        "definition": "函数图象的识别指不逐点描图，而是依据解析式读出定义域、值域、奇偶性、单调性、零点、特殊点符号以及 x→±∞ 时的变化趋势，从而在若干图象中选出正确的一个，或由图象反推解析式。",
+        "key_points": [
+          "⚠️ 先看定义域：图象上挖去的点、缺失的区间往往能直接排除两个选项。",
+          "⚠️ 再看奇偶性：奇函数图象关于原点对称，偶函数图象关于 y 轴对称。",
+          "⚠️ 最后用特殊点（f(0)、f(1)、零点）的符号和远处趋势确认，避免只看一点就下结论。"
+        ],
+        "application": "高考选择题高频：给出四个图象选解析式，或给出解析式选图象；也用于判断方程根的个数、比较函数值大小。",
+        "connections": "把单调性、奇偶性、周期性等性质与图象直观结合起来，是导数作图的先修，也与“函数图象的平移与对称变换”互补。",
+        "common_mistakes": [
+          "只代一个特殊点就作出选择，忽略了另一个选项在同一点也相同。",
+          "忘记检查定义域中被挖去的点，把有空洞的图象当成连续图象。",
+          "把偶函数图象误判为关于原点对称，或把奇函数图象误判为关于 y 轴对称。"
+        ],
+        "counter_examples": "y=x² 与 y=|x| 都过 (0,0) 和 (1,1)，但在 (0,1) 内大小关系相反，不能只凭两个公共点区分；y=sin x/x 在 x=0 处无定义，图象在原点附近有空洞，但极限存在。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": true
+    },
+    {
       "id": "renjiao-math-g10-a-ku-列举法",
       "textbook_id": "renjiao-math-g10-a",
       "cluster_id": "renjiao-math-g10-a-kc-集合的基本概念与表示",
@@ -5016,6 +5069,54 @@
         "counter_examples": [
           "注意边界条件"
         ]
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": true
+    },
+    {
+      "id": "renjiao-math-g10-a-ku-含参不等式恒成立讨论",
+      "textbook_id": "renjiao-math-g10-a",
+      "cluster_id": "renjiao-math-g10-a-kc-一元二次不等式与函数-方程的联系及恒成立",
+      "name": "含参不等式恒成立讨论",
+      "description": "含参数的不等式在给定区间上恒成立，用分离参数求最值或按参数分类讨论求参数范围。",
+      "prerequisites": [
+        "renjiao-math-g10-a-ku-一元二次不等式恒成立问题",
+        "renjiao-math-g10-a-ku-二次函数-一元二次方程-一元二次不等式的关系"
+      ],
+      "related_kus": [
+        "renjiao-math-g10-a-ku-一元二次不等式与二次函数-一元二次方程的联系"
+      ],
+      "difficulty": 0.75,
+      "exam_frequency": "high",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "对任意 x∈[1,2]，x²−ax+1≥0 恒成立：分离参数得 a≤x+1/x，而 x+1/x 在 [1,2] 上的最小值为 2（x=1），故 a≤2。",
+          "对任意 x∈R，ax²+ax+1>0 恒成立：a=0 时 1>0 成立；a>0 时需 Δ=a²−4a<0，得 0<a<4；a<0 时开口向下，不可能恒正。综上 0≤a<4。",
+          "若把“恒成立”改成“有解”，则 a≥x+1/x 有解等价于 a≥最小值，最值方向与恒成立相反。"
+        ],
+        "intuition": "恒成立就是“无论怎么取值都不翻车”，所以只需盯住最危险的那个点：要始终在上方，就看函数的最低点；要始终在下方，就看最高点。",
+        "definition": "含参不等式恒成立问题指在给定区间上，不等式对任意自变量都成立，求参数的取值范围。基本转化是：a≥f(x) 恒成立 ⇔ a≥f(x) 的最大值；a≤f(x) 恒成立 ⇔ a≤f(x) 的最小值（最值在给定区间上取）。",
+        "key_points": [
+          "⚠️ 先明确“对谁恒成立”：是全体实数还是某个区间，区间端点是否取到。",
+          "⚠️ 能分离参数时优先分离，把问题化为求最值；分离时除以含参式子必须讨论其正负。",
+          "⚠️ 不能分离时按参数分类讨论，重点检查二次项系数为 0、判别式与区间端点的位置。"
+        ],
+        "application": "高一与一元二次不等式、二次函数最值结合；高三与导数结合，求“f(x)≥0 在区间上恒成立”的参数范围，是高考压轴题的常见第一问。",
+        "connections": "以一元二次不等式解法、二次函数最值为基础，向后衔接导数求最值与“存在性”问题；与“恒成立”对偶的“有解”问题常成对出现。",
+        "common_mistakes": [
+          "把恒成立与有解的最值方向弄反：恒成立看最值，有解也看最值，但不等号方向相反。",
+          "分离参数时除以一个含参数的式子，没有讨论它是正还是负。",
+          "忽略二次项系数为 0 的退化情形，漏掉参数的一个端点值。"
+        ],
+        "counter_examples": "“ax²+ax+1>0 对 x∈R 恒成立”不能只写 Δ<0：当 a=0 时 1>0 也恒成立，答案必须包含 0；而“ax²+ax+1>0 有解”在 a=0 时同样成立，但最值条件不同。"
       },
       "provenance": null,
       "source_excerpt": null,
@@ -6239,6 +6340,53 @@
       "verified": true
     },
     {
+      "id": "renjiao-math-g10-a-ku-幂函数",
+      "textbook_id": "renjiao-math-g10-a",
+      "cluster_id": "renjiao-math-g10-a-kc-函数的概念与性质",
+      "name": "幂函数",
+      "description": "形如 y=x^α（α 为常数）的函数；掌握 α=1、2、3、1/2、−1 时的定义域、图象与单调性。",
+      "prerequisites": [
+        "renjiao-math-g10-a-ku004"
+      ],
+      "related_kus": [
+        "renjiao-math-g10-a-ku005"
+      ],
+      "difficulty": 0.5,
+      "exam_frequency": "high",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "y=x³：奇函数，在 R 上单调递增，图象过 (−1,−1)、(0,0)、(1,1)。",
+          "y=x^(1/2)：定义域为 [0,+∞)，非奇非偶，图象过 (0,0)、(1,1)、(4,2)。",
+          "y=x^(−1)：定义域为 {x|x≠0}，奇函数，在 (−∞,0) 和 (0,+∞) 上分别单调递减。"
+        ],
+        "intuition": "幂函数像同一台机器换不同的档位：底数 x 是投入，指数 α 决定产出增长得快还是慢、图象关于谁对称。",
+        "definition": "一般地，函数 y=x^α 叫做幂函数，其中 x 是自变量，α 是常数。高中重点研究 α=1、2、3、1/2、−1 五个代表，它们的定义域随指数不同而变化。",
+        "key_points": [
+          "⚠️ 幂函数必须写成 y=x^α 的形式：系数为 1、底数是自变量、指数是常数，三者缺一不可。",
+          "⚠️ 五个代表图象都经过点 (1,1)；α>0 时在 (0,+∞) 上递增，α<0 时在 (0,+∞) 上递减。",
+          "⚠️ 奇偶性由 α 决定：α 为整数时按幂的符号规律判断，α=1/2 时定义域不对称，既非奇也非偶。"
+        ],
+        "application": "常见考法：比较两个幂的大小（化为同指数或同底数，再用单调性）；由图象选解析式；求含幂函数的定义域；判断幂函数与指数函数的区别。",
+        "connections": "与指数函数 y=a^x 形成对照：幂函数的自变量在底数、指数为常数，指数函数的自变量在指数、底数为常数。后续学习导数时，(x^α)′=αx^(α−1) 也以幂函数为载体。",
+        "common_mistakes": [
+          "把 y=2x² 或 y=x²+1 当作幂函数，忽略了系数必须为 1、结构必须是单项式。",
+          "认为 y=x^(−1) 在整个定义域上单调递减，实际上它在 (−∞,0) 和 (0,+∞) 上分别递减。",
+          "忽略 α=1/2 时定义域只有 [0,+∞)，画图时把左半平面也补上。"
+        ],
+        "counter_examples": "y=2^x 是指数函数而不是幂函数；y=x^0=1（x≠0）是常函数，通常不作为幂函数的五个代表；α 不同时图象形状差别很大，不能把 y=x² 的结论直接搬到 y=x³。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": true
+    },
+    {
       "id": "renjiao-math-g10-a-ku-并集的定义",
       "textbook_id": "renjiao-math-g10-a",
       "cluster_id": "renjiao-math-g10-a-kc-集合的基本运算",
@@ -6709,6 +6857,53 @@
         "counter_examples": [
           "注意边界条件"
         ]
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": true
+    },
+    {
+      "id": "renjiao-math-g10-a-ku-抽象函数",
+      "textbook_id": "renjiao-math-g10-a",
+      "cluster_id": "renjiao-math-g10-a-kc-函数的概念与性质",
+      "name": "抽象函数",
+      "description": "只给出函数方程或性质、不给解析式的函数问题；用赋值法求值，并用定义证明单调性与奇偶性。",
+      "prerequisites": [
+        "renjiao-math-g10-a-ku004"
+      ],
+      "related_kus": [
+        "renjiao-math-g10-a-ku005"
+      ],
+      "difficulty": 0.8,
+      "exam_frequency": "high",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "concept",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "已知 f(x+y)=f(x)+f(y) 对任意实数成立：令 x=y=0 得 f(0)=0；令 y=−x 得 f(−x)=−f(x)，所以 f 为奇函数。",
+          "接上例，若 x>0 时 f(x)<0：任取 x₁<x₂，则 f(x₂)−f(x₁)=f(x₂−x₁)<0，故 f 在 R 上单调递减。",
+          "已知 f(xy)=f(x)+f(y)（x,y>0）：令 x=y=1 得 f(1)=0；令 y=1/x 得 f(1/x)=−f(x)，可进一步讨论单调性。"
+        ],
+        "intuition": "抽象函数像一台只给规则、不给说明书的机器：看不到内部构造，但可以代入特殊输入，再比较两次输出的差，推断它的对称性和增减性。",
+        "definition": "抽象函数指没有给出具体解析式，只给出函数方程（如 f(x+y)=f(x)+f(y)）或若干性质的一类函数问题。解题的基本方法是赋值、代换，以及回到单调性、奇偶性的定义作差或作商。",
+        "key_points": [
+          "⚠️ 先赋特殊值：0、1、−1、−x、y=−x 是最常用的入口，用来求 f(0)、f(1) 和判断奇偶性。",
+          "⚠️ 证明单调性必须回到定义：任取 x₁<x₂，把 f(x₂)−f(x₁) 化成已知符号的 f(x₂−x₁) 或 f(x₂/x₁)。",
+          "⚠️ 题目给出的定义域要先用上；赋值时取的值必须落在定义域内。"
+        ],
+        "application": "高考常在选择、填空中考 f(0)、奇偶性、单调性，或把抽象不等式 f(x)+f(y)<0 转化为自变量的大小关系；也常作为导数压轴题的第一问。",
+        "connections": "它是函数概念、单调性、奇偶性与不等式的综合运用，也是函数方程思想的入门；与具体函数（一次、指数、对数）的性质互为印证。",
+        "common_mistakes": [
+          "由 f(x+y)=f(x)+f(y) 直接断定 f(x)=kx，题目没有给连续性或可导性时这一步不成立。",
+          "证明单调性时没有“任取”，或作差后没有说明差的符号来源。",
+          "把加法型 f(x+y)=f(x)+f(y) 与乘法型 f(xy)=f(x)+f(y) 的结论混用。"
+        ],
+        "counter_examples": "f(x+y)=f(x)+f(y) 在连续条件下才有 f(x)=kx；若不要求连续，还存在病态解，所以不能直接设解析式。f(xy)=f(x)+f(y) 对应的是对数型结构，不能套用加法型的奇偶性结论。"
       },
       "provenance": null,
       "source_excerpt": null,

@@ -292,6 +292,55 @@
   ],
   "units": [
     {
+      "id": "RENJIAO-G8-MATH-S-ku-一线三等角模型",
+      "textbook_id": "RENJIAO-G8-MATH-S",
+      "cluster_id": "RENJIAO-G8-MATH-S-kc-三角形全等的判定定理-一般三角形",
+      "name": "一线三等角模型",
+      "description": "同一直线上三个相等角配合一组对应边，可证两三角形全等；只有角相等时得到相似。",
+      "prerequisites": [
+        "RENJIAO-G8-MATH-S-ku-角角边-aas-判定定理",
+        "RENJIAO-G8-MATH-S-ku-全等三角形的性质"
+      ],
+      "related_kus": [
+        "RENJIAO-G8-MATH-S-ku-角边角-asa-判定定理"
+      ],
+      "difficulty": 0.7,
+      "exam_frequency": "high",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "application",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "B、P、C 在同一直线上，∠B=∠APC=∠C=α，且 AP=PC，则 △ABP≌△PCD（AAS）。",
+          "等边三角形 ABC 中，D、E 在 BC 上，∠ADE=60°，可构造一线三等角，得 △ABD∽△DCE。",
+          "正方形中过顶点作两条互相垂直的线段，常出现三个 90° 角共线的一线三直角，用全等求线段长。"
+        ],
+        "intuition": "一条直线上立三个相同的斜角，像三块同角度的斜坡；坡度相同，坡面形状就相似，再给一条对应边相等，大小也被固定。",
+        "definition": "一线三等角模型指三个相等角的顶点 B、P、C 在同一直线上，即 ∠B=∠APC=∠C=α。若再有一组对应边相等（如 AP=PC），则 △ABP≌△PCD；若只有角相等，则由两角分别相等得到 △ABP∽△PCD。",
+        "key_points": [
+          "⚠️ 先确认“三个相等角的顶点在同一直线上”，这是模型成立的前提。",
+          "⚠️ 找对应角：由平角 180° 与三角形内角和推出 ∠A=∠CPD、∠APB=∠D。",
+          "⚠️ 有边相等用 AAS 或 ASA 证全等，没有边相等只能用 AA 证相似；α=90° 时退化为一线三直角。"
+        ],
+        "application": "中考几何压轴：全等或相似的构造、正方形与等边三角形综合、求线段长度与最值；也常与旋转、折叠结合。",
+        "connections": "以全等判定（AAS、ASA）和相似判定（AA）为基础；与“手拉手模型”“半角模型”并列，是几何模型层的重要成员。",
+        "common_mistakes": [
+          "三个角相等但顶点不共线，仍套用模型。",
+          "对应角找错，导致对应边错位、比例式写反。",
+          "只证了角相等就断言全等，缺少边相等的条件。",
+          "忽略 α=90° 时模型退化为一线三直角，仍按一般角处理。"
+        ],
+        "counter_examples": "∠B=∠APC=∠C 但 AP≠PC 时，只能得到相似，不能得到全等；B、P、C 不共线时，三个角相等也构不成一线三等角。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
       "id": "RENJIAO-G8-MATH-S-ku-三条线段组成三角形的条件",
       "textbook_id": "RENJIAO-G8-MATH-S",
       "cluster_id": "RENJIAO-G8-MATH-S-kc-三角形的边与稳定性",

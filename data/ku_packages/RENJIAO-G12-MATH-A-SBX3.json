@@ -1901,6 +1901,56 @@
       "verified": true
     },
     {
+      "id": "RENJIAO-G12-MATH-A-SBX3-ku-分组分配问题",
+      "textbook_id": "RENJIAO-G12-MATH-A-SBX3",
+      "cluster_id": "RENJIAO-G12-MATH-A-SBX3-kc-排列与组合的典型应用",
+      "name": "分组分配问题",
+      "description": "把 n 个不同元素分组再分配：区分平均分组、非平均分组与指定对象，避免重复计数。",
+      "prerequisites": [
+        "RENJIAO-G12-MATH-A-SBX3-ku-组合数公式",
+        "RENJIAO-G12-MATH-A-SBX3-ku-排列数公式"
+      ],
+      "related_kus": [
+        "RENJIAO-G12-MATH-A-SBX3-ku-有限制条件的组合问题-至少-至多"
+      ],
+      "difficulty": 0.75,
+      "exam_frequency": "high",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "procedure",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "6 人分成 2、2、2 三组：C(6,2)C(4,2)C(2,2)/3!=15，因为三组大小相同且组没有标号，要除以 3!。",
+          "6 人分成 1、2、3 三组：C(6,1)C(5,2)C(3,3)=60，三组大小不同，不需要再除。",
+          "6 人分成 2、2、2 三组后分给 3 个不同任务：15×3!=90，先分组再分配。",
+          "10 个相同名额分给 4 个班，每班至少 1 个：用隔板法，C(9,3)=84。"
+        ],
+        "intuition": "分组像把牌分成几摞，摞本身没有名字；分配像把分好的摞再发给不同的人，人有名字。所以平均分组要除掉“摞的顺序”，分配则要再乘上“给谁”的排列数。",
+        "definition": "分组分配问题指把 n 个不同元素按指定数量分成若干组（分组），再分给不同对象（分配）。分组只关心“怎么分”，分配还要关心“给谁”；相同元素分给不同对象则常用隔板法。",
+        "key_points": [
+          "⚠️ 非平均分组：依次取组后相乘，不除任何阶乘。",
+          "⚠️ 平均分组：若 k 个组大小相同且组无标号，要除以 k!；部分平均只除以相同大小组的阶乘。",
+          "⚠️ 分配问题：先分组，再乘目标对象的排列数；若组本身已有标号，则不能再除。"
+        ],
+        "application": "高考计数原理高频：分组分配、名额分配、志愿者分配、球队分组；常与排列数、组合数、两个计数原理综合考查。",
+        "connections": "建立在组合数公式与分类加法、分步乘法计数原理之上；隔板法是“相同元素分配”的专门工具，与“不同元素分组”形成对照。",
+        "common_mistakes": [
+          "平均分组忘记除以组数阶乘，导致同一分法被重复计数。",
+          "非平均分组也去除以阶乘，少算了分法。",
+          "分组后分配时忘记乘对象排列数，或对象已有标号却又除了一次。",
+          "相同元素分配误用组合数，没有用隔板法。"
+        ],
+        "counter_examples": "6 人分成 2、2、2 三组后分给 3 个有名字的小组，此时组已有标号，不能再除 3!；10 个相同球分给 4 人允许空盒，隔板数是 C(13,3)，不是 C(9,3)。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": true
+    },
+    {
       "id": "RENJIAO-G12-MATH-A-SBX3-ku-参数μ和σ对正态曲线的影响",
       "textbook_id": "RENJIAO-G12-MATH-A-SBX3",
       "cluster_id": "RENJIAO-G12-MATH-A-SBX3-kc-正态曲线的性质与参数意义",

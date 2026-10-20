@@ -2560,6 +2560,55 @@
       "verified": false
     },
     {
+      "id": "RENJIAO-G9-MATH-X-ku-母子型相似模型",
+      "textbook_id": "RENJIAO-G9-MATH-X",
+      "cluster_id": "RENJIAO-G9-MATH-X-kc-相似三角形的应用",
+      "name": "母子型相似模型",
+      "description": "直角三角形斜边上的高分出两个小三角形，三者两两相似；由对应边成比例得到射影关系。",
+      "prerequisites": [
+        "RENJIAO-G9-MATH-X-ku-两角分别相等判定三角形相似",
+        "RENJIAO-G9-MATH-X-ku-相似三角形对应线段的比等于相似比"
+      ],
+      "related_kus": [
+        "RENJIAO-G9-MATH-X-ku-直角三角形相似的hl判定"
+      ],
+      "difficulty": 0.7,
+      "exam_frequency": "high",
+      "question_types": [
+        "short_answer"
+      ],
+      "ku_type": "application",
+      "curriculum_standard": null,
+      "mastery_levels": [],
+      "rich_content": {
+        "examples": [
+          "Rt△ABC 中 ∠C=90°，CD⊥AB 于 D：△ACD∽△ABC∽△CBD，且 AC²=AD·AB、BC²=BD·AB、CD²=AD·BD。",
+          "AC=6，AB=10，则 AD=AC²/AB=3.6，BD=6.4，CD=√(AD·BD)=4.8。",
+          "一般三角形中出现公共角和另一组等角时，也可按母子型写出对应边比例，不必是直角三角形。"
+        ],
+        "intuition": "母子型像大三角形“生”出两个小三角形：形状完全相同，只是大小不同，所以所有对应边都按同一比例缩放。",
+        "definition": "母子型相似指在 △ABC 中，若 ∠ACB=90°，CD⊥AB 于 D，则 △ACD∽△ABC∽△CBD。其本质是共用角 A（或 B）再加上一组直角相等；由对应边成比例可推出 AC²=AD·AB、BC²=BD·AB、CD²=AD·BD。",
+        "key_points": [
+          "⚠️ 先找公共角，再找第二组等角（直角，或由平行、垂直、已知条件推出）。",
+          "⚠️ 写对应边时按“小三角形的斜边对应大三角形的斜边”对齐，比例式才不会写反。",
+          "⚠️ 常用射影关系 AC²=AD·AB，但 D 必须落在 AB 上，且 CD 是斜边上的高。"
+        ],
+        "application": "中考相似压轴：求线段长、证明比例式、与圆和二次函数综合；高考解三角形中也会用到射影关系。",
+        "connections": "以相似三角形的判定（两角分别相等）和性质（对应边成比例）为基础；与“一线三等角”互为姊妹模型；为射影定理、圆幂定理做铺垫。",
+        "common_mistakes": [
+          "对应边写错，把 AD 对应 AB 写成 AD 对应 AC。",
+          "只记结论不写相似依据，过程分丢失。",
+          "在非直角三角形中直接套 AC²=AD·AB。",
+          "忽略 D 必须落在 AB 上，高落在形外时仍照搬线段关系。"
+        ],
+        "counter_examples": "若 CD 不是斜边上的高，三个三角形不一定相似；钝角三角形中高落在形外，射影关系要带符号处理，不能直接相加。"
+      },
+      "provenance": null,
+      "source_excerpt": null,
+      "ai_generated": true,
+      "verified": false
+    },
+    {
       "id": "RENJIAO-G9-MATH-X-ku-气体压强与体积的反比例关系",
       "textbook_id": "RENJIAO-G9-MATH-X",
       "cluster_id": "RENJIAO-G9-MATH-X-kc-反比例函数的实际应用",
