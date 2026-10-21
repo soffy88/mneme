@@ -36,9 +36,9 @@ RUN apt-get update \
 COPY --from=builder /usr/local/lib/python3.12/site-packages /usr/local/lib/python3.12/site-packages
 COPY --from=builder /usr/local/bin /usr/local/bin
 
-# Copy mneme project files
-COPY . .
-RUN chown -R mneme:mneme /app
+# Copy mneme project files with ownership set at COPY time: a separate
+# chown layer would duplicate the entire app tree (~6GB) in the image.
+COPY --chown=mneme:mneme . .
 USER mneme
 
 # Keep the checked-in runtime closure first even when the image is run without

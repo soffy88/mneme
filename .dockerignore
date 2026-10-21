@@ -26,3 +26,11 @@ docker
 tests
 docs
 scratch
+
+# --- image slimming (2026-10-21): bulk data lives on the host and reaches the
+# container via the compose bind-mount of the working tree; baking it into the
+# image only duplicated it (~5.6GB). Tracked small files stay.
+data/external
+curriculum_standards/*.pdf
+.veya
+.veya-project
