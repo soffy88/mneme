@@ -101,6 +101,8 @@ async def test_daily_plan_prefs_crud(client, student):
         "late_night_minute": 30,
         "weak_max_items": 3,
         "new_max_items": 2,
+        "new_ku_per_session": 3,
+        "chunk_budget_enabled": True,
     }
 
     # 部分更新：只改 budget_minutes 和 weak_max_items，其余保留默认

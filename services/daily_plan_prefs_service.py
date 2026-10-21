@@ -22,6 +22,11 @@ _DEFAULT_PREFS = {
     "late_night_minute": 30,
     "weak_max_items": 3,
     "new_max_items": 2,
+    # 认知负荷预算（工作记忆 3–4 组块）：单节计划最多引入的新 KU 数。
+    # 保守默认 3；chunk_budget_enabled=False 可整体关闭（回到不设上限）。
+    # 这是「新组块」上限，不是 new_max_items（后者只影响时长估算/单任务条数）。
+    "new_ku_per_session": 3,
+    "chunk_budget_enabled": True,
 }
 _ALLOWED_KEYS = set(_DEFAULT_PREFS.keys())
 
@@ -51,8 +56,16 @@ def _validate(updates: dict) -> str | None:
     for key in ("weak_max_items", "new_max_items"):
         if key in updates:
             v = updates[key]
-            if not isinstance(v, int) or v < 0:
+            if not isinstance(v, int) or isinstance(v, bool) or v < 0:
                 return f"{key} 必须是 >=0 的整数"
+    if "new_ku_per_session" in updates:
+        v = updates["new_ku_per_session"]
+        # None = 不设上限（等价关闭该项约束）；0 = 本节不引入任何新 KU
+        if v is not None and (not isinstance(v, int) or isinstance(v, bool) or v < 0):
+            return "new_ku_per_session 必须是 >=0 的整数或 null(不限)"
+    if "chunk_budget_enabled" in updates:
+        if not isinstance(updates["chunk_budget_enabled"], bool):
+            return "chunk_budget_enabled 必须是布尔值"
     return None
 
 

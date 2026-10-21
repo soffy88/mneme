@@ -49,6 +49,70 @@ def _is_late_night(
     return (now.hour, now.minute) >= (hour, minute)
 
 
+# ── 认知负荷预算（工作记忆 3–4 组块）────────────────────────────────────
+# 工作记忆面对未关联信息只能维持 3–4 个组块：一节计划里引入的「新 KU」就是
+# 最贵的新组块。给新 KU 总量设上限，超出的顺延（deferred，如实记录不静默
+# 丢弃），腾出的位置由已接触/已自动化内容的交错练习队列填充（见
+# interleaved_queue）。纯函数、无 DB，便于单测；不改变 ZPD 评分行为。
+
+def count_new_concepts(ku_ids: list, known_kp_set: set) -> int:
+    """一组 KU 里学生从未接触过（不在 kc_mastery 中）的数量 = 新组块数。"""
+    return sum(1 for k in ku_ids if str(k) not in known_kp_set)
+
+
+def apply_chunk_budget(
+    tasks: list[dict],
+    *,
+    enabled: bool,
+    limit: Optional[int],
+    known_kp_set: set,
+    filler_ku_ids: Optional[list] = None,
+    item_cap: int = 2,
+) -> tuple[list[dict], dict]:
+    """给每个任务标注 new_concept_count，并把 new_learn 的新 KU 总量压到 limit。
+
+    enabled=False 或 limit=None → 不裁剪（只标注计数），行为与旧版一致。
+    被裁掉的新 KU 进 info["deferred_ku_ids"]；裁剪后为空的 new_learn 任务
+    整体移除。info["filler_ku_ids"] 记录填充用的交错练习 KU（已自动化/
+    已接触内容），仅当确有顺延时非空。
+    """
+    info: dict = {
+        "enabled": bool(enabled),
+        "new_ku_per_session": limit,
+        "new_ku_count": 0,
+        "deferred_ku_ids": [],
+        "filler_ku_ids": [],
+    }
+    remaining: Optional[int] = limit if (enabled and limit is not None) else None
+    kept_tasks: list[dict] = []
+    for t in tasks:
+        ids = [str(x) for x in t.get("ku_ids", [])]
+        t["new_concept_count"] = count_new_concepts(ids, known_kp_set)
+        if t.get("type") != "new_learn":
+            kept_tasks.append(t)
+            continue
+        if remaining is None:
+            info["new_ku_count"] += len(ids)
+            kept_tasks.append(t)
+            continue
+        keep = ids[: max(0, remaining)]
+        deferred = ids[len(keep):]
+        remaining -= len(keep)
+        info["new_ku_count"] += len(keep)
+        if deferred:
+            t["deferred_ku_ids"] = deferred
+            info["deferred_ku_ids"].extend(deferred)
+        if not keep:
+            continue  # 预算用尽：整个新学任务顺延，不留空任务
+        t["ku_ids"] = keep
+        t["title"] = f"学习{len(keep)}个新知识点"
+        t["estimated_minutes"] = min(len(keep), item_cap) * MINUTES_PER_NEW_KU
+        kept_tasks.append(t)
+    if info["deferred_ku_ids"] and filler_ku_ids:
+        info["filler_ku_ids"] = [str(x) for x in filler_ku_ids]
+    return kept_tasks, info
+
+
 ALL_SUBJECTS = ["math", "physics", "english", "chinese"]
 
 # GDMATH-* KC 前缀全部属于数学
@@ -104,7 +168,11 @@ async def build_daily_plan(
     # ── 0. 考期感知（教育理念 06）：算距考天数；临考(≤14天)停推新知、向巩固倾斜 ──
     # U.24 教学机制 feature-flag（PEDAGOGY_EXAM_AWARE_ENABLED=0 急停：忽略 exam_date，
     # 不停推新知也不显示倒计时，整个机制视为不存在）
-    from services.feature_flags import PEDAGOGY_EXAM_AWARE, pedagogy_enabled
+    from services.feature_flags import (
+        PEDAGOGY_CHUNK_BUDGET,
+        PEDAGOGY_EXAM_AWARE,
+        pedagogy_enabled,
+    )
     from services.models import User
 
     exam_countdown_days: Optional[int] = None
@@ -308,6 +376,22 @@ async def build_daily_plan(
     subject_order = {s: i for i, s in enumerate(ALL_SUBJECTS)}
     tasks.sort(key=lambda t: (t["priority"], subject_order.get(t["subject"], 99)))
 
+    # ── 6.2 认知负荷预算：单节新 KU 总量上限（默认 3，可在 prefs 关闭/调
+    #        整；运维急停 env PEDAGOGY_CHUNK_BUDGET_ENABLED=0）。超预算的新
+    #        KU 顺延并如实记录，位置由 interleaved_queue 的已自动化内容交错
+    #        练习填充。不改 ZPD/policy 评分（annotate 在后面照常跑）。
+    _chunk_enabled = pedagogy_enabled(PEDAGOGY_CHUNK_BUDGET) and bool(
+        prefs.get("chunk_budget_enabled", True)
+    )
+    tasks, chunk_budget = apply_chunk_budget(
+        tasks,
+        enabled=_chunk_enabled,
+        limit=prefs.get("new_ku_per_session", 3),
+        known_kp_set=known_kp_set,
+        filler_ku_ids=[q["ku_id"] for q in interleaved_queue],
+        item_cap=prefs["new_max_items"],
+    )
+
     # ── 6.5 会话预算裁剪（L5 会话时间设计，U.20）：按 priority 顺序贪心纳入，
     #        不拆分单个任务；预算内至少保留第一个任务，避免预算过小导致计划整体清零。
     # V.2：请求显式传 budget_minutes 时临时覆盖（保留既有能力）；不传则回退到学生
@@ -363,6 +447,7 @@ async def build_daily_plan(
         "late_night": late_night,  # U.20 会话时间设计：22:30 后不排新任务
         "suggested_break_minutes": DEFAULT_SUGGESTED_BREAK_MINUTES,  # U.20 建议柔性中断
         "budget_minutes": budget_minutes,
+        "chunk_budget": chunk_budget,  # 认知负荷预算：新 KU 上限/实际/顺延/填充
         "dropped_tasks": dropped_tasks,  # U.20 预算裁剪掉的任务（如实记录，不静默丢弃）
         "subjects_summary": subjects_summary,
         "tasks": tasks,
