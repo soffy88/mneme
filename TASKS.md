@@ -2922,3 +2922,11 @@ CI 常驻的判分准确率回归门，堵死"构造桩题掩盖真实数据判�
 - [x] `services/viz_generator.py`：生成 + 后处理 + 质检 + MinIO 缓存 (ku_id, variant) + 后台生成/pending 轮询；`services/routers/viz.py`（`/v1/viz/ku`、`/v1/viz/quiz-answer`）；MCP `GenerateKUVisualization`；`tool_grants` 学生默认；tutor agent 挂载。
 - [x] 课内测验经 SubmitAnswer 回写（gate pending → `tool_submit_answer`，去重）。测试 `tests/test_viz_generator.py`。
 - [x] 前端：mneme-web `/placement/prereq` 薄弱根因下 sandbox iframe 互动课（`KUVizLesson`）。
+
+## COG-1 · 认知负荷三件套（2026-10-21，feat/cognitive-load-trio，待生产切换决策）
+
+来源：认知科学长文（工作记忆 3–4 组块）对 Mneme 的映射调研——五条原理中三条（BKT+FSRS 自动化 / ZPD 适度挑战 / 苏格拉底最小线索）已是内核既有，本节补缺口。分支已实现+测试，未合并 main、未切生产。
+
+- [x] 缺口单点练闭环：`services/gap_drill_service.py`（weak_roots→未满足前置 KU 的 5–10 道微题，题库原题+确定性变式，变式答案服务端按 seed 重算不外发）+ MCP `StartGapDrill`/`SubmitGapDrillAnswer`/`EvaluateGapDrillReturn`；逐题回写只经 SubmitAnswer（题库题复用 prereq 回写、变式走同构写路径），自评不写、重放去重；练完只读 KCMastery 按 GATE 核对，过门禁回原题标注「刚补的就是这一步」。`tool_grants` 学生默认集 +3 工具。测试 `tests/test_gap_drill_service.py`、`tests/test_gap_drill_mcp.py`。
+- [x] 解题草稿板（mneme-web 同名分支）：`src/components/student/ScratchBoard.tsx` 三栏（已知条件/中间结果/目标），中间结果可钉住、按 KU 存 localStorage 跨题不消失，答题框写出「=值」自动记下并钉住；接入 `/practice/session`。tsc 全仓通过 + `next build` 通过。
+- [x] 新组块预算：`daily_plan_prefs` 新增 `new_ku_per_session`（默认 3，None 不限）与 `chunk_budget_enabled`（默认开）；`build_daily_plan` 用纯函数 `apply_chunk_budget` 裁 new_learn 总量、顺延如实记录（`chunk_budget.deferred_ku_ids`）、交错队列填充，任务标注 `new_concept_count`；env 急停 `PEDAGOGY_CHUNK_BUDGET_ENABLED=0`；不改 ZPD 公式。测试 `tests/test_chunk_budget.py`。
