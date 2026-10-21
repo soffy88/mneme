@@ -38,6 +38,28 @@ if [ -d "$REPO_ROOT/.pytest_cache" ] && [ ! -w "$REPO_ROOT/.pytest_cache" ]; the
     echo -e "${YELLOW}==> .pytest_cache 不可写，pytest 缓存回退到 /tmp/pytest-cache${NC}"
 fi
 
+# 树权限守卫（2026-10-21 事故）：生产 api 容器以 mneme(uid 999) 非 root 运行并
+# bind-mount 本工作树；被 git 跟踪的文件若 others 不可读，启动自检的全仓 AST
+# 扫描会 PermissionError 崩溃循环（当时中招：scripts/architecture_gate.py 711、
+# tests/unit/test_architecture_closure.py 与 vendor/PROJECT_ADAPTERS.md 600）。
+# git 只存执行位，644 与 600 之差不进版本库、git status 也看不见——只能靠这里
+# 在部署前用数字权限位拦住，不许再靠上线时发现。
+echo -e "${GREEN}==> Checking tracked files are others-readable (prod container uid 999)...${NC}"
+perm_offenders=()
+while IFS= read -r f; do
+    [ -f "$f" ] || continue
+    mode="$(stat -c %a "$f")"
+    if [ $(( ${mode: -1} & 4 )) -eq 0 ]; then
+        perm_offenders+=("$f ($mode)")
+    fi
+done < <(git ls-files)
+if [ ${#perm_offenders[@]} -gt 0 ]; then
+    echo -e "${RED}==> 以下被跟踪文件 others 不可读，生产容器(uid 999)启动自检会崩：${NC}" >&2
+    printf "    %s\n" "${perm_offenders[@]}" >&2
+    echo -e "${RED}    修复：chmod 对齐 git 模式（普通文件 644，可执行脚本 755）后重跑。${NC}" >&2
+    exit 1
+fi
+
 # 选择执行环境
 if [ -x ".venv/bin/python" ]; then
     RUN=(.venv/bin/python -m)
