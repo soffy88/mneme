@@ -2472,24 +2472,28 @@ async def submit_gap_drill_answer_with_writeback(
     from services.tool_grants import _is_student
 
     out = tool_answer_gap_drill(session, answer, result)
-    if record_mastery and _is_student(current_user):
+    # 先取原始值：db.commit() 后会话会过期 current_user 的全部属性，此后再读
+    # .role/.id 将触发同步懒加载（MissingGreenlet）——finished 分支曾因此 500。
+    is_student = _is_student(current_user)
+    student_id = current_user.id
+    if record_mastery and is_student:
         answered = out.get("answered")
         if answered and answered.get("kind") == "variant":
             out["mastery_writeback"] = await gap_drill_variant_writeback(
-                db, student_id=current_user.id, answered=answered, user_answer=answer
+                db, student_id=student_id, answered=answered, user_answer=answer
             )
         else:
             out["mastery_writeback"] = await prereq_mastery_writeback(
-                db, student_id=current_user.id, answered=answered, user_answer=answer
+                db, student_id=student_id, answered=answered, user_answer=answer
             )
         await db.commit()
     else:
         out["mastery_writeback"] = {"written": False, "reason": "not_student" if record_mastery else "disabled"}
     # 练完自动附上回原题核对（只读 KCMastery；未过门禁如实标注，不放行）
-    if out.get("finished") and _is_student(current_user):
+    if out.get("finished") and is_student:
         from services import gap_drill_service as gds
 
-        out["return_check"] = await gds.evaluate_return(db, current_user.id, out["session"])
+        out["return_check"] = await gds.evaluate_return(db, student_id, out["session"])
     return out
 
 

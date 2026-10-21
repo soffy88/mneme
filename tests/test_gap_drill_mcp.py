@@ -134,3 +134,66 @@ async def test_self_assessed_answer_never_writes(actors, client, db):
     )
     assert r2.status_code == 200, r2.text
     assert r2.json()["mastery_writeback"] == {"written": False, "reason": "self_assessed"}
+
+
+@pytest.mark.asyncio
+async def test_student_drill_final_answer_returns_return_check(actors, client, db):
+    """回归：提交最后一题走 finished 分支自动附 return_check，必须 200。
+
+    旧实现 db.commit() 后再读已过期的 current_user.role/.id，触发同步懒加载
+    （MissingGreenlet）返回 500；既有测试只提交第一题，从未走到该分支。
+    """
+    stu = actors["stu"]
+    r = await client.post(
+        "/mcp/StartGapDrill",
+        json={"weak_roots": _ROOTS, "count": 5, "original_ku_id": "cnmath:cnm_p002"},
+        headers=_h(stu),
+    )
+    assert r.status_code == 200, r.text
+    body = r.json()
+    session, nxt = body["session"], body.get("next")
+    total = len(session["items"])
+    assert total >= 2
+
+    last = None
+    for _ in range(total + 5):
+        q = (nxt or {}).get("question") or {}
+        bank_q = pds.question_by_id(q["id"]) if q.get("id") else None
+        ans = str(bank_q["answer"]) if bank_q else "0"
+        r = await client.post(
+            "/mcp/SubmitGapDrillAnswer",
+            json={"session": session, "answer": ans},
+            headers=_h(stu),
+        )
+        assert r.status_code == 200, r.text
+        body = r.json()
+        if body.get("needs_self_assessment"):
+            r = await client.post(
+                "/mcp/SubmitGapDrillAnswer",
+                json={"session": body["session"], "result": "correct"},
+                headers=_h(stu),
+            )
+            assert r.status_code == 200, r.text
+            body = r.json()
+        session, nxt = body["session"], body.get("next")
+        if body.get("finished"):
+            last = body
+            break
+
+    assert last is not None and last["finished"] is True
+    assert "mastery_writeback" in last
+    rc = last.get("return_check")
+    assert rc is not None, "finished 响应必须自动附 return_check"
+    assert rc["finished"] is True
+    assert rc["per_ku"] and rc["per_ku"][0]["ku_id"] == "cnmath:cnm_p001"
+    assert rc["per_ku"][0]["p_mastery"] is not None
+    assert rc["next_action"] in ("return_to_original", "continue_drill_or_mastery_gate")
+
+    # 独立接口对同一 finished 会话仍可核对
+    r = await client.post(
+        "/mcp/EvaluateGapDrillReturn",
+        json={"session": session},
+        headers=_h(stu),
+    )
+    assert r.status_code == 200, r.text
+    assert r.json()["finished"] is True
