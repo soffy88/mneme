@@ -2361,6 +2361,203 @@ async def mcp_submit_prereq_diagnosis_answer(
     )
 
 
+# ---------------------------------------------------------------- 缺口单点练闭环（认知负荷①）
+# 诊断 weak_roots → 只练未满足前置 KU 的 5–10 道微题 → 逐题回写 → 过门禁回原题。
+# 装配在 services.gap_drill_service（无状态会话，判分确定性）；题库题回写直接复用
+# prereq_mastery_writeback（answered 形态同构），变式题期望答案不在题库里，走下面
+# 的 gap_drill_variant_writeback（服务端按 seed 重算变式取内核解，绝不信客户端）。
+
+
+def _gap_call(fn: Any, *args: Any, **kwargs: Any) -> Any:
+    from services import gap_drill_service as gds
+
+    try:
+        return fn(*args, **kwargs)
+    except gds.GapDrillError as e:
+        raise HTTPException(status_code=400, detail=str(e)) from e
+
+
+def tool_start_gap_drill(
+    weak_roots: list[dict],
+    original: Optional[dict] = None,
+    count: int = 8,
+) -> dict:
+    from services import gap_drill_service as gds
+
+    return _gap_call(gds.build_drill, weak_roots, original=original, count=count)
+
+
+def tool_answer_gap_drill(
+    session: dict, answer: Optional[str] = None, result: Optional[str] = None
+) -> dict:
+    """纯单点练推进（不碰 DB）。带 DB 的学生作答走 submit_gap_drill_answer_with_writeback。"""
+    from services import gap_drill_service as gds
+
+    return _gap_call(gds.answer_drill, session, answer, result)
+
+
+async def gap_drill_variant_writeback(
+    db: AsyncSession,
+    *,
+    student_id: uuid.UUID,
+    answered: Optional[dict],
+    user_answer: Optional[str],
+) -> dict:
+    """变式题逐题回写：期望答案由服务端按 (base_question_id, variant_seed) 重算。
+
+    与 prereq_mastery_writeback 同一写路径（pose pending → tool_submit_answer），
+    同一去重纪律（question_ref 唯一）；自评/无作答/重算失败一律不写。
+    """
+    from services import gap_drill_service as gds
+    from services.models import QuestionRecord
+
+    if not answered:
+        return {"written": False, "reason": "not_applied"}
+    if answered.get("self_assessed"):
+        return {"written": False, "reason": "self_assessed"}
+    if not (user_answer or "").strip():
+        return {"written": False, "reason": "no_answer"}
+    exp = gds.expected_answer(answered)
+    if exp is None or not exp.get("submit_qtype"):
+        return {"written": False, "reason": "not_auto_gradable"}
+
+    qid = f"gapdrill:{answered.get('variant_seed')}:{answered.get('question_id')}"[:64]
+    dup = (
+        await db.execute(
+            select(QuestionRecord.id).where(
+                QuestionRecord.student_id == student_id, QuestionRecord.question_ref == qid
+            ).limit(1)
+        )
+    ).first()
+    if dup is not None or await gate_store.get_pending(db, student_id=student_id, question_id=qid):
+        return {"written": False, "reason": "duplicate", "question_id": qid}
+
+    try:
+        async with db.begin_nested():
+            await gate_store.pose_question(
+                db,
+                question_id=qid,
+                student_id=student_id,
+                kc_id=str(answered["ku_id"]),
+                prompt=exp["prompt"],
+                expected=exp["expected"],
+                qtype=exp["submit_qtype"],
+            )
+            r = await tool_submit_answer(
+                db, student_id=student_id, question_id=qid, answer=str(user_answer)
+            )
+    except Exception as e:  # noqa: BLE001 — 回写失败不拖垮单点练
+        logger.warning("gap drill variant writeback failed: %s", e)
+        return {"written": False, "reason": "error", "question_id": qid}
+    if not r.get("graded"):
+        return {"written": False, "reason": str(r.get("error") or "not_graded"), "question_id": qid}
+    return {
+        "written": True,
+        "question_id": qid,
+        "kc_id": r.get("kc_id"),
+        "is_correct": r.get("is_correct"),
+        "verdict_source": r.get("verdict_source"),
+    }
+
+
+async def submit_gap_drill_answer_with_writeback(
+    db: AsyncSession,
+    current_user: User,
+    session: dict,
+    answer: Optional[str] = None,
+    result: Optional[str] = None,
+    record_mastery: bool = True,
+) -> dict:
+    """单点练推进 + （学生本人）逐题 SubmitAnswer 回写。家长/admin 代答不写档案。"""
+    from services.tool_grants import _is_student
+
+    out = tool_answer_gap_drill(session, answer, result)
+    if record_mastery and _is_student(current_user):
+        answered = out.get("answered")
+        if answered and answered.get("kind") == "variant":
+            out["mastery_writeback"] = await gap_drill_variant_writeback(
+                db, student_id=current_user.id, answered=answered, user_answer=answer
+            )
+        else:
+            out["mastery_writeback"] = await prereq_mastery_writeback(
+                db, student_id=current_user.id, answered=answered, user_answer=answer
+            )
+        await db.commit()
+    else:
+        out["mastery_writeback"] = {"written": False, "reason": "not_student" if record_mastery else "disabled"}
+    # 练完自动附上回原题核对（只读 KCMastery；未过门禁如实标注，不放行）
+    if out.get("finished") and _is_student(current_user):
+        from services import gap_drill_service as gds
+
+        out["return_check"] = await gds.evaluate_return(db, current_user.id, out["session"])
+    return out
+
+
+class StartGapDrillReq(BaseModel):
+    weak_roots: list[dict[str, Any]]
+    original_ku_id: Optional[str] = None
+    original_question_id: Optional[str] = None
+    original_label: Optional[str] = None
+    count: int = 8
+
+
+class SubmitGapDrillAnswerReq(BaseModel):
+    session: dict[str, Any]
+    answer: Optional[str] = None
+    result: Optional[str] = None
+    record_mastery: bool = True
+
+
+class EvaluateGapDrillReturnReq(BaseModel):
+    session: dict[str, Any]
+
+
+@router.post("/StartGapDrill")
+async def mcp_start_gap_drill(
+    req: StartGapDrillReq,
+    db: AsyncSession = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+) -> dict:
+    await _ensure_tool_allowed(db, current_user, "StartGapDrill")
+    original = {
+        k: v
+        for k, v in {
+            "ku_id": req.original_ku_id,
+            "question_id": req.original_question_id,
+            "label": req.original_label,
+        }.items()
+        if v
+    }
+    return tool_start_gap_drill(req.weak_roots, original or None, req.count)
+
+
+@router.post("/SubmitGapDrillAnswer")
+async def mcp_submit_gap_drill_answer(
+    req: SubmitGapDrillAnswerReq,
+    db: AsyncSession = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+) -> dict:
+    await _ensure_tool_allowed(db, current_user, "SubmitGapDrillAnswer")
+    return await submit_gap_drill_answer_with_writeback(
+        db, current_user, req.session, req.answer, req.result, req.record_mastery
+    )
+
+
+@router.post("/EvaluateGapDrillReturn")
+async def mcp_evaluate_gap_drill_return(
+    req: EvaluateGapDrillReturnReq,
+    db: AsyncSession = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+) -> dict:
+    await _ensure_tool_allowed(db, current_user, "EvaluateGapDrillReturn")
+    from services import gap_drill_service as gds
+
+    try:
+        return await gds.evaluate_return(db, current_user.id, req.session)
+    except gds.GapDrillError as e:
+        raise HTTPException(status_code=400, detail=str(e)) from e
+
+
 # ---------------------------------------------------------------- AetherViz 知识点互动课
 # 共享内容（按 KU 缓存于 MinIO），授权同 /v1/viz/ku（services.tool_grants，学生默认放行）。
 # 课内测验结果只经 /v1/viz/quiz-answer → gate pending → tool_submit_answer 回写。

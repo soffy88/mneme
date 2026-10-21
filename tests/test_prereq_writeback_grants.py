@@ -226,8 +226,13 @@ def test_default_student_tools_are_the_four_diagnosis_tools():
     assert PREREQ_DIAGNOSIS_TOOLS == {
         "SearchMathTopic", "GetMathTopic", "StartPrereqDiagnosis", "SubmitPrereqDiagnosisAnswer"
     }
-    # AetherViz 起学生默认集 = 4 个诊断工具 + GenerateKUVisualization
-    assert DEFAULT_STUDENT_TOOLS == PREREQ_DIAGNOSIS_TOOLS | {"GenerateKUVisualization"}
+    # AetherViz 起学生默认集 = 4 个诊断工具 + GenerateKUVisualization；
+    # 缺口单点练闭环起再加 3 个 GapDrill 工具（同为无状态+SubmitAnswer 写路径）
+    from services.tool_grants import GAP_DRILL_TOOLS
+
+    assert DEFAULT_STUDENT_TOOLS == (
+        PREREQ_DIAGNOSIS_TOOLS | {"GenerateKUVisualization"} | GAP_DRILL_TOOLS
+    )
     assert "BindPartnerChannel" not in DEFAULT_STUDENT_TOOLS
 
 

@@ -25,7 +25,11 @@ PREREQ_DIAGNOSIS_TOOLS: frozenset[str] = frozenset(
 )
 # AetherViz 知识点互动课（共享内容；课内测验回写只经 SubmitAnswer）——学生默认可用
 VIZ_TOOLS: frozenset[str] = frozenset({"GenerateKUVisualization"})
-DEFAULT_STUDENT_TOOLS: frozenset[str] = PREREQ_DIAGNOSIS_TOOLS | VIZ_TOOLS
+# 缺口单点练闭环（无状态会话；逐题回写只经 SubmitAnswer）——学生默认可用
+GAP_DRILL_TOOLS: frozenset[str] = frozenset(
+    {"StartGapDrill", "SubmitGapDrillAnswer", "EvaluateGapDrillReturn"}
+)
+DEFAULT_STUDENT_TOOLS: frozenset[str] = PREREQ_DIAGNOSIS_TOOLS | VIZ_TOOLS | GAP_DRILL_TOOLS
 
 
 def _is_student(user: Any) -> bool:
