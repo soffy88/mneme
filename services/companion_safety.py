@@ -114,7 +114,7 @@ def check_input(text: str, *, name: str = "小智", topic: str | None = None) ->
         return InputVerdict(
             "romance", clean, pii,
             f"谢谢你愿意和我聊天！不过我是你的学习伙伴{name}，不做男朋友女朋友，也不玩角色扮演哦。"
-            f"真正陪伴你的是家人和朋友～{redirect_line(name, topic)}",
+            f"真正陪伴你的是家人和朋友～要不要和我一起来一道{'「' + topic + '」' if topic else '数学'}小练习？",
         )
     if _has(clean, OFF_TOPIC) and not _has(clean, STUDY_SIGNALS):
         return InputVerdict("off_topic", clean, pii, redirect_line(name, topic))
@@ -124,6 +124,8 @@ def check_input(text: str, *, name: str = "小智", topic: str | None = None) ->
 def filter_output(text: str, *, name: str = "小智") -> tuple[str, list[str]]:
     """LLM 输出兜底：越界词/亲密依赖/索要 PII → 替换为安全话术；PII 打码。"""
     flags: list[str] = []
+    if re.match(r"\s*\[(engine|provider)[ _]?error", text or "", re.I) or not (text or "").strip():
+        return "我刚才走神了，没想好怎么说。我们换个说法再试一次好吗？", ["engine_error"]
     out, pii = redact_pii(text or "")
     if pii:
         flags.append("pii")

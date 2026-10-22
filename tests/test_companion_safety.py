@@ -72,3 +72,8 @@ def test_safety_prompt_rules():
     p = cs.safety_prompt("小星", mode="companion")
     for kw in ("小星", "只聊学习", "男女朋友", "个人信息", "SubmitAnswer", "休息"):
         assert kw in p
+
+
+def test_engine_error_never_reaches_child():
+    out, flags = cs.filter_output("[engine error: provider execution failed: http_4xx]")
+    assert "engine" not in out and flags == ["engine_error"]

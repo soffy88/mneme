@@ -96,6 +96,12 @@ def _to_openai_messages(messages: list[dict]) -> list[dict]:
     return out
 
 
+def model_chain(model: str) -> list[str]:
+    """'a,b , c' → ['a','b','c']；空串回落原值。"""
+    chain = [m.strip() for m in (model or "").split(",") if m.strip()]
+    return chain or [model]
+
+
 class OpenAICompatibleLoopCaller:
     """Provider-neutral OpenAI-compatible tool-calling adapter."""
 
@@ -138,14 +144,28 @@ class OpenAICompatibleLoopCaller:
             if self.api_key
             else {}
         )
+        # VEYA_MODEL 可为逗号分隔的候选链（与文本 provider 同一配置）：网关不认整串，
+        # 必须逐个模型尝试，前一个 HTTP 失败/超时才换下一个；全失败抛最后一个错误。
+        models = model_chain(self.model)
+        last_exc: Exception | None = None
+        data: dict[str, Any] | None = None
         async with httpx.AsyncClient(timeout=provider_httpx_timeout()) as client:
-            resp = await client.post(
-                f"{self.base_url}/chat/completions",
-                headers=headers,
-                json=payload,
-            )
-            resp.raise_for_status()
-            data = resp.json()
+            for m in models:
+                try:
+                    resp = await client.post(
+                        f"{self.base_url}/chat/completions",
+                        headers=headers,
+                        json={**payload, "model": m},
+                    )
+                    resp.raise_for_status()
+                    data = resp.json()
+                    break
+                except (httpx.HTTPStatusError, httpx.TransportError) as exc:
+                    last_exc = exc
+                    continue
+        if data is None:
+            assert last_exc is not None
+            raise last_exc
 
         msg = data["choices"][0]["message"]
         usage = data.get("usage", {})
