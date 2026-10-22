@@ -456,7 +456,14 @@ def _timeout() -> float:
 
 
 async def generate(ku_id: str, weak_points: list[str] | None = None) -> dict[str, Any]:
-    """真正调 LLM 生成一份课（不读缓存）；质检不过最多重试 1 次。"""
+    """真正调 LLM 生成一份课（不读缓存）；质检不过或答案键被 sympy 判错最多重试 1 次。
+
+    每道测验题在 ``quiz_key`` 里带 ``verified``（sympy 确认「恰好键定项正确」才为 True）与
+    ``verify`` 明细；只有 verified 题回写 BKT。答案键有错且重试用尽时，仍交付这份课（页内照常
+    答题），错题 verified=False——宁可不写掌握度，也不让课挂掉。
+    """
+    from services.viz_quiz_verify import verify_quiz
+
     ku = load_ku(ku_id)
     canonical = str(ku.get("ku_id") or ku_id)
     variant = variant_of(weak_points)
@@ -465,7 +472,9 @@ async def generate(ku_id: str, weak_points: list[str] | None = None) -> dict[str
         raise VizError("LLM 不可用")
     system, user = build_messages(ku, weak_points)
     last_err = "unknown"
-    for attempt in range(2):
+    fallback: dict[str, Any] | None = None
+    attempts = 2
+    for attempt in range(attempts):
         t0 = time.monotonic()
         try:
             out = await asyncio.wait_for(
@@ -487,13 +496,21 @@ async def generate(ku_id: str, weak_points: list[str] | None = None) -> dict[str
             last_err = "quality:" + ",".join(qc["fatal"])[:300]
             logger.warning("viz quality failed (%s): %s", canonical, qc["fatal"])
             continue
+        quiz_key = extract_quiz(page)
+        checks = verify_quiz(quiz_key)
+        for q, v in zip(quiz_key, checks):
+            q["verified"] = v["status"] == "verified"
+            q["verify"] = v
+        defects = [q["id"] for q, v in zip(quiz_key, checks) if v["status"] == "defect"]
+        qc["quiz_verified"] = sum(1 for q in quiz_key if q["verified"])
+        qc["quiz_defects"] = defects
         inner = getattr(caller, "caller", caller)
-        return {
+        doc = {
             "ku_id": canonical,
             "variant": variant,
             "weak_points": sorted({w.strip() for w in (weak_points or []) if w and w.strip()}),
             "html": page,
-            "quiz_key": extract_quiz(page),
+            "quiz_key": quiz_key,
             "quality": qc,
             "model": str(getattr(inner, "last_good_model", None) or getattr(inner, "model", "unknown")),
             "usage": (out.get("usage") if isinstance(out, dict) else None) or {},
@@ -502,6 +519,14 @@ async def generate(ku_id: str, weak_points: list[str] | None = None) -> dict[str
             "prompt_version": PROMPT_VERSION,
             "created_at": datetime.now(timezone.utc).isoformat(),
         }
+        if not defects:
+            return doc
+        last_err = "quiz_key_defect:" + ",".join(defects)
+        logger.warning("viz quiz key defect (%s): %s %s", canonical, defects, checks)
+        if fallback is None or len(defects) < len(fallback["quality"]["quiz_defects"]):
+            fallback = doc
+    if fallback is not None:
+        return fallback
     raise VizError(f"生成失败：{last_err}")
 
 
@@ -524,7 +549,10 @@ def public_view(doc: dict[str, Any], *, cached: bool) -> dict[str, Any]:
         "quiz": [{k: q[k] for k in ("id", "prompt", "choices")} for q in doc.get("quiz_key") or []],
         "model": doc.get("model"),
         "created_at": doc.get("created_at"),
-        "quality": {k: doc.get("quality", {}).get(k) for k in ("ok", "issues", "tex_count", "quiz_count", "bytes")},
+        "quality": {
+            k: doc.get("quality", {}).get(k)
+            for k in ("ok", "issues", "tex_count", "quiz_count", "quiz_verified", "quiz_defects", "bytes")
+        },
     }
 
 
@@ -554,9 +582,9 @@ async def get_or_generate(
     variant = variant_of(weak_points)
     key = (canonical, variant)
     if not force:
-        doc = await cache_get(canonical, variant)
-        if doc and doc.get("html"):
-            return public_view(doc, cached=True)
+        hit = await cache_get(canonical, variant)
+        if hit and hit.get("html"):
+            return public_view(hit, cached=True)
     task = _inflight.get(key)
     if task is None:
         if key in _last_error and not force:
