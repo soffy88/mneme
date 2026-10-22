@@ -781,6 +781,8 @@ FIRe=前置隐式重复信用（只写调度折扣）。**KU≠记忆单元。**
 
 ---
 
+**朗读 / 语音辅导 / AI 陪学陪练（VC-1,2026-10-22,用户批准）**:新增自托管语音容器 `speech`(`docker/speech/`,sherpa-onnx CPU,国内可用,无 GPU:ASR SenseVoice int8 + silero VAD + TTS matcha-icefall-zh-baker/vocos;模型宿主只读挂载,不进镜像;仅内网,cpus 4/内存 2g)。新依赖只在该容器内,api 不引入 sherpa。服务层:`services/speech_text.py`(LaTeX→口语中文,纯函数,如 (a+b)^2→「a加b的平方」;中文 TTS 读拉丁字母;分句)、`services/speech_client.py`(TTS 按「声音|语速|朗读文本」sha256 缓存于 MinIO bucket `tts-audio`)、`services/companion_safety.py`(儿童安全:输入侧自伤→12355 引导、教育边界拒绝词表单源复用 `research_service._BLOCKED_PATTERNS`、恋爱/角色扮演/依赖、明显离题→温和引回学习,PII 打码后才进 LLM/日志;输出侧拦亲密依赖话术与索要个人信息;安全系统提示)、`services/companion_service.py`(会话状态机 VAD→ASR→安全→tutor_loop→输出过滤→逐句 TTS,speech_start/interrupt 打断;陪练模式 KC 池=BKT 最弱 KU,PoseQuestion/SubmitAnswer 判分,掌握度只经 SubmitAnswer;每 10 分钟提醒休息;单次/每日时长上限;每分钟 12 轮限流)。API:`POST /v1/tts`(登录用户,60 次/分)、`WS /v1/voice`(首帧 auth,不把 token 放 URL;授权伪工具 `VoiceTutor`/`StudyCompanion` 入学生默认集,家长需 admin SetUserGrant;每学生单连接)、`GET/PUT /v1/companion/{sid}/settings`(家长改名字/开关/每日上限/单次上限,学生只读)、`GET /v1/companion/{sid}/logs`(学生本人/绑定家长)。新表 `companion_settings`/`companion_usage`/`companion_messages`(migration vcm1a2b3c4d5,已入 purge 清单)。陪练无摄像头/联网/浏览工具。tutor_loop 非流式:按句流式合成下发(首句先出声),非 token 级流式。设计参考 Open-LLM-VTuber(管线思路),未复用其代码,未用 Live2D;头像为自绘 SVG。
+
 ## 附录 · L4 语文双轨 + L6 家长端(2026-07-03)
 
 - **L4 语文双轨**：语文非 KU 掌握型。`oprim.chinese_track` 按 ku_type 硬分 **记诵轨**(文言实词虚词/成语/

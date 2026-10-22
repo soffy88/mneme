@@ -85,6 +85,10 @@ _STUDENT_TABLES: list[tuple[str, str]] = [
     ("user_learner_profiles", "student_id"),
     # 研究报告（/v1/research）：学生的问题 + 报告，FC-2：新表同 PR 入清单。
     ("research_reports", "student_id"),
+    # 语音辅导 / AI 陪学陪练（/v1/voice）：设置、用量、会话日志，FC-2：新表同 PR 入清单。
+    ("companion_settings", "student_id"),
+    ("companion_usage", "student_id"),
+    ("companion_messages", "student_id"),
     # 题目收藏（/v2/practice/bookmarks）：学生自有，FC-2：新表同 PR 入清单。
     # 只存 wrong_question_id 值（无 FK），与 wrong_questions 删除顺序无关。
     ("question_bookmarks", "student_id"),
