@@ -15,7 +15,7 @@ sys.path.insert(0, '/app')
 from sqlalchemy import select, text
 from obase.db import SessionLocal
 from services.models import (
-    Textbook, Lesson, KnowledgeUnit, KnowledgeCluster, QuestionRecord, ReadingPassage
+    Textbook, KnowledgeCluster, QuestionRecord, ReadingPassage
 )
 from services.ku_ingest_service import store_curriculum_ku
 
