@@ -15,7 +15,7 @@ import os
 import random
 import re
 import uuid
-from datetime import date
+from datetime import UTC, date, datetime
 
 import redis.asyncio as aioredis
 from obase.auth import create_access_token
@@ -174,6 +174,41 @@ async def verify_code(phone: str, code: str) -> bool:
 
 # ── 注册/登录 ─────────────────────────────────────────────────────────────────
 
+#: 未成年人（<14）注册必须提供监护人联系方式并显式同意。
+GUARDIAN_CONSENT_AGE = 14
+
+
+def assess_registration_age(
+    birth_date: date,
+    *,
+    guardian_phone: str | None = None,
+    guardian_email: str | None = None,
+    guardian_consent: bool = False,
+) -> tuple[int | None, dict | None]:
+    """学生注册的唯一年龄闸门（手机/邮箱/邀请码/用户名四条路径共用）。
+
+    返回 ``(age, error)``。error 为 None 表示可继续；否则调用方直接返回它。
+    规则：
+    - 生日不能是未来日期，也不接受 >120 岁；
+    - <14 岁必须有监护人手机或邮箱 **且** 显式 consent=true；
+    - 年龄算法只走 ``privacy._age``（日历周岁），不用 //365。
+    """
+    from services.privacy import _age
+
+    today = datetime.now(UTC).date()
+    if birth_date > today:
+        return None, {"error_code": 422, "error": "出生日期不合法"}
+    age = _age(birth_date)
+    if age is not None and age > 120:
+        return None, {"error_code": 422, "error": "出生日期不合法"}
+    if age is not None and age < GUARDIAN_CONSENT_AGE:
+        if not guardian_consent or not (guardian_phone or guardian_email):
+            return age, {
+                "error_code": 422,
+                "error": "Guardian consent required for students under 14",
+            }
+    return age, None
+
 
 async def register_student(
     db: AsyncSession,
@@ -200,17 +235,12 @@ async def register_student(
     if not await verify_code(phone, code):
         return {"error_code": 400, "error": "验证码无效或已过期"}
 
-    # 合规：年龄。用单源日历算法（privacy._age），不用 //365——后者会少算几天，
-    # 生日前几天的 13 岁会被当成 14 岁，绕过监护同意闸门（合规红线，宁可算小不算大）。
-    from services.privacy import _age
-
-    age = _age(birth_date)
-    if age is not None and age < 14:
-        if not guardian_phone or not guardian_consent:
-            return {
-                "error_code": 422,
-                "error": "Guardian consent required for students under 14",
-            }
+    # 合规：年龄。与邮箱/用户名/邀请码注册共用同一闸门（单源 privacy._age）。
+    age, age_error = assess_registration_age(
+        birth_date, guardian_phone=guardian_phone, guardian_consent=guardian_consent
+    )
+    if age_error is not None:
+        return age_error
 
     # 手机号唯一
     existing = (
@@ -224,13 +254,14 @@ async def register_student(
         phone=phone,
         name=name,
         role=UserRole.student,
+        birth_date=birth_date,
         grade=grade,
         invite_code=uuid.uuid4().hex[:6].upper(),  # 供家长绑定
     )
     db.add(user)
     await db.flush()
 
-    if age is not None and age < 14 and guardian_phone:
+    if age is not None and age < GUARDIAN_CONSENT_AGE and guardian_phone:
         db.add(
             GuardianConsent(
                 id=uuid.uuid4(),
@@ -399,16 +430,12 @@ async def register_student_email(
     if not await verify_email_code(email, code):
         return {"error_code": 400, "error": "验证码无效或已过期"}
 
-    # 合规：年龄（单源 privacy._age，不用 //365）
-    from services.privacy import _age
-
-    age = _age(birth_date)
-    if age is not None and age < 14:
-        if not guardian_email or not guardian_consent:
-            return {
-                "error_code": 422,
-                "error": "Guardian consent required for students under 14",
-            }
+    # 合规：年龄（与其它学生注册路径共用同一闸门）
+    age, age_error = assess_registration_age(
+        birth_date, guardian_email=guardian_email, guardian_consent=guardian_consent
+    )
+    if age_error is not None:
+        return age_error
 
     existing = (
         await db.execute(select(User).where(User.email == email))
@@ -421,13 +448,14 @@ async def register_student_email(
         email=email,
         name=name,
         role=UserRole.student,
+        birth_date=birth_date,
         grade=grade,
         invite_code=uuid.uuid4().hex[:6].upper(),
     )
     db.add(user)
     await db.flush()
 
-    if age is not None and age < 14 and guardian_email:
+    if age is not None and age < GUARDIAN_CONSENT_AGE and guardian_email:
         db.add(
             GuardianConsent(
                 id=uuid.uuid4(),
@@ -528,6 +556,8 @@ async def _register_password_account(
     birth_date: date | None = None,
     grade: str | None = None,
     guardian_id=None,
+    guardian_email: str | None = None,
+    guardian_consent: bool = False,
     ip_address: str | None = None,
 ) -> dict:
     from services.models import GuardianConsent, ParentStudent, User, UserRole
@@ -558,12 +588,23 @@ async def _register_password_account(
         if birth_date is not None:
             from services.privacy import _age
             age = _age(birth_date)
-        if age is not None and age < 14:
+        if age is not None and age < GUARDIAN_CONSENT_AGE:
             db.add(GuardianConsent(
                 id=uuid.uuid4(), student_id=user.id,
                 consent_type="authenticated_parent_account",
                 consent_version="1.0", ip_address=ip_address,
             ))
+    elif guardian_email and guardian_consent and birth_date is not None:
+        from services.privacy import _age
+        age = _age(birth_date)
+        if age is not None and age < GUARDIAN_CONSENT_AGE:
+            db.add(GuardianConsent(
+                id=uuid.uuid4(), student_id=user.id,
+                guardian_email=guardian_email,
+                consent_type="registration",
+                consent_version="1.0", ip_address=ip_address,
+            ))
+    if guardian_id is not None or (guardian_email and guardian_consent):
         await db.flush()
 
     token = create_access_token({"sub": str(user.id), "role": user.role.value})
@@ -576,17 +617,24 @@ async def _register_password_account(
 async def register_student_account(
     db: AsyncSession, *, username: str, password: str, name: str,
     birth_date: date, grade: str,
+    guardian_email: str | None = None, guardian_consent: bool = False,
 ) -> dict:
-    """Self-registration is for age 14+; younger users need an authenticated parent."""
-    from services.models import UserRole
-    from services.privacy import _age
+    """Username/password student registration; under-14 needs guardian consent.
 
-    age = _age(birth_date)
-    if age is not None and age < 14:
-        return {"error_code": 422, "error": "14 岁以下学生需由家长账号创建"}
+    Age 14+ may self-register. Under-14 must supply a guardian email and explicit
+    consent, or be created by an authenticated parent (create_student_for_parent).
+    """
+    from services.models import UserRole
+
+    _, age_error = assess_registration_age(
+        birth_date, guardian_email=guardian_email, guardian_consent=guardian_consent
+    )
+    if age_error is not None:
+        return age_error
     return await _register_password_account(
         db, username=username, password=password, name=name,
         role=UserRole.student, birth_date=birth_date, grade=grade,
+        guardian_email=guardian_email, guardian_consent=guardian_consent,
     )
 
 
@@ -613,6 +661,60 @@ async def create_student_for_parent(
         role=UserRole.student, birth_date=birth_date, grade=grade,
         guardian_id=parent.id, ip_address=ip_address,
     )
+
+
+async def register_student_with_invite(
+    db: AsyncSession, *, invitation_code: str, username: str, password: str,
+    name: str, birth_date: date, grade: str,
+    guardian_email: str | None = None, guardian_consent: bool = False,
+    ip_address: str | None = None,
+) -> dict:
+    """Invitation-only student registration (no email/SMS dependency).
+
+    The invite row is locked ``FOR UPDATE`` for the whole transaction so two
+    concurrent redemptions cannot both succeed. Invite-based registration is
+    intentionally not gated by ``REGISTRATION_OPEN``: possession of an
+    admin-issued code *is* the admission control.
+    """
+    from services.models import RegistrationInvite, UserRole
+
+    _, age_error = assess_registration_age(
+        birth_date, guardian_email=guardian_email, guardian_consent=guardian_consent
+    )
+    if age_error is not None:
+        return age_error
+
+    normalized_code = (invitation_code or "").strip().upper()
+    invite = (
+        await db.execute(
+            select(RegistrationInvite)
+            .where(RegistrationInvite.code == normalized_code)
+            .with_for_update()
+        )
+    ).scalar_one_or_none()
+    now = datetime.now(UTC)
+    if (
+        invite is None
+        or invite.revoked_at is not None
+        or invite.student_id is not None
+        or invite.used_at is not None
+        or (invite.expires_at is not None and invite.expires_at <= now)
+    ):
+        return {"error_code": 400, "error": "邀请码无效、已使用或已过期"}
+
+    result = await _register_password_account(
+        db, username=username, password=password, name=name,
+        role=UserRole.student, birth_date=birth_date, grade=grade,
+        guardian_email=guardian_email, guardian_consent=guardian_consent,
+        ip_address=ip_address,
+    )
+    if "error" in result:
+        return result
+
+    invite.student_id = uuid.UUID(result["user"]["id"])
+    invite.used_at = now
+    await db.flush()
+    return result
 
 
 async def login_email(db: AsyncSession, email: str, code: str) -> dict:

@@ -193,6 +193,36 @@ class GuardianConsent(Base):
     ip_address: Mapped[Optional[str]] = mapped_column(String(45))
 
 
+class RegistrationInvite(Base):
+    """Admin-issued, single-use student registration invite (invite-only launch).
+
+    ``student_id``/``used_at`` mark redemption. Codes are never emailed by the
+    platform: an admin hands them out out-of-band, so registration no longer
+    depends on a working SMTP/SMS provider.
+    """
+
+    __tablename__ = "registration_invites"
+
+    id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True), primary_key=True, server_default=text("gen_random_uuid()")
+    )
+    code: Mapped[str] = mapped_column(String(24), unique=True, nullable=False)
+    note: Mapped[Optional[str]] = mapped_column(String(120))
+    created_by: Mapped[Optional[uuid.UUID]] = mapped_column(
+        UUID(as_uuid=True), ForeignKey("users.id")
+    )
+    # 兑换该码的学生（未成年人数据 → 必须同 PR 入 purge_service._STUDENT_TABLES）
+    student_id: Mapped[Optional[uuid.UUID]] = mapped_column(
+        UUID(as_uuid=True), ForeignKey("users.id")
+    )
+    expires_at: Mapped[Optional[datetime]] = mapped_column(DateTime(timezone=True))
+    revoked_at: Mapped[Optional[datetime]] = mapped_column(DateTime(timezone=True))
+    used_at: Mapped[Optional[datetime]] = mapped_column(DateTime(timezone=True))
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), server_default=text("now()")
+    )
+
+
 # ===== 学习数据 =====
 class Paper(Base):
     __tablename__ = "papers"

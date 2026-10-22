@@ -78,6 +78,8 @@ _STUDENT_TABLES: list[tuple[str, str]] = [
     ("effortful_gains", "student_id"),
     ("error_tags", "student_id"),
     ("guardian_consents", "student_id"),
+    # 邀请码兑换记录：student_id 指向注册学生，随学生硬删除一并清除（FC-2）。
+    ("registration_invites", "student_id"),
     ("cornell_progress", "student_id"),
     ("speaking_sessions", "student_id"),
     ("streaks", "student_id"),

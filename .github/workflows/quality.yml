@@ -38,6 +38,8 @@ jobs:
           enable-cache: true
       - name: Install locked dependencies
         run: uv sync --locked
+      - name: Secret scan (tracked files)
+        run: uv run python scripts/secret_scan.py
       - name: Start MinIO
         run: |
           docker run --detach --name mneme-ci-minio \

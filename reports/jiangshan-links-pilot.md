@@ -252,7 +252,7 @@ Top 锚点（按 KU 数）：
 
 ```bash
 cd /data/soffy/projects/mneme-wt-jiangshan
-POSTGRES_PASSWORD=*** python3 -m pytest tests/test_jiangshan_links.py -q --no-cov
+python3 -m pytest tests/test_jiangshan_links.py -q --no-cov
 # 6 passed
 ```
 

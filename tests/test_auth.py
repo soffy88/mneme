@@ -235,6 +235,13 @@ async def test_minor_with_guardian_accepted(client, monkeypatch):
         assert consent.consent_type == "registration"
         # X.4：合规审计留痕，注册IP应该被记下来（此前字段定义了但从没写入过）
         assert consent.ip_address is not None
+        # P0-7：birth_date 必须落库，否则后续年龄分层/家长可见性会退化为 None。
+        student = (
+            await session.execute(
+                select(User).where(User.phone == phone)
+            )
+        ).scalar_one()
+        assert student.birth_date.isoformat() == "2020-01-01"
 
     await _clean_phone(phone)
 

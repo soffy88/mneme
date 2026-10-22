@@ -168,6 +168,11 @@ async def test_minor_email_with_guardian_accepted(client, db, monkeypatch):
         assert consent is not None
         assert consent.guardian_email == "parent@qq.com"
         assert consent.ip_address is not None  # 注册IP留痕
+        # P0-7：邮箱注册也必须持久化 birth_date。
+        student = (
+            await db.execute(select(User).where(User.id == sid))
+        ).scalar_one()
+        assert student.birth_date.isoformat() == "2020-01-01"
     finally:
         await _clean_email(db, email)
 

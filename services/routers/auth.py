@@ -13,7 +13,7 @@ from datetime import date
 from fastapi import APIRouter, Depends, HTTPException, Query, Request
 from obase.db import get_db
 from omodul.auth import LoginInput, RegisterStudentInput, SendCodeInput
-from pydantic import BaseModel, field_validator
+from pydantic import BaseModel, Field, field_validator
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
@@ -101,8 +101,35 @@ class RegisterStudentAccountReq(BaseModel):
     name: str
     birth_date: date
     grade: str
+    guardian_email: str | None = None
+    guardian_consent: bool = False
 
     _v = field_validator("username")(lambda cls, v: auth_service.normalize_account_username(v))
+
+    @field_validator("guardian_email")
+    @classmethod
+    def _v_guardian(cls, v: str | None) -> str | None:
+        return _validate_email(v) if v else v
+
+
+class RegisterStudentInviteReq(BaseModel):
+    """邀请制注册：邀请码 + 用户名/密码，不依赖邮件或短信通道。"""
+
+    invitation_code: str = Field(min_length=6, max_length=24)
+    username: str
+    password: str
+    name: str
+    birth_date: date
+    grade: str
+    guardian_email: str | None = None
+    guardian_consent: bool = False
+
+    _v = field_validator("username")(lambda cls, v: auth_service.normalize_account_username(v))
+
+    @field_validator("guardian_email")
+    @classmethod
+    def _v_guardian(cls, v: str | None) -> str | None:
+        return _validate_email(v) if v else v
 
 
 class RegisterParentAccountReq(BaseModel):
@@ -310,6 +337,37 @@ async def post_register_student_account(
     result = await auth_service.register_student_account(
         db=db, username=payload.username, password=payload.password,
         name=payload.name, birth_date=payload.birth_date, grade=payload.grade,
+        guardian_email=str(payload.guardian_email) if payload.guardian_email else None,
+        guardian_consent=payload.guardian_consent,
+    )
+    if "error" in result:
+        raise HTTPException(status_code=result["error_code"], detail=result["error"])
+    await db.commit()
+    return result
+
+
+@router.post("/v1/auth/register/student-invite", status_code=201)
+async def post_register_student_invite(
+    payload: RegisterStudentInviteReq,
+    request: Request,
+    db: AsyncSession = Depends(get_db),
+):
+    """邀请制学生注册（不依赖 SMTP/SMS；邀请码本身就是准入闸门）。
+
+    与其它学生注册路径共用同一套年龄门禁：<14 必须带监护人邮箱 + 明确同意。
+    故意不检查 ``REGISTRATION_OPEN``——管理员签发的邀请码才是授权边界。
+    """
+    result = await auth_service.register_student_with_invite(
+        db=db,
+        invitation_code=payload.invitation_code,
+        username=payload.username,
+        password=payload.password,
+        name=payload.name,
+        birth_date=payload.birth_date,
+        grade=payload.grade,
+        guardian_email=str(payload.guardian_email) if payload.guardian_email else None,
+        guardian_consent=payload.guardian_consent,
+        ip_address=request.client.host if request.client else None,
     )
     if "error" in result:
         raise HTTPException(status_code=result["error_code"], detail=result["error"])

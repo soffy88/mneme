@@ -255,6 +255,18 @@
 | P0-6 | 公开自助注册不可用 | 唯一 UI 走 `/register/student-email`；`EMAIL_PROVIDER=mock` 被 `_mock_bypass_allowed` 拒绝；实测 send-email-code 返回“未配置真实邮件通道” | 新用户无法注册，`REGISTRATION_OPEN=1` 形同虚设 | 配置真实 SMTP 并端到端测试；或明确改为邀请码/管理员开户，并在 UI 隐藏自助注册 | 2–4h（SMTP）；或 1d（邀请制 UI） |
 | P0-7 | 未成年人注册保护可绕过 + 生日未落库 | `register_student_account()` 无年龄/监护人校验；`register_student_email()` 的 `User(...)` 未写 `birth_date` | <14 可绕过监护人同意；后续年龄分层失效 | 所有学生注册路径统一走年龄门禁与 `GuardianConsent`；持久化 `birth_date`；补测试 | 4–8h |
 
+### P0 修复状态（2026-10-22，分支 `fix/launch-p0`）
+
+| ID | 状态 | 修复证据 | 剩余 |
+|---|---|---|---|
+| P0-1 | **已修** | `reports/jiangshan-links-pilot.md` 口令行已删除；`scripts/secret_scan.py` PASS；`secret_scan` 已加入 `.github/workflows/quality.yml`；PostgreSQL 口令已 `ALTER USER` 轮换并同步 `.env`（旧值未重写 git 历史，已作废） | 无 |
+| P0-2 | **已修** | `/data/soffy/backups/mneme/run_backup.sh` 已实现并手动成功（pg_dump -Fc + MinIO 快照 + 7 天轮转 + backup.log）；restore drill 关键表行数一致，记录见 `docs/RESTORE_DRILL.md` | RPO/RTO 数值、异地副本、自动演练仍属 owner 决策 |
+| P0-5 | **部分** | MinIO 已换非默认强随机凭据；`GIT_SHA`/`RELEASE_VERSION` 已注入 `.env` 与 compose；生产 preflight 现只剩“真实邮件/短信验证通道”一项，属外部依赖，故**保留 demo** 未硬切 | 真实 SMTP/短信通道（外部），通道就绪后可再切 `production` |
+| P0-6 | **已修** | 新增 `registration_invites` 表 + admin API（生成/列表/吊销）；学生凭邀请码注册端点 `POST /v1/auth/register/student-invite`（不依赖邮件）；登录页隐藏邮件自助注册、改为邀请码注册；`ADMIN_USER_IDS` 已设 owner 账户 | 无（SMTP 路径仍保留可配置） |
+| P0-7 | **已修** | 手机/邮箱/用户名/邀请码四条学生注册路径统一年龄闸门（`assess_registration_age`），`birth_date` 全部落库，<14 必须监护人联系方式 + 明确同意；新增/更新测试覆盖 | 无 |
+
+> 未处理的 P0-3（法务/隐私/ICP）与 P0-4（CC BY-NC 商用授权）仍为外部/法务阻塞，本轮未动。
+
 ### P1（建议在 GA 前完成）
 
 | ID | 建议项 | 证据/影响 | 估工时 |
