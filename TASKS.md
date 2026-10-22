@@ -2930,3 +2930,9 @@ CI 常驻的判分准确率回归门，堵死"构造桩题掩盖真实数据判�
 - [x] 缺口单点练闭环：`services/gap_drill_service.py`（weak_roots→未满足前置 KU 的 5–10 道微题，题库原题+确定性变式，变式答案服务端按 seed 重算不外发）+ MCP `StartGapDrill`/`SubmitGapDrillAnswer`/`EvaluateGapDrillReturn`；逐题回写只经 SubmitAnswer（题库题复用 prereq 回写、变式走同构写路径），自评不写、重放去重；练完只读 KCMastery 按 GATE 核对，过门禁回原题标注「刚补的就是这一步」。`tool_grants` 学生默认集 +3 工具。测试 `tests/test_gap_drill_service.py`、`tests/test_gap_drill_mcp.py`。
 - [x] 解题草稿板（mneme-web 同名分支）：`src/components/student/ScratchBoard.tsx` 三栏（已知条件/中间结果/目标），中间结果可钉住、按 KU 存 localStorage 跨题不消失，答题框写出「=值」自动记下并钉住；接入 `/practice/session`。tsc 全仓通过 + `next build` 通过。
 - [x] 新组块预算：`daily_plan_prefs` 新增 `new_ku_per_session`（默认 3，None 不限）与 `chunk_budget_enabled`（默认开）；`build_daily_plan` 用纯函数 `apply_chunk_budget` 裁 new_learn 总量、顺延如实记录（`chunk_budget.deferred_ku_ids`）、交错队列填充，任务标注 `new_concept_count`；env 急停 `PEDAGOGY_CHUNK_BUDGET_ENABLED=0`；不改 ZPD 公式。测试 `tests/test_chunk_budget.py`。
+
+## VC-1 · 朗读 + 语音辅导 + AI 陪学陪练（2026-10-22，用户批准）
+
+- [x] 朗读：`POST /v1/tts`，LaTeX→口语中文（`services/speech_text.py`），自托管 sherpa-onnx TTS 容器 `speech`，MinIO `tts-audio` 按文本哈希缓存。测试 `tests/test_speech_text.py`、`tests/test_voice_api.py::test_tts_endpoint`。
+- [x] 语音辅导：`WS /v1/voice`（首帧鉴权 + tool_grants 学生默认/家长显式），VAD+SenseVoice ASR → tutor_loop/MCP → 输出过滤 → 逐句 TTS，打断。测试 `tests/test_voice_session.py`、`tests/test_voice_api.py::test_ws_auth_and_grants`。
+- [x] AI 陪学陪练：儿童安全层（`services/companion_safety.py`）、家长可配名字/每日上限/单次上限、日志家长可见、弱 KU 练习、休息提醒、限流；新表 3 张入 purge 清单。测试 `tests/test_companion_safety.py`、`tests/test_voice_api.py`。

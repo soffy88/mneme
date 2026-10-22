@@ -29,7 +29,9 @@ VIZ_TOOLS: frozenset[str] = frozenset({"GenerateKUVisualization"})
 GAP_DRILL_TOOLS: frozenset[str] = frozenset(
     {"StartGapDrill", "SubmitGapDrillAnswer", "EvaluateGapDrillReturn"}
 )
-DEFAULT_STUDENT_TOOLS: frozenset[str] = PREREQ_DIAGNOSIS_TOOLS | VIZ_TOOLS | GAP_DRILL_TOOLS
+# 语音辅导 / AI 陪学陪练（/v1/voice 会话授权伪工具名；判分仍只经 MCP 工具→SubmitAnswer）——学生默认可用，家长需显式授予
+VOICE_TOOLS: frozenset[str] = frozenset({"VoiceTutor", "StudyCompanion"})
+DEFAULT_STUDENT_TOOLS: frozenset[str] = PREREQ_DIAGNOSIS_TOOLS | VIZ_TOOLS | GAP_DRILL_TOOLS | VOICE_TOOLS
 
 
 def _is_student(user: Any) -> bool:

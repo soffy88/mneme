@@ -43,6 +43,7 @@ def register_domain_routers(app: FastAPI) -> None:
         subjects,
         textbook,
         viz,
+        voice,
     )
 
     for mod in (
@@ -81,5 +82,6 @@ def register_domain_routers(app: FastAPI) -> None:
         research,
         questions,
         viz,
+        voice,
     ):
         app.include_router(mod.router)

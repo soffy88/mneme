@@ -53,6 +53,8 @@ async def tool_chat_turn(
     loop_caller: Any,
     classify_llm: Callable[[str], Awaitable[str]],
     auth_token: Optional[str] = None,
+    extra_system: str = "",
+    max_iterations: int = 40,
 ) -> dict:
     """编排：取 KC 候选池（不传则用 GetPath 默认路径）→ 取 persona（C3）渲染成
     system prompt 块 → 调 run_chat_turn（零 DB，FC-5）。可脱 HTTP 直测——真/假
@@ -70,6 +72,8 @@ async def tool_chat_turn(
         db, persona_slug or persona_store.DEFAULT_PERSONA_SLUG
     )
     persona_block = persona_result.get("prompt_block", "")
+    if extra_system:  # 语音/陪练：安全提示与人格规则追加在 persona 之后（规则优先于语气）
+        persona_block = f"{persona_block}\n\n{extra_system}".strip()
 
     return await run_chat_turn(
         student_id=str(student_id),
@@ -80,6 +84,7 @@ async def tool_chat_turn(
         classify_llm=classify_llm,
         persona_prompt_block=persona_block,
         auth_token=auth_token,
+        max_iterations=max_iterations,
     )
 
 

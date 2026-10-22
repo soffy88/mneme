@@ -83,6 +83,8 @@ services:
       MINIO_ACCESS_KEY: ${MINIO_ACCESS_KEY:-minioadmin}
       MINIO_SECRET_KEY: ${MINIO_SECRET_KEY:?需在 .env 设置 MINIO_SECRET_KEY}
       MINIO_BUCKET: mneme
+      # 朗读/语音辅导：自托管 speech 容器（内网）
+      SPEECH_BASE_URL: ${SPEECH_BASE_URL:-http://speech:8080}
       DEEPSEEK_API_KEY: ${DEEPSEEK_API_KEY}
       SMS_PROVIDER: mock
       # SMS_SIGN_NAME: ""        # 阿里云短信签名（报备后填写）
@@ -441,6 +443,26 @@ services:
     networks:
       - default
       - helios-net
+
+  speech:
+    # 自托管中文语音（sherpa-onnx CPU）：ASR SenseVoice + VAD silero + TTS matcha-zh-baker。
+    # 仅内网（无 ports），由 api 的 /v1/tts、/v1/voice 鉴权后代理。模型宿主只读挂载，不进镜像。
+    build:
+      context: ./docker/speech
+    image: mneme-speech:cpu
+    restart: always
+    environment:
+      SPEECH_THREADS: "2"
+    volumes:
+      - ${SPEECH_MODEL_HOST_DIR:-/data/soffy/models/sherpa}:/models:ro
+    deploy:
+      resources:
+        limits:
+          cpus: "4"
+          memory: 2g
+    read_only: true
+    tmpfs:
+      - /tmp
 
 networks:
   default:
