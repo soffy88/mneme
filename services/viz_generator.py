@@ -617,6 +617,11 @@ async def submit_viz_quiz_answer(
         return {"written": False, "reason": "unknown_question"}
     if not isinstance(choice, int) or isinstance(choice, bool) or not 0 <= choice < len(item["choices"]):
         return {"written": False, "reason": "invalid_choice"}
+    if item.get("verified") is not True:
+        # LLM 答案键未经 sympy 核验（或核验不了）：题目照常在页内展示，但不回写 BKT，
+        # 免得错误答案键污染掌握度（cnm_148 Q2 双正确项事故）。
+        logger.info("viz quiz answer not written (unverified key): %s/%s/%s", doc.get("ku_id"), doc.get("variant"), item["id"])
+        return {"ok": True, "written": False, "reason": "unverified_quiz"}
     student_id = current_user.id
     qid = _quiz_qid(doc["ku_id"], doc["variant"], item["id"], str(doc.get("created_at")))
     dup = (

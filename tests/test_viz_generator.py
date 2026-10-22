@@ -287,6 +287,9 @@ async def test_quiz_answer_writes_bkt_only_via_submit_answer(actors, client, db,
     stub(GOOD)
     stu = actors["stu"]
     out = (await client.post("/v1/viz/ku", json={"ku_id": KU, "wait_seconds": 10}, headers=_h(stu))).json()
+    doc = mem.d[vg._obj_key(KU, "base")]
+    for q in doc["quiz_key"]:  # 测试桩课：答案键已人工核验
+        q["verified"] = True
     body = {"ku_id": out["ku_id"], "variant": out["variant"], "quiz_id": "q1", "choice": 2}
     r = await client.post("/v1/viz/quiz-answer", json=body, headers=_h(stu))
     wb = r.json()
@@ -307,6 +310,25 @@ async def test_quiz_answer_writes_bkt_only_via_submit_answer(actors, client, db,
     assert (await client.post("/v1/viz/quiz-answer", json={**body, "quiz_id": "zz"}, headers=_h(stu))).json()["reason"] == "unknown_question"
     assert (await client.post("/v1/viz/quiz-answer", json={**body, "quiz_id": "q1", "choice": 5}, headers=_h(stu))).json()["reason"] == "invalid_choice"
     assert (await client.post("/v1/viz/quiz-answer", json=body, headers=_h(actors["par"]))).status_code == 403
+
+
+@pytest.mark.asyncio
+async def test_unverified_quiz_answer_never_writes_bkt(actors, client, db, mem, stub):
+    stub(GOOD)
+    stu = actors["stu"]
+    out = (await client.post("/v1/viz/ku", json={"ku_id": KU, "wait_seconds": 10}, headers=_h(stu))).json()
+    key = vg._obj_key(KU, "base")
+    for q in mem.d[key]["quiz_key"]:  # 旧缓存课没有 verified 标记 / 核验不了
+        q.pop("verified", None)
+    body = {"ku_id": out["ku_id"], "variant": out["variant"], "quiz_id": "q1", "choice": 2}
+    r = await client.post("/v1/viz/quiz-answer", json=body, headers=_h(stu))
+    assert r.status_code == 200 and r.json() == {"ok": True, "written": False, "reason": "unverified_quiz"}
+    mem.d[key]["quiz_key"][1]["verified"] = False
+    r2 = await client.post("/v1/viz/quiz-answer", json={**body, "quiz_id": "q2", "choice": 1}, headers=_h(stu))
+    assert r2.json()["reason"] == "unverified_quiz"
+    assert await _mastery(db, stu, KU) is None
+    n = (await db.execute(text("SELECT count(*) FROM interaction_events WHERE student_id=:s"), {"s": stu})).scalar()
+    assert n == 0
 
 
 def test_viz_service_never_writes_mastery_directly():
