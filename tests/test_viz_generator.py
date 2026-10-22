@@ -165,6 +165,47 @@ async def test_generate_caches_and_retries_on_bad_output(mem, stub):
     assert again["status"] == "ready" and again["cached"] is True and len(c.calls) == 2
 
 
+QUIZ_DEFECT = {
+    "items": [
+        QUIZ["items"][0],
+        {
+            "id": "q2",
+            "prompt": "下列式子中，计算正确的是？",
+            "choices": [
+                "\\((a - b)^2 = a^2 - b^2\\)",
+                "\\((-a - b)^2 = a^2 + 2ab + b^2\\)",
+                "\\((2x + 1)^2 = 4x^2 + 2x + 1\\)",
+                "\\((a - 2b)^2 = a^2 - 4ab + 4b^2\\)",
+            ],
+            "answer": 3,
+        },
+    ]
+}
+BAD_KEY = GOOD.replace(json.dumps(QUIZ, ensure_ascii=False), json.dumps(QUIZ_DEFECT, ensure_ascii=False))
+
+
+@pytest.mark.asyncio
+async def test_quiz_key_defect_triggers_regeneration(mem, stub):
+    c = stub(BAD_KEY, GOOD)
+    out = await vg.get_or_generate(KU, wait_seconds=10)
+    assert out["status"] == "ready" and len(c.calls) == 2
+    assert out["quality"]["quiz_verified"] == 2 and out["quality"]["quiz_defects"] == []
+    doc = mem.d[vg._obj_key(KU, "base")]
+    assert [q["verified"] for q in doc["quiz_key"]] == [True, True]
+
+
+@pytest.mark.asyncio
+async def test_persistent_quiz_defect_ships_lesson_unverified(mem, stub):
+    c = stub(BAD_KEY)
+    out = await vg.get_or_generate(KU, wait_seconds=10)
+    assert out["status"] == "ready" and len(c.calls) == 2  # 重试上限仍是 2 次
+    assert out["quality"]["quiz_defects"] == ["q2"] and out["quality"]["quiz_verified"] == 1
+    doc = mem.d[vg._obj_key(KU, "base")]
+    assert [q["verified"] for q in doc["quiz_key"]] == [True, False]
+    assert doc["quiz_key"][1]["verify"]["correct"] == [1, 3]
+    assert all("verified" not in q and "answer" not in q for q in out["quiz"])
+
+
 @pytest.mark.asyncio
 async def test_generation_failure_reported(mem, stub):
     stub("<p>not html</p>")
@@ -288,8 +329,7 @@ async def test_quiz_answer_writes_bkt_only_via_submit_answer(actors, client, db,
     stu = actors["stu"]
     out = (await client.post("/v1/viz/ku", json={"ku_id": KU, "wait_seconds": 10}, headers=_h(stu))).json()
     doc = mem.d[vg._obj_key(KU, "base")]
-    for q in doc["quiz_key"]:  # 测试桩课：答案键已人工核验
-        q["verified"] = True
+    assert all(q.get("verified") is True for q in doc["quiz_key"]), doc["quiz_key"]
     body = {"ku_id": out["ku_id"], "variant": out["variant"], "quiz_id": "q1", "choice": 2}
     r = await client.post("/v1/viz/quiz-answer", json=body, headers=_h(stu))
     wb = r.json()
