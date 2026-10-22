@@ -5,6 +5,7 @@
 - 评估方式：代码/文档/路由审阅、生产库只读查询、公开端点探测、10 分片测试 + 根目录复核、Ruff/MyPy/覆盖率
 - 重要事实：`sxueji.com` 已经公网可达（`/studio/learn`、`/login` 均 200），但容器运行在 `MNEME_ENV=demo`
 - 最终判定：**NO-GO（正式公开/商业化上线）**；若定义为“邀请制、免费、不宣称学习效果的技术试点”，可在完成 P0-1/2/5/6/7 后转为**有条件 GO**
+- 修复进展（2026-10-22，`fix/launch-p0` 已合入 `main`）：P0-1/2/6/7 已修；P0-5 部分（MinIO 凭据轮换、`GIT_SHA`/`RELEASE_VERSION` 注入完成，因缺真实邮件/短信通道仍保留 `demo`）；P0-3/4 仍为外部/法务阻塞。详见 §5「P0 修复状态」。
 
 ---
 
@@ -266,6 +267,15 @@
 | P0-7 | **已修** | 手机/邮箱/用户名/邀请码四条学生注册路径统一年龄闸门（`assess_registration_age`），`birth_date` 全部落库，<14 必须监护人联系方式 + 明确同意；新增/更新测试覆盖 | 无 |
 
 > 未处理的 P0-3（法务/隐私/ICP）与 P0-4（CC BY-NC 商用授权）仍为外部/法务阻塞，本轮未动。
+
+**修复后复验（`main`，2026-10-22）**
+
+- 测试：10 分片 + `tests/unit`，**2812 passed / 0 failed / 15 skipped**；Ruff、MyPy 通过。
+- 安全：`scripts/secret_scan.py` PASS（已入 `.github/workflows/quality.yml`）。
+- 迁移：单 head `rin1a2b3c4d5`，`/readiness` 返回 `migrations=true`。
+- 站点：`https://sxueji.com/login`、`/studio/learn`、`/health`、`/readiness` 均 200。
+- 邀请码端到端：经公网 `POST /v1/admin/invitations` 生成码 → `POST /v1/auth/register/student-invite` 注册成功（201，`birth_date` 落库，邀请码标记已用），验证后已清理测试账号。
+- 环境：仍为 `MNEME_ENV=demo`（唯一剩余 preflight 项为真实邮件/短信通道）；`GIT_SHA`/`RELEASE_VERSION`/`ADMIN_USER_IDS` 已注入。
 
 ### P1（建议在 GA 前完成）
 
