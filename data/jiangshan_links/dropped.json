@@ -1,0 +1,2179 @@
+[
+  {
+    "ku_id": "TONGBIAN-G4-CHINESE-S-ku-古诗三首中的哲理与写景",
+    "ku_name": "古诗三首中的哲理与写景",
+    "grade": "G4",
+    "ku_type": "shici_jianshang",
+    "reason": "无可靠地点/人物锚点（仅为行文提及或跨篇目通用条目）"
+  },
+  {
+    "ku_id": "TONGBIAN-G4-CHINESE-X-ku-文化常识-囊萤夜读与铁杵成针",
+    "ku_name": "文化常识：囊萤夜读与铁杵成针",
+    "grade": "G4",
+    "ku_type": "wenhua_changshi",
+    "reason": "两则典故合编，无单一人物的行迹锚点，按口径不挂"
+  },
+  {
+    "ku_id": "TONGBIAN-G5-CHINESE-X-ku-口语交际-怎么表演课本剧",
+    "ku_name": "口语交际：怎么表演课本剧",
+    "grade": "G5",
+    "ku_type": "kouyu_jiaoji",
+    "reason": "无可靠地点/人物锚点（仅为行文提及或跨篇目通用条目）"
+  },
+  {
+    "ku_id": "TONGBIAN-G5-CHINESE-X-ku-古诗中的家国情怀",
+    "ku_name": "古诗中的家国情怀",
+    "grade": "G5",
+    "ku_type": "shici_jianshang",
+    "reason": "多首诗整合的单元 KU，无单一地点，按口径不挂"
+  },
+  {
+    "ku_id": "TONGBIAN-G5-CHINESE-X-ku-文化常识-四大名著",
+    "ku_name": "文化常识：四大名著",
+    "grade": "G5",
+    "ku_type": "wenhua_changshi",
+    "reason": "四部名著综合条，无单一地点/人物，按口径不挂"
+  },
+  {
+    "ku_id": "TONGBIAN-G6-CHINESE-S-ku-文化常识-鲁迅与-故乡",
+    "ku_name": "文化常识：鲁迅与《故乡》",
+    "grade": "G6",
+    "ku_type": "wenhua_changshi",
+    "reason": "现代小说，鲁镇为虚构地名，按本批口径不挂"
+  },
+  {
+    "ku_id": "TONGBIAN-G6-CHINESE-X-ku-成语积累与望文生义辨析",
+    "ku_name": "成语积累与望文生义辨析",
+    "grade": "G6",
+    "ku_type": "cizu_yunyong",
+    "reason": "无可靠地点/人物锚点（仅为行文提及或跨篇目通用条目）"
+  },
+  {
+    "ku_id": "TONGBIAN-G6-CHINESE-X-ku-文化常识-传统节日与民俗",
+    "ku_name": "文化常识：传统节日与民俗",
+    "grade": "G6",
+    "ku_type": "wenhua_changshi",
+    "reason": "无可靠地点/人物锚点（仅为行文提及或跨篇目通用条目）"
+  },
+  {
+    "ku_id": "TONGBIAN-G6-CHINESE-X-ku-概括主要内容与详略",
+    "ku_name": "概括主要内容与详略",
+    "grade": "G6",
+    "ku_type": "jixuwen_yuedu",
+    "reason": "无可靠地点/人物锚点（仅为行文提及或跨篇目通用条目）"
+  },
+  {
+    "ku_id": "TONGBIAN-G7-CHINESE-S-ku-五猖会-文学文化常识-陶庵梦忆",
+    "ku_name": "五猖会·文学文化常识·陶庵梦忆",
+    "grade": "G7",
+    "ku_type": "wenhua_changshi",
+    "reason": "现代散文，绍兴为作者籍贯而非篇目地点，按本批口径不挂"
+  },
+  {
+    "ku_id": "TONGBIAN-G7-CHINESE-S-ku-些须-读音",
+    "ku_name": "些须·读音",
+    "grade": "G7",
+    "ku_type": "zixing_ziyin",
+    "reason": "《西游记》情节/字词条，需区分历史玄奘与小说唐僧，按口径不挂"
+  },
+  {
+    "ku_id": "TONGBIAN-G7-CHINESE-S-ku-使-使唤-劳力",
+    "ku_name": "使·使唤，劳力",
+    "grade": "G7",
+    "ku_type": "wenyan_word",
+    "reason": "寓言地点为虚指宋国，无可靠年份，剔除"
+  },
+  {
+    "ku_id": "TONGBIAN-G7-CHINESE-S-ku-分晓-道理",
+    "ku_name": "分晓·道理",
+    "grade": "G7",
+    "ku_type": "wenyan_word",
+    "reason": "《西游记》情节/字词条，需区分历史玄奘与小说唐僧，按口径不挂"
+  },
+  {
+    "ku_id": "TONGBIAN-G7-CHINESE-S-ku-判断句---也",
+    "ku_name": "判断句·……也",
+    "grade": "G7",
+    "ku_type": "wenyan_syntax",
+    "reason": "寓言地点为虚指宋国，无可靠年份，剔除"
+  },
+  {
+    "ku_id": "TONGBIAN-G7-CHINESE-S-ku-及-待-等到",
+    "ku_name": "及·待，等到",
+    "grade": "G7",
+    "ku_type": "wenyan_word",
+    "reason": "寓言地点为虚指宋国，无可靠年份，剔除"
+  },
+  {
+    "ku_id": "TONGBIAN-G7-CHINESE-S-ku-史铁生-作家常识",
+    "ku_name": "史铁生·作家常识",
+    "grade": "G7",
+    "ku_type": "wenhua_changshi",
+    "reason": "无可靠地点/人物锚点（仅为行文提及或跨篇目通用条目）"
+  },
+  {
+    "ku_id": "TONGBIAN-G7-CHINESE-S-ku-吕不韦--吕氏春秋",
+    "ku_name": "吕不韦·《吕氏春秋》",
+    "grade": "G7",
+    "ku_type": "wenhua_changshi",
+    "reason": "寓言地点为虚指宋国，无可靠年份，剔除"
+  },
+  {
+    "ku_id": "TONGBIAN-G7-CHINESE-S-ku-大惊失色-非常害怕",
+    "ku_name": "大惊失色·非常害怕",
+    "grade": "G7",
+    "ku_type": "chengyu",
+    "reason": "《西游记》情节/字词条，需区分历史玄奘与小说唐僧，按口径不挂"
+  },
+  {
+    "ku_id": "TONGBIAN-G7-CHINESE-S-ku-对-应答",
+    "ku_name": "对·应答",
+    "grade": "G7",
+    "ku_type": "wenyan_word",
+    "reason": "寓言地点为虚指宋国，无可靠年份，剔除"
+  },
+  {
+    "ku_id": "TONGBIAN-G7-CHINESE-S-ku-巍然不动-形容高大稳固",
+    "ku_name": "巍然不动·形容高大稳固",
+    "grade": "G7",
+    "ku_type": "chengyu",
+    "reason": "《西游记》情节/字词条，需区分历史玄奘与小说唐僧，按口径不挂"
+  },
+  {
+    "ku_id": "TONGBIAN-G7-CHINESE-S-ku-幌-读音",
+    "ku_name": "幌·读音",
+    "grade": "G7",
+    "ku_type": "zixing_ziyin",
+    "reason": "《西游记》情节/字词条，需区分历史玄奘与小说唐僧，按口径不挂"
+  },
+  {
+    "ku_id": "TONGBIAN-G7-CHINESE-S-ku-志诚-诚实",
+    "ku_name": "志诚·诚实",
+    "grade": "G7",
+    "ku_type": "wenyan_word",
+    "reason": "《西游记》情节/字词条，需区分历史玄奘与小说唐僧，按口径不挂"
+  },
+  {
+    "ku_id": "TONGBIAN-G7-CHINESE-S-ku-悚惧-恐惧",
+    "ku_name": "悚惧·恐惧",
+    "grade": "G7",
+    "ku_type": "zixing_ziyin",
+    "reason": "《西游记》情节/字词条，需区分历史玄奘与小说唐僧，按口径不挂"
+  },
+  {
+    "ku_id": "TONGBIAN-G7-CHINESE-S-ku-悭吝-吝啬",
+    "ku_name": "悭吝·吝啬",
+    "grade": "G7",
+    "ku_type": "zixing_ziyin",
+    "reason": "《西游记》情节/字词条，需区分历史玄奘与小说唐僧，按口径不挂"
+  },
+  {
+    "ku_id": "TONGBIAN-G7-CHINESE-S-ku-搠-刺",
+    "ku_name": "搠·刺",
+    "grade": "G7",
+    "ku_type": "zixing_ziyin",
+    "reason": "《西游记》情节/字词条，需区分历史玄奘与小说唐僧，按口径不挂"
+  },
+  {
+    "ku_id": "TONGBIAN-G7-CHINESE-S-ku-撮盐入火-火上浇油",
+    "ku_name": "撮盐入火·火上浇油",
+    "grade": "G7",
+    "ku_type": "chengyu",
+    "reason": "《西游记》情节/字词条，需区分历史玄奘与小说唐僧，按口径不挂"
+  },
+  {
+    "ku_id": "TONGBIAN-G7-CHINESE-S-ku-旋风翻败叶-流水淌残花",
+    "ku_name": "旋风翻败叶·流水淌残花",
+    "grade": "G7",
+    "ku_type": "mingpian",
+    "reason": "《西游记》情节/字词条，需区分历史玄奘与小说唐僧，按口径不挂"
+  },
+  {
+    "ku_id": "TONGBIAN-G7-CHINESE-S-ku-是必-读音",
+    "ku_name": "是必·读音",
+    "grade": "G7",
+    "ku_type": "zixing_ziyin",
+    "reason": "《西游记》情节/字词条，需区分历史玄奘与小说唐僧，按口径不挂"
+  },
+  {
+    "ku_id": "TONGBIAN-G7-CHINESE-S-ku-求闻之若此-不若无闻也-穿井得一人",
+    "ku_name": "求闻之若此，不若无闻也（穿井得一人）",
+    "grade": "G7",
+    "ku_type": "mingju",
+    "reason": "寓言地点为虚指宋国，无可靠年份，剔除"
+  },
+  {
+    "ku_id": "TONGBIAN-G7-CHINESE-S-ku-穿井得一人--启示",
+    "ku_name": "《穿井得一人》·启示",
+    "grade": "G7",
+    "ku_type": "wenyan_yuedu",
+    "reason": "寓言地点为虚指宋国，无可靠年份，剔除"
+  },
+  {
+    "ku_id": "TONGBIAN-G7-CHINESE-S-ku-穿井得一人--文言词语-穿",
+    "ku_name": "穿",
+    "grade": "G7",
+    "ku_type": "wenyan_word",
+    "reason": "跨篇目通用文言词条，无单一地点/年份，按口径不挂"
+  },
+  {
+    "ku_id": "TONGBIAN-G7-CHINESE-S-ku-穿井得一人--翻译技巧",
+    "ku_name": "《穿井得一人》·翻译技巧",
+    "grade": "G7",
+    "ku_type": "wenyan_yuedu",
+    "reason": "寓言地点为虚指宋国，无可靠年份，剔除"
+  },
+  {
+    "ku_id": "TONGBIAN-G7-CHINESE-S-ku-精读-细读--西游记-三调芭蕉扇",
+    "ku_name": "精读·细读（《西游记》三调芭蕉扇）",
+    "grade": "G7",
+    "ku_type": "mingzhu_yuedu",
+    "reason": "《西游记》情节/字词条，需区分历史玄奘与小说唐僧，按口径不挂"
+  },
+  {
+    "ku_id": "TONGBIAN-G7-CHINESE-S-ku-精读与跳读--西游记",
+    "ku_name": "精读与跳读（《西游记》）",
+    "grade": "G7",
+    "ku_type": "mingzhu_yuedu",
+    "reason": "《西游记》情节/字词条，需区分历史玄奘与小说唐僧，按口径不挂"
+  },
+  {
+    "ku_id": "TONGBIAN-G7-CHINESE-S-ku-结束-装束打扮",
+    "ku_name": "结束·装束打扮",
+    "grade": "G7",
+    "ku_type": "wenyan_word",
+    "reason": "《西游记》情节/字词条，需区分历史玄奘与小说唐僧，按口径不挂"
+  },
+  {
+    "ku_id": "TONGBIAN-G7-CHINESE-S-ku-罗刹-读音",
+    "ku_name": "罗刹·读音",
+    "grade": "G7",
+    "ku_type": "zixing_ziyin",
+    "reason": "《西游记》情节/字词条，需区分历史玄奘与小说唐僧，按口径不挂"
+  },
+  {
+    "ku_id": "TONGBIAN-G7-CHINESE-S-ku-芭蕉扇-读音",
+    "ku_name": "芭蕉扇·读音",
+    "grade": "G7",
+    "ku_type": "zixing_ziyin",
+    "reason": "《西游记》情节/字词条，需区分历史玄奘与小说唐僧，按口径不挂"
+  },
+  {
+    "ku_id": "TONGBIAN-G7-CHINESE-S-ku-蓝缕-读音",
+    "ku_name": "蓝缕·读音",
+    "grade": "G7",
+    "ku_type": "zixing_ziyin",
+    "reason": "《西游记》情节/字词条，需区分历史玄奘与小说唐僧，按口径不挂"
+  },
+  {
+    "ku_id": "TONGBIAN-G7-CHINESE-S-ku-蟭蟟-一种小蝉",
+    "ku_name": "蟭蟟·一种小蝉",
+    "grade": "G7",
+    "ku_type": "zixing_ziyin",
+    "reason": "《西游记》情节/字词条，需区分历史玄奘与小说唐僧，按口径不挂"
+  },
+  {
+    "ku_id": "TONGBIAN-G7-CHINESE-S-ku-裙钗-读音",
+    "ku_name": "裙钗·读音",
+    "grade": "G7",
+    "ku_type": "zixing_ziyin",
+    "reason": "《西游记》情节/字词条，需区分历史玄奘与小说唐僧，按口径不挂"
+  },
+  {
+    "ku_id": "TONGBIAN-G7-CHINESE-S-ku-西游记--一调芭蕉扇情节",
+    "ku_name": "《西游记》·一调芭蕉扇情节",
+    "grade": "G7",
+    "ku_type": "mingzhu_yuedu",
+    "reason": "《西游记》情节/字词条，需区分历史玄奘与小说唐僧，按口径不挂"
+  },
+  {
+    "ku_id": "TONGBIAN-G7-CHINESE-S-ku-西游记--主要内容",
+    "ku_name": "《西游记》·主要内容",
+    "grade": "G7",
+    "ku_type": "mingzhu_yuedu",
+    "reason": "《西游记》情节/字词条，需区分历史玄奘与小说唐僧，按口径不挂"
+  },
+  {
+    "ku_id": "TONGBIAN-G7-CHINESE-S-ku-西游记--主题",
+    "ku_name": "《西游记》·主题",
+    "grade": "G7",
+    "ku_type": "mingzhu_yuedu",
+    "reason": "《西游记》情节/字词条，需区分历史玄奘与小说唐僧，按口径不挂"
+  },
+  {
+    "ku_id": "TONGBIAN-G7-CHINESE-S-ku-西游记--主题-反抗精神",
+    "ku_name": "《西游记》·主题·反抗精神",
+    "grade": "G7",
+    "ku_type": "mingzhu_yuedu",
+    "reason": "《西游记》情节/字词条，需区分历史玄奘与小说唐僧，按口径不挂"
+  },
+  {
+    "ku_id": "TONGBIAN-G7-CHINESE-S-ku-西游记--主题思想",
+    "ku_name": "《西游记》·主题思想",
+    "grade": "G7",
+    "ku_type": "mingzhu_yuedu",
+    "reason": "《西游记》情节/字词条，需区分历史玄奘与小说唐僧，按口径不挂"
+  },
+  {
+    "ku_id": "TONGBIAN-G7-CHINESE-S-ku-西游记--人物形象-孙悟空",
+    "ku_name": "《西游记》·人物形象·孙悟空",
+    "grade": "G7",
+    "ku_type": "mingzhu_yuedu",
+    "reason": "《西游记》情节/字词条，需区分历史玄奘与小说唐僧，按口径不挂"
+  },
+  {
+    "ku_id": "TONGBIAN-G7-CHINESE-S-ku-西游记--孙悟空形象",
+    "ku_name": "《西游记》·孙悟空形象",
+    "grade": "G7",
+    "ku_type": "mingzhu_yuedu",
+    "reason": "《西游记》情节/字词条，需区分历史玄奘与小说唐僧，按口径不挂"
+  },
+  {
+    "ku_id": "TONGBIAN-G7-CHINESE-S-ku-西游记--情节-三借芭蕉扇",
+    "ku_name": "《西游记》·情节·三借芭蕉扇",
+    "grade": "G7",
+    "ku_type": "mingzhu_yuedu",
+    "reason": "《西游记》情节/字词条，需区分历史玄奘与小说唐僧，按口径不挂"
+  },
+  {
+    "ku_id": "TONGBIAN-G7-CHINESE-S-ku-西游记--核心人物与主题",
+    "ku_name": "《西游记》·核心人物与主题",
+    "grade": "G7",
+    "ku_type": "mingzhu_yuedu",
+    "reason": "《西游记》情节/字词条，需区分历史玄奘与小说唐僧，按口径不挂"
+  },
+  {
+    "ku_id": "TONGBIAN-G7-CHINESE-S-ku-西游记--核心人物形象",
+    "ku_name": "《西游记》·核心人物形象",
+    "grade": "G7",
+    "ku_type": "mingzhu_yuedu",
+    "reason": "《西游记》情节/字词条，需区分历史玄奘与小说唐僧，按口径不挂"
+  },
+  {
+    "ku_id": "TONGBIAN-G7-CHINESE-S-ku-西游记--猪八戒形象",
+    "ku_name": "《西游记》·猪八戒形象",
+    "grade": "G7",
+    "ku_type": "mingzhu_yuedu",
+    "reason": "《西游记》情节/字词条，需区分历史玄奘与小说唐僧，按口径不挂"
+  },
+  {
+    "ku_id": "TONGBIAN-G7-CHINESE-S-ku-西游记--精读与跳读",
+    "ku_name": "《西游记》·精读与跳读",
+    "grade": "G7",
+    "ku_type": "mingzhu_yuedu",
+    "reason": "《西游记》情节/字词条，需区分历史玄奘与小说唐僧，按口径不挂"
+  },
+  {
+    "ku_id": "TONGBIAN-G7-CHINESE-S-ku-西游记--精读方法-人物心理分析",
+    "ku_name": "《西游记》·精读方法·人物心理分析",
+    "grade": "G7",
+    "ku_type": "jixuwen_yuedu",
+    "reason": "《西游记》情节/字词条，需区分历史玄奘与小说唐僧，按口径不挂"
+  },
+  {
+    "ku_id": "TONGBIAN-G7-CHINESE-S-ku-西游记--精读方法-语言鉴赏",
+    "ku_name": "《西游记》·精读方法·语言鉴赏",
+    "grade": "G7",
+    "ku_type": "jixuwen_yuedu",
+    "reason": "《西游记》情节/字词条，需区分历史玄奘与小说唐僧，按口径不挂"
+  },
+  {
+    "ku_id": "TONGBIAN-G7-CHINESE-S-ku-西游记--经典情节",
+    "ku_name": "《西游记》·经典情节",
+    "grade": "G7",
+    "ku_type": "mingzhu_yuedu",
+    "reason": "《西游记》情节/字词条，需区分历史玄奘与小说唐僧，按口径不挂"
+  },
+  {
+    "ku_id": "TONGBIAN-G7-CHINESE-S-ku-西游记--经典情节与主题",
+    "ku_name": "《西游记》·经典情节与主题",
+    "grade": "G7",
+    "ku_type": "mingzhu_yuedu",
+    "reason": "《西游记》情节/字词条，需区分历史玄奘与小说唐僧，按口径不挂"
+  },
+  {
+    "ku_id": "TONGBIAN-G7-CHINESE-S-ku-西游记--结构特点",
+    "ku_name": "《西游记》·结构特点",
+    "grade": "G7",
+    "ku_type": "mingzhu_yuedu",
+    "reason": "《西游记》情节/字词条，需区分历史玄奘与小说唐僧，按口径不挂"
+  },
+  {
+    "ku_id": "TONGBIAN-G7-CHINESE-S-ku-西游记--罗刹女形象",
+    "ku_name": "《西游记》·罗刹女形象",
+    "grade": "G7",
+    "ku_type": "mingzhu_yuedu",
+    "reason": "《西游记》情节/字词条，需区分历史玄奘与小说唐僧，按口径不挂"
+  },
+  {
+    "ku_id": "TONGBIAN-G7-CHINESE-S-ku-西游记--语言特点",
+    "ku_name": "《西游记》·语言特点",
+    "grade": "G7",
+    "ku_type": "mingzhu_yuedu",
+    "reason": "《西游记》情节/字词条，需区分历史玄奘与小说唐僧，按口径不挂"
+  },
+  {
+    "ku_id": "TONGBIAN-G7-CHINESE-S-ku-西游记--跳读方法",
+    "ku_name": "《西游记》·跳读方法",
+    "grade": "G7",
+    "ku_type": "jixuwen_yuedu",
+    "reason": "《西游记》情节/字词条，需区分历史玄奘与小说唐僧，按口径不挂"
+  },
+  {
+    "ku_id": "TONGBIAN-G7-CHINESE-S-ku-解数-读音",
+    "ku_name": "解数·读音",
+    "grade": "G7",
+    "ku_type": "zixing_ziyin",
+    "reason": "《西游记》情节/字词条，需区分历史玄奘与小说唐僧，按口径不挂"
+  },
+  {
+    "ku_id": "TONGBIAN-G7-CHINESE-S-ku-记叙文阅读--西游记--动作描写",
+    "ku_name": "记叙文阅读·《西游记》·动作描写",
+    "grade": "G7",
+    "ku_type": "jixuwen_yuedu",
+    "reason": "《西游记》情节/字词条，需区分历史玄奘与小说唐僧，按口径不挂"
+  },
+  {
+    "ku_id": "TONGBIAN-G7-CHINESE-S-ku-记叙文阅读--西游记--心理描写",
+    "ku_name": "记叙文阅读·《西游记》·心理描写",
+    "grade": "G7",
+    "ku_type": "jixuwen_yuedu",
+    "reason": "《西游记》情节/字词条，需区分历史玄奘与小说唐僧，按口径不挂"
+  },
+  {
+    "ku_id": "TONGBIAN-G7-CHINESE-S-ku-记叙文阅读--西游记--语言描写",
+    "ku_name": "记叙文阅读·《西游记》·语言描写",
+    "grade": "G7",
+    "ku_type": "jixuwen_yuedu",
+    "reason": "《西游记》情节/字词条，需区分历史玄奘与小说唐僧，按口径不挂"
+  },
+  {
+    "ku_id": "TONGBIAN-G7-CHINESE-S-ku-道-讲述",
+    "ku_name": "道·讲述",
+    "grade": "G7",
+    "ku_type": "wenyan_word",
+    "reason": "寓言地点为虚指宋国，无可靠年份，剔除"
+  },
+  {
+    "ku_id": "TONGBIAN-G7-CHINESE-S-ku-郭沫若-作家常识",
+    "ku_name": "郭沫若·作家常识",
+    "grade": "G7",
+    "ku_type": "wenhua_changshi",
+    "reason": "现代诗，无历史地点锚点，按本批口径不挂"
+  },
+  {
+    "ku_id": "TONGBIAN-G7-CHINESE-S-ku-闻-使听到",
+    "ku_name": "闻",
+    "grade": "G7",
+    "ku_type": "wenyan_word",
+    "reason": "寓言地点为虚指宋国，无可靠年份，剔除"
+  },
+  {
+    "ku_id": "TONGBIAN-G7-CHINESE-S-ku-饶舌-读音",
+    "ku_name": "饶舌·读音",
+    "grade": "G7",
+    "ku_type": "zixing_ziyin",
+    "reason": "《西游记》情节/字词条，需区分历史玄奘与小说唐僧，按口径不挂"
+  },
+  {
+    "ku_id": "TONGBIAN-G7-CHINESE-S-ku-鲁迅--朝花夕拾",
+    "ku_name": "鲁迅·《朝花夕拾》",
+    "grade": "G7",
+    "ku_type": "mingzhu_yuedu",
+    "reason": "现代散文集，无单一历史地点，按本批口径不挂"
+  },
+  {
+    "ku_id": "TONGBIAN-G7-CHINESE-S-ku-鲁迅-文学家思想家革命家",
+    "ku_name": "鲁迅·文学家思想家革命家",
+    "grade": "G7",
+    "ku_type": "wenhua_changshi",
+    "reason": "现代散文，绍兴为作者籍贯而非篇目地点，按本批口径不挂"
+  },
+  {
+    "ku_id": "TONGBIAN-G7-CHINESE-S-ku-鲁迅-文学常识",
+    "ku_name": "鲁迅·文学常识",
+    "grade": "G7",
+    "ku_type": "wenhua_changshi",
+    "reason": "现代散文，绍兴为作者籍贯而非篇目地点，按本批口径不挂"
+  },
+  {
+    "ku_id": "TONGBIAN-G7-CHINESE-S-ku-鲁迅-文学文化常识",
+    "ku_name": "鲁迅·文学文化常识",
+    "grade": "G7",
+    "ku_type": "wenhua_changshi",
+    "reason": "现代散文，绍兴为作者籍贯而非篇目地点，按本批口径不挂"
+  },
+  {
+    "ku_id": "TONGBIAN-G7-CHINESE-X-ku-京味儿语言-骆驼祥子",
+    "ku_name": "京味儿语言（骆驼祥子）",
+    "grade": "G7",
+    "ku_type": "mingzhu_yuedu",
+    "reason": "现代小说，北平为故事背景，按本批口径不挂"
+  },
+  {
+    "ku_id": "TONGBIAN-G7-CHINESE-X-ku-卿-qīng",
+    "ku_name": "卿·qīng",
+    "grade": "G7",
+    "ku_type": "wenyan_word",
+    "reason": "“当涂”为“当道掌权”义，非地名，剔除"
+  },
+  {
+    "ku_id": "TONGBIAN-G7-CHINESE-X-ku-叶圣陶-作家常识",
+    "ku_name": "叶圣陶·作家常识",
+    "grade": "G7",
+    "ku_type": "wenhua_changshi",
+    "reason": "现代散文，无历史地点锚点，按本批口径不挂"
+  },
+  {
+    "ku_id": "TONGBIAN-G7-CHINESE-X-ku-叶圣陶-现代作家",
+    "ku_name": "叶圣陶·现代作家",
+    "grade": "G7",
+    "ku_type": "wenhua_changshi",
+    "reason": "现代散文，无历史地点锚点，按本批口径不挂"
+  },
+  {
+    "ku_id": "TONGBIAN-G7-CHINESE-X-ku-孙权劝学--名句默写",
+    "ku_name": "《孙权劝学》·名句默写",
+    "grade": "G7",
+    "ku_type": "mingju",
+    "reason": "“当涂”为“当道掌权”义，非地名，剔除"
+  },
+  {
+    "ku_id": "TONGBIAN-G7-CHINESE-X-ku-当涂-dāng-tú",
+    "ku_name": "当涂·dāng tú",
+    "grade": "G7",
+    "ku_type": "wenyan_word",
+    "reason": "“当涂”为“当道掌权”义，非地名，剔除"
+  },
+  {
+    "ku_id": "TONGBIAN-G7-CHINESE-X-ku-李森祥-作家简介",
+    "ku_name": "李森祥·作家简介",
+    "grade": "G7",
+    "ku_type": "wenhua_changshi",
+    "reason": "现代小说，无历史地点锚点，按本批口径不挂"
+  },
+  {
+    "ku_id": "TONGBIAN-G7-CHINESE-X-ku-杨万里-南宋诗人-过松源晨炊漆公店",
+    "ku_name": "杨万里·南宋诗人（过松源晨炊漆公店）",
+    "grade": "G7",
+    "ku_type": "wenhua_changshi",
+    "reason": "无可靠地点/人物锚点（仅为行文提及或跨篇目通用条目）"
+  },
+  {
+    "ku_id": "TONGBIAN-G7-CHINESE-X-ku-杨绛-文学常识",
+    "ku_name": "杨绛·文学常识",
+    "grade": "G7",
+    "ku_type": "wenhua_changshi",
+    "reason": "现代散文，北京仅为行文提及，按本批口径不挂"
+  },
+  {
+    "ku_id": "TONGBIAN-G7-CHINESE-X-ku-梁启超-文学文化常识",
+    "ku_name": "梁启超·文学文化常识",
+    "grade": "G7",
+    "ku_type": "wenhua_changshi",
+    "reason": "现代议论，无历史地点锚点，按本批口径不挂"
+  },
+  {
+    "ku_id": "TONGBIAN-G7-CHINESE-X-ku-洋车夫行当-骆驼祥子",
+    "ku_name": "洋车夫行当（骆驼祥子）",
+    "grade": "G7",
+    "ku_type": "mingzhu_yuedu",
+    "reason": "现代小说，北平为故事背景，按本批口径不挂"
+  },
+  {
+    "ku_id": "TONGBIAN-G7-CHINESE-X-ku-老王--杨绛",
+    "ku_name": "《老王》·杨绛",
+    "grade": "G7",
+    "ku_type": "wenhua_changshi",
+    "reason": "现代散文，北京仅为行文提及，按本批口径不挂"
+  },
+  {
+    "ku_id": "TONGBIAN-G7-CHINESE-X-ku-老舍-文学常识",
+    "ku_name": "老舍·文学常识",
+    "grade": "G7",
+    "ku_type": "wenhua_changshi",
+    "reason": "现代小说，北平为故事背景，按本批口径不挂"
+  },
+  {
+    "ku_id": "TONGBIAN-G7-CHINESE-X-ku-说和做--文学文化常识-臧克家",
+    "ku_name": "《说和做》·文学文化常识·臧克家",
+    "grade": "G7",
+    "ku_type": "wenhua_changshi",
+    "reason": "现代散文，无历史地点锚点，按本批口径不挂"
+  },
+  {
+    "ku_id": "TONGBIAN-G7-CHINESE-X-ku-赵师秀-南宋诗人-约客",
+    "ku_name": "赵师秀·南宋诗人（约客）",
+    "grade": "G7",
+    "ku_type": "wenhua_changshi",
+    "reason": "无可靠地点/人物锚点（仅为行文提及或跨篇目通用条目）"
+  },
+  {
+    "ku_id": "TONGBIAN-G7-CHINESE-X-ku-邓稼先--引用-五四-歌曲表达爱国情怀",
+    "ku_name": "《邓稼先》·引用“五四”歌曲表达爱国情怀",
+    "grade": "G7",
+    "ku_type": "jixuwen_yuedu",
+    "reason": "现代传记，北京仅为行文提及，按本批口径不挂"
+  },
+  {
+    "ku_id": "TONGBIAN-G7-CHINESE-X-ku-阿长与-山海经---主题升华",
+    "ku_name": "《阿长与〈山海经〉》·主题升华",
+    "grade": "G7",
+    "ku_type": "jixuwen_yuedu",
+    "reason": "现代散文，绍兴为作者籍贯而非篇目地点，按本批口径不挂"
+  },
+  {
+    "ku_id": "TONGBIAN-G7-CHINESE-X-ku-阿长与-山海经---开头结尾作用",
+    "ku_name": "《阿长与〈山海经〉》·开头结尾作用",
+    "grade": "G7",
+    "ku_type": "jixuwen_yuedu",
+    "reason": "现代散文，绍兴为作者籍贯而非篇目地点，按本批口径不挂"
+  },
+  {
+    "ku_id": "TONGBIAN-G7-CHINESE-X-ku-陆定一-作家常识",
+    "ku_name": "陆定一·作家常识",
+    "grade": "G7",
+    "ku_type": "wenhua_changshi",
+    "reason": "现代回忆录，越城岭不在江山时序地名库，按本批口径不挂"
+  },
+  {
+    "ku_id": "TONGBIAN-G7-CHINESE-X-ku-陆定一-文学常识",
+    "ku_name": "陆定一·文学常识",
+    "grade": "G7",
+    "ku_type": "wenhua_changshi",
+    "reason": "现代回忆录，越城岭不在江山时序地名库，按本批口径不挂"
+  },
+  {
+    "ku_id": "TONGBIAN-G7-CHINESE-X-ku-鞠躬尽瘁-jū-gōng-jìn-cuì",
+    "ku_name": "鞠躬尽瘁·jū gōng jìn cuì",
+    "grade": "G7",
+    "ku_type": "chengyu",
+    "reason": "现代传记，北京仅为行文提及，按本批口径不挂"
+  },
+  {
+    "ku_id": "TONGBIAN-G7-CHINESE-X-ku-驿路梨花处处开-驿路梨花",
+    "ku_name": "驿路梨花处处开（驿路梨花）",
+    "grade": "G7",
+    "ku_type": "mingju",
+    "reason": "现代小说，哀牢山不在江山时序地名库，按本批口径不挂"
+  },
+  {
+    "ku_id": "TONGBIAN-G7-CHINESE-X-ku-骆驼祥子--语言特色",
+    "ku_name": "《骆驼祥子》·语言特色",
+    "grade": "G7",
+    "ku_type": "mingzhu_yuedu",
+    "reason": "现代小说，北平为故事背景，按本批口径不挂"
+  },
+  {
+    "ku_id": "TONGBIAN-G7-CHINESE-X-ku-鲁迅--朝花夕拾",
+    "ku_name": "鲁迅·《朝花夕拾》",
+    "grade": "G7",
+    "ku_type": "wenhua_changshi",
+    "reason": "现代散文，绍兴为作者籍贯而非篇目地点，按本批口径不挂"
+  },
+  {
+    "ku_id": "TONGBIAN-G7-CHINESE-X-ku-鲁迅-文学文化常识",
+    "ku_name": "鲁迅·文学文化常识",
+    "grade": "G7",
+    "ku_type": "wenhua_changshi",
+    "reason": "现代散文，绍兴为作者籍贯而非篇目地点，按本批口径不挂"
+  },
+  {
+    "ku_id": "TONGBIAN-G8-CHINESE-S-ku-且-况且",
+    "ku_name": "且",
+    "grade": "G8",
+    "ku_type": "wenyan_word",
+    "reason": "跨篇目通用文言词条，无单一地点/年份，按口径不挂"
+  },
+  {
+    "ku_id": "TONGBIAN-G8-CHINESE-S-ku-举-选拔-任用",
+    "ku_name": "举",
+    "grade": "G8",
+    "ku_type": "wenyan_word",
+    "reason": "跨篇目通用文言词条，无单一地点/年份，按口径不挂"
+  },
+  {
+    "ku_id": "TONGBIAN-G8-CHINESE-S-ku-举例子-说明方法",
+    "ku_name": "举例子·说明方法",
+    "grade": "G8",
+    "ku_type": "shuomingwen_yuedu",
+    "reason": "现代说明文（1962），卢沟桥仅为举例对象，按本批古诗文/历史地名口径不挂"
+  },
+  {
+    "ku_id": "TONGBIAN-G8-CHINESE-S-ku-举例子说明方法",
+    "ku_name": "举例子说明方法",
+    "grade": "G8",
+    "ku_type": "shuomingwen_yuedu",
+    "reason": "现代说明文（1962），卢沟桥仅为举例对象，按本批古诗文/历史地名口径不挂"
+  },
+  {
+    "ku_id": "TONGBIAN-G8-CHINESE-S-ku-作比较-说明方法",
+    "ku_name": "作比较·说明方法",
+    "grade": "G8",
+    "ku_type": "shuomingwen_yuedu",
+    "reason": "现代说明文（1962），卢沟桥仅为举例对象，按本批古诗文/历史地名口径不挂"
+  },
+  {
+    "ku_id": "TONGBIAN-G8-CHINESE-S-ku-作比较说明方法",
+    "ku_name": "作比较说明方法",
+    "grade": "G8",
+    "ku_type": "shuomingwen_yuedu",
+    "reason": "现代说明文（1962），卢沟桥仅为举例对象，按本批古诗文/历史地名口径不挂"
+  },
+  {
+    "ku_id": "TONGBIAN-G8-CHINESE-S-ku-分类别-说明方法",
+    "ku_name": "分类别·说明方法",
+    "grade": "G8",
+    "ku_type": "shuomingwen_yuedu",
+    "reason": "现代说明文（1962），卢沟桥仅为举例对象，按本批古诗文/历史地名口径不挂"
+  },
+  {
+    "ku_id": "TONGBIAN-G8-CHINESE-S-ku-列数字-说明方法",
+    "ku_name": "列数字·说明方法",
+    "grade": "G8",
+    "ku_type": "shuomingwen_yuedu",
+    "reason": "现代说明文（1962），卢沟桥仅为举例对象，按本批古诗文/历史地名口径不挂"
+  },
+  {
+    "ku_id": "TONGBIAN-G8-CHINESE-S-ku-反-同-返",
+    "ku_name": "反",
+    "grade": "G8",
+    "ku_type": "wenyan_word",
+    "reason": "跨篇目通用文言词条，无单一地点/年份，按口径不挂"
+  },
+  {
+    "ku_id": "TONGBIAN-G8-CHINESE-S-ku-史记-名著导读",
+    "ku_name": "《史记》名著导读",
+    "grade": "G8",
+    "ku_type": "mingzhu_yuedu",
+    "reason": "《史记》为通史，无单一地点，剔除"
+  },
+  {
+    "ku_id": "TONGBIAN-G8-CHINESE-S-ku-奔-飞奔的马-与朱元思书",
+    "ku_name": "奔",
+    "grade": "G8",
+    "ku_type": "wenyan_word",
+    "reason": "跨篇目通用文言词条，无单一地点/年份，按口径不挂"
+  },
+  {
+    "ku_id": "TONGBIAN-G8-CHINESE-S-ku-张择端-清明上河图",
+    "ku_name": "张择端·清明上河图",
+    "grade": "G8",
+    "ku_type": "wenhua_changshi",
+    "reason": "现代说明文，写《清明上河图》图像，非人物行迹或诗文地点，按本批口径不挂"
+  },
+  {
+    "ku_id": "TONGBIAN-G8-CHINESE-S-ku-晏殊-北宋词人-文学文化常识",
+    "ku_name": "晏殊·北宋词人（文学文化常识）",
+    "grade": "G8",
+    "ku_type": "wenhua_changshi",
+    "reason": "无可靠地点/人物锚点（仅为行文提及或跨篇目通用条目）"
+  },
+  {
+    "ku_id": "TONGBIAN-G8-CHINESE-S-ku-梦回繁华--引用",
+    "ku_name": "《梦回繁华》·引用",
+    "grade": "G8",
+    "ku_type": "shuomingwen_yuedu",
+    "reason": "现代说明文，写《清明上河图》图像，非人物行迹或诗文地点，按本批口径不挂"
+  },
+  {
+    "ku_id": "TONGBIAN-G8-CHINESE-S-ku-梦回繁华--说明方法-分类别",
+    "ku_name": "《梦回繁华》·说明方法·分类别",
+    "grade": "G8",
+    "ku_type": "shuomingwen_yuedu",
+    "reason": "现代说明文，写《清明上河图》图像，非人物行迹或诗文地点，按本批口径不挂"
+  },
+  {
+    "ku_id": "TONGBIAN-G8-CHINESE-S-ku-梦回繁华--说明顺序-空间顺序",
+    "ku_name": "《梦回繁华》·说明顺序·空间顺序",
+    "grade": "G8",
+    "ku_type": "shuomingwen_yuedu",
+    "reason": "现代说明文，写《清明上河图》图像，非人物行迹或诗文地点，按本批口径不挂"
+  },
+  {
+    "ku_id": "TONGBIAN-G8-CHINESE-S-ku-芜湖-wú-hú",
+    "ku_name": "芜湖·wú hú",
+    "grade": "G8",
+    "ku_type": "zixing_ziyin",
+    "reason": "现代新闻，无历史地点锚点，按本批口径不挂"
+  },
+  {
+    "ku_id": "TONGBIAN-G8-CHINESE-S-ku-苏州园林--说明方法-作比较",
+    "ku_name": "《苏州园林》·说明方法·作比较",
+    "grade": "G8",
+    "ku_type": "shuomingwen_yuedu",
+    "reason": "现代说明文（1956），苏州为现代城市泛指，按本批口径不挂"
+  },
+  {
+    "ku_id": "TONGBIAN-G8-CHINESE-S-ku-苦-使动用法",
+    "ku_name": "苦",
+    "grade": "G8",
+    "ku_type": "wenyan_word",
+    "reason": "跨篇目通用文言词条，无单一地点/年份，按口径不挂"
+  },
+  {
+    "ku_id": "TONGBIAN-G8-CHINESE-S-ku-茅以昇-文学文化常识",
+    "ku_name": "茅以昇·文学文化常识",
+    "grade": "G8",
+    "ku_type": "wenhua_changshi",
+    "reason": "现代说明文（1962），卢沟桥仅为举例对象，按本批古诗文/历史地名口径不挂"
+  },
+  {
+    "ku_id": "TONGBIAN-G8-CHINESE-S-ku-藤野先生--句子含义",
+    "ku_name": "《藤野先生》·句子含义",
+    "grade": "G8",
+    "ku_type": "jixuwen_yuedu",
+    "reason": "现代散文，地点为东京/仙台，江山时序无对应地名，按本批口径不挂"
+  },
+  {
+    "ku_id": "TONGBIAN-G8-CHINESE-S-ku-说明文写作-抓住特征",
+    "ku_name": "说明文写作·抓住特征",
+    "grade": "G8",
+    "ku_type": "xiezuo",
+    "reason": "现代说明文（1962），卢沟桥仅为举例对象，按本批古诗文/历史地名口径不挂"
+  },
+  {
+    "ku_id": "TONGBIAN-G8-CHINESE-S-ku-资料卡片制作-名称-类别-所在地-概述",
+    "ku_name": "资料卡片制作（名称·类别·所在地·概述）",
+    "grade": "G8",
+    "ku_type": "xiezuo",
+    "reason": "学习方法条，泰山仅为示例，按口径不挂"
+  },
+  {
+    "ku_id": "TONGBIAN-G8-CHINESE-S-ku-飞向太空港--报告文学与航天精神",
+    "ku_name": "《飞向太空港》·报告文学与航天精神",
+    "grade": "G8",
+    "ku_type": "mingzhu_yuedu",
+    "reason": "现代报告文学，无历史地点锚点，按本批口径不挂"
+  },
+  {
+    "ku_id": "TONGBIAN-G8-CHINESE-S-ku-鲁迅-文学文化常识",
+    "ku_name": "鲁迅·文学文化常识",
+    "grade": "G8",
+    "ku_type": "wenhua_changshi",
+    "reason": "现代散文，地点为东京/仙台，江山时序无对应地名，按本批口径不挂"
+  },
+  {
+    "ku_id": "TONGBIAN-G8-CHINESE-X-ku-专题探究-和朱自清一起谈经典",
+    "ku_name": "专题探究：和朱自清一起谈经典",
+    "grade": "G8",
+    "ku_type": "xiezuo",
+    "reason": "现代学术随笔，无历史地点锚点，按本批口径不挂"
+  },
+  {
+    "ku_id": "TONGBIAN-G8-CHINESE-X-ku-写作-借景抒情",
+    "ku_name": "写作·借景抒情",
+    "grade": "G8",
+    "ku_type": "xiezuo",
+    "reason": "通用写作方法条，无单一地点，按口径不挂"
+  },
+  {
+    "ku_id": "TONGBIAN-G8-CHINESE-X-ku-北冥有鱼--整体阅读方法",
+    "ku_name": "《北冥有鱼》·整体阅读方法",
+    "grade": "G8",
+    "ku_type": "wenyan_yuedu",
+    "reason": "无可靠地点/人物锚点（仅为行文提及或跨篇目通用条目）"
+  },
+  {
+    "ku_id": "TONGBIAN-G8-CHINESE-X-ku-可-大约",
+    "ku_name": "可",
+    "grade": "G8",
+    "ku_type": "wenyan_word",
+    "reason": "跨篇目通用文言词条，无单一地点/年份，按口径不挂"
+  },
+  {
+    "ku_id": "TONGBIAN-G8-CHINESE-X-ku-回延安-贺敬之",
+    "ku_name": "回延安·贺敬之",
+    "grade": "G8",
+    "ku_type": "wenhua_changshi",
+    "reason": "现代诗，延安为现代革命圣地，按本批口径不挂"
+  },
+  {
+    "ku_id": "TONGBIAN-G8-CHINESE-X-ku-大自然的语言--举例子",
+    "ku_name": "《大自然的语言》·举例子",
+    "grade": "G8",
+    "ku_type": "shuomingwen_yuedu",
+    "reason": "无可靠地点/人物锚点（仅为行文提及或跨篇目通用条目）"
+  },
+  {
+    "ku_id": "TONGBIAN-G8-CHINESE-X-ku-大自然的语言--作比较",
+    "ku_name": "《大自然的语言》·作比较",
+    "grade": "G8",
+    "ku_type": "shuomingwen_yuedu",
+    "reason": "无可靠地点/人物锚点（仅为行文提及或跨篇目通用条目）"
+  },
+  {
+    "ku_id": "TONGBIAN-G8-CHINESE-X-ku-应有格物致知精神-整体阅读方法",
+    "ku_name": "应有格物致知精神·整体阅读方法",
+    "grade": "G8",
+    "ku_type": "wenyan_yuedu",
+    "reason": "现代演讲，王阳明仅为举例提及，按本批口径不挂"
+  },
+  {
+    "ku_id": "TONGBIAN-G8-CHINESE-X-ku-志-做记号",
+    "ku_name": "志",
+    "grade": "G8",
+    "ku_type": "wenyan_word",
+    "reason": "跨篇目通用文言词条，无单一地点/年份，按口径不挂"
+  },
+  {
+    "ku_id": "TONGBIAN-G8-CHINESE-X-ku-灯笼-吴伯箫",
+    "ku_name": "灯笼·吴伯箫",
+    "grade": "G8",
+    "ku_type": "wenhua_changshi",
+    "reason": "现代散文，无历史地点锚点，按本批口径不挂"
+  },
+  {
+    "ku_id": "TONGBIAN-G8-CHINESE-X-ku-王选-文学文化常识",
+    "ku_name": "王选·文学文化常识",
+    "grade": "G8",
+    "ku_type": "wenhua_changshi",
+    "reason": "现代演讲，无历史地点锚点，按本批口径不挂"
+  },
+  {
+    "ku_id": "TONGBIAN-G8-CHINESE-X-ku-省略句-应有格物致知精神",
+    "ku_name": "省略句（应有格物致知精神）",
+    "grade": "G8",
+    "ku_type": "wenyan_syntax",
+    "reason": "现代演讲，王阳明仅为举例提及，按本批口径不挂"
+  },
+  {
+    "ku_id": "TONGBIAN-G8-CHINESE-X-ku-社戏--成语-行云流水",
+    "ku_name": "行云流水",
+    "grade": "G8",
+    "ku_type": "chengyu",
+    "reason": "现代小说，鲁镇为虚构地名，按本批口径不挂"
+  },
+  {
+    "ku_id": "TONGBIAN-G8-CHINESE-X-ku-社戏--鲁迅-作者简介",
+    "ku_name": "《社戏》·鲁迅·作者简介",
+    "grade": "G8",
+    "ku_type": "wenhua_changshi",
+    "reason": "现代小说，鲁镇为虚构地名，按本批口径不挂"
+  },
+  {
+    "ku_id": "TONGBIAN-G8-CHINESE-X-ku-社戏-鲁迅",
+    "ku_name": "社戏·鲁迅",
+    "grade": "G8",
+    "ku_type": "wenhua_changshi",
+    "reason": "现代小说，鲁镇为虚构地名，按本批口径不挂"
+  },
+  {
+    "ku_id": "TONGBIAN-G8-CHINESE-X-ku-鲁迅-文学常识",
+    "ku_name": "鲁迅·文学常识",
+    "grade": "G8",
+    "ku_type": "wenhua_changshi",
+    "reason": "现代小说，鲁镇为虚构地名，按本批口径不挂"
+  },
+  {
+    "ku_id": "TONGBIAN-G9-CHINESE-S-ku-一径-径直",
+    "ku_name": "一径·径直",
+    "grade": "G9",
+    "ku_type": "wenyan_word",
+    "reason": "《红楼梦》大观园为虚构地点，按本批口径不挂"
+  },
+  {
+    "ku_id": "TONGBIAN-G9-CHINESE-S-ku-余光中-文学文化常识",
+    "ku_name": "余光中·文学文化常识",
+    "grade": "G9",
+    "ku_type": "wenhua_changshi",
+    "reason": "现代诗，无单一历史地点，按本批口径不挂"
+  },
+  {
+    "ku_id": "TONGBIAN-G9-CHINESE-S-ku-创造宣言--东山樵夫比喻",
+    "ku_name": "《创造宣言》·东山樵夫比喻",
+    "grade": "G9",
+    "ku_type": "yilunwen_yuedu",
+    "reason": "现代议论，玄奘仅为举例提及，按本批口径不挂"
+  },
+  {
+    "ku_id": "TONGBIAN-G9-CHINESE-S-ku-创造宣言--举例论证",
+    "ku_name": "《创造宣言》·举例论证",
+    "grade": "G9",
+    "ku_type": "yilunwen_yuedu",
+    "reason": "现代议论，玄奘仅为举例提及，按本批口径不挂"
+  },
+  {
+    "ku_id": "TONGBIAN-G9-CHINESE-S-ku-名著导读--艾青诗选",
+    "ku_name": "名著导读·《艾青诗选》",
+    "grade": "G9",
+    "ku_type": "mingzhu_yuedu",
+    "reason": "现代诗，无单一历史地点，按本批口径不挂"
+  },
+  {
+    "ku_id": "TONGBIAN-G9-CHINESE-S-ku-圆明园-历史常识",
+    "ku_name": "圆明园·历史常识",
+    "grade": "G9",
+    "ku_type": "wenhua_changshi",
+    "reason": "外国书信，圆明园非本批诗文锚点，按本批口径不挂"
+  },
+  {
+    "ku_id": "TONGBIAN-G9-CHINESE-S-ku-开-启发",
+    "ku_name": "开",
+    "grade": "G9",
+    "ku_type": "wenyan_word",
+    "reason": "跨篇目通用文言词条，无单一地点/年份，按口径不挂"
+  },
+  {
+    "ku_id": "TONGBIAN-G9-CHINESE-S-ku-曹文轩-作家常识",
+    "ku_name": "曹文轩·作家常识",
+    "grade": "G9",
+    "ku_type": "wenhua_changshi",
+    "reason": "现代小说，无历史地点锚点，按本批口径不挂"
+  },
+  {
+    "ku_id": "TONGBIAN-G9-CHINESE-S-ku-曹文轩-孤独之旅",
+    "ku_name": "曹文轩（孤独之旅）",
+    "grade": "G9",
+    "ku_type": "wenhua_changshi",
+    "reason": "现代小说，无历史地点锚点，按本批口径不挂"
+  },
+  {
+    "ku_id": "TONGBIAN-G9-CHINESE-S-ku-梁启超-文学常识",
+    "ku_name": "梁启超·文学常识",
+    "grade": "G9",
+    "ku_type": "wenhua_changshi",
+    "reason": "现代演讲，无历史地点锚点，按本批口径不挂"
+  },
+  {
+    "ku_id": "TONGBIAN-G9-CHINESE-S-ku-梁启超-文学文化常识",
+    "ku_name": "梁启超·文学文化常识",
+    "grade": "G9",
+    "ku_type": "wenhua_changshi",
+    "reason": "现代演讲，无历史地点锚点，按本批口径不挂"
+  },
+  {
+    "ku_id": "TONGBIAN-G9-CHINESE-S-ku-艾青-文学文化常识",
+    "ku_name": "艾青·文学文化常识",
+    "grade": "G9",
+    "ku_type": "wenhua_changshi",
+    "reason": "现代诗，无单一历史地点，按本批口径不挂"
+  },
+  {
+    "ku_id": "TONGBIAN-G9-CHINESE-S-ku-艾青诗选--作者与时代背景",
+    "ku_name": "《艾青诗选》·作者与时代背景",
+    "grade": "G9",
+    "ku_type": "mingzhu_yuedu",
+    "reason": "无可靠地点/人物锚点（仅为行文提及或跨篇目通用条目）"
+  },
+  {
+    "ku_id": "TONGBIAN-G9-CHINESE-S-ku-议论文-事实论据",
+    "ku_name": "议论文·事实论据",
+    "grade": "G9",
+    "ku_type": "yilunwen_yuedu",
+    "reason": "现代议论，玄奘仅为举例提及，按本批口径不挂"
+  },
+  {
+    "ku_id": "TONGBIAN-G9-CHINESE-S-ku-陶行知",
+    "ku_name": "陶行知",
+    "grade": "G9",
+    "ku_type": "wenhua_changshi",
+    "reason": "现代议论，玄奘仅为举例提及，按本批口径不挂"
+  },
+  {
+    "ku_id": "TONGBIAN-G9-CHINESE-S-ku-陶行知-人民教育家",
+    "ku_name": "陶行知·人民教育家",
+    "grade": "G9",
+    "ku_type": "wenhua_changshi",
+    "reason": "现代议论，玄奘仅为举例提及，按本批口径不挂"
+  },
+  {
+    "ku_id": "TONGBIAN-G9-CHINESE-S-ku-顾-义项",
+    "ku_name": "顾",
+    "grade": "G9",
+    "ku_type": "wenyan_word",
+    "reason": "跨篇目通用文言词条，无单一地点/年份，按口径不挂"
+  },
+  {
+    "ku_id": "TONGBIAN-G9-CHINESE-S-ku-顾颉刚-历史学家",
+    "ku_name": "顾颉刚·历史学家",
+    "grade": "G9",
+    "ku_type": "wenhua_changshi",
+    "reason": "现代议论，无历史地点锚点，按本批口径不挂"
+  },
+  {
+    "ku_id": "TONGBIAN-G9-CHINESE-S-ku-鲁迅-文学家",
+    "ku_name": "鲁迅·文学家",
+    "grade": "G9",
+    "ku_type": "wenhua_changshi",
+    "reason": "现代议论，无历史地点锚点，按本批口径不挂"
+  },
+  {
+    "ku_id": "TONGBIAN-G9-CHINESE-S-ku-鲁迅-文学常识",
+    "ku_name": "鲁迅·文学常识",
+    "grade": "G9",
+    "ku_type": "wenhua_changshi",
+    "reason": "现代小说，鲁镇为虚构地名，按本批口径不挂"
+  },
+  {
+    "ku_id": "TONGBIAN-G9-CHINESE-S-ku-鲁迅-文学文化常识",
+    "ku_name": "鲁迅·文学文化常识",
+    "grade": "G9",
+    "ku_type": "wenhua_changshi",
+    "reason": "现代小说，鲁镇为虚构地名，按本批口径不挂"
+  },
+  {
+    "ku_id": "TONGBIAN-G9-CHINESE-S-ku-鲁迅-鲁迅",
+    "ku_name": "鲁迅·鲁迅",
+    "grade": "G9",
+    "ku_type": "wenhua_changshi",
+    "reason": "现代小说，鲁镇为虚构地名，按本批口径不挂"
+  },
+  {
+    "ku_id": "TONGBIAN-G9-CHINESE-X-ku-不求甚解-驳论方法",
+    "ku_name": "不求甚解·驳论方法",
+    "grade": "G9",
+    "ku_type": "yilunwen_yuedu",
+    "reason": "无可靠地点/人物锚点（仅为行文提及或跨篇目通用条目）"
+  },
+  {
+    "ku_id": "TONGBIAN-G9-CHINESE-X-ku-何冀平-中国剧作家",
+    "ku_name": "何冀平·中国剧作家",
+    "grade": "G9",
+    "ku_type": "wenhua_changshi",
+    "reason": "现代话剧，无历史地点锚点，按本批口径不挂"
+  },
+  {
+    "ku_id": "TONGBIAN-G9-CHINESE-X-ku-再-两次-送东阳马生序",
+    "ku_name": "再",
+    "grade": "G9",
+    "ku_type": "wenyan_word",
+    "reason": "跨篇目通用文言词条，无单一地点/年份，按口径不挂"
+  },
+  {
+    "ku_id": "TONGBIAN-G9-CHINESE-X-ku-刘绍棠",
+    "ku_name": "刘绍棠",
+    "grade": "G9",
+    "ku_type": "wenhua_changshi",
+    "reason": "现代小说，无历史地点锚点，按本批口径不挂"
+  },
+  {
+    "ku_id": "TONGBIAN-G9-CHINESE-X-ku-刘绍棠-作家简介",
+    "ku_name": "刘绍棠·作家简介",
+    "grade": "G9",
+    "ku_type": "wenhua_changshi",
+    "reason": "现代小说，无历史地点锚点，按本批口径不挂"
+  },
+  {
+    "ku_id": "TONGBIAN-G9-CHINESE-X-ku-刘绍棠-文学文化常识",
+    "ku_name": "刘绍棠·文学文化常识",
+    "grade": "G9",
+    "ku_type": "wenhua_changshi",
+    "reason": "现代小说，无历史地点锚点，按本批口径不挂"
+  },
+  {
+    "ku_id": "TONGBIAN-G9-CHINESE-X-ku-叶圣陶",
+    "ku_name": "叶圣陶",
+    "grade": "G9",
+    "ku_type": "wenhua_changshi",
+    "reason": "现代文艺随笔，无历史地点锚点，按本批口径不挂"
+  },
+  {
+    "ku_id": "TONGBIAN-G9-CHINESE-X-ku-夔-字音字形",
+    "ku_name": "夔·字音字形",
+    "grade": "G9",
+    "ku_type": "zixing_ziyin",
+    "reason": "现代文艺论文，峨眉/夔门/剑阁仅为意境举例，按本批口径不挂"
+  },
+  {
+    "ku_id": "TONGBIAN-G9-CHINESE-X-ku-天下第一楼--人物语言特色",
+    "ku_name": "《天下第一楼》·人物语言特色",
+    "grade": "G9",
+    "ku_type": "jixuwen_yuedu",
+    "reason": "现代话剧，无历史地点锚点，按本批口径不挂"
+  },
+  {
+    "ku_id": "TONGBIAN-G9-CHINESE-X-ku-孰视之-邹忌讽齐王纳谏",
+    "ku_name": "孰视之（邹忌讽齐王纳谏）",
+    "grade": "G9",
+    "ku_type": "mingju",
+    "reason": "跨篇目通用文言词条，无单一地点/年份，按口径不挂"
+  },
+  {
+    "ku_id": "TONGBIAN-G9-CHINESE-X-ku-山水画的意境--写作方法",
+    "ku_name": "《山水画的意境》·写作方法",
+    "grade": "G9",
+    "ku_type": "xiezuo",
+    "reason": "现代文艺论文，峨眉/夔门/剑阁仅为意境举例，按本批口径不挂"
+  },
+  {
+    "ku_id": "TONGBIAN-G9-CHINESE-X-ku-山水画的意境--说明方法",
+    "ku_name": "《山水画的意境》·说明方法",
+    "grade": "G9",
+    "ku_type": "shuomingwen_yuedu",
+    "reason": "现代文艺论文，峨眉/夔门/剑阁仅为意境举例，按本批口径不挂"
+  },
+  {
+    "ku_id": "TONGBIAN-G9-CHINESE-X-ku-峨眉-夔门-剑阁-青城-文学文化常识",
+    "ku_name": "峨眉·夔门·剑阁·青城·文学文化常识",
+    "grade": "G9",
+    "ku_type": "wenhua_changshi",
+    "reason": "现代文艺论文，峨眉/夔门/剑阁仅为意境举例，按本批口径不挂"
+  },
+  {
+    "ku_id": "TONGBIAN-G9-CHINESE-X-ku-沈尹默-诗人书法家-月夜",
+    "ku_name": "沈尹默·诗人书法家（月夜）",
+    "grade": "G9",
+    "ku_type": "wenhua_changshi",
+    "reason": "现代诗，无历史地点锚点，按本批口径不挂"
+  },
+  {
+    "ku_id": "TONGBIAN-G9-CHINESE-X-ku-湘妃竹-典故",
+    "ku_name": "湘妃竹·典故",
+    "grade": "G9",
+    "ku_type": "wenhua_changshi",
+    "reason": "现代话剧，湘妃竹为典故而非行迹地点，按本批口径不挂"
+  },
+  {
+    "ku_id": "TONGBIAN-G9-CHINESE-X-ku-王之蔽甚矣-邹忌讽齐王纳谏",
+    "ku_name": "王之蔽甚矣（邹忌讽齐王纳谏）",
+    "grade": "G9",
+    "ku_type": "mingju",
+    "reason": "跨篇目通用文言词条，无单一地点/年份，按口径不挂"
+  },
+  {
+    "ku_id": "TONGBIAN-G9-CHINESE-X-ku-胸有成竹-山水画的意境",
+    "ku_name": "胸有成竹",
+    "grade": "G9",
+    "ku_type": "chengyu",
+    "reason": "现代文艺论文，峨眉/夔门/剑阁仅为意境举例，按本批口径不挂"
+  },
+  {
+    "ku_id": "TONGBIAN-G9-CHINESE-X-ku-蒲柳人家-刘绍棠",
+    "ku_name": "蒲柳人家·刘绍棠",
+    "grade": "G9",
+    "ku_type": "wenhua_changshi",
+    "reason": "现代小说，无历史地点锚点，按本批口径不挂"
+  },
+  {
+    "ku_id": "TONGBIAN-G9-CHINESE-X-ku-被-同-披--陈涉世家",
+    "ku_name": "被",
+    "grade": "G9",
+    "ku_type": "wenyan_word",
+    "reason": "跨篇目通用文言词条，无单一地点/年份，按口径不挂"
+  },
+  {
+    "ku_id": "TONGBIAN-G9-CHINESE-X-ku-邹忌讽齐王纳谏-倒装句-宾语前置",
+    "ku_name": "《邹忌讽齐王纳谏》倒装句·宾语前置",
+    "grade": "G9",
+    "ku_type": "wenyan_syntax",
+    "reason": "跨篇目通用文言词条，无单一地点/年份，按口径不挂"
+  },
+  {
+    "ku_id": "TONGBIAN-G9-CHINESE-X-ku-邹忌讽齐王纳谏-判断句",
+    "ku_name": "《邹忌讽齐王纳谏》判断句",
+    "grade": "G9",
+    "ku_type": "wenyan_syntax",
+    "reason": "跨篇目通用文言词条，无单一地点/年份，按口径不挂"
+  },
+  {
+    "ku_id": "TONGBIAN-G9-CHINESE-X-ku-邹忌讽齐王纳谏-整体阅读方法",
+    "ku_name": "《邹忌讽齐王纳谏》整体阅读方法",
+    "grade": "G9",
+    "ku_type": "wenyan_yuedu",
+    "reason": "跨篇目通用文言词条，无单一地点/年份，按口径不挂"
+  },
+  {
+    "ku_id": "TONGBIAN-G9-CHINESE-X-ku-邹忌讽齐王纳谏-省略句",
+    "ku_name": "《邹忌讽齐王纳谏》省略句",
+    "grade": "G9",
+    "ku_type": "wenyan_syntax",
+    "reason": "跨篇目通用文言词条，无单一地点/年份，按口径不挂"
+  },
+  {
+    "ku_id": "TONGBIAN-G9-CHINESE-X-ku-邹忌讽齐王纳谏-记叙文阅读方法",
+    "ku_name": "《邹忌讽齐王纳谏》记叙文阅读方法",
+    "grade": "G9",
+    "ku_type": "jixuwen_yuedu",
+    "reason": "跨篇目通用文言词条，无单一地点/年份，按口径不挂"
+  },
+  {
+    "ku_id": "TONGBIAN-G9-CHINESE-X-ku-邹忌讽齐王纳谏-讽谏方法",
+    "ku_name": "邹忌讽齐王纳谏·讽谏方法",
+    "grade": "G9",
+    "ku_type": "wenyan_yuedu",
+    "reason": "跨篇目通用文言词条，无单一地点/年份，按口径不挂"
+  },
+  {
+    "ku_id": "TONGBIAN-G9-CHINESE-X-ku-间-暗中-陈涉世家",
+    "ku_name": "间",
+    "grade": "G9",
+    "ku_type": "wenyan_word",
+    "reason": "跨篇目通用文言词条，无单一地点/年份，按口径不挂"
+  },
+  {
+    "ku_id": "TONGBIAN-G9-CHINESE-X-ku-鲁迅-文学常识",
+    "ku_name": "鲁迅·文学常识",
+    "grade": "G9",
+    "ku_type": "wenhua_changshi",
+    "reason": "现代小说，鲁镇为虚构地名，按本批口径不挂"
+  },
+  {
+    "ku_id": "ZHONGKAO-CHINESE-ZHUANTI-ku-与-和-给予-参与",
+    "ku_name": "与·和、给予、参与",
+    "grade": "G9",
+    "ku_type": "wenyan_word",
+    "reason": "跨篇目通用文言词条，无单一地点/年份，按口径不挂"
+  },
+  {
+    "ku_id": "ZHONGKAO-CHINESE-ZHUANTI-ku-且-而且-尚且-将要",
+    "ku_name": "且·而且、尚且、将要",
+    "grade": "G9",
+    "ku_type": "wenyan_word",
+    "reason": "跨篇目通用文言词条，无单一地点/年份，按口径不挂"
+  },
+  {
+    "ku_id": "ZHONGKAO-CHINESE-ZHUANTI-ku-为-介词与动词",
+    "ku_name": "为·介词与动词",
+    "grade": "G9",
+    "ku_type": "wenyan_word",
+    "reason": "跨篇目通用文言词条，无单一地点/年份，按口径不挂"
+  },
+  {
+    "ku_id": "ZHONGKAO-CHINESE-ZHUANTI-ku-乃-于是-才-竟然",
+    "ku_name": "乃·于是、才、竟然",
+    "grade": "G9",
+    "ku_type": "wenyan_word",
+    "reason": "跨篇目通用文言词条，无单一地点/年份，按口径不挂"
+  },
+  {
+    "ku_id": "ZHONGKAO-CHINESE-ZHUANTI-ku-之-代词-代人-代事-代物",
+    "ku_name": "之·代词：代人、代事、代物",
+    "grade": "G9",
+    "ku_type": "wenyan_word",
+    "reason": "跨篇目通用文言词条，无单一地点/年份，按口径不挂"
+  },
+  {
+    "ku_id": "ZHONGKAO-CHINESE-ZHUANTI-ku-之-结构助词-的与取消独立性",
+    "ku_name": "之·结构助词：的与取消独立性",
+    "grade": "G9",
+    "ku_type": "wenyan_word",
+    "reason": "跨篇目通用文言词条，无单一地点/年份，按口径不挂"
+  },
+  {
+    "ku_id": "ZHONGKAO-CHINESE-ZHUANTI-ku-乎-语气词与介词",
+    "ku_name": "乎·语气词与介词",
+    "grade": "G9",
+    "ku_type": "wenyan_word",
+    "reason": "跨篇目通用文言词条，无单一地点/年份，按口径不挂"
+  },
+  {
+    "ku_id": "ZHONGKAO-CHINESE-ZHUANTI-ku-也-判断语气与句中停顿",
+    "ku_name": "也·判断语气与句中停顿",
+    "grade": "G9",
+    "ku_type": "wenyan_word",
+    "reason": "跨篇目通用文言词条，无单一地点/年份，按口径不挂"
+  },
+  {
+    "ku_id": "ZHONGKAO-CHINESE-ZHUANTI-ku-于-介词-在-到-向-比",
+    "ku_name": "于·介词：在、到、向、比",
+    "grade": "G9",
+    "ku_type": "wenyan_word",
+    "reason": "跨篇目通用文言词条，无单一地点/年份，按口径不挂"
+  },
+  {
+    "ku_id": "ZHONGKAO-CHINESE-ZHUANTI-ku-以-介词-用-凭借-因为",
+    "ku_name": "以·介词：用、凭借、因为",
+    "grade": "G9",
+    "ku_type": "wenyan_word",
+    "reason": "跨篇目通用文言词条，无单一地点/年份，按口径不挂"
+  },
+  {
+    "ku_id": "ZHONGKAO-CHINESE-ZHUANTI-ku-以-连词-来-以致",
+    "ku_name": "以·连词：来、以致",
+    "grade": "G9",
+    "ku_type": "wenyan_word",
+    "reason": "跨篇目通用文言词条，无单一地点/年份，按口径不挂"
+  },
+  {
+    "ku_id": "ZHONGKAO-CHINESE-ZHUANTI-ku-何-什么-为什么-多么",
+    "ku_name": "何·什么、为什么、多么",
+    "grade": "G9",
+    "ku_type": "wenyan_word",
+    "reason": "跨篇目通用文言词条，无单一地点/年份，按口径不挂"
+  },
+  {
+    "ku_id": "ZHONGKAO-CHINESE-ZHUANTI-ku-其-代词-他的-那",
+    "ku_name": "其·代词：他的、那",
+    "grade": "G9",
+    "ku_type": "wenyan_word",
+    "reason": "跨篇目通用文言词条，无单一地点/年份，按口径不挂"
+  },
+  {
+    "ku_id": "ZHONGKAO-CHINESE-ZHUANTI-ku-其-语气副词-大概-难道",
+    "ku_name": "其·语气副词：大概、难道",
+    "grade": "G9",
+    "ku_type": "wenyan_word",
+    "reason": "跨篇目通用文言词条，无单一地点/年份，按口径不挂"
+  },
+  {
+    "ku_id": "ZHONGKAO-CHINESE-ZHUANTI-ku-则-就-却-如果",
+    "ku_name": "则·就、却、如果",
+    "grade": "G9",
+    "ku_type": "wenyan_word",
+    "reason": "跨篇目通用文言词条，无单一地点/年份，按口径不挂"
+  },
+  {
+    "ku_id": "ZHONGKAO-CHINESE-ZHUANTI-ku-名著整本书--西游记",
+    "ku_name": "名著整本书：《西游记》",
+    "grade": "G9",
+    "ku_type": "mingzhu_yuedu",
+    "reason": "《西游记》情节/字词条，需区分历史玄奘与小说唐僧，按口径不挂"
+  },
+  {
+    "ku_id": "ZHONGKAO-CHINESE-ZHUANTI-ku-因-于是-凭借-因为",
+    "ku_name": "因·于是、凭借、因为",
+    "grade": "G9",
+    "ku_type": "wenyan_word",
+    "reason": "跨篇目通用文言词条，无单一地点/年份，按口径不挂"
+  },
+  {
+    "ku_id": "ZHONGKAO-CHINESE-ZHUANTI-ku-文言内容概括-事件经过",
+    "ku_name": "文言内容概括：事件经过",
+    "grade": "G9",
+    "ku_type": "wenyan_yuedu",
+    "reason": "通用文言应试方法条，无单一地点/篇目，按口径不挂"
+  },
+  {
+    "ku_id": "ZHONGKAO-CHINESE-ZHUANTI-ku-文言内容概括-人物形象",
+    "ku_name": "文言内容概括：人物形象",
+    "grade": "G9",
+    "ku_type": "wenyan_yuedu",
+    "reason": "通用文言应试方法条，无单一地点/篇目，按口径不挂"
+  },
+  {
+    "ku_id": "ZHONGKAO-CHINESE-ZHUANTI-ku-文言内容概括-原因与结果",
+    "ku_name": "文言内容概括：原因与结果",
+    "grade": "G9",
+    "ku_type": "wenyan_yuedu",
+    "reason": "通用文言应试方法条，无单一地点/篇目，按口径不挂"
+  },
+  {
+    "ku_id": "ZHONGKAO-CHINESE-ZHUANTI-ku-文言内容概括-观点与理由",
+    "ku_name": "文言内容概括：观点与理由",
+    "grade": "G9",
+    "ku_type": "wenyan_yuedu",
+    "reason": "通用文言应试方法条，无单一地点/篇目，按口径不挂"
+  },
+  {
+    "ku_id": "ZHONGKAO-CHINESE-ZHUANTI-ku-文言翻译-倒装句的语序调整",
+    "ku_name": "文言翻译：倒装句的语序调整",
+    "grade": "G9",
+    "ku_type": "wenyan_yuedu",
+    "reason": "通用文言应试方法条，无单一地点/篇目，按口径不挂"
+  },
+  {
+    "ku_id": "ZHONGKAO-CHINESE-ZHUANTI-ku-文言翻译-判断句与被动句",
+    "ku_name": "文言翻译：判断句与被动句",
+    "grade": "G9",
+    "ku_type": "wenyan_yuedu",
+    "reason": "通用文言应试方法条，无单一地点/篇目，按口径不挂"
+  },
+  {
+    "ku_id": "ZHONGKAO-CHINESE-ZHUANTI-ku-文言翻译-留删补换调贯六字法",
+    "ku_name": "文言翻译：留删补换调贯六字法",
+    "grade": "G9",
+    "ku_type": "wenyan_yuedu",
+    "reason": "通用文言应试方法条，无单一地点/篇目，按口径不挂"
+  },
+  {
+    "ku_id": "ZHONGKAO-CHINESE-ZHUANTI-ku-文言翻译-直译为主-意译为辅",
+    "ku_name": "文言翻译：直译为主、意译为辅",
+    "grade": "G9",
+    "ku_type": "wenyan_yuedu",
+    "reason": "通用文言应试方法条，无单一地点/篇目，按口径不挂"
+  },
+  {
+    "ku_id": "ZHONGKAO-CHINESE-ZHUANTI-ku-文言翻译-省略句的成分补足",
+    "ku_name": "文言翻译：省略句的成分补足",
+    "grade": "G9",
+    "ku_type": "wenyan_yuedu",
+    "reason": "通用文言应试方法条，无单一地点/篇目，按口径不挂"
+  },
+  {
+    "ku_id": "ZHONGKAO-CHINESE-ZHUANTI-ku-焉-兼词与语气词",
+    "ku_name": "焉·兼词与语气词",
+    "grade": "G9",
+    "ku_type": "wenyan_word",
+    "reason": "跨篇目通用文言词条，无单一地点/年份，按口径不挂"
+  },
+  {
+    "ku_id": "ZHONGKAO-CHINESE-ZHUANTI-ku-者-代词与判断标志",
+    "ku_name": "者·代词与判断标志",
+    "grade": "G9",
+    "ku_type": "wenyan_word",
+    "reason": "跨篇目通用文言词条，无单一地点/年份，按口径不挂"
+  },
+  {
+    "ku_id": "ZHONGKAO-CHINESE-ZHUANTI-ku-而-承接与并列",
+    "ku_name": "而·承接与并列",
+    "grade": "G9",
+    "ku_type": "wenyan_word",
+    "reason": "跨篇目通用文言词条，无单一地点/年份，按口径不挂"
+  },
+  {
+    "ku_id": "ZHONGKAO-CHINESE-ZHUANTI-ku-虽-虽然与即使",
+    "ku_name": "虽·虽然与即使",
+    "grade": "G9",
+    "ku_type": "wenyan_word",
+    "reason": "跨篇目通用文言词条，无单一地点/年份，按口径不挂"
+  },
+  {
+    "ku_id": "ZHONGKAO-CHINESE-ZHUANTI-ku-遂-于是与终于",
+    "ku_name": "遂·于是与终于",
+    "grade": "G9",
+    "ku_type": "wenyan_word",
+    "reason": "跨篇目通用文言词条，无单一地点/年份，按口径不挂"
+  },
+  {
+    "ku_id": "TONGBIAN-G10-CHINESE-BXS-ku-一劳永逸",
+    "ku_name": "一劳永逸",
+    "grade": "G10",
+    "ku_type": "chengyu",
+    "reason": "现代议论，燕然山仅为成语出处，按本批口径不挂"
+  },
+  {
+    "ku_id": "TONGBIAN-G10-CHINESE-BXS-ku-不知所措-不知道怎么办才好",
+    "ku_name": "不知所措·不知道怎么办才好",
+    "grade": "G10",
+    "ku_type": "chengyu",
+    "reason": "现代小说，无历史地点锚点，按本批口径不挂"
+  },
+  {
+    "ku_id": "TONGBIAN-G10-CHINESE-BXS-ku-写景抒情散文阅读法",
+    "ku_name": "写景抒情散文阅读法",
+    "grade": "G10",
+    "ku_type": "sanwen_yuedu",
+    "reason": "现代散文（1934），北平为现代都市背景，按本批口径不挂"
+  },
+  {
+    "ku_id": "TONGBIAN-G10-CHINESE-BXS-ku-刻骨铭心",
+    "ku_name": "刻骨铭心",
+    "grade": "G10",
+    "ku_type": "chengyu",
+    "reason": "现代通讯，无历史地点锚点，按本批口径不挂"
+  },
+  {
+    "ku_id": "TONGBIAN-G10-CHINESE-BXS-ku-匝-周-圈-短歌行",
+    "ku_name": "匝",
+    "grade": "G10",
+    "ku_type": "wenyan_word",
+    "reason": "跨篇目通用文言词条，无单一地点/年份，按口径不挂"
+  },
+  {
+    "ku_id": "TONGBIAN-G10-CHINESE-BXS-ku-小说主题归纳法",
+    "ku_name": "小说主题归纳法",
+    "grade": "G10",
+    "ku_type": "xiaoshuo_yuedu",
+    "reason": "现代小说，无历史地点锚点，按本批口径不挂"
+  },
+  {
+    "ku_id": "TONGBIAN-G10-CHINESE-BXS-ku-小说人物形象塑造法",
+    "ku_name": "小说人物形象塑造法",
+    "grade": "G10",
+    "ku_type": "xiezuo",
+    "reason": "现代小说，无历史地点锚点，按本批口径不挂"
+  },
+  {
+    "ku_id": "TONGBIAN-G10-CHINESE-BXS-ku-小说人物心理分析法",
+    "ku_name": "小说人物心理分析法",
+    "grade": "G10",
+    "ku_type": "xiaoshuo_yuedu",
+    "reason": "现代小说，无历史地点锚点，按本批口径不挂"
+  },
+  {
+    "ku_id": "TONGBIAN-G10-CHINESE-BXS-ku-小说对比手法赏析法",
+    "ku_name": "小说对比手法赏析法",
+    "grade": "G10",
+    "ku_type": "xiaoshuo_yuedu",
+    "reason": "现代小说，无历史地点锚点，按本批口径不挂"
+  },
+  {
+    "ku_id": "TONGBIAN-G10-CHINESE-BXS-ku-小说细节描写赏析法",
+    "ku_name": "小说细节描写赏析法",
+    "grade": "G10",
+    "ku_type": "xiaoshuo_yuedu",
+    "reason": "现代小说，无历史地点锚点，按本批口径不挂"
+  },
+  {
+    "ku_id": "TONGBIAN-G10-CHINESE-BXS-ku-平平仄仄",
+    "ku_name": "平平仄仄",
+    "grade": "G10",
+    "ku_type": "wenhua_changshi",
+    "reason": "现代散文（1934），北平为现代都市背景，按本批口径不挂"
+  },
+  {
+    "ku_id": "TONGBIAN-G10-CHINESE-BXS-ku-拿来主义-文化常识",
+    "ku_name": "拿来主义·文化常识",
+    "grade": "G10",
+    "ku_type": "wenhua_changshi",
+    "reason": "现代议论，无历史地点锚点，按本批口径不挂"
+  },
+  {
+    "ku_id": "TONGBIAN-G10-CHINESE-BXS-ku-掇-拾取-短歌行",
+    "ku_name": "掇",
+    "grade": "G10",
+    "ku_type": "wenyan_word",
+    "reason": "跨篇目通用文言词条，无单一地点/年份，按口径不挂"
+  },
+  {
+    "ku_id": "TONGBIAN-G10-CHINESE-BXS-ku-文言文整体阅读法-主客问答体",
+    "ku_name": "文言文整体阅读法（主客问答体）",
+    "grade": "G10",
+    "ku_type": "wenyan_yuedu",
+    "reason": "通用文言应试方法条，无单一地点/篇目，按口径不挂"
+  },
+  {
+    "ku_id": "TONGBIAN-G10-CHINESE-BXS-ku-文言文论证方法分析法",
+    "ku_name": "文言文论证方法分析法",
+    "grade": "G10",
+    "ku_type": "wenyan_yuedu",
+    "reason": "通用文言应试方法条，无单一地点/篇目，按口径不挂"
+  },
+  {
+    "ku_id": "TONGBIAN-G10-CHINESE-BXS-ku-文言游记阅读法",
+    "ku_name": "文言游记阅读法",
+    "grade": "G10",
+    "ku_type": "wenyan_yuedu",
+    "reason": "通用文言应试方法条，无单一地点/篇目，按口径不挂"
+  },
+  {
+    "ku_id": "TONGBIAN-G10-CHINESE-BXS-ku-潭柘寺",
+    "ku_name": "潭柘寺",
+    "grade": "G10",
+    "ku_type": "wenhua_changshi",
+    "reason": "现代散文（1934），北平为现代都市背景，按本批口径不挂"
+  },
+  {
+    "ku_id": "TONGBIAN-G10-CHINESE-BXS-ku-西山",
+    "ku_name": "西山",
+    "grade": "G10",
+    "ku_type": "wenhua_changshi",
+    "reason": "现代散文（1934），北平为现代都市背景，按本批口径不挂"
+  },
+  {
+    "ku_id": "TONGBIAN-G10-CHINESE-BXS-ku-豁然开朗",
+    "ku_name": "豁然开朗",
+    "grade": "G10",
+    "ku_type": "chengyu",
+    "reason": "现代散文，无历史地点锚点，按本批口径不挂"
+  },
+  {
+    "ku_id": "TONGBIAN-G10-CHINESE-BXS-ku-钓鱼台",
+    "ku_name": "钓鱼台",
+    "grade": "G10",
+    "ku_type": "wenhua_changshi",
+    "reason": "现代散文（1934），北平为现代都市背景，按本批口径不挂"
+  },
+  {
+    "ku_id": "TONGBIAN-G10-CHINESE-BXS-ku-陶然亭",
+    "ku_name": "陶然亭",
+    "grade": "G10",
+    "ku_type": "wenhua_changshi",
+    "reason": "现代散文（1934），北平为现代都市背景，按本批口径不挂"
+  },
+  {
+    "ku_id": "TONGBIAN-G10-CHINESE-BXX-ku-亢旱",
+    "ku_name": "亢旱",
+    "grade": "G10",
+    "ku_type": "wenyan_word",
+    "reason": "无可靠地点/人物锚点（仅为行文提及或跨篇目通用条目）"
+  },
+  {
+    "ku_id": "TONGBIAN-G10-CHINESE-BXX-ku-以讹传讹",
+    "ku_name": "以讹传讹",
+    "grade": "G10",
+    "ku_type": "chengyu",
+    "reason": "成语释义条，无对应诗文地点，按口径不挂"
+  },
+  {
+    "ku_id": "TONGBIAN-G10-CHINESE-BXX-ku-内-通假字-鸿门宴",
+    "ku_name": "内",
+    "grade": "G10",
+    "ku_type": "wenyan_word",
+    "reason": "跨篇目通用文言词条，无单一地点/年份，按口径不挂"
+  },
+  {
+    "ku_id": "TONGBIAN-G10-CHINESE-BXX-ku-因-趁机义-鸿门宴",
+    "ku_name": "因",
+    "grade": "G10",
+    "ku_type": "wenyan_word",
+    "reason": "跨篇目通用文言词条，无单一地点/年份，按口径不挂"
+  },
+  {
+    "ku_id": "TONGBIAN-G10-CHINESE-BXX-ku-固-使动-谏太宗十思疏",
+    "ku_name": "固",
+    "grade": "G10",
+    "ku_type": "wenyan_word",
+    "reason": "跨篇目通用文言词条，无单一地点/年份，按口径不挂"
+  },
+  {
+    "ku_id": "TONGBIAN-G10-CHINESE-BXX-ku-天坛皇穹宇",
+    "ku_name": "天坛皇穹宇",
+    "grade": "G10",
+    "ku_type": "wenyan_word",
+    "reason": "无可靠地点/人物锚点（仅为行文提及或跨篇目通用条目）"
+  },
+  {
+    "ku_id": "TONGBIAN-G10-CHINESE-BXX-ku-小说情节脉络分析法",
+    "ku_name": "小说情节脉络分析法",
+    "grade": "G10",
+    "ku_type": "xiaoshuo_yuedu",
+    "reason": "沧州不在江山时序可解析地名库，剔除"
+  },
+  {
+    "ku_id": "TONGBIAN-G10-CHINESE-BXX-ku-幸-临幸义-阿房宫赋",
+    "ku_name": "幸",
+    "grade": "G10",
+    "ku_type": "wenyan_word",
+    "reason": "跨篇目通用文言词条，无单一地点/年份，按口径不挂"
+  },
+  {
+    "ku_id": "TONGBIAN-G10-CHINESE-BXX-ku-恁地-如此义-林教头",
+    "ku_name": "恁地·如此义（林教头）",
+    "grade": "G10",
+    "ku_type": "wenyan_word",
+    "reason": "沧州不在江山时序可解析地名库，剔除"
+  },
+  {
+    "ku_id": "TONGBIAN-G10-CHINESE-BXX-ku-愁心-意象-说-木叶",
+    "ku_name": "愁心·意象（说“木叶”）",
+    "grade": "G10",
+    "ku_type": "wenyan_word",
+    "reason": "现代文艺随笔，灞桥仅为意象举例，按本批口径不挂"
+  },
+  {
+    "ku_id": "TONGBIAN-G10-CHINESE-BXX-ku-意-心意义-与妻书",
+    "ku_name": "意",
+    "grade": "G10",
+    "ku_type": "wenyan_word",
+    "reason": "跨篇目通用文言词条，无单一地点/年份，按口径不挂"
+  },
+  {
+    "ku_id": "TONGBIAN-G10-CHINESE-BXX-ku-抑-难道-齐桓晋文之事",
+    "ku_name": "抑",
+    "grade": "G10",
+    "ku_type": "wenyan_word",
+    "reason": "跨篇目通用文言词条，无单一地点/年份，按口径不挂"
+  },
+  {
+    "ku_id": "TONGBIAN-G10-CHINESE-BXX-ku-文化常识--左传-与-史记",
+    "ku_name": "文化常识（《左传》与《史记》）",
+    "grade": "G10",
+    "ku_type": "wenhua_changshi",
+    "reason": "跨篇目通用文言词条，无单一地点/年份，按口径不挂"
+  },
+  {
+    "ku_id": "TONGBIAN-G10-CHINESE-BXX-ku-文言赋体阅读法",
+    "ku_name": "文言赋体阅读法",
+    "grade": "G10",
+    "ku_type": "wenyan_yuedu",
+    "reason": "通用文言应试方法条，无单一地点/篇目，按口径不挂"
+  },
+  {
+    "ku_id": "TONGBIAN-G10-CHINESE-BXX-ku-杨柳-离别意象-说-木叶-拓展",
+    "ku_name": "杨柳·离别意象（说“木叶”拓展）",
+    "grade": "G10",
+    "ku_type": "shici_jianshang",
+    "reason": "现代文艺随笔，灞桥仅为意象举例，按本批口径不挂"
+  },
+  {
+    "ku_id": "TONGBIAN-G10-CHINESE-BXX-ku-求之不得",
+    "ku_name": "求之不得",
+    "grade": "G10",
+    "ku_type": "chengyu",
+    "reason": "成语释义条，无对应诗文地点，按口径不挂"
+  },
+  {
+    "ku_id": "TONGBIAN-G10-CHINESE-BXX-ku-诗歌意象暗示性分析法",
+    "ku_name": "诗歌意象暗示性分析法",
+    "grade": "G10",
+    "ku_type": "shici_jianshang",
+    "reason": "现代文艺随笔，灞桥仅为意象举例，按本批口径不挂"
+  },
+  {
+    "ku_id": "TONGBIAN-G10-CHINESE-BXX-ku-道-规律-庖丁解牛",
+    "ku_name": "道",
+    "grade": "G10",
+    "ku_type": "wenyan_word",
+    "reason": "跨篇目通用文言词条，无单一地点/年份，按口径不挂"
+  },
+  {
+    "ku_id": "TONGBIAN-G10-CHINESE-BXX-ku-阡陌交通",
+    "ku_name": "阡陌交通",
+    "grade": "G10",
+    "ku_type": "chengyu",
+    "reason": "现代议论，桃花源仅为成语用例，按本批口径不挂"
+  },
+  {
+    "ku_id": "TONGBIAN-G11-CHINESE-SBXM-ku-北海-今贝加尔湖",
+    "ku_name": "北海·今贝加尔湖",
+    "grade": "G11",
+    "ku_type": "wenhua_changshi",
+    "reason": "北海（贝加尔湖）不在江山时序可解析地名库，剔除"
+  },
+  {
+    "ku_id": "TONGBIAN-G11-CHINESE-SBXM-ku-情随事迁",
+    "ku_name": "情随事迁",
+    "grade": "G11",
+    "ku_type": "chengyu",
+    "reason": "现代散文，兰亭仅为成语用例，按本批口径不挂"
+  },
+  {
+    "ku_id": "TONGBIAN-G11-CHINESE-SBXM-ku-诗歌宏大生命主题解读法",
+    "ku_name": "诗歌宏大生命主题解读法",
+    "grade": "G11",
+    "ku_type": "shici_jianshang",
+    "reason": "无可靠地点/人物锚点（仅为行文提及或跨篇目通用条目）"
+  },
+  {
+    "ku_id": "TONGBIAN-G11-CHINESE-SBXS-ku-为之于未有-治之于未乱义-老子",
+    "ku_name": "为之于未有，治之于未乱",
+    "grade": "G11",
+    "ku_type": "mingpian",
+    "reason": "《老子》系年早于江山时序最早快照（前403），剔除"
+  },
+  {
+    "ku_id": "TONGBIAN-G11-CHINESE-SBXS-ku-先秦诸子论说文的譬喻与对比手法",
+    "ku_name": "先秦诸子论说文的譬喻与对比手法",
+    "grade": "G11",
+    "ku_type": "wenyan_yuedu",
+    "reason": "《老子》系年早于江山时序最早快照（前403），剔除"
+  },
+  {
+    "ku_id": "TONGBIAN-G11-CHINESE-SBXS-ku-坚如磐石",
+    "ku_name": "坚如磐石",
+    "grade": "G11",
+    "ku_type": "chengyu",
+    "reason": "现代议论，泰山仅为比喻，按本批口径不挂"
+  },
+  {
+    "ku_id": "TONGBIAN-G11-CHINESE-SBXS-ku-坚忍不拔",
+    "ku_name": "坚忍不拔",
+    "grade": "G11",
+    "ku_type": "chengyu",
+    "reason": "成语释义条，无对应诗文地点，按口径不挂"
+  },
+  {
+    "ku_id": "TONGBIAN-G11-CHINESE-SBXS-ku-欲不欲-学不学-复众人之所过义-老子",
+    "ku_name": "欲不欲·学不学·复众人之所过义（老子）",
+    "grade": "G11",
+    "ku_type": "wenyan_word",
+    "reason": "《老子》系年早于江山时序最早快照（前403），剔除"
+  },
+  {
+    "ku_id": "TONGBIAN-G11-CHINESE-SBXS-ku-物以希为贵",
+    "ku_name": "物以希为贵",
+    "grade": "G11",
+    "ku_type": "chengyu",
+    "reason": "现代散文，地点为东京/仙台，江山时序无对应地名，按本批口径不挂"
+  },
+  {
+    "ku_id": "GAOKAO-CHINESE-ZHUANTI-ku-与-结交-赞同与和",
+    "ku_name": "与·结交、赞同与和",
+    "grade": "G12",
+    "ku_type": "wenyan_word",
+    "reason": "跨篇目通用文言词条，无单一地点/年份，按口径不挂"
+  },
+  {
+    "ku_id": "GAOKAO-CHINESE-ZHUANTI-ku-且-况且-尚且与将要",
+    "ku_name": "且·况且、尚且与将要",
+    "grade": "G12",
+    "ku_type": "wenyan_word",
+    "reason": "跨篇目通用文言词条，无单一地点/年份，按口径不挂"
+  },
+  {
+    "ku_id": "GAOKAO-CHINESE-ZHUANTI-ku-为-被动-治理与判断",
+    "ku_name": "为·被动、治理与判断",
+    "grade": "G12",
+    "ku_type": "wenyan_word",
+    "reason": "跨篇目通用文言词条，无单一地点/年份，按口径不挂"
+  },
+  {
+    "ku_id": "GAOKAO-CHINESE-ZHUANTI-ku-乃-才-于是与竟然",
+    "ku_name": "乃·才、于是与竟然",
+    "grade": "G12",
+    "ku_type": "wenyan_word",
+    "reason": "跨篇目通用文言词条，无单一地点/年份，按口径不挂"
+  },
+  {
+    "ku_id": "GAOKAO-CHINESE-ZHUANTI-ku-之-取消独立性与宾语前置",
+    "ku_name": "之·取消独立性与宾语前置",
+    "grade": "G12",
+    "ku_type": "wenyan_word",
+    "reason": "跨篇目通用文言词条，无单一地点/年份，按口径不挂"
+  },
+  {
+    "ku_id": "GAOKAO-CHINESE-ZHUANTI-ku-乎-介词-词尾与语气",
+    "ku_name": "乎·介词、词尾与语气",
+    "grade": "G12",
+    "ku_type": "wenyan_word",
+    "reason": "跨篇目通用文言词条，无单一地点/年份，按口径不挂"
+  },
+  {
+    "ku_id": "GAOKAO-CHINESE-ZHUANTI-ku-也-判断与肯定",
+    "ku_name": "也·判断与肯定",
+    "grade": "G12",
+    "ku_type": "wenyan_word",
+    "reason": "跨篇目通用文言词条，无单一地点/年份，按口径不挂"
+  },
+  {
+    "ku_id": "GAOKAO-CHINESE-ZHUANTI-ku-乡土中国--无为政治",
+    "ku_name": "《乡土中国》·无为政治",
+    "grade": "G12",
+    "ku_type": "mingzhu_yuedu",
+    "reason": "现代学术著作，无历史地点锚点，按本批口径不挂"
+  },
+  {
+    "ku_id": "GAOKAO-CHINESE-ZHUANTI-ku-于-处所-比较与对象",
+    "ku_name": "于·处所、比较与对象",
+    "grade": "G12",
+    "ku_type": "wenyan_word",
+    "reason": "跨篇目通用文言词条，无单一地点/年份，按口径不挂"
+  },
+  {
+    "ku_id": "GAOKAO-CHINESE-ZHUANTI-ku-以-工具-凭借与修饰",
+    "ku_name": "以·工具、凭借与修饰",
+    "grade": "G12",
+    "ku_type": "wenyan_word",
+    "reason": "跨篇目通用文言词条，无单一地点/年份，按口径不挂"
+  },
+  {
+    "ku_id": "GAOKAO-CHINESE-ZHUANTI-ku-何-什么-为什么与多么",
+    "ku_name": "何·什么、为什么与多么",
+    "grade": "G12",
+    "ku_type": "wenyan_word",
+    "reason": "跨篇目通用文言词条，无单一地点/年份，按口径不挂"
+  },
+  {
+    "ku_id": "GAOKAO-CHINESE-ZHUANTI-ku-其-推测-反问与祈使",
+    "ku_name": "其·推测、反问与祈使",
+    "grade": "G12",
+    "ku_type": "wenyan_word",
+    "reason": "跨篇目通用文言词条，无单一地点/年份，按口径不挂"
+  },
+  {
+    "ku_id": "GAOKAO-CHINESE-ZHUANTI-ku-则-就-却与那么",
+    "ku_name": "则·就、却与那么",
+    "grade": "G12",
+    "ku_type": "wenyan_word",
+    "reason": "跨篇目通用文言词条，无单一地点/年份，按口径不挂"
+  },
+  {
+    "ku_id": "GAOKAO-CHINESE-ZHUANTI-ku-因-凭借-于是与通过",
+    "ku_name": "因·凭借、于是与通过",
+    "grade": "G12",
+    "ku_type": "wenyan_word",
+    "reason": "跨篇目通用文言词条，无单一地点/年份，按口径不挂"
+  },
+  {
+    "ku_id": "GAOKAO-CHINESE-ZHUANTI-ku-文言断句-依对称与对话",
+    "ku_name": "文言断句：依对称与对话",
+    "grade": "G12",
+    "ku_type": "wenyan_yuedu",
+    "reason": "通用文言应试方法条，无单一地点/篇目，按口径不挂"
+  },
+  {
+    "ku_id": "GAOKAO-CHINESE-ZHUANTI-ku-文言断句-依语法与虚词",
+    "ku_name": "文言断句：依语法与虚词",
+    "grade": "G12",
+    "ku_type": "wenyan_yuedu",
+    "reason": "通用文言应试方法条，无单一地点/篇目，按口径不挂"
+  },
+  {
+    "ku_id": "GAOKAO-CHINESE-ZHUANTI-ku-文言断句-综合检查",
+    "ku_name": "文言断句：综合检查",
+    "grade": "G12",
+    "ku_type": "wenyan_yuedu",
+    "reason": "通用文言应试方法条，无单一地点/篇目，按口径不挂"
+  },
+  {
+    "ku_id": "GAOKAO-CHINESE-ZHUANTI-ku-文言翻译-倒装与省略",
+    "ku_name": "文言翻译：倒装与省略",
+    "grade": "G12",
+    "ku_type": "wenyan_yuedu",
+    "reason": "通用文言应试方法条，无单一地点/篇目，按口径不挂"
+  },
+  {
+    "ku_id": "GAOKAO-CHINESE-ZHUANTI-ku-文言翻译-关键实词与活用",
+    "ku_name": "文言翻译：关键实词与活用",
+    "grade": "G12",
+    "ku_type": "wenyan_yuedu",
+    "reason": "通用文言应试方法条，无单一地点/篇目，按口径不挂"
+  },
+  {
+    "ku_id": "GAOKAO-CHINESE-ZHUANTI-ku-文言翻译-语段综合训练",
+    "ku_name": "文言翻译：语段综合训练",
+    "grade": "G12",
+    "ku_type": "wenyan_yuedu",
+    "reason": "通用文言应试方法条，无单一地点/篇目，按口径不挂"
+  },
+  {
+    "ku_id": "GAOKAO-CHINESE-ZHUANTI-ku-焉-兼词与词尾",
+    "ku_name": "焉·兼词与词尾",
+    "grade": "G12",
+    "ku_type": "wenyan_word",
+    "reason": "跨篇目通用文言词条，无单一地点/年份，按口径不挂"
+  },
+  {
+    "ku_id": "GAOKAO-CHINESE-ZHUANTI-ku-红楼梦--大观园的空间叙事",
+    "ku_name": "《红楼梦》·大观园的空间叙事",
+    "grade": "G12",
+    "ku_type": "mingzhu_yuedu",
+    "reason": "大观园为文学虚构地点，按本批口径不挂"
+  },
+  {
+    "ku_id": "GAOKAO-CHINESE-ZHUANTI-ku-者-判断标志与定语后置",
+    "ku_name": "者·判断标志与定语后置",
+    "grade": "G12",
+    "ku_type": "wenyan_word",
+    "reason": "跨篇目通用文言词条，无单一地点/年份，按口径不挂"
+  },
+  {
+    "ku_id": "GAOKAO-CHINESE-ZHUANTI-ku-虽-即使与虽然如此",
+    "ku_name": "虽·即使与虽然如此",
+    "grade": "G12",
+    "ku_type": "wenyan_word",
+    "reason": "跨篇目通用文言词条，无单一地点/年份，按口径不挂"
+  },
+  {
+    "ku_id": "GAOKAO-CHINESE-ZHUANTI-ku-遂-承接与最终结果",
+    "ku_name": "遂·承接与最终结果",
+    "grade": "G12",
+    "ku_type": "wenyan_word",
+    "reason": "跨篇目通用文言词条，无单一地点/年份，按口径不挂"
+  },
+  {
+    "ku_id": "GAOKAO-CHINESE-ZHUANTI-ku-高考文言概括-事件经过",
+    "ku_name": "高考文言概括：事件经过",
+    "grade": "G12",
+    "ku_type": "wenyan_yuedu",
+    "reason": "通用文言应试方法条，无单一地点/篇目，按口径不挂"
+  },
+  {
+    "ku_id": "GAOKAO-CHINESE-ZHUANTI-ku-高考文言概括-原因与结果",
+    "ku_name": "高考文言概括：原因与结果",
+    "grade": "G12",
+    "ku_type": "wenyan_yuedu",
+    "reason": "通用文言应试方法条，无单一地点/篇目，按口径不挂"
+  },
+  {
+    "ku_id": "GAOKAO-CHINESE-ZHUANTI-ku-高考文言概括-多材料比较",
+    "ku_name": "高考文言概括：多材料比较",
+    "grade": "G12",
+    "ku_type": "wenyan_yuedu",
+    "reason": "通用文言应试方法条，无单一地点/篇目，按口径不挂"
+  },
+  {
+    "ku_id": "GAOKAO-CHINESE-ZHUANTI-ku-高考文言概括-观点与理由",
+    "ku_name": "高考文言概括：观点与理由",
+    "grade": "G12",
+    "ku_type": "wenyan_yuedu",
+    "reason": "通用文言应试方法条，无单一地点/篇目，按口径不挂"
+  },
+  {
+    "ku_id": "GAOKAO-CHINESE-ZHUANTI-ku-高考文言概括-评价与启示",
+    "ku_name": "高考文言概括：评价与启示",
+    "grade": "G12",
+    "ku_type": "wenyan_yuedu",
+    "reason": "通用文言应试方法条，无单一地点/篇目，按口径不挂"
+  },
+  {
+    "ku_id": "GAOKAO-CHINESE-ZHUANTI-ku-高考文言翻译-六字操作法",
+    "ku_name": "高考文言翻译：六字操作法",
+    "grade": "G12",
+    "ku_type": "wenyan_yuedu",
+    "reason": "通用文言应试方法条，无单一地点/篇目，按口径不挂"
+  },
+  {
+    "ku_id": "GAOKAO-CHINESE-ZHUANTI-ku-高考文言翻译-判断句与被动句",
+    "ku_name": "高考文言翻译：判断句与被动句",
+    "grade": "G12",
+    "ku_type": "wenyan_yuedu",
+    "reason": "通用文言应试方法条，无单一地点/篇目，按口径不挂"
+  },
+  {
+    "ku_id": "GAOKAO-CHINESE-ku-万人空巷",
+    "ku_name": "万人空巷",
+    "grade": "G12",
+    "ku_type": "chengyu",
+    "reason": "成语释义条，无对应诗文地点，按口径不挂"
+  },
+  {
+    "ku_id": "GAOKAO-CHINESE-ku-不以为然",
+    "ku_name": "不以为然",
+    "grade": "G12",
+    "ku_type": "chengyu",
+    "reason": "成语释义条，无对应诗文地点，按口径不挂"
+  },
+  {
+    "ku_id": "GAOKAO-CHINESE-ku-明日黄花",
+    "ku_name": "明日黄花",
+    "grade": "G12",
+    "ku_type": "chengyu",
+    "reason": "成语释义条，无对应诗文地点，按口径不挂"
+  },
+  {
+    "ku_id": "TONGBIAN-G12-CHINESE-SBXX-ku-不以为然",
+    "ku_name": "不以为然",
+    "grade": "G12",
+    "ku_type": "chengyu",
+    "reason": "现代说明文，无历史地点锚点，按本批口径不挂"
+  },
+  {
+    "ku_id": "TONGBIAN-G12-CHINESE-SBXX-ku-京味语言特点赏析法",
+    "ku_name": "京味语言特点赏析法",
+    "grade": "G12",
+    "ku_type": "sanwen_yuedu",
+    "reason": "无可靠地点/人物锚点（仅为行文提及或跨篇目通用条目）"
+  },
+  {
+    "ku_id": "TONGBIAN-G12-CHINESE-SBXX-ku-六合",
+    "ku_name": "六合",
+    "grade": "G12",
+    "ku_type": "wenhua_changshi",
+    "reason": "无可靠地点/人物锚点（仅为行文提及或跨篇目通用条目）"
+  },
+  {
+    "ku_id": "TONGBIAN-G12-CHINESE-SBXX-ku-太牢",
+    "ku_name": "太牢",
+    "grade": "G12",
+    "ku_type": "wenhua_changshi",
+    "reason": "无可靠地点/人物锚点（仅为行文提及或跨篇目通用条目）"
+  },
+  {
+    "ku_id": "TONGBIAN-G12-CHINESE-SBXX-ku-文言文情理兼顾劝说策略",
+    "ku_name": "文言文情理兼顾劝说策略",
+    "grade": "G12",
+    "ku_type": "wenyan_yuedu",
+    "reason": "通用文言应试方法条，无单一地点/篇目，按口径不挂"
+  },
+  {
+    "ku_id": "TONGBIAN-G12-CHINESE-SBXX-ku-文言文词类活用辨认法",
+    "ku_name": "文言文词类活用辨认法",
+    "grade": "G12",
+    "ku_type": "wenyan_yuedu",
+    "reason": "石钟山/湖口不在江山时序可解析地名库，剔除"
+  },
+  {
+    "ku_id": "TONGBIAN-G12-CHINESE-SBXX-ku-浪漫主义结尾",
+    "ku_name": "浪漫主义结尾",
+    "grade": "G12",
+    "ku_type": "shici_jianshang",
+    "reason": "无可靠地点/人物锚点（仅为行文提及或跨篇目通用条目）"
+  },
+  {
+    "ku_id": "TONGBIAN-G12-CHINESE-SBXX-ku-舟-名词作状语-凭借舟",
+    "ku_name": "舟·名词作状语（凭借舟）",
+    "grade": "G12",
+    "ku_type": "wenyan_word",
+    "reason": "石钟山/湖口不在江山时序可解析地名库，剔除"
+  },
+  {
+    "ku_id": "TONGBIAN-G12-CHINESE-SBXX-ku-赫赫有名",
+    "ku_name": "赫赫有名",
+    "grade": "G12",
+    "ku_type": "chengyu",
+    "reason": "现代说明文，无历史地点锚点，按本批口径不挂"
+  }
+]
