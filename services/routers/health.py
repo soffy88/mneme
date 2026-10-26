@@ -9,13 +9,13 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from obase.db import get_db
 from services.readiness import health_payload, readiness_payload
 
-# Must match `alembic heads` (vocabulary memory nodes).
+# Must match `alembic heads` (current head: word-atlas migration f9a1b2c3d4e5).
 #
 # **加迁移时必须同步改这里**，否则 `/readiness` 会静默掉到 503
 # （`migrations = revision == EXPECTED_MIGRATION_HEAD`，而 DB 已经跑到新 head，
 # 两边对不上）。这不是我臆想的坑 —— 加 confusable_words 那次迁移后就撞上了，
 # alembic 报「upgrade 成功」而 readiness 却红。
-EXPECTED_MIGRATION_HEAD = "rin1a2b3c4d5"
+EXPECTED_MIGRATION_HEAD = "f9a1b2c3d4e5"
 
 router = APIRouter(tags=["health"])
 
