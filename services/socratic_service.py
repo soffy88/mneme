@@ -5,6 +5,7 @@ Layer-4 rule: assembly + DB only; business logic lives in omodul/oskill.
 
 from __future__ import annotations
 
+import asyncio
 import json
 import re as _re
 import uuid
@@ -35,6 +36,9 @@ from obase.sympy_runtime import SymPyRuntime
 
 _runtime = SymPyRuntime()
 
+# 元认知支架是可选项：LLM 挂起时必须有上限，否则 start 请求会被拖到客户端超时。
+METACOG_TIMEOUT_S = 25
+
 
 async def start_session(
     db: AsyncSession, question_id: uuid.UUID, student_id: uuid.UUID
@@ -46,13 +50,22 @@ async def start_session(
     if not wq:
         return {"error": "question not found"}
 
+    # 快照（防懒加载）：后续 helper 可能提交会话——如无缓存画像时
+    # generate_learner_profile 末尾的 commit 会过期会话上所有实例属性；
+    # 此后再碰 wq 属性会触发懒加载刷新，在异步上下文外报 MissingGreenlet。
+    # 此后全程只用快照，不再碰 wq 属性。
+    q_text = wq.question_text or ""
+    q_answer = wq.correct_answer or ""
+    q_steps = wq.step_analysis if isinstance(wq.step_analysis, dict) else None
+    q_kps = wq.knowledge_points
+
     kc_id = ""
     textbook_id = ""
     mastery_row = None
-    if wq.knowledge_points:
+    if q_kps:
         kc_ids = (
-            list(wq.knowledge_points.keys())
-            if isinstance(wq.knowledge_points, dict)
+            list(q_kps.keys())
+            if isinstance(q_kps, dict)
             else []
         )
         if kc_ids:
@@ -90,7 +103,7 @@ async def start_session(
     await db.flush()
 
     # 首问扣题（确定性优先）：基于真实题面构造锚定问题，不让 LLM 漂成通用问句
-    q_snippet = " ".join((wq.question_text or "").split())
+    q_snippet = " ".join(q_text.split())
     if len(q_snippet) > 60:
         q_snippet = q_snippet[:60] + "…"
     anchored_q = (
@@ -100,8 +113,8 @@ async def start_session(
     )
     # T.6：拍卷步骤批改定位过首个错步（verify_step 确定性）→ 首问附带位置提示。
     # 只指出"第几步"，不含正确答案/步骤内容（苏格拉底红线）。
-    if isinstance(wq.step_analysis, dict):
-        fw = wq.step_analysis.get("first_wrong_step")
+    if q_steps is not None:
+        fw = q_steps.get("first_wrong_step")
         if isinstance(fw, int) and fw >= 0:
             anchored_q += f"（提示：你当时的解题过程从第 {fw + 1} 步开始出了问题，可以先回想一下那一步。）"
     # 强制元认知支架 (Metacog Scaffold)
@@ -112,13 +125,18 @@ async def start_session(
 
         caller = get_optional_text_caller()
         try:
-            meta_res = await metacog_scaffold(
-                MetacogScaffoldInput(
-                    question=wq.question_text or "未知题目",
-                    student_id=str(student_id),
-                    input_content="刚开始看题",
+            # 有上限的元认知调用：超时按原有 fallback 走（保留确定性锚定首问），
+            # 不让一次可选 LLM 调用拖垮整个 start 请求。
+            meta_res = await asyncio.wait_for(
+                metacog_scaffold(
+                    MetacogScaffoldInput(
+                        question=q_text or "未知题目",
+                        student_id=str(student_id),
+                        input_content="刚开始看题",
+                    ),
+                    caller=caller,
                 ),
-                caller=caller,
+                timeout=METACOG_TIMEOUT_S,
             )
             metacog_data = meta_res.self_eval
             # 保留确定性锚定首问；仅采用 metacog 的识别脚手架选项
@@ -139,8 +157,8 @@ async def start_session(
     result = await socratic_session_workflow(
         config=SocraticConfig(mode=mode, max_turns=20),
         input_data=SocraticInput(
-            question_text=wq.question_text or "",
-            correct_answer=wq.correct_answer or "",
+            question_text=q_text,
+            correct_answer=q_answer,
             kc_id=kc_id,
             profiler_result={},
             student_messages=[],
