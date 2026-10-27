@@ -27,6 +27,7 @@ import re
 import uuid
 from datetime import datetime, timedelta, timezone
 from typing import Optional
+from dataclasses import dataclass
 
 from sqlalchemy import func, or_, select
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -583,3 +584,218 @@ __all__ = [
     "grade_deterministic",
     "schedule_after_answer",
 ]
+# ── Exam Cram 嫁接 2：错题优先重测队列 + 确定性小抄 ─────────────
+# 接在 services/wrongbook_review_service.py 末尾（不改 build_today_session /
+# schedule_after_answer / answer_item 的既有行为）。
+#
+# 分工（沿用仓内既定口径）：
+# - FSRS 只管复测排期（wrong_questions.fsrs_due 由既有 oprim 引擎维护），
+#   掌握判定仍走 BKT（answer_item 里的 process_interaction），本文件不写
+#   任何掌握度字段。
+# - “错次”取 question_records 里 is_correct=False 的记录数；错题本里的
+#   每一行本身就代表至少一次答错，故下限为 1（无记录的老数据不判 0）。
+
+
+
+@dataclass
+class PriorityItem:
+    item_id: str
+    subject: Optional[str]
+    question_text: str
+    fsrs_due: Optional[datetime]
+    error_count: int
+    last_wrong_at: Optional[datetime]
+    review_count: int
+    kc: Optional[str]
+
+    def to_dict(self) -> dict:
+        return {
+            "item_id": self.item_id,
+            "subject": self.subject,
+            "question_text": self.question_text,
+            "fsrs_due": self.fsrs_due.isoformat() if self.fsrs_due else None,
+            "error_count": self.error_count,
+            "last_wrong_at": self.last_wrong_at.isoformat() if self.last_wrong_at else None,
+            "review_count": self.review_count,
+            "kc": self.kc,
+        }
+
+
+def rank_review_items(items: list[dict], *, now: datetime) -> list[dict]:
+    """纯函数排序：到期 FSRS 项优先 → 错次多者 → 最近错者。
+
+    items 每项含 fsrs_due（datetime 或 None）、error_count（int）、
+    last_wrong_at（datetime 或 None）。返回新列表，不改入参顺序。
+    - tier 0：已到期（fsrs_due <= now），按到期先后升序；
+    - tier 1：其余，按 error_count 降序，再按 last_wrong_at 降序
+      （无记录者视为最旧，排最后）。
+    """
+    due = []
+    rest = []
+    for it in items:
+        if it.get("fsrs_due") is not None and it["fsrs_due"] <= now:
+            due.append(it)
+        else:
+            rest.append(it)
+    due.sort(key=lambda it: it["fsrs_due"])
+
+    def _rest_key(it: dict) -> tuple:
+        last = it.get("last_wrong_at")
+        ts = last.timestamp() if last is not None else 0.0
+        return (-int(it.get("error_count") or 0), -ts)
+
+    rest.sort(key=_rest_key)
+    return due + rest
+
+
+async def build_priority_queue(
+    db: AsyncSession,
+    student_id: uuid.UUID,
+    *,
+    now: Optional[datetime] = None,
+    limit: int = 50,
+) -> dict:
+    """未毕业错题的优先重测队列：只读排序，不出变式，不截会话预算，
+    不改任何掌握度/排期字段。"""
+    from services.models import QuestionRecord
+
+    now = now or datetime.now(timezone.utc)
+    rows = (
+        await db.execute(
+            select(WrongQuestion).where(
+                WrongQuestion.student_id == student_id,
+                WrongQuestion.graduated_at.is_(None),
+                WrongQuestion.question_text.isnot(None),
+                WrongQuestion.question_text != "",
+            )
+        )
+    ).scalars().all()
+    if not rows:
+        return {"student_id": str(student_id), "total_open": 0, "items": []}
+    ids = [r.id for r in rows]
+    err_rows = (
+        await db.execute(
+            select(
+                QuestionRecord.wrong_question_id,
+                func.count(),
+                func.max(QuestionRecord.created_at),
+            ).where(
+                QuestionRecord.student_id == student_id,
+                QuestionRecord.wrong_question_id.in_(ids),
+                QuestionRecord.is_correct.is_(False),
+            ).group_by(QuestionRecord.wrong_question_id)
+        )
+    ).all()
+    err_map: dict = {str(wqid): (int(cnt), last) for wqid, cnt, last in err_rows}
+    items: list[dict] = []
+    for r in rows:
+        cnt, last = err_map.get(str(r.id), (0, None))
+        items.append(
+            {
+                "item_id": str(r.id),
+                "subject": r.subject,
+                "question_text": r.question_text,
+                "fsrs_due": r.fsrs_due,
+                "error_count": max(1, cnt),
+                "last_wrong_at": last,
+                "review_count": int(r.review_count or 0),
+                "kc": _first_kc(r),
+            }
+        )
+    ranked = rank_review_items(items, now=now)
+    return {
+        "student_id": str(student_id),
+        "total_open": len(ranked),
+        "items": ranked[: max(0, int(limit))],
+    }
+
+
+def render_cheatsheet(groups: list[dict], *, student_label: str = "") -> str:
+    """确定性小抄拼装：只拼资料原文与错题记录，缺项留空，绝不现编。
+
+    groups 每项：kc、ku_name（或 None）、ku_description（或 None）、
+    open_items（每项 question_text、error_type、review_count）。
+    仓内目前没有“章节小结 / 困惑点”存储，故这两栏固定留空（暂无），
+    不由 LLM 生成——有存储后再接。
+    """
+    lines = ["# 错题小抄"]
+    if student_label:
+        lines.append(f"\n学生：{student_label}")
+    if not groups:
+        lines.append("\n（暂无未关闭错题）")
+        return "\n".join(lines) + "\n"
+    for g in groups:
+        lines.append(f"\n## {g.get('ku_name') or g.get('kc') or '未归类'}")
+        if g.get("ku_description"):
+            lines.append(f"\n资料原文：{g['ku_description']}")
+        else:
+            lines.append("\n资料原文：（暂无）")
+        lines.append("\n小结：（暂无小结）")
+        lines.append("\n困惑点：（暂无记录）")
+        items = g.get("open_items") or []
+        if not items:
+            lines.append("\n未关闭错题：（无）")
+        else:
+            lines.append("\n未关闭错题：")
+            for it in items:
+                et = it.get("error_type") or "未分类"
+                lines.append(
+                    f"- {it.get('question_text', '')}（错因：{et}，已复习 {it.get('review_count', 0)} 次）"
+                )
+    return "\n".join(lines) + "\n"
+
+
+async def build_cheatsheet(
+    db: AsyncSession,
+    student_id: uuid.UUID,
+) -> dict:
+    """每学生一份 Markdown 小抄：按 KC 分组，内容只取 KU 描述与错题行。"""
+    from services.models import KnowledgeUnit
+
+    rows = (
+        await db.execute(
+            select(WrongQuestion).where(
+                WrongQuestion.student_id == student_id,
+                WrongQuestion.graduated_at.is_(None),
+                WrongQuestion.question_text.isnot(None),
+                WrongQuestion.question_text != "",
+            )
+        )
+    ).scalars().all()
+    grouped: dict[str, list] = {}
+    for r in rows:
+        grouped.setdefault(_first_kc(r) or "", []).append(r)
+    groups: list[dict] = []
+    for kc, rs in sorted(grouped.items()):
+        ku_name = None
+        ku_desc = None
+        if kc:
+            ku = (await db.execute(select(KnowledgeUnit).where(KnowledgeUnit.id == kc))).scalar_one_or_none()
+            if ku is not None:
+                ku_name = ku.name
+                ku_desc = ku.description
+        groups.append(
+            {
+                "kc": kc or None,
+                "ku_name": ku_name,
+                "ku_description": ku_desc,
+                "open_items": [
+                    {
+                        "question_text": r.question_text,
+                        "error_type": (
+                            r.error_type.value
+                            if getattr(r.error_type, "value", None) is not None
+                            else (str(r.error_type) if r.error_type is not None else None)
+                        ),
+                        "review_count": int(r.review_count or 0),
+                    }
+                    for r in rs
+                ],
+            }
+        )
+    return {
+        "student_id": str(student_id),
+        "open_count": len(rows),
+        "groups": groups,
+        "markdown": render_cheatsheet(groups),
+    }

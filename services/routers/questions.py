@@ -12,6 +12,8 @@
 - GET  /v1/review/today                        今天 ~10 分钟的错题复习
 - POST /v1/review/today/answer                 提交一题（确定性判分优先）
 - POST /v1/review/today/finish                 结束 → 连续天数、剩余到期
+- GET  /v1/review/priority                     错题优先重测队列（嫁接 2）
+- GET  /v1/review/cheatsheet                   确定性错题小抄（嫁接 2）
 """
 
 from __future__ import annotations
@@ -506,3 +508,26 @@ async def post_review_today_finish(
         correct=min(body.correct, body.answered),
         duration_seconds=body.duration_seconds,
     )
+
+
+@router.get("/v1/review/priority")
+async def get_review_priority(
+    limit: int = Query(default=50, ge=1, le=200),
+    current_user: User = Depends(get_current_user),
+    db: AsyncSession = Depends(get_db),
+):
+    """错题优先重测队列（嫁接 2）：到期 FSRS 项 → 错次多者 → 最近错者。只读。"""
+    from services.wrongbook_review_service import build_priority_queue
+
+    return await build_priority_queue(db, current_user.id, limit=limit)
+
+
+@router.get("/v1/review/cheatsheet")
+async def get_review_cheatsheet(
+    current_user: User = Depends(get_current_user),
+    db: AsyncSession = Depends(get_db),
+):
+    """确定性错题小抄（嫁接 2）：只拼资料原文与错题记录，缺项留空。"""
+    from services.wrongbook_review_service import build_cheatsheet
+
+    return await build_cheatsheet(db, current_user.id)

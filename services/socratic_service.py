@@ -264,10 +264,31 @@ async def socratic_message_stream(
     )
     await db.flush()
 
+    # 溯源（嫁接 1）：本路回复以错题 + KU + 教材为材料，来源如实附在 done
+    # 事件里；学生消息里的转向语句只标记、不执行，并随 notice 明示。
+    from services.provenance import (
+        STEERING_NOTICE,
+        scan_injected_instructions,
+        scan_result_to_dict,
+    )
+
+    _steering = scan_injected_instructions(student_message)
+    _sources: list[dict] = []
+    if wq is not None:
+        _sources.append({"kind": "question", "ref": str(wq.id)})
+    if kc_id:
+        _sources.append({"kind": "ku", "ref": kc_id})
+    if textbook_id:
+        _sources.append({"kind": "textbook", "ref": textbook_id})
+    _provenance = {
+        "sources": _sources,
+        "steering_hits": scan_result_to_dict(_steering),
+        "notice": STEERING_NOTICE if _steering else None,
+    }
     turn = len([m for m in messages if m.get("role") == "assistant"])
     for chunk in sse_chunks:
         yield f"data: {json.dumps({'delta': chunk + ' '})}\n\n"
-    yield f"data: {json.dumps({'done': True, 'turn': turn})}\n\n"
+    yield f"data: {json.dumps({'done': True, 'turn': turn, 'provenance': _provenance})}\n\n"
 
 
 # 纯算术片段：仅数字/运算符/括号/小数/常见 unicode 运算符（无变量/文字）

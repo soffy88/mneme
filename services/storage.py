@@ -182,3 +182,46 @@ def delete_question_image(object_path: str) -> None:
         if e.code == "NoSuchKey":
             return
         raise
+
+
+# ── 讲义/题目裁图：私有桶（教学资料图，只存键，经鉴权 API 回传字节）──
+LESSON_FIGURE_BUCKET = "lesson-figures"
+
+
+def ensure_lesson_figure_bucket() -> None:
+    c = _client()
+    if not c.bucket_exists(LESSON_FIGURE_BUCKET):
+        c.make_bucket(LESSON_FIGURE_BUCKET)  # 新桶默认私有（无匿名策略）
+
+
+def upload_lesson_figure(object_path: str, data: bytes, content_type: str) -> None:
+    ensure_lesson_figure_bucket()
+    _client().put_object(
+        LESSON_FIGURE_BUCKET,
+        object_path,
+        io.BytesIO(data),
+        length=len(data),
+        content_type=content_type,
+    )
+
+
+def download_lesson_figure(object_path: str) -> bytes:
+    try:
+        resp = _client().get_object(LESSON_FIGURE_BUCKET, object_path)
+        try:
+            return resp.read()
+        finally:
+            resp.close()
+            resp.release_conn()
+    except S3Error as e:
+        raise FileNotFoundError("lesson figure not found") from e
+
+
+def delete_lesson_figure(object_path: str) -> None:
+    """删除讲义图；对象不存在视为成功（幂等）。"""
+    try:
+        _client().remove_object(LESSON_FIGURE_BUCKET, object_path)
+    except S3Error as e:
+        if e.code == "NoSuchKey":
+            return
+        raise

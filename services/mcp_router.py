@@ -557,6 +557,18 @@ async def tool_get_review_queue(
     }
 
 
+async def tool_get_wrongbook_priority_queue(
+    db: AsyncSession,
+    student_id: uuid.UUID,
+    limit: int = 50,
+) -> dict:
+    """错题优先重测队列（mcp 工具层，嫁接 2）：到期 FSRS 项 → 错次多者 →
+    最近错者。只读排序，不改掌握度。"""
+    from services.wrongbook_review_service import build_priority_queue
+
+    return await build_priority_queue(db, student_id, limit=limit)
+
+
 def _infer_qtype(expected: str) -> str:
     """题库无 qtype 列：单字母 A/B/C/D → choice；否则 solve（grade_math sympy+回落兜底）。"""
     e = (expected or "").strip().upper().replace(" ", "")
@@ -1093,6 +1105,11 @@ class GetReviewQueueReq(BaseModel):
     now: Optional[float] = None
 
 
+class GetWrongbookPriorityQueueReq(BaseModel):
+    student_id: uuid.UUID
+    limit: int = 50
+
+
 class RequestQuestionReq(BaseModel):
     student_id: uuid.UUID
     kc_id: str
@@ -1322,6 +1339,16 @@ async def mcp_get_review_queue(
 ) -> dict:
     await _ensure_student_access(db, current_user, req.student_id)
     return await tool_get_review_queue(db, req.student_id, req.kc_ids, req.now)
+
+
+@router.post("/GetWrongbookPriorityQueue")
+async def mcp_get_wrongbook_priority_queue(
+    req: GetWrongbookPriorityQueueReq,
+    db: AsyncSession = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+) -> dict:
+    await _ensure_student_access(db, current_user, req.student_id)
+    return await tool_get_wrongbook_priority_queue(db, req.student_id, req.limit)
 
 
 @router.post("/RequestQuestion")

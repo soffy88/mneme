@@ -24,6 +24,11 @@ from obase.db import get_db
 from services import persona_store
 from services.auth_deps import _ensure_student_self, get_current_user, oauth2_scheme
 from services.mcp_router import tool_get_path, tool_get_persona
+from services.provenance import (
+    STEERING_NOTICE,
+    scan_injected_instructions,
+    scan_result_to_dict,
+)
 from services.models import User
 
 router = APIRouter(prefix="/v1/chat", tags=["chat"])
@@ -55,6 +60,7 @@ async def tool_chat_turn(
     auth_token: Optional[str] = None,
     extra_system: str = "",
     max_iterations: int = 40,
+    strict_provenance: bool = False,
 ) -> dict:
     """编排：取 KC 候选池（不传则用 GetPath 默认路径）→ 取 persona（C3）渲染成
     system prompt 块 → 调 run_chat_turn（零 DB，FC-5）。可脱 HTTP 直测——真/假
@@ -75,7 +81,7 @@ async def tool_chat_turn(
     if extra_system:  # 语音/陪练：安全提示与人格规则追加在 persona 之后（规则优先于语气）
         persona_block = f"{persona_block}\n\n{extra_system}".strip()
 
-    return await run_chat_turn(
+    result = await run_chat_turn(
         student_id=str(student_id),
         kc_ids=kc_ids,
         history=history or [],
@@ -86,6 +92,34 @@ async def tool_chat_turn(
         auth_token=auth_token,
         max_iterations=max_iterations,
     )
+    if not isinstance(result, dict):
+        return result
+    # 溯源门禁（嫁接 1）：循环当前只回纯文本，尚无分段标签，故此处如实
+    # 标注 gate=unlabeled/certified=False，不谎称已标注；导航回复（去练
+    # 习）不含事实主张，豁免。strict_provenance=True 时未认证的知识回答
+    # 直接拦截、不交付原文——生产切 strict 前须先让循环输出分段标签。
+    hits = scan_injected_instructions(message)
+    reply_text = result.get("reply")
+    if reply_text:
+        hits += scan_injected_instructions(str(reply_text))
+    action = result.get("action")
+    if action == "goto_mastery_path":
+        gate, certified = "exempt", True
+    else:
+        gate, certified = "unlabeled", False
+    provenance = {
+        "gate": gate,
+        "certified": certified,
+        "steering_hits": scan_result_to_dict(hits),
+        "notice": STEERING_NOTICE if hits else None,
+    }
+    if strict_provenance and not certified:
+        return {
+            **result,
+            "reply": "本轮回答未完成来源标注，已按门禁拦截，未交付原文。",
+            "provenance": {**provenance, "refused": True},
+        }
+    return {**result, "provenance": provenance}
 
 
 async def _classify_llm(prompt: str) -> str:
