@@ -2500,3 +2500,32 @@ class CowriterRequest(Base):
     created_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True), server_default=text("now()"), nullable=False
     )
+
+
+class TeachingFigureSpec(Base):
+    """教学图规格（teachable-figures 方法论的 Mneme 干净实现）。
+
+    规格全文存 spec JSONB；verified 只由服务端 verify 门禁设置，
+    创建时恒为 False——写路径不接受客户端的 verified 输入，任何
+    绕过门禁的置位路径都不存在。ku_id 不设 ORM 外键（同
+    KnowledgeUnit.textbook_id 的 DB-level only 惯例），锚点存在性
+    由 verify 门禁在应用层核验。
+    """
+
+    __tablename__ = "teaching_figure_specs"
+
+    id: Mapped[str] = mapped_column(String(100), primary_key=True)
+    ku_id: Mapped[str] = mapped_column(String(100), nullable=False)
+    spec: Mapped[dict] = mapped_column(JSONB, nullable=False)
+    verified: Mapped[bool] = mapped_column(
+        Boolean, server_default=text("false"), default=False
+    )
+    author_id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True), ForeignKey("users.id"), nullable=False
+    )
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), server_default=text("now()")
+    )
+    updated_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), server_default=text("now()")
+    )
