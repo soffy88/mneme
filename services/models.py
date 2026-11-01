@@ -2529,3 +2529,184 @@ class TeachingFigureSpec(Base):
     updated_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True), server_default=text("now()")
     )
+
+
+# ── 9 项全嫁接（all-grafts）：视频课 / 听写 / 跟读 / 分级有声 / 模考 / 任务板 ──
+# 只学方法、干净重写。掌握裁决仍只认 BKT；以下表只存规格、尝试记录与
+# 排期快照，verified 恒由服务端门禁设置（路由层保证），不由客户端传入。
+
+
+class VideoLessonSpec(Base):
+    """视频课规格（services/video_lesson.py 合同的持久化形态）。
+
+    ku_id 锚点可选：无锚点课仍可建，由 verified 门禁决定学生是否可见。
+    """
+
+    __tablename__ = "video_lesson_specs"
+
+    id: Mapped[str] = mapped_column(String(100), primary_key=True)
+    ku_id: Mapped[Optional[str]] = mapped_column(String(100), nullable=True)
+    spec: Mapped[dict] = mapped_column(JSONB, nullable=False)
+    verified: Mapped[bool] = mapped_column(Boolean, default=False)
+    author_id: Mapped[uuid.UUID] = mapped_column(UUID(as_uuid=True), ForeignKey("users.id"))
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), server_default=text("now()")
+    )
+    updated_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), server_default=text("now()")
+    )
+
+
+class DictationSpec(Base):
+    """听写规格（services/dictation.py 合同的持久化形态）。"""
+
+    __tablename__ = "dictation_specs"
+
+    id: Mapped[str] = mapped_column(String(100), primary_key=True)
+    spec: Mapped[dict] = mapped_column(JSONB, nullable=False)
+    verified: Mapped[bool] = mapped_column(Boolean, default=False)
+    author_id: Mapped[uuid.UUID] = mapped_column(UUID(as_uuid=True), ForeignKey("users.id"))
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), server_default=text("now()")
+    )
+    updated_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), server_default=text("now()")
+    )
+
+
+class DictationAttempt(Base):
+    """听写尝试记录（只追加）：成绩、错词与 FSRS 排期快照。
+
+    错词同时以 QuestionRecord 行追加（source="dictation"）；音频/原文
+    不存入本表，原文以 spec 内的 passage_id 溯源。
+    """
+
+    __tablename__ = "dictation_attempts"
+
+    id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True), primary_key=True, default=uuid.uuid4
+    )
+    student_id: Mapped[uuid.UUID] = mapped_column(UUID(as_uuid=True), ForeignKey("users.id"))
+    spec_id: Mapped[str] = mapped_column(String(100), nullable=False)
+    score: Mapped[float] = mapped_column(Float, nullable=False)
+    missed_words: Mapped[Optional[dict]] = mapped_column(JSONB)
+    fsrs_card_json: Mapped[Optional[dict]] = mapped_column(JSONB)
+    fsrs_due: Mapped[Optional[datetime]] = mapped_column(DateTime(timezone=True))
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), server_default=text("now()")
+    )
+
+
+class ShadowingSpec(Base):
+    """跟读规格（services/shadowing.py 合同的持久化形态）。"""
+
+    __tablename__ = "shadowing_specs"
+
+    id: Mapped[str] = mapped_column(String(100), primary_key=True)
+    spec: Mapped[dict] = mapped_column(JSONB, nullable=False)
+    verified: Mapped[bool] = mapped_column(Boolean, default=False)
+    author_id: Mapped[uuid.UUID] = mapped_column(UUID(as_uuid=True), ForeignKey("users.id"))
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), server_default=text("now()")
+    )
+    updated_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), server_default=text("now()")
+    )
+
+
+class ShadowingAttempt(Base):
+    """跟读尝试记录（只追加）：评分、转写与弱项词。音频永不入库。"""
+
+    __tablename__ = "shadowing_attempts"
+
+    id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True), primary_key=True, default=uuid.uuid4
+    )
+    student_id: Mapped[uuid.UUID] = mapped_column(UUID(as_uuid=True), ForeignKey("users.id"))
+    spec_id: Mapped[str] = mapped_column(String(100), nullable=False)
+    sentence_index: Mapped[int] = mapped_column(Integer, nullable=False)
+    scores: Mapped[dict] = mapped_column(JSONB, nullable=False)
+    transcript: Mapped[Optional[str]] = mapped_column(Text)
+    weak_words: Mapped[Optional[dict]] = mapped_column(JSONB)
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), server_default=text("now()")
+    )
+
+
+class GradedAudioSpec(Base):
+    """分级有声规格（services/graded_audio.py 合同的持久化形态）。"""
+
+    __tablename__ = "graded_audio_specs"
+
+    id: Mapped[str] = mapped_column(String(100), primary_key=True)
+    spec: Mapped[dict] = mapped_column(JSONB, nullable=False)
+    verified: Mapped[bool] = mapped_column(Boolean, default=False)
+    author_id: Mapped[uuid.UUID] = mapped_column(UUID(as_uuid=True), ForeignKey("users.id"))
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), server_default=text("now()")
+    )
+    updated_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), server_default=text("now()")
+    )
+
+
+class MockExamSpec(Base):
+    """模考规格（services/mock_exam.py 合同的持久化形态）。"""
+
+    __tablename__ = "mock_exam_specs"
+
+    id: Mapped[str] = mapped_column(String(100), primary_key=True)
+    spec: Mapped[dict] = mapped_column(JSONB, nullable=False)
+    verified: Mapped[bool] = mapped_column(Boolean, default=False)
+    author_id: Mapped[uuid.UUID] = mapped_column(UUID(as_uuid=True), ForeignKey("users.id"))
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), server_default=text("now()")
+    )
+    updated_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), server_default=text("now()")
+    )
+
+
+class MockExamAttempt(Base):
+    """模考交卷记录（只追加）：答案与评分明细快照，答案不含标准答案。"""
+
+    __tablename__ = "mock_exam_attempts"
+
+    id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True), primary_key=True, default=uuid.uuid4
+    )
+    student_id: Mapped[uuid.UUID] = mapped_column(UUID(as_uuid=True), ForeignKey("users.id"))
+    spec_id: Mapped[str] = mapped_column(String(100), nullable=False)
+    answers: Mapped[dict] = mapped_column(JSONB, nullable=False)
+    result: Mapped[dict] = mapped_column(JSONB, nullable=False)
+    late: Mapped[bool] = mapped_column(Boolean, default=False)
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), server_default=text("now()")
+    )
+
+
+class StudyTask(Base):
+    """任务板任务（services/task_board.py 合同的持久化形态）。
+
+    status 只取 todo/in_progress/done；position 决定同列内顺序；archived
+    归档后不再出现在看板与日历默认视图。
+    """
+
+    __tablename__ = "study_tasks"
+
+    id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True), primary_key=True, default=uuid.uuid4
+    )
+    student_id: Mapped[uuid.UUID] = mapped_column(UUID(as_uuid=True), ForeignKey("users.id"))
+    title: Mapped[str] = mapped_column(String(200), nullable=False)
+    notes: Mapped[Optional[str]] = mapped_column(Text)
+    status: Mapped[str] = mapped_column(String(20), server_default=text("'todo'"))
+    due_date: Mapped[Optional[date]] = mapped_column(Date)
+    position: Mapped[int] = mapped_column(Integer, server_default=text("0"))
+    archived: Mapped[bool] = mapped_column(Boolean, server_default=text("false"))
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), server_default=text("now()")
+    )
+    updated_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), server_default=text("now()")
+    )

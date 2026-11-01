@@ -2619,3 +2619,190 @@ async def mcp_generate_ku_visualization(
             wait_seconds=max(0.0, min(req.wait_seconds, 60.0)),
         ),
     )
+
+
+# ── 9 项全嫁接：只读 MCP 工具（规格快照＋任务板）────────────────────────
+# 只读，不改任何状态；verified 纪律与 HTTP 路由一致（未验证一律 found False）。
+
+
+class GetVideoLessonReq(BaseModel):
+    student_id: uuid.UUID
+    spec_id: str
+
+
+class GetDictationSpecReq(BaseModel):
+    student_id: uuid.UUID
+    spec_id: str
+
+
+class GetShadowingSpecReq(BaseModel):
+    student_id: uuid.UUID
+    spec_id: str
+
+
+class GetGradedAudioSpecReq(BaseModel):
+    student_id: uuid.UUID
+    spec_id: str
+
+
+class GetMockExamSpecReq(BaseModel):
+    student_id: uuid.UUID
+    spec_id: str
+
+
+class GetTaskBoardReq(BaseModel):
+    student_id: uuid.UUID
+    include_archived: bool = False
+
+
+async def tool_get_video_lesson(
+    db: AsyncSession, student_id: uuid.UUID, spec_id: str
+) -> dict:
+    """视频课规格只读快照（mcp 工具层，嫁接 all-grafts 1）：仅 verified 可见。"""
+    from services.models import VideoLessonSpec
+
+    row = await db.get(VideoLessonSpec, spec_id)
+    if row is None or not row.verified:
+        return {"found": False}
+    return {
+        "found": True,
+        "id": row.id,
+        "ku_id": row.ku_id,
+        "spec": row.spec,
+        "verified": True,
+    }
+
+
+async def tool_get_dictation_spec(
+    db: AsyncSession, student_id: uuid.UUID, spec_id: str
+) -> dict:
+    """听写规格只读快照（mcp 工具层，嫁接 all-grafts 5）：仅 verified 可见。"""
+    from services.models import DictationSpec
+
+    row = await db.get(DictationSpec, spec_id)
+    if row is None or not row.verified:
+        return {"found": False}
+    return {"found": True, "id": row.id, "spec": row.spec, "verified": True}
+
+
+async def tool_get_shadowing_spec(
+    db: AsyncSession, student_id: uuid.UUID, spec_id: str
+) -> dict:
+    """跟读规格只读快照（mcp 工具层，嫁接 all-grafts 6）：仅 verified 可见。"""
+    from services.models import ShadowingSpec
+
+    row = await db.get(ShadowingSpec, spec_id)
+    if row is None or not row.verified:
+        return {"found": False}
+    return {"found": True, "id": row.id, "spec": row.spec, "verified": True}
+
+
+async def tool_get_graded_audio_spec(
+    db: AsyncSession, student_id: uuid.UUID, spec_id: str
+) -> dict:
+    """分级有声规格只读快照（mcp 工具层，嫁接 all-grafts 7）：仅 verified 可见。"""
+    from services.models import GradedAudioSpec
+
+    row = await db.get(GradedAudioSpec, spec_id)
+    if row is None or not row.verified:
+        return {"found": False}
+    return {"found": True, "id": row.id, "spec": row.spec, "verified": True}
+
+
+async def tool_get_mock_exam_spec(
+    db: AsyncSession, student_id: uuid.UUID, spec_id: str
+) -> dict:
+    """模考规格只读快照（mcp 工具层，嫁接 all-grafts 8）：仅 verified 可见，答案不在规格内。"""
+    from services.models import MockExamSpec
+
+    row = await db.get(MockExamSpec, spec_id)
+    if row is None or not row.verified:
+        return {"found": False}
+    return {"found": True, "id": row.id, "spec": row.spec, "verified": True}
+
+
+async def tool_get_task_board(
+    db: AsyncSession, student_id: uuid.UUID, include_archived: bool = False
+) -> dict:
+    """任务板只读快照（mcp 工具层，嫁接 all-grafts 3）：仅本人任务，板序排列。"""
+    from services.models import StudyTask
+    from services.task_board import sort_tasks
+
+    stmt = select(StudyTask).where(StudyTask.student_id == student_id)
+    if not include_archived:
+        stmt = stmt.where(StudyTask.archived.is_(False))
+    rows = (await db.execute(stmt)).scalars().all()
+    items = [
+        {
+            "id": str(row.id),
+            "title": row.title,
+            "notes": row.notes,
+            "status": row.status,
+            "due_date": row.due_date.isoformat() if row.due_date else None,
+            "position": row.position,
+            "archived": bool(row.archived),
+            "created_at": row.created_at.isoformat() if row.created_at else None,
+        }
+        for row in rows
+    ]
+    return {"items": sort_tasks(items)}
+
+
+@router.post("/GetVideoLesson")
+async def mcp_get_video_lesson(
+    req: GetVideoLessonReq,
+    db: AsyncSession = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+) -> dict:
+    await _ensure_student_access(db, current_user, req.student_id)
+    return await tool_get_video_lesson(db, req.student_id, req.spec_id)
+
+
+@router.post("/GetDictationSpec")
+async def mcp_get_dictation_spec(
+    req: GetDictationSpecReq,
+    db: AsyncSession = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+) -> dict:
+    await _ensure_student_access(db, current_user, req.student_id)
+    return await tool_get_dictation_spec(db, req.student_id, req.spec_id)
+
+
+@router.post("/GetShadowingSpec")
+async def mcp_get_shadowing_spec(
+    req: GetShadowingSpecReq,
+    db: AsyncSession = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+) -> dict:
+    await _ensure_student_access(db, current_user, req.student_id)
+    return await tool_get_shadowing_spec(db, req.student_id, req.spec_id)
+
+
+@router.post("/GetGradedAudioSpec")
+async def mcp_get_graded_audio_spec(
+    req: GetGradedAudioSpecReq,
+    db: AsyncSession = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+) -> dict:
+    await _ensure_student_access(db, current_user, req.student_id)
+    return await tool_get_graded_audio_spec(db, req.student_id, req.spec_id)
+
+
+@router.post("/GetMockExamSpec")
+async def mcp_get_mock_exam_spec(
+    req: GetMockExamSpecReq,
+    db: AsyncSession = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+) -> dict:
+    await _ensure_student_access(db, current_user, req.student_id)
+    return await tool_get_mock_exam_spec(db, req.student_id, req.spec_id)
+
+
+@router.post("/GetTaskBoard")
+async def mcp_get_task_board(
+    req: GetTaskBoardReq,
+    db: AsyncSession = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+) -> dict:
+    await _ensure_student_access(db, current_user, req.student_id)
+    return await tool_get_task_board(db, req.student_id, req.include_archived)

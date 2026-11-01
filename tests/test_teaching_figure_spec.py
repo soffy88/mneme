@@ -612,8 +612,8 @@ async def test_migration_upgrades_to_single_head():
     repo_root = Path(__file__).resolve().parents[1]
     cfg = Config(str(repo_root / "alembic.ini"))
     script = ScriptDirectory.from_config(cfg)
-    assert tuple(script.get_heads()) == ("tfg1a2b3c4d5e",)
-    assert script.get_revision("tfg1a2b3c4d5e").down_revision == "f9a1b2c3d4e5"
+    assert tuple(script.get_heads()) == ("all1a2b3c4d5e",)
+    assert script.get_revision("all1a2b3c4d5e").down_revision == "tfg1a2b3c4d5e"
 
     def _alembic(*args):
         env = dict(os.environ)
@@ -644,9 +644,22 @@ async def test_migration_upgrades_to_single_head():
         conn = await asyncpg.connect(dsn.rsplit("/", 1)[0] + f"/{scratch}")
         try:
             # 克隆带上了固件自建的表：先删掉，upgrade 才能真建它。
+            # 本分支新增的 9 张表同样由固件自建，一并删掉。
             await conn.execute(
                 "DROP TABLE IF EXISTS teaching_figure_specs CASCADE"
             )
+            for _table in (
+                "video_lesson_specs",
+                "dictation_specs",
+                "dictation_attempts",
+                "shadowing_specs",
+                "shadowing_attempts",
+                "graded_audio_specs",
+                "mock_exam_specs",
+                "mock_exam_attempts",
+                "study_tasks",
+            ):
+                await conn.execute(f"DROP TABLE IF EXISTS {_table} CASCADE")
             # alembic stamp 会先解析当前版本行（prq1a2b3c4d5，链内无此
             # revision，直接拒）；只在一次性克隆库内直写版本行到父 revision。
             await conn.execute("DELETE FROM alembic_version")
@@ -670,7 +683,7 @@ async def test_migration_upgrades_to_single_head():
             )
         finally:
             await conn.close()
-        assert version == "tfg1a2b3c4d5e"
+        assert version == "all1a2b3c4d5e"
         assert has_table == "teaching_figure_specs"
         assert has_index == "ix_teaching_figure_specs_ku_id"
         _alembic("downgrade", "f9a1b2c3d4e5")
