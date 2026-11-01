@@ -569,6 +569,62 @@ async def tool_get_wrongbook_priority_queue(
     return await build_priority_queue(db, student_id, limit=limit)
 
 
+
+async def tool_get_exam_sheet(
+    db: AsyncSession,
+    student_id: uuid.UUID,
+    sheet_id: str,
+) -> dict:
+    """组卷只读快照（mcp 工具层，嫁接 wrong-notebook 1）：仅本人可见，
+    他人/不存在一律报未找到，不泄露。只读，不改任何状态。"""
+    from services.exam_sheet import sheet_attempt_stats
+    from services.models import ExamSheet
+
+    row = await db.get(ExamSheet, sheet_id)
+    if row is None or row.student_id != student_id:
+        return {"found": False}
+    ids = [str(q["wrong_question_id"]) for q in row.spec.get("questions", [])]
+    stats = await sheet_attempt_stats(db, student_id, ids)
+    questions = []
+    for q in row.spec.get("questions", []):
+        item = dict(q)
+        stat = stats.get(str(q["wrong_question_id"]), {})
+        item["attempts"] = int(stat.get("attempts", 0))
+        item["last_is_correct"] = stat.get("last_is_correct")
+        item["last_answered_at"] = stat.get("last_answered_at")
+        questions.append(item)
+    spec = dict(row.spec)
+    spec["questions"] = questions
+    return {
+        "found": True,
+        "sheet": {"id": row.id, "student_id": str(row.student_id), "spec": spec},
+    }
+
+
+async def tool_get_animated_explanation(
+    db: AsyncSession,
+    student_id: uuid.UUID,
+    spec_id: str,
+) -> dict:
+    """动画讲解只读快照（mcp 工具层，嫁接 wrong-notebook 2）：学生仅见
+    verified 的规格；未验证/不存在一律报未找到。只读，返回确定性拼装。
+    student_id 仅用于端点层的 _ensure_student_access，不参与可见性判定
+    （verified 规格对所有学生可见，与 REST 列表口径一致）。"""
+    from services.animated_explanation import (
+        AnimationAssemblyError,
+        assemble_animation,
+    )
+    from services.models import AnimatedExplanationSpec
+
+    row = await db.get(AnimatedExplanationSpec, spec_id)
+    if row is None or not row.verified:
+        return {"found": False}
+    try:
+        animation = assemble_animation(row.spec)
+    except AnimationAssemblyError:
+        return {"found": False, "reason": "malformed_spec"}
+    return {"found": True, "animation": animation}
+
 def _infer_qtype(expected: str) -> str:
     """题库无 qtype 列：单字母 A/B/C/D → choice；否则 solve（grade_math sympy+回落兜底）。"""
     e = (expected or "").strip().upper().replace(" ", "")
@@ -1110,6 +1166,16 @@ class GetWrongbookPriorityQueueReq(BaseModel):
     limit: int = 50
 
 
+
+class GetExamSheetReq(BaseModel):
+    student_id: uuid.UUID
+    sheet_id: str
+
+
+class GetAnimatedExplanationReq(BaseModel):
+    student_id: uuid.UUID
+    spec_id: str
+
 class RequestQuestionReq(BaseModel):
     student_id: uuid.UUID
     kc_id: str
@@ -1350,6 +1416,26 @@ async def mcp_get_wrongbook_priority_queue(
     await _ensure_student_access(db, current_user, req.student_id)
     return await tool_get_wrongbook_priority_queue(db, req.student_id, req.limit)
 
+
+
+@router.post("/GetExamSheet")
+async def mcp_get_exam_sheet(
+    req: GetExamSheetReq,
+    db: AsyncSession = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+) -> dict:
+    await _ensure_student_access(db, current_user, req.student_id)
+    return await tool_get_exam_sheet(db, req.student_id, req.sheet_id)
+
+
+@router.post("/GetAnimatedExplanation")
+async def mcp_get_animated_explanation(
+    req: GetAnimatedExplanationReq,
+    db: AsyncSession = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+) -> dict:
+    await _ensure_student_access(db, current_user, req.student_id)
+    return await tool_get_animated_explanation(db, req.student_id, req.spec_id)
 
 @router.post("/RequestQuestion")
 async def mcp_request_question(

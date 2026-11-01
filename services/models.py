@@ -2710,3 +2710,82 @@ class StudyTask(Base):
     updated_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True), server_default=text("now()")
     )
+
+class ExamSheet(Base):
+    """组卷打印产物（wrong-notebook 方法论的 Mneme 干净实现）。
+
+    区别于 papers 表（拍照录入的来源试卷）：exam sheet 是从已有错题
+    组出来的练习卷。spec 存拼装后的冻结快照（题干/答案取自错题行，
+    含留白与答案页），读取时再叠加实时作答统计。
+    """
+
+    __tablename__ = "exam_sheets"
+
+    id: Mapped[str] = mapped_column(String(100), primary_key=True)
+    student_id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True), ForeignKey("users.id"), nullable=False
+    )
+    spec: Mapped[dict] = mapped_column(JSONB, nullable=False)
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), server_default=text("now()")
+    )
+    updated_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), server_default=text("now()")
+    )
+
+
+class ExamSheetResult(Base):
+    """组卷作答回填行：同一题在同一组卷内只允许一条（唯一约束兜底）。
+
+    wrong_question_id 只存值不设 FK（同 QuestionRecord 惯例）。
+    """
+
+    __tablename__ = "exam_sheet_results"
+    __table_args__ = (
+        UniqueConstraint("sheet_id", "wrong_question_id"),
+        Index("ix_exam_sheet_results_sheet_id", "sheet_id"),
+    )
+
+    id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True), primary_key=True, server_default=text("gen_random_uuid()")
+    )
+    sheet_id: Mapped[str] = mapped_column(
+        String(100), ForeignKey("exam_sheets.id"), nullable=False
+    )
+    wrong_question_id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True), nullable=False
+    )
+    is_correct: Mapped[bool] = mapped_column(Boolean, nullable=False)
+    seconds: Mapped[Optional[int]] = mapped_column(Integer, nullable=True)
+    answered_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), server_default=text("now()"), nullable=False
+    )
+
+
+class AnimatedExplanationSpec(Base):
+    """SVG 动画讲解规格（wrong-notebook 方法论的 Mneme 干净实现）。
+
+    规格全文存 spec JSONB；verified 只由服务端 verify 门禁设置，
+    创建时恒为 False。question_id/ku_id 只存值不设 FK（同
+    QuestionRecord.question_ref 惯例），引用存在性由 verify 门禁在
+    应用层核验（fail-closed）。
+    """
+
+    __tablename__ = "animated_explanation_specs"
+
+    id: Mapped[str] = mapped_column(String(100), primary_key=True)
+    question_id: Mapped[Optional[str]] = mapped_column(String(128), nullable=True)
+    ku_id: Mapped[Optional[str]] = mapped_column(String(100), nullable=True)
+    spec: Mapped[dict] = mapped_column(JSONB, nullable=False)
+    verified: Mapped[bool] = mapped_column(
+        Boolean, server_default=text("false"), default=False
+    )
+    author_id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True), ForeignKey("users.id"), nullable=False
+    )
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), server_default=text("now()")
+    )
+    updated_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), server_default=text("now()")
+    )

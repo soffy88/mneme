@@ -612,8 +612,11 @@ async def test_migration_upgrades_to_single_head():
     repo_root = Path(__file__).resolve().parents[1]
     cfg = Config(str(repo_root / "alembic.ini"))
     script = ScriptDirectory.from_config(cfg)
-    assert tuple(script.get_heads()) == ("all1a2b3c4d5e",)
+    # 链已延长：单头现为 wrong-notebook 迁移（down_revision 已改为 all-grafts head）。
+    assert tuple(script.get_heads()) == ("wnb1a2b3c4d5e",)
+    assert script.get_revision("tfg1a2b3c4d5e").down_revision == "f9a1b2c3d4e5"
     assert script.get_revision("all1a2b3c4d5e").down_revision == "tfg1a2b3c4d5e"
+    assert script.get_revision("wnb1a2b3c4d5e").down_revision == "all1a2b3c4d5e"
 
     def _alembic(*args):
         env = dict(os.environ)
@@ -660,6 +663,13 @@ async def test_migration_upgrades_to_single_head():
                 "study_tasks",
             ):
                 await conn.execute(f"DROP TABLE IF EXISTS {_table} CASCADE")
+            # 克隆同样带上了 wrong-notebook 固件自建的表：先删掉，
+            # upgrade head（全链）才能真建它们。
+            await conn.execute("DROP TABLE IF EXISTS exam_sheet_results CASCADE")
+            await conn.execute("DROP TABLE IF EXISTS exam_sheets CASCADE")
+            await conn.execute(
+                "DROP TABLE IF EXISTS animated_explanation_specs CASCADE"
+            )
             # alembic stamp 会先解析当前版本行（prq1a2b3c4d5，链内无此
             # revision，直接拒）；只在一次性克隆库内直写版本行到父 revision。
             await conn.execute("DELETE FROM alembic_version")
@@ -683,7 +693,7 @@ async def test_migration_upgrades_to_single_head():
             )
         finally:
             await conn.close()
-        assert version == "all1a2b3c4d5e"
+        assert version == "wnb1a2b3c4d5e"
         assert has_table == "teaching_figure_specs"
         assert has_index == "ix_teaching_figure_specs_ku_id"
         _alembic("downgrade", "f9a1b2c3d4e5")
