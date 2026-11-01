@@ -499,12 +499,13 @@ async def test_migration_upgrades_to_single_head():
     )
     cfg = Config(str(REPO_ROOT / "alembic.ini"))
     script = ScriptDirectory.from_config(cfg)
-    assert tuple(script.get_heads()) == ("wnb1a2b3c4d5e",)
+    assert tuple(script.get_heads()) == ("phy1a2b3c4d5e",)
     assert script.get_revision("all1a2b3c4d5e").down_revision == "tfg1a2b3c4d5e"
     assert script.get_revision("wnb1a2b3c4d5e").down_revision == "all1a2b3c4d5e"
+    assert script.get_revision("phy1a2b3c4d5e").down_revision == "wnb1a2b3c4d5e"
     from services.routers.health import EXPECTED_MIGRATION_HEAD
 
-    assert EXPECTED_MIGRATION_HEAD == "wnb1a2b3c4d5e"
+    assert EXPECTED_MIGRATION_HEAD == "phy1a2b3c4d5e"
 
     def _alembic(*args):
         env = dict(os.environ)
@@ -547,6 +548,8 @@ async def test_migration_upgrades_to_single_head():
                 "exam_sheets",
                 "exam_sheet_results",
                 "animated_explanation_specs",
+                "physics_models",
+                "physics_practice_items",
             ):
                 await conn.execute(f"DROP TABLE IF EXISTS {table} CASCADE")
             await conn.execute("DELETE FROM alembic_version")
@@ -574,7 +577,7 @@ async def test_migration_upgrades_to_single_head():
             )
         finally:
             await conn.close()
-        assert version == "wnb1a2b3c4d5e"
+        assert version == "phy1a2b3c4d5e"
         assert len(tables) == 9, [dict(r) for r in tables]
         assert has_index == "ix_study_tasks_student_due"
         _alembic("downgrade", "tfg1a2b3c4d5e")

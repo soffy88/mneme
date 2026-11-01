@@ -2789,3 +2789,57 @@ class AnimatedExplanationSpec(Base):
     updated_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True), server_default=text("now()")
     )
+
+class PhysicsModel(Base):
+    """物理真值模型规格（Atlas of Physics model→checks 方法论的 Mneme 干净实现）。
+
+    规格全文存 spec JSONB；verified 只由服务端 verify 门禁设置，
+    创建时恒为 False——写路径不接受客户端的 verified 输入，任何
+    绕过门禁的置位路径都不存在。ku_id 可为空（不锚定具体知识点），
+    不设 ORM 外键，锚点存在性由 verify 门禁在应用层核验。
+    """
+
+    __tablename__ = "physics_models"
+
+    id: Mapped[str] = mapped_column(String(100), primary_key=True)
+    ku_id: Mapped[str | None] = mapped_column(String(100), nullable=True)
+    spec: Mapped[dict] = mapped_column(JSONB, nullable=False)
+    verified: Mapped[bool] = mapped_column(
+        Boolean, server_default=text("false"), default=False
+    )
+    author_id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True), ForeignKey("users.id"), nullable=False
+    )
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), server_default=text("now()")
+    )
+    updated_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), server_default=text("now()")
+    )
+
+
+class PhysicsPracticeItem(Base):
+    """物理计算题项（答案由模型算出、独立重算对上的纪律）。
+
+    规格全文存 spec JSONB；verified 只由服务端 verify 门禁设置。
+    model_id 存注册表中的模型名（非 FK，模型是代码注册表而非
+    DB 行）；题项锚定的模型行由 spec.model 字段承载，应用层核验。
+    """
+
+    __tablename__ = "physics_practice_items"
+
+    id: Mapped[str] = mapped_column(String(100), primary_key=True)
+    model_id: Mapped[str] = mapped_column(String(100), nullable=False)
+    spec: Mapped[dict] = mapped_column(JSONB, nullable=False)
+    verified: Mapped[bool] = mapped_column(
+        Boolean, server_default=text("false"), default=False
+    )
+    author_id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True), ForeignKey("users.id"), nullable=False
+    )
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), server_default=text("now()")
+    )
+    updated_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), server_default=text("now()")
+    )

@@ -625,6 +625,27 @@ async def tool_get_animated_explanation(
         return {"found": False, "reason": "malformed_spec"}
     return {"found": True, "animation": animation}
 
+async def tool_get_physics_model(db: AsyncSession, model_id: str) -> dict:
+    """物理真值模型规格（只读，供 agent 取模型参数与 caveat）。仅 verified 可见；无此模型 → {error}。"""
+    from services.models import PhysicsModel
+
+    row = (
+        await db.execute(
+            select(PhysicsModel).where(
+                PhysicsModel.id == model_id, PhysicsModel.verified.is_(True)
+            )
+        )
+    ).scalar_one_or_none()
+    if row is None:
+        return {"error": "physics model not found", "model_id": model_id}
+    return {
+        "model_id": row.id,
+        "ku_id": row.ku_id,
+        "spec": row.spec,
+        "verified": row.verified,
+    }
+
+
 def _infer_qtype(expected: str) -> str:
     """题库无 qtype 列：单字母 A/B/C/D → choice；否则 solve（grade_math sympy+回落兜底）。"""
     e = (expected or "").strip().upper().replace(" ", "")
@@ -1176,6 +1197,11 @@ class GetAnimatedExplanationReq(BaseModel):
     student_id: uuid.UUID
     spec_id: str
 
+class GetPhysicsModelReq(BaseModel):
+    student_id: uuid.UUID
+    model_id: str
+
+
 class RequestQuestionReq(BaseModel):
     student_id: uuid.UUID
     kc_id: str
@@ -1417,7 +1443,6 @@ async def mcp_get_wrongbook_priority_queue(
     return await tool_get_wrongbook_priority_queue(db, req.student_id, req.limit)
 
 
-
 @router.post("/GetExamSheet")
 async def mcp_get_exam_sheet(
     req: GetExamSheetReq,
@@ -1428,6 +1453,16 @@ async def mcp_get_exam_sheet(
     return await tool_get_exam_sheet(db, req.student_id, req.sheet_id)
 
 
+@router.post("/GetPhysicsModel")
+async def mcp_get_physics_model(
+    req: GetPhysicsModelReq,
+    db: AsyncSession = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+) -> dict:
+    await _ensure_student_access(db, current_user, req.student_id)
+    return await tool_get_physics_model(db, req.model_id)
+
+
 @router.post("/GetAnimatedExplanation")
 async def mcp_get_animated_explanation(
     req: GetAnimatedExplanationReq,
@@ -1436,6 +1471,7 @@ async def mcp_get_animated_explanation(
 ) -> dict:
     await _ensure_student_access(db, current_user, req.student_id)
     return await tool_get_animated_explanation(db, req.student_id, req.spec_id)
+
 
 @router.post("/RequestQuestion")
 async def mcp_request_question(

@@ -348,9 +348,10 @@ def test_migration_pin_matches_single_head():
     repo_root = Path(__file__).resolve().parents[1]
     cfg = Config(str(repo_root / "alembic.ini"))
     script = ScriptDirectory.from_config(cfg)
-    assert tuple(script.get_heads()) == ("wnb1a2b3c4d5e",)
-    assert EXPECTED_MIGRATION_HEAD == "wnb1a2b3c4d5e"
+    assert tuple(script.get_heads()) == ("phy1a2b3c4d5e",)
+    assert EXPECTED_MIGRATION_HEAD == "phy1a2b3c4d5e"
     assert script.get_revision("wnb1a2b3c4d5e").down_revision == "all1a2b3c4d5e"
+    assert script.get_revision("phy1a2b3c4d5e").down_revision == "wnb1a2b3c4d5e"
 
 
 @pytest.mark.asyncio
@@ -410,6 +411,8 @@ async def test_migration_upgrades_to_single_head():
             await conn.execute(
                 "DROP TABLE IF EXISTS animated_explanation_specs CASCADE"
             )
+            await conn.execute("DROP TABLE IF EXISTS physics_models CASCADE")
+            await conn.execute("DROP TABLE IF EXISTS physics_practice_items CASCADE")
             await conn.execute("DELETE FROM alembic_version")
             await conn.execute(
                 "INSERT INTO alembic_version VALUES ('all1a2b3c4d5e')"
@@ -445,7 +448,7 @@ async def test_migration_upgrades_to_single_head():
             }
         finally:
             await conn.close()
-        assert version == "wnb1a2b3c4d5e"
+        assert version == "phy1a2b3c4d5e"
         assert tables == {
             "exam_sheets": "exam_sheets",
             "exam_sheet_results": "exam_sheet_results",

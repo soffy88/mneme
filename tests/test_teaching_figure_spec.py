@@ -587,7 +587,7 @@ async def test_migration_upgrades_to_single_head():
     upgrade 在既有 word-atlas 迁移处已断（建 FSRS 卡表时 vocab_units
     不存在）——均为本迁移之外的既有状态，本次不越界修。② 故本测试克隆
     mneme_test（同一台测试 postgres）为一次性库，删掉固件自建的表后
-    stamp 到父 revision，再走真实 alembic CLI upgrade head（只跑本迁移）
+    stamp 到父 revision，再走真实 alembic CLI upgrade head（跑 teaching-figure 与 physics 两迁移）
     与 downgrade 回父 revision；绝不碰生产库。
     """
     import os
@@ -612,11 +612,12 @@ async def test_migration_upgrades_to_single_head():
     repo_root = Path(__file__).resolve().parents[1]
     cfg = Config(str(repo_root / "alembic.ini"))
     script = ScriptDirectory.from_config(cfg)
-    # 链已延长：单头现为 wrong-notebook 迁移（down_revision 已改为 all-grafts head）。
-    assert tuple(script.get_heads()) == ("wnb1a2b3c4d5e",)
+    # 链已延长：单头现为 physics 迁移（down_revision 已改为 wrong-notebook head）。
+    assert tuple(script.get_heads()) == ("phy1a2b3c4d5e",)
     assert script.get_revision("tfg1a2b3c4d5e").down_revision == "f9a1b2c3d4e5"
     assert script.get_revision("all1a2b3c4d5e").down_revision == "tfg1a2b3c4d5e"
     assert script.get_revision("wnb1a2b3c4d5e").down_revision == "all1a2b3c4d5e"
+    assert script.get_revision("phy1a2b3c4d5e").down_revision == "wnb1a2b3c4d5e"
 
     def _alembic(*args):
         env = dict(os.environ)
@@ -670,6 +671,10 @@ async def test_migration_upgrades_to_single_head():
             await conn.execute(
                 "DROP TABLE IF EXISTS animated_explanation_specs CASCADE"
             )
+            await conn.execute("DROP TABLE IF EXISTS physics_models CASCADE")
+            await conn.execute(
+                "DROP TABLE IF EXISTS physics_practice_items CASCADE"
+            )
             # alembic stamp 会先解析当前版本行（prq1a2b3c4d5，链内无此
             # revision，直接拒）；只在一次性克隆库内直写版本行到父 revision。
             await conn.execute("DELETE FROM alembic_version")
@@ -691,11 +696,19 @@ async def test_migration_upgrades_to_single_head():
                 "SELECT indexname FROM pg_indexes WHERE "
                 "indexname = 'ix_teaching_figure_specs_ku_id'"
             )
+            has_models = await conn.fetchval(
+                "SELECT to_regclass('public.physics_models')"
+            )
+            has_items = await conn.fetchval(
+                "SELECT to_regclass('public.physics_practice_items')"
+            )
         finally:
             await conn.close()
-        assert version == "wnb1a2b3c4d5e"
+        assert version == "phy1a2b3c4d5e"
         assert has_table == "teaching_figure_specs"
         assert has_index == "ix_teaching_figure_specs_ku_id"
+        assert has_models == "physics_models"
+        assert has_items == "physics_practice_items"
         _alembic("downgrade", "f9a1b2c3d4e5")
         conn = await asyncpg.connect(dsn.rsplit("/", 1)[0] + f"/{scratch}")
         try:
@@ -705,10 +718,18 @@ async def test_migration_upgrades_to_single_head():
             has_table = await conn.fetchval(
                 "SELECT to_regclass('public.teaching_figure_specs')"
             )
+            has_models = await conn.fetchval(
+                "SELECT to_regclass('public.physics_models')"
+            )
+            has_items = await conn.fetchval(
+                "SELECT to_regclass('public.physics_practice_items')"
+            )
         finally:
             await conn.close()
         assert version == "f9a1b2c3d4e5"
         assert has_table is None
+        assert has_models is None
+        assert has_items is None
     finally:
         maint = await asyncpg.connect(dsn)
         try:
