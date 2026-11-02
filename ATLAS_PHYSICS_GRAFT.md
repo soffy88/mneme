@@ -69,7 +69,7 @@ find_untagged_numbers）。verified 只由服务端 verify 端点重跑
 ## 4. 持久化与接线
 
 - ONE 个 Alembic 迁移 `phy1a2b3c4d5e`（down_revision
-  `tfg1a2b3c4d5e`）：`physics_models` 表（id、ku_id 可空、spec
+  `wnb1a2b3c4d5e`）：`physics_models` 表（id、ku_id 可空、spec
   JSONB、verified 默认 False、author_id、时间戳）与
   `physics_practice_items` 表（id、model_id 存注册表模型名、
   spec JSONB、verified 默认 False、author_id、时间戳）。
@@ -94,6 +94,8 @@ find_untagged_numbers）。verified 只由服务端 verify 端点重跑
 
 - 若 all-grafts 先合：本分支 rebase 到其 head，把本迁移的
   down_revision 改到对方 head、health pin 改到本 head、两处
+
+> 2026-11-02 已按此顺序合入 main：all → wnb → phy，链头现为 phy1a2b3c4d5e。
   单头断言（本文件测试与 test_teaching_figure_spec.py）同步改到
   本 head，再重跑迁移测试。
 - 若本分支先合：对方 rebase 时做对称修改（对方任务书已有此口径）。

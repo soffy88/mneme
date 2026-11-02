@@ -5,7 +5,7 @@
 不接对方前端 / Prisma / 打包体系；不新增依赖；不改前端；不碰生产。
 
 分支：`feat/wrong-notebook-graft`（基线 main `694c92a`）。
-迁移：`wnb1a2b3c4d5e`（down_revision `tfg1a2b3c4d5e`），
+迁移：`wnb1a2b3c4d5e`（down_revision `all1a2b3c4d5e`），
 `services/routers/health.py` 的 `EXPECTED_MIGRATION_HEAD` 已同步改为新 head
 （2026-10-31 teachfig 部署实撞的教训：漏改则 `/readiness` 报 migrations:false）。
 
@@ -174,12 +174,12 @@ ruff：改动文件全过。
 2. `git merge --ff-only` 本分支进 main 并 push（生产 checkout 在
 `/data/soffy/projects/mneme`，api 代码 bind 挂载）。
 3. 只 `docker compose restart api`（无新依赖，无需重建镜像）。
-4. 迁移一次成功：`alembic_version` 由 `tfg1a2b3c4d5e` → `wnb1a2b3c4d5e`；
+4. 迁移一次成功：`alembic_version` 由 `all1a2b3c4d5e` → `wnb1a2b3c4d5e`；
 验 `/readiness` 全 true（pin 已同步）、`/health` 200。
 5. 冒烟（冒烟号，凭证只在远程 shell 内 source）：未登录新路由 401；
 组卷创建→导出→回填→动画 verify→学生可见链路 200（admin 链路生产侧
 须 ADMIN_USER_IDS 白名单账号，测试未覆盖真机 admin，见 §7）。
-6. 回退：后端 revert 本合并提交 + `alembic downgrade tfg1a2b3c4d5e` +
+6. 回退：后端 revert 本合并提交 + `alembic downgrade all1a2b3c4d5e` +
 重启 api；无数据迁移回写（新表空表可直接删）。
 
 ## 7. 未验证项与待接点
