@@ -21,6 +21,7 @@ from obase.db import get_db
 from services.auth_deps import get_current_user
 from services.i18n import negotiate_language, t
 from services.models import KnowledgeUnit, User, VideoLessonSpec
+from services.narration_source_ledger import verify_lesson_source_ledger
 from services.video_lesson import (
     VideoLessonCheck,
     assemble_video_lesson,
@@ -50,14 +51,24 @@ async def _known_ku_ids(db: AsyncSession) -> set[str]:
     return set(await db.scalars(select(KnowledgeUnit.id)))
 
 
-def _gate_or_422(spec: dict, known: set[str], lg: str) -> None:
+def _gate_or_422(spec: dict, known: set[str], lg: str, require_ledger: bool = False) -> None:
+    """Shared gate: the ten video-lesson gates, plus the source-ledger
+    gate when require_ledger is set. Only verify/assemble require the
+    ledger: drafts may be created ledger-less, but nothing ledger-less
+    may be verified or assembled into a production script."""
     check: VideoLessonCheck = verify_video_lesson(spec, known)
-    if not check.passed:
+    issues = [issue.to_dict() for issue in check.issues]
+    passed = check.passed
+    if require_ledger:
+        ledger_check = verify_lesson_source_ledger(spec)
+        issues.extend(issue.to_dict() for issue in ledger_check.issues)
+        passed = passed and ledger_check.passed
+    if not passed:
         raise HTTPException(
             status_code=422,
             detail={
                 "message": t("video_lesson.gate_failed", lg),
-                "issues": [issue.to_dict() for issue in check.issues],
+                "issues": issues,
             },
         )
 
@@ -166,7 +177,7 @@ async def verify_video_lesson_endpoint(
     row = await db.get(VideoLessonSpec, spec_id)
     if row is None:
         raise HTTPException(status_code=404, detail=t("common.not_found", lg))
-    _gate_or_422(row.spec, await _known_ku_ids(db), lg)
+    _gate_or_422(row.spec, await _known_ku_ids(db), lg, require_ledger=True)
     row.verified = True
     row.updated_at = datetime.now(timezone.utc)
     await db.flush()
@@ -185,5 +196,5 @@ async def assemble_video_lesson_endpoint(
 ) -> dict:
     lg = _lang(accept_language, lang)
     row = await _visible_row(db, spec_id, current_user, lg)
-    _gate_or_422(row.spec, await _known_ku_ids(db), lg)
+    _gate_or_422(row.spec, await _known_ku_ids(db), lg, require_ledger=True)
     return assemble_video_lesson(row.spec)

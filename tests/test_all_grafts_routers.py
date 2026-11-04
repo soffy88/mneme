@@ -41,11 +41,61 @@ def _bi(zh, en):
 
 
 def _video_spec(spec_id="vl-ag-1", ku_id=KU_ID):
+    from services.narration_source_ledger import (
+        AdversarialReview,
+        LedgerEvidence,
+        LedgerRow,
+        SourceLedger,
+        SourceTier,
+        attach_ledger,
+    )
+    from services.provenance import ProvenanceLabel
     from services.video_lesson import triangle_angle_sum_spec
 
     spec = triangle_angle_sum_spec(spec_id)
     spec["ku_id"] = ku_id
-    return spec
+    ledger = SourceLedger(
+        rows=[
+            LedgerRow(
+                id="L01",
+                claim="看这个三角形，把三个角标为 A、B、C，准备拼在一起。",
+                shot=0,
+                label=ProvenanceLabel.GENERATED,
+                status="framing",
+            ),
+            LedgerRow(
+                id="L02",
+                claim="把三个角拼到一条直线上，看拼出的角是不是平角。",
+                shot=1,
+                label=ProvenanceLabel.GENERATED,
+                status="framing",
+            ),
+            LedgerRow(
+                id="L03",
+                claim="三角形三个内角的和是 180 度",
+                shot=2,
+                label=ProvenanceLabel.MATERIAL,
+                evidence=[
+                    LedgerEvidence(
+                        source="人教版数学七年级下册",
+                        tier=SourceTier.T1,
+                        quote="三角形三个内角的和等于 180 度。",
+                    )
+                ],
+                status="single-source",
+            ),
+        ],
+        review=AdversarialReview(
+            reviewer="adversarial",
+            checks={
+                "no_unsourced_assertions": True,
+                "every_row_tiered": True,
+                "disputes_listed_both_sides": True,
+                "quotes_present": True,
+            },
+        ),
+    )
+    return attach_ledger(spec, ledger)
 
 
 def _dictation_spec(spec_id="dic-ag-1"):
